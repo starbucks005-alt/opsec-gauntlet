@@ -25,16 +25,17 @@
   .jl-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default);width:28px;height:28px;color:var(--text-muted);cursor:pointer;font-family:var(--font-mono);font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
   .jl-min-btn:hover{color:var(--accent);border-color:var(--accent);}
 
-  /* Portrait — two states (eyes open / eyes closed) crossfade as a blink */
+  /* Portrait — two states (eyes open / eyes closed). The closed image instantly
+     pops on top of the open image for a ~120ms blink. No crossfade so there is
+     no brightness overshoot between the two near-identical images. */
   .jl-portrait{position:relative;width:200px;height:255px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default);background:var(--bg-primary);animation:jl-float 5.4s ease-in-out infinite;}
   .jl-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-  .jl-portrait .jl-open{animation:jl-blink-open 6s ease-in-out infinite;}
-  .jl-portrait .jl-closed{opacity:0;animation:jl-blink-closed 6s ease-in-out infinite;}
-  @keyframes jl-blink-open{0%,92%,100%{opacity:1;}94%,97%{opacity:0;}}
-  @keyframes jl-blink-closed{0%,92%,100%{opacity:0;}94%,97%{opacity:1;}}
+  .jl-portrait .jl-open{opacity:1;}
+  .jl-portrait .jl-closed{opacity:0;animation:jl-blink 6s steps(1,end) infinite;}
+  @keyframes jl-blink{0%,95%,100%{opacity:0;}96%,98%{opacity:1;}}
   @keyframes jl-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
   @media (prefers-reduced-motion: reduce){
-    .jl-portrait, .jl-portrait .jl-open, .jl-portrait .jl-closed{animation:none;}
+    .jl-portrait, .jl-portrait .jl-closed{animation:none;}
     .jl-portrait .jl-closed{opacity:0;}
   }
 
@@ -226,14 +227,16 @@
       <div style="flex:1;min-width:0;">
         <div id="jl-ms-name" class="ms-banner-name"></div>
         <div id="jl-ms-meta" class="ms-banner-meta"></div>
+        <div id="jl-ms-found" class="ms-banner-meta" style="margin-top:0.15rem;color:var(--text-muted);"></div>
       </div>
       <button class="ms-banner-btn" onclick="jlPickChapter()">Pick a Chapter →</button>
+      <a href="workshop.html" class="ms-banner-swap" style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px;margin-left:0.3rem;">✕ Use a different one</a>
     </div>
     <div id="jl-chapter-grid" class="ms-chapter-grid"></div>
 
     <!-- No-manuscript note -->
     <div id="jl-no-ms" class="no-ms-note" style="display:none;">
-      No manuscript loaded yet. You can paste a single chapter below, or <a href="workshop.html">upload your full manuscript once</a> so every GP tool can read from it.
+      No manuscript loaded yet. Three options: paste a single chapter into the box below, <strong>upload one chapter as a PDF</strong> using the button above the chapter text, or <a href="workshop.html">upload your full manuscript once</a> so every GP tool can read from it.
     </div>
 
     <!-- STAGE 1: SETUP -->
@@ -266,16 +269,18 @@
       </div>
 
       <div class="field">
-        <label class="field-label"><span>Chapter Text</span></label>
-        <textarea class="field-textarea" id="jl-chapter-text" placeholder="Pick a chapter above, paste one here, or upload a single-chapter PDF below. Up to 15,000 characters."></textarea>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;">
-          <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);" id="jl-char-count">0 chars</div>
-          <label style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;border:1px solid var(--border-default);background:none;color:var(--accent);padding:0.45rem 0.95rem;cursor:pointer;display:inline-block;">
-            Upload one chapter as PDF
+        <label class="field-label">
+          <span>Chapter Text</span>
+          <label style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;border:1px solid var(--accent);background:rgba(184,146,42,0.08);color:var(--accent);padding:0.4rem 0.85rem;cursor:pointer;display:inline-block;letter-spacing:0.15em;font-weight:500;">
+            📄 Upload one chapter (PDF)
             <input type="file" id="jl-chapter-pdf" accept=".pdf" style="display:none;">
           </label>
+        </label>
+        <textarea class="field-textarea" id="jl-chapter-text" placeholder="Pick a chapter from the loaded manuscript above, paste one here, or upload a single-chapter PDF using the button at the top right of this box. Up to 15,000 characters."></textarea>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;">
+          <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);" id="jl-char-count">0 chars</div>
+          <div id="jl-pdf-status" style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;color:var(--text-muted);min-height:1em;"></div>
         </div>
-        <div id="jl-pdf-status" style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;color:var(--text-muted);margin-top:0.5rem;min-height:1em;"></div>
       </div>
 
       <div class="field">
@@ -471,33 +476,38 @@
     document.getElementById('jl-ms-banner').classList.add('visible');
   }
   function detectChapters(text) {
-    const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|twenty-nine|thirty';
-    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${numberWords})\\b[^\\n]*`, 'gim');
+    const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|twenty-two|twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|twenty-nine|thirty|thirty-one|thirty-two|forty|fifty';
+    const roman = '[IVXLCDM]{1,8}';
+    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`, 'gim');
     const matches = []; let m;
     while ((m = re.exec(text)) !== null) matches.push({ title: m[0].trim(), index: m.index });
     if (matches.length >= 2) {
       const out = [];
-      for (let i = 0; i < matches.length && i < 60; i++) {
+      for (let i = 0; i < matches.length && i < 80; i++) {
         const start = matches[i].index;
         const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
         out.push({ title: matches[i].title, text: text.slice(start, end).trim() });
       }
-      return out;
+      return { kind: 'chapters', list: out };
     }
     const words = text.split(/\s+/);
     const chunks = [];
     for (let i = 0; i < words.length && chunks.length < 40; i += 3000) {
       chunks.push({ title: `Section ${chunks.length + 1}`, text: words.slice(i, i + 3000).join(' ') });
     }
-    return chunks;
+    return { kind: 'sections', list: chunks };
   }
   window.jlPickChapter = () => {
     const text = window.gpMs?.getText();
-    if (!text) return;
-    const chapters = detectChapters(text);
+    const foundEl = document.getElementById('jl-ms-found');
+    if (!text) {
+      if (foundEl) foundEl.textContent = 'No manuscript text loaded. Use "Use a different one" to upload.';
+      return;
+    }
+    const result = detectChapters(text);
     const grid = document.getElementById('jl-chapter-grid');
     grid.innerHTML = '';
-    chapters.forEach((ch) => {
+    result.list.forEach((ch) => {
       const btn = document.createElement('button');
       btn.className = 'ms-chapter-pill';
       btn.textContent = ch.title.length > 60 ? ch.title.slice(0, 60) + '…' : ch.title;
@@ -511,6 +521,12 @@
       grid.appendChild(btn);
     });
     grid.classList.add('visible');
+    if (foundEl) {
+      foundEl.textContent = result.kind === 'chapters'
+        ? `Found ${result.list.length} chapter${result.list.length === 1 ? '' : 's'}. Click one to load it.`
+        : `Could not auto-detect chapter headings, so I split the text into ${result.list.length} sections. Pick one or paste a chapter manually.`;
+    }
+    grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
   function updateCharCount() {
