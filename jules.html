@@ -969,16 +969,40 @@
   };
 
   /* ── Download / copy ─────────────────────────────────────── */
-  window.jlCopyRewrite = async () => {
+  function legacyCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  window.jlCopyRewrite = async (ev) => {
     const out = assembleFinal();
+    const btn = (ev && ev.currentTarget) || document.querySelector('button[onclick="jlCopyRewrite()"]');
+    const flash = (msg) => { if (!btn) return; const orig = btn.textContent; btn.textContent = msg; setTimeout(() => btn.textContent = orig, 1600); };
+    let ok = false;
     try {
-      await navigator.clipboard.writeText(out);
-      const btn = event.target;
-      const orig = btn.textContent;
-      btn.textContent = 'Copied ✓';
-      setTimeout(() => btn.textContent = orig, 1600);
-    } catch {
-      document.getElementById('jl-workshop-err').textContent = 'Could not copy. Select and copy manually.';
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(out);
+        ok = true;
+      }
+    } catch {}
+    if (!ok) ok = legacyCopy(out);
+    const errEl = document.getElementById('jl-workshop-err');
+    if (ok) {
+      if (errEl) errEl.textContent = '';
+      flash('Copied ✓');
+    } else if (errEl) {
+      errEl.textContent = 'Could not copy. Use "Download as .txt" instead, or select the rewrite and copy manually.';
     }
   };
   window.jlDownloadRewrite = () => {
