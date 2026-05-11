@@ -69,11 +69,14 @@
   }
 
   .nav-links {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
     display: flex;
     align-items: stretch;
     list-style: none;
     height: 100%;
-    flex: 1;
     justify-content: center;
     gap: 0;
   }
@@ -109,13 +112,12 @@
 
   /* HERO */
   .hero {
-    min-height: min(100vh, 720px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 6rem 2rem 4rem;
+    padding: 5rem 2rem 2.5rem;
     position: relative;
     overflow: hidden;
   }
