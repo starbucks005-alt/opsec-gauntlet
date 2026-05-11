@@ -85,40 +85,113 @@ Draft your three-bullet game plan for this chapter.`;
   return { system, user };
 }
 
-function buildRewritePrompts({ chapterText, chapterTitle, genre, plan }) {
-  const system = `You are Jules, a rewrite partner at Greylander Press. You have a signed-off three-bullet game plan from the author. Your job now is to rewrite the chapter against that plan.
+function splitForStagedCall(text, parts = 2) {
+  if (!text || parts < 2) return [text];
+  const len = text.length;
+  const chunks = [];
+  let cursor = 0;
+  for (let i = 1; i < parts; i++) {
+    const ideal = Math.floor((len * i) / parts);
+    // Prefer the nearest paragraph break (\n\n) before the ideal split point; fallback to after; fallback to ideal.
+    let breakAt = text.lastIndexOf('\n\n', ideal);
+    if (breakAt < cursor + 200) {
+      const after = text.indexOf('\n\n', ideal);
+      breakAt = after === -1 ? ideal : after;
+    }
+    chunks.push(text.slice(cursor, breakAt).trim());
+    cursor = breakAt;
+  }
+  chunks.push(text.slice(cursor).trim());
+  return chunks.filter(Boolean);
+}
+
+function buildRewriteSegmentPrompts({ fullChapterText, segment, segmentIndex, totalSegments, chapterTitle, genre, plan }) {
+  const system = `You are Jules, a rewrite partner at Greylander Press. You have a signed-off three-bullet game plan from the author. The chapter is being rewritten in ${totalSegments} parallel segments to fit within the platform's response window. This call rewrites SEGMENT ${segmentIndex + 1} of ${totalSegments}.
 
 ${HARD_RULES}
 
 REWRITE RULES:
-- Execute every bullet of the plan. Do not skip one.
-- Do not add scenes that were not in the original chapter. Do not cut scenes that were in the original chapter. Same beats, sharpened.
+- Execute every bullet of the plan that applies to this segment. Do not skip one.
+- Rewrite ONLY the segment provided. Do not include any text outside it. Do not summarize, do not bridge, do not recap. Your output joins onto the other segments verbatim.
+- Do not add scenes that were not in the original segment. Do not cut scenes that were in the original segment.
 - Preserve every named entity exactly: character names, place names, codenames, technical terms (e.g. "Red Earth", "Digital Ghost", "Iron Man", "PUF"). Names are author canon.
 - Preserve POV and tense.
 - Maintain or slightly tighten length. Do not pad. Do not bloat.
 - Keep dialogue lines that already work; rewrite dialogue lines that the plan flagged.
 - Do not insert section headers, chapter labels, or scene break dividers that were not in the original.
+- Do not start with a recap of what came before. Continue mid-flow if the segment starts mid-flow.
 
-Return ONLY a JSON object with this exact shape — no markdown fence, no preamble:
+Return ONLY a JSON object with this exact shape, no markdown fence, no preamble:
 {
-  "rewrite": "The full rewritten chapter as a single string. Paragraphs separated by a blank line."
+  "rewrite": "The rewritten segment as a single string. Paragraphs separated by a blank line."
 }`;
 
   const titleLine = chapterTitle ? `\nCHAPTER: ${chapterTitle}` : '';
   const genreLine = genre ? `\nGENRE: ${genre}` : '';
-  const planBlock = (plan || []).map((b,i) => `${i+1}. ${b}`).join('\n');
+  const planBlock = (plan || []).map((b, i) => `${i + 1}. ${b}`).join('\n');
 
   const user = `${titleLine}${genreLine}
 
-SIGNED-OFF PLAN:
+SIGNED-OFF PLAN (applies to the whole chapter):
 ${planBlock}
 
-ORIGINAL CHAPTER:
+ORIGINAL CHAPTER (full text, for context and continuity):
 ---
-${chapterText}
+${fullChapterText}
 ---
 
-Rewrite the chapter against the signed-off plan.`;
+YOUR SEGMENT TO REWRITE (segment ${segmentIndex + 1} of ${totalSegments}):
+---
+${segment}
+---
+
+Rewrite ONLY this segment against the signed-off plan. Do not produce text outside this segment.`;
+
+  return { system, user };
+}
+
+function buildIterateSegmentPrompts({ fullChapterText, fullCurrentRewrite, segment, segmentIndex, totalSegments, chapterTitle, genre, note }) {
+  const system = `You are Jules, a rewrite partner at Greylander Press. You produced a rewrite of this chapter; the author is now giving you a short note. The rework is being staged in ${totalSegments} parallel segments to fit the platform's response window. This call reworks SEGMENT ${segmentIndex + 1} of ${totalSegments}.
+
+${HARD_RULES}
+
+ITERATION RULES:
+- Operate on the CURRENT REWRITE segment provided. The original chapter is canon for names, beats, intent.
+- Push on what the author asked for more of. Pull back on what they asked for less of. Leave the rest alone.
+- Rework ONLY the segment provided. Do not include any text outside it. Your output joins onto the other segments verbatim.
+- Do not add scenes. Do not cut scenes.
+- Preserve every named entity exactly.
+- Do not start with a recap. Continue mid-flow if the segment starts mid-flow.
+
+Return ONLY a JSON object with this exact shape, no markdown fence, no preamble:
+{
+  "rewrite": "The reworked segment as a single string."
+}`;
+
+  const titleLine = chapterTitle ? `\nCHAPTER: ${chapterTitle}` : '';
+  const genreLine = genre ? `\nGENRE: ${genre}` : '';
+
+  const user = `${titleLine}${genreLine}
+
+AUTHOR'S NOTE FOR THIS PASS (applies to the whole chapter):
+${note}
+
+ORIGINAL CHAPTER (canon reference for names, beats, intent):
+---
+${fullChapterText}
+---
+
+FULL CURRENT REWRITE (context):
+---
+${fullCurrentRewrite}
+---
+
+YOUR SEGMENT TO REWORK (segment ${segmentIndex + 1} of ${totalSegments}):
+---
+${segment}
+---
+
+Rework ONLY this segment against the author's note. Do not produce text outside this segment.`;
 
   return { system, user };
 }
@@ -261,33 +334,56 @@ exports.handler = async (event) => {
   const balance = balRow?.balance ?? 0;
   if (balance < cost) return json(402, { error: 'Insufficient credits', needed: cost, have: balance });
 
-  let prompts;
-  if (mode === 'plan') {
-    prompts = buildPlanPrompts({ chapterText, chapterTitle, genre, problems, freeText, previousPlan, redirect });
-  } else if (mode === 'rewrite') {
-    prompts = buildRewritePrompts({ chapterText, chapterTitle, genre, plan });
-  } else if (mode === 'iterate') {
-    prompts = buildIteratePrompts({ chapterText, chapterTitle, genre, currentRewrite, note });
-  } else {
-    prompts = buildRegenParagraphPrompts({ chapterText, chapterTitle, genre, currentRewrite, paragraph, note });
-  }
-
-  const maxTokens = mode === 'plan' ? 800 : (mode === 'regenerate-paragraph' ? 1200 : 6000);
-  const temperature = mode === 'plan' ? 0.6 : 0.7;
+  const client = new Anthropic({ apiKey: ANTHROPIC_KEY });
+  const stripFences = (raw) => raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/, '').trim();
+  const callOnce = async ({ system, user, max_tokens, temperature }) => {
+    const resp = await client.messages.create({
+      model: MODEL, max_tokens, temperature,
+      system, messages: [{ role: 'user', content: user }],
+    });
+    const raw = (resp.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
+    return JSON.parse(stripFences(raw));
+  };
 
   let parsed;
   try {
-    const client = new Anthropic({ apiKey: ANTHROPIC_KEY });
-    const resp = await client.messages.create({
-      model: MODEL,
-      max_tokens: maxTokens,
-      temperature,
-      system: prompts.system,
-      messages: [{ role: 'user', content: prompts.user }],
-    });
-    const raw = (resp.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
-    const clean = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/, '').trim();
-    parsed = JSON.parse(clean);
+    if (mode === 'plan') {
+      const p = buildPlanPrompts({ chapterText, chapterTitle, genre, problems, freeText, previousPlan, redirect });
+      parsed = await callOnce({ system: p.system, user: p.user, max_tokens: 800, temperature: 0.6 });
+    } else if (mode === 'regenerate-paragraph') {
+      const p = buildRegenParagraphPrompts({ chapterText, chapterTitle, genre, currentRewrite, paragraph, note });
+      parsed = await callOnce({ system: p.system, user: p.user, max_tokens: 1200, temperature: 0.7 });
+    } else if (mode === 'rewrite') {
+      // Stage the rewrite in parallel segments so each call fits in Netlify's 26s window.
+      const segments = splitForStagedCall(chapterText, 2);
+      const results = await Promise.all(segments.map((segment, idx) => {
+        const p = buildRewriteSegmentPrompts({
+          fullChapterText: chapterText, segment, segmentIndex: idx, totalSegments: segments.length,
+          chapterTitle, genre, plan,
+        });
+        return callOnce({ system: p.system, user: p.user, max_tokens: 4000, temperature: 0.7 });
+      }));
+      const stitched = results.map((r) => {
+        if (!r.rewrite || typeof r.rewrite !== 'string') throw new Error('Segment response malformed.');
+        return r.rewrite.trim();
+      }).join('\n\n');
+      parsed = { rewrite: stitched };
+    } else {
+      // iterate — stage the same way against the current rewrite.
+      const segments = splitForStagedCall(currentRewrite, 2);
+      const results = await Promise.all(segments.map((segment, idx) => {
+        const p = buildIterateSegmentPrompts({
+          fullChapterText: chapterText, fullCurrentRewrite: currentRewrite, segment,
+          segmentIndex: idx, totalSegments: segments.length, chapterTitle, genre, note,
+        });
+        return callOnce({ system: p.system, user: p.user, max_tokens: 4000, temperature: 0.7 });
+      }));
+      const stitched = results.map((r) => {
+        if (!r.rewrite || typeof r.rewrite !== 'string') throw new Error('Segment response malformed.');
+        return r.rewrite.trim();
+      }).join('\n\n');
+      parsed = { rewrite: stitched };
+    }
   } catch (err) {
     console.error('[jules]', mode, 'AI error', err);
     return json(502, { error: err?.message || 'AI provider error' });
