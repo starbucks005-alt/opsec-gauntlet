@@ -13,7 +13,7 @@
     { id: 'novice',      label: 'Novice',       href: 'index.html#phase-novice' },
     { id: 'pre',         label: 'Pre-Project',  href: 'index.html#phase-pre' },
     { id: 'post',        label: 'Post Draft',   href: 'index.html#phase-post' },
-    { id: 'playground',  label: 'Playground',   href: 'index.html#phase-playground' },
+    { id: 'playground',  label: 'Playground',   href: 'index.html#cast' },
     { id: 'publish',     label: 'Publish',      href: 'index.html#phase-publish' },
     { id: 'catalog',     label: 'Catalog',      href: 'catalog.html' },
     { id: 'reviews',     label: 'Site Reviews', href: 'index.html#phase-site-reviews' },

@@ -1623,6 +1623,47 @@
   .phase-card-play { border-color: rgba(184,146,42,0.4); background: rgba(184,146,42,0.03); }
   .phase-card-play .phase-card-tag::before { content: '◇ '; }
 
+  /* ── The Cast — standalone Playground section, sits outside the phase numbering ── */
+  .cast-section { max-width: 1200px; margin: 5rem auto; padding: 0 2.5rem; }
+  .cast-header { text-align: center; margin-bottom: 2.8rem; }
+  .cast-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .cast-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--text); line-height: 1.15; margin-bottom: 0.7rem; }
+  .cast-title em { font-style: italic; color: var(--gold-light, var(--accent)); }
+  .cast-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--text-dim); line-height: 1.5; max-width: 620px; margin: 0 auto; }
+  .cast-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 2rem; }
+  .cast-card {
+    display: grid; grid-template-columns: 160px 1fr; gap: 1.4rem;
+    border: 1px solid rgba(184,146,42,0.45); background: rgba(184,146,42,0.05);
+    padding: 1.6rem;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  }
+  .cast-card:hover { transform: translateY(-3px); border-color: var(--gold); background: rgba(184,146,42,0.08); box-shadow: 0 10px 28px rgba(184,146,42,0.18); }
+  .cast-portrait { position: relative; width: 160px; height: 200px; overflow: hidden; border: 1px solid var(--rule); background: var(--ink-soft, var(--bg)); flex-shrink: 0; }
+  .cast-portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cast-portrait .cast-closed { opacity: 0; animation: cast-blink 5.6s steps(1,end) infinite; }
+  @keyframes cast-blink { 0%, 95%, 100% { opacity: 0; } 97% { opacity: 1; } }
+  .cast-body { display: flex; flex-direction: column; }
+  .cast-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; color: var(--gold-light, var(--gold)); line-height: 1.15; margin-bottom: 0.15rem; }
+  .cast-role { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem; }
+  .cast-desc { font-size: 1rem; color: var(--text); line-height: 1.55; margin-bottom: 1rem; flex: 1; }
+  .cast-ctas { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .cast-cta { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 0.95rem; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .cast-cta:hover { background: var(--gold); color: var(--ink); }
+
+  [data-theme="light"] .cast-title { color: #1a1208; }
+  [data-theme="light"] .cast-title em { color: #7a5c14; }
+  [data-theme="light"] .cast-name { color: #7a5c14; }
+
+  @media (max-width: 768px) {
+    .cast-section { padding: 0 1.2rem; margin: 3rem auto; }
+    .cast-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    .cast-card { grid-template-columns: 110px 1fr; padding: 1.2rem; gap: 1rem; }
+    .cast-portrait { width: 110px; height: 140px; }
+    .cast-title { font-size: 2rem; }
+    .cast-sub { font-size: 1.05rem; }
+    .cast-name { font-size: 1.3rem; }
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
@@ -1656,7 +1697,7 @@
     <li><a href="#phase-novice">Novice</a></li>
     <li><a href="#phase-pre">Pre-Project</a></li>
     <li><a href="#phase-post">Post Draft</a></li>
-    <li><a href="#phase-playground">Playground</a></li>
+    <li><a href="#cast">Playground</a></li>
     <li><a href="#phase-publish">Publish</a></li>
     <li><a href="#phase-catalog">Catalog</a></li>
     <li><a href="#phase-site-reviews">Site Reviews</a></li>
@@ -1678,7 +1719,7 @@
 <section id="journey" class="journey">
   <div class="journey-intro">
     <div class="section-label">The Author Journey</div>
-    <h2>Seven phases. <em>One imprint.</em></h2>
+    <h2>Six phases. <em>One imprint.</em></h2>
     <p>From learning the craft to publication. Each phase builds on the last.</p>
   </div>
 
@@ -1851,50 +1892,82 @@
     </div>
   </div>
 
-  <!-- PHASE 4 — AUTHOR PLAYGROUND -->
-  <div class="phase" id="phase-playground">
-    <div class="phase-num">04</div>
-    <div class="phase-body">
-      <h3 class="phase-title">Author Playground. <em>For Fun.</em></h3>
-      <p class="phase-desc">See your book from a new angle. Explore the world, hear it discussed, interview the characters. Same engine, different lens.</p>
-      <div class="phase-cards">
-        <a class="phase-card phase-card-play" href="podcast-reviewer.html" style="border-color:rgba(184,146,42,0.5);background:rgba(184,146,42,0.03);">
-          <div class="phase-card-icon">🎙️</div>
-          <div class="phase-card-name">Podcast Review — with Rachel &amp; Adam</div>
-          <div class="phase-card-desc">Hear two hosts discuss your draft. Honesty, not applause.</div>
-          <div class="phase-card-tag">Play →</div>
-        </a>
-        <a class="phase-card phase-card-play" href="worldbuilding-map.html" style="border-color:rgba(184,146,42,0.5);background:rgba(184,146,42,0.03);">
-          <div class="phase-card-icon">🗺️</div>
-          <div class="phase-card-name">World-Building Map — with Emir</div>
-          <div class="phase-card-desc">Interactive map of the locations in your story.</div>
-          <div class="phase-card-tag">Play →</div>
-        </a>
-        <a class="phase-card phase-card-play" href="character-interviewer.html" style="border-color:rgba(184,146,42,0.5);background:rgba(184,146,42,0.03);">
-          <div class="phase-card-icon">🎭</div>
-          <div class="phase-card-name">Character Interviewer — with Maddie</div>
-          <div class="phase-card-desc">Interview your characters in voice. Pressure-test motivation, hear how each one talks.</div>
-          <div class="phase-card-tag">Play →</div>
-        </a>
-        <a class="phase-card phase-card-play" href="character-portraits.html" style="border-color:rgba(184,146,42,0.5);background:rgba(184,146,42,0.03);">
-          <div class="phase-card-icon">🖼️</div>
-          <div class="phase-card-name">Character Portraits — with Chris</div>
-          <div class="phase-card-desc">Upload your book; Chris pulls every named character with the descriptions you wrote and renders portraits. Lock the one you want — the exact prompt is revealed for you to copy elsewhere.</div>
-          <div class="phase-card-tag">Open Chris →</div>
-        </a>
-        <a class="phase-card phase-card-play" href="story-world.html" style="border-color:rgba(184,146,42,0.5);background:rgba(184,146,42,0.03);">
-          <div class="phase-card-icon">📖</div>
-          <div class="phase-card-name">Story World — with Chris</div>
-          <div class="phase-card-desc">Build an illustrated book page by page. Pick a style, pick a mode (story, picture book, wordless, or comic), then write each page — Chris paints it. Generate art or upload your own drawing. Download single pages or the whole book as a PDF.</div>
-          <div class="phase-card-tag">Open Chris →</div>
-        </a>
-      </div>
+  <!-- THE CAST — Playground, standalone (not phase-numbered) -->
+  <section class="cast-section" id="cast">
+    <div class="cast-header">
+      <div class="cast-eyebrow">The Playground · For Fun</div>
+      <h2 class="cast-title">Meet <em>the Cast.</em></h2>
+      <p class="cast-sub">Hear your book read aloud. See your characters. Talk to them. The bits no other writing tool gives you.</p>
     </div>
-  </div>
+    <div class="cast-grid">
 
-  <!-- PHASE 5 — PUBLISH -->
+      <div class="cast-card">
+        <div class="cast-portrait">
+          <img src="assets/Podcast_hosts_Open.png" alt="Rachel and Adam, the podcast hosts">
+          <img src="assets/Podcast_hosts_Closed.png" alt="" aria-hidden="true" class="cast-closed">
+        </div>
+        <div class="cast-body">
+          <div class="cast-name">Rachel &amp; Adam.</div>
+          <div class="cast-role">The Podcasters</div>
+          <div class="cast-desc">Two hosts read your draft and discuss it the way a book podcast would. They say your title out loud. They argue about your protagonist. Honesty, not applause.</div>
+          <div class="cast-ctas">
+            <a class="cast-cta" href="podcast-reviewer.html">Hear the review →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cast-card">
+        <div class="cast-portrait">
+          <img src="assets/Interviewer_Maddie_Open.png" alt="Maddie, the interviewer">
+          <img src="assets/Interviewer_Maddie_Closed.png" alt="" aria-hidden="true" class="cast-closed">
+        </div>
+        <div class="cast-body">
+          <div class="cast-name">Maddie.</div>
+          <div class="cast-role">The Interviewer</div>
+          <div class="cast-desc">Sits your protagonist down and interviews her in the snarky way she actually talks. Pressure-test her motivation, hear her voice, find the cracks before a reader does.</div>
+          <div class="cast-ctas">
+            <a class="cast-cta" href="character-interviewer.html">Open Maddie →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cast-card">
+        <div class="cast-portrait">
+          <img src="assets/Chris_Artist_Eyes_Open.png" alt="Chris, the artist">
+          <img src="assets/Chris_Artist_Eyes_Closed.png" alt="" aria-hidden="true" class="cast-closed">
+        </div>
+        <div class="cast-body">
+          <div class="cast-name">Chris.</div>
+          <div class="cast-role">The Artist</div>
+          <div class="cast-desc">Pulls every named character from your draft and paints portraits from the descriptions you wrote. Then builds illustrated picture books page by page, for your story or for your grandchildren.</div>
+          <div class="cast-ctas">
+            <a class="cast-cta" href="character-portraits.html">Character Portraits →</a>
+            <a class="cast-cta" href="story-world.html">Story World →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cast-card">
+        <div class="cast-portrait">
+          <img src="assets/Cartographer_Emir_Open.png" alt="Emir, the cartographer">
+          <img src="assets/Cartographer_Emir_Closed.png" alt="" aria-hidden="true" class="cast-closed">
+        </div>
+        <div class="cast-body">
+          <div class="cast-name">Emir.</div>
+          <div class="cast-role">The Cartographer</div>
+          <div class="cast-desc">Reads your story's locations and draws them onto an interactive map. The geography you wrote, now something you can point to.</div>
+          <div class="cast-ctas">
+            <a class="cast-cta" href="worldbuilding-map.html">Open the Map →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PHASE 4 — PUBLISH -->
   <div class="phase" id="phase-publish">
-    <div class="phase-num">05</div>
+    <div class="phase-num">04</div>
     <div class="phase-body">
       <h3 class="phase-title">Publish. <em>The Greylander Press Imprint.</em></h3>
       <p class="phase-desc">Manuscript evaluation, cover production, transparent pricing, and the publishing pathway through KDP and ACX.</p>
@@ -1951,9 +2024,9 @@
     </div>
   </div>
 
-  <!-- PHASE 6 — CATALOG (GP's published books + Honest Book Reviews catalog) -->
+  <!-- PHASE 5 — CATALOG (GP's published books + Honest Book Reviews catalog) -->
   <div class="phase" id="phase-catalog">
-    <div class="phase-num">06</div>
+    <div class="phase-num">05</div>
     <div class="phase-body">
       <h3 class="phase-title">Catalog. <em>The proof.</em></h3>
       <p class="phase-desc">What GP has published, and what GP has reviewed. Both catalogs, scoped by what they are.</p>
@@ -1974,9 +2047,9 @@
     </div>
   </div>
 
-  <!-- PHASE 7 — SITE REVIEWS (visitor testimonials about Greylander Press) -->
+  <!-- PHASE 6 — SITE REVIEWS (visitor testimonials about Greylander Press) -->
   <div class="phase" id="phase-site-reviews">
-    <div class="phase-num">07</div>
+    <div class="phase-num">06</div>
     <div class="phase-body">
       <h3 class="phase-title">Site Reviews. <em>What you think of us.</em></h3>
       <p class="phase-desc">Visitors review the press. Authors who shipped through GP, readers who found the catalog, anyone who used the tools. The same anti-sycophancy standard applies in both directions.</p>
