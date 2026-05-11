@@ -12,7 +12,7 @@ const Anthropic = require('@anthropic-ai/sdk').default;
 const pdfParse  = require('pdf-parse/lib/pdf-parse.js');
 
 const MODEL   = 'claude-sonnet-4-6';
-const TEXT_CAP = 150000; // chars stored in client
+const TEXT_CAP = 600000; // chars stored in client — covers a ~110k-word novel with headroom
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
