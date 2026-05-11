@@ -57,6 +57,11 @@
   .ms-banner-name{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);}
   .ms-banner-meta{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;}
   .ms-banner-btn{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.15);color:var(--accent);padding:0.4rem 0.9rem;cursor:pointer;}
+  .no-ms-note{border:1px solid var(--accent);background:rgba(184,146,42,0.08);padding:1.4rem 1.6rem;margin-bottom:1.6rem;font-size:1rem;color:var(--text-primary);line-height:1.55;}
+  .no-ms-note strong{color:var(--accent);}
+  .no-ms-cta{display:inline-block;margin-top:0.8rem;background:var(--btn-primary-bg);color:var(--btn-primary-text);padding:0.7rem 1.4rem;font-family:var(--font-display);font-weight:700;font-size:0.95rem;text-decoration:none;}
+  .no-ms-cta:hover{background:var(--btn-primary-bg-hover);}
+  .no-ms-or{display:block;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin:0.9rem 0 0.4rem;}
 
   .field{display:block;margin-bottom:1.4rem;}
   .field-label{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem;}
@@ -226,6 +231,15 @@
     <!-- Chapter pills (shown after Pick a Chapter) -->
     <div id="bea-chapter-grid" class="ms-chapter-grid"></div>
     <div id="bea-chapter-guide" style="display:none;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.08);color:var(--text-primary);padding:0.7rem 1rem;margin-bottom:1.2rem;font-size:0.85rem;line-height:1.5;"></div>
+
+    <!-- No-manuscript empty state -->
+    <div id="bea-no-ms" class="no-ms-note" style="display:none;">
+      <div style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--accent);margin-bottom:0.4rem;">Start by uploading your manuscript.</div>
+      Bea works chapter-by-chapter on your manuscript. Upload it once at <strong>Workshop</strong> and every Post-Draft tool (Bea, Jules, Margo, the Professor) reads from the same file — you won't upload again.
+      <a href="workshop.html" class="no-ms-cta">Upload manuscript at Workshop →</a>
+      <span class="no-ms-or">— or, for a one-off —</span>
+      <span style="font-size:0.9rem;color:var(--text-muted);">Paste a single chapter into the box below.</span>
+    </div>
 
     <!-- Form step -->
     <div id="bea-step-form">
@@ -407,7 +421,12 @@
   // ── Manuscript-store integration ─────────────────────────────────────────────
   function beaCheckMs() {
     const meta = window.gpMs?.getMeta();
-    if (!meta) return;
+    const noMs = document.getElementById('bea-no-ms');
+    if (!meta) {
+      if (noMs) noMs.style.display = 'block';
+      return;
+    }
+    if (noMs) noMs.style.display = 'none';
     const banner = document.getElementById('bea-ms-banner');
     if (!banner) return;
     document.getElementById('bea-ms-name').textContent = meta.filename || 'Manuscript loaded';
@@ -419,6 +438,12 @@
     document.getElementById('bea-ms-paste-btn').style.display = 'inline-block';
   }
 
+  function cleanChapterTitle(t) {
+    return t
+      .replace(/[\s\.·…\-_]{2,}\d+\s*$/, '')
+      .replace(/\s+$/, '')
+      .replace(/\s+/g, ' ');
+  }
   // Naive chapter splitter — same heuristic as Workshop
   function detectChapters(text) {
     const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|twenty-nine|thirty|forty|fifty';
@@ -426,15 +451,20 @@
     const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`, 'gim');
     let matches = [];
     let m;
-    while ((m = re.exec(text)) !== null) matches.push({ title: m[0].trim(), index: m.index });
-    // Dedupe TOC entries: if a title repeats, keep the last occurrence (body, not contents listing).
+    while ((m = re.exec(text)) !== null) {
+      matches.push({ title: cleanChapterTitle(m[0].trim()), index: m.index });
+    }
     if (matches.length >= 2) {
       const seen = new Map();
-      for (const x of matches) {
-        const key = x.title.replace(/\s+/g, ' ').trim().toLowerCase();
-        seen.set(key, x);
-      }
+      for (const x of matches) seen.set(x.title.toLowerCase(), x);
       matches = [...seen.values()].sort((a, b) => a.index - b.index);
+      const kept = [];
+      for (let i = 0; i < matches.length; i++) {
+        const start = matches[i].index;
+        const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
+        if (end - start >= 400) kept.push(matches[i]);
+      }
+      if (kept.length >= 2) matches = kept;
     }
     if (matches.length >= 2) {
       const out = [];

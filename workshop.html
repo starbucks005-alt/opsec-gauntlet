@@ -368,6 +368,17 @@
         <div style="flex:1;min-width:240px;font-size:0.92rem;color:var(--text);line-height:1.55;">You're viewing a sample of Grey's work on a sample manuscript. Pick any mode below to see what it does. <strong style="color:var(--gold);">Sign in to use Grey on your own manuscript.</strong></div>
         <button onclick="wsOpenAuth()" class="btn-gold" style="padding:0.6rem 1.2rem;font-size:0.85rem;">Sign in →</button>
       </div>
+      <!-- Hand-off panel: route to other Post-Draft tools -->
+      <div style="border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.4rem;margin-bottom:1.6rem;font-size:0.9rem;line-height:1.55;color:var(--text);">
+        <strong style="color:var(--gold);font-family:'Playfair Display',serif;font-size:1rem;">Your manuscript is loaded.</strong> Use Grey below for enrich / diagnose / rebuild, or hand it to another reader — they'll already have your chapters:
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.7rem;">
+          <a href="jules.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Jules · Rewrite Partner →</a>
+          <a href="bea.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Bea · Copy Editor →</a>
+          <a href="margo.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Margo · Beta Reader →</a>
+          <a href="professor.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Professor · Fact-Check →</a>
+        </div>
+      </div>
+
       <div class="ws-work-layout">
 
         <!-- Left column -->
@@ -851,8 +862,13 @@ The doctor did not write. She set the pen down on the legal pad, folded her hand
   };
 
   // ── Chapter detection ────────────────────────────────────────────────────────
+  function cleanChapterTitle(t) {
+    return t
+      .replace(/[\s\.·…\-_]{2,}\d+\s*$/, '')
+      .replace(/\s+$/, '')
+      .replace(/\s+/g, ' ');
+  }
   function detectChapters(text) {
-    // Match common chapter patterns: "Chapter 1", "Chapter One", "CHAPTER 1", "Part 1", "Part One", Roman numerals.
     const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty.one|twenty.two|twenty.three|twenty.four|twenty.five|twenty.six|twenty.seven|twenty.eight|twenty.nine|thirty|forty|fifty';
     const roman = '[IVXLCDM]{1,8}';
     const chapterRe = new RegExp(
@@ -863,17 +879,20 @@ The doctor did not write. She set the pen down on the legal pad, folded her hand
     let matches = [];
     let m;
     while ((m = chapterRe.exec(text)) !== null) {
-      matches.push({ title: m[0].trim(), index: m.index });
+      matches.push({ title: cleanChapterTitle(m[0].trim()), index: m.index });
     }
 
-    // Dedupe TOC entries: if a title repeats, keep the last occurrence (body, not contents listing).
     if (matches.length >= 2) {
       const seen = new Map();
-      for (const x of matches) {
-        const key = x.title.replace(/\s+/g, ' ').trim().toLowerCase();
-        seen.set(key, x);
-      }
+      for (const x of matches) seen.set(x.title.toLowerCase(), x);
       matches = [...seen.values()].sort((a, b) => a.index - b.index);
+      const kept = [];
+      for (let i = 0; i < matches.length; i++) {
+        const start = matches[i].index;
+        const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
+        if (end - start >= 400) kept.push(matches[i]);
+      }
+      if (kept.length >= 2) matches = kept;
     }
 
     if (matches.length >= 2) {
