@@ -505,25 +505,13 @@
       const seen = new Map();
       for (const x of matches) seen.set(x.title.toLowerCase(), x);
       matches = [...seen.values()].sort((a, b) => a.index - b.index);
-      // Drop dense clusters: runs of 3+ matches with consecutive gaps under 300 chars are residual TOC entries that have no body counterpart.
-      if (matches.length >= 3) {
-        const inCluster = new Array(matches.length).fill(false);
-        let runStart = 0;
-        for (let i = 1; i <= matches.length; i++) {
-          const gap = i < matches.length ? matches[i].index - matches[i - 1].index : Infinity;
-          if (gap >= 300) {
-            if (i - runStart >= 3) {
-              for (let k = runStart; k < i; k++) inCluster[k] = true;
-            }
-            runStart = i;
-          }
-        }
-        const dropped = inCluster.filter(Boolean).length;
-        const filtered = matches.filter((_, i) => !inCluster[i]);
-        if (filtered.length >= 2) {
-          matches = filtered;
-          tocOnlyDropped = dropped;
-        }
+      // Drop residual TOC orphans: after dedupe, any survivor whose raw line ends with a dot-leader + page number is a TOC entry whose body counterpart isn't in this text.
+      const TOC_LEADER_RE = /[\s\.·…\-_]{2,}\d+\s*$/;
+      const dropped = matches.filter(m => TOC_LEADER_RE.test(m.rawTitle)).length;
+      const kept = matches.filter(m => !TOC_LEADER_RE.test(m.rawTitle));
+      if (kept.length >= 2) {
+        matches = kept;
+        tocOnlyDropped = dropped;
       }
     }
     if (matches.length >= 2) {
