@@ -499,21 +499,32 @@
     while ((m = re.exec(text)) !== null) {
       matches.push({ rawTitle: m[0].trim(), title: cleanChapterTitle(m[0].trim()), index: m.index });
     }
-    // Dedupe TOC entries: same cleaned title appearing more than once → keep the last (body) and require its forward slice to be > 500 chars.
+    let tocOnlyDropped = 0;
     if (matches.length >= 2) {
+      // Dedupe: same cleaned title appearing more than once → keep the last occurrence (body wins over TOC).
       const seen = new Map();
-      for (const x of matches) {
-        seen.set(x.title.toLowerCase(), x);
-      }
+      for (const x of matches) seen.set(x.title.toLowerCase(), x);
       matches = [...seen.values()].sort((a, b) => a.index - b.index);
-      // Also drop any surviving match whose slice to the next match is too short (orphan TOC line at end of contents page).
-      const kept = [];
-      for (let i = 0; i < matches.length; i++) {
-        const start = matches[i].index;
-        const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
-        if (end - start >= 400) kept.push(matches[i]);
+      // Drop dense clusters: runs of 3+ matches with consecutive gaps under 300 chars are residual TOC entries that have no body counterpart.
+      if (matches.length >= 3) {
+        const inCluster = new Array(matches.length).fill(false);
+        let runStart = 0;
+        for (let i = 1; i <= matches.length; i++) {
+          const gap = i < matches.length ? matches[i].index - matches[i - 1].index : Infinity;
+          if (gap >= 300) {
+            if (i - runStart >= 3) {
+              for (let k = runStart; k < i; k++) inCluster[k] = true;
+            }
+            runStart = i;
+          }
+        }
+        const dropped = inCluster.filter(Boolean).length;
+        const filtered = matches.filter((_, i) => !inCluster[i]);
+        if (filtered.length >= 2) {
+          matches = filtered;
+          tocOnlyDropped = dropped;
+        }
       }
-      if (kept.length >= 2) matches = kept;
     }
     if (matches.length >= 2) {
       const out = [];
@@ -522,7 +533,7 @@
         const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
         out.push({ title: matches[i].title, text: text.slice(start, end).trim() });
       }
-      return { kind: 'chapters', list: out };
+      return { kind: 'chapters', list: out, tocOnlyDropped };
     }
     const words = text.split(/\s+/);
     const chunks = [];
@@ -572,9 +583,14 @@
     });
     grid.classList.add('visible');
     if (foundEl) {
-      foundEl.textContent = result.kind === 'chapters'
-        ? `Found ${result.list.length} chapter${result.list.length === 1 ? '' : 's'}. Click one to load it.`
-        : `Could not auto-detect chapter headings, so I split the text into ${result.list.length} sections. Pick one or paste a chapter manually.`;
+      if (result.kind === 'chapters') {
+        const tocNote = result.tocOnlyDropped
+          ? ` ${result.tocOnlyDropped} chapter title${result.tocOnlyDropped === 1 ? ' was' : 's were'} in the table of contents but the bodies aren't in this PDF, so they're hidden.`
+          : '';
+        foundEl.textContent = `Found ${result.list.length} chapter${result.list.length === 1 ? '' : 's'} with body text.${tocNote} Click one to load it.`;
+      } else {
+        foundEl.textContent = `Could not auto-detect chapter headings, so I split the text into ${result.list.length} sections. Pick one or paste a chapter manually.`;
+      }
     }
     grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
