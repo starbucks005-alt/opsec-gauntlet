@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honest Book Review — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
+    --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
+    --band-foundational:#c0392b; --band-developmental:#d4742a;
+    --band-competent:#d4aa4a; --band-professional:#5a8c3a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+
+  .gp-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;background:var(--bg);z-index:100;}
+  .gp-topbar-logo{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;white-space:nowrap;}
+  .gp-topbar-back{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;flex:1;}
+  .gp-topbar-back:hover{color:var(--gold);}
+  .gp-topbar-cta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--rule);padding:0.4rem 0.9rem;text-decoration:none;}
+
+  .rv-main{max-width:780px;margin:0 auto;padding:3rem 2.5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+
+  /* Magazine-review layout */
+  .r-headline{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:0.6rem;letter-spacing:-0.005em;}
+  .r-subhead{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--text-dim);margin-bottom:1.8rem;}
+  .r-subhead em{color:var(--gold-light);font-style:italic;}
+  .r-bookinfo{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.1rem 0;margin:1.8rem 0 2.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.8rem 2rem;}
+  .r-bookinfo-row{display:flex;flex-direction:column;gap:0.15rem;}
+  .r-bookinfo-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);}
+  .r-bookinfo-val{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);}
+  .r-verdict{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--gold-light);margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--rule);text-transform:none;}
+  .r-verdict em{color:var(--cream);font-style:italic;}
+
+  .r-honesty{border:2px solid var(--rule);padding:2.5rem 2rem;text-align:center;margin-bottom:2rem;background:rgba(255,255,255,0.02);}
+  .r-honesty-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.8rem;}
+  .r-honesty-band{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;letter-spacing:0.05em;line-height:1;text-transform:uppercase;}
+  .band-foundational{color:var(--band-foundational);}
+  .band-developmental{color:var(--band-developmental);}
+  .band-competent{color:var(--band-competent);}
+  .band-professional{color:var(--band-professional);}
+  .r-honesty.b-foundational{border-color:var(--band-foundational);}
+  .r-honesty.b-developmental{border-color:var(--band-developmental);}
+  .r-honesty.b-competent{border-color:var(--band-competent);}
+  .r-honesty.b-professional{border-color:var(--band-professional);}
+
+  .r-pull-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.25rem;color:var(--gold-light);padding:0.4rem 0 0.4rem 1.2rem;border-left:3px solid var(--gold);margin:0 0 1.8rem;line-height:1.5;}
+  .r-section{margin-bottom:2.5rem;}
+  .r-h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cream);font-weight:700;margin-bottom:0.4rem;}
+  .r-h3-sub{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;}
+
+  .r-heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
+  .r-heat-card{border:1px solid var(--rule);padding:1.2rem;background:rgba(255,255,255,0.02);border-left-width:4px;}
+  .r-heat-card.b-foundational{border-left-color:var(--band-foundational);}
+  .r-heat-card.b-developmental{border-left-color:var(--band-developmental);}
+  .r-heat-card.b-competent{border-left-color:var(--band-competent);}
+  .r-heat-card.b-professional{border-left-color:var(--band-professional);}
+  .r-heat-name{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;}
+  .r-heat-band{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.7rem;}
+  .r-heat-summary{font-size:0.95rem;color:var(--text);line-height:1.55;}
+
+  .r-prose{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.8;color:var(--text);background:rgba(255,255,255,0.02);border-left:3px solid var(--gold);padding:1.6rem 2rem;}
+  .r-meta{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-top:2rem;border-top:1px solid var(--rule);padding-top:1.2rem;line-height:1.7;}
+
+  .rv-loading, .rv-empty{text-align:center;padding:5rem 2rem;}
+  .rv-loading{color:var(--text-dim);font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;}
+  .rv-empty-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cream);margin-bottom:0.6rem;}
+
+  .share-row{display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:2rem;}
+  .share-btn{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--rule);padding:0.6rem 1.2rem;cursor:pointer;background:none;text-decoration:none;}
+  .share-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* Admin toolbar — only rendered for owner */
+  .admin-bar{margin-top:3rem;border:1px dashed var(--rule);padding:1.2rem 1.5rem;background:rgba(192,57,43,0.04);}
+  .admin-bar-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.8rem;}
+  .admin-bar-row{display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center;}
+  .admin-btn{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;background:none;border:1px solid var(--rule);color:var(--text-dim);}
+  .admin-btn-warn{border-color:#d4742a;color:#d4742a;}
+  .admin-btn-warn:hover{background:rgba(212,116,42,0.1);}
+  .admin-btn-danger{border-color:#c0392b;color:#e74c3c;}
+  .admin-btn-danger:hover{background:rgba(192,57,43,0.1);}
+  .admin-status{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--text-dim);margin-left:auto;}
+
+  /* Print stylesheet (Export PDF) */
+  @media print {
+    @page { size: letter; margin: 0.6in; }
+    body { background: #fff !important; color: #1a1a1a !important; font-size: 11pt; }
+    .gp-topbar, .no-print, .share-row, .admin-bar { display: none !important; }
+    .rv-main { padding: 0 !important; max-width: 100% !important; }
+    .r-headline, .r-h3 { color: #1a1a1a !important; }
+    .r-subhead { color: #555 !important; }
+    .r-subhead em { color: #8a6e1f !important; }
+    .r-pull-quote { color: #8a6e1f !important; border-left-color: #8a6e1f !important; }
+    .r-h3-sub { color: #777 !important; }
+    .r-bookinfo { border-color: #ccc !important; page-break-inside: avoid; }
+    .r-bookinfo-label { color: #777 !important; }
+    .r-bookinfo-val { color: #1a1a1a !important; }
+    .r-prose { background: #fafafa !important; color: #1a1a1a !important; border-left-color: #8a6e1f !important; }
+    .r-verdict { color: #8a6e1f !important; border-top-color: #ccc !important; }
+    .r-verdict em { color: #1a1a1a !important; }
+    .r-meta { color: #555 !important; border-top-color: #ccc !important; }
+    .print-header { display: block !important; border-bottom: 2px solid #8a6e1f; padding-bottom: 0.6rem; margin-bottom: 1.2rem; }
+    .print-header-title { font-family: 'Playfair Display', serif; font-size: 14pt; color: #8a6e1f; font-weight: 700; }
+    a { color: #1a1a1a !important; text-decoration: none !important; }
+  }
+  .print-header { display: none; }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<header class="gp-topbar">
+  <a class="gp-topbar-logo" href="index.html">GREYLANDER PRESS</a>
+  <a class="gp-topbar-back" href="reviews.html">← All reviews</a>
+  <a class="gp-topbar-cta" href="honest-review.html">Submit your book →</a>
+  <span class="gp-topbar-cta no-print" id="credit-badge" style="display:none;">— credits</span>
+  <button class="gp-topbar-cta no-print" data-theme-toggle aria-label="Theme" style="cursor:pointer;background:none;font:inherit;letter-spacing:0.18em;text-transform:uppercase;">
+    <span data-theme-icon>◐</span> <span data-theme-label>Auto</span>
+  </button>
+</header>
+
+<main class="rv-main">
+  <div id="content">
+    <div class="rv-loading">Loading review…</div>
+  </div>
+</main>
+
+<script type="module">
+  const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const TESTS = [
+    { key:'sensory_depth',        label:'Sensory Depth' },
+    { key:'dialogue_vitality',    label:'Dialogue Vitality' },
+    { key:'pacing_tension',       label:'Pacing & Tension' },
+    { key:'structural_integrity', label:'Structural Integrity' },
+    { key:'character_agency',     label:'Character Agency' },
+  ];
+
+  // Show credit badge if signed in (helps gauge whether to submit another)
+  (async () => {
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session?.user) return;
+      const { data } = await sb.from('gp_credits').select('balance').eq('user_id', session.user.id).single();
+      const badge = document.getElementById('credit-badge');
+      if (badge) {
+        badge.textContent = (data?.balance ?? 0) + ' credits';
+        badge.style.display = '';
+      }
+    } catch {}
+  })();
+
+  const slug = new URLSearchParams(location.search).get('slug');
+  if (!slug) {
+    document.getElementById('content').innerHTML = '<div class="rv-empty"><div class="rv-empty-title">No review specified.</div><p><a href="reviews.html" style="color:var(--gold-light);">Browse all reviews →</a></p></div>';
+  } else {
+    loadReview(slug);
+  }
+
+  async function loadReview(slug) {
+    // Try slug first, then fall back to id (in case the URL passes a UUID)
+    let { data, error } = await sb.from('honest_reviews')
+      .select('*')
+      .eq('is_published', true)
+      .eq('slug', slug)
+      .maybeSingle();
+    if (!data && !error) {
+      const fallback = await sb.from('honest_reviews')
+        .select('*')
+        .eq('is_published', true)
+        .eq('id', slug)
+        .maybeSingle();
+      data = fallback.data;
+    }
+    if (!data) {
+      document.getElementById('content').innerHTML = `<div class="rv-empty"><div class="rv-empty-title">Review not found.</div><p>It may not be published, or the link is broken. <a href="reviews.html" style="color:var(--gold-light);">Browse all reviews →</a></p></div>`;
+      return;
+    }
+    render(data);
+  }
+
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+  function render(rev) {
+    const honesty = (rev.honesty_score || 'developmental').toLowerCase();
+    const c = document.getElementById('content');
+    c.innerHTML = '';
+
+    document.title = `${rev.book_title} — Honest Book Review · Greylander Press`;
+
+    // Print header (only visible when exporting PDF)
+    const ph = el('div', 'print-header');
+    ph.appendChild(el('div', 'print-header-title', `Greylander Press · Honest Book Reviews · ${rev.book_title}`));
+    c.appendChild(ph);
+
+    c.appendChild(el('div', 's-label', 'Greylander Press · Honest Book Review'));
+
+    // Headline (engine-written creative title) with fallback for legacy reviews
+    const headlineText = (rev.headline && String(rev.headline).trim())
+      ? String(rev.headline).trim()
+      : rev.book_title;
+    const headline = el('h1', 'r-headline', esc(headlineText));
+    c.appendChild(headline);
+
+    // Subhead: byline as a magazine-style "A Review of X by Y"
+    const subhead = el('div', 'r-subhead');
+    subhead.innerHTML = `A Review of <em>${esc(rev.book_title)}</em> by ${esc(rev.book_author)}`;
+    c.appendChild(subhead);
+
+    // Pull quote (kept) — smaller magazine-style placement under the subhead
+    if (rev.pull_quote) {
+      c.appendChild(el('div', 'r-pull-quote', `"${esc(rev.pull_quote)}"`));
+    }
+
+    // Book Information block
+    const info = el('div', 'r-bookinfo');
+    function infoRow(label, value) {
+      if (!value) return;
+      const row = el('div', 'r-bookinfo-row');
+      row.appendChild(el('span', 'r-bookinfo-label', esc(label)));
+      row.appendChild(el('span', 'r-bookinfo-val', esc(value)));
+      info.appendChild(row);
+    }
+    infoRow('Title',     rev.book_title);
+    infoRow('Author',    rev.book_author);
+    infoRow('Publisher', rev.book_publisher);
+    infoRow('Year',      rev.book_year);
+    c.appendChild(info);
+
+    // Review prose
+    if (rev.executive_summary) {
+      const sec = el('div', 'r-section');
+      sec.appendChild(el('h3', 'r-h3', 'Review'));
+      sec.appendChild(el('div', 'r-prose', esc(rev.executive_summary).replace(/\n+/g, '<br><br>')));
+      // Verdict line as the closing paragraph (editorial voice carries the band)
+      const verdict = el('p', 'r-verdict');
+      verdict.innerHTML = `Greylander Press grades <em>${esc(rev.book_title)}</em> ${esc(honesty)}.`;
+      sec.appendChild(verdict);
+      c.appendChild(sec);
+    }
+
+    // Methodology disclosure (mandatory on every public review)
+    const methSec = el('div', 'r-section');
+    methSec.appendChild(el('h3', 'r-h3', 'Methodology'));
+    methSec.appendChild(el('p', 'r-h3-sub', 'What was read deeply, what was read briefly'));
+    const sampled = Array.isArray(rev.sampled_chapter_indices) ? rev.sampled_chapter_indices : [];
+    const sampledNames = sampled.map((s) => s.title || `Chapter ${s.index}`).filter(Boolean);
+    let methText;
+    if (rev.tier === 'scan') {
+      methText = `Honest Book Reviews evaluates the full manuscript through a complete contextual read and runs depth diagnostics across five structurally-sampled chapters: the opening, the structural midpoints of acts one and three, the book's central pivot, and the closing chapter. Each sampled chapter receives three independent diagnostic passes. Findings represent the convergence of structural and book-wide analysis.`;
+      if (sampledNames.length) methText += `\n\nChapters sampled at depth: ${sampledNames.join(' · ')}`;
+    } else {
+      methText = `Demo tier review. Engine evaluated the supplied chapter through three independent diagnostic passes. Demo reviews do not produce book-wide findings.`;
+    }
+    methSec.appendChild(el('div', 'r-prose', esc(methText).replace(/\n+/g, '<br><br>')));
+    c.appendChild(methSec);
+
+    // Footer meta
+    const meta = el('div', 'r-meta');
+    const dateStr = rev.published_at ? new Date(rev.published_at).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }) : '—';
+    meta.innerHTML = `Published ${esc(dateStr)} · Greylander Press · Authors may unpublish or delete their own review at any time.`;
+    c.appendChild(meta);
+
+    // Share row
+    const share = el('div', 'share-row no-print');
+    const copyBtn = el('button', 'share-btn', 'Copy link');
+    copyBtn.onclick = () => navigator.clipboard.writeText(location.href).then(() => copyBtn.textContent = 'Copied').catch(() => alert('Could not copy. URL: ' + location.href));
+    const printBtn = el('button', 'share-btn', 'Save as PDF');
+    printBtn.onclick = () => window.print();
+    share.appendChild(copyBtn);
+    share.appendChild(printBtn);
+    c.appendChild(share);
+
+    maybeRenderAdminBar(rev, c);
+  }
+
+  // Moderation toolbar. Renders for: (a) site admins (ADMIN_USER_IDS), or
+  // (b) the author of this specific review (rev.user_id match).
+  async function maybeRenderAdminBar(rev, container) {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session?.user) return;
+
+    const userId = session.user.id;
+    const isAuthor = !!rev.user_id && userId === rev.user_id;
+
+    let isAdmin = false;
+    try {
+      const res = await fetch('/.netlify/functions/honest-review-admin', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer ' + session.access_token },
+        body: JSON.stringify({ action: 'check' }),
+      });
+      if (res.ok) isAdmin = (await res.json()).is_admin === true;
+    } catch {}
+
+    if (!isAdmin && !isAuthor) return;
+
+    const bar = el('div', 'admin-bar no-print');
+    bar.appendChild(el('div', 'admin-bar-label', isAdmin ? 'Owner controls' : 'Your review'));
+    const row = el('div', 'admin-bar-row');
+
+    const unpubBtn = el('button', 'admin-btn admin-btn-warn', 'Unpublish (hide from public)');
+    unpubBtn.onclick = () => adminAct(rev.id, 'unpublish', session.access_token, unpubBtn,
+      isAdmin
+        ? 'Unpublish this review? It will be hidden from the public catalog. The row stays — you can republish from the submission page.'
+        : 'Unpublish your review? It will be removed from the public catalog. You can republish it from the same page if you change your mind.');
+
+    const deleteBtn = el('button', 'admin-btn admin-btn-danger', 'Delete permanently');
+    deleteBtn.onclick = () => adminAct(rev.id, 'delete', session.access_token, deleteBtn,
+      isAdmin
+        ? 'Delete this review permanently? The row will be removed and cannot be recovered.'
+        : 'Delete your review permanently? This cannot be undone. Your submission credits are not refunded.');
+
+    const status = el('span', 'admin-status', isAdmin ? 'signed in as owner' : 'signed in as author');
+
+    row.appendChild(unpubBtn);
+    row.appendChild(deleteBtn);
+    row.appendChild(status);
+    bar.appendChild(row);
+    container.appendChild(bar);
+  }
+
+  async function adminAct(reviewId, action, token, btn, confirmMsg) {
+    if (!confirm(confirmMsg)) return;
+    btn.disabled = true; btn.textContent = 'Working…';
+    try {
+      const res = await fetch('/.netlify/functions/honest-review-admin', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer ' + token },
+        body: JSON.stringify({ action, review_id: reviewId }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      // Both actions remove the review from the public view → bounce to catalog.
+      location.href = 'reviews.html';
+    } catch (e) {
+      btn.disabled = false; btn.textContent = action === 'delete' ? 'Delete permanently' : 'Unpublish (hide from public)';
+      alert('Could not ' + action + ': ' + e.message);
+    }
+  }
+</script>
+
+</body>
+</html>

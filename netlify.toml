@@ -1,0 +1,106 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+  [functions.proxy-ai]
+    timeout = 26
+
+  [functions.catalog-add]
+    timeout = 26
+
+  [functions.admin-catalog]
+    timeout = 26
+
+  [functions.podcast-reviewer]
+    timeout = 26
+    external_node_modules = ["pdf-parse"]
+
+  [functions.workshop]
+    timeout = 26
+    external_node_modules = ["pdf-parse"]
+
+  [functions.workshop-assist-background]
+    timeout = 26
+
+  [functions.site-review-submit]
+    timeout = 26
+
+  [functions.site-review-action]
+    timeout = 10
+
+  [functions.gauntlet-init]
+    timeout = 26
+    external_node_modules = ["pdf-parse"]
+
+  [functions.gauntlet-eval-background]
+    timeout = 26
+
+  [functions.manuscript-extract]
+    timeout = 26
+    external_node_modules = ["pdf-parse"]
+
+  [functions.extract-book-characters]
+    timeout = 26
+    external_node_modules = ["pdf-parse"]
+
+  [functions.generate-character-portrait]
+    timeout = 26
+
+  [functions.lock-character-portrait]
+    timeout = 10
+
+  [functions.story-world-create]
+    timeout = 10
+
+  [functions.story-world-suggest-prompt]
+    timeout = 26
+
+  [functions.story-world-update-page]
+    timeout = 10
+
+  [functions.story-world-generate-image]
+    timeout = 26
+
+  [functions.story-world-upload-image]
+    timeout = 10
+
+  [functions.story-world-restyle-image]
+    timeout = 26
+
+  [functions.story-world-cast-add]
+    timeout = 26
+
+  [functions.story-world-cast-remove]
+    timeout = 10
+
+  [functions.story-world-pdf]
+    timeout = 26
+    external_node_modules = ["pdf-lib", "@pdf-lib/fontkit"]
+    included_files = ["assets/fonts/**"]
+
+  [functions.agent-search]
+    timeout = 26
+
+  [functions.bea]
+    timeout = 26
+
+  [functions.professor]
+    timeout = 26
+
+  [functions.jaque]
+    timeout = 26
+
+  [functions.margo]
+    timeout = 26
+
+  [functions.character-interviewer]
+    external_node_modules = ["pdf-parse"]
+
+  [functions.honest-review-init]
+    external_node_modules = ["pdf-parse"]
+
+  [functions.worldbuilding-map]
+    external_node_modules = ["pdf-parse"]

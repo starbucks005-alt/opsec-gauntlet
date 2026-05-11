@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan a Poem — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary,#13100c);color:var(--text-primary,#f4ede0);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;line-height:1.7;min-height:100vh;padding-top:72px;}
+  .pn-main{max-width:1080px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--text-primary,#f4ede0);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent,#b8922a);}
+  .s-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted,#a89880);margin-bottom:0.9rem;max-width:680px;line-height:1.6;}
+  .gw-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.5rem;}
+  .gw-intro.minimized{display:none;}
+  .gw-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default,rgba(184,146,42,0.3));width:28px;height:28px;color:var(--text-muted,#a89880);cursor:pointer;font-family:'DM Mono',monospace;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .gw-min-btn:hover{color:var(--accent,#b8922a);border-color:var(--accent,#b8922a);}
+  .gw-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary,#13100c);animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gw-portrait .gw-closed{opacity:0;animation:gw-blink 5.6s infinite;}
+  @keyframes gw-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gw-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .gw-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--text-primary,#f4ede0);}
+  .gw-greeting em{color:var(--accent,#b8922a);font-style:italic;}
+  .gw-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-mini-badge.visible{display:flex;}
+  .gw-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .gw-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .gw-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary,#13100c);border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent,#b8922a);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .gw-mini-badge:hover .gw-mini-tooltip{opacity:1;}
+
+  .pn-step-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin:2rem 0 1rem;}
+
+  .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem;}
+  .form-card{border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:1.5rem;cursor:pointer;transition:all 0.2s;position:relative;background:rgba(0,0,0,0.15);}
+  .form-card:hover{border-color:var(--accent,#b8922a);transform:translateY(-2px);}
+  .form-card.selected{border-color:var(--accent,#b8922a);background:rgba(184,146,42,0.08);}
+  .form-card.selected::before{content:'✓';position:absolute;top:0.7rem;right:0.7rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent,#b8922a);}
+  .form-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.3rem;}
+  .form-spec{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .form-hint{font-size:0.78rem;color:var(--text-muted,#a89880);line-height:1.5;}
+
+  .field-group{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  .field-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .field-input,.field-textarea{background:var(--input-bg,rgba(0,0,0,0.3));border:1px solid var(--input-border,rgba(184,146,42,0.25));color:var(--input-text,#f4ede0);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;width:100%;}
+  .field-input:focus,.field-textarea:focus{border-color:var(--accent,#b8922a);}
+  .field-textarea{min-height:88px;line-height:1.55;resize:vertical;}
+  .pn-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .btn-gold{background:var(--accent,#b8922a);color:#13100c;border:none;padding:0.95rem 2.2rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background 0.2s;}
+  .btn-gold:hover{background:#d4aa4a;}
+  .btn-outline{background:transparent;color:var(--accent,#b8922a);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.95rem 1.8rem;border:1px solid var(--border-default,rgba(184,146,42,0.3));cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--accent,#b8922a);}
+
+  .struct-area{display:none;margin-top:3rem;}
+  .struct-area.visible{display:block;}
+  .struct-header{border-bottom:1px solid var(--border-default,rgba(184,146,42,0.25));padding-bottom:1.4rem;margin-bottom:1.8rem;}
+  .struct-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .struct-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .struct-spec{border:1px solid rgba(184,146,42,0.25);background:rgba(184,146,42,0.04);padding:1.4rem 1.8rem;margin-bottom:1.5rem;}
+  .struct-spec-label{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .struct-spec-list{list-style:none;padding:0;}
+  .struct-spec-list li{font-size:0.95rem;color:var(--text-primary,#f4ede0);line-height:1.7;padding:0.2rem 0;}
+  .struct-spec-list li strong{color:var(--accent,#b8922a);font-weight:600;}
+
+  .line-row{display:flex;gap:1.2rem;align-items:flex-start;padding:0.6rem 0;border-bottom:1px solid rgba(184,146,42,0.08);}
+  .line-row:last-child{border-bottom:none;}
+  .line-num{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--accent,#b8922a);min-width:2rem;padding-top:0.2rem;}
+  .line-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--text-muted,#a89880);min-width:5rem;padding-top:0.2rem;}
+  .line-hint{font-size:0.92rem;color:var(--text-primary,#f4ede0);line-height:1.5;}
+
+  .cta-bar{display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap;align-items:center;}
+
+  @media(max-width:760px){
+    .pn-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.7rem;}
+    .pn-two-col{grid-template-columns:1fr;}
+    .gw-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gw-portrait{width:120px;height:155px;}
+    .form-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="pre"></div>
+
+<main class="pn-main">
+
+  <div class="s-label">Phase 02 — Pre-Project</div>
+  <h1 class="s-title">Plan a Poem.</h1>
+  <p class="s-sub">Pick the form. Tell Grey your subject and the image you want to land. The structure guide and line-by-line scaffold come next.</p>
+
+  <div class="gw-intro" id="gw-intro">
+    <button class="gw-min-btn" onclick="gwMinimize()" aria-label="Minimize Grey" title="Minimize">−</button>
+    <div class="gw-portrait" aria-label="Grey, your writing partner">
+      <img src="assets/Grey_Open.png" alt="Grey, looking up from the page" class="gw-open">
+      <img src="assets/Grey_Closed.png" alt="" aria-hidden="true" class="gw-closed">
+    </div>
+    <div>
+      <div class="gw-name">Grey.</div>
+      <div class="gw-greeting">Your writing partner. <em>Form is the wall the meaning leans on.</em> Tell me which shape you're working in and what you're after, and I'll lay out the rules of the form alongside a line-by-line scaffold so you can hear where each beat has to land.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 1 — Choose Your Form</div>
+  <div class="form-grid">
+    <div class="form-card" data-form="freeverse" onclick="selectForm(this)">
+      <div class="form-name">Free Verse</div>
+      <div class="form-spec">No fixed meter</div>
+      <div class="form-hint">Rhythm and line breaks set by ear. The discipline of the unmetered line.</div>
+    </div>
+    <div class="form-card" data-form="sonnet" onclick="selectForm(this)">
+      <div class="form-name">Sonnet</div>
+      <div class="form-spec">14 lines, iambic pentameter</div>
+      <div class="form-hint">Shakespearean (3 quatrains + couplet) or Petrarchan (octave + sestet). The volta turns the argument.</div>
+    </div>
+    <div class="form-card" data-form="haiku" onclick="selectForm(this)">
+      <div class="form-name">Haiku</div>
+      <div class="form-spec">5 / 7 / 5 syllables</div>
+      <div class="form-hint">Three lines. A seasonal image, a perceptual shift. Compression to the bone.</div>
+    </div>
+    <div class="form-card" data-form="villanelle" onclick="selectForm(this)">
+      <div class="form-name">Villanelle</div>
+      <div class="form-spec">19 lines, two refrains</div>
+      <div class="form-hint">Five tercets and a quatrain. Two repeating lines weave through. Obsessive, incantatory.</div>
+    </div>
+    <div class="form-card" data-form="ballad" onclick="selectForm(this)">
+      <div class="form-name">Ballad</div>
+      <div class="form-spec">Quatrains, abab or abcb</div>
+      <div class="form-hint">Storytelling stanzas. Alternating four-stress and three-stress lines. The form of folk memory.</div>
+    </div>
+    <div class="form-card" data-form="ode" onclick="selectForm(this)">
+      <div class="form-name">Ode</div>
+      <div class="form-spec">Variable, formal address</div>
+      <div class="form-hint">A sustained, elevated address to a subject. Praise, complaint, meditation. Length earns its weight.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 2 — Your Poem</div>
+
+  <div class="field-group">
+    <label class="field-label" for="po-title">Title</label>
+    <input class="field-input" type="text" id="po-title" placeholder="e.g., Late Light">
+  </div>
+
+  <div class="pn-two-col">
+    <div class="field-group">
+      <label class="field-label" for="po-subject">Subject</label>
+      <input class="field-input" type="text" id="po-subject" placeholder="What is the poem about?">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="po-image">Central Image</label>
+      <input class="field-input" type="text" id="po-image" placeholder="The thing the reader will see and remember">
+    </div>
+  </div>
+
+  <button class="btn-gold" onclick="generateStructure()">Show My Form Guide →</button>
+
+  <div class="struct-area" id="struct-area">
+    <div class="struct-header">
+      <div class="struct-title" id="struct-title">—</div>
+      <div class="struct-meta" id="struct-meta">—</div>
+    </div>
+    <div class="struct-spec" id="struct-spec"></div>
+    <div id="struct-lines"></div>
+
+    <div class="cta-bar">
+      <a href="publish.html" class="btn-outline">Submit to GP →</a>
+      <button class="btn-outline" onclick="resetAll()">Start Over</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="gw-mini-badge" id="gw-mini-badge" onclick="gwMaximize()" aria-label="Bring Grey back">
+  <img src="assets/quill pen.png" alt="Grey, minimized">
+  <span class="gw-mini-tooltip">Grey is here</span>
+</button>
+
+<script>
+let _form = null;
+
+function selectForm(card){
+  document.querySelectorAll('.form-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  _form = card.dataset.form;
+}
+
+window.gwMinimize = () => {
+  document.getElementById('gw-intro').classList.add('minimized');
+  document.getElementById('gw-mini-badge').classList.add('visible');
+};
+window.gwMaximize = () => {
+  document.getElementById('gw-intro').classList.remove('minimized');
+  document.getElementById('gw-mini-badge').classList.remove('visible');
+};
+
+const FORMS = {
+  freeverse: {
+    label: 'Free Verse',
+    spec: [
+      "<strong>Lines:</strong> Variable. Length set by breath, syntax, and emphasis.",
+      "<strong>Meter:</strong> No fixed metrical foot. Rhythm rises from natural speech and rhetorical pressure.",
+      "<strong>Rhyme:</strong> Optional. When used, often slant or scattered.",
+      "<strong>Discipline:</strong> Every line break is a choice. The form rewards ear and edits hard.",
+    ],
+    lines: [
+      {n:'1',  m:'OPEN',     h:'Drop into the central image. No throat-clearing.'},
+      {n:'2',  m:'BUILD',    h:'Sense detail. Make it concrete.'},
+      {n:'3',  m:'BUILD',    h:'A second sense. Anchor the scene.'},
+      {n:'4',  m:'PIVOT',    h:'Introduce tension or a contradiction.'},
+      {n:'5',  m:'DEEPEN',   h:'Take the image inward. What does it mean to the speaker?'},
+      {n:'6',  m:'DEEPEN',   h:'Resist resolution. Let the question stay open.'},
+      {n:'7',  m:'TURN',     h:'A small reversal. The poem looks at itself.'},
+      {n:'8',  m:'CLOSE',    h:'Return to the image, transfigured. End on a noun if you can.'},
+    ],
+  },
+  sonnet: {
+    label: 'Sonnet (Shakespearean)',
+    spec: [
+      "<strong>Lines:</strong> 14, in iambic pentameter (10 syllables, da-DUM x5).",
+      "<strong>Rhyme:</strong> ABAB CDCD EFEF GG.",
+      "<strong>Structure:</strong> Three quatrains argue or develop the case. The closing couplet turns or seals it.",
+      "<strong>Volta:</strong> The turn typically falls at line 9 or in the couplet.",
+    ],
+    lines: [
+      {n:'1',  m:'A',  h:'Quatrain 1 opens the situation or argument.'},
+      {n:'2',  m:'B',  h:'Develop the image or claim.'},
+      {n:'3',  m:'A',  h:'Continue the line of thought.'},
+      {n:'4',  m:'B',  h:'Close the first quatrain on a held note.'},
+      {n:'5',  m:'C',  h:'Quatrain 2 complicates the argument.'},
+      {n:'6',  m:'D',  h:'Press the complication.'},
+      {n:'7',  m:'C',  h:'Hold the new ground.'},
+      {n:'8',  m:'D',  h:'Land before the volta.'},
+      {n:'9',  m:'E',  h:'Quatrain 3 / volta. The argument turns.'},
+      {n:'10', m:'F',  h:'Develop the new view.'},
+      {n:'11', m:'E',  h:'Press it into specifics.'},
+      {n:'12', m:'F',  h:'Close the third quatrain.'},
+      {n:'13', m:'G',  h:'Couplet, line 1. Seal or surprise.'},
+      {n:'14', m:'G',  h:'Couplet, line 2. The poem lands.'},
+    ],
+  },
+  haiku: {
+    label: 'Haiku',
+    spec: [
+      "<strong>Lines:</strong> 3.",
+      "<strong>Syllables:</strong> 5 / 7 / 5 (English convention; classical Japanese counts moras).",
+      "<strong>Image:</strong> A concrete, observed moment. Often anchored in season or place.",
+      "<strong>Cut:</strong> A perceptual shift between two of the lines (the kireji). One image meets another.",
+    ],
+    lines: [
+      {n:'1', m:'5 syl', h:'The first observation. A concrete image, no abstraction.'},
+      {n:'2', m:'7 syl', h:'The second observation, or the cut. Something else enters.'},
+      {n:'3', m:'5 syl', h:'The reverberation. The line that lets the silence speak.'},
+    ],
+  },
+  villanelle: {
+    label: 'Villanelle',
+    spec: [
+      "<strong>Lines:</strong> 19 (5 tercets + 1 quatrain).",
+      "<strong>Rhyme:</strong> Two rhymes only, ABA throughout, ABAA in the closing quatrain.",
+      "<strong>Refrains:</strong> Line 1 (R1) and line 3 (R2) repeat alternately as the closing line of each tercet, then both close the quatrain.",
+      "<strong>Effect:</strong> Obsessive, incantatory. Trust the repetition to deepen, not to bore.",
+    ],
+    lines: [
+      {n:'1',  m:'A · R1', h:'Refrain 1. A line strong enough to bear repeating.'},
+      {n:'2',  m:'B',      h:'Develop the situation.'},
+      {n:'3',  m:'A · R2', h:'Refrain 2. The other line that will return.'},
+      {n:'4',  m:'A',      h:'Tercet 2 begins.'},
+      {n:'5',  m:'B',      h:'Press the image.'},
+      {n:'6',  m:'A · R1', h:'Refrain 1 returns. Same line, new context.'},
+      {n:'7',  m:'A',      h:'Tercet 3.'},
+      {n:'8',  m:'B',      h:'Add weight.'},
+      {n:'9',  m:'A · R2', h:'Refrain 2 returns.'},
+      {n:'10', m:'A',      h:'Tercet 4. The pressure builds.'},
+      {n:'11', m:'B',      h:'Continue.'},
+      {n:'12', m:'A · R1', h:'Refrain 1 again, freighted by what came before.'},
+      {n:'13', m:'A',      h:'Tercet 5.'},
+      {n:'14', m:'B',      h:'Set up the close.'},
+      {n:'15', m:'A · R2', h:'Refrain 2 again.'},
+      {n:'16', m:'A',      h:'Quatrain opens.'},
+      {n:'17', m:'B',      h:'Drive toward the close.'},
+      {n:'18', m:'A · R1', h:'Refrain 1 lands.'},
+      {n:'19', m:'A · R2', h:'Refrain 2 closes the poem. The two refrains finally meet.'},
+    ],
+  },
+  ballad: {
+    label: 'Ballad',
+    spec: [
+      "<strong>Lines:</strong> Quatrains (4-line stanzas). 4 to 8 stanzas is typical, longer if the story requires.",
+      "<strong>Meter:</strong> Alternating tetrameter (4 stresses) and trimeter (3 stresses). The common measure.",
+      "<strong>Rhyme:</strong> ABCB or ABAB.",
+      "<strong>Voice:</strong> Storytelling. Plain diction. Repetition of phrase or refrain is welcome.",
+    ],
+    lines: [
+      {n:'1',  m:'A · 4', h:'Stanza 1, line 1. Set the scene. Tetrameter.'},
+      {n:'2',  m:'B · 3', h:'Trimeter. Introduce the figure or situation.'},
+      {n:'3',  m:'C · 4', h:'Tetrameter. A line of action or detail.'},
+      {n:'4',  m:'B · 3', h:'Trimeter. Close the stanza on the rhyme.'},
+      {n:'5',  m:'…',     h:'Stanza 2 begins. The story moves forward; the form holds.'},
+      {n:'…',  m:'…',     h:'Continue in matching quatrains until the story reaches its turn and resolution.'},
+    ],
+  },
+  ode: {
+    label: 'Ode',
+    spec: [
+      "<strong>Form:</strong> Variable. Pindaric (strophe / antistrophe / epode), Horatian (regular stanzas), or irregular.",
+      "<strong>Mode:</strong> Sustained, elevated address to a subject. Praise, lament, meditation, complaint.",
+      "<strong>Length:</strong> Earns its scale. The subject must hold the attention.",
+      "<strong>Discipline:</strong> Diction stays high without going stiff. Specific images keep the abstraction honest.",
+    ],
+    lines: [
+      {n:'I',   m:'STROPHE',     h:'Open the address. Name the subject. Set the register.'},
+      {n:'II',  m:'STROPHE',     h:'Develop the subject in concrete terms.'},
+      {n:'III', m:'ANTISTROPHE', h:'Turn. Question, complicate, or contradict the opening claim.'},
+      {n:'IV',  m:'ANTISTROPHE', h:'Press the contradiction.'},
+      {n:'V',   m:'EPODE',       h:'Synthesis. The understanding the poem has earned.'},
+      {n:'VI',  m:'EPODE',       h:'Close on the image that proves the meditation.'},
+    ],
+  },
+};
+
+window.generateStructure = function(){
+  if (!_form){ alert('Please choose a form first.'); return; }
+  const def = FORMS[_form];
+  const title = document.getElementById('po-title').value.trim() || 'Untitled';
+  const subject = document.getElementById('po-subject').value.trim();
+  const image = document.getElementById('po-image').value.trim();
+
+  document.getElementById('struct-title').textContent = title;
+  const metaParts = [def.label];
+  if (subject) metaParts.push(subject);
+  if (image) metaParts.push('Image: ' + image);
+  document.getElementById('struct-meta').textContent = metaParts.join(' · ');
+
+  const spec = document.getElementById('struct-spec');
+  spec.innerHTML = `<div class="struct-spec-label">${def.label} · The Form</div><ul class="struct-spec-list">${def.spec.map(s => '<li>' + s + '</li>').join('')}</ul>`;
+
+  const linesHtml = def.lines.map(line => `<div class="line-row"><div class="line-num">${line.n}</div><div class="line-meta">${line.m}</div><div class="line-hint">${line.h}</div></div>`).join('');
+  document.getElementById('struct-lines').innerHTML = linesHtml;
+
+  const area = document.getElementById('struct-area');
+  area.classList.add('visible');
+  setTimeout(() => area.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+};
+
+window.resetAll = function(){
+  _form = null;
+  document.querySelectorAll('.form-card').forEach(c => c.classList.remove('selected'));
+  ['po-title','po-subject','po-image'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('struct-area').classList.remove('visible');
+};
+</script>
+
+</body>
+</html>

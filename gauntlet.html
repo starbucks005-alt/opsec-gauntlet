@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Gauntlet — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/manuscript-store.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<script src="assets/sample-pdfs.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
+    --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
+    --band-foundational:#c0392b; --band-developmental:#d4742a;
+    --band-competent:#d4aa4a; --band-professional:#5a8c3a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+
+  /* Topbar (mirrors app.html) */
+  .gp-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;background:var(--bg);z-index:100;}
+  .gp-topbar-logo{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;white-space:nowrap;}
+  .gp-topbar-back{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;flex:1;}
+  .gp-topbar-back:hover{color:var(--gold);}
+  .credit-badge{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--rule);padding:0.25rem 0.75rem;}
+
+  /* Main */
+  .gt-main{max-width:1000px;margin:0 auto;padding:3rem 2.5rem;}
+
+  /* Section labels */
+  .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--gold-light);}
+  .s-sub{color:var(--text-dim);font-size:0.95rem;margin-bottom:2.5rem;max-width:680px;}
+  .divider{border:none;border-top:1px solid var(--rule);margin:2.5rem 0;}
+
+  /* Step (panel) */
+  .step{display:none;}
+  .step.active{display:block;}
+
+  /* Step 1: Upload zone */
+  .gt-drop{
+    border:2px dashed var(--rule);
+    padding:4rem 2rem;text-align:center;cursor:pointer;
+    transition:all 0.2s;display:block;
+  }
+  .gt-drop:hover, .gt-drop.dragover{border-color:var(--gold);background:rgba(184,146,42,0.04);}
+  .gt-drop-icon{font-size:3rem;color:var(--gold-light);margin-bottom:1rem;line-height:1;}
+  .gt-drop-text{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin-bottom:0.4rem;}
+  .gt-drop-sub{font-size:0.85rem;color:var(--text-dim);}
+  .gt-drop input{display:none;}
+  .upload-err{margin-top:1rem;color:#e74c3c;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;min-height:1.2rem;}
+
+  /* File card after upload */
+  .gt-file-card{
+    border:1px solid var(--gold);background:rgba(184,146,42,0.04);
+    padding:1.5rem 2rem;
+    display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.5rem;
+    margin-bottom:2rem;
+  }
+  .gt-file-icon{font-size:2rem;color:var(--gold-light);}
+  .gt-file-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--cream);}
+  .gt-file-size{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;margin-top:0.3rem;}
+  .gt-file-remove{
+    background:none;border:1px solid var(--rule);color:var(--text-dim);
+    padding:0.5rem 1rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+  }
+  .gt-file-remove:hover{border-color:#c0392b;color:#e74c3c;}
+
+  /* Scope detector display */
+  .scope-pick-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.8rem;}
+  .scope-pick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem;margin-bottom:2rem;}
+  .scope-btn{
+    background:rgba(255,255,255,0.02);border:1px solid var(--rule);
+    padding:1.2rem 1.3rem;text-align:left;cursor:pointer;
+    transition:all 0.15s;display:flex;flex-direction:column;gap:0.4rem;
+    font-family:'Cormorant Garamond',serif;color:var(--text);
+  }
+  .scope-btn:hover{border-color:var(--gold-light);background:rgba(184,146,42,0.04);}
+  .scope-btn.selected{border-color:var(--gold);background:rgba(184,146,42,0.08);box-shadow:inset 0 0 0 1px var(--gold);}
+  .scope-btn-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--cream);font-weight:700;}
+  .scope-btn.selected .scope-btn-name{color:var(--gold-light);}
+  .scope-btn-range{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
+  .scope-btn-cost{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:0.2rem;}
+
+  /* Context questions */
+  .ctx-q{margin-bottom:1.4rem;}
+  .ctx-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;display:block;}
+  .ctx-input,.ctx-select{
+    width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--rule);
+    padding:0.7rem 1rem;color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;
+  }
+  .ctx-input:focus,.ctx-select:focus{border-color:var(--gold);}
+  .ctx-textarea{min-height:80px;line-height:1.6;resize:vertical;}
+  .ctx-select option{background:var(--ink-soft);color:var(--text);}
+
+  /* Buttons */
+  .btn-gold{
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.85rem 2rem;
+    font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
+    letter-spacing:0.04em;cursor:pointer;text-decoration:none;display:inline-block;
+  }
+  .btn-gold:hover:not(:disabled){background:var(--gold-light);}
+  .btn-gold:disabled{opacity:0.5;cursor:not-allowed;}
+  .btn-outline{
+    background:none;border:1px solid var(--rule);color:var(--text-dim);
+    padding:0.7rem 1.5rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+  }
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* Step 3: Running state */
+  .run-status{text-align:center;padding:5rem 2rem;}
+  .run-status-rune{
+    font-size:3rem;color:var(--gold-light);margin-bottom:1.5rem;line-height:1;
+    display:inline-block;animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+  .run-status-text{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--cream);margin-bottom:0.6rem;}
+  .run-status-sub{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;line-height:1.7;max-width:540px;margin:0 auto;}
+  .run-progress{margin-top:2.5rem;display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;}
+  .run-pill{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--text-dim);
+    border:1px solid var(--rule);padding:0.35rem 0.8rem;
+  }
+  .run-pill.active{border-color:var(--gold);color:var(--gold);animation:pillPulse 1.4s ease-in-out infinite;}
+  .run-pill.done{border-color:var(--band-professional);color:var(--band-professional);}
+  @keyframes pillPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,0.0);}50%{box-shadow:0 0 0 4px rgba(212,175,55,0.18);}}
+  .run-dots::after{content:'';animation:dots 1.4s steps(4,end) infinite;}
+  @keyframes dots{0%{content:'';}25%{content:'.';}50%{content:'..';}75%{content:'...';}}
+  .run-timer{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);letter-spacing:0.2em;text-transform:uppercase;margin-top:1rem;}
+  .run-timer-val{color:var(--gold-light);}
+
+  /* ── Report Card ─────────────────────────────────────────────────────── */
+  .r-honesty{
+    border:2px solid var(--rule);padding:2.5rem 2rem;text-align:center;margin-bottom:3rem;
+    background:rgba(255,255,255,0.02);
+  }
+  .r-honesty-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.8rem;}
+  .r-honesty-band{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;letter-spacing:0.05em;line-height:1;text-transform:uppercase;}
+  .r-honesty-meta{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-top:1.2rem;}
+  .band-foundational{color:var(--band-foundational);}
+  .band-developmental{color:var(--band-developmental);}
+  .band-competent{color:var(--band-competent);}
+  .band-professional{color:var(--band-professional);}
+  .r-honesty.b-foundational{border-color:var(--band-foundational);}
+  .r-honesty.b-developmental{border-color:var(--band-developmental);}
+  .r-honesty.b-competent{border-color:var(--band-competent);}
+  .r-honesty.b-professional{border-color:var(--band-professional);}
+
+  .r-section{margin-bottom:3rem;}
+  .r-h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cream);font-weight:700;margin-bottom:0.4rem;}
+  .r-h3-sub{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;}
+
+  /* Heat map: 5 Test cards */
+  .r-heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
+  .r-heat-card{border:1px solid var(--rule);padding:1.2rem;background:rgba(255,255,255,0.02);border-left-width:4px;}
+  .r-heat-card.b-foundational{border-left-color:var(--band-foundational);}
+  .r-heat-card.b-developmental{border-left-color:var(--band-developmental);}
+  .r-heat-card.b-competent{border-left-color:var(--band-competent);}
+  .r-heat-card.b-professional{border-left-color:var(--band-professional);}
+  .r-heat-name{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;}
+  .r-heat-band{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.7rem;}
+  .r-heat-summary{font-size:0.95rem;color:var(--text);line-height:1.55;margin-bottom:0.7rem;}
+  .r-heat-holes{list-style:none;padding:0;margin:0;}
+  .r-heat-holes li{font-size:0.85rem;color:var(--text-dim);line-height:1.5;padding-left:1rem;position:relative;margin-bottom:0.3rem;}
+  .r-heat-holes li:before{content:'›';position:absolute;left:0;color:var(--gold);}
+  .r-heat-holes li strong{color:var(--gold-light);font-weight:600;}
+
+  /* Prose blocks (Executive Summary) */
+  .r-prose{font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.75;color:var(--text);background:rgba(255,255,255,0.02);border-left:3px solid var(--gold);padding:1.5rem 1.8rem;}
+
+  /* Red Ink List */
+  .r-redink{list-style:none;counter-reset:r;padding:0;}
+  .r-redink li{counter-increment:r;border:1px solid var(--rule);padding:1.2rem 1.5rem 1.2rem 3.5rem;margin-bottom:1rem;position:relative;background:rgba(192,57,43,0.04);}
+  .r-redink li:before{
+    content:counter(r);position:absolute;left:1rem;top:1.1rem;
+    font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--band-foundational);line-height:1;
+  }
+  .r-redink-finding{font-size:1rem;color:var(--text);margin-bottom:0.5rem;line-height:1.55;}
+  .r-redink-action{font-size:0.9rem;color:var(--text-dim);line-height:1.55;}
+  .r-redink-action strong{color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:500;}
+
+  /* Tool Recommendations */
+  .r-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;}
+  .r-tool{border:1px solid var(--rule);padding:1.5rem;background:rgba(255,255,255,0.02);display:flex;flex-direction:column;}
+  .r-tool-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold-light);font-weight:700;margin-bottom:0.8rem;}
+  .r-tool-row{font-size:0.9rem;color:var(--text);line-height:1.55;margin-bottom:0.7rem;}
+  .r-tool-row strong{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);font-weight:500;display:block;margin-bottom:0.2rem;}
+  .r-tool-excerpt{font-style:italic;color:var(--text-dim);font-size:0.9rem;border-left:2px solid var(--rule);padding-left:1rem;margin:0.5rem 0 1rem;line-height:1.5;}
+  .r-tool-cta{margin-top:auto;display:inline-block;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:0.6rem 1rem;text-decoration:none;text-align:center;transition:all 0.15s;}
+  .r-tool-cta:hover{background:var(--gold);color:var(--bg);}
+
+  /* Accordions */
+  .r-accordion{border:1px solid var(--rule);margin-bottom:1rem;}
+  .r-accordion summary{cursor:pointer;padding:1rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);list-style:none;}
+  .r-accordion summary::-webkit-details-marker{display:none;}
+  .r-accordion summary:before{content:'+';margin-right:0.7rem;color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;}
+  .r-accordion[open] summary:before{content:'−';}
+  .r-accordion summary:hover{color:var(--gold);}
+  .r-accordion-body{padding:0 1.5rem 1.5rem;}
+
+  /* Stagnation patterns table */
+  .r-stag-list{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;}
+  .r-stag-pill{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--band-developmental);border:1px solid var(--band-developmental);padding:0.3rem 0.7rem;}
+  .r-stag-table{width:100%;font-family:'DM Mono',monospace;font-size:0.75rem;border-collapse:collapse;}
+  .r-stag-table th, .r-stag-table td{text-align:left;padding:0.5rem;border-bottom:1px solid var(--rule);color:var(--text);}
+  .r-stag-table th{color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;font-size:0.6rem;font-weight:500;}
+
+  /* Pass-by-pass transparency */
+  .r-passes{width:100%;font-family:'DM Mono',monospace;font-size:0.7rem;border-collapse:collapse;}
+  .r-passes th, .r-passes td{text-align:center;padding:0.6rem;border-bottom:1px solid var(--rule);}
+  .r-passes th:first-child, .r-passes td:first-child{text-align:left;}
+  .r-passes th{color:var(--text-dim);letter-spacing:0.12em;text-transform:uppercase;font-size:0.6rem;font-weight:500;}
+  .r-passes td.cell-band{font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}
+
+  /* ── Print stylesheet (Export PDF) ────────────────────────────────────── */
+  @media print {
+    @page { size: letter; margin: 0.6in; }
+    body { background: #fff !important; color: #1a1a1a !important; font-size: 10.5pt; }
+    .gp-topbar, .no-print, #upload-step, #scope-step, #running-step { display: none !important; }
+    .step { display: block !important; }
+    .gt-main { padding: 0 !important; max-width: 100% !important; }
+    .s-title, .s-label, .s-sub { color: #1a1a1a !important; }
+    .s-title em { color: #8a6e1f !important; }
+    .r-honesty { background: #fff !important; padding: 1.2rem !important; margin-bottom: 1.5rem !important; page-break-after: avoid; }
+    .r-honesty-eyebrow, .r-honesty-meta { color: #555 !important; }
+    .r-h3 { color: #1a1a1a !important; }
+    .r-h3-sub { color: #777 !important; }
+    .r-section { margin-bottom: 1.4rem !important; page-break-inside: avoid; }
+    .r-heat-card { background: #fafafa !important; border-color: #ccc !important; page-break-inside: avoid; }
+    .r-heat-name { color: #555 !important; }
+    .r-heat-summary { color: #1a1a1a !important; }
+    .r-heat-holes li { color: #444 !important; }
+    .r-heat-holes li strong { color: #8a6e1f !important; }
+    .r-prose { background: #fafafa !important; color: #1a1a1a !important; border-left-color: #8a6e1f !important; page-break-inside: avoid; }
+    .r-redink li { background: #fff5f3 !important; border-color: #c0392b !important; page-break-inside: avoid; }
+    .r-redink-finding { color: #1a1a1a !important; }
+    .r-redink-action { color: #444 !important; }
+    .r-redink-action strong { color: #8a6e1f !important; }
+    .r-tool { background: #fafafa !important; border-color: #ccc !important; page-break-inside: avoid; }
+    .r-tool-name { color: #8a6e1f !important; }
+    .r-tool-row, .r-tool-excerpt { color: #1a1a1a !important; }
+    .r-tool-row strong { color: #555 !important; }
+    .r-tool-cta { display: none !important; }
+    .r-accordion { border-color: #ccc !important; page-break-inside: avoid; }
+    .r-accordion summary { color: #1a1a1a !important; }
+    .r-accordion summary:before { color: #8a6e1f !important; }
+    .r-stag-table th, .r-stag-table td, .r-passes th, .r-passes td { color: #1a1a1a !important; border-bottom-color: #ccc !important; }
+    .r-stag-table th, .r-passes th { color: #555 !important; }
+    .r-stag-pill { color: #8a4a1f !important; border-color: #8a4a1f !important; }
+    .band-foundational { color: #c0392b !important; }
+    .band-developmental { color: #b85a1f !important; }
+    .band-competent { color: #8a6e1f !important; }
+    .band-professional { color: #4a7a30 !important; }
+    .r-honesty.b-foundational { border-color: #c0392b !important; border-width: 2px !important; }
+    .r-honesty.b-developmental { border-color: #b85a1f !important; border-width: 2px !important; }
+    .r-honesty.b-competent { border-color: #8a6e1f !important; border-width: 2px !important; }
+    .r-honesty.b-professional { border-color: #4a7a30 !important; border-width: 2px !important; }
+    .r-heat-card.b-foundational { border-left-color: #c0392b !important; }
+    .r-heat-card.b-developmental { border-left-color: #b85a1f !important; }
+    .r-heat-card.b-competent { border-left-color: #8a6e1f !important; }
+    .r-heat-card.b-professional { border-left-color: #4a7a30 !important; }
+    .print-header { display: block !important; border-bottom: 2px solid #8a6e1f; padding-bottom: 0.6rem; margin-bottom: 1.2rem; }
+    .print-header-title { font-family: 'Playfair Display', serif; font-size: 14pt; color: #8a6e1f; font-weight: 700; }
+    .print-header-meta { font-family: 'DM Mono', monospace; font-size: 8pt; color: #666; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.2rem; }
+    a { color: #1a1a1a !important; text-decoration: none !important; }
+  }
+  .print-header { display: none; }
+
+  /* Auth prompt */
+  .auth-prompt{
+    text-align:center;padding:5rem 2rem;border:1px solid var(--rule);max-width:560px;margin:0 auto;
+  }
+  .auth-prompt-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cream);margin-bottom:1rem;}
+  .auth-prompt-body{color:var(--text-dim);margin-bottom:1.5rem;}
+  .auth-form-tabs{display:flex;border-bottom:1px solid var(--rule);margin-bottom:1.8rem;}
+  .auth-form-tab{background:none;border:none;border-bottom:2px solid transparent;padding:0.5rem 1.2rem 0.5rem 0;margin-bottom:-1px;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;}
+  .auth-form-tab.active{border-bottom-color:var(--gold);color:var(--gold-light);}
+  .auth-form-field{margin-bottom:1rem;text-align:left;}
+  .auth-form-label{display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;}
+  .auth-form-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--rule);padding:0.7rem 1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;}
+  [data-theme="light"] .auth-form-input{background:rgba(0,0,0,0.06);color:var(--text);}
+  .auth-form-input:focus{border-color:var(--gold);}
+  .auth-form-btn{width:100%;background:var(--gold);color:var(--ink);border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;margin-top:0.25rem;font-weight:700;}
+  .auth-form-btn:hover{background:var(--gold-light);}
+  .auth-form-msg{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:#e74c3c;margin-top:0.75rem;min-height:1.2rem;}
+  .auth-form-policy{font-size:0.82rem;color:var(--text-dim);line-height:1.6;display:flex;align-items:flex-start;gap:0.6rem;text-align:left;}
+  .auth-form-policy input{accent-color:var(--gold);margin-top:0.3rem;flex-shrink:0;}
+
+  @media(max-width:700px){
+    .gt-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.6rem;}
+    .gt-drop{padding:2.5rem 1rem;}
+    .gt-file-card{grid-template-columns:1fr;text-align:center;}
+  }
+
+  /* Judge character intro panel */
+  .gp-char-intro{display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid rgba(184,146,42,0.4);background:rgba(184,146,42,0.05);padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
+  .gp-char-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid rgba(184,146,42,0.4);background:var(--ink,#13100c);animation:gp-char-float 5.0s ease-in-out infinite;}
+  .gp-char-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gp-char-portrait .gp-char-closed{opacity:0;animation:gp-char-blink 5.6s infinite;}
+  @keyframes gp-char-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gp-char-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gp-char-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold-light,#d4aa4a);margin-bottom:0.4rem;}
+  .gp-char-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--cream,#f4ede0);}
+  .gp-char-greeting em{color:var(--gold-light,#d4aa4a);font-style:italic;}
+  @media(max-width:760px){
+    .gp-char-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gp-char-portrait{width:120px;height:155px;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="publish"></div>
+<span id="credit-badge" style="display:none;"></span>
+
+<main class="gt-main">
+
+  <!-- Auth gate (shown if not signed in) -->
+  <div id="auth-required" class="auth-prompt" style="display:none;">
+    <div class="auth-prompt-title">Sign in to run The Gauntlet</div>
+    <p class="auth-prompt-body">Credit-gated diagnostic. Sign in or create a free account below.</p>
+    <div class="auth-form-tabs">
+      <button class="auth-form-tab active" id="gt-tab-si" onclick="gtAuthTab('signin')">Sign In</button>
+      <button class="auth-form-tab" id="gt-tab-su" onclick="gtAuthTab('signup')">Create Account</button>
+    </div>
+    <div id="gt-signin">
+      <div class="auth-form-field">
+        <label class="auth-form-label">Email</label>
+      <div data-gp-samples data-input="#pdf-input"></div>
+        <input class="auth-form-input" type="email" id="gt-si-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="auth-form-field">
+        <label class="auth-form-label">Password</label>
+        <input class="auth-form-input" type="password" id="gt-si-pass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="auth-form-btn" onclick="gtDoSignIn()">Sign In →</button>
+      <div class="auth-form-msg" id="gt-si-msg"></div>
+    </div>
+    <div id="gt-signup" style="display:none;">
+      <div class="auth-form-field">
+        <label class="auth-form-label">Full Name</label>
+        <input class="auth-form-input" type="text" id="gt-su-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="auth-form-field">
+        <label class="auth-form-label">Email</label>
+        <input class="auth-form-input" type="email" id="gt-su-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="auth-form-field">
+        <label class="auth-form-label">Password</label>
+        <input class="auth-form-input" type="password" id="gt-su-pass" placeholder="Min 8 characters" autocomplete="new-password">
+      </div>
+      <div class="auth-form-field">
+        <label class="auth-form-policy">
+          <input type="checkbox" id="gt-su-policy">
+          <span>I have read and agree to the <a href="terms.html" target="_blank" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;">Greylander Press User Agreement</a>, including the imprint and attribution terms, credit policy, and PAID AI Governance standards.</span>
+        </label>
+      </div>
+      <button class="auth-form-btn" onclick="gtDoSignUp()">Create Account →</button>
+      <div class="auth-form-msg" id="gt-su-msg"></div>
+    </div>
+  </div>
+
+  <!-- Main flow (shown when signed in) -->
+  <div id="gauntlet-flow" style="display:none;">
+
+    <div class="s-label">Diagnostic</div>
+    <div class="s-title">The <em>Gauntlet</em></div>
+    <p class="s-sub">High-fidelity manuscript audit against the standard of professional publishable fiction. Five Tests. Banded scoring. Specific findings.</p>
+
+    <div class="gp-char-intro">
+      <div class="gp-char-portrait" aria-label="The Judge">
+        <img src="assets/Judge_Eyes_Open.png" alt="The Judge, eyes on the page" class="gp-char-open">
+        <img src="assets/Judge_Eyes_Closed.png" alt="" aria-hidden="true" class="gp-char-closed">
+      </div>
+      <div>
+        <div class="gp-char-name">The Judge.</div>
+        <div class="gp-char-greeting">Five tests. <em>One verdict.</em> I read the whole manuscript and grade it against the standard for currently publishable fiction. No softening, no hedging. Bands are bands. Findings are specific and chapter-anchored. If something works, I will say so. If it does not, I will tell you exactly where and why.</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Upload -->
+    <div class="step active" id="upload-step">
+      <div class="s-label">Step 1 — Upload</div>
+
+      <!-- Loaded manuscript banner -->
+      <div id="gt-ms-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;">
+        <span style="font-size:1.4rem;">📄</span>
+        <div style="flex:1;min-width:0;">
+          <div id="gt-ms-name" style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);"></div>
+          <div id="gt-ms-meta" style="font-size:0.8rem;color:var(--text-dim);margin-top:0.2rem;"></div>
+        </div>
+        <button onclick="gtUseMsFile()" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.15);color:var(--gold);padding:0.4rem 0.9rem;cursor:pointer;">Use This Manuscript →</button>
+        <button onclick="document.getElementById('gt-ms-banner').style.display='none'" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.1);background:none;color:var(--text-dim);padding:0.4rem 0.9rem;cursor:pointer;">✕ Upload different</button>
+      </div>
+
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream);margin-bottom:1.5rem;">PDF only. Save your manuscript as PDF before uploading.</div>
+
+      <label class="gt-drop" id="drop-zone">
+        <input type="file" id="pdf-input" accept="application/pdf,.pdf">
+        <div class="gt-drop-icon">📄</div>
+        <div class="gt-drop-text">Drop your manuscript PDF here</div>
+        <div class="gt-drop-sub">Or click to browse. PDF only, up to 50 MB.</div>
+      </label>
+      <div id="upload-err" class="upload-err"></div>
+    </div>
+
+    <!-- Step 2: Confirm scope + context -->
+    <div class="step" id="scope-step">
+      <div class="s-label">Step 2 — Confirm Scope</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream);margin-bottom:1.5rem;">What did you upload?</div>
+
+      <div class="gt-file-card">
+        <div class="gt-file-icon">📄</div>
+        <div>
+          <div class="gt-file-name" id="file-name">manuscript.pdf</div>
+          <div class="gt-file-size" id="file-size">— · — pages · — words</div>
+        </div>
+        <button class="gt-file-remove" onclick="resetUpload()">Remove</button>
+      </div>
+
+      <div class="scope-pick-label">What did you upload?</div>
+      <div class="scope-pick-grid" id="scope-pick">
+        <button type="button" class="scope-btn" data-scope="chapter" onclick="pickScope('chapter')">
+          <div class="scope-btn-name">Single Chapter</div>
+          <div class="scope-btn-range">Up to 35,000 words</div>
+          <div class="scope-btn-cost">25 credits · context required</div>
+        </button>
+        <button type="button" class="scope-btn" data-scope="novella_20k" onclick="pickScope('novella_20k')">
+          <div class="scope-btn-name">Short Manuscript</div>
+          <div class="scope-btn-range">Up to 20,000 words</div>
+          <div class="scope-btn-cost">50 credits</div>
+        </button>
+        <button type="button" class="scope-btn" data-scope="novella_50k" onclick="pickScope('novella_50k')">
+          <div class="scope-btn-name">Medium Manuscript</div>
+          <div class="scope-btn-range">Up to 50,000 words</div>
+          <div class="scope-btn-cost">75 credits</div>
+        </button>
+        <button type="button" class="scope-btn" data-scope="manuscript" onclick="pickScope('manuscript')">
+          <div class="scope-btn-name">Full Manuscript</div>
+          <div class="scope-btn-range">Up to 110,000 words</div>
+          <div class="scope-btn-cost">100 credits</div>
+        </button>
+      </div>
+
+      <!-- Context questions (only when scope is chapter) -->
+      <div id="excerpt-context" style="display:none;">
+        <div class="s-label" style="margin-bottom:0.8rem;">Context — required for single chapters</div>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1.5rem;">A chapter evaluated in isolation needs context. Without it, judgments that depend on the surrounding work will be explicitly flagged as provisional in the report.</p>
+
+        <div class="ctx-q">
+          <label class="ctx-label">Where in the work is this chapter?</label>
+          <select class="ctx-select" id="ctx-position">
+            <option value="">Select…</option>
+            <option value="opening">Opening of the work</option>
+            <option value="middle">Middle</option>
+            <option value="near_end">Near the end</option>
+            <option value="other">Other / not sure</option>
+          </select>
+        </div>
+
+        <div class="ctx-q">
+          <label class="ctx-label">Protagonist's situation entering this excerpt</label>
+          <textarea class="ctx-input ctx-textarea" id="ctx-protagonist" placeholder="What does the protagonist want? What pressure are they under?"></textarea>
+        </div>
+
+        <div class="ctx-q">
+          <label class="ctx-label">What just happened in the prior scene?</label>
+          <textarea class="ctx-input ctx-textarea" id="ctx-prior" placeholder="One or two sentences."></textarea>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+        <button class="btn-gold" id="run-btn" onclick="runGauntlet()">Run the Gauntlet →</button>
+        <button class="btn-outline" onclick="resetUpload()">Upload different PDF</button>
+        <span id="cost-display" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-left:auto;">Cost: — credits</span>
+      </div>
+    </div>
+
+    <!-- Step 3: Running -->
+    <div class="step" id="running-step">
+      <div class="run-status">
+        <div class="run-status-rune">⚔</div>
+        <div class="run-status-text"><span id="run-status-text">Auditing your manuscript</span><span class="run-dots"></span></div>
+        <div class="run-status-sub" id="run-status-sub">Longer manuscripts take longer. Full chapters typically run 2-4 minutes; full manuscripts can take 5-10. The page will update when complete.</div>
+        <div class="run-progress" id="run-progress">
+          <div class="run-pill" data-stage="parse">Parsing PDF</div>
+          <div class="run-pill" data-stage="scope">Detecting scope</div>
+          <div class="run-pill" data-stage="pass1">Pass 1</div>
+          <div class="run-pill" data-stage="pass2">Pass 2</div>
+          <div class="run-pill" data-stage="pass3">Pass 3</div>
+          <div class="run-pill" data-stage="resolve">Resolving bands</div>
+        </div>
+        <div class="run-timer">elapsed <span class="run-timer-val" id="run-elapsed">00:00</span></div>
+      </div>
+    </div>
+
+    <!-- Step 4: Report Card -->
+    <div class="step" id="report-step">
+      <div class="s-label">Diagnostic Complete</div>
+      <div class="s-title">Report <em>Card</em></div>
+      <p class="s-sub">Held to the standard of currently publishable fiction. Three independent passes resolved by median band per Test.</p>
+      <div id="report-body"></div>
+      <hr class="divider no-print">
+      <div class="report-actions no-print" style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <button class="btn-outline" onclick="exportReportPdf()">Export PDF</button>
+        <button class="btn-outline" onclick="resetUpload()">Run another diagnostic</button>
+        <a class="btn-outline" href="index.html#phase-publish">← Phase 05 Publish</a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script type="module">
+  // ── Supabase ─────────────────────────────────────────────────────────────────
+  const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  // ── State ────────────────────────────────────────────────────────────────────
+  const state = { user: null, file: null, scope: null, wordCount: 0, pageCount: 0 };
+
+  // ── Auth gate ────────────────────────────────────────────────────────────────
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session?.user) {
+    document.getElementById('auth-required').style.display = 'block';
+  } else {
+    state.user = session.user;
+    document.getElementById('gauntlet-flow').style.display = 'block';
+    try {
+      const { data } = await sb.from('gp_credits').select('balance').eq('user_id', state.user.id).single();
+      const balance = data?.balance ?? 0;
+      document.getElementById('credit-badge').textContent = balance + ' credits';
+    } catch { /* leave dash */ }
+  }
+
+  // ── Inline auth form ─────────────────────────────────────────────────────────
+  window.gtAuthTab = (tab) => {
+    document.getElementById('gt-tab-si').classList.toggle('active', tab === 'signin');
+    document.getElementById('gt-tab-su').classList.toggle('active', tab === 'signup');
+    document.getElementById('gt-signin').style.display = tab === 'signin' ? 'block' : 'none';
+    document.getElementById('gt-signup').style.display = tab === 'signup' ? 'block' : 'none';
+  };
+  window.gtDoSignIn = async () => {
+    const email = document.getElementById('gt-si-email').value.trim();
+    const pass  = document.getElementById('gt-si-pass').value;
+    const msg   = document.getElementById('gt-si-msg');
+    msg.style.color = '#e74c3c';
+    msg.textContent = '';
+    if (!email || !pass) { msg.textContent = 'Email and password required.'; return; }
+    const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+    if (error) { msg.textContent = error.message; return; }
+    location.reload();
+  };
+  window.gtDoSignUp = async () => {
+    const name  = document.getElementById('gt-su-name').value.trim();
+    const email = document.getElementById('gt-su-email').value.trim();
+    const pass  = document.getElementById('gt-su-pass').value;
+    const msg   = document.getElementById('gt-su-msg');
+    msg.style.color = '#e74c3c';
+    msg.textContent = '';
+    if (!document.getElementById('gt-su-policy').checked) {
+      msg.textContent = 'Please accept the User Agreement to continue.'; return;
+    }
+    if (pass.length < 8) { msg.textContent = 'Password must be at least 8 characters.'; return; }
+    const { error } = await sb.auth.signUp({
+      email, password: pass,
+      options: { data: { full_name: name, policy_accepted: true, policy_accepted_at: new Date().toISOString(), policy_version: '2026-04-30', policy_url: '/terms.html' } },
+    });
+    if (error) { msg.textContent = error.message; return; }
+    msg.style.color = 'var(--gold)';
+    msg.textContent = 'Account created! Check your email to confirm, then sign in.';
+  };
+
+  // ── Upload handling ──────────────────────────────────────────────────────────
+  const drop = document.getElementById('drop-zone');
+  const pdfInput = document.getElementById('pdf-input');
+
+  drop?.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('dragover'); });
+  drop?.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+  drop?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    drop.classList.remove('dragover');
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+  pdfInput?.addEventListener('change', (e) => {
+    if (e.target.files.length) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file) {
+    const err = document.getElementById('upload-err');
+    err.textContent = '';
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      err.textContent = 'PDF only. Save your manuscript as PDF before uploading.';
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      err.textContent = 'File too large. Max 50 MB.';
+      return;
+    }
+    state.file = file;
+    document.getElementById('file-name').textContent = file.name;
+    // Local heuristic for default tier — user can override.
+    // Rough: PDFs are 10-15KB per ~1000 words at standard formatting.
+    const kb = file.size / 1024;
+    let suggested;
+    if (kb < 250) suggested = 'chapter';
+    else if (kb < 350) suggested = 'novella_20k';
+    else if (kb < 700) suggested = 'novella_50k';
+    else suggested = 'manuscript';
+    document.getElementById('file-size').textContent = formatSize(file.size) + ' · pick the tier that matches your upload';
+    pickScope(suggested);
+    showStep('scope-step');
+  }
+
+  window.pickScope = (scope) => {
+    state.scope = scope;
+    document.querySelectorAll('.scope-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.scope === scope);
+    });
+    refreshScope();
+  };
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/(1024*1024)).toFixed(2) + ' MB';
+  }
+
+  function refreshScope() {
+    const costs = { chapter: 25, novella_20k: 50, novella_50k: 75, manuscript: 100 };
+    document.getElementById('cost-display').textContent = `Cost: ${costs[state.scope] ?? '—'} credits`;
+    document.getElementById('excerpt-context').style.display = state.scope === 'chapter' ? 'block' : 'none';
+  }
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function setStage(stage) {
+    document.querySelectorAll('.run-pill').forEach(p => {
+      const s = p.dataset.stage;
+      p.classList.remove('active');
+      // Mark earlier pills "done" and current "active"
+      const stages = ['parse','scope','pass1','pass2','pass3','resolve'];
+      const idx = stages.indexOf(stage);
+      const pidx = stages.indexOf(s);
+      if (pidx < idx) p.classList.add('done');
+      else if (pidx === idx) p.classList.add('active');
+    });
+  }
+
+  // ── Run — calls gauntlet-eval-background, polls gauntlet_runs row for progress ─
+  window.runGauntlet = async () => {
+    if (!state.file) { alert('Upload a PDF first.'); return; }
+    if (!state.scope) { alert('Pick a scope tier.'); return; }
+    if (state.scope === 'chapter') {
+      const pos = document.getElementById('ctx-position').value;
+      if (!pos) { alert('Select where this chapter sits in the work.'); return; }
+    }
+
+    showStep('running-step');
+    document.getElementById('run-status-text').textContent = 'Uploading manuscript…';
+    document.getElementById('run-status-sub').textContent = 'Parsing PDF, then running multi-pass evaluation.';
+    setStage('parse');
+
+    // Read file as base64
+    const pdfBase64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result).split(',')[1]);  // strip data: prefix
+      reader.onerror = reject;
+      reader.readAsDataURL(state.file);
+    });
+
+    const excerptContext = state.scope === 'chapter' ? {
+      position:    document.getElementById('ctx-position').value,
+      protagonist: document.getElementById('ctx-protagonist').value.trim(),
+      prior_scene: document.getElementById('ctx-prior').value.trim(),
+    } : null;
+
+    // Get auth token
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { document.getElementById('run-status-text').textContent = 'Sign in expired. Please sign in again.'; return; }
+
+    // POST to init (sync front door); init creates the run row + triggers the BG worker
+    let res;
+    try {
+      res = await fetch('/.netlify/functions/gauntlet-init', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({ pdfBase64, filename: state.file.name, excerptContext, userScope: state.scope }),
+      });
+    } catch (e) {
+      document.getElementById('run-status-text').textContent = 'Upload failed';
+      document.getElementById('run-status-sub').textContent = e.message;
+      return;
+    }
+
+    if (res.status === 402) {
+      const d = await res.json().catch(() => ({}));
+      document.getElementById('run-status-text').textContent = 'Insufficient credits';
+      document.getElementById('run-status-sub').textContent = `This run requires ${d.needed} credits. You have ${d.have}.`;
+      return;
+    }
+    if (res.status === 413) {
+      const d = await res.json().catch(() => ({}));
+      const labels = { chapter:'Single Chapter', novella_20k:'Short Manuscript (≤20K)', novella_50k:'Medium Manuscript (≤50K)', manuscript:'Full Manuscript (≤110K)' };
+      if (d.suggested_scope) {
+        document.getElementById('run-status-text').textContent = 'Wrong tier picked';
+        document.getElementById('run-status-sub').textContent = `Your file is ${d.word_count?.toLocaleString()} words. You picked "${labels[d.selected_scope] || d.selected_scope}". Go back and pick "${labels[d.suggested_scope] || d.suggested_scope}" instead.`;
+      } else {
+        document.getElementById('run-status-text').textContent = 'Manuscript too large';
+        document.getElementById('run-status-sub').textContent = `${d.word_count?.toLocaleString()} words exceeds the ${d.cap?.toLocaleString() || '110,000'}-word cap. Run as separate chapter diagnostics.`;
+      }
+      return;
+    }
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      document.getElementById('run-status-text').textContent = 'Could not start run';
+      document.getElementById('run-status-sub').textContent = d.error || ('HTTP ' + res.status);
+      return;
+    }
+
+    const { run_id } = await res.json();
+    state.runId = run_id;
+    setStage('scope');
+    document.getElementById('run-status-text').textContent = 'Running diagnostic';
+    document.getElementById('run-status-sub').textContent = 'Multi-pass evaluation. The page will update when complete.';
+
+    startRunHeartbeat();
+    // Subscribe to row updates
+    pollRun(run_id);
+  };
+
+  // ── Heartbeat: elapsed timer + auto-advancing stage chip + rotating reassurance ─
+  const REASSURANCE = [
+    'Multi-pass evaluation. The page will update when complete.',
+    'Three independent passes for reproducibility. Patience yields better diagnostics.',
+    'Honest critique takes time. The Gauntlet does not rush.',
+    'Anti-sycophancy validator on watch. No cushioning. No hedging.',
+    'Cross-checking findings across passes. Median band wins.',
+    'Held to the standard of professional publishable fiction.',
+    'Still working. The PAID framework rewards patience.',
+    'Resolving bands. Synthesis pass next.',
+  ];
+  let _heartbeat = null, _runStartedAt = 0;
+  function startRunHeartbeat() {
+    _runStartedAt = Date.now();
+    let msgIdx = 0;
+    const tick = () => {
+      const sec = Math.floor((Date.now() - _runStartedAt) / 1000);
+      const mm = String(Math.floor(sec / 60)).padStart(2, '0');
+      const ss = String(sec % 60).padStart(2, '0');
+      const el = document.getElementById('run-elapsed');
+      if (el) el.textContent = `${mm}:${ss}`;
+      // Auto-advance pill on a time budget (60s/pass, ~3min total)
+      let stage = 'scope';
+      if (sec < 5)        stage = 'scope';
+      else if (sec < 65)  stage = 'pass1';
+      else if (sec < 125) stage = 'pass2';
+      else if (sec < 185) stage = 'pass3';
+      else                stage = 'resolve';
+      setStage(stage);
+      // Rotate reassurance every ~14s, only if we haven't been overwritten by validator-regen msg
+      if (sec > 0 && sec % 14 === 0) {
+        const sub = document.getElementById('run-status-sub');
+        if (sub && !sub.textContent.includes('validator regenerated')) {
+          msgIdx = (msgIdx + 1) % REASSURANCE.length;
+          sub.textContent = REASSURANCE[msgIdx];
+        }
+      }
+    };
+    tick();
+    _heartbeat = setInterval(tick, 1000);
+  }
+  function stopRunHeartbeat() {
+    if (_heartbeat) { clearInterval(_heartbeat); _heartbeat = null; }
+  }
+
+  let _pollHandle = null;
+  function pollRun(runId) {
+    let lastStatus = 'running';
+    const tick = async () => {
+      try {
+        const { data, error } = await sb.from('gauntlet_runs').select('*').eq('id', runId).single();
+        if (error) throw error;
+        if (!data) return;
+        if (data.status === lastStatus && data.status === 'running') {
+          // Update progress pill heuristically based on validator_regens / time
+          if (data.validator_regens > 0) {
+            document.getElementById('run-status-sub').textContent = `Anti-sycophancy validator regenerated ${data.validator_regens} time(s). Engine is enforcing the honesty standard.`;
+          }
+          return;
+        }
+        lastStatus = data.status;
+        if (data.status === 'complete') {
+          clearInterval(_pollHandle);
+          stopRunHeartbeat();
+          setStage('resolve');
+          renderReport(data);
+        } else if (data.status === 'failed') {
+          clearInterval(_pollHandle);
+          stopRunHeartbeat();
+          document.getElementById('run-status-text').textContent = 'Run failed';
+          document.getElementById('run-status-sub').textContent = data.error_message || 'Unknown error';
+        }
+      } catch (e) {
+        console.error('poll error', e);
+      }
+    };
+    tick();
+    _pollHandle = setInterval(tick, 4000);  // every 4s
+  }
+
+  // Test name + ordering for display
+  const TESTS = [
+    { key:'sensory_depth',         label:'Sensory Depth' },
+    { key:'dialogue_vitality',     label:'Dialogue Vitality' },
+    { key:'pacing_tension',        label:'Pacing & Tension' },
+    { key:'structural_integrity', label:'Structural Integrity' },
+    { key:'character_agency',     label:'Character Agency' },
+  ];
+
+  // Tool deep-link map
+  const TOOL_LINKS = {
+    enrich:               { name:'Prose Enricher',         href:'prose-enricher.html' },
+    dialog:               { name:'Add Dialogue',           href:'add-dialogue.html' },
+    adapt:                { name:'Adapt from Source',      href:'adapt-from-source.html' },
+    structural_rebuild:   { name:'Structural Rebuild',     href:'structural-rebuild.html' },
+    scene_builder:        { name:'Scene Builder',          href:'scene-builder.html' },
+    descriptor_library:   { name:'Descriptor Library',     href:'descriptor-library.html' },
+    character_interviewer:{ name:'Character Interviewer',  href:'character-interviewer.html' },
+    podcast_reviewer:     { name:'Podcast-Style Reviewer', href:'podcast-reviewer.html' },
+    worldbuilding_map:    { name:'World-Building Map',     href:'worldbuilding-map.html' },
+  };
+
+  // Defensive: strip ```json fences and tidy whitespace if synthesis parse fell through
+  function cleanProse(s) {
+    if (!s || typeof s !== 'string') return '';
+    let t = s.trim();
+    t = t.replace(/^(?:```|""")(?:json)?\s*/i, '').replace(/(?:```|""")\s*$/i, '');
+    // If the prose looks like wrapped JSON, try to extract executive_summary
+    if (/^\s*\{[\s\S]*"executive_summary"\s*:/.test(t)) {
+      // First try strict JSON parse
+      try { const obj = JSON.parse(t); if (obj.executive_summary) return String(obj.executive_summary); }
+      catch {}
+      // Fallback: regex-extract the value even if JSON is truncated/malformed
+      const m = t.match(/"executive_summary"\s*:\s*"((?:[^"\\]|\\.)*)/);
+      if (m && m[1]) {
+        return m[1].replace(/\\"/g, '"').replace(/\\n/g, '\n').replace(/\\\\/g, '\\');
+      }
+    }
+    return t;
+  }
+
+  function fmtMs(ms) {
+    if (!ms) return '—';
+    const s = Math.floor(ms / 1000);
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  }
+
+  function el(tag, cls, html) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+
+  function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function renderReport(run) {
+    showStep('report-step');
+    const body = document.getElementById('report-body');
+    body.innerHTML = '';
+
+    // ── Print-only header (only visible when exporting to PDF) ──
+    const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    const fname = run.manuscript_filename || 'Manuscript';
+    const ph = el('div', 'print-header');
+    ph.appendChild(el('div', 'print-header-title', 'Greylander Press · The Gauntlet'));
+    ph.appendChild(el('div', 'print-header-meta', `${escapeHtml(fname)} · ${date}`));
+    body.appendChild(ph);
+
+    const honesty = (run.honesty_score || 'developmental').toLowerCase();
+    const bands = run.pillar_bands || {};
+    const findings = run.pillar_findings || {};
+    const redInk = Array.isArray(run.red_ink_list) ? run.red_ink_list : [];
+    const tools = Array.isArray(run.tool_recommendations) ? run.tool_recommendations : [];
+    const stag = run.stagnation_flags || {};
+    const passes = Array.isArray(run.pass_raw_bands) ? run.pass_raw_bands : [];
+
+    // ── Honesty banner ──
+    const banner = el('div', `r-honesty b-${honesty}`);
+    banner.appendChild(el('div', 'r-honesty-eyebrow', 'Honesty Score'));
+    banner.appendChild(el('div', `r-honesty-band band-${honesty}`, escapeHtml(honesty)));
+    const meta = [
+      `${run.credits_charged ?? 0} credits`,
+      `${fmtMs(run.elapsed_runtime_ms)} elapsed`,
+      `${run.validator_regens ?? 0} validator regens`,
+    ].join(' · ');
+    banner.appendChild(el('div', 'r-honesty-meta', meta));
+    body.appendChild(banner);
+
+    // ── Heat map: 5 Tests ──
+    const heatSec = el('div', 'r-section');
+    heatSec.appendChild(el('h3', 'r-h3', 'The Five Tests'));
+    heatSec.appendChild(el('p', 'r-h3-sub', 'Median band across 3 independent passes'));
+    const heatGrid = el('div', 'r-heat');
+    for (const t of TESTS) {
+      const band = (bands[t.key] || 'developmental').toLowerCase();
+      const f = findings[t.key] || {};
+      const card = el('div', `r-heat-card b-${band}`);
+      card.appendChild(el('div', 'r-heat-name', escapeHtml(t.label)));
+      card.appendChild(el('div', `r-heat-band band-${band}`, escapeHtml(band)));
+      if (f.summary) card.appendChild(el('div', 'r-heat-summary', escapeHtml(f.summary)));
+      if (Array.isArray(f.holes) && f.holes.length) {
+        const ul = el('ul', 'r-heat-holes');
+        for (const h of f.holes.slice(0, 4)) {
+          const ref = h.ref ? `<strong>${escapeHtml(h.ref)}:</strong> ` : '';
+          ul.appendChild(el('li', null, ref + escapeHtml(h.finding || '')));
+        }
+        card.appendChild(ul);
+      }
+      heatGrid.appendChild(card);
+    }
+    heatSec.appendChild(heatGrid);
+    body.appendChild(heatSec);
+
+    // ── Executive Summary ──
+    const summary = cleanProse(run.executive_summary);
+    if (summary) {
+      const sec = el('div', 'r-section');
+      sec.appendChild(el('h3', 'r-h3', 'Executive Summary'));
+      sec.appendChild(el('p', 'r-h3-sub', 'Cold blunt assessment'));
+      sec.appendChild(el('div', 'r-prose', escapeHtml(summary).replace(/\n+/g, '<br><br>')));
+      body.appendChild(sec);
+    }
+
+    // ── Red Ink List ──
+    if (redInk.length) {
+      const sec = el('div', 'r-section');
+      sec.appendChild(el('h3', 'r-h3', 'Red Ink List'));
+      sec.appendChild(el('p', 'r-h3-sub', 'Author-only findings · No tool will fix these'));
+      const ol = el('ol', 'r-redink');
+      for (const r of redInk) {
+        const li = el('li');
+        li.appendChild(el('div', 'r-redink-finding', escapeHtml(r.finding || '')));
+        if (r.author_action) li.appendChild(el('div', 'r-redink-action', `<strong>Action:</strong> ${escapeHtml(r.author_action)}`));
+        ol.appendChild(li);
+      }
+      sec.appendChild(ol);
+      body.appendChild(sec);
+    }
+
+    // ── Tool Recommendations ──
+    if (tools.length) {
+      const sec = el('div', 'r-section');
+      sec.appendChild(el('h3', 'r-h3', 'Tool Recommendations'));
+      sec.appendChild(el('p', 'r-h3-sub', 'Where the engine routes you next'));
+      const grid = el('div', 'r-tools');
+      for (const t of tools) {
+        const link = TOOL_LINKS[t.tool];
+        if (!link) continue;
+        const card = el('div', 'r-tool');
+        card.appendChild(el('div', 'r-tool-name', escapeHtml(link.name)));
+        if (t.diagnosis) card.appendChild(el('div', 'r-tool-row', `<strong>Diagnosis</strong>${escapeHtml(t.diagnosis)}`));
+        if (t.why)       card.appendChild(el('div', 'r-tool-row', `<strong>Why this tool</strong>${escapeHtml(t.why)}`));
+        if (t.excerpt)   card.appendChild(el('div', 'r-tool-excerpt', `"${escapeHtml(t.excerpt)}"`));
+        const cta = el('a', 'r-tool-cta', `Open ${escapeHtml(link.name)} →`);
+        cta.href = link.href;
+        card.appendChild(cta);
+        grid.appendChild(card);
+      }
+      sec.appendChild(grid);
+      body.appendChild(sec);
+    }
+
+    // ── Stagnation accordion ──
+    if (stag && (stag.patterns_detected?.length || stag.density_per_pattern)) {
+      const acc = el('details', 'r-accordion');
+      acc.appendChild(el('summary', null, 'Stagnation pattern analysis'));
+      const accBody = el('div', 'r-accordion-body');
+      if (Array.isArray(stag.patterns_detected) && stag.patterns_detected.length) {
+        const list = el('div', 'r-stag-list');
+        for (const p of stag.patterns_detected) {
+          list.appendChild(el('span', 'r-stag-pill', escapeHtml(p.replace(/_/g, ' '))));
+        }
+        accBody.appendChild(list);
+      }
+      if (stag.density_per_pattern && typeof stag.density_per_pattern === 'object') {
+        const tbl = el('table', 'r-stag-table');
+        tbl.innerHTML = '<thead><tr><th>Pattern</th><th>Density</th></tr></thead>';
+        const tbody = el('tbody');
+        for (const [k, v] of Object.entries(stag.density_per_pattern)) {
+          const tr = el('tr');
+          tr.appendChild(el('td', null, escapeHtml(k.replace(/_/g, ' '))));
+          tr.appendChild(el('td', null, typeof v === 'number' ? v.toFixed(4) : escapeHtml(String(v))));
+          tbody.appendChild(tr);
+        }
+        tbl.appendChild(tbody);
+        accBody.appendChild(tbl);
+      }
+      if (stag.routed_to_enricher) {
+        accBody.appendChild(el('p', 'r-h3-sub', 'Routed to Prose Enricher'));
+      }
+      acc.appendChild(accBody);
+      body.appendChild(acc);
+    }
+
+    // ── Pass-by-pass transparency ──
+    if (passes.length) {
+      const acc = el('details', 'r-accordion');
+      acc.appendChild(el('summary', null, `Pass-by-pass transparency (${passes.length} independent passes)`));
+      const accBody = el('div', 'r-accordion-body');
+      const tbl = el('table', 'r-passes');
+      let head = '<thead><tr><th>Test</th>';
+      for (let i = 0; i < passes.length; i++) head += `<th>Pass ${i + 1}</th>`;
+      head += '<th>Median</th></tr></thead>';
+      tbl.innerHTML = head;
+      const tbody = el('tbody');
+      for (const t of TESTS) {
+        const tr = el('tr');
+        tr.appendChild(el('td', null, escapeHtml(t.label)));
+        for (const p of passes) {
+          const b = (p?.[t.key] || '').toLowerCase();
+          tr.appendChild(el('td', `cell-band band-${b}`, escapeHtml(b || '—')));
+        }
+        const med = (bands[t.key] || '').toLowerCase();
+        tr.appendChild(el('td', `cell-band band-${med}`, escapeHtml(med || '—')));
+        tbody.appendChild(tr);
+      }
+      tbl.appendChild(tbody);
+      accBody.appendChild(tbl);
+      acc.appendChild(accBody);
+      body.appendChild(acc);
+    }
+  }
+
+  window.exportReportPdf = () => {
+    // Open all accordions so they print
+    const wasOpen = [];
+    document.querySelectorAll('#report-body details').forEach(d => {
+      wasOpen.push([d, d.open]); d.open = true;
+    });
+    // Set a sensible document title for the saved PDF filename
+    const originalTitle = document.title;
+    const fnameMatch = document.querySelector('.print-header-meta');
+    const stamp = (fnameMatch?.textContent || '').replace(/[·\/\\:]/g, '-').replace(/\s+/g, '_');
+    document.title = `Gauntlet_${stamp || 'Report'}`.slice(0, 90);
+    // Print, then restore
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => {
+        document.title = originalTitle;
+        wasOpen.forEach(([d, open]) => { d.open = open; });
+      }, 500);
+    }, 50);
+  };
+
+  window.resetUpload = () => {
+    state.file = null;
+    state.scope = null;
+    document.getElementById('pdf-input').value = '';
+    document.getElementById('upload-err').textContent = '';
+    showStep('upload-step');
+  };
+
+  // ── Tool routing helpers (used by Phase 3 Report Card) ──────────────────────
+  // Sets sessionStorage payload and navigates directly to the dedicated tool page.
+  // Each tool page can read sessionStorage on load to pre-populate.
+  window.gauntletHandoff = (tool, excerpt, diagnosis) => {
+    const payload = { tool, excerpt: excerpt || '', diagnosis: diagnosis || '', source: 'gauntlet', at: Date.now() };
+    sessionStorage.setItem('gp_gauntlet_handoff', JSON.stringify(payload));
+    const dest = (TOOL_LINKS[tool] && TOOL_LINKS[tool].href) || 'index.html';
+    location.href = dest;
+  };
+
+  // ── Shared manuscript banner ────────────────────────────────────────────────
+  function gtCheckMs() {
+    const meta = window.gpMs?.getMeta();
+    if (!meta || !window.gpMs?.hasPdf()) return;
+    const banner = document.getElementById('gt-ms-banner');
+    if (!banner) return;
+    document.getElementById('gt-ms-name').textContent = meta.filename || 'Manuscript';
+    const parts = [];
+    if (meta.wordCount) parts.push(meta.wordCount.toLocaleString() + ' words');
+    if (meta.title) parts.push('"' + meta.title + '"');
+    document.getElementById('gt-ms-meta').textContent = parts.join(' · ') || 'From current session';
+    banner.style.display = 'flex';
+  }
+
+  window.gtUseMsFile = function () {
+    const meta = window.gpMs?.getMeta();
+    const file = window.gpMs?.toFile(meta?.filename);
+    if (!file) return;
+    handleFile(file);
+    document.getElementById('gt-ms-banner').style.display = 'none';
+  };
+
+  document.addEventListener('DOMContentLoaded', gtCheckMs);
+  window.addEventListener('gp-manuscript-ready', gtCheckMs);
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# Phase 02 — Pre-Project: legacy plan.html / /plan URLs map to dedicated pages.
+# Force flag (!) so these win over any cached/static file with the same path.
+/plan.html  format=screenplay  /plan-screenplay.html  301!
+/plan.html  format=shortstory  /plan-shortstory.html  301!
+/plan.html  format=poem        /plan-poem.html        301!
+/plan.html                     /plan-novel.html       301!
+/plan       format=screenplay  /plan-screenplay.html  301!
+/plan       format=shortstory  /plan-shortstory.html  301!
+/plan       format=poem        /plan-poem.html        301!
+/plan                          /plan-novel.html       301!
+
+# Legacy app.html (Author Studio) → split into Scene Builder + Ghostwriter + Adapt + Descriptor
+/app.html   tool=adapt         /adapt-from-source.html  301
+/app.html   tool=descriptor    /descriptor-library.html 301
+/app.html   step=2             /ghostwriter.html        301
+/app.html                      /scene-builder.html      301
+/app                           /scene-builder.html      301
+
+# Legacy workshop.html → split into Phase 03 mode pages
+/workshop.html  mode=enrich    /prose-enricher.html     301
+/workshop.html  mode=dialogue  /add-dialogue.html       301
+/workshop.html  mode=rebuild   /structural-rebuild.html 301
+/workshop.html                 /workshop.html           200
+/workshop                      /workshop.html           200

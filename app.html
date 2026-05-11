@@ -1,0 +1,2950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greylander Press — Studio</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<script src="assets/manuscript-store.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
+  --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
+  --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
+}
+[data-theme="light"] {
+  --bg:#faf6f0; --ink:#faf6f0; --ink-soft:#f0e8d8;
+  --cream:#2a1f0e; --text:#2a1f0e; --text-dim:#7a6a52;
+  --gold:#8a6a1a; --gold-light:#a07f25; --rule:rgba(138,106,26,0.25);
+}
+/* Light mode: fix hardcoded dark rgba backgrounds */
+[data-theme="light"] #auth-overlay{background:rgba(250,246,240,0.97);}
+[data-theme="light"] #credits-modal{background:rgba(250,246,240,0.95);}
+[data-theme="light"] .modal-box{background:var(--bg);}
+[data-theme="light"] .auth-input,
+[data-theme="light"] .field-input,
+[data-theme="light"] .field-select,
+[data-theme="light"] .field-textarea,
+[data-theme="light"] .gw-prompt-input{background:rgba(0,0,0,0.06);color:var(--text);}
+[data-theme="light"] .gw-output,
+[data-theme="light"] .gw-context-box{background:rgba(0,0,0,0.04);color:var(--text);}
+[data-theme="light"] .cover-topbar,
+[data-theme="light"] .ai-bar{background:rgba(0,0,0,0.03);}
+[data-theme="light"] #toast{background:var(--ink-soft);color:var(--text);}
+[data-theme="light"] .type-card:hover,[data-theme="light"] .type-card.selected,
+[data-theme="light"] .genre-card:hover,[data-theme="light"] .genre-card.selected,
+[data-theme="light"] .trim-card:hover,[data-theme="light"] .trim-card.selected{background:rgba(138,106,26,0.08);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+
+/* ── Auth overlay ── */
+#auth-overlay{position:fixed;inset:0;background:rgba(14,11,8,0.97);z-index:1000;display:flex;align-items:center;justify-content:center;}
+.auth-box{width:100%;max-width:440px;padding:3rem;border:1px solid var(--rule);}
+.auth-logo{font-family:'Playfair Display',serif;font-size:1.5rem;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.3rem;}
+.auth-sub{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.5rem;}
+.auth-tab-bar{display:flex;border-bottom:1px solid var(--rule);margin-bottom:2rem;}
+.auth-tab{background:none;border:none;border-bottom:2px solid transparent;padding:0.6rem 1.5rem 0.6rem 0;margin-bottom:-1px;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;}
+.auth-tab.active{border-bottom-color:var(--gold);color:var(--gold-light);}
+.auth-field{margin-bottom:1.2rem;}
+.auth-label{display:block;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;}
+.auth-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--rule);padding:0.75rem 1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;}
+.auth-input:focus{border-color:var(--gold);}
+.auth-btn{width:100%;background:var(--gold);color:var(--ink);border:none;padding:0.85rem;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;margin-top:0.5rem;}
+.auth-btn:hover{background:var(--gold-light);}
+.auth-msg{font-family:'DM Mono',monospace;font-size:0.65rem;color:#c0392b;margin-top:0.8rem;min-height:1.2rem;}
+
+/* ── App shell ── */
+#app{display:none;flex-direction:column;min-height:100vh;}
+#app.visible{display:flex;}
+
+/* Secondary topbar — project name + credits, sits below global sitenav */
+.gp-topbar{display:flex;align-items:center;padding:0 1.5rem;height:36px;border-bottom:1px solid var(--rule);gap:1rem;position:sticky;top:72px;background:var(--bg);z-index:100;}
+.gp-topbar-logo{display:none;}
+.gp-topbar-project{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.credit-badge{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--rule);padding:0.2rem 0.6rem;cursor:pointer;white-space:nowrap;}
+.gp-user-btn{display:none;}
+
+/* Step pipeline nav — full-width sticky bar below secondary topbar */
+.gp-stepbar{
+  display:flex; align-items:stretch; border-bottom:1px solid var(--rule);
+  position:sticky; top:108px; background:var(--bg); z-index:99;
+}
+.gp-step{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:0.2rem; background:none; border:none; border-bottom:3px solid transparent;
+  padding:0.85rem 1rem; margin-bottom:-1px; cursor:pointer; transition:all 0.2s;
+  white-space:nowrap; text-align:center; position:relative;
+}
+.gp-step:not(:last-child)::after{
+  content:'›'; position:absolute; right:0; top:50%; transform:translateY(-50%);
+  color:rgba(184,146,42,0.3); font-size:1rem; pointer-events:none;
+}
+.gp-step:hover .gp-step-label{color:var(--gold-light);}
+.gp-step.active{border-bottom-color:var(--gold);}
+.gp-step.active .gp-step-label{color:var(--gold-light);}
+.gp-step-num{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);}
+.gp-step-label{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--text-dim);transition:color 0.2s;}
+
+/* Main content */
+.gp-main{flex:1;padding:3rem 2.5rem;max-width:1100px;width:100%;margin:0 auto;}
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* Section labels */
+.s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+.s-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.5rem;}
+.s-sub{color:var(--text-dim);font-size:0.95rem;margin-bottom:2.5rem;max-width:600px;}
+.divider{border:none;border-top:1px solid var(--rule);margin:2.5rem 0;}
+
+/* Field elements (reused everywhere) */
+.field-group{display:flex;flex-direction:column;gap:0.4rem;}
+.field-label{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);}
+.field-input,.field-select,.field-textarea{background:rgba(255,255,255,0.04);border:1px solid var(--rule);padding:0.7rem 1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;width:100%;}
+.field-textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--gold);}
+.field-select option{background:var(--ink-soft);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
+.form-row.three{grid-template-columns:1fr 1fr 1fr;}
+.form-full{margin-bottom:1.2rem;}
+
+/* Buttons */
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:0.8rem 2rem;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-outline{background:none;border:1px solid var(--rule);color:var(--text-dim);padding:0.7rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ── Screen 0: Dashboard ── */
+.type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;margin-bottom:0;}
+.adapt-strip{margin:1.2rem 0 2rem;}
+.adapt-card{border:1px solid var(--gold);padding:1.5rem 2rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:1.5rem;}
+.adapt-card:hover,.adapt-card.selected{background:rgba(184,146,42,0.07);}
+[data-theme="light"] .adapt-card:hover,[data-theme="light"] .adapt-card.selected{background:rgba(138,106,26,0.08);}
+.adapt-card-icon{font-size:2rem;flex-shrink:0;}
+.adapt-card-body{display:flex;flex-direction:column;gap:0.25rem;}
+.adapt-card-badge{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+.adapt-card-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--cream);}
+.adapt-card-desc{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
+[data-theme="light"] .adapt-card-name{color:var(--cream);}
+.adapt-wrap{margin-top:2rem;}
+/* Prose Enricher */
+.enrich-intensity{display:flex;gap:0.6rem;margin-bottom:1.5rem;}
+.enrich-btn{background:none;border:1px solid var(--rule);padding:0.45rem 1.1rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;transition:all 0.15s;}
+.enrich-btn:hover,.enrich-btn.active{border-color:var(--gold);color:var(--gold-light);}
+.enrich-output{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--rule);padding:1.2rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:0.95rem;line-height:1.8;min-height:260px;white-space:pre-wrap;margin-bottom:1rem;}
+[data-theme="light"] .enrich-output{background:rgba(0,0,0,0.04);}
+.adapt-source-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem;display:block;}
+.adapt-source{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--rule);padding:1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:0.9rem;line-height:1.7;resize:vertical;min-height:320px;outline:none;margin-bottom:1.5rem;}
+.adapt-source:focus{border-color:var(--gold);}
+[data-theme="light"] .adapt-source{background:rgba(0,0,0,0.04);color:var(--text);}
+.adapt-status{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-dim);margin-top:0.75rem;min-height:1rem;}
+.type-card{border:1px solid var(--rule);padding:2rem 1.5rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.5rem;}
+.type-card:hover,.type-card.selected{border-color:var(--gold);background:rgba(184,146,42,0.05);}
+.type-icon{font-size:1.8rem;margin-bottom:0.3rem;}
+.type-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--cream);}
+.type-desc{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
+.type-badge{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+
+/* Recent projects */
+.project-list{display:flex;flex-direction:column;gap:0.8rem;}
+.project-row{display:flex;align-items:center;gap:1.5rem;padding:1rem 1.2rem;border:1px solid var(--rule);cursor:pointer;}
+.project-row:hover{border-color:var(--gold);}
+.project-row-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);flex:1;}
+.project-row-meta{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
+.project-row-btn{background:none;border:1px solid var(--rule);color:var(--gold);font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.35rem 0.8rem;cursor:pointer;}
+
+/* ── Screen 1: Planner ── */
+.genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+.genre-card{border:1px solid var(--rule);padding:1.2rem;cursor:pointer;transition:all 0.2s;}
+.genre-card:hover,.genre-card.selected{border-color:var(--gold);background:rgba(184,146,42,0.05);}
+.genre-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);}
+.genre-eg{font-size:0.78rem;color:var(--text-dim);}
+
+.outline-row{display:flex;align-items:flex-start;gap:1rem;padding:1rem;border-bottom:1px solid var(--rule);}
+.outline-row:last-child{border-bottom:none;}
+.outline-ch-num{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;color:var(--gold);min-width:2.5rem;padding-top:0.2rem;}
+.outline-ch-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:0.2rem;}
+.outline-ch-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.6;}
+.outline-wrap{border:1px solid var(--rule);margin-top:2rem;}
+
+/* Chapter count slider */
+.slider-row{display:flex;align-items:center;gap:1rem;}
+.slider-row input[type=range]{flex:1;accent-color:var(--gold);}
+.slider-val{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);min-width:2rem;}
+
+/* AI expand bar */
+.ai-bar{margin-top:2rem;padding:1.5rem;border:1px solid var(--rule);background:rgba(184,146,42,0.03);}
+.ai-bar-title{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.ai-status{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-dim);margin-top:0.8rem;min-height:1.2rem;}
+
+/* ── Screen 2: Ghost Writer ── */
+.gw-layout{display:grid;grid-template-columns:260px 1fr 220px;gap:2rem;min-height:600px;}
+.gw-sidebar{border-right:1px solid var(--rule);padding-right:2rem;}
+.gw-sidebar-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.gw-context-box{background:rgba(255,255,255,0.03);border:1px solid var(--rule);padding:1rem;margin-bottom:1.5rem;font-size:0.82rem;color:var(--text-dim);line-height:1.6;min-height:280px;height:280px;overflow-y:auto;}
+.gw-mode-btn{display:block;width:100%;text-align:left;background:none;border:1px solid var(--rule);padding:0.6rem 0.9rem;margin-bottom:0.5rem;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;}
+.gw-mode-btn:hover,.gw-mode-btn.active{border-color:var(--gold);color:var(--gold-light);}
+/* Chapter Navigator */
+.gw-ch-nav{margin-bottom:1.5rem;}
+.gw-ch-list{max-height:260px;overflow-y:auto;border:1px solid var(--rule);}
+.gw-ch-item{display:flex;align-items:baseline;gap:0.6rem;padding:0.5rem 0.8rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.15s;}
+.gw-ch-item:last-child{border-bottom:none;}
+.gw-ch-item:hover{background:rgba(184,146,42,0.07);}
+.gw-ch-item.active{background:rgba(184,146,42,0.12);border-left:2px solid var(--gold);}
+.gw-ch-num{font-family:'DM Mono',monospace;font-size:0.46rem;color:var(--gold);letter-spacing:0.12em;white-space:nowrap;flex-shrink:0;}
+.gw-ch-title{font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--text-dim);line-height:1.3;}
+.gw-ch-item.active .gw-ch-title{color:var(--text);}
+[data-theme="light"] .gw-ch-item:hover{background:rgba(0,0,0,0.05);}
+[data-theme="light"] .gw-ch-item.active{background:rgba(184,146,42,0.1);}
+.gw-main{display:flex;flex-direction:column;gap:1rem;}
+.gw-output{flex:1;min-height:400px;background:rgba(255,255,255,0.02);border:1px solid var(--rule);padding:1.5rem;font-size:1rem;line-height:1.9;color:var(--text);overflow-y:auto;white-space:pre-wrap;font-family:'Cormorant Garamond',serif;}
+.gw-output.empty{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-style:italic;font-size:0.9rem;}
+.gw-prompt-row{display:flex;gap:0.8rem;align-items:flex-end;}
+.gw-prompt-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--rule);padding:0.75rem 1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;resize:none;min-height:70px;line-height:1.6;}
+.gw-prompt-input:focus{border-color:var(--gold);}
+.gw-send-btn{background:var(--gold);color:var(--ink);border:none;padding:0.75rem 1.5rem;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;cursor:pointer;white-space:nowrap;align-self:flex-end;}
+.gw-send-btn:hover{background:var(--gold-light);}
+.gw-send-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.gw-action-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
+.gw-stat{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
+/* Grey panel */
+.gw-grey-panel{border-left:1px solid var(--rule);padding-left:1.5rem;display:flex;flex-direction:column;gap:0;}
+.gw-grey-avatar{width:82px;height:82px;object-fit:cover;border-radius:4px;margin-bottom:0.75rem;flex-shrink:0;display:block;border:1px solid var(--rule);}
+.gw-grey-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:0.1rem;}
+.gw-grey-role{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;}
+.gw-grey-thought{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.92rem;line-height:1.75;color:#dddddd;border-left:2px solid var(--rule);padding-left:0.9rem;margin-bottom:1rem;min-height:60px;transition:opacity 0.4s;}
+.gw-grey-thought.fading{opacity:0;}
+[data-theme="light"] .gw-grey-thought{color:#222222;}
+.gw-grey-wc{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:auto;}
+@keyframes greyBorderPulse{0%,100%{border-left-color:var(--gold)}50%{border-left-color:var(--rule)}}
+.gw-grey-panel.writing{border-left:2px solid var(--gold);animation:greyBorderPulse 2s ease-in-out infinite;}
+.gw-grey-stats{display:none;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.gw-grey-panel.writing .gw-grey-stats{display:flex;}
+.gw-grey-stat-row{display:flex;justify-content:space-between;align-items:baseline;}
+.gw-grey-stat-label{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
+.gw-grey-stat-val{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--gold);}
+.gw-grey-min-btn{background:none;border:none;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;padding:0;align-self:flex-end;margin-bottom:0.6rem;opacity:0.55;}
+.gw-grey-min-btn:hover{opacity:1;color:var(--gold);}
+.gw-grey-quill{display:none;width:38px;cursor:pointer;margin:0 auto;opacity:0.65;transition:opacity 0.2s;}
+.gw-grey-quill:hover{opacity:1;}
+.gw-grey-panel.minimized{align-items:center;padding-left:0.75rem;}
+.gw-grey-panel.minimized .gw-grey-avatar,.gw-grey-panel.minimized .gw-grey-name,.gw-grey-panel.minimized .gw-grey-role,.gw-grey-panel.minimized .gw-grey-thought,.gw-grey-panel.minimized .gw-grey-wc,.gw-grey-panel.minimized .gw-grey-stats,.gw-grey-panel.minimized .gw-grey-min-btn{display:none;}
+.gw-grey-panel.minimized .gw-grey-quill{display:block;}
+.gw-layout.grey-min{grid-template-columns:260px 1fr 52px;}
+
+/* ── Screen 3: Cover ── */
+.cover-wrap{border:1px solid var(--rule);overflow:hidden;}
+.cover-topbar{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.2rem;border-bottom:1px solid var(--rule);background:rgba(255,255,255,0.02);}
+.cover-topbar-label{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);}
+.cover-topbar a{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;}
+
+/* ── Screen 4: Export & Publish ── */
+.trim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+.trim-card{border:1px solid var(--rule);padding:1.2rem;cursor:pointer;transition:all 0.2s;}
+.trim-card:hover,.trim-card.selected{border-color:var(--gold);background:rgba(184,146,42,0.05);}
+.trim-size{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);}
+.trim-cm{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--text-dim);}
+.trim-use{font-size:0.8rem;color:var(--text-dim);margin-top:0.4rem;}
+.pub-options{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
+.pub-card{border:1px solid var(--rule);padding:2rem;}
+.pub-card-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:0.5rem;}
+.pub-card-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.6;margin-bottom:1.5rem;}
+.pub-badge{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+
+/* Toast */
+#toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink-soft);border:1px solid var(--rule);padding:1rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+#toast.show{opacity:1;}
+#toast.error{border-color:#c0392b;color:#e74c3c;}
+
+/* Credits modal */
+#credits-modal{position:fixed;inset:0;background:rgba(14,11,8,0.95);z-index:900;display:none;align-items:center;justify-content:center;}
+#credits-modal.open{display:flex;}
+.modal-box{max-width:480px;width:100%;padding:2.5rem;border:1px solid var(--rule);background:var(--bg);}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:1rem;}
+.modal-body{font-size:0.9rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;}
+.modal-close{background:none;border:1px solid var(--rule);color:var(--text-dim);padding:0.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;}
+
+/* GAUNTLET — visually weighted top-level diagnostic card */
+.draft-section{margin-bottom:3.5rem;}
+.gt-card{
+  border:1px solid var(--gold);
+  background:linear-gradient(135deg,rgba(184,146,42,0.08),rgba(184,146,42,0.02));
+  padding:2.2rem 2.5rem;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:1.8rem;
+  align-items:center;
+}
+.gt-card-rune{font-size:2.6rem;line-height:1;color:var(--gold-light);flex-shrink:0;}
+.gt-card-meta{display:flex;flex-direction:column;gap:0.4rem;}
+.gt-card-badge{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);}
+.gt-card-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--cream);line-height:1.15;}
+.gt-card-desc{font-size:0.92rem;color:var(--text-dim);line-height:1.6;max-width:560px;}
+.gt-card-actions{display:flex;flex-direction:column;gap:0.7rem;min-width:160px;}
+.gt-card-cta{
+  background:var(--gold);color:var(--ink);border:none;
+  padding:0.85rem 1.5rem;
+  font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
+  letter-spacing:0.04em;cursor:pointer;text-decoration:none;text-align:center;
+  display:inline-block;white-space:nowrap;
+}
+.gt-card-cta:hover{background:var(--gold-light);}
+.gt-card-how{
+  background:none;border:1px solid var(--rule);color:var(--text-dim);
+  padding:0.7rem 1.2rem;
+  font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+  text-transform:uppercase;cursor:pointer;
+}
+.gt-card-how:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Gauntlet long-form modal */
+.gt-modal{
+  position:fixed;inset:0;background:rgba(14,11,8,0.94);
+  z-index:1100;display:none;align-items:flex-start;justify-content:center;
+  padding:4rem 1.5rem;overflow-y:auto;
+}
+.gt-modal.open{display:flex;}
+.gt-modal-box{
+  position:relative;max-width:780px;width:100%;
+  background:var(--bg);border:1px solid var(--rule);
+  padding:3rem 3rem 2.5rem;
+}
+.gt-modal-x{
+  position:absolute;top:1rem;right:1.2rem;background:none;border:none;
+  font-size:1.6rem;color:var(--text-dim);cursor:pointer;line-height:1;
+}
+.gt-modal-x:hover{color:var(--gold);}
+.gt-modal-eyebrow{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+.gt-modal-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--cream);margin-bottom:1.5rem;}
+.gt-modal-body{font-size:1rem;color:var(--text);line-height:1.75;}
+.gt-modal-body p{margin-bottom:1rem;}
+.gt-modal-section-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin:1.4rem 0 0.5rem;}
+.gt-modal-emphasis{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;
+  color:var(--gold-light);border-left:2px solid var(--gold);
+  padding:0.6rem 0 0.6rem 1.2rem;margin:1.5rem 0 1rem !important;
+}
+.gt-modal-attribution{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-dim);margin-top:1rem;}
+.gt-modal-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;}
+[data-theme="light"] .gt-card{background:linear-gradient(135deg,rgba(138,106,26,0.08),rgba(138,106,26,0.02));}
+[data-theme="light"] .gt-modal{background:rgba(250,246,240,0.95);}
+@media(max-width:700px){
+  .gt-card{grid-template-columns:1fr;gap:1rem;}
+  .gt-card-rune{font-size:2rem;}
+  .gt-modal-box{padding:2.2rem 1.6rem 2rem;}
+}
+
+@media(max-width:900px){
+  .gw-grey-panel{display:none;}
+  .gw-layout{grid-template-columns:260px 1fr;}
+}
+@media(max-width:700px){
+  .gw-layout{grid-template-columns:1fr;}
+  .gw-sidebar{border-right:none;padding-right:0;border-bottom:1px solid var(--rule);padding-bottom:1.5rem;}
+  .pub-options,.trim-grid,.genre-grid{grid-template-columns:1fr;}
+  .form-row,.form-row.three{grid-template-columns:1fr;}
+}
+
+/* ── Writing Coach ─────────────────────────────────────────────────────────── */
+.coach-section { margin: 0 0 3.5rem; }
+.coach-module {
+  margin-top: 2rem; padding: 1.8rem 2rem;
+  border: 1px solid var(--rule);
+  background: rgba(184,146,42,0.03);
+}
+.coach-module-head { margin-bottom: 1.4rem; }
+.coach-module-num {
+  font-family: 'DM Mono',monospace; font-size: 0.55rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem;
+}
+.coach-module-title {
+  font-family: 'Playfair Display',serif; font-size: 1.4rem; font-weight: 700;
+  color: var(--cream); margin-bottom: 0.3rem;
+}
+.coach-module-sub {
+  font-size: 0.92rem; color: var(--text-dim); line-height: 1.55;
+}
+
+/* Module 1: Story Architecture timeline */
+.coach-timeline {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+  position: relative; margin: 1.5rem 0 0; padding: 0.5rem 0;
+}
+.coach-timeline::before {
+  content: ''; position: absolute; top: calc(0.5rem + 24px);
+  left: 8.33%; right: 8.33%; height: 1px; background: var(--rule);
+  z-index: 0;
+}
+.coach-node {
+  background: none; border: none; padding: 0.4rem 0.2rem; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  position: relative; z-index: 1; color: inherit;
+  font-family: inherit;
+}
+.coach-node-pct {
+  font-family: 'DM Mono',monospace; font-size: 0.55rem; letter-spacing: 0.18em;
+  color: var(--text-dim); white-space: nowrap;
+}
+.coach-node-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--rule);
+  transition: all 0.2s;
+}
+.coach-node:hover .coach-node-dot { border-color: var(--gold-light); }
+.coach-node.active .coach-node-dot {
+  background: var(--gold); border-color: var(--gold);
+  box-shadow: 0 0 0 5px rgba(184,146,42,0.18);
+}
+.coach-node-name {
+  font-family: 'Playfair Display',serif; font-size: 0.92rem; font-weight: 700;
+  color: var(--text-dim); text-align: center; line-height: 1.2;
+  transition: color 0.2s;
+}
+.coach-node:hover .coach-node-name { color: var(--text); }
+.coach-node.active .coach-node-name { color: var(--cream); }
+
+.coach-detail {
+  display: none;
+  margin-top: 1.6rem; padding: 1.4rem 1.6rem;
+  border-left: 2px solid var(--gold);
+  background: rgba(0,0,0,0.18);
+}
+.coach-detail.open { display: block; }
+.coach-detail-quick {
+  font-family: 'Playfair Display',serif; font-style: italic; font-size: 1.05rem;
+  color: var(--gold-light); margin-bottom: 1.1rem; line-height: 1.55;
+}
+.coach-detail-block { margin-bottom: 0.9rem; }
+.coach-detail-block:last-child { margin-bottom: 0; }
+.coach-detail-label {
+  font-family: 'DM Mono',monospace; font-size: 0.55rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem;
+}
+.coach-detail-block p { color: var(--text); line-height: 1.6; font-size: 0.92rem; }
+
+/* Modules 2-4: card grids */
+.coach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.4rem; }
+.coach-card {
+  border: 1px solid var(--rule); padding: 1.3rem 1.4rem;
+  cursor: pointer; transition: all 0.2s;
+  background: rgba(0,0,0,0.18);
+  position: relative;
+}
+.coach-card:hover { border-color: var(--gold-light); }
+.coach-card.open { border-color: var(--gold); background: rgba(184,146,42,0.06); }
+.coach-card::after {
+  content: '+'; position: absolute; top: 1.1rem; right: 1.2rem;
+  font-family: 'DM Mono',monospace; font-size: 1rem; color: var(--text-dim);
+  transition: all 0.2s; line-height: 1;
+}
+.coach-card.open::after { content: '−'; color: var(--gold); }
+.coach-card-tag {
+  font-family: 'DM Mono',monospace; font-size: 0.55rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; padding-right: 1.4rem;
+}
+.coach-card-name {
+  font-family: 'Playfair Display',serif; font-size: 1.15rem; font-weight: 700;
+  color: var(--cream); margin-bottom: 0.5rem;
+}
+.coach-card-quick {
+  font-size: 0.88rem; color: var(--text-dim); line-height: 1.5;
+}
+.coach-card-detail {
+  display: none; margin-top: 1rem; padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+.coach-card.open .coach-card-detail { display: block; }
+
+@media (max-width: 800px) {
+  .coach-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .coach-timeline { grid-template-columns: repeat(3, 1fr); row-gap: 1.5rem; }
+  .coach-timeline::before { display: none; }
+  .coach-module { padding: 1.4rem 1.2rem; }
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="post"></div>
+
+<!-- ── Auth Overlay ── -->
+<div id="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-logo">Greylander Press</div>
+    <div class="auth-sub">Author Studio</div>
+    <div class="auth-tab-bar">
+      <button class="auth-tab active" onclick="authTab('signin')">Sign In</button>
+      <button class="auth-tab" onclick="authTab('signup')">Create Account</button>
+    </div>
+    <div id="auth-signin">
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" type="email" id="si-email" placeholder="your@email.com">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Password</label>
+        <input class="auth-input" type="password" id="si-pass" placeholder="••••••••">
+      </div>
+      <button class="auth-btn" onclick="doSignIn()">Sign In →</button>
+      <div class="auth-msg" id="si-msg"></div>
+    </div>
+    <div id="auth-signup" style="display:none;">
+      <div class="auth-field">
+        <label class="auth-label">Full Name</label>
+        <input class="auth-input" type="text" id="su-name" placeholder="Your name">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" type="email" id="su-email" placeholder="your@email.com">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Password</label>
+        <input class="auth-input" type="password" id="su-pass" placeholder="Min 8 characters">
+      </div>
+      <div class="auth-field">
+        <label style="display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;">
+          <input type="checkbox" id="su-policy" style="accent-color:var(--gold);margin-top:0.3rem;flex-shrink:0;">
+          <span style="font-size:0.82rem;color:var(--text-dim);line-height:1.6;">I have read and agree to the <a href="terms.html" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;">Greylander Press User Agreement</a>, including the imprint and attribution terms (Option A / Option B), credit policy, and PAID AI Governance standards.</span>
+        </label>
+      </div>
+      <button class="auth-btn" onclick="doSignUp()">Create Account →</button>
+      <div class="auth-msg" id="su-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── App Shell ── -->
+<div id="app">
+  <!-- Slim secondary bar: project name + credits (global nav above via sitenav.js) -->
+  <div class="gp-topbar">
+    <div class="gp-topbar-project" id="topbar-project">New Project</div>
+    <div class="credit-badge" id="credit-badge" onclick="openCreditsModal()">— credits</div>
+  </div>
+
+  <!-- Step pipeline nav -->
+  <div class="gp-stepbar">
+    <button class="gp-step active" id="step-btn-0" onclick="goStep(0)">
+      <span class="gp-step-num">01</span>
+      <span class="gp-step-label">Choose &amp; Plan</span>
+    </button>
+    <button class="gp-step" id="step-btn-1" onclick="goStep(1)">
+      <span class="gp-step-num">02</span>
+      <span class="gp-step-label">Ghost Writer</span>
+    </button>
+    <button class="gp-step" id="step-btn-2" onclick="goStep(2)">
+      <span class="gp-step-num">03</span>
+      <span class="gp-step-label">Cover Design</span>
+    </button>
+    <button class="gp-step" id="step-btn-3" onclick="goStep(3)">
+      <span class="gp-step-num">04</span>
+      <span class="gp-step-label">Export &amp; Publish</span>
+    </button>
+  </div>
+
+  <!-- Main -->
+  <div class="gp-main">
+
+    <!-- ── Screen 0: Choose & Plan ── -->
+    <div class="screen active" id="screen-0">
+
+      <!-- ── Already have a draft? → The Gauntlet ── -->
+      <div class="draft-section">
+        <div class="s-label">Already have a draft?</div>
+        <div class="s-title">Run the <em>Gauntlet.</em></div>
+        <div class="s-sub">Get an honest diagnosis. The Gauntlet identifies what works, what does not, and where to focus your revision.</div>
+        <div class="gt-card">
+          <div class="gt-card-rune">⚔</div>
+          <div class="gt-card-meta">
+            <div class="gt-card-badge">Diagnostic</div>
+            <div class="gt-card-title">The Gauntlet</div>
+            <div class="gt-card-desc">A high-fidelity manuscript audit against the standard of professional publishable fiction. Five Tests. Banded scoring. Specific findings. PDF only.</div>
+          </div>
+          <div class="gt-card-actions">
+            <a class="gt-card-cta" href="gauntlet.html">Run the Gauntlet →</a>
+            <button class="gt-card-how" onclick="gtHowOpen()">How It Works</button>
+          </div>
+        </div>
+        <hr class="divider">
+      </div>
+
+      <!-- ── Writing Coach (free reference; no AI calls, no credits) ── -->
+      <div class="coach-section" id="writing-coach">
+        <div class="s-label">Need craft guidance?</div>
+        <div class="s-title">Writing <em>Coach.</em></div>
+        <div class="s-sub">Quick-reference frameworks for story architecture, character arcs, dialogue, and craft. Click any node or card to expand. Free to use, no AI calls, no credits.</div>
+
+        <!-- Module 1: Story Architecture -->
+        <div class="coach-module" id="coach-module-1">
+          <div class="coach-module-head">
+            <div class="coach-module-num">Module 01</div>
+            <div class="coach-module-title">Story Architecture</div>
+            <div class="coach-module-sub">Six structural milestones from setup to climax. Click a milestone to expand.</div>
+          </div>
+          <div class="coach-timeline">
+            <button class="coach-node active" data-node="setup" onclick="coachToggle('setup')">
+              <div class="coach-node-pct">0–12%</div>
+              <div class="coach-node-dot"></div>
+              <div class="coach-node-name">Setup</div>
+            </button>
+            <button class="coach-node" data-node="launch" onclick="coachToggle('launch')">
+              <div class="coach-node-pct">12–25%</div>
+              <div class="coach-node-dot"></div>
+              <div class="coach-node-name">The Launch</div>
+            </button>
+            <button class="coach-node" data-node="midpoint" onclick="coachToggle('midpoint')">
+              <div class="coach-node-pct">25–50%</div>
+              <div class="coach-node-dot"></div>
+              <div class="coach-node-name">Midpoint</div>
+            </button>
+            <button class="coach-node" data-node="mirror" onclick="coachToggle('mirror')">
+              <div class="coach-node-pct">50%</div>
+              <div class="coach-node-dot"></div>
+              <div class="coach-node-name">The Mirror</div>
+            </button>
+            <button class="coach-node" data-node="dark-night" onclick="coachToggle('dark-night')">
+              <div class="coach-node-pct">50–75%</div>
+              <div class="coach-node-dot"></div>
+              <div class="coach-node-name">Dark Night</div>
+            </button>
+            <button class="coach-node" data-node="climax" onclick="coachToggle('climax')">
+              <div class="coach-node-pct">75–100%</div>
+              <div class="coach-node-dot"></div>
+              <div class="coach-node-name">Climax</div>
+            </button>
+          </div>
+          <div class="coach-detail open" id="coach-detail-setup">
+            <div class="coach-detail-quick">Establish the baseline reality, then disrupt it with the inciting incident.</div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>If the reader isn't hooked immediately, they will put the book down.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>Spending too much time on backstory before the inciting incident happens.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>Does the first scene show the character's everyday world? What specific event shatters that world by page 10?</p></div>
+          </div>
+          <div class="coach-detail" id="coach-detail-launch">
+            <div class="coach-detail-quick">Point of No Return. The character attempts to solve the initial problem, fails, and locks into the journey.</div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>This moves the story from passive to active. The protagonist cannot go back to the way things were.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>Making the character's reaction half-hearted or keeping them in denial too long.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What choice closes the door behind the protagonist?</p></div>
+          </div>
+          <div class="coach-detail" id="coach-detail-midpoint">
+            <div class="coach-detail-quick">Shift from reacting to the plot to taking proactive charge.</div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>A protagonist who only reacts gets boring. Here, they take the offensive.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The character remains a victim of circumstance through the middle of the book.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What piece of information forces the character to stop running and start fighting back?</p></div>
+          </div>
+          <div class="coach-detail" id="coach-detail-mirror">
+            <div class="coach-detail-quick">The stakes double; a major truth is revealed that shatters the old worldview.</div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>It acts as the emotional midpoint. The character sees a reflection of the truth they are ignoring.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The middle sags because nothing changes regarding the character's internal beliefs.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What shocking revelation forces the character to change their plan for the second half of the book?</p></div>
+          </div>
+          <div class="coach-detail" id="coach-detail-dark-night">
+            <div class="coach-detail-quick">Rock bottom. External plans fail.</div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>The lowest emotional point before the final climb. The "false victory" or failure shatters their confidence.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The stakes feel artificial because the reader doesn't feel the emotional weight.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What failure strips the protagonist of everything they thought they needed?</p></div>
+          </div>
+          <div class="coach-detail" id="coach-detail-climax">
+            <div class="coach-detail-quick">Plot and character arc collide.</div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>The physical plot problem and the internal character flaw must be resolved in the same action.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The ending relies on pure luck rather than the character's growth.</p></div>
+            <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>How does the character use what they learned in the Dark Night to win the final battle?</p></div>
+          </div>
+        </div>
+
+        <!-- Module 2: Character Arc Alignment -->
+        <div class="coach-module" id="coach-module-2">
+          <div class="coach-module-head">
+            <div class="coach-module-num">Module 02</div>
+            <div class="coach-module-title">Character Arc Alignment</div>
+            <div class="coach-module-sub">Want, Lie, Need. The three forces that shape a protagonist's journey.</div>
+          </div>
+          <div class="coach-grid">
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">External Goal</div>
+              <div class="coach-card-name">The Want</div>
+              <div class="coach-card-quick">The tangible objective the protagonist chases (e.g., stopping the threat, getting the promotion).</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Focusing too much on internal thoughts early on without a clear, physical goal.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Does the reader know exactly what the character is fighting for by the end of chapter one?</p></div>
+              </div>
+            </div>
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">False Belief</div>
+              <div class="coach-card-name">The Lie</div>
+              <div class="coach-card-quick">The flawed worldview or false belief carried from the past.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Giving the character a flaw that doesn't affect the plot.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>What specific false assumption does the protagonist make that makes their journey harder?</p></div>
+              </div>
+            </div>
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Internal Truth</div>
+              <div class="coach-card-name">The Need</div>
+              <div class="coach-card-quick">The internal truth and transformation required to succeed.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Making the character's realization come out of nowhere at the end.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>What truth must they accept, and how does the climax force that specific choice?</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 3: The Dialogue Doctor -->
+        <div class="coach-module" id="coach-module-3">
+          <div class="coach-module-head">
+            <div class="coach-module-num">Module 03</div>
+            <div class="coach-module-title">The Dialogue Doctor</div>
+            <div class="coach-module-sub">Subtext, voice, and action beats. Three diagnostics for dialogue that works.</div>
+          </div>
+          <div class="coach-grid">
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Tension Below the Line</div>
+              <div class="coach-card-name">Subtext</div>
+              <div class="coach-card-quick">Let unspoken tension carry the scene's weight.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Writing "on-the-nose" dialogue where characters say exactly what they are thinking.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>What is the character actually feeling versus what they are saying? The subtext, not the surface words, must drive the interaction.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Cut the conversational filler. Force characters to use subtext or physical actions to communicate their real motives.</p></div>
+              </div>
+            </div>
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Distinct Voice</div>
+              <div class="coach-card-name">Voice</div>
+              <div class="coach-card-quick">Vary line lengths and vocabulary to distinguish character voices.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Every character sounding exactly like the author.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>If you remove the name tags, can you still tell who is speaking?</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Tailor the vocabulary, rhythm, and length of sentences to the character's background, personality, and current emotional state.</p></div>
+              </div>
+            </div>
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Movement &amp; Sense</div>
+              <div class="coach-card-name">Action Beats</div>
+              <div class="coach-card-quick">Ground conversations with movement and sensory details.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Creating a "talking head" effect with blocks of dialogue and no environment interaction.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Where are the characters physically during this conversation?</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Use physical movement, business, or sensory reactions to break up lines of speech and reveal emotion without stating it.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 4: Core Writing Principles -->
+        <div class="coach-module" id="coach-module-4">
+          <div class="coach-module-head">
+            <div class="coach-module-num">Module 04</div>
+            <div class="coach-module-title">Core Writing Principles</div>
+            <div class="coach-module-sub">Three foundational tools every draft is judged against.</div>
+          </div>
+          <div class="coach-grid">
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Pacing</div>
+              <div class="coach-card-name">Scene vs. Sequel</div>
+              <div class="coach-card-quick">Balance active plot progression with character processing.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Pacing the story too fast or lingering too long in one place.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Does the scene end with a cliffhanger or decision, and does the sequel allow the character to process the emotional aftermath before acting again?</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Ensure high-intensity action scenes alternate with slower, reflective aftermath scenes.</p></div>
+              </div>
+            </div>
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Sensory Anchor</div>
+              <div class="coach-card-name">Show, Don't Tell</div>
+              <div class="coach-card-quick">Replace summaries with visceral, sensory descriptions.</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Explicitly telling the reader an emotion (e.g., "She was terrified").</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Can you replace an adjective or summary statement with an action or sensory detail?</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Evoke emotion by anchoring it in a visceral, physical reaction.</p></div>
+              </div>
+            </div>
+            <div class="coach-card" onclick="coachCardToggle(this)">
+              <div class="coach-card-tag">Process</div>
+              <div class="coach-card-name">Drafting Mindset</div>
+              <div class="coach-card-quick">Separate the drafting phase (exploration) from the revision phase (precision).</div>
+              <div class="coach-card-detail">
+                <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Trying to edit and write at the same time, which stops the flow.</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Are you judging the words as you type them, or just letting the story pour out?</p></div>
+                <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Complete the first draft without looking back. Save architecture and precision for the revision.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider">
+      </div>
+
+      <div class="s-label">Start Here</div>
+      <div class="s-title">What are you <em>creating?</em></div>
+      <div class="s-sub">Choose your form. We'll guide you through outlining, writing, cover design, and publishing.</div>
+
+      <div class="type-grid" id="type-grid">
+        <div class="type-card" onclick="selectType('novel',this)">
+          <div class="type-icon">📖</div>
+          <div class="type-badge">Long-form</div>
+          <div class="type-name">Novel</div>
+          <div class="type-desc">Full-length fiction in any genre: literary, thriller, romance, sci-fi, historical, mystery.</div>
+        </div>
+        <div class="type-card" onclick="selectType('short_story',this)">
+          <div class="type-icon">✍️</div>
+          <div class="type-badge">Short fiction</div>
+          <div class="type-name">Short Story</div>
+          <div class="type-desc">1,000–15,000 words. Single arc, focused character, sharp ending.</div>
+        </div>
+        <div class="type-card" onclick="selectType('poem',this)">
+          <div class="type-icon">🪶</div>
+          <div class="type-badge">Poetry</div>
+          <div class="type-name">Poem</div>
+          <div class="type-desc">Free verse, sonnet, haiku, narrative. Any form, any length.</div>
+        </div>
+        <div class="type-card" onclick="selectType('screenplay',this)">
+          <div class="type-icon">🎬</div>
+          <div class="type-badge">Screen</div>
+          <div class="type-name">Screenplay</div>
+          <div class="type-desc">Feature film, TV pilot (hour or half), or short. Industry-standard format.</div>
+        </div>
+      </div>
+
+      <!-- Tool cards -->
+      <div class="adapt-strip" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;">
+        <div class="adapt-card" id="adapt-type-card" onclick="selectAdapt(this)">
+          <div class="adapt-card-icon">🔄</div>
+          <div class="adapt-card-body">
+            <div class="adapt-card-badge">Adaptation</div>
+            <div class="adapt-card-name">Adapt from Source</div>
+            <div class="adapt-card-desc">Paste a screenplay, short story, or treatment. AI breaks it into a full novel chapter outline with synopses.</div>
+          </div>
+        </div>
+        <div class="adapt-card" id="enrich-type-card" onclick="selectEnrich(this)">
+          <div class="adapt-card-icon">✍️</div>
+          <div class="adapt-card-body">
+            <div class="adapt-card-badge">Prose Tool</div>
+            <div class="adapt-card-name">Prose Enricher</div>
+            <div class="adapt-card-desc">Paste a sparse scene or chapter. AI adds sensory details, atmosphere, and interiority. Same plot beats, richer prose.</div>
+          </div>
+        </div>
+        <div class="adapt-card" id="dialog-type-card" onclick="selectDialog(this)">
+          <div class="adapt-card-icon">💬</div>
+          <div class="adapt-card-body">
+            <div class="adapt-card-badge">Prose Tool</div>
+            <div class="adapt-card-name">Add Dialogue</div>
+            <div class="adapt-card-desc">Paste a scene with little or no conversation. AI weaves in natural dialogue that reveals character and fits the scene.</div>
+          </div>
+        </div>
+        <div class="adapt-card" id="structural-type-card" onclick="selectStructural(this)">
+          <div class="adapt-card-icon">🏛</div>
+          <div class="adapt-card-body">
+            <div class="adapt-card-badge">Prose Tool · 4 credits</div>
+            <div class="adapt-card-name">Structural Rebuild</div>
+            <div class="adapt-card-desc">Paste a chapter or act that needs more than polish. AI returns a structural diagnosis and a rebuilt scene-by-scene outline.</div>
+          </div>
+        </div>
+        <div class="adapt-card" id="scene-type-card" onclick="selectScene(this)">
+          <div class="adapt-card-icon">🎬</div>
+          <div class="adapt-card-body">
+            <div class="adapt-card-badge">Prose Tool · 3 credits</div>
+            <div class="adapt-card-name">Scene Builder</div>
+            <div class="adapt-card-desc">Give a premise, the characters present, and a pacing tempo. AI builds a complete scene beat-by-beat in your voice.</div>
+          </div>
+        </div>
+        <div class="adapt-card" id="descriptor-type-card" onclick="selectDescriptor(this)">
+          <div class="adapt-card-icon">📚</div>
+          <div class="adapt-card-body">
+            <div class="adapt-card-badge">Prose Tool · 2 credits</div>
+            <div class="adapt-card-name">Descriptor Library</div>
+            <div class="adapt-card-desc">Paste a passage with repetitive vocabulary or generic description. AI swaps in sharper, more specific alternatives.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prose Enricher panel -->
+      <div id="enrich-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label">Prose Tool</div>
+        <div class="s-title" style="font-size:1.6rem;">Prose Enricher</div>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a scene or chapter that feels thin. Grey adds sensory details, atmosphere, and character interiority, without changing your plot beats or extending the story.</p>
+        <div class="form-full field-group">
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Scene or Chapter<button id="enrich-ms-btn" onclick="appUseMsText('enrich-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <textarea class="adapt-source" id="enrich-source" placeholder="Paste the passage you want enriched here…" style="min-height:280px;"></textarea>
+        </div>
+        <div class="field-label" style="margin-bottom:0.6rem;">Enrichment Depth</div>
+        <div class="enrich-intensity">
+          <button class="enrich-btn active" data-depth="subtle" onclick="setEnrichDepth(this)">Subtle</button>
+          <button class="enrich-btn" data-depth="moderate" onclick="setEnrichDepth(this)">Moderate</button>
+          <button class="enrich-btn" data-depth="rich" onclick="setEnrichDepth(this)">Rich</button>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;">
+          <button class="btn-gold" id="enrich-btn" onclick="enrichProse()">✦ Enrich Prose →</button>
+          <button class="btn-outline" id="enrich-copy-btn" style="display:none;" onclick="enrichCopy()">Copy Result</button>
+        </div>
+        <div class="adapt-status" id="enrich-status"></div>
+        <div id="enrich-output-wrap" style="display:none;">
+          <div class="field-label" style="margin-bottom:0.6rem;">Enriched Passage</div>
+          <div class="enrich-output" id="enrich-output"></div>
+        </div>
+      </div>
+
+      <!-- Add Dialogue panel -->
+      <div id="dialog-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label">Prose Tool</div>
+        <div class="s-title" style="font-size:1.6rem;">Add Dialogue</div>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a scene that needs conversation. Grey weaves in natural dialogue between the characters, revealing personality, building tension, and fitting the genre, without changing your plot beats.</p>
+        <div class="form-full field-group">
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Scene<button id="dialog-ms-btn" onclick="appUseMsText('dialog-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <textarea class="adapt-source" id="dialog-source" placeholder="Paste the scene here. If you want, note the character names and tone below." style="min-height:240px;"></textarea>
+        </div>
+        <div class="form-full field-group" style="margin-bottom:1.5rem;">
+          <label class="field-label">Characters &amp; Tone (optional)</label>
+          <input class="field-input" id="dialog-context" placeholder="e.g. Palmer is guarded, Corey is loyal — tense thriller tone">
+        </div>
+        <div class="field-label" style="margin-bottom:0.6rem;">Dialogue Amount</div>
+        <div class="enrich-intensity">
+          <button class="enrich-btn active" data-amount="light" onclick="setDialogAmount(this)">Light</button>
+          <button class="enrich-btn" data-amount="balanced" onclick="setDialogAmount(this)">Balanced</button>
+          <button class="enrich-btn" data-amount="heavy" onclick="setDialogAmount(this)">Heavy</button>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;">
+          <button class="btn-gold" id="dialog-btn" onclick="dialogAddConversation()">💬 Add Dialogue →</button>
+          <button class="btn-outline" id="dialog-copy-btn" style="display:none;" onclick="dialogCopy()">Copy Result</button>
+        </div>
+        <div class="adapt-status" id="dialog-status"></div>
+        <div id="dialog-output-wrap" style="display:none;">
+          <div class="field-label" style="margin-bottom:0.6rem;">Scene with Dialogue</div>
+          <div class="enrich-output" id="dialog-output"></div>
+        </div>
+      </div>
+
+      <!-- Structural Rebuild panel -->
+      <div id="structural-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label">Prose Tool · 4 credits</div>
+        <div class="s-title" style="font-size:1.6rem;">Structural Rebuild</div>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a chapter or act that needs more than polish. Grey returns a structural diagnosis, then a rebuilt scene-by-scene outline.</p>
+        <div class="form-full field-group">
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Chapter or Act<button id="structural-ms-btn" onclick="appUseMsText('structural-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <textarea class="adapt-source" id="structural-source" placeholder="Paste the chapter or act here. Up to 8,000 characters." style="min-height:280px;"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label">Intent</label>
+            <select class="field-select" id="structural-intent">
+              <option value="">Optional. Select a goal…</option>
+              <option value="Tighten pacing">Tighten pacing</option>
+              <option value="Add a missing beat">Add a missing beat</option>
+              <option value="Restructure act order">Restructure act order</option>
+              <option value="Strengthen escalation">Strengthen escalation</option>
+              <option value="Cut redundancy">Cut redundancy</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Pacing Profile</label>
+            <select class="field-select" id="structural-pacing">
+              <option value="">Optional. Default…</option>
+              <option value="Brisk">Brisk</option>
+              <option value="Steady narrative">Steady narrative</option>
+              <option value="Slow burn">Slow burn</option>
+              <option value="Cinematic">Cinematic</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;margin-top:1rem;">
+          <button class="btn-gold" id="structural-btn" onclick="runStructural()">✦ Rebuild Structure →</button>
+          <button class="btn-outline" id="structural-copy-btn" style="display:none;" onclick="copyOutput('structural-output')">Copy Result</button>
+        </div>
+        <div class="adapt-status" id="structural-status"></div>
+        <div id="structural-output-wrap" style="display:none;">
+          <div class="field-label" style="margin-bottom:0.6rem;">Structural Diagnosis &amp; Rebuild</div>
+          <div class="enrich-output" id="structural-output"></div>
+        </div>
+      </div>
+
+      <!-- Scene Builder panel -->
+      <div id="scene-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label">Prose Tool · 3 credits</div>
+        <div class="s-title" style="font-size:1.6rem;">Scene Builder</div>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Give a premise, the characters present, and a pacing tempo. Grey builds a complete scene beat-by-beat in your voice.</p>
+        <div class="form-full field-group">
+          <label class="field-label">Premise / Core Idea</label>
+          <textarea class="adapt-source" id="scene-premise" placeholder="What is the scene's situation? What needs to happen? Up to 8,000 characters." style="min-height:200px;"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label">Characters Present</label>
+            <input class="field-input" type="text" id="scene-characters" placeholder="e.g. Palmer, Corey, the courier">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Pacing Tempo</label>
+            <select class="field-select" id="scene-tempo">
+              <option value="">Optional. Default…</option>
+              <option value="Snap (fast / kinetic)">Snap (fast / kinetic)</option>
+              <option value="Steady (standard)">Steady (standard)</option>
+              <option value="Siphon (slow / atmospheric)">Siphon (slow / atmospheric)</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;margin-top:1rem;">
+          <button class="btn-gold" id="scene-btn" onclick="runScene()">✦ Generate Scene →</button>
+          <button class="btn-outline" id="scene-copy-btn" style="display:none;" onclick="copyOutput('scene-output')">Copy Result</button>
+        </div>
+        <div class="adapt-status" id="scene-status"></div>
+        <div id="scene-output-wrap" style="display:none;">
+          <div class="field-label" style="margin-bottom:0.6rem;">Scene</div>
+          <div class="enrich-output" id="scene-output"></div>
+        </div>
+      </div>
+
+      <!-- Descriptor Library panel -->
+      <div id="descriptor-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label">Prose Tool · 2 credits</div>
+        <div class="s-title" style="font-size:1.6rem;">Descriptor Library</div>
+        <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a passage with repetitive vocabulary or generic description. Grey swaps in sharper, more specific alternatives. Plot beats and dialogue are preserved exactly.</p>
+        <div class="form-full field-group">
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Passage<button id="descriptor-ms-btn" onclick="appUseMsText('descriptor-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <textarea class="adapt-source" id="descriptor-source" placeholder="Paste the passage to sharpen. Up to 8,000 characters." style="min-height:280px;"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label">Focus Area</label>
+            <select class="field-select" id="descriptor-focus">
+              <option value="">Optional. Default…</option>
+              <option value="Overused verbs">Overused verbs</option>
+              <option value="Generic settings">Generic settings</option>
+              <option value="Weak adjectives">Weak adjectives</option>
+              <option value="Lazy descriptors (looked, smiled, the man)">Lazy descriptors</option>
+              <option value="All of the above">All of the above</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Tone Profile</label>
+            <select class="field-select" id="descriptor-tone">
+              <option value="">Optional. Default…</option>
+              <option value="Literary">Literary</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Mystery">Mystery</option>
+              <option value="Romance">Romance</option>
+              <option value="Sci-fi / Fantasy">Sci-fi / Fantasy</option>
+              <option value="Historical">Historical</option>
+              <option value="Gritty / noir">Gritty / noir</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;margin-top:1rem;">
+          <button class="btn-gold" id="descriptor-btn" onclick="runDescriptor()">✦ Sharpen Passage →</button>
+          <button class="btn-outline" id="descriptor-copy-btn" style="display:none;" onclick="copyOutput('descriptor-output')">Copy Result</button>
+        </div>
+        <div class="adapt-status" id="descriptor-status"></div>
+        <div id="descriptor-output-wrap" style="display:none;">
+          <div class="field-label" style="margin-bottom:0.6rem;">Sharpened Passage</div>
+          <div class="enrich-output" id="descriptor-output"></div>
+        </div>
+      </div>
+
+      <!-- Adapt planner (appears after adapt card selected) -->
+      <div id="adapt-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label">Story Expander</div>
+        <div class="s-title" style="font-size:1.6rem;">Adapt from Source</div>
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label">Title (working)</label>
+            <input class="field-input" id="adapt-title" placeholder="Your novel title...">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Target Chapter Count</label>
+            <div class="slider-row">
+              <input type="range" min="4" max="30" value="20" id="adapt-ch-slider" oninput="document.getElementById('adapt-ch-val').textContent=this.value">
+              <span class="slider-val" id="adapt-ch-val">20</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-full field-group">
+          <label class="field-label">Paste Source Material</label>
+          <textarea class="adapt-source" id="adapt-source" placeholder="Paste your screenplay, short story, treatment, or scene notes here. The AI will analyze the dramatic structure and build a chapter-by-chapter novel outline with synopses."></textarea>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+          <button class="btn-gold" id="adapt-btn" onclick="adaptBuildOutline()">✦ Analyze &amp; Build Outline →</button>
+        </div>
+        <div class="adapt-status" id="adapt-status"></div>
+      </div>
+
+      <!-- Planner (appears after type selection) -->
+      <div id="planner-wrap" style="display:none;">
+        <hr class="divider">
+        <div class="s-label" id="plan-type-label">Novel Planner</div>
+        <div class="s-title" style="font-size:1.6rem;">Build Your Outline</div>
+
+        <!-- Genre (novels/stories/plays/screenplays) -->
+        <div id="plan-genre-section">
+          <div class="field-label" style="margin-bottom:0.8rem;">Genre</div>
+          <div class="genre-grid" id="plan-genre-grid"></div>
+        </div>
+
+        <!-- Project details form -->
+        <div id="plan-form" style="display:none;">
+          <div class="form-row">
+            <div class="field-group">
+              <label class="field-label">Title (working)</label>
+              <input class="field-input" id="plan-title" placeholder="Your title...">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Author Name</label>
+              <input class="field-input" id="plan-author" placeholder="Pen name or real name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field-group">
+              <label class="field-label" id="plan-p-label">Protagonist</label>
+              <input class="field-input" id="plan-p" placeholder="Name & brief description">
+            </div>
+            <div class="field-group">
+              <label class="field-label" id="plan-a-label">Antagonist / Conflict</label>
+              <input class="field-input" id="plan-a" placeholder="Name, force, or internal conflict">
+            </div>
+          </div>
+          <div class="form-full field-group">
+            <label class="field-label" id="plan-s-label">Setting / World</label>
+            <input class="field-input" id="plan-s" placeholder="When and where the story takes place">
+          </div>
+          <div class="form-full field-group">
+            <label class="field-label">Core Conflict / Premise</label>
+            <textarea class="field-textarea" id="plan-conflict" placeholder="What is the central tension or question?"></textarea>
+          </div>
+
+          <!-- Chapter count (for novels/stories) -->
+          <div id="plan-chapters-row" class="form-full field-group" style="display:none;">
+            <label class="field-label">Chapter / Scene Count</label>
+            <div class="slider-row">
+              <input type="range" min="4" max="30" value="12" id="plan-ch-slider" oninput="document.getElementById('plan-ch-val').textContent=this.value">
+              <span class="slider-val" id="plan-ch-val">12</span>
+            </div>
+          </div>
+
+          <button class="btn-gold" onclick="generateOutline()" style="margin-top:1rem;">Build Outline →</button>
+        </div>
+
+        <!-- Outline output -->
+        <div id="plan-outline-wrap" style="display:none;">
+          <div class="outline-wrap" id="plan-outline-list"></div>
+          <div class="ai-bar" id="plan-ai-bar">
+            <div class="ai-bar-title">✦ Expand Outline with AI</div>
+            <p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:1rem;">Each chapter will receive a 2–3 sentence expanded synopsis from Grey (1 credit per expand).</p>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+              <button class="btn-gold" onclick="expandOutlineAI()">✦ Expand All →</button>
+              <button class="btn-outline" onclick="proceedToWrite()">Proceed to Ghost Writer →</button>
+            </div>
+            <div class="ai-status" id="plan-ai-status"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: Ghost Writer ── -->
+    <div class="screen" id="screen-1">
+      <div style="margin-bottom:1rem;"><button onclick="goStep(0)" style="background:none;border:none;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;padding:0;">← Back to Outline</button></div>
+      <div class="s-label">AI Assisted</div>
+      <div class="s-title">Ghost Writer</div>
+      <div class="s-sub">Write scenes, chapters, dialogue, and more. The AI knows your project context.</div>
+
+      <div class="gw-layout" id="gw-layout">
+        <div class="gw-sidebar">
+
+          <!-- Import -->
+          <div style="margin-bottom:1.5rem;padding:1rem;border:1px solid var(--rule);background:rgba(184,146,42,0.03);">
+            <div class="gw-sidebar-label" style="margin-bottom:0.6rem;">Import Your Work</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);line-height:1.6;margin-bottom:0.8rem;">Already writing? Upload <strong>one chapter at a time</strong>, not your full manuscript. Grey reads the chapter, learns your voice, and continues from there.</p>
+            <input type="file" id="gw-pdf-input" accept=".pdf" style="display:none;" onchange="gwImportPDF(this)">
+            <button class="btn-outline" style="width:100%;text-align:center;" onclick="document.getElementById('gw-pdf-input').click()">↑ Upload Chapter PDF</button>
+            <div id="gw-import-status" style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--gold);margin-top:0.5rem;min-height:1rem;"></div>
+          </div>
+
+          <!-- Chapter Navigator (shown when outline exists) -->
+          <div class="gw-ch-nav" id="gw-ch-nav" style="display:none;">
+            <div class="gw-sidebar-label">Chapters</div>
+            <div class="gw-ch-list" id="gw-ch-list"></div>
+          </div>
+
+          <div class="gw-sidebar-label">Project Context</div>
+          <textarea class="gw-context-box" id="gw-context-box" placeholder="Complete the outline in Step 01 or import a PDF to load context here. You can also type or paste context directly." style="resize:vertical;font-family:'Cormorant Garamond',serif;font-style:normal;min-height:160px;"></textarea>
+
+          <div class="gw-sidebar-label" style="margin-top:1.5rem;">Writing Mode</div>
+          <button class="gw-mode-btn active" onclick="setGwMode('scene',this)">Write Next Scene</button>
+          <button class="gw-mode-btn" onclick="setGwMode('chapter',this)">Draft Full Chapter</button>
+          <button class="gw-mode-btn" onclick="setGwMode('dialogue',this)">Generate Dialogue</button>
+          <button class="gw-mode-btn" onclick="setGwMode('continue',this)">Continue Last Passage</button>
+          <button class="gw-mode-btn" onclick="setGwMode('rewrite',this)">Rewrite / Improve</button>
+          <button class="gw-mode-btn" onclick="setGwMode('poem',this)">Write Poem</button>
+          <button class="gw-mode-btn" onclick="setGwMode('free',this)">Free Prompt</button>
+
+          <div style="margin-top:2rem;">
+            <div class="gw-sidebar-label">Word Count</div>
+            <div class="gw-stat" id="gw-wordcount">0 words written</div>
+          </div>
+        </div>
+
+        <div class="gw-main">
+          <div class="gw-output empty" id="gw-output" contenteditable="true" oninput="gwCountWords()">
+            Your writing will appear here. Select a mode and describe what to write.
+          </div>
+          <div class="gw-action-row">
+            <button class="btn-outline" onclick="gwCopy()">Copy All</button>
+            <button class="btn-outline" onclick="gwDownload()">Download .txt</button>
+            <button class="btn-outline" onclick="gwClear()">Clear</button>
+            <button class="btn-outline" style="margin-left:auto;" onclick="goStep(2)">Next: Cover →</button>
+          </div>
+          <div class="gw-prompt-row">
+            <textarea class="gw-prompt-input" id="gw-prompt" placeholder="Describe the scene, chapter, or passage you want to write..." rows="3"></textarea>
+            <button class="gw-send-btn" id="gw-send-btn" onclick="gwGenerate()">Write →</button>
+          </div>
+          <div class="ai-status" id="gw-status"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;color:var(--text-dim);margin-top:0.5rem;">Press Write again to continue. Your writing will not be erased, it will keep going.</div>
+        </div>
+
+        <!-- Grey's panel -->
+        <div class="gw-grey-panel" id="gw-grey-panel">
+          <button class="gw-grey-min-btn" onclick="gwGreyMinimize()" title="Minimize Grey">— min</button>
+          <img class="gw-grey-avatar" id="gw-grey-avatar" src="assets/Grey_Open.png" alt="Grey">
+          <div class="gw-grey-name">Grey</div>
+          <div class="gw-grey-role">Your Ghost Writer</div>
+          <div class="gw-grey-thought" id="gw-grey-thought">Ready when you are. Choose a mode, describe your scene, and press Write.</div>
+          <div class="gw-grey-wc" id="gw-grey-wc"></div>
+          <div class="gw-grey-stats" id="gw-grey-stats">
+            <div class="gw-grey-stat-row"><span class="gw-grey-stat-label">words</span><span class="gw-grey-stat-val" id="gw-live-wc">—</span></div>
+            <div class="gw-grey-stat-row"><span class="gw-grey-stat-label">sentences</span><span class="gw-grey-stat-val" id="gw-live-sc">—</span></div>
+            <div class="gw-grey-stat-row"><span class="gw-grey-stat-label">pace</span><span class="gw-grey-stat-val" id="gw-live-pace">—</span></div>
+          </div>
+          <img class="gw-grey-quill" src="assets/quill pen.png" alt="Restore Grey" onclick="gwGreyRestore()" title="Restore Grey">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Cover Design ── -->
+    <div class="screen" id="screen-2">
+      <div class="s-label">Visual Identity</div>
+      <div class="s-title">Cover Design</div>
+      <div class="s-sub">Design your cover using AI image generation. The canvas starts blank. Describe your vision.</div>
+      <div class="cover-wrap">
+        <div class="cover-topbar">
+          <span class="cover-topbar-label">Cover Generator</span>
+          <a href="cover-generator.html" target="_blank">Open Full Page ↗</a>
+        </div>
+        <iframe src="cover-generator.html" style="width:100%;height:88vh;border:none;" id="cover-iframe"></iframe>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Export & Publish ── -->
+    <div class="screen" id="screen-3">
+      <div class="s-label">Final Step</div>
+      <div class="s-title">Export &amp; Publish</div>
+      <div class="s-sub">Choose your trim size, export a KDP-ready file, or submit to Greylander Press for our imprint.</div>
+
+      <div class="field-label" style="margin-bottom:1rem;">Select Trim Size</div>
+      <div class="trim-grid" id="trim-grid">
+        <div class="trim-card" onclick="selectTrim('5x8',this)">
+          <div class="trim-size">5 × 8</div>
+          <div class="trim-cm">12.7 × 20.3 cm</div>
+          <div class="trim-use">Standard fiction. The most common novel trim.</div>
+        </div>
+        <div class="trim-card" onclick="selectTrim('5.06x7.81',this)">
+          <div class="trim-size">5.06 × 7.81</div>
+          <div class="trim-cm">12.85 × 19.84 cm</div>
+          <div class="trim-use">Mass market paperback. Maximizes shelf presence.</div>
+        </div>
+        <div class="trim-card" onclick="selectTrim('5.5x8.5',this)">
+          <div class="trim-size">5.5 × 8.5</div>
+          <div class="trim-cm">13.97 × 21.59 cm</div>
+          <div class="trim-use">Trade paperback. Popular for literary and nonfiction.</div>
+        </div>
+        <div class="trim-card" onclick="selectTrim('6x9',this)">
+          <div class="trim-size">6 × 9</div>
+          <div class="trim-cm">15.24 × 22.86 cm</div>
+          <div class="trim-use">Larger trade. Ideal for how-to and essay collections.</div>
+        </div>
+        <div class="trim-card" onclick="selectTrim('8.5x11',this)">
+          <div class="trim-size">8.5 × 11</div>
+          <div class="trim-cm">21.59 × 27.94 cm</div>
+          <div class="trim-use">Full US letter. Screenplays, illustrated, workbooks.</div>
+        </div>
+        <div class="trim-card" onclick="selectTrim('5.25x8',this)">
+          <div class="trim-size">5.25 × 8</div>
+          <div class="trim-cm">13.34 × 20.32 cm</div>
+          <div class="trim-use">Slight step up from standard. Short story collections.</div>
+        </div>
+      </div>
+
+      <div class="pub-options" style="grid-template-columns:1fr 1fr 1fr;">
+        <!-- Option 1: KDP only -->
+        <div class="pub-card">
+          <div class="pub-badge">Self-Publish</div>
+          <div class="pub-card-title">Export for KDP</div>
+          <div class="pub-card-desc">Download a template formatted for your trim size. Publish independently on Amazon KDP. Your title is not listed in the GP catalog.</div>
+          <button class="btn-gold" onclick="exportKDP()">Download Template →</button>
+        </div>
+
+        <!-- Option 2: Made with GP -->
+        <div class="pub-card" style="border-color:rgba(184,146,42,0.5);">
+          <div class="pub-badge">GP Catalog</div>
+          <div class="pub-card-title">Made with GP</div>
+          <div class="pub-card-desc">Your title is listed in the Greylander Press catalog as <em>"Made with GP"</em>. No editorial review required. You publish it yourself; we celebrate it. You retain full copyright.</div>
+          <div class="form-full field-group" style="margin-bottom:1rem;">
+            <label class="field-label">Author Note (optional)</label>
+            <textarea class="field-textarea" id="pub-note-mgp" placeholder="Brief description for the catalog listing..." style="min-height:50px;"></textarea>
+          </div>
+          <label style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;cursor:pointer;">
+            <input type="checkbox" id="isbn-request-mgp" style="accent-color:var(--gold);">
+            <span class="field-label" style="cursor:pointer;">Request an ISBN</span>
+          </label>
+          <button class="btn-gold" onclick="submitToGP('made_with_gp')" style="background:var(--ink-soft);border:1px solid rgba(184,146,42,0.5);color:var(--gold);">List in Catalog →</button>
+        </div>
+
+        <!-- Option 3: GP Imprint -->
+        <div class="pub-card" style="border-color:var(--gold);">
+          <div class="pub-badge" style="color:var(--gold-light);">★ GP Imprint</div>
+          <div class="pub-card-title">Submit for GP Imprint</div>
+          <div class="pub-card-desc">We review your manuscript. If selected, we publish it under the <strong style="color:var(--cream);">Greylander Press imprint</strong>: full editorial, ISBN, catalog listing, and distribution support.</div>
+          <div class="form-full field-group" style="margin-bottom:1rem;">
+            <label class="field-label">Why is this a fit for GP?</label>
+            <textarea class="field-textarea" id="pub-note-imprint" placeholder="Tell us about your work and why it belongs under the GP imprint..." style="min-height:50px;"></textarea>
+          </div>
+          <label style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;cursor:pointer;">
+            <input type="checkbox" id="isbn-request-imprint" style="accent-color:var(--gold);" checked>
+            <span class="field-label" style="cursor:pointer;">Request an ISBN (recommended)</span>
+          </label>
+          <button class="btn-gold" onclick="submitToGP('gp_imprint')">Submit for Review →</button>
+        </div>
+      </div>
+
+      <!-- Rights policy reminder -->
+      <div style="margin-top:1.5rem;padding:1rem 1.2rem;border:1px solid var(--rule);background:rgba(184,146,42,0.02);">
+        <span style="font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);">Author Rights</span>
+        <span style="font-size:0.82rem;color:var(--text-dim);margin-left:1rem;">You retain full copyright to all work created here. Catalog listing does not transfer any rights. GP Imprint publishing requires a separate signed agreement.</span>
+      </div>
+      <div class="ai-status" id="pub-status" style="margin-top:1rem;"></div>
+    </div>
+
+  </div><!-- /gp-main -->
+</div><!-- /app -->
+
+<!-- Credits modal -->
+<div id="credits-modal">
+  <div class="modal-box">
+    <div class="modal-title">Your Credits</div>
+    <div class="modal-body" id="credits-modal-body">
+      Credits are used for AI features: Ghost Writer (3/call), outline expansion (1/call), and more. Free accounts receive 25 credits per month.
+    </div>
+    <button class="modal-close" onclick="closeCreditsModal()">Close</button>
+  </div>
+</div>
+
+<!-- GAUNTLET — How It Works modal -->
+<div class="gt-modal" id="gt-how-modal" onclick="if(event.target===this) gtHowClose()">
+  <div class="gt-modal-box">
+    <button class="gt-modal-x" onclick="gtHowClose()" aria-label="Close">×</button>
+    <div class="gt-modal-eyebrow">Diagnostic · How It Works</div>
+    <h3 class="gt-modal-title">How the Gauntlet Reads Your Work</h3>
+    <div class="gt-modal-body">
+      <p>The Gauntlet is a manuscript diagnostic built on Greylander Press's commitment to PAID AI Governance and anti-sycophancy principles. It evaluates your manuscript against the standard of professional publishable fiction in your genre. It does not adjust its standard based on your experience level, your apparent intent, or how much work you have already put in. The same standard applies to a debut novelist and a bestselling author. This is not unkindness. It is the only way the feedback is useful.</p>
+
+      <div class="gt-modal-section-label">1. The standard is fixed</div>
+      <p>The Gauntlet evaluates against what publishable fiction looks like at the professional level, not against what feels achievable for you specifically. If a chapter has structural problems, it says so. If the prose is working, it says so. The score is not curved.</p>
+
+      <div class="gt-modal-section-label">2. Five Tests of craft</div>
+      <p>Every submission is evaluated across five dimensions. Each Test receives a banded score and a Hole Report identifying specific weaknesses with line or paragraph references where possible.</p>
+      <p><strong style="color:var(--cream);">Sensory Depth.</strong> Whether scenes are rendered with concrete sensory texture or summarized abstractly.<br>
+      <strong style="color:var(--cream);">Dialogue Vitality.</strong> Whether characters have distinct voices and whether subtext lives beneath the spoken lines, or whether dialogue is on the nose and exposition-heavy.<br>
+      <strong style="color:var(--cream);">Pacing and Tension.</strong> Whether scenes move with appropriate rhythm or stall, compress, or sprawl.<br>
+      <strong style="color:var(--cream);">Structural Integrity.</strong> Whether scenes accomplish what scenes need to accomplish. Beats, escalation, resolution.<br>
+      <strong style="color:var(--cream);">Character Agency.</strong> Whether characters drive the story through their choices or are dragged along by plot.</p>
+
+      <div class="gt-modal-section-label">3. Stagnation Heuristic</div>
+      <p>The Gauntlet identifies specific patterns that indicate stagnant prose. Long stretches of passive construction in active scenes. Adverb-dependent dialogue tags. Abstract summary where concrete sensory rendering would serve the moment. Repetitive sentence structure. Stative verb chains where dynamic verbs would create movement. When these patterns appear in significant proportion, the Gauntlet flags Stagnant Prose and routes you to the Prose Enricher.</p>
+
+      <div class="gt-modal-section-label">4. The Gauntlet does not soften</div>
+      <p>The evaluation engine is built to reject hedging, compensatory praise, and sycophantic framing. You will not see "I think" or "great job, but" or "with some polish, this could be." If the work is strong, the Gauntlet says so directly. If the work has problems, the Gauntlet identifies them without cushioning. This is an architectural decision, not a personality choice. The Gauntlet exists to give you the feedback that helps you fix the manuscript, not the feedback that makes you feel good about handing it in.</p>
+
+      <div class="gt-modal-section-label">5. Some problems have no tool</div>
+      <p>The Gauntlet recommends GP tools when the diagnosed issue can be addressed by one. When the issue requires your attention as the author, the Gauntlet says so. The Red Ink List identifies three to five problems that no tool will fix. Cuts you need to make. Characters that need rebuilding. Premises with structural issues. The honesty here is the point. A Gauntlet that always recommended a GP tool would be a sales funnel, not a diagnostic.</p>
+
+      <div class="gt-modal-section-label">6. Excerpts are evaluated honestly</div>
+      <p>If you submit a chapter or excerpt, the Gauntlet asks for context before evaluating. The opening of the work, the middle, near the end. What has happened before this. Without context, the Gauntlet will explicitly flag which judgments depend on information not provided rather than producing confident assessments based on missing context.</p>
+
+      <div class="gt-modal-section-label">7. The standard is reproducible</div>
+      <p>The same input run twice will produce the same banded scores. Variance in narrative phrasing is acceptable. Variance in band assignment is not. If you disagree with a finding, the underlying logic is consistent enough that you can interrogate the diagnosis rather than wonder whether the tool just had a bad day.</p>
+
+      <div class="gt-modal-section-label">Why this approach</div>
+      <p>Greylander Press practices PAID AI Governance. Position the work honestly. Audit what is actually there. Interrogate weaknesses rather than smoothing past them. Demand specifics rather than accepting generic assessment. The Gauntlet is the practical instantiation of these principles applied to fiction. The architecture enforces honesty so that you receive feedback you can actually use to improve the manuscript, rather than feedback designed to make you feel good about it.</p>
+
+      <div class="gt-modal-section-label">What the Gauntlet is not</div>
+      <p>The Gauntlet is not your beta reader. It is not your writing group. It is not your friend. It does not care whether you keep using it. It cares whether your manuscript is closer to publishable than it was when you uploaded it.</p>
+      <p>The Gauntlet is also not an editor. It does not rewrite your prose, fix your dialogue, or restructure your chapters. It diagnoses. It identifies what works, what does not, and where to focus your revision. The revision itself is yours to do, with the GP tools the Gauntlet recommends or with your own work, depending on what the diagnosis surfaces.</p>
+      <p>The Gauntlet is also not a replacement for human editorial judgment at the line level or the structural level on serious projects. It is a high-fidelity diagnostic and remediation layer that handles the work AI handles well. For the kind of editorial judgment that requires deep domain understanding, market knowledge, or career-shaping advice, you still need a human editor. The Gauntlet's job is to make sure your manuscript is in a state where a human editor's time is well-spent.</p>
+
+      <p class="gt-modal-emphasis">The author remains the writer, the decision-maker, and the one accountable for the work. The Gauntlet provides diagnosis. You provide the revision.</p>
+      <p class="gt-modal-attribution">Greylander Press · Dr. Terry Oroszi</p>
+    </div>
+    <div class="gt-modal-actions">
+      <a class="gt-card-cta" href="gauntlet.html">Run the Gauntlet →</a>
+      <button class="gt-card-how" onclick="gtHowClose()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.gtHowOpen  = () => document.getElementById('gt-how-modal').classList.add('open');
+  window.gtHowClose = () => document.getElementById('gt-how-modal').classList.remove('open');
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') window.gtHowClose(); });
+</script>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script type="module">
+// ── Supabase ─────────────────────────────────────────────────────────────────
+const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+
+const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+window._sb = sb;
+
+// ── State ─────────────────────────────────────────────────────────────────────
+const state = {
+  user: null,
+  credits: null,
+  type: null,       // novel | short_story | poem | play | screenplay
+  genre: null,
+  title: '',
+  author: '',
+  outline: [],      // [{num, title, desc}]
+  gwMode: 'scene',
+  gwText: '',
+  trimSize: null,
+};
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+window.authTab = (tab) => {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('auth-signin').style.display = tab === 'signin' ? 'block' : 'none';
+  document.getElementById('auth-signup').style.display = tab === 'signup' ? 'block' : 'none';
+};
+
+window.doSignIn = async () => {
+  const email = document.getElementById('si-email').value.trim();
+  const pass  = document.getElementById('si-pass').value;
+  const msg   = document.getElementById('si-msg');
+  msg.textContent = '';
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) { msg.textContent = error.message; return; }
+};
+
+window.doSignUp = async () => {
+  const name  = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass  = document.getElementById('su-pass').value;
+  const msg   = document.getElementById('su-msg');
+  msg.textContent = '';
+  if (!document.getElementById('su-policy').checked) {
+    msg.textContent = 'Please read and accept the User Agreement to continue.'; return;
+  }
+  if (pass.length < 8) { msg.textContent = 'Password must be at least 8 characters.'; return; }
+  const acceptedAt = new Date().toISOString();
+  const { error } = await sb.auth.signUp({
+    email, password: pass,
+    options: {
+      data: {
+        full_name: name,
+        policy_accepted: true,
+        policy_accepted_at: acceptedAt,
+        policy_version: '2026-04-30',
+        policy_url: '/terms.html',
+      },
+    },
+  });
+  if (error) { msg.textContent = error.message; return; }
+  msg.style.color = 'var(--gold)';
+  msg.textContent = 'Account created! Sign in now.';
+};
+
+// Theme toggle is handled by assets/theme.js (3-state: auto/light/dark, gp-theme key)
+
+// ── Writing Coach: click-to-expand handlers ──────────────────────────────────
+window.coachToggle = (id) => {
+  // Story Architecture timeline: accordion (only one detail visible at a time)
+  document.querySelectorAll('.coach-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.coach-node').forEach(n => n.classList.remove('active'));
+  const detail = document.getElementById('coach-detail-' + id);
+  if (detail) detail.classList.add('open');
+  const node = document.querySelector(`.coach-node[data-node="${id}"]`);
+  if (node) node.classList.add('active');
+};
+window.coachCardToggle = (card) => {
+  // Modules 2-4 cards: each card expands independently
+  card.classList.toggle('open');
+};
+
+window.doSignOut = async () => {
+  await sb.auth.signOut();
+  location.reload();
+};
+
+// Claim any pre-account gifts sent to this email. Idempotent — safe to call
+// every sign-in. Shows a single toast summarizing what was applied.
+async function claimPendingGifts(session) {
+  if (!session?.access_token) return;
+  try {
+    const r = await fetch('/.netlify/functions/claim-pending-gifts-gp', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + session.access_token, 'Content-Type': 'application/json' },
+    });
+    if (!r.ok) return;
+    const d = await r.json();
+    if (!d?.total_credits_added) return;
+    const total = d.total_credits_added;
+    const giftCount = (d.claimed || []).length;
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99998;background:#0a0a0a;border:1px solid var(--gold,#b8922a);padding:14px 20px;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:opacity 0.4s;font-family:"Inter",sans-serif;';
+    toast.innerHTML =
+      '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#e0c87a;margin-bottom:6px;">&#127873; Gift Claimed</div>' +
+      '<div style="font-size:13px;color:#f5f3ee;line-height:1.5;">' +
+        '+' + total + ' credits added to your account' +
+        (giftCount > 1 ? ' (across ' + giftCount + ' gifts)' : '') +
+      '</div>';
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 6500);
+  } catch (e) {
+    console.warn('[gp] claimPendingGifts failed:', e?.message);
+  }
+}
+
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (session?.user) {
+    state.user = session.user;
+    document.getElementById('auth-overlay').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    // Claim any pending credits sent to this email before account existed.
+    // Runs before loadCredits so the balance display reflects the claimed amount.
+    await claimPendingGifts(session);
+    await loadCredits();
+    restoreSession();
+    consumeGauntletHandoff();
+  } else {
+    state.user = null;
+    document.getElementById('auth-overlay').style.display = 'flex';
+    document.getElementById('app').classList.remove('visible');
+  }
+});
+
+// ── Gauntlet handoff receiver ─────────────────────────────────────────────────
+// gauntlet.html sets sessionStorage.gp_gauntlet_handoff = {tool, excerpt, diagnosis, at}
+// before navigating here. We consume it once per session, route to the right tool,
+// pre-fill the textarea, and show a banner naming the diagnosis.
+function consumeGauntletHandoff() {
+  let payload;
+  try {
+    const raw = sessionStorage.getItem('gp_gauntlet_handoff');
+    if (!raw) return;
+    payload = JSON.parse(raw);
+    sessionStorage.removeItem('gp_gauntlet_handoff');
+  } catch { return; }
+  if (!payload?.tool || !payload?.excerpt) return;
+  if (payload.at && Date.now() - payload.at > 10 * 60 * 1000) return;  // drop stale (>10 min)
+
+  const map = {
+    enrich: { fn:'selectEnrich', sourceId:'enrich-source', wrapId:'enrich-wrap' },
+    dialog: { fn:'selectDialog', sourceId:'dialog-source', wrapId:'dialog-wrap' },
+    adapt:  { fn:'selectAdapt',  sourceId:'adapt-source',  wrapId:'adapt-wrap'  },
+  };
+  const t = map[payload.tool];
+  if (!t) return;
+  if (typeof window[t.fn] === 'function') window[t.fn]();
+  const ta = document.getElementById(t.sourceId);
+  if (ta) ta.value = payload.excerpt;
+  showGauntletBanner(t.wrapId, payload.diagnosis);
+}
+
+function showGauntletBanner(wrapId, diagnosis) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  document.getElementById('gt-handoff-banner')?.remove();
+
+  const banner = document.createElement('div');
+  banner.id = 'gt-handoff-banner';
+  banner.style.cssText = 'border:1px solid var(--gold);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin:1rem 0 1.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start;';
+
+  const rune = document.createElement('span');
+  rune.textContent = '⚔';
+  rune.style.cssText = 'font-size:1.4rem;color:var(--gold-light);line-height:1;';
+
+  const body = document.createElement('div');
+  const eyebrow = document.createElement('div');
+  eyebrow.textContent = 'Loaded from Gauntlet diagnosis';
+  eyebrow.style.cssText = "font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;";
+  const text = document.createElement('div');
+  text.textContent = diagnosis || 'Excerpt pre-loaded from your manuscript audit.';
+  text.style.cssText = 'font-size:0.92rem;color:var(--text);line-height:1.6;';
+  body.appendChild(eyebrow);
+  body.appendChild(text);
+
+  const close = document.createElement('button');
+  close.textContent = '×';
+  close.setAttribute('aria-label', 'Dismiss');
+  close.style.cssText = 'background:none;border:none;color:var(--text-dim);font-size:1.2rem;cursor:pointer;line-height:1;padding:0 0.4rem;';
+  close.onclick = () => banner.remove();
+
+  banner.appendChild(rune);
+  banner.appendChild(body);
+  banner.appendChild(close);
+
+  wrap.insertBefore(banner, wrap.firstChild);
+  wrap.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Credits ───────────────────────────────────────────────────────────────────
+async function loadCredits() {
+  const { data } = await sb.from('gp_credits').select('balance').eq('user_id', state.user.id).single();
+  state.credits = data?.balance ?? '—';
+  document.getElementById('credit-badge').textContent = state.credits + ' credits';
+}
+
+window.openCreditsModal = () => {
+  document.getElementById('credits-modal-body').textContent =
+    `You have ${state.credits} credits remaining this month. Credits reset monthly. Ghost Writer: 3/call · Outline Expand: 1/call · Blurb: 2/call.`;
+  document.getElementById('credits-modal').classList.add('open');
+};
+window.closeCreditsModal = () => document.getElementById('credits-modal').classList.remove('open');
+
+// ── callProxyGP — lightweight helper, no auth, no credits ─────────────────────
+async function callProxyGP(prompt, maxTokens) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 24000);
+  try {
+    const res = await fetch('/.netlify/functions/proxy-gp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, maxTokens: maxTokens || 400 }),
+      signal: ctrl.signal,
+    });
+    if (!res.ok) throw new Error('proxy-gp error ' + res.status);
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', text = '';
+    outer: while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (!raw) continue;
+        let evt; try { evt = JSON.parse(raw); } catch { continue; }
+        if (evt.type === 'delta' && evt.text) text += evt.text;
+        else if (evt.type === 'done') break outer;
+      }
+    }
+    return text.trim();
+  } finally { clearTimeout(t); }
+}
+
+// ── callLLM ───────────────────────────────────────────────────────────────────
+async function callLLM(prompt, maxTokens, action, system) {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) throw new Error('Not signed in');
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+
+  let res;
+  try {
+    res = await fetch('/.netlify/functions/proxy-ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({ action: action || 'ghost_write', prompt, maxTokens: maxTokens || 1500, system }),
+      signal: controller.signal,
+    });
+  } catch(err) {
+    clearTimeout(timeout);
+    if (err.name === 'AbortError') throw new Error('Request timed out (25s). Try a shorter prompt or smaller context.');
+    throw err;
+  }
+  clearTimeout(timeout);
+
+  if (res.status === 402) {
+    showOutOfCredits();
+    throw new Error('INSUFFICIENT_CREDITS');
+  }
+  if (res.status === 429) throw new Error('Daily limit reached. Try again tomorrow.');
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    throw new Error(e.error || 'Server error ' + res.status);
+  }
+  const d = await res.json();
+  if (d.credits_remaining !== undefined) {
+    state.credits = d.credits_remaining;
+    document.getElementById('credit-badge').textContent = state.credits + ' credits';
+  }
+  return d.text || '';
+}
+
+function showOutOfCredits() {
+  document.getElementById('credits-modal-body').textContent =
+    'You have run out of credits. Credits reset monthly. Contact Greylander Press to upgrade your account.';
+  document.getElementById('credits-modal').classList.add('open');
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+window.goStep = (n) => {
+  document.querySelectorAll('.screen').forEach((s,i) => s.classList.toggle('active', i === n));
+  document.querySelectorAll('.gp-step').forEach((b,i) => b.classList.toggle('active', i === n));
+  saveSession();
+};
+
+let _restoring = false;
+
+function saveSession() {
+  if (_restoring) return;
+  try {
+    const step = [...document.querySelectorAll('.gp-step')].findIndex(b => b.classList.contains('active'));
+    sessionStorage.setItem('gp_session', JSON.stringify({
+      step: step < 0 ? 0 : step,
+      type: state.type, genre: state.genre, title: state.title, author: state.author,
+      outline: state.outline, gwMode: state.gwMode, gwText: state.gwText, trimSize: state.trimSize,
+      fields: {
+        p:        document.getElementById('plan-p')?.value        || '',
+        a:        document.getElementById('plan-a')?.value        || '',
+        s:        document.getElementById('plan-s')?.value        || '',
+        chSlider: document.getElementById('plan-ch-slider')?.value || '12',
+        ctx:      document.getElementById('gw-context-box')?.value || '',
+      },
+    }));
+  } catch(e) {}
+}
+
+function restoreSession() {
+  try {
+    const raw = sessionStorage.getItem('gp_session');
+    if (!raw) return false;
+    const snap = JSON.parse(raw);
+    if (!snap.step && snap.step !== 0) return false;
+
+    _restoring = true;
+
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+
+    // Restore type (rebuilds genre grid dynamically)
+    if (snap.type === 'adapt') {
+      document.getElementById('adapt-type-card').classList.add('selected');
+      document.getElementById('adapt-wrap').style.display = 'block';
+      if (snap.title) set('adapt-title', snap.title);
+    } else if (snap.type) {
+      const typeOrder = ['novel','short_story','poem','play','screenplay'];
+      const typeCard = document.querySelectorAll('.type-card')[typeOrder.indexOf(snap.type)];
+      if (typeCard) selectType(snap.type, typeCard);
+    }
+
+    // Form fields
+    set('plan-p', snap.fields?.p || '');
+    set('plan-a', snap.fields?.a || '');
+    set('plan-s', snap.fields?.s || '');
+    set('plan-title', snap.title || '');
+    set('plan-author', snap.author || '');
+    const slider = document.getElementById('plan-ch-slider');
+    if (slider) {
+      slider.value = snap.fields?.chSlider || '12';
+      const sliderVal = document.getElementById('plan-ch-val');
+      if (sliderVal) sliderVal.textContent = slider.value;
+    }
+
+    // Genre
+    if (snap.genre) {
+      state.genre = snap.genre;
+      document.querySelectorAll('.genre-card').forEach(c => {
+        if (c.querySelector('.genre-name')?.textContent === snap.genre) c.classList.add('selected');
+      });
+      document.getElementById('plan-form').style.display = 'block';
+    }
+
+    // Outline
+    if (snap.outline?.length) {
+      state.outline = snap.outline;
+      state.title   = snap.title  || '';
+      state.author  = snap.author || '';
+      document.getElementById('plan-outline-list').innerHTML = state.outline.map(ch => `
+        <div class="outline-row" data-ch="${ch.num}">
+          <div class="outline-ch-num">Ch ${ch.num}</div>
+          <div>
+            <div class="outline-ch-title" contenteditable="true">${ch.title}</div>
+            <div class="outline-ch-desc">${ch.desc}</div>
+          </div>
+        </div>`).join('');
+      document.getElementById('plan-outline-wrap').style.display = 'block';
+      document.getElementById('topbar-project').textContent = state.title;
+    }
+
+    // GW context box
+    if (snap.fields?.ctx) {
+      const ctx = document.getElementById('gw-context-box');
+      if (ctx) ctx.value = snap.fields.ctx;
+    } else {
+      updateGhostWriterContext();
+    }
+
+    // GW output text
+    if (snap.gwText) {
+      state.gwText = snap.gwText;
+      const output = document.getElementById('gw-output');
+      if (output) { output.textContent = snap.gwText; output.classList.remove('empty'); }
+      gwCountWords();
+      const wc = document.getElementById('gw-grey-wc');
+      if (wc) wc.textContent = snap.gwText.trim().split(/\s+/).length.toLocaleString() + ' total words';
+    }
+
+    // GW mode
+    if (snap.gwMode) {
+      state.gwMode = snap.gwMode;
+      const modeBtn = [...document.querySelectorAll('.gw-mode-btn')].find(
+        b => b.getAttribute('onclick')?.includes("'" + snap.gwMode + "'")
+      );
+      if (modeBtn) setGwMode(snap.gwMode, modeBtn);
+    }
+
+    // Navigate to saved step — but let ?step=N URL param win if present
+    const urlStep = new URLSearchParams(window.location.search).get('step');
+    const n = urlStep ? parseInt(urlStep, 10) - 1 : (snap.step || 0);
+    document.querySelectorAll('.screen').forEach((s,i) => s.classList.toggle('active', i === n));
+    document.querySelectorAll('.gp-step').forEach((b,i) => b.classList.toggle('active', i === n));
+
+    if (state.outline && state.outline.length) buildChapterNav();
+
+    _restoring = false;
+    return true;
+  } catch(e) { _restoring = false; return false; }
+}
+
+// ── Screen 0: Type selection ──────────────────────────────────────────────────
+const GENRES = {
+  novel:       ['Literary','Thriller','Mystery','Sci-Fi','Historical','Romance'],
+  short_story: ['Literary','Genre','Horror','Magical Realism','Flash Fiction','Fable'],
+  poem:        ['Free Verse','Sonnet','Narrative','Haiku','Elegy','Ode'],
+  play:        ['Drama','Comedy','Tragedy','Farce','One-Act','Musical'],
+  screenplay:  ['Feature Film','TV Pilot (Hour)','TV Pilot (Half)','Short Film','Docudrama','Limited Series'],
+};
+
+const TYPE_LABELS = {
+  novel: 'Novel Planner', short_story: 'Short Story Planner',
+  poem: 'Poetry Planner', screenplay: 'Screenplay Planner',
+};
+
+window.selectAdapt = (card) => {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  if (typeof _clearAdaptCards === 'function') _clearAdaptCards();
+  document.getElementById('adapt-type-card').classList.add('selected');
+  state.type = 'adapt';
+  if (typeof _hideAllStudioWraps === 'function') _hideAllStudioWraps();
+  document.getElementById('adapt-wrap').style.display = 'block';
+  document.getElementById('adapt-wrap').scrollIntoView({ behavior: 'smooth' });
+  saveSession();
+};
+
+window.selectEnrich = (card) => {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  if (typeof _clearAdaptCards === 'function') _clearAdaptCards();
+  document.getElementById('enrich-type-card').classList.add('selected');
+  state.type = 'enrich';
+  if (typeof _hideAllStudioWraps === 'function') _hideAllStudioWraps();
+  document.getElementById('enrich-wrap').style.display = 'block';
+  document.getElementById('enrich-wrap').scrollIntoView({ behavior: 'smooth' });
+};
+
+let _enrichDepth = 'subtle';
+window.setEnrichDepth = (btn) => {
+  document.querySelectorAll('.enrich-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _enrichDepth = btn.dataset.depth;
+};
+
+window.enrichCopy = () => {
+  const text = document.getElementById('enrich-output').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+};
+
+window.enrichProse = async () => {
+  const source = document.getElementById('enrich-source').value.trim();
+  if (!source) { showToast('Paste a passage first', 'error'); return; }
+
+  const btn = document.getElementById('enrich-btn');
+  const status = document.getElementById('enrich-status');
+  const outputWrap = document.getElementById('enrich-output-wrap');
+  const output = document.getElementById('enrich-output');
+  const copyBtn = document.getElementById('enrich-copy-btn');
+
+  btn.disabled = true;
+  copyBtn.style.display = 'none';
+  outputWrap.style.display = 'none';
+  output.textContent = '';
+  status.textContent = 'Enriching…';
+
+  const depthInstructions = {
+    subtle:   'Add a light touch of sensory detail and atmosphere. Keep additions brief: one or two words or a short clause per paragraph.',
+    moderate: 'Add sensory details (sight, sound, smell, touch), atmospheric texture, and brief character interiority. Enrich each paragraph meaningfully without overwhelming the prose.',
+    rich:     'Deeply enrich every paragraph with vivid sensory details, immersive atmosphere, environmental texture, and character interiority. The prose should feel cinematic and fully realized.',
+  };
+
+  const systemPrompt = 'You are Grey, a skilled literary ghost writer for Greylander Press. ' +
+    'You enrich prose by adding sensory and atmospheric depth. ' +
+    'Never use em dashes (\u2014). Use periods, commas, or short sentences instead. ' +
+    'Write in a natural human voice. Return only the enriched passage. No preamble, no commentary.';
+
+  const prompt = `Enrich the following passage. ${depthInstructions[_enrichDepth]}\n\nCRITICAL RULES:\n- Do NOT add new plot events, new characters, or new dialogue\n- Do NOT change the order of story beats\n- Do NOT extend the story forward beyond where it ends\n- Preserve every existing sentence; only add to them or weave in new descriptive phrases\n- Return the complete enriched passage\n\nPassage to enrich:\n${source}`;
+
+  try {
+    const res = await fetch('/.netlify/functions/proxy-gp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, maxTokens: 3000, system: systemPrompt }),
+    });
+    if (!res.ok) throw new Error('AI error ' + res.status);
+
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', fullText = '';
+    outputWrap.style.display = 'block';
+    outer: while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (!raw) continue;
+        let evt; try { evt = JSON.parse(raw); } catch { continue; }
+        if (evt.type === 'delta' && evt.text) {
+          fullText += evt.text;
+          output.textContent = fullText.replace(/\n{2,}/g, '\n');
+          status.textContent = `Enriching… ${fullText.split(/\s+/).length} words`;
+        } else if (evt.type === 'done') { break outer; }
+        else if (evt.type === 'error') throw new Error(evt.error || 'Stream error');
+      }
+    }
+    status.textContent = `Done. ${fullText.split(/\s+/).length} words enriched.`;
+    copyBtn.style.display = 'inline-block';
+  } catch(e) {
+    status.textContent = 'Error: ' + e.message;
+  }
+  btn.disabled = false;
+};
+
+window.selectDialog = (card) => {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('dialog-type-card').classList.add('selected');
+  document.getElementById('adapt-type-card').classList.remove('selected');
+  document.getElementById('enrich-type-card').classList.remove('selected');
+  state.type = 'dialog';
+  _hideAllStudioWraps();
+  document.getElementById('dialog-wrap').style.display = 'block';
+  document.getElementById('dialog-wrap').scrollIntoView({ behavior: 'smooth' });
+};
+
+// ── Helper: hide every Studio tool wrap and clear non-self adapt-card selection ──
+function _hideAllStudioWraps() {
+  ['planner-wrap','adapt-wrap','enrich-wrap','dialog-wrap','structural-wrap','scene-wrap','descriptor-wrap']
+    .forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+}
+function _clearAdaptCards() {
+  ['adapt-type-card','enrich-type-card','dialog-type-card','structural-type-card','scene-type-card','descriptor-type-card']
+    .forEach(id => document.getElementById(id)?.classList.remove('selected'));
+}
+
+// ── Three live tools: Structural Rebuild / Scene Builder / Descriptor Library ──
+window.selectStructural = () => {
+  _clearAdaptCards();
+  document.getElementById('structural-type-card').classList.add('selected');
+  state.type = 'structural';
+  _hideAllStudioWraps();
+  document.getElementById('structural-wrap').style.display = 'block';
+  document.getElementById('structural-wrap').scrollIntoView({ behavior: 'smooth' });
+};
+window.selectScene = () => {
+  _clearAdaptCards();
+  document.getElementById('scene-type-card').classList.add('selected');
+  state.type = 'scene';
+  _hideAllStudioWraps();
+  document.getElementById('scene-wrap').style.display = 'block';
+  document.getElementById('scene-wrap').scrollIntoView({ behavior: 'smooth' });
+};
+window.selectDescriptor = () => {
+  _clearAdaptCards();
+  document.getElementById('descriptor-type-card').classList.add('selected');
+  state.type = 'descriptor';
+  _hideAllStudioWraps();
+  document.getElementById('descriptor-wrap').style.display = 'block';
+  document.getElementById('descriptor-wrap').scrollIntoView({ behavior: 'smooth' });
+};
+
+// ── Manuscript store helpers ──
+function appCheckMsBtns() {
+  if (!window.gpMs?.hasMeta()) return;
+  ['enrich-ms-btn','dialog-ms-btn','structural-ms-btn','descriptor-ms-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'inline-block';
+  });
+}
+window.appUseMsText = function(targetId) {
+  const text = window.gpMs?.getText();
+  if (!text) return;
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  // cap at 8000 chars
+  el.value = text.slice(0, 8000);
+  el.dispatchEvent(new Event('input'));
+};
+document.addEventListener('DOMContentLoaded', () => { setTimeout(appCheckMsBtns, 400); });
+window.addEventListener('gp-manuscript-ready', appCheckMsBtns);
+
+// ── Shared runner for the three live tools ──
+async function _runAuthorTool({ toolType, payload, btnId, statusId, outputWrapId, outputId, copyBtnId, runningLabel, runLabel }) {
+  const btn = document.getElementById(btnId);
+  const status = document.getElementById(statusId);
+  const outputWrap = document.getElementById(outputWrapId);
+  const output = document.getElementById(outputId);
+  const copyBtn = document.getElementById(copyBtnId);
+
+  btn.disabled = true;
+  if (copyBtn) copyBtn.style.display = 'none';
+  outputWrap.style.display = 'none';
+  output.textContent = '';
+  status.textContent = runningLabel;
+
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) throw new Error('Not signed in');
+    const res = await fetch('/.netlify/functions/process-author-tool', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({ tool_type: toolType, payload }),
+    });
+    const data = await res.json();
+    if (res.status === 402) { status.textContent = `Out of credits. Need ${data.needed}, have ${data.have}.`; return; }
+    if (res.status === 413) { status.textContent = data.error || 'Input too long.'; return; }
+    if (!res.ok) throw new Error(data.error || ('Server error ' + res.status));
+    output.textContent = data.result || '';
+    outputWrap.style.display = 'block';
+    if (copyBtn) copyBtn.style.display = 'inline-block';
+    status.textContent = `Done. ${data.credits_remaining} credits remaining.`;
+    if (typeof loadCredits === 'function') loadCredits();
+  } catch (e) {
+    status.textContent = 'Error: ' + (e.message || String(e));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = runLabel;
+  }
+}
+
+window.runStructural = () => {
+  const text_block = document.getElementById('structural-source').value.trim();
+  if (!text_block) { document.getElementById('structural-status').textContent = 'Paste a chapter or act first.'; return; }
+  _runAuthorTool({
+    toolType: 'structural_rebuild',
+    payload: {
+      text_block,
+      intent: document.getElementById('structural-intent').value,
+      pacing_profile: document.getElementById('structural-pacing').value,
+    },
+    btnId: 'structural-btn', statusId: 'structural-status',
+    outputWrapId: 'structural-output-wrap', outputId: 'structural-output',
+    copyBtnId: 'structural-copy-btn',
+    runningLabel: 'Rebuilding structure…',
+    runLabel: '✦ Rebuild Structure →',
+  });
+};
+window.runScene = () => {
+  const premise = document.getElementById('scene-premise').value.trim();
+  if (!premise) { document.getElementById('scene-status').textContent = 'Enter a premise first.'; return; }
+  _runAuthorTool({
+    toolType: 'scene_builder',
+    payload: {
+      premise,
+      characters_present: document.getElementById('scene-characters').value,
+      pacing_tempo: document.getElementById('scene-tempo').value,
+    },
+    btnId: 'scene-btn', statusId: 'scene-status',
+    outputWrapId: 'scene-output-wrap', outputId: 'scene-output',
+    copyBtnId: 'scene-copy-btn',
+    runningLabel: 'Building scene…',
+    runLabel: '✦ Generate Scene →',
+  });
+};
+window.runDescriptor = () => {
+  const text_segment = document.getElementById('descriptor-source').value.trim();
+  if (!text_segment) { document.getElementById('descriptor-status').textContent = 'Paste a passage first.'; return; }
+  _runAuthorTool({
+    toolType: 'descriptor_library',
+    payload: {
+      text_segment,
+      focus_area: document.getElementById('descriptor-focus').value,
+      tone_profile: document.getElementById('descriptor-tone').value,
+    },
+    btnId: 'descriptor-btn', statusId: 'descriptor-status',
+    outputWrapId: 'descriptor-output-wrap', outputId: 'descriptor-output',
+    copyBtnId: 'descriptor-copy-btn',
+    runningLabel: 'Sharpening passage…',
+    runLabel: '✦ Sharpen Passage →',
+  });
+};
+window.copyOutput = (id) => {
+  const text = document.getElementById(id)?.textContent || '';
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+};
+
+let _dialogAmount = 'balanced';
+window.setDialogAmount = (btn) => {
+  document.querySelectorAll('#dialog-wrap .enrich-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _dialogAmount = btn.dataset.amount;
+};
+
+window.dialogCopy = () => {
+  const text = document.getElementById('dialog-output').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+};
+
+window.dialogAddConversation = async () => {
+  const source = document.getElementById('dialog-source').value.trim();
+  if (!source) { showToast('Paste a scene first', 'error'); return; }
+  const ctx = document.getElementById('dialog-context').value.trim();
+
+  const btn = document.getElementById('dialog-btn');
+  const status = document.getElementById('dialog-status');
+  const outputWrap = document.getElementById('dialog-output-wrap');
+  const output = document.getElementById('dialog-output');
+  const copyBtn = document.getElementById('dialog-copy-btn');
+
+  btn.disabled = true;
+  copyBtn.style.display = 'none';
+  outputWrap.style.display = 'none';
+  output.textContent = '';
+  status.textContent = 'Writing dialogue…';
+
+  const amountInstructions = {
+    light:    'Add a small amount of dialogue: one or two short exchanges that fit naturally into the scene.',
+    balanced: 'Weave in several exchanges of dialogue throughout the scene, balanced with the narrative prose.',
+    heavy:    'Add substantial dialogue throughout. Characters should drive much of the scene through conversation.',
+  };
+
+  const systemPrompt = 'You are Grey, a skilled literary ghost writer for Greylander Press. ' +
+    'You write sharp, character-revealing dialogue that fits naturally into prose. ' +
+    'Never use em dashes (\u2014). Use periods, commas, or short sentences instead. ' +
+    'Write in a natural human voice. Return only the rewritten scene. No preamble, no commentary.';
+
+  const contextLine = ctx ? `\n\nCharacters and tone: ${ctx}` : '';
+  const prompt = `Add dialogue to the following scene. ${amountInstructions[_dialogAmount]}${contextLine}\n\nRULES:\n- Do NOT change the plot beats or add new story events\n- Dialogue should reveal character, build tension, or deepen the moment\n- Integrate dialogue smoothly into the existing prose; do not replace narrative, add to it\n- Keep each character's voice distinct and consistent\n- Return the complete rewritten scene\n\nScene:\n${source}`;
+
+  try {
+    const res = await fetch('/.netlify/functions/proxy-gp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, maxTokens: 3000, system: systemPrompt }),
+    });
+    if (!res.ok) throw new Error('AI error ' + res.status);
+
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', fullText = '';
+    outputWrap.style.display = 'block';
+    outer: while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (!raw) continue;
+        let evt; try { evt = JSON.parse(raw); } catch { continue; }
+        if (evt.type === 'delta' && evt.text) {
+          fullText += evt.text;
+          output.textContent = fullText.replace(/\n{2,}/g, '\n');
+          status.textContent = `Writing… ${fullText.split(/\s+/).length} words`;
+        } else if (evt.type === 'done') { break outer; }
+        else if (evt.type === 'error') throw new Error(evt.error || 'Stream error');
+      }
+    }
+    status.textContent = `Done. ${fullText.split(/\s+/).length} words.`;
+    copyBtn.style.display = 'inline-block';
+  } catch(e) {
+    status.textContent = 'Error: ' + e.message;
+  }
+  btn.disabled = false;
+};
+
+window.adaptBuildOutline = async () => {
+  const sourceText = document.getElementById('adapt-source').value.trim();
+  const title = document.getElementById('adapt-title').value.trim();
+  const count = parseInt(document.getElementById('adapt-ch-slider')?.value || '20');
+  if (!sourceText) { showToast('Paste your source material first', 'error'); return; }
+
+  const btn = document.getElementById('adapt-btn');
+  const status = document.getElementById('adapt-status');
+  btn.disabled = true;
+  status.textContent = 'Analyzing structure…';
+
+  state.title = title || 'Untitled';
+  state.genre = 'Thriller';
+
+  const prompt = `You are analyzing source material to create a ${count}-chapter novel outline.\n\nReturn ONLY a valid JSON array with exactly ${count} objects. Each object must have:\n- "num": chapter number as integer\n- "title": chapter title, 4-8 words\n- "desc": exactly 2 sentences describing what happens in this chapter\n\nSource material:\n${sourceText.substring(0, 9000)}\n\nReturn only the JSON array. No explanation, no markdown, no code blocks. Start with [ and end with ].`;
+
+  try {
+    const res = await fetch('/.netlify/functions/proxy-gp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, maxTokens: 3500 }),
+    });
+    if (!res.ok) throw new Error('AI error ' + res.status);
+
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', fullText = '';
+    let chapterCount = 0;
+    outer: while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (!raw || raw === '[DONE]') continue;
+        let evt;
+        try { evt = JSON.parse(raw); } catch { continue; }
+        if (evt.type === 'delta' && evt.text) {
+          fullText += evt.text;
+          chapterCount = (fullText.match(/"num"/g) || []).length;
+          status.textContent = `Building outline… ${chapterCount} chapters so far`;
+        } else if (evt.type === 'done') { break outer; }
+        else if (evt.type === 'error') throw new Error(evt.error || 'Stream error');
+      }
+    }
+
+    const jsonMatch = fullText.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error('Could not parse outline. Try again');
+    const chapters = JSON.parse(jsonMatch[0]);
+    if (!Array.isArray(chapters) || !chapters.length) throw new Error('Invalid outline structure');
+
+    state.outline = chapters.map((ch, i) => ({
+      num: ch.num || i + 1,
+      title: ch.title || `Chapter ${i + 1}`,
+      desc: ch.desc || '',
+    }));
+
+    document.getElementById('plan-outline-list').innerHTML = state.outline.map(ch => `
+      <div class="outline-row" data-ch="${ch.num}">
+        <div class="outline-ch-num">Ch ${ch.num}</div>
+        <div>
+          <div class="outline-ch-title" contenteditable="true">${ch.title}</div>
+          <div class="outline-ch-desc">${ch.desc}</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('planner-wrap').style.display = 'block';
+    document.getElementById('plan-genre-section').style.display = 'none';
+    document.getElementById('plan-form').style.display = 'none';
+    document.getElementById('plan-outline-wrap').style.display = 'block';
+    document.getElementById('topbar-project').textContent = state.title;
+    updateGhostWriterContext();
+    buildChapterNav();
+    document.getElementById('plan-outline-wrap').scrollIntoView({ behavior: 'smooth' });
+    status.textContent = `${state.outline.length} chapters built. ✓ Click "Proceed to Ghost Writer" to start writing.`;
+    saveSession();
+  } catch(e) {
+    status.textContent = 'Error: ' + e.message;
+  }
+  btn.disabled = false;
+};
+
+window.selectType = (type, card) => {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  document.getElementById('adapt-type-card').classList.remove('selected');
+  document.getElementById('enrich-type-card').classList.remove('selected');
+  document.getElementById('dialog-type-card').classList.remove('selected');
+  state.type = type;
+  document.getElementById('adapt-wrap').style.display = 'none';
+  document.getElementById('enrich-wrap').style.display = 'none';
+  document.getElementById('dialog-wrap').style.display = 'none';
+  document.getElementById('plan-type-label').textContent = TYPE_LABELS[type];
+  document.getElementById('planner-wrap').style.display = 'block';
+
+  // Build genre grid
+  const grid = document.getElementById('plan-genre-grid');
+  grid.innerHTML = '';
+  GENRES[type].forEach(g => {
+    const div = document.createElement('div');
+    div.className = 'genre-card';
+    div.innerHTML = `<div class="genre-name">${g}</div>`;
+    div.onclick = () => selectGenre(g, div);
+    grid.appendChild(div);
+  });
+
+  // Show/hide chapters slider
+  document.getElementById('plan-chapters-row').style.display =
+    ['novel','short_story'].includes(type) ? 'block' : 'none';
+
+  document.getElementById('adapt-wrap').style.display = 'none';
+  document.getElementById('adapt-type-card').classList.remove('selected');
+  document.getElementById('plan-genre-section').style.display = 'block';
+  document.getElementById('plan-form').style.display = 'none';
+  document.getElementById('plan-outline-wrap').style.display = 'none';
+
+  // Rename protagonist/setting labels for screenplays
+  document.getElementById('plan-p-label').textContent = type === 'screenplay' ? 'Protagonist' : 'Protagonist / Main Character';
+  document.getElementById('plan-a-label').textContent = type === 'screenplay' ? 'Antagonist / Stakes' : 'Antagonist / Conflict';
+  document.getElementById('plan-s-label').textContent = type === 'screenplay' ? 'World / Setting' : 'Setting / Time Period';
+
+  document.getElementById('planner-wrap').scrollIntoView({ behavior: 'smooth' });
+  saveSession();
+};
+
+window.selectGenre = (genre, card) => {
+  document.querySelectorAll('.genre-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  state.genre = genre;
+  document.getElementById('plan-form').style.display = 'block';
+  document.getElementById('plan-form').scrollIntoView({ behavior: 'smooth' });
+  saveSession();
+};
+
+// ── Outline builder ───────────────────────────────────────────────────────────
+const FP_TEMPLATES = {
+  Literary:['Ordinary world & inner wound','Inciting disruption','First refusal of change','Crossing the threshold','New world / new relationships','Deepening complications','Point of no return','Crisis of identity','Dark night of the soul','Forced confrontation','Revelation & truth','Climactic choice','Aftermath & new equilibrium','Reflection','Closing image'],
+  Thriller:['Normal world — hidden threat','Inciting incident','Hero drawn in','Raising stakes','First clash with antagonist','Setback & regrouping','Midpoint revelation','Tightening trap','Betrayal','Race against time','Darkest hour','Final confrontation','Resolution','Denouement'],
+  Mystery:['Body / crime discovered','Detective introduced','First clues gathered','Red herring #1','Deepening investigation','Suspect pool revealed','Red herring #2','Key witness or break','Midpoint revelation','Danger to detective','Narrowing suspects','Final deduction','Confrontation','Resolution & justice'],
+  'Sci-Fi':['World-building & protagonist established','Discovery of anomaly','First contact / encounter','Initial response & wonder','Conflict emerges','Alliance formed','Midpoint escalation','Betrayal or complication','Point of no return','Sacrifice required','Final battle / choice','Aftermath','New world order','Reflection','Legacy'],
+  Historical:['Historical setting established','Protagonist introduced in context','Inciting event (historical trigger)','Drawn into larger events','First major conflict','Alliance & romance','Historical turning point','Personal cost','Crisis of loyalty','Dark moment','Decisive action','Climax tied to history','Personal resolution','Epilogue — historical impact'],
+  Romance:['Meet cute / first encounter','Attraction & tension','Forced proximity','Growing connection','First kiss / breakthrough','Obstacle introduced','Misunderstanding or pull-apart','Dark moment','Reconciliation attempt','Grand gesture','Resolution','HEA / HFN epilogue'],
+  Drama:['Opening tableau','Protagonist & world','Inciting conflict','Rising tension','Complication','Midpoint shift','Crisis deepens','Dark moment','Climax','Resolution'],
+  Tragedy:['Hero in glory','Fatal flaw revealed','First misstep','Rising hubris','Warning ignored','Point of no return','Cascade of consequences','Tragic climax','Recognition','Catharsis'],
+  'Free Verse':['Opening image / invocation','Central tension','Expansion & deepening','Turn','Closing resonance'],
+  Sonnet:['Quatrain 1 — theme introduction','Quatrain 2 — development','Quatrain 3 — complication','Couplet — volta & resolution'],
+  Feature:['Opening image','Ordinary world','Inciting incident','Debate','Break into Act 2','Fun & games','Midpoint','Bad guys close in','All is lost','Dark night of soul','Break into Act 3','Climax','Closing image'],
+};
+
+function getTemplate(type, genre) {
+  if (type === 'screenplay') return FP_TEMPLATES['Feature'] || [];
+  return FP_TEMPLATES[genre] || FP_TEMPLATES['Literary'];
+}
+
+function buildOutlineItems(type, genre, p, a, s, count) {
+  const tmpl = getTemplate(type, genre);
+  const items = [];
+  for (let i = 0; i < count; i++) {
+    const idx = Math.round((i / (count - 1)) * (tmpl.length - 1));
+    const beat = tmpl[Math.min(idx, tmpl.length - 1)];
+    const ch = beat
+      .replace(/\[P\]/g, p || 'the protagonist')
+      .replace(/\[A\]/g, a || 'the antagonist')
+      .replace(/\[S\]/g, s || 'the world');
+    items.push({ num: i + 1, title: `Chapter ${i + 1}`, desc: ch });
+  }
+  return items;
+}
+
+window.generateOutline = () => {
+  const p = document.getElementById('plan-p').value.trim();
+  const a = document.getElementById('plan-a').value.trim();
+  const s = document.getElementById('plan-s').value.trim();
+  const title = document.getElementById('plan-title').value.trim();
+  const count = parseInt(document.getElementById('plan-ch-slider')?.value || '12');
+
+  state.title  = title || 'Untitled';
+  state.author = document.getElementById('plan-author').value.trim();
+  state.outline = buildOutlineItems(state.type, state.genre, p, a, s, count);
+
+  const list = document.getElementById('plan-outline-list');
+  list.innerHTML = state.outline.map(ch => `
+    <div class="outline-row" data-ch="${ch.num}">
+      <div class="outline-ch-num">Ch ${ch.num}</div>
+      <div>
+        <div class="outline-ch-title" contenteditable="true">${ch.title}</div>
+        <div class="outline-ch-desc">${ch.desc}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('plan-outline-wrap').style.display = 'block';
+  document.getElementById('topbar-project').textContent = state.title;
+  updateGhostWriterContext();
+  document.getElementById('plan-outline-wrap').scrollIntoView({ behavior: 'smooth' });
+  saveSession();
+};
+
+window.expandOutlineAI = async () => {
+  const rows = Array.from(document.querySelectorAll('#plan-outline-list .outline-row'));
+  const status = document.getElementById('plan-ai-status');
+  const p = document.getElementById('plan-p').value.trim();
+  const a = document.getElementById('plan-a').value.trim();
+  const s = document.getElementById('plan-s').value.trim();
+  let errors = 0;
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const descEl = row.querySelector('.outline-ch-desc');
+    const beat = descEl.textContent;
+    status.textContent = `Expanding chapter ${i + 1} of ${rows.length}…`;
+    descEl.style.opacity = '0.4';
+    try {
+      const prompt = `You are outlining a ${state.genre} ${state.type} titled "${state.title}". Protagonist: ${p}. Antagonist/conflict: ${a}. Setting: ${s}.\n\nExpand this chapter beat into a 2–3 sentence synopsis that a novelist could use as a writing guide:\n"${beat}"\n\nReturn only the expanded synopsis, no preamble.`;
+      const text = await callProxyGP(prompt, 300);
+      descEl.textContent = text;
+      state.outline[i].desc = text;
+    } catch(e) {
+      errors++;
+      descEl.style.opacity = '1';
+      if (e.message === 'INSUFFICIENT_CREDITS') { status.textContent = 'Out of credits.'; return; }
+      status.textContent = `Ch ${i+1} failed: ${e.message}. Continuing…`;
+    }
+    descEl.style.opacity = '1';
+  }
+  status.textContent = errors ? `Done. ${errors} chapter(s) failed. Press Expand again to retry.` : 'Outline expanded. ✓';
+  updateGhostWriterContext();
+  saveSession();
+};
+
+window.proceedToWrite = () => {
+  updateGhostWriterContext();
+  buildChapterNav();
+  goStep(1);
+};
+
+function buildChapterNav() {
+  const nav = document.getElementById('gw-ch-nav');
+  const list = document.getElementById('gw-ch-list');
+  if (!nav || !list || !state.outline || !state.outline.length) return;
+  list.innerHTML = '';
+  state.outline.forEach((ch, i) => {
+    const item = document.createElement('div');
+    item.className = 'gw-ch-item';
+    item.dataset.idx = i;
+    item.innerHTML = `<span class="gw-ch-num">Ch ${ch.num}</span><span class="gw-ch-title">${ch.title || ch.desc?.slice(0,40) || ''}</span>`;
+    item.addEventListener('click', () => selectChapterForWriting(i));
+    list.appendChild(item);
+  });
+  nav.style.display = 'block';
+}
+
+function selectChapterForWriting(i) {
+  const ch = state.outline[i];
+  if (!ch) return;
+  // Highlight active
+  document.querySelectorAll('.gw-ch-item').forEach((el, j) => el.classList.toggle('active', j === i));
+  // Load context
+  const ctxBox = document.getElementById('gw-context-box');
+  const header = `${state.type?.replace('_',' ')} — ${state.genre}\nTitle: "${state.title}"\nAuthor: ${state.author || '—'}\n\n`;
+  const chBlock = `Chapter ${ch.num}: ${ch.title}\n${ch.desc || ''}`;
+  ctxBox.value = header + chBlock;
+  // Set mode to chapter draft and pre-fill prompt
+  const modeBtn = document.querySelector('.gw-mode-btn[onclick*="chapter"]');
+  if (modeBtn) setGwMode('chapter', modeBtn);
+  document.querySelectorAll('.gw-mode-btn').forEach(b => b.classList.toggle('active', b.getAttribute('onclick')?.includes("'chapter'")));
+  const prompt = document.getElementById('gw-prompt');
+  prompt.value = `Draft Chapter ${ch.num}: "${ch.title}"\n\n${ch.desc || ''}`;
+  prompt.focus();
+  saveSession();
+}
+
+function updateGhostWriterContext() {
+  const ctxBox = document.getElementById('gw-context-box');
+  if (!state.title && !state.outline.length) return;
+  const beats = state.outline.slice(0, 5).map(c => `Ch ${c.num}: ${c.desc}`).join('\n');
+  ctxBox.value = `${state.type?.replace('_',' ')} — ${state.genre}\nTitle: "${state.title}"\nAuthor: ${state.author || '—'}\n\nOutline (first 5):\n${beats}`;
+}
+
+// ── Ghost Writer ───────────────────────────────────────────────────────────────
+window.setGwMode = (mode, btn) => {
+  document.querySelectorAll('.gw-mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.gwMode = mode;
+
+  const hints = {
+    scene: 'Describe the scene: who is in it, where it takes place, and the key beat or tension.',
+    chapter: 'Describe the chapter\'s arc: how it starts, what shifts, how it ends.',
+    dialogue: 'Describe the exchange: who is speaking, what they want, and the subtext.',
+    continue: 'Paste or describe the last paragraph so the AI can continue from there.',
+    rewrite: 'Paste the passage you want improved and describe the direction.',
+    poem: 'Describe your poem: form, subject, tone, length.',
+    free: 'Enter any creative writing prompt.',
+  };
+  document.getElementById('gw-prompt').placeholder = hints[mode] || 'Describe what you want to write…';
+  saveSession();
+};
+
+window.gwGenerate = async () => {
+  const prompt = document.getElementById('gw-prompt').value.trim();
+  if (!prompt) return;
+  const btn = document.getElementById('gw-send-btn');
+  const status = document.getElementById('gw-status');
+  const output = document.getElementById('gw-output');
+
+  btn.disabled = true;
+  output.classList.remove('empty');
+  let elapsed = 0;
+  const timer = setInterval(() => {
+    elapsed++;
+    if (elapsed > 20) {
+      status.textContent = `Writing… ${elapsed}s. Taking longer than usual. If this stalls, try pasting just one chapter.`;
+    } else if (elapsed > 10) {
+      status.textContent = `Writing… ${elapsed}s (large document, hang tight)`;
+    } else {
+      status.textContent = `Writing… ${elapsed}s`;
+    }
+  }, 1000);
+  status.textContent = 'Writing… 0s';
+
+  const context = document.getElementById('gw-context-box').value;
+  const systemCtx = context.includes('Untitled') || context.includes('Complete the outline')
+    ? '' : `Project context:\n${context}\n\n`;
+
+  const modeInstructions = {
+    scene: 'Write a vivid, immersive scene.',
+    chapter: 'Write a complete chapter draft.',
+    dialogue: 'Write sharp, character-revealing dialogue.',
+    continue: 'Continue the narrative seamlessly.',
+    rewrite: 'Rewrite the passage with improved craft.',
+    poem: 'Write the poem with care for form and imagery.',
+    free: '',
+  };
+
+  const fullPrompt = `${systemCtx}${modeInstructions[state.gwMode] || ''}\n\nAuthor request: ${prompt}`;
+
+  const actionMap = {
+    scene: 'ghost_write', chapter: 'ghost_write', dialogue: 'ghost_write',
+    continue: 'ghost_continue', rewrite: 'ghost_rewrite',
+    poem: 'poem_write', free: 'ghost_write',
+  };
+
+  // Grey's panel
+  const greyPanel = document.getElementById('gw-grey-panel');
+  const greyThoughtEl = document.getElementById('gw-grey-thought');
+  const greyWcEl = document.getElementById('gw-grey-wc');
+  const greyAvatarEl = document.getElementById('gw-grey-avatar');
+  const modeThoughts = {
+    scene: [
+      'Finding the tension in the room\u2026',
+      'Placing everyone where they need to be\u2026',
+      'Watching the mark\u2026',
+      'Letting the silence do the work\u2026',
+      'The scene is turning\u2026',
+      'Every detail is a loaded gun\u2026',
+      'Someone is about to make a mistake\u2026',
+      'Grounding the reader before the hit\u2026',
+    ],
+    chapter: [
+      'Your protagonist is deciding something\u2026',
+      'Mapping the chapter arc\u2026',
+      'The clock is already running\u2026',
+      'Building toward the turn\u2026',
+      'Pressure building from the left\u2026',
+      'Layering in what they won\u2019t say\u2026',
+      'Something is about to change\u2026',
+      'Letting the pacing breathe before it sprints\u2026',
+    ],
+    dialogue: [
+      'Someone in this room is lying\u2026',
+      'Finding what they won\u2019t say directly\u2026',
+      'Every line is a move\u2026',
+      'Watching who blinks first\u2026',
+      'The threat beneath the pleasantries\u2026',
+      'Sharpening the exchange\u2026',
+      'Letting silence land between them\u2026',
+      'The subtext is doing the heavy work\u2026',
+    ],
+    continue: [
+      'Still watching the mark\u2026',
+      'Picking up the thread\u2026',
+      'The tension hasn\u2019t broken yet\u2026',
+      'Matching the pace of what came before\u2026',
+      'Keeping the pressure where you left it\u2026',
+      'Reading where you left off\u2026',
+      'Your voice, not mine\u2026',
+      'Staying in the current\u2026',
+    ],
+    rewrite: [
+      'The knife is precise here\u2026',
+      'Finding what\u2019s worth keeping\u2026',
+      'Cutting what the reader already knows\u2026',
+      'Making every word earn its place\u2026',
+      'Tightening without losing the heat\u2026',
+      'Clarifying the intention\u2026',
+      'Keeping the danger in\u2026',
+      'Looking at the bones of this\u2026',
+    ],
+    poem: [
+      'Feeling for the line breaks\u2026',
+      'The white space is part of it\u2026',
+      'Finding the image that earns it\u2026',
+      'Every line break is a decision\u2026',
+      'Listening for the cadence\u2026',
+      'Trusting compression\u2026',
+      'The image before the idea\u2026',
+      'Letting the form hold the weight\u2026',
+    ],
+    free: [
+      'The scene is turning\u2026',
+      'Your protagonist is deciding something\u2026',
+      'Following your lead\u2026',
+      'Watching what surfaces\u2026',
+      'Finding the voice in the silence\u2026',
+      'Not forcing it\u2026',
+      'Seeing where this wants to go\u2026',
+      'Trusting the instinct\u2026',
+    ],
+  };
+  const thoughts = modeThoughts[state.gwMode] || modeThoughts.free;
+  let tIdx = 0;
+  greyThoughtEl.textContent = thoughts[0];
+  greyPanel.classList.add('writing');
+  greyStopBlink();
+  greyWcEl.textContent = '';
+  const liveWcEl = document.getElementById('gw-live-wc');
+  const liveScEl = document.getElementById('gw-live-sc');
+  const livePaceEl = document.getElementById('gw-live-pace');
+  let liveWords = 0, liveSentences = 0, liveStartTime = Date.now();
+  liveWcEl.textContent = '0';
+  liveScEl.textContent = '0';
+  livePaceEl.textContent = '—';
+  const paceInterval = setInterval(() => {
+    const elapsedSec = (Date.now() - liveStartTime) / 1000;
+    if (elapsedSec > 1) livePaceEl.textContent = (liveWords / elapsedSec).toFixed(1) + ' w/s';
+  }, 2000);
+  const thoughtCycle = setInterval(() => {
+    greyThoughtEl.classList.add('fading');
+    setTimeout(() => {
+      tIdx = (tIdx + 1) % thoughts.length;
+      greyThoughtEl.textContent = thoughts[tIdx];
+      greyThoughtEl.classList.remove('fading');
+    }, 350);
+  }, 3500);
+
+  try {
+    const modeTokens = { scene:900, chapter:1200, dialogue:600, continue:900, rewrite:900, poem:500, free:900 };
+
+    // Prep output area before stream starts
+    const placeholder = 'Your writing will appear here. Select a mode and describe what to write.';
+    const existing = output.textContent === placeholder ? '' : output.textContent;
+    const separator = existing.trim() ? '\n\n——\n\n' : '';
+    output.classList.remove('empty');
+    output.textContent = existing + separator;
+
+    const gwCtrl = new AbortController();
+    const gwAbort = setTimeout(() => gwCtrl.abort(), 55000);
+    let gwRes;
+    try {
+      gwRes = await fetch('/.netlify/functions/proxy-gp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: fullPrompt, maxTokens: modeTokens[state.gwMode] || 700 }),
+        signal: gwCtrl.signal,
+      });
+    } finally { clearTimeout(gwAbort); }
+
+    if (!gwRes.ok) {
+      const e = await gwRes.json().catch(() => ({}));
+      throw new Error(e.error || 'Server error ' + gwRes.status);
+    }
+
+    // SSE reader — chunks arrive live, append directly to output
+    const gwReader = gwRes.body.getReader();
+    const gwDec = new TextDecoder();
+    let gwBuf = '', newText = '';
+    outer: while (true) {
+      const { done, value } = await gwReader.read();
+      if (done) break;
+      gwBuf += gwDec.decode(value, { stream: true });
+      const lines = gwBuf.split('\n');
+      gwBuf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (!raw || raw === '[DONE]') continue;
+        let evt;
+        try { evt = JSON.parse(raw); } catch { continue; }
+        if (evt.type === 'delta' && evt.text) {
+          newText += evt.text;
+          output.textContent = existing + separator + newText.replace(/\n{2,}/g, '\n');
+          output.scrollTop = output.scrollHeight;
+          liveWords = newText.trim() ? newText.trim().split(/\s+/).length : 0;
+          liveSentences = (newText.match(/[.!?]+/g) || []).length;
+          liveWcEl.textContent = liveWords.toLocaleString();
+          liveScEl.textContent = liveSentences.toString();
+        } else if (evt.type === 'done') {
+          break outer;
+        } else if (evt.type === 'error') {
+          throw new Error(evt.error || 'Stream error');
+        }
+      }
+    }
+
+    clearInterval(thoughtCycle);
+    clearInterval(timer);
+    clearInterval(paceInterval);
+    greyPanel.classList.remove('writing');
+    greyStartBlink();
+    state.gwText = output.textContent;
+    gwCountWords();
+    saveSession();
+    const newWords = newText.trim().split(/\s+/).length;
+    greyThoughtEl.textContent = `${newWords} words written. Press Write to keep going. I won't erase what's here.`;
+    greyWcEl.textContent = state.gwText.trim().split(/\s+/).length.toLocaleString() + ' total words';
+    status.textContent = `Done. ${elapsed}s`;
+    setTimeout(() => { if (status.textContent.startsWith('Done')) status.textContent = ''; }, 3000);
+    document.getElementById('gw-prompt').value = '';
+  } catch(e) {
+    clearInterval(thoughtCycle);
+    clearInterval(timer);
+    clearInterval(paceInterval);
+    greyPanel.classList.remove('writing');
+    greyStartBlink();
+    greyThoughtEl.textContent = 'Something went wrong. Try again.';
+    if (e.message !== 'INSUFFICIENT_CREDITS') {
+      status.textContent = 'Error: ' + e.message;
+    }
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+window.gwCountWords = () => {
+  const text = document.getElementById('gw-output').textContent;
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('gw-wordcount').textContent = words.toLocaleString() + ' words written';
+};
+
+window.gwCopy = () => {
+  navigator.clipboard.writeText(document.getElementById('gw-output').textContent);
+  showToast('Copied to clipboard');
+};
+
+window.gwDownload = () => {
+  const text = document.getElementById('gw-output').textContent;
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (state.title || 'manuscript') + '.txt';
+  a.click();
+};
+
+window.gwImportPDF = async (input) => {
+  const file = input.files[0];
+  if (!file) return;
+  const status = document.getElementById('gw-import-status');
+  status.textContent = 'Reading PDF…';
+
+  try {
+    const pdfjsLib = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs');
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs';
+
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const totalPages = pdf.numPages;
+    let fullText = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+      status.textContent = `Reading page ${i} of ${totalPages}…`;
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items.map(item => item.str).join(' ');
+      fullText += pageText + '\n\n';
+    }
+
+    fullText = fullText.trim();
+    const wordCount = fullText.split(/\s+/).length;
+
+    // Load into output area
+    const output = document.getElementById('gw-output');
+    output.classList.remove('empty');
+    output.textContent = fullText;
+    gwCountWords();
+
+    // Load context: title from filename + first 600 chars
+    const titleGuess = file.name.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ');
+    if (!state.title) { state.title = titleGuess; document.getElementById('topbar-project').textContent = titleGuess; }
+    const snippet = fullText.substring(0, 600).replace(/\s+/g, ' ');
+    document.getElementById('gw-context-box').value =
+      `Imported: "${titleGuess}"\n${totalPages} pages · ${wordCount.toLocaleString()} words\n\nOpening:\n${snippet}…`;
+
+    state.gwText = fullText;
+
+    if (wordCount > 8000 || totalPages > 30) {
+      status.style.color = '#c0392b';
+      status.textContent = `⚠ ${wordCount.toLocaleString()} words (${totalPages} pages). Too large. Please export a single chapter and upload that instead. Full manuscripts will time out.`;
+      document.getElementById('gw-context-box').value = '';
+      state.gwText = '';
+    } else {
+      status.style.color = 'var(--gold)';
+      status.textContent = `✓ ${wordCount.toLocaleString()} words imported (${totalPages} pages). Ready.`;
+    }
+
+    // Prime the prompt
+    document.getElementById('gw-prompt').value =
+      'Continue the story from where it leaves off, matching the author\'s voice and style.';
+    document.getElementById('gw-prompt').focus();
+    input.value = '';
+  } catch(e) {
+    status.textContent = 'Error: ' + e.message;
+  }
+};
+
+window.gwClear = () => {
+  if (!confirm('Clear all written text?')) return;
+  const el = document.getElementById('gw-output');
+  el.textContent = 'Your writing will appear here. Select a mode and describe what to write.';
+  el.classList.add('empty');
+  state.gwText = '';
+  gwCountWords();
+};
+
+// ── Grey Blink ────────────────────────────────────────────────────────────────
+var _greyBlinkInterval = null;
+function greyStartBlink() {
+  greyStopBlink();
+  var img = document.getElementById('gw-grey-avatar');
+  if (img) img.src = 'assets/Grey_Closed.png';
+  _greyBlinkInterval = setInterval(function() {
+    var img = document.getElementById('gw-grey-avatar');
+    if (!img) return;
+    img.src = 'assets/Grey_Open.png';
+    setTimeout(function() {
+      var img2 = document.getElementById('gw-grey-avatar');
+      if (img2) img2.src = 'assets/Grey_Closed.png';
+    }, 1000);
+  }, 3000);
+}
+function greyStopBlink() {
+  if (_greyBlinkInterval) { clearInterval(_greyBlinkInterval); _greyBlinkInterval = null; }
+  var img = document.getElementById('gw-grey-avatar');
+  if (img) img.src = 'assets/Grey_Open.png';
+}
+document.addEventListener('DOMContentLoaded', function() { greyStartBlink(); });
+document.addEventListener('DOMContentLoaded', function() { setTimeout(restoreSession, 300); });
+// ?step=N jumps directly to a pipeline step (1=Choose&Plan, 2=GhostWriter, 3=Cover, 4=Export)
+// ?tool=descriptor|adapt|scene opens the matching Ghost Writer sub-tool
+document.addEventListener('DOMContentLoaded', function() {
+  var params = new URLSearchParams(window.location.search);
+  var s = params.get('step');
+  if (s) { var idx = parseInt(s,10)-1; if (idx>=0 && idx<=3) setTimeout(function(){ goStep(idx); },300); }
+  var tool = params.get('tool');
+  var TOOL_FNS = { descriptor: 'selectDescriptor', adapt: 'selectAdapt', scene: 'selectScene' };
+  if (TOOL_FNS[tool]) {
+    setTimeout(function(){ if (typeof window[TOOL_FNS[tool]] === 'function') window[TOOL_FNS[tool]](); }, 600);
+  }
+});
+// Scroll to anchor from homepage links (e.g. app.html#coach-module-1)
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.hash) {
+    setTimeout(function() {
+      var el = document.querySelector(window.location.hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500);
+  }
+});
+
+window.gwGreyMinimize = function() {
+  document.getElementById('gw-grey-panel').classList.add('minimized');
+  document.getElementById('gw-layout').classList.add('grey-min');
+};
+window.gwGreyRestore = function() {
+  document.getElementById('gw-grey-panel').classList.remove('minimized');
+  document.getElementById('gw-layout').classList.remove('grey-min');
+};
+
+// ── Export & Publish ──────────────────────────────────────────────────────────
+window.selectTrim = (size, card) => {
+  document.querySelectorAll('.trim-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  state.trimSize = size;
+};
+
+window.exportKDP = () => {
+  if (!state.trimSize) { showToast('Select a trim size first', 'error'); return; }
+  const map = {
+    '5x8': '5x8', '5.06x7.81': '5.06x7.81', '5.5x8.5': '5.5x8.5',
+    '6x9': '6x9', '8.5x11': '8.5x11', '5.25x8': '5.25x8',
+  };
+  const file = `templates/${map[state.trimSize]}.pdf`;
+  window.open(file, '_blank');
+};
+
+window.submitToGP = async (listingType) => {
+  if (!state.trimSize) { showToast('Select a trim size first', 'error'); return; }
+  const status = document.getElementById('pub-status');
+  const isMGP  = listingType === 'made_with_gp';
+  const note   = isMGP
+    ? document.getElementById('pub-note-mgp').value.trim()
+    : document.getElementById('pub-note-imprint').value.trim();
+  const isbn   = isMGP
+    ? document.getElementById('isbn-request-mgp').checked
+    : document.getElementById('isbn-request-imprint').checked;
+
+  status.style.color = 'var(--text-dim)';
+  status.textContent = 'Submitting…';
+
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const res = await fetch('/.netlify/functions/catalog-add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({
+        title: state.title || 'Untitled',
+        author_name: state.author || state.user.email,
+        genre: state.genre,
+        project_type: state.type,
+        blurb: note,
+        trim_size: state.trimSize,
+        word_count: parseInt(document.getElementById('gw-wordcount')?.textContent) || null,
+        isbn_requested: isbn,
+        listing_type: listingType,
+      }),
+    });
+    const d = await res.json();
+    if (!res.ok) throw new Error(d.error || 'Submission failed');
+    status.style.color = 'var(--gold)';
+    status.textContent = isMGP
+      ? '✓ Listed in the GP catalog as "Made with GP". Catalog ID: ' + d.catalog_id
+      : '✓ Submitted for GP Imprint review. We will be in touch. Catalog ID: ' + d.catalog_id;
+  } catch(e) {
+    status.style.color = '#e74c3c';
+    status.textContent = 'Error: ' + e.message;
+  }
+};
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (type ? ' ' + type : '');
+  setTimeout(() => t.className = '', 3000);
+}
+window.showToast = showToast;
+</script>
+</body>
+</html>

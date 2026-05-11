@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World-Building Map Explorer — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<script src="assets/sample-pdfs.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-serif);font-size:1.05rem;line-height:1.7;min-height:100vh;}
+
+  .gp-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--border-default);gap:1.5rem;position:sticky;top:0;background:var(--bg-primary);z-index:100;}
+  .gp-topbar-logo{font-family:var(--font-display);font-size:1rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;}
+  .gp-topbar-back{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;flex:1;}
+  .gp-topbar-back:hover{color:var(--accent);}
+  .credit-badge{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border-default);padding:0.25rem 0.75rem;}
+
+  .wm-main{max-width:1100px;margin:0 auto;padding:3rem 2.5rem;}
+  .s-label{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;}
+  .s-title{font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--text-primary);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent);}
+  .s-sub{color:var(--text-muted);font-size:0.95rem;margin-bottom:2.5rem;max-width:680px;}
+  .divider{border:none;border-top:1px solid var(--border-default);margin:2.5rem 0;}
+
+  .step{display:none;}
+  .step.active{display:block;}
+
+  .wm-drop{border:2px dashed var(--border-default);padding:4rem 2rem;text-align:center;cursor:pointer;transition:all 0.2s;display:block;}
+  .wm-drop:hover, .wm-drop.dragover{border-color:var(--accent);background:var(--accent-soft);}
+  .wm-drop-icon{font-size:3rem;color:var(--accent);margin-bottom:1rem;line-height:1;}
+  .wm-drop-text{font-family:var(--font-display);font-size:1.3rem;color:var(--text-primary);margin-bottom:0.4rem;}
+  .wm-drop-sub{font-size:0.85rem;color:var(--text-muted);}
+  .wm-drop input{display:none;}
+  .upload-err{margin-top:1rem;color:var(--error);font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;min-height:1.2rem;}
+
+  .running{padding:5rem 2rem;text-align:center;}
+  .running-rune{font-size:3rem;color:var(--accent);animation:pulse 2s ease-in-out infinite;display:inline-block;line-height:1;}
+  @keyframes pulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+  .running-text{font-family:var(--font-display);font-size:1.4rem;color:var(--text-primary);margin-top:1.5rem;}
+  .running-sub{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-top:0.6rem;}
+
+  /* Map canvas */
+  .map-shell{display:grid;grid-template-columns:1fr 320px;gap:1.5rem;margin-top:1.5rem;}
+  .map-canvas-wrap{border:1px solid var(--border-default);background:var(--bg-secondary);height:600px;position:relative;overflow:hidden;}
+  #map-svg{width:100%;height:100%;display:block;cursor:grab;}
+  #map-svg:active{cursor:grabbing;}
+  .node-circle{cursor:pointer;transition:r 0.15s, fill 0.15s;}
+  .node-label{font-family:var(--font-display);font-size:11px;fill:var(--text-primary);pointer-events:none;text-anchor:middle;}
+  .node-circle.unestablished{stroke-dasharray:3 3;}
+  .edge-line{pointer-events:none;}
+
+  .map-side{border:1px solid var(--border-default);background:var(--surface);padding:1.4rem 1.5rem;height:fit-content;max-height:600px;overflow-y:auto;position:sticky;top:80px;}
+  .map-side-empty{color:var(--text-muted);font-style:italic;text-align:center;padding:2rem 0;font-size:0.92rem;}
+  .map-side-name{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--text-primary);margin-bottom:0.3rem;}
+  .map-side-type{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:0.8rem;}
+  .map-side-status{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;display:inline-block;padding:0.15rem 0.5rem;border:1px solid;margin-bottom:1rem;}
+  .map-side-status.established{color:var(--success);border-color:var(--success);}
+  .map-side-status.unestablished{color:var(--warning);border-color:var(--warning);}
+  .map-side-block{margin-bottom:0.9rem;}
+  .map-side-block-label{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;}
+  .map-side-block-text{color:var(--text-secondary);font-size:0.9rem;line-height:1.55;}
+  .map-side-scenes{display:flex;flex-wrap:wrap;gap:0.4rem;}
+  .map-side-scene{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;color:var(--text-muted);border:1px solid var(--border-default);padding:0.2rem 0.5rem;}
+
+  .map-legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);}
+  .map-legend-item{display:flex;align-items:center;gap:0.4rem;}
+  .map-legend-dot{width:12px;height:12px;border-radius:50%;}
+  .map-legend-dot.solid{background:var(--accent);}
+  .map-legend-dot.dashed{background:transparent;border:2px dashed var(--accent);}
+
+  .btn-gold{background:var(--btn-primary-bg);color:var(--btn-primary-text);border:none;padding:0.85rem 2rem;font-family:var(--font-display);font-size:0.95rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;}
+  .btn-gold:hover{background:var(--btn-primary-bg-hover);}
+  .btn-outline{background:none;border:1px solid var(--border-default);color:var(--text-muted);padding:0.7rem 1.5rem;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+  .auth-prompt{text-align:center;padding:5rem 2rem;border:1px solid var(--border-default);max-width:560px;margin:0 auto;}
+  .auth-prompt-title{font-family:var(--font-display);font-size:1.5rem;color:var(--text-primary);margin-bottom:1rem;}
+  .auth-prompt-body{color:var(--text-muted);margin-bottom:1.5rem;}
+
+  @media (max-width: 900px) {
+    .map-shell{grid-template-columns:1fr;}
+    .map-side{position:static;}
+  }
+
+  /* Cartographer Emir character intro panel */
+  .gp-char-intro{display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
+  .gp-char-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary);animation:gp-char-float 5.0s ease-in-out infinite;}
+  .gp-char-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gp-char-portrait .gp-char-closed{opacity:0;animation:gp-char-blink 5.6s infinite;}
+  @keyframes gp-char-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gp-char-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gp-char-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--accent);margin-bottom:0.4rem;}
+  .gp-char-greeting{font-family:var(--font-serif);font-size:1.05rem;line-height:1.6;color:var(--text-primary);}
+  .gp-char-greeting em{color:var(--accent);font-style:italic;}
+  @media(max-width:760px){
+    .gp-char-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gp-char-portrait{width:120px;height:155px;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="playground"></div>
+
+<header class="gp-topbar" style="display:none;">
+  <a class="gp-topbar-logo" href="index.html">GREYLANDER PRESS</a>
+  <a class="gp-topbar-back" href="index.html">← Back</a>
+  <span class="credit-badge" id="credit-badge">— credits</span>
+  <button class="theme-toggle" data-theme-toggle aria-label="Theme">
+    <span data-theme-icon>◐</span>
+    <span data-theme-label>Auto</span>
+  </button>
+</header>
+
+<main class="wm-main">
+
+  <div id="auth-required" class="auth-prompt" style="display:none;">
+    <div class="auth-prompt-title">Sign in required</div>
+    <p class="auth-prompt-body">The World-Building Map Explorer is credit-gated. Sign in or create a free account on the homepage first.</p>
+    <a href="index.html#auth" class="btn-gold">Sign In on Homepage →</a>
+  </div>
+
+  <div id="wm-flow" style="display:none;">
+
+    <div class="s-label">Author Playground</div>
+    <div class="s-title">World-Building <em>Map Explorer</em></div>
+    <p class="s-sub">Upload your manuscript. The Explorer maps every named location with what is established and what is named but undeveloped. Click a node to see its lore. 10 credits per map generation.</p>
+
+    <div class="gp-char-intro">
+      <div class="gp-char-portrait" aria-label="Cartographer Emir">
+        <img src="assets/Cartographer_Emir_Open.png" alt="Emir, the cartographer" class="gp-char-open">
+        <img src="assets/Cartographer_Emir_Closed.png" alt="" aria-hidden="true" class="gp-char-closed">
+      </div>
+      <div>
+        <div class="gp-char-name">Emir.</div>
+        <div class="gp-char-greeting">Cartographer. <em>Every place named in your manuscript wants a map.</em> Hand me your draft and I will pin every location, mark what is established, flag what is named but undeveloped, and chart how characters move between them. Click a pin and you get the lore in one paragraph.</div>
+      </div>
+    </div>
+
+    <div class="step active" id="upload-step">
+      <div class="s-label">Upload Manuscript</div>
+      <div style="font-family:var(--font-display);font-size:1.2rem;color:var(--text-primary);margin-bottom:1.5rem;">PDF only. Max 50 MB.</div>
+      <label class="wm-drop" id="drop-zone">
+        <input type="file" id="pdf-input" accept="application/pdf,.pdf">
+        <div class="wm-drop-icon">🗺</div>
+        <div class="wm-drop-text">Drop your manuscript PDF here</div>
+        <div class="wm-drop-sub">Or click to browse. 10 credits per generation.</div>
+      </label>
+      <div data-gp-samples data-input="#pdf-input"></div>
+      <div class="upload-err" id="upload-err"></div>
+    </div>
+
+    <div class="step" id="running-step">
+      <div class="running">
+        <div class="running-rune">🗺</div>
+        <div class="running-text">Mapping the world…</div>
+        <div class="running-sub">Extracting locations, lore, and connections</div>
+      </div>
+    </div>
+
+    <div class="step" id="map-step">
+      <div class="map-shell">
+        <div>
+          <div class="map-canvas-wrap">
+            <svg id="map-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <div class="map-legend">
+            <div class="map-legend-item"><span class="map-legend-dot solid"></span> Established</div>
+            <div class="map-legend-item"><span class="map-legend-dot dashed"></span> Named but not developed</div>
+          </div>
+          <div style="margin-top:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;">
+            <button class="btn-outline" onclick="resetMap()">New manuscript</button>
+            <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);align-self:center;" id="map-stats"></span>
+          </div>
+        </div>
+        <aside class="map-side" id="map-side">
+          <div class="map-side-empty">Click a node to see its lore.</div>
+        </aside>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script type="module">
+  const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const state = { user: null, file: null, session: null, nodes: [], edges: [], central: null };
+
+  // Defensive JSON parse (see character-interviewer for rationale)
+  async function safeJson(res, opLabel) {
+    const ct = res.headers.get('content-type') || '';
+    if (ct.includes('application/json')) return res.json();
+    const txt = await res.text().catch(() => '');
+    if (res.status === 413 || /too large|payload/i.test(txt)) {
+      throw new Error('Upload too large for the server (over 4 MB after encoding). Try a smaller PDF.');
+    }
+    if (res.status === 504 || res.status === 502) {
+      throw new Error('Server timed out during ' + opLabel + '. Try again, or use a smaller PDF.');
+    }
+    throw new Error('Server returned ' + res.status + ' (non-JSON response). Try again.');
+  }
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session?.user) {
+    document.getElementById('auth-required').style.display = 'block';
+  } else {
+    state.user = session.user;
+    state.session = session;
+    document.getElementById('wm-flow').style.display = 'block';
+    refreshCredits();
+  }
+
+  async function refreshCredits() {
+    try {
+      const { data } = await sb.from('gp_credits').select('balance').eq('user_id', state.user.id).single();
+      document.getElementById('credit-badge').textContent = (data?.balance ?? 0) + ' credits';
+    } catch {}
+  }
+
+  const drop = document.getElementById('drop-zone');
+  const pdfInput = document.getElementById('pdf-input');
+  drop?.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('dragover'); });
+  drop?.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+  drop?.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
+  pdfInput?.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); });
+
+  async function handleFile(file) {
+    const err = document.getElementById('upload-err');
+    err.textContent = '';
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) { err.textContent = 'PDF only.'; return; }
+    if (file.size > 4 * 1024 * 1024) { err.textContent = 'File too large for upload (max 4 MB). Compress or split the PDF.'; return; }
+    state.file = file;
+    showStep('running-step');
+
+    const pdfBase64 = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(',')[1]);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+
+    try {
+      const res = await fetch('/.netlify/functions/worldbuilding-map', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + state.session.access_token },
+        body: JSON.stringify({ pdfBase64 }),
+      });
+      const data = await safeJson(res, 'map generation');
+      if (res.status === 402) { showStep('upload-step'); err.textContent = `Out of credits. Need ${data.needed}, have ${data.have}.`; return; }
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      state.nodes = data.nodes || [];
+      state.edges = data.edges || [];
+      state.central = data.central_id;
+      document.getElementById('credit-badge').textContent = data.credits_remaining + ' credits';
+      renderMap();
+      showStep('map-step');
+
+      // Per-work catalog opt-in (declinable, 24h-suppressed per tool).
+      try {
+        window.sb = sb; window._gpSession = state.session;
+        const guessed = (state.file?.name || '').replace(/\.pdf$/i, '').trim();
+        window.GPCatalogOptIn?.maybePrompt({ tool: 'worldbuilding_map', suggestedTitle: guessed });
+      } catch {}
+    } catch (e) {
+      showStep('upload-step');
+      err.textContent = 'Map generation failed: ' + e.message;
+    }
+  }
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Simple force-directed layout
+  function renderMap() {
+    const svg = document.getElementById('map-svg');
+    svg.innerHTML = '';
+    const W = 800, H = 600;
+    const nodes = state.nodes.map(n => ({ ...n, x: W/2 + (Math.random()-0.5)*200, y: H/2 + (Math.random()-0.5)*200, vx: 0, vy: 0 }));
+    const idIndex = new Map(nodes.map((n, i) => [n.id, i]));
+    const edges = state.edges.filter(e => idIndex.has(e.source) && idIndex.has(e.target));
+
+    // Run a quick force simulation (200 ticks, no animation)
+    for (let iter = 0; iter < 200; iter++) {
+      // Repulsion
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i+1; j < nodes.length; j++) {
+          const dx = nodes[j].x - nodes[i].x;
+          const dy = nodes[j].y - nodes[i].y;
+          const d2 = dx*dx + dy*dy + 0.01;
+          const f = 1500 / d2;
+          const fx = f * dx / Math.sqrt(d2);
+          const fy = f * dy / Math.sqrt(d2);
+          nodes[i].vx -= fx; nodes[i].vy -= fy;
+          nodes[j].vx += fx; nodes[j].vy += fy;
+        }
+      }
+      // Attraction along edges
+      edges.forEach(e => {
+        const a = nodes[idIndex.get(e.source)];
+        const b = nodes[idIndex.get(e.target)];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d = Math.sqrt(dx*dx + dy*dy) + 0.01;
+        const f = (d - 120) * 0.05;
+        const fx = f * dx / d;
+        const fy = f * dy / d;
+        a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+      });
+      // Center pull
+      nodes.forEach(n => {
+        n.vx += (W/2 - n.x) * 0.005;
+        n.vy += (H/2 - n.y) * 0.005;
+      });
+      // Apply
+      nodes.forEach(n => {
+        n.vx *= 0.85; n.vy *= 0.85;
+        n.x += n.vx; n.y += n.vy;
+        n.x = Math.max(40, Math.min(W-40, n.x));
+        n.y = Math.max(40, Math.min(H-40, n.y));
+      });
+    }
+
+    // Draw edges
+    const NS = 'http://www.w3.org/2000/svg';
+    edges.forEach(e => {
+      const a = nodes[idIndex.get(e.source)];
+      const b = nodes[idIndex.get(e.target)];
+      const line = document.createElementNS(NS, 'line');
+      line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+      line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+      line.setAttribute('stroke', 'currentColor');
+      line.setAttribute('stroke-opacity', '0.25');
+      line.setAttribute('stroke-width', '1');
+      line.classList.add('edge-line');
+      svg.appendChild(line);
+    });
+
+    // Draw nodes
+    nodes.forEach((n, idx) => {
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('transform', `translate(${n.x}, ${n.y})`);
+      g.style.cursor = 'pointer';
+
+      const isCentral = n.id === state.central;
+      const r = isCentral ? 14 : 10;
+      const circle = document.createElementNS(NS, 'circle');
+      circle.setAttribute('r', r);
+      circle.setAttribute('fill', n.established ? 'var(--accent)' : 'var(--bg-primary)');
+      circle.setAttribute('stroke', 'var(--accent)');
+      circle.setAttribute('stroke-width', '2');
+      circle.classList.add('node-circle');
+      if (!n.established) circle.classList.add('unestablished');
+      g.appendChild(circle);
+
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('y', r + 14);
+      label.classList.add('node-label');
+      label.textContent = n.name || n.id;
+      g.appendChild(label);
+
+      g.addEventListener('click', () => showNodeDetails(n));
+      svg.appendChild(g);
+    });
+
+    // Stats
+    const established = state.nodes.filter(n => n.established).length;
+    document.getElementById('map-stats').textContent = `${state.nodes.length} locations · ${established} established · ${state.nodes.length - established} undeveloped`;
+  }
+
+  function showNodeDetails(n) {
+    const side = document.getElementById('map-side');
+    side.innerHTML = '';
+    const name = document.createElement('div'); name.className = 'map-side-name'; name.textContent = n.name || ''; side.appendChild(name);
+    const type = document.createElement('div'); type.className = 'map-side-type'; type.textContent = n.type || ''; side.appendChild(type);
+    const status = document.createElement('div'); status.className = 'map-side-status ' + (n.established ? 'established' : 'unestablished');
+    status.textContent = n.established ? 'Established' : 'Named but not developed';
+    side.appendChild(status);
+    const loreBlock = document.createElement('div'); loreBlock.className = 'map-side-block';
+    const loreLabel = document.createElement('div'); loreLabel.className = 'map-side-block-label'; loreLabel.textContent = 'Lore'; loreBlock.appendChild(loreLabel);
+    const loreText = document.createElement('div'); loreText.className = 'map-side-block-text'; loreText.textContent = n.lore || '—'; loreBlock.appendChild(loreText);
+    side.appendChild(loreBlock);
+    if (n.scenes && n.scenes.length) {
+      const sceneBlock = document.createElement('div'); sceneBlock.className = 'map-side-block';
+      const sceneLabel = document.createElement('div'); sceneLabel.className = 'map-side-block-label'; sceneLabel.textContent = 'Appears in'; sceneBlock.appendChild(sceneLabel);
+      const sceneList = document.createElement('div'); sceneList.className = 'map-side-scenes';
+      n.scenes.forEach(s => {
+        const tag = document.createElement('span'); tag.className = 'map-side-scene'; tag.textContent = s;
+        sceneList.appendChild(tag);
+      });
+      sceneBlock.appendChild(sceneList);
+      side.appendChild(sceneBlock);
+    }
+  }
+
+  window.resetMap = () => {
+    state.nodes = []; state.edges = []; state.central = null;
+    document.getElementById('pdf-input').value = '';
+    document.getElementById('upload-err').textContent = '';
+    document.getElementById('map-side').innerHTML = '<div class="map-side-empty">Click a node to see its lore.</div>';
+    showStep('upload-step');
+  };
+</script>
+<script src="assets/catalog-optin.js"></script>
+</body>
+</html>

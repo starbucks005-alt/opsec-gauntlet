@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan a Short Story or Novella — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary,#13100c);color:var(--text-primary,#f4ede0);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;line-height:1.7;min-height:100vh;padding-top:72px;}
+  .pn-main{max-width:1080px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--text-primary,#f4ede0);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent,#b8922a);}
+  .s-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted,#a89880);margin-bottom:0.9rem;max-width:680px;line-height:1.6;}
+  .gw-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.5rem;}
+  .gw-intro.minimized{display:none;}
+  .gw-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default,rgba(184,146,42,0.3));width:28px;height:28px;color:var(--text-muted,#a89880);cursor:pointer;font-family:'DM Mono',monospace;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .gw-min-btn:hover{color:var(--accent,#b8922a);border-color:var(--accent,#b8922a);}
+  .gw-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary,#13100c);animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gw-portrait .gw-closed{opacity:0;animation:gw-blink 5.6s infinite;}
+  @keyframes gw-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gw-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .gw-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--text-primary,#f4ede0);}
+  .gw-greeting em{color:var(--accent,#b8922a);font-style:italic;}
+  .gw-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-mini-badge.visible{display:flex;}
+  .gw-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .gw-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .gw-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary,#13100c);border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent,#b8922a);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .gw-mini-badge:hover .gw-mini-tooltip{opacity:1;}
+
+  .pn-step-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin:2rem 0 1rem;}
+
+  .len-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
+  .len-card{border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:1.25rem;cursor:pointer;transition:all 0.2s;position:relative;background:rgba(0,0,0,0.15);}
+  .len-card:hover{border-color:var(--accent,#b8922a);transform:translateY(-2px);}
+  .len-card.selected{border-color:var(--accent,#b8922a);background:rgba(184,146,42,0.08);}
+  .len-card.selected::before{content:'✓';position:absolute;top:0.6rem;right:0.7rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent,#b8922a);}
+  .len-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .len-words{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .len-hint{font-size:0.78rem;color:var(--text-muted,#a89880);line-height:1.5;}
+
+  .field-group{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  .field-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .field-input,.field-textarea{background:var(--input-bg,rgba(0,0,0,0.3));border:1px solid var(--input-border,rgba(184,146,42,0.25));color:var(--input-text,#f4ede0);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;width:100%;}
+  .field-input:focus,.field-textarea:focus{border-color:var(--accent,#b8922a);}
+  .field-textarea{min-height:88px;line-height:1.55;resize:vertical;}
+  .pn-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .btn-gold{background:var(--accent,#b8922a);color:#13100c;border:none;padding:0.95rem 2.2rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background 0.2s;}
+  .btn-gold:hover{background:#d4aa4a;}
+  .btn-outline{background:transparent;color:var(--accent,#b8922a);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.95rem 1.8rem;border:1px solid var(--border-default,rgba(184,146,42,0.3));cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--accent,#b8922a);}
+
+  .scene-area{display:none;margin-top:3rem;}
+  .scene-area.visible{display:block;}
+  .scene-header{border-bottom:1px solid var(--border-default,rgba(184,146,42,0.25));padding-bottom:1.4rem;margin-bottom:1.8rem;}
+  .scene-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .scene-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .scene-row{display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid rgba(184,146,42,0.1);}
+  .scene-row:last-child{border-bottom:none;}
+  .scene-num{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;color:var(--accent,#b8922a);min-width:3rem;padding-top:0.3rem;}
+  .scene-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.2rem;}
+  .scene-desc{font-size:0.92rem;color:var(--text-muted,#a89880);line-height:1.6;}
+  .cta-bar{display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap;align-items:center;}
+
+  @media(max-width:760px){
+    .pn-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.7rem;}
+    .pn-two-col{grid-template-columns:1fr;}
+    .gw-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gw-portrait{width:120px;height:155px;}
+    .len-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="pre"></div>
+
+<main class="pn-main">
+
+  <div class="s-label">Phase 02 — Pre-Project</div>
+  <h1 class="s-title">Plan a Short Story <em>or Novella</em>.</h1>
+  <p class="s-sub">Pick your length. Sketch your protagonist and the central pressure. Grey will lay out the scene map sized to fit.</p>
+
+  <div class="gw-intro" id="gw-intro">
+    <button class="gw-min-btn" onclick="gwMinimize()" aria-label="Minimize Grey" title="Minimize">−</button>
+    <div class="gw-portrait" aria-label="Grey, your writing partner">
+      <img src="assets/Grey_Open.png" alt="Grey, looking up from the page" class="gw-open">
+      <img src="assets/Grey_Closed.png" alt="" aria-hidden="true" class="gw-closed">
+    </div>
+    <div>
+      <div class="gw-name">Grey.</div>
+      <div class="gw-greeting">Your writing partner. <em>Compression is craft.</em> Short fiction lives or dies on what's left out. Tell me your length, your character, and what hurts; I'll sketch a scene map that fits the form. Flash carries one decisive moment. A novella can hold an arc.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 1 — Choose Your Length</div>
+  <div class="len-grid">
+    <div class="len-card" data-len="flash" onclick="selectLen(this)">
+      <div class="len-name">Flash Fiction</div>
+      <div class="len-words">Under 1,000 words</div>
+      <div class="len-hint">A single charged moment. One image, one decision, one reveal.</div>
+    </div>
+    <div class="len-card" data-len="short" onclick="selectLen(this)">
+      <div class="len-name">Short Story</div>
+      <div class="len-words">1,000 to 7,500 words</div>
+      <div class="len-hint">A complete arc in a few scenes. Pressure builds, breaks, settles.</div>
+    </div>
+    <div class="len-card" data-len="long" onclick="selectLen(this)">
+      <div class="len-name">Long Short Story</div>
+      <div class="len-words">7,500 to 20,000 words</div>
+      <div class="len-hint">Room for a subplot or a second viewpoint. Still tight.</div>
+    </div>
+    <div class="len-card" data-len="novella" onclick="selectLen(this)">
+      <div class="len-name">Novella</div>
+      <div class="len-words">20,000 to 40,000 words</div>
+      <div class="len-hint">A full arc with breathing room. Acts, turns, an interior.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 2 — Your Story</div>
+
+  <div class="field-group">
+    <label class="field-label" for="ss-title">Title</label>
+    <input class="field-input" type="text" id="ss-title" placeholder="e.g., The Last Window">
+  </div>
+
+  <div class="pn-two-col">
+    <div class="field-group">
+      <label class="field-label" for="ss-protag">Protagonist</label>
+      <input class="field-input" type="text" id="ss-protag" placeholder="Name. One sentence about them.">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="ss-setting">Setting</label>
+      <input class="field-input" type="text" id="ss-setting" placeholder="Where and when this story breathes">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="ss-conflict">What hurts? (the central pressure)</label>
+    <textarea class="field-textarea" id="ss-conflict" rows="3" placeholder="What is your protagonist trying to do, fear, lose, hide, or face?"></textarea>
+  </div>
+
+  <button class="btn-gold" onclick="generateScenes()">Build My Scene Map →</button>
+
+  <div class="scene-area" id="scene-area">
+    <div class="scene-header">
+      <div class="scene-title" id="scene-title">—</div>
+      <div class="scene-meta" id="scene-meta">—</div>
+    </div>
+    <div id="scene-rows"></div>
+
+    <div class="cta-bar">
+      <a href="publish.html" class="btn-outline">Submit to GP →</a>
+      <button class="btn-outline" onclick="resetAll()">Start Over</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="gw-mini-badge" id="gw-mini-badge" onclick="gwMaximize()" aria-label="Bring Grey back">
+  <img src="assets/quill pen.png" alt="Grey, minimized">
+  <span class="gw-mini-tooltip">Grey is here</span>
+</button>
+
+<script>
+let _len = null;
+
+function selectLen(card){
+  document.querySelectorAll('.len-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  _len = card.dataset.len;
+}
+
+window.gwMinimize = () => {
+  document.getElementById('gw-intro').classList.add('minimized');
+  document.getElementById('gw-mini-badge').classList.add('visible');
+};
+window.gwMaximize = () => {
+  document.getElementById('gw-intro').classList.remove('minimized');
+  document.getElementById('gw-mini-badge').classList.remove('visible');
+};
+
+const LEN_LABEL = {flash:'Flash Fiction', short:'Short Story', long:'Long Short Story', novella:'Novella'};
+const LEN_SCENES = {flash:3, short:5, long:8, novella:12};
+
+function buildScenes(len, p, s){
+  const count = LEN_SCENES[len] || 5;
+  if (len === 'flash'){
+    return [
+      {n:'Open', t:'The Image', d:`Drop the reader into ${s} with ${p} mid-tension. No setup. Trust the compression.`},
+      {n:'Turn', t:'The Decision', d:`${p} faces the choice the story is really about. Make the cost visible in one line.`},
+      {n:'Land', t:'The Reverberation', d:`The aftermath in a single beat. The image that stays after the page is closed.`},
+    ];
+  }
+  if (len === 'short'){
+    return [
+      {n:'1', t:'Equilibrium with a Crack', d:`${p} in ${s}, going about their life. The fault line is already visible.`},
+      {n:'2', t:'The Disturbance', d:`Something arrives, breaks, or is asked. ${p} cannot ignore it.`},
+      {n:'3', t:'The Engagement', d:`${p} acts. The world pushes back. Pressure rises in a single scene.`},
+      {n:'4', t:'The Reckoning', d:`${p} faces what the disturbance was actually about. The story's argument lands.`},
+      {n:'5', t:'The New Equilibrium', d:`Not return. Resettlement. The reader feels what shifted.`},
+    ];
+  }
+  if (len === 'long'){
+    return [
+      {n:'1', t:'World and Want', d:`${p} in ${s}. Show what they want and what they cannot say.`},
+      {n:'2', t:'Inciting Pressure', d:`The thing that triggers the story. Specific, concrete, irreversible.`},
+      {n:'3', t:'First Move', d:`${p} acts on the pressure. The action reveals character.`},
+      {n:'4', t:'Complication', d:`A second front opens. Personal stakes intertwine with the inciting pressure.`},
+      {n:'5', t:'Midpoint Reversal', d:`A reveal or a defeat that flips the story. ${p}'s plan must change.`},
+      {n:'6', t:'Closing In', d:`The combined pressures bear down. ${p} runs out of options.`},
+      {n:'7', t:'The Decisive Act', d:`${p} commits to the choice the story has been forcing them toward.`},
+      {n:'8', t:'After', d:`The cost is paid or refused. The reader feels the trade.`},
+    ];
+  }
+  // novella default
+  return [
+    {n:'1',  t:'Opening Image',           d:`Establish ${s}, the tone, and ${p}'s baseline. Plant the seed of the central pressure.`},
+    {n:'2',  t:'Want and Wound',          d:`${p}'s surface goal vs the deeper thing they cannot face.`},
+    {n:'3',  t:'Inciting Incident',       d:`The event that disturbs the equilibrium. ${p} cannot continue as before.`},
+    {n:'4',  t:'Crossing Over',           d:`${p} commits to a new course. Old life recedes; new pressures arrive.`},
+    {n:'5',  t:'Subplot Surfaces',        d:`A second thread (relationship, past, or place) introduces a parallel pressure.`},
+    {n:'6',  t:'Midpoint Reversal',       d:`A revelation, betrayal, or victory that flips the narrative trajectory.`},
+    {n:'7',  t:'Closing In',              d:`Antagonistic forces converge. ${p}'s choices narrow.`},
+    {n:'8',  t:'The Cost',                d:`Something ${p} valued is lost or surrendered. The story extracts its price.`},
+    {n:'9',  t:'Dark Beat',               d:`${p} at their lowest. A scene of grief, doubt, or stillness.`},
+    {n:'10', t:'New Resolve',             d:`${p} sees clearly. The path forward is hard but visible.`},
+    {n:'11', t:'Confrontation',           d:`The decisive scene. The story's argument is tested in action.`},
+    {n:'12', t:'Resolution',              d:`The new equilibrium. What was kept, what was given up. The final image.`},
+  ];
+}
+
+window.generateScenes = function(){
+  if (!_len){ alert('Please choose a length first.'); return; }
+  const title = document.getElementById('ss-title').value.trim() || 'Untitled';
+  const p = document.getElementById('ss-protag').value.trim() || 'the protagonist';
+  const s = document.getElementById('ss-setting').value.trim() || 'the world of the story';
+
+  const scenes = buildScenes(_len, p, s);
+  document.getElementById('scene-title').textContent = title;
+  document.getElementById('scene-meta').textContent = `${LEN_LABEL[_len]} · ${scenes.length} Scenes`;
+
+  const container = document.getElementById('scene-rows');
+  container.innerHTML = '';
+  scenes.forEach(scene => {
+    const row = document.createElement('div');
+    row.className = 'scene-row';
+    row.innerHTML = `<div class="scene-num">${scene.n}</div><div><div class="scene-name">${scene.t}</div><div class="scene-desc">${scene.d}</div></div>`;
+    container.appendChild(row);
+  });
+
+  const area = document.getElementById('scene-area');
+  area.classList.add('visible');
+  setTimeout(() => area.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+};
+
+window.resetAll = function(){
+  _len = null;
+  document.querySelectorAll('.len-card').forEach(c => c.classList.remove('selected'));
+  ['ss-title','ss-protag','ss-setting','ss-conflict'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('scene-area').classList.remove('visible');
+};
+</script>
+
+</body>
+</html>

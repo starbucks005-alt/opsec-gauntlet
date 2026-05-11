@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Character Portraits — Greylander Press</title>
+<link rel="icon" type="image/png" href="gp-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1815;
+    --paper: #f5f0e6;
+    --gold: #b8922a;
+    --gold-light: #d4ae47;
+    --teal: #2f6e6e;
+    --rust: #a85a3a;
+    --line: rgba(245,240,230,0.12);
+    --text: #f0e8d8;
+    --text-dim: rgba(240,232,216,0.65);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  a { color: var(--gold-light); }
+  .nav-back {
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color: var(--text-dim); text-decoration:none;
+    padding:8px 14px; border:1px solid var(--line);
+  }
+  .nav-back:hover { color: var(--gold-light); border-color: rgba(184,146,42,0.4); }
+  header {
+    padding: 28px 40px 8px;
+    border-bottom: 1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:14px;
+  }
+  header h1 {
+    font-family:'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+  }
+  header h1 em { color: var(--gold); font-style: italic; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 28px 40px 80px; }
+
+  .panel {
+    background: rgba(245,240,230,0.03);
+    border: 1px solid var(--line);
+    padding: 24px 28px;
+    margin-bottom: 22px;
+  }
+  .panel h2 {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 14px;
+  }
+  label.field { display:block; margin-bottom:14px; }
+  label.field .lbl {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--text-dim); margin-bottom: 5px; display:block;
+  }
+  input[type="text"], select, textarea {
+    width:100%; padding:9px 12px;
+    background: rgba(0,0,0,0.3); color: var(--text);
+    border: 1px solid var(--line);
+    font-family:'Inter',sans-serif; font-size:13px;
+    outline:none;
+  }
+  input[type="text"]:focus, select:focus, textarea:focus { border-color: rgba(184,146,42,0.5); }
+  textarea { resize: vertical; line-height: 1.5; min-height: 80px; }
+  select { background: var(--ink); }
+
+  .btn {
+    display:inline-block; cursor:pointer;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    padding:10px 20px; font-weight:600; border:none;
+  }
+  .btn-primary { background: var(--gold); color: var(--ink); }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: rgba(184,146,42,0.5); }
+
+  .upload-zone {
+    border: 2px dashed rgba(184,146,42,0.3);
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .upload-zone:hover, .upload-zone.drag {
+    border-color: var(--gold);
+    background: rgba(184,146,42,0.06);
+  }
+  .upload-zone .uz-emoji { font-size: 32px; margin-bottom: 8px; }
+  .upload-zone .uz-prim { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color: var(--gold-light); text-transform:uppercase; font-weight:600; }
+  .upload-zone .uz-sub { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  .upload-zone input { display: none; }
+
+  .character-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .char-card {
+    background: rgba(245,240,230,0.04);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .char-card-header { padding: 14px 18px 8px; }
+  .char-name {
+    font-family:'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; margin: 0;
+  }
+  .char-desc {
+    font-size: 12px; color: var(--text-dim);
+    line-height: 1.55; margin: 6px 0 0;
+    display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .char-image-wrap {
+    position: relative; aspect-ratio: 1 / 1;
+    background: rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 14px 18px 0;
+    border: 1px solid var(--line);
+  }
+  .char-image-wrap img { width: 100%; height: 100%; object-fit: cover; display:block; }
+  .char-image-empty {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; color: rgba(245,240,230,0.3); letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .char-image-spinner {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; color: var(--gold); letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .char-actions {
+    padding: 12px 18px 16px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .char-actions .btn { flex: 1; min-width: 110px; padding: 8px 12px; font-size: 10px; }
+  .lock-badge {
+    display:inline-block; font-family:'JetBrains Mono',monospace;
+    font-size:9px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:2px 8px; background: var(--gold); color: var(--ink); margin-left: 6px;
+  }
+  .prompt-box {
+    margin: 0 18px 16px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(184,146,42,0.4);
+    padding: 12px 14px;
+    display: none;
+  }
+  .prompt-box.show { display: block; }
+  .prompt-box-label {
+    font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold-light); margin-bottom: 6px;
+  }
+  .prompt-text {
+    font-family:'JetBrains Mono',monospace; font-size: 11px; line-height: 1.6;
+    color: var(--text-dim); white-space: pre-wrap; word-break: break-word; margin: 0 0 10px;
+  }
+  .prompt-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .prompt-actions .btn { font-size: 9px; padding: 6px 10px; }
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--ink); border: 1px solid var(--gold);
+    padding: 12px 18px; font-size: 12px; color: var(--text);
+    z-index: 99; max-width: 320px;
+  }
+  .toast.error { border-color: #c0413a; }
+  .legal {
+    font-size: 11px; color: var(--text-dim); line-height: 1.6;
+    margin-top: 22px; padding: 14px 18px;
+    background: rgba(0,0,0,0.25); border-left: 3px solid var(--gold);
+  }
+  .legal strong { color: var(--gold-light); }
+  .auth-block {
+    text-align:center; padding: 60px 30px; max-width: 540px; margin: 60px auto;
+    border: 1px solid var(--line); background: rgba(245,240,230,0.03);
+  }
+  /* Chris (cover & character artist) intro — matches cover-generator.html */
+  .gp-char-intro {
+    display:grid; grid-template-columns:auto 1fr; gap:1.8rem; align-items:center;
+    border:1px solid rgba(184,146,42,0.4); background:rgba(184,146,42,0.05);
+    padding:1.6rem 1.8rem; margin: 0 0 2rem; max-width: 1100px;
+  }
+  .gp-char-portrait {
+    position:relative; width:160px; height:200px; flex-shrink:0; overflow:hidden;
+    border:1px solid rgba(184,146,42,0.4); background: var(--ink);
+    animation: gp-char-float 5s ease-in-out infinite;
+  }
+  .gp-char-portrait img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .gp-char-portrait .gp-char-closed { opacity:0; animation: gp-char-blink 5.6s infinite; }
+  @keyframes gp-char-blink { 0%, 95%, 100% { opacity:0; } 97% { opacity:1; } }
+  @keyframes gp-char-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .gp-char-name {
+    font-family:'Playfair Display', serif;
+    font-size: 1.2rem; font-weight:700; color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .gp-char-greeting {
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px; line-height: 1.6; color: var(--text);
+  }
+  .gp-char-greeting em { color: var(--gold-light); font-style: italic; }
+  @media (max-width: 760px) {
+    .gp-char-intro { grid-template-columns: 110px 1fr; gap: 1rem; padding: 1.2rem; }
+    .gp-char-portrait { width: 110px; height: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Character <em>Portraits</em></h1>
+  <a class="nav-back" href="index.html">← Greylander Press</a>
+</header>
+
+<div id="auth-gate" class="container" style="display:none;">
+  <div class="auth-block">
+    <h2 style="font-family:'Playfair Display',serif;font-size:22px;margin:0 0 10px;">Sign in to generate portraits</h2>
+    <p style="color:var(--text-dim);">Character extraction and image generation use your account credits and store your portraits privately.</p>
+    <p style="margin-top:18px;"><a class="btn btn-primary" href="login.html?redirect=character-portraits">Sign in →</a></p>
+  </div>
+</div>
+
+<div id="app" class="container" style="display:none;">
+
+  <div class="gp-char-intro">
+    <div class="gp-char-portrait" aria-label="Chris, the cover and character artist">
+      <img src="assets/Chris_Artist_Eyes2_Open.png" alt="Chris, art director" class="gp-char-open">
+      <img src="assets/Chris_Artist_Eyes2_Closed.png" alt="" aria-hidden="true" class="gp-char-closed">
+    </div>
+    <div>
+      <div class="gp-char-name">Chris.</div>
+      <div class="gp-char-greeting">
+        Cover and character artist. <em>Drop your book; I will sketch your cast.</em>
+        I read the manuscript, pull every named character with the descriptions you wrote, and render portraits in one click. Lock the one you like and I reveal the exact prompt — copy it into Midjourney, Flux, Firefly, or anywhere you want to keep iterating.
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="upload-panel">
+    <h2>1. Upload your book</h2>
+    <p style="font-size:13px;color:var(--text-dim);margin:0 0 16px;line-height:1.6;">
+      PDF or .txt of your manuscript. I extract every named character, suggest a portrait prompt for each, and let you generate images with one click. The exact prompt is revealed when you lock a portrait — copy it into Midjourney, Flux, Firefly, or any tool you prefer.
+    </p>
+    <label class="field">
+      <span class="lbl">Book title (optional)</span>
+      <input type="text" id="book-title" placeholder="e.g., The Midnight Press">
+    </label>
+    <label class="field">
+      <span class="lbl">Visual style (one style for all characters in this book — keeps the cast cohesive)</span>
+      <select id="book-style">
+        <option value="cinematic realistic portrait">Cinematic realistic portrait</option>
+        <option value="oil painting, classical portrait">Oil painting, classical</option>
+        <option value="watercolor portrait, soft light">Watercolor, soft light</option>
+        <option value="ink and pencil line art, monochrome">Ink &amp; pencil line art (monochrome)</option>
+        <option value="graphic novel ink illustration, bold linework">Graphic novel ink, bold linework</option>
+        <option value="anime illustration, clean cel shading">Anime, clean cel shading</option>
+        <option value="charcoal sketch, dramatic shadow">Charcoal sketch, dramatic shadow</option>
+        <option value="photoreal studio headshot">Photoreal studio headshot</option>
+      </select>
+    </label>
+    <label class="upload-zone" id="upload-zone">
+      <div class="uz-emoji">📚</div>
+      <div class="uz-prim" id="uz-prim">Drop PDF here or click to browse</div>
+      <div class="uz-sub">PDF or .txt · 25 MB max · text-extractable (not scanned-image)</div>
+      <input type="file" id="book-file" accept=".pdf,.txt,.md,application/pdf,text/plain">
+    </label>
+    <div id="upload-status" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);"></div>
+  </div>
+
+  <div id="characters-panel" class="panel" style="display:none;">
+    <h2 id="characters-title">2. Generate portraits</h2>
+    <p style="font-size:13px;color:var(--text-dim);margin:0 0 16px;line-height:1.6;">
+      Click <strong>Generate</strong> on any character. When you're happy, click <strong>Lock</strong> — the prompt used is revealed for you to copy.
+    </p>
+    <div class="character-grid" id="characters-grid"></div>
+  </div>
+
+  <div class="legal">
+    <strong>About these images:</strong> AI-generated character portraits are intended as reference and promotional companions to your manuscript — for character development, marketing, social media, or your own creative work. The U.S. Copyright Office does not currently register works generated solely by AI, so treat AI-rendered portraits as supplementary art and keep your copyright registration on the manuscript text itself. Locked portraits stay private to your account; we surface the prompt so you can take it elsewhere if you want.
+  </div>
+</div>
+
+<div id="toast-host"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+const state = {
+  user: null,
+  bookSignature: null,
+  characters: [],   // book_characters rows from server, augmented with .latestPortrait
+};
+
+function toast(msg, isError) {
+  const t = document.createElement('div');
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.textContent = msg;
+  document.getElementById('toast-host').appendChild(t);
+  setTimeout(() => { t.style.transition = 'opacity .4s'; t.style.opacity = 0; setTimeout(() => t.remove(), 400); }, 4500);
+}
+function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    document.getElementById('auth-gate').style.display = 'block';
+    return;
+  }
+  state.user = session.user;
+  document.getElementById('app').style.display = 'block';
+  setupUpload();
+}
+
+function setupUpload() {
+  const zone   = document.getElementById('upload-zone');
+  const input  = document.getElementById('book-file');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag');
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+  input.addEventListener('change', e => { if (e.target.files.length) handleFile(e.target.files[0]); });
+}
+
+function startStatusProgress(el, lines) {
+  const start = Date.now();
+  let lineIdx = 0;
+  let dotIdx = 0;
+  const tick = () => {
+    const secs = Math.floor((Date.now() - start) / 1000);
+    const dots = '.'.repeat(dotIdx % 4);
+    el.textContent = lines[lineIdx % lines.length] + dots + '   (' + secs + 's)';
+    dotIdx++;
+    if (dotIdx % 12 === 0) lineIdx++;
+  };
+  tick();
+  const id = setInterval(tick, 400);
+  return () => clearInterval(id);
+}
+
+async function handleFile(file) {
+  const status = document.getElementById('upload-status');
+  if (file.size > 25 * 1024 * 1024) { status.textContent = 'File exceeds 25 MB.'; status.style.color = '#c0413a'; return; }
+  status.textContent = 'Reading ' + file.name + '...';
+  status.style.color = 'var(--gold)';
+
+  // Read as base64
+  let b64;
+  try {
+    const arrayBuf = await file.arrayBuffer();
+    const bytes = new Uint8Array(arrayBuf);
+    let binary = '';
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    b64 = btoa(binary);
+  } catch (e) { status.textContent = 'Could not read file: ' + e.message; status.style.color = '#c0413a'; return; }
+
+  status.style.color = 'var(--gold)';
+  const stopProgress = startStatusProgress(status, [
+    'Chris is reading your manuscript',
+    'Chris is meeting your characters',
+    'Chris is making notes in the margins',
+    'Chris is wetting the brush',
+    'Chris is mixing the paint',
+    'Chris is sketching out faces',
+    'Chris is double-checking the cast list',
+  ]);
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { stopProgress(); status.textContent = 'Sign in expired. Please reload.'; return; }
+  try {
+    const res = await fetch('/.netlify/functions/extract-book-characters', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({
+        filename:       file.name,
+        content_base64: b64,
+        book_title:     document.getElementById('book-title').value || file.name,
+        book_style:     document.getElementById('book-style').value,
+      }),
+    });
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch { throw new Error(res.status === 502 || res.status === 504 || /<html/i.test(text) ? 'Server timed out reading this manuscript. Try a shorter excerpt, or upload again — sometimes a retry is enough.' : ('HTTP ' + res.status)); }
+    if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    state.bookSignature = data.book_signature;
+    state.characters    = (data.characters || []).map(c => ({ ...c, latestPortrait: null, generating: false }));
+    stopProgress();
+    status.textContent = 'Found ' + state.characters.length + ' character' + (state.characters.length === 1 ? '' : 's') + (data.truncated ? ' (book truncated for processing)' : '') + '.';
+    status.style.color = '#5a9e6f';
+    await loadExistingPortraits();
+    renderCharacters();
+  } catch (e) {
+    stopProgress();
+    status.textContent = 'Extraction failed: ' + e.message;
+    status.style.color = '#c0413a';
+  }
+}
+
+async function loadExistingPortraits() {
+  if (!state.characters.length) return;
+  const ids = state.characters.map(c => c.id);
+  const { data, error } = await sb
+    .from('character_portraits')
+    .select('*')
+    .in('character_id', ids)
+    .order('created_at', { ascending: false });
+  if (error) return;
+  // Prefer the locked portrait, else the most recent
+  const byChar = {};
+  (data || []).forEach(p => {
+    const cur = byChar[p.character_id];
+    if (!cur || (p.locked && !cur.locked)) byChar[p.character_id] = p;
+  });
+  state.characters.forEach(c => { c.latestPortrait = byChar[c.id] || null; });
+}
+
+function renderCharacters() {
+  const panel = document.getElementById('characters-panel');
+  const grid  = document.getElementById('characters-grid');
+  panel.style.display = state.characters.length ? 'block' : 'none';
+  document.getElementById('characters-title').textContent =
+    '2. Generate portraits — ' + state.characters.length + ' character' + (state.characters.length === 1 ? '' : 's');
+
+  grid.innerHTML = state.characters.map((c, i) => {
+    const p = c.latestPortrait;
+    const lockedBadge = p && p.locked ? '<span class="lock-badge">🔒 Locked</span>' : '';
+    const imageBlock = p
+      ? '<img src="' + escapeHtml(p.image_url) + '" alt="Portrait of ' + escapeHtml(c.character_name) + '">'
+      : (c.generating
+         ? '<div class="char-image-spinner" id="spinner-' + i + '">Chris is prepping the canvas</div>'
+         : '<div class="char-image-empty">no portrait yet</div>');
+    const promptBlock = (p && p.locked) ? '<div class="prompt-box show" id="prompt-' + i + '">'
+      + '<div class="prompt-box-label">★ Prompt used (copy to Midjourney, Flux, Firefly, etc.)</div>'
+      + '<div class="prompt-text">' + escapeHtml(p.prompt_used) + '</div>'
+      + '<div class="prompt-actions">'
+      +   '<button class="btn btn-ghost" onclick="copyPrompt(' + i + ')">📋 Copy prompt</button>'
+      +   '<a class="btn btn-ghost" href="' + escapeHtml(p.image_url) + '" target="_blank" rel="noopener">↗ Open image</a>'
+      + '</div>'
+    + '</div>' : '';
+
+    return '<div class="char-card" id="card-' + i + '">'
+      + '<div class="char-card-header">'
+      +   '<h3 class="char-name">' + escapeHtml(c.character_name) + lockedBadge + '</h3>'
+      +   '<div class="char-desc">' + escapeHtml(c.character_description || '') + '</div>'
+      + '</div>'
+      + '<div class="char-image-wrap">' + imageBlock + '</div>'
+      + '<div class="char-actions">'
+      +   (p ? '<button class="btn btn-ghost" onclick="generatePortrait(' + i + ')" ' + (c.generating ? 'disabled' : '') + '>↻ Regenerate</button>' : '<button class="btn btn-primary" onclick="generatePortrait(' + i + ')" ' + (c.generating ? 'disabled' : '') + '>Generate →</button>')
+      +   (p ? '<button class="btn ' + (p.locked ? 'btn-ghost' : 'btn-primary') + '" onclick="toggleLock(' + i + ')">' + (p.locked ? '🔓 Unlock' : '🔒 Lock this') + '</button>' : '')
+      + '</div>'
+      + promptBlock
+    + '</div>';
+  }).join('');
+}
+
+async function generatePortrait(i) {
+  const c = state.characters[i];
+  if (!c || c.generating) return;
+  c.generating = true;
+  renderCharacters();
+
+  const spinner = document.getElementById('spinner-' + i);
+  const stopProgress = spinner ? startStatusProgress(spinner, [
+    'Chris is mixing the paint',
+    'Chris is sketching the outline',
+    'Chris is laying down base colors',
+    'Chris is shaping the face',
+    'Chris is adding shadows and highlights',
+    'Chris is finishing the eyes',
+    'Chris is stepping back to compare',
+    'Chris is signing the canvas',
+  ]) : () => {};
+
+  const { data: { session } } = await sb.auth.getSession();
+  try {
+    const currentStyle = (document.getElementById('book-style')?.value || '').trim();
+    const res = await fetch('/.netlify/functions/generate-character-portrait', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({ character_id: c.id, book_style: currentStyle }),
+    });
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch { throw new Error(res.status === 502 || res.status === 504 || /<html/i.test(text) ? 'Server timed out painting this portrait. Try again.' : ('HTTP ' + res.status)); }
+    if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+    c.latestPortrait = data.portrait;
+    toast('Portrait generated for ' + c.character_name + '.');
+  } catch (e) {
+    toast('Generation failed: ' + e.message, true);
+  } finally {
+    stopProgress();
+    c.generating = false;
+    renderCharacters();
+  }
+}
+
+async function toggleLock(i) {
+  const c = state.characters[i];
+  if (!c || !c.latestPortrait) return;
+  const wantLocked = !c.latestPortrait.locked;
+  const { data: { session } } = await sb.auth.getSession();
+  try {
+    const res = await fetch('/.netlify/functions/lock-character-portrait', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({ portrait_id: c.latestPortrait.id, locked: wantLocked }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+    c.latestPortrait = data.portrait;
+    toast(wantLocked ? 'Locked. Prompt revealed below the image.' : 'Unlocked.');
+    renderCharacters();
+  } catch (e) {
+    toast('Lock toggle failed: ' + e.message, true);
+  }
+}
+
+function copyPrompt(i) {
+  const c = state.characters[i];
+  if (!c || !c.latestPortrait) return;
+  navigator.clipboard.writeText(c.latestPortrait.prompt_used).then(() => toast('Prompt copied to clipboard.'));
+}
+
+window.generatePortrait = generatePortrait;
+window.toggleLock      = toggleLock;
+window.copyPrompt      = copyPrompt;
+
+init();
+</script>
+</body>
+</html>

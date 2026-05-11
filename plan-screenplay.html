@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan a Screenplay — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary,#13100c);color:var(--text-primary,#f4ede0);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;line-height:1.7;min-height:100vh;padding-top:72px;}
+
+  .pn-main{max-width:1080px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+
+  .s-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--text-primary,#f4ede0);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent,#b8922a);}
+  .s-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted,#a89880);margin-bottom:0.9rem;max-width:680px;line-height:1.6;}
+
+  .gw-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.5rem;}
+  .gw-intro.minimized{display:none;}
+  .gw-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default,rgba(184,146,42,0.3));width:28px;height:28px;color:var(--text-muted,#a89880);cursor:pointer;font-family:'DM Mono',monospace;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .gw-min-btn:hover{color:var(--accent,#b8922a);border-color:var(--accent,#b8922a);}
+  .gw-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary,#13100c);animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gw-portrait .gw-closed{opacity:0;animation:gw-blink 5.6s infinite;}
+  @keyframes gw-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gw-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .gw-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--text-primary,#f4ede0);}
+  .gw-greeting em{color:var(--accent,#b8922a);font-style:italic;}
+
+  .gw-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-mini-badge.visible{display:flex;}
+  .gw-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .gw-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .gw-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary,#13100c);border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent,#b8922a);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .gw-mini-badge:hover .gw-mini-tooltip{opacity:1;}
+
+  .pn-step-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin:2rem 0 1rem;}
+  .pn-step-label .pn-step-hint{color:var(--text-muted,#a89880);font-size:0.85em;text-transform:none;letter-spacing:0.05em;}
+
+  .struct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem;}
+  .struct-card{border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:1.5rem;cursor:pointer;transition:all 0.2s;position:relative;background:rgba(0,0,0,0.15);}
+  .struct-card:hover{border-color:var(--accent,#b8922a);transform:translateY(-2px);}
+  .struct-card.selected{border-color:var(--accent,#b8922a);background:rgba(184,146,42,0.08);}
+  .struct-card.selected::before{content:'✓';position:absolute;top:0.7rem;right:0.7rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent,#b8922a);}
+  .struct-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.5rem;}
+  .struct-hint{font-size:0.78rem;color:var(--text-muted,#a89880);line-height:1.5;}
+
+  .field-group{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  .field-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .field-input,.field-textarea,.field-select{background:var(--input-bg,rgba(0,0,0,0.3));border:1px solid var(--input-border,rgba(184,146,42,0.25));color:var(--input-text,#f4ede0);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;width:100%;appearance:none;}
+  .field-input:focus,.field-textarea:focus,.field-select:focus{border-color:var(--accent,#b8922a);}
+  .field-textarea{min-height:88px;line-height:1.55;resize:vertical;}
+  .pn-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+
+  .btn-gold{background:var(--accent,#b8922a);color:#13100c;border:none;padding:0.95rem 2.2rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background 0.2s;}
+  .btn-gold:hover{background:#d4aa4a;}
+  .btn-outline{background:transparent;color:var(--accent,#b8922a);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.95rem 1.8rem;border:1px solid var(--border-default,rgba(184,146,42,0.3));cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--accent,#b8922a);}
+
+  .beat-area{display:none;margin-top:3rem;}
+  .beat-area.visible{display:block;}
+  .beat-header{border-bottom:1px solid var(--border-default,rgba(184,146,42,0.25));padding-bottom:1.4rem;margin-bottom:1.8rem;}
+  .beat-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;text-transform:uppercase;letter-spacing:0.05em;}
+  .beat-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .beat-row{display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid rgba(184,146,42,0.1);}
+  .beat-row:last-child{border-bottom:none;}
+  .beat-num{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--accent,#b8922a);min-width:5rem;padding-top:0.3rem;text-align:right;flex-shrink:0;}
+  .beat-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.2rem;}
+  .beat-desc{font-size:0.92rem;color:var(--text-muted,#a89880);line-height:1.6;}
+
+  .cta-bar{display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap;align-items:center;}
+
+  @media(max-width:760px){
+    .pn-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.7rem;}
+    .pn-two-col{grid-template-columns:1fr;}
+    .gw-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gw-portrait{width:120px;height:155px;}
+    .struct-grid{grid-template-columns:1fr;}
+    .beat-num{min-width:auto;text-align:left;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="pre"></div>
+
+<main class="pn-main">
+
+  <div class="s-label">Phase 02 — Pre-Project</div>
+  <h1 class="s-title">Plan a Screenplay.</h1>
+  <p class="s-sub">Pick your structure, Three-Act, Save the Cat, or Hero's Journey, and Grey will lay out a beat sheet formatted for the page.</p>
+
+  <div class="gw-intro" id="gw-intro">
+    <button class="gw-min-btn" onclick="gwMinimize()" aria-label="Minimize Grey" title="Minimize">−</button>
+    <div class="gw-portrait" aria-label="Grey, your writing partner">
+      <img src="assets/Grey_Open.png" alt="Grey, looking up from the page" class="gw-open">
+      <img src="assets/Grey_Closed.png" alt="" aria-hidden="true" class="gw-closed">
+    </div>
+    <div>
+      <div class="gw-name">Grey.</div>
+      <div class="gw-greeting">Your writing partner. <em>Beats first, dialogue second.</em> Tell me your protagonist, your opposition, and the world they move through. I'll lay out the act breaks, midpoint, and turning points where they have to land. Page numbers scale with format (feature, hour pilot, half-hour, short).</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 1 — Choose Your Structure</div>
+  <div class="struct-grid">
+    <div class="struct-card" data-struct="threeact" onclick="selectStruct(this)">
+      <div class="struct-name">Three-Act Structure</div>
+      <div class="struct-hint">Setup, confrontation, resolution. The classical foundation. Aristotle's bones, Hollywood's flesh.</div>
+    </div>
+    <div class="struct-card" data-struct="savethecat" onclick="selectStruct(this)">
+      <div class="struct-name">Save the Cat</div>
+      <div class="struct-hint">Blake Snyder's 15-beat sheet. Page-precise. Used by working screenwriters and showrunners.</div>
+    </div>
+    <div class="struct-card" data-struct="herosjourney" onclick="selectStruct(this)">
+      <div class="struct-name">Hero's Journey</div>
+      <div class="struct-hint">Campbell's monomyth, Vogler's screenwriting adaptation. 12 stages of departure, initiation, return.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 2 — Your Project Details</div>
+
+  <div class="field-group">
+    <label class="field-label" for="pn-title">Title</label>
+    <input class="field-input" type="text" id="pn-title" placeholder="e.g., MERIDIAN HOUR">
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="pn-logline">Logline (optional)</label>
+    <input class="field-input" type="text" id="pn-logline" placeholder="One sentence. The pitch.">
+  </div>
+
+  <div class="pn-two-col">
+    <div class="field-group">
+      <label class="field-label" for="pn-protag">Protagonist</label>
+      <input class="field-input" type="text" id="pn-protag" placeholder="Name + one sentence">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="pn-antag">Antagonist / Opposition</label>
+      <input class="field-input" type="text" id="pn-antag" placeholder="Name or force opposing them">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="pn-world">World</label>
+    <input class="field-input" type="text" id="pn-world" placeholder="e.g., a 1980s Berlin spy network. Or a near-future Mars colony.">
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="pn-type">Format</label>
+    <select class="field-select" id="pn-type">
+      <option value="feature">Feature (~110 pages)</option>
+      <option value="pilot-hour">Pilot, Hour drama (~60 pages)</option>
+      <option value="pilot-half">Pilot, Half hour (~30 pages)</option>
+      <option value="short">Short film (~30 pages)</option>
+    </select>
+  </div>
+
+  <button class="btn-gold" onclick="generateBeats()">Build My Beat Sheet →</button>
+
+  <div class="beat-area" id="beat-area">
+    <div class="beat-header">
+      <div class="beat-title" id="beat-title">, </div>
+      <div class="beat-meta" id="beat-meta">, </div>
+    </div>
+    <div id="beat-rows"></div>
+
+    <div class="cta-bar">
+      <a href="publish.html" class="btn-outline">Submit to GP →</a>
+      <button class="btn-outline" onclick="resetAll()">Start Over</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="gw-mini-badge" id="gw-mini-badge" onclick="gwMaximize()" aria-label="Bring Grey back">
+  <img src="assets/quill pen.png" alt="Grey, minimized">
+  <span class="gw-mini-tooltip">Grey is here</span>
+</button>
+
+<script>
+let _struct = null;
+
+function selectStruct(card){
+  document.querySelectorAll('.struct-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  _struct = card.dataset.struct;
+}
+
+window.gwMinimize = () => {
+  document.getElementById('gw-intro').classList.add('minimized');
+  document.getElementById('gw-mini-badge').classList.add('visible');
+};
+window.gwMaximize = () => {
+  document.getElementById('gw-intro').classList.remove('minimized');
+  document.getElementById('gw-mini-badge').classList.remove('visible');
+};
+
+function structLabel(s){
+  return ({threeact:'Three-Act Structure', savethecat:'Save the Cat', herosjourney:"Hero's Journey"})[s] || 'Structure';
+}
+
+function buildBeats(struct, p, a, world, type){
+  const sc = ({feature:1, 'pilot-hour':0.55, 'pilot-half':0.28, short:0.35})[type] || 1;
+  const pp = (s, e) => `pp. ${Math.round(s*sc)}–${Math.round(e*sc)}`;
+  const pg = (n) => `p. ${Math.round(n*sc)}`;
+
+  if (struct === 'savethecat') return [
+    {pages: pg(1),      name: "Opening Image",         desc: `A single image that establishes tone, world, and the problem before it is a problem. The visual thesis statement.`},
+    {pages: pg(5),      name: "Theme Stated",          desc: `Someone, not ${p}, says aloud what the film is about. ${p} does not understand it yet.`},
+    {pages: pp(1, 10),  name: "Set-Up",                desc: `Introduce ${p} in ${world}. Show what is missing from their life. Plant every element that will pay off later.`},
+    {pages: pg(12),     name: "Catalyst",              desc: `Life as ${p} knows it changes. A death, an offer, a discovery. The story engine ignites.`},
+    {pages: pp(12, 25), name: "Debate",                desc: `${p} resists. Should I go? Can I do this? The last chance to turn back before the real story begins.`},
+    {pages: pg(25),     name: "Break Into Two",        desc: `${p} makes a choice. Leaves the comfort zone behind. Act Two begins.`},
+    {pages: pg(30),     name: "B Story",               desc: `A new relationship begins, the love story, the mentor, the foil. This character will carry the theme.`},
+    {pages: pp(30, 55), name: "Fun and Games",         desc: `The premise is delivered. The poster promise. ${p} in the new world, thriving and failing.`},
+    {pages: pg(55),     name: "Midpoint",              desc: `A false victory or false defeat. Stakes are raised. ${p} and ${a} face off. The fun is over.`},
+    {pages: pp(55, 75), name: "Bad Guys Close In",     desc: `${a}, external and internal, regroups and pushes back. ${p}'s team fractures. Doubt creeps in.`},
+    {pages: pg(75),     name: "All Is Lost",           desc: `The worst moment. ${p}'s world collapses. Something or someone dies, literally or symbolically.`},
+    {pages: pp(75, 85), name: "Dark Night of the Soul", desc: `${p} has hit bottom. Reflection, grief. The answer is buried somewhere beneath the despair.`},
+    {pages: pg(85),     name: "Break Into Three",      desc: `Thanks to the B Story, ${p} finds the solution. Synthesis of Act 1 and Act 2 selves. The final plan forms.`},
+    {pages: pp(85, 110), name: "Finale",                desc: `${p} storms the castle. ${a} is defeated in a way that was impossible in Act 1. The theme is proven.`},
+    {pages: pg(110),    name: "Final Image",           desc: `The mirror of the Opening Image, but everything is different now. The transformation is complete and visible.`},
+  ];
+
+  if (struct === 'herosjourney') return [
+    {pages: pp(1, 10),  name: "Ordinary World",        desc: `${p} in ${world}, before the adventure. We see who they are, what they value, what they lack.`},
+    {pages: pp(10, 15), name: "Call to Adventure",     desc: `A herald or event signals that ${p}'s world is about to change. The challenge is presented.`},
+    {pages: pp(15, 20), name: "Refusal of the Call",   desc: `${p} hesitates or refuses. Fear, obligation, self-doubt. A reason to stay that the audience understands.`},
+    {pages: pp(20, 28), name: "Meeting the Mentor",    desc: `A figure with wisdom prepares ${p} for what is ahead. Offers a gift, physical or philosophical.`},
+    {pages: pg(28),     name: "Crossing the Threshold", desc: `${p} commits. Leaves the known world behind. There is no going home as the same person.`},
+    {pages: pp(28, 55), name: "Tests, Allies, Enemies", desc: `${p} learns the rules of the special world. Who can be trusted. Who serves ${a}. What it costs to survive here.`},
+    {pages: pp(55, 65), name: "Approach to the Cave",  desc: `${p} approaches the innermost danger, where ${a} is strongest, where the greatest prize awaits.`},
+    {pages: pp(65, 75), name: "The Ordeal",            desc: `${p} faces death, actual or symbolic. A crisis of identity. The hero must die to be reborn as who they truly are.`},
+    {pages: pp(75, 80), name: "Reward",                desc: `Having survived, ${p} takes possession of the prize, an object, knowledge, or reconciliation.`},
+    {pages: pp(80, 90), name: "The Road Back",         desc: `The return journey begins, but ${a} is not finished. A chase, a consequence, a last gauntlet.`},
+    {pages: pp(90, 105), name: "Resurrection",          desc: `${p} is tested one final time by ${a}. Must use everything learned. The old self must die completely.`},
+    {pages: pp(105, 115),name: "Return with the Elixir", desc: `${p} comes home to ${world}. Changed. Carrying a gift that heals what was broken at the start.`},
+  ];
+
+  // Three-Act default
+  return [
+    {pages: pp(1, 10),  name: "Act One, Opening",      desc: `Introduce ${p} in ${world}. Establish tone, genre, the rules of this story's world.`},
+    {pages: pp(10, 15), name: "Inciting Incident",      desc: `The event that disrupts ${p}'s world and sets the central conflict in motion.`},
+    {pages: pp(15, 25), name: "Act One Escalation",     desc: `${p} reacts, resists, or is drawn deeper. The antagonistic force, ${a}, takes shape.`},
+    {pages: pg(25),     name: "End of Act One / Lock-In",desc: `${p} makes a decisive choice or is forced into a situation they cannot escape. Act Two begins.`},
+    {pages: pp(25, 40), name: "Act Two-A, New World",  desc: `${p} in the new reality. Testing the limits of the conflict. First confrontations with ${a}.`},
+    {pages: pp(40, 55), name: "Rising Complications",   desc: `Stakes escalate. The personal and external conflicts intertwine. ${a}'s reach expands.`},
+    {pages: pg(55),     name: "Midpoint",               desc: `A game-changing event at the structural center. False victory or crushing defeat. Everything accelerates.`},
+    {pages: pp(55, 70), name: "Act Two-B, Pressure",   desc: `${p} pursues the goal with new urgency, but ${a} is fighting back with everything they have.`},
+    {pages: pp(70, 80), name: "All-Is-Lost Moment",     desc: `${p} hits their lowest point. The goal seems unreachable. ${a} appears to have won.`},
+    {pages: pp(80, 85), name: "Second Act Break",       desc: `A revelation or decision makes the final confrontation inevitable. ${p} commits to the endgame.`},
+    {pages: pp(85, 100), name: "Act Three, The Finale", desc: `${p} storms the final obstacle. Confrontation with ${a} in the climactic sequence.`},
+    {pages: pp(100, 110),name: "Climax",                 desc: `The decisive confrontation. One question. One answer. The story's argument resolved.`},
+    {pages: pp(110, 115),name: "Resolution / Denouement", desc: `The new normal. What was saved, what was lost. ${p}'s world, and the final image.`},
+  ];
+}
+
+window.generateBeats = function(){
+  if (!_struct){ alert('Please choose a structure first.'); return; }
+  const title = (document.getElementById('pn-title').value.trim() || 'Untitled').toUpperCase();
+  const p = document.getElementById('pn-protag').value.trim() || 'the protagonist';
+  const a = document.getElementById('pn-antag').value.trim() || 'the antagonist';
+  const world = document.getElementById('pn-world').value.trim() || 'the world';
+  const type = document.getElementById('pn-type').value || 'feature';
+
+  const beats = buildBeats(_struct, p, a, world, type);
+  document.getElementById('beat-title').textContent = title;
+  document.getElementById('beat-meta').textContent = `${structLabel(_struct)} · ${beats.length} Beats`;
+
+  const container = document.getElementById('beat-rows');
+  container.innerHTML = '';
+  beats.forEach(beat => {
+    const row = document.createElement('div');
+    row.className = 'beat-row';
+    row.innerHTML = `<div class="beat-num">${beat.pages}</div><div><div class="beat-name">${beat.name}</div><div class="beat-desc">${beat.desc}</div></div>`;
+    container.appendChild(row);
+  });
+
+  const area = document.getElementById('beat-area');
+  area.classList.add('visible');
+  setTimeout(() => area.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+};
+
+window.resetAll = function(){
+  _struct = null;
+  document.querySelectorAll('.struct-card').forEach(c => c.classList.remove('selected'));
+  ['pn-title','pn-logline','pn-protag','pn-antag','pn-world'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('pn-type').value = 'feature';
+  document.getElementById('beat-area').classList.remove('visible');
+};
+</script>
+
+</body>
+</html>

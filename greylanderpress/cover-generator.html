@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greylander Press — Cover Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Sacramento&family=Satisfy&family=Pinyon+Script&family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Libre+Baskerville:wght@400;700&family=Cinzel:wght@400;700&family=Abril+Fatface&family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#13100c; --ink-soft:#1e1a15; --ink-mid:#2a2318;
+  --cream:#f4ede0; --gold:#b8922a; --gold-light:#d4aa4a;
+  --rule:rgba(184,146,42,0.25); --text:#e8dece; --text-dim:#9a8e7e;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--ink);color:var(--text);font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;line-height:1.6;min-height:100vh;}
+nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.9rem 3rem;background:rgba(19,16,12,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:.9rem;letter-spacing:.18em;color:var(--gold-light);text-decoration:none;display:flex;align-items:center;gap:.6rem;}
+.nav-logo img{height:28px;width:28px;}
+.nav-back{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold-light);}
+.header{padding:2.5rem 3rem 1.5rem;border-bottom:1px solid var(--rule);margin-bottom:2rem;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.page-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:.4rem;}
+.page-title em{color:var(--gold-light);font-style:italic;}
+.page-sub{color:var(--text-dim);font-style:italic;font-size:1rem;}
+.container{display:grid;grid-template-columns:400px 1fr;gap:2rem;padding:0 3rem 4rem;max-width:1600px;margin:0 auto;}
+.card{background:var(--ink-soft);border:1px solid var(--rule);padding:1.4rem;margin-bottom:1.25rem;}
+.card:last-child{margin-bottom:0;}
+.card-title{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;padding-bottom:.6rem;border-bottom:1px solid var(--rule);}
+.field{margin-bottom:1rem;}
+.field:last-child{margin-bottom:0;}
+.field-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:.35rem;}
+.field-input,.field-select,.field-textarea{width:100%;background:rgba(13,10,7,.9);border:1px solid var(--rule);color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:.6rem .8rem;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--gold);}
+.field-textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.color-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.75rem;}
+.color-item{display:flex;align-items:center;gap:.5rem;background:rgba(13,10,7,.6);border:1px solid var(--rule);padding:.4rem .6rem;}
+.color-item input[type="color"]{width:30px;height:30px;border:none;background:none;cursor:pointer;padding:0;flex-shrink:0;}
+.color-item label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);}
+.presets{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem;}
+.preset{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .65rem;border:1px solid var(--rule);background:none;color:var(--text-dim);cursor:pointer;transition:all .2s;}
+.preset:hover,.preset.active{border-color:var(--gold);color:var(--gold-light);background:rgba(184,146,42,.08);}
+.btn{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;padding:.85rem 1.5rem;border:none;cursor:pointer;transition:all .25s;width:100%;display:block;margin-bottom:.6rem;}
+.btn:last-child{margin-bottom:0;}
+.btn-gold{background:var(--gold);color:var(--ink);}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-gold:disabled{opacity:.45;cursor:not-allowed;}
+.btn-outline{background:none;border:1px solid var(--rule);color:var(--text-dim);}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold-light);}
+.btn-download{background:none;border:1px solid var(--gold);color:var(--gold-light);}
+.btn-download:hover{background:var(--gold);color:var(--ink);}
+.status-line{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);min-height:1.2em;margin:.5rem 0;}
+.status-line.err{color:#d04040;}
+.warning{background:rgba(184,146,42,.07);border:1px solid rgba(184,146,42,.3);padding:.75rem;font-size:.85rem;color:var(--text-dim);font-style:italic;line-height:1.5;margin-bottom:1rem;}
+.preview-panel{position:sticky;top:80px;align-self:start;}
+.preview-card{background:var(--ink-soft);border:1px solid var(--rule);padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+.preview-label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);width:100%;padding-bottom:.6rem;border-bottom:1px solid var(--rule);}
+#canvasWrap{width:100%;display:flex;justify-content:center;align-items:center;min-height:300px;}
+.placeholder{width:100%;height:300px;border:1px dashed var(--rule);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-style:italic;text-align:center;padding:2rem;}
+#coverCanvas{max-width:100%;display:block;}
+.dims-line{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-align:center;}
+#dlBtn{display:none;width:auto;padding:.85rem 3rem;}
+@media(max-width:960px){.container{grid-template-columns:1fr;padding:0 1.5rem 3rem;} .preview-panel{position:relative;top:auto;} nav{padding:.9rem 1.5rem;} .header{padding:2rem 1.5rem 1.5rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="gp-logo.png" alt="GP">
+    Greylander Press
+  </a>
+  <a href="index.html" class="nav-back">← Back to Site</a>
+</nav>
+
+<div class="header">
+  <div class="eyebrow">Tools</div>
+  <h1 class="page-title">Cover <em>Generator</em></h1>
+  <p class="page-sub">KDP-accurate dimensions · AI-generated imagery · Download-ready PNG</p>
+</div>
+
+<div class="container">
+
+  <div class="controls-col">
+
+    <div class="card">
+      <div class="card-title">Book Information</div>
+      <div class="field">
+        <label class="field-label">Title</label>
+        <input class="field-input" type="text" id="bookTitle" placeholder="Your Book Title">
+      </div>
+      <div class="field">
+        <label class="field-label">Subtitle (optional)</label>
+        <input class="field-input" type="text" id="bookSubtitle" placeholder="A Compelling Subtitle">
+      </div>
+      <div class="field">
+        <label class="field-label">Author Name</label>
+        <input class="field-input" type="text" id="authorName" placeholder="Dr. Your Name">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Print Specifications</div>
+      <div class="field">
+        <label class="field-label">Trim Size</label>
+        <select class="field-select" id="trimSize">
+          <option value="5x8">5" × 8"</option>
+          <option value="5.5x8.5" selected>5.5" × 8.5" ★ Most Common Nonfiction</option>
+          <option value="6x9">6" × 9" ★ Standard Trade</option>
+          <option value="6.14x9.21">6.14" × 9.21" — US Trade</option>
+          <option value="7x10">7" × 10" — Textbook</option>
+          <option value="8.5x11">8.5" × 11" — Workbook / Large Format</option>
+        </select>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label class="field-label">Page Count</label>
+          <input class="field-input" type="number" id="pageCount" value="200" min="24" max="828">
+        </div>
+        <div class="field">
+          <label class="field-label">Paper Type</label>
+          <select class="field-select" id="paperType">
+            <option value="white">White (0.002252")</option>
+            <option value="cream" selected>Cream (0.0025")</option>
+            <option value="color">Color (0.002347")</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Typography</div>
+      <div class="field">
+        <label class="field-label">Title Font</label>
+        <select class="field-select" id="titleFont">
+          <option value="Playfair Display">Playfair Display — Classic Serif</option>
+          <option value="Cormorant Garamond">Cormorant Garamond — Elegant</option>
+          <option value="Cinzel">Cinzel — Roman Caps</option>
+          <option value="Libre Baskerville">Libre Baskerville — Editorial</option>
+          <option value="Abril Fatface">Abril Fatface — Bold Display</option>
+          <option value="Lora">Lora — Contemporary Serif</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Author Signature Font</label>
+        <select class="field-select" id="authorFont">
+          <option value="Great Vibes">Great Vibes — Flowing Script</option>
+          <option value="Dancing Script">Dancing Script — Casual Script</option>
+          <option value="Pinyon Script">Pinyon Script — Formal Script</option>
+          <option value="Sacramento">Sacramento — Light Script</option>
+          <option value="Satisfy">Satisfy — Bold Script</option>
+          <option value="Pacifico">Pacifico — Friendly Script</option>
+        </select>
+      </div>
+      <div class="color-grid">
+        <div class="color-item">
+          <input type="color" id="titleColor" value="#f4ede0">
+          <label>Title</label>
+        </div>
+        <div class="color-item">
+          <input type="color" id="authorColor" value="#d4aa4a">
+          <label>Author</label>
+        </div>
+        <div class="color-item">
+          <input type="color" id="spineColor" value="#b8922a">
+          <label>Spine</label>
+        </div>
+        <div class="color-item">
+          <input type="color" id="backColor" value="#1a1410">
+          <label>Back Cover</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">AI Cover Image — DALL-E 3</div>
+      <div class="warning">⚠ Your API key is used directly in this browser. Anyone who views source can see it. For shared use, a server-side proxy is the correct solution.</div>
+      <div class="field">
+        <label class="field-label">OpenAI API Key</label>
+        <input class="field-input" type="password" id="apiKey" placeholder="sk-...">
+      </div>
+      <div class="field">
+        <label class="field-label">Image Style</label>
+        <div class="presets">
+          <button class="preset" onclick="applyPreset(this,'photorealistic cinematic dramatic lighting')">Photorealistic</button>
+          <button class="preset" onclick="applyPreset(this,'abstract geometric rich deep colors')">Abstract</button>
+          <button class="preset" onclick="applyPreset(this,'dark moody atmospheric noir')">Dark Moody</button>
+          <button class="preset" onclick="applyPreset(this,'minimalist clean lines professional')">Minimalist</button>
+          <button class="preset" onclick="applyPreset(this,'painterly watercolor soft romantic')">Painterly</button>
+          <button class="preset" onclick="applyPreset(this,'epic cinematic vast dramatic landscape')">Epic</button>
+        </div>
+        <textarea class="field-textarea" id="imagePrompt" placeholder="Describe the cover image... e.g. 'Dark stormy cityscape at night, rain on glass, noir atmosphere, deep blues and shadows'"></textarea>
+      </div>
+      <button class="btn btn-gold" id="genBtn" onclick="generateAIImage()">Generate AI Cover Image</button>
+      <div class="status-line" id="statusMsg"></div>
+      <button class="btn btn-outline" onclick="renderPreview(undefined)">Refresh Preview (No AI)</button>
+    </div>
+
+  </div>
+
+  <div class="preview-panel">
+    <div class="preview-card">
+      <div class="preview-label">Cover Preview — Full Wrap (Back · Spine · Front)</div>
+      <div id="canvasWrap">
+        <div class="placeholder">Fill in book details and click<br>Refresh Preview or Generate AI Cover Image</div>
+      </div>
+      <div class="dims-line" id="dimsLine"></div>
+      <button class="btn btn-download" id="dlBtn" onclick="downloadPNG()">↓ Download PNG</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const TRIMS = {
+  '5x8':       {w:5,   h:8   },
+  '5.5x8.5':   {w:5.5, h:8.5 },
+  '6x9':       {w:6,   h:9   },
+  '6.14x9.21': {w:6.14,h:9.21},
+  '7x10':      {w:7,   h:10  },
+  '8.5x11':    {w:8.5, h:11  },
+};
+const PAPER = {white:0.002252, cream:0.0025, color:0.002347};
+const BLEED = 0.125;
+
+let lastImageSrc = null;
+let gpLogo = null;
+
+// Preload GP logo
+(function(){
+  const img = new Image();
+  img.onload = () => { gpLogo = img; };
+  img.src = 'gp-logo.png';
+})();
+
+function applyPreset(btn, text) {
+  document.getElementById('imagePrompt').value = text;
+  document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setStatus(msg, isErr) {
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.className = 'status-line' + (isErr ? ' err' : '');
+}
+
+function getDims() {
+  const trimKey = document.getElementById('trimSize').value;
+  const pages   = parseInt(document.getElementById('pageCount').value) || 200;
+  const paper   = document.getElementById('paperType').value;
+  const trim    = TRIMS[trimKey] || TRIMS['5.5x8.5'];
+  const spine   = pages * PAPER[paper];
+  const totalW  = trim.w * 2 + spine + BLEED * 2;
+  const totalH  = trim.h + BLEED * 2;
+  return {trim, spine, totalW, totalH};
+}
+
+async function ensureFonts(tf, af) {
+  try {
+    await Promise.all([
+      document.fonts.load(`bold 48px "${tf}"`),
+      document.fonts.load(`italic 40px "${tf}"`),
+      document.fonts.load(`48px "${af}"`),
+    ]);
+    await document.fonts.ready;
+  } catch(e) {}
+}
+
+function wrapText(ctx, text, cx, y, maxW, lineH) {
+  if (!text) return y;
+  const words = text.trim().split(/\s+/);
+  let line = '';
+  words.forEach(word => {
+    const test = line + (line ? ' ' : '') + word;
+    if (ctx.measureText(test).width > maxW && line) {
+      ctx.fillText(line, cx, y);
+      line = word; y += lineH;
+    } else { line = test; }
+  });
+  if (line) ctx.fillText(line, cx, y);
+  return y + lineH;
+}
+
+function countLines(ctx, text, maxW) {
+  if (!text) return 0;
+  const words = text.trim().split(/\s+/);
+  let line = '', lines = 1;
+  words.forEach(word => {
+    const test = line + (line ? ' ' : '') + word;
+    if (ctx.measureText(test).width > maxW && line) { lines++; line = word; }
+    else { line = test; }
+  });
+  return lines;
+}
+
+async function renderPreview(imageSrc) {
+  const tf = document.getElementById('titleFont').value;
+  const af = document.getElementById('authorFont').value;
+  await ensureFonts(tf, af);
+
+  const title    = document.getElementById('bookTitle').value.trim()   || 'Your Book Title';
+  const subtitle = document.getElementById('bookSubtitle').value.trim();
+  const author   = document.getElementById('authorName').value.trim()  || 'Author Name';
+  const titleCol  = document.getElementById('titleColor').value;
+  const authorCol = document.getElementById('authorColor').value;
+  const spineCol  = document.getElementById('spineColor').value;
+  const backCol   = document.getElementById('backColor').value;
+
+  const src = (imageSrc !== undefined) ? imageSrc : lastImageSrc;
+
+  const {trim, spine, totalW, totalH} = getDims();
+
+  // Scale to fit (max 880px wide)
+  const maxW = Math.min(880, window.innerWidth - 100);
+  const PX   = Math.floor(Math.min(100, maxW / totalW));
+
+  const cW      = Math.round(totalW * PX);
+  const cH      = Math.round(totalH * PX);
+  const bleed   = Math.round(BLEED * PX);
+  const spinePx = Math.max(2, Math.round(spine * PX));
+  const tW      = Math.round(trim.w * PX);
+  const tH      = Math.round(trim.h * PX);
+
+  const wrap = document.getElementById('canvasWrap');
+  wrap.innerHTML = '';
+  const canvas = document.createElement('canvas');
+  canvas.id = 'coverCanvas';
+  canvas.width = cW; canvas.height = cH;
+  canvas.style.maxWidth = '100%';
+  wrap.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  const OY = bleed;
+  const bx = bleed;
+  const sx = bx + tW;
+  const fx = sx + spinePx;
+
+  // ── BACK COVER ──
+  ctx.fillStyle = backCol;
+  ctx.fillRect(bx, OY, tW, tH);
+  // Top rule
+  ctx.fillStyle = spineCol;
+  ctx.fillRect(bx, OY, tW, Math.max(2, Math.round(tH * 0.012)));
+  // GP logo
+  if (gpLogo) {
+    const lsz = Math.min(tW * 0.18, 50);
+    ctx.globalAlpha = 0.5;
+    ctx.drawImage(gpLogo, bx + (tW-lsz)/2, OY + tH - lsz - Math.round(tH*.05), lsz, lsz);
+    ctx.globalAlpha = 1;
+  }
+  // Imprint text
+  const impSz = Math.max(6, Math.round(tH * 0.018));
+  ctx.font = `${impSz}px 'DM Mono', monospace`;
+  ctx.fillStyle = 'rgba(184,146,42,0.4)';
+  ctx.textAlign = 'center';
+  ctx.fillText('GREYLANDER PRESS', bx + tW/2, OY + tH - Math.round(tH*.015));
+
+  // ── SPINE ──
+  ctx.fillStyle = spineCol;
+  ctx.fillRect(sx, OY, spinePx, tH);
+  // Spine GP logo
+  if (gpLogo && spinePx >= 18) {
+    const lsz = Math.min(spinePx * .8, 24);
+    ctx.globalAlpha = .9;
+    ctx.drawImage(gpLogo, sx + (spinePx-lsz)/2, OY + Math.round(tH*.03), lsz, lsz);
+    ctx.globalAlpha = 1;
+  }
+  // Spine title
+  if (spinePx >= 28) {
+    ctx.save();
+    ctx.translate(sx + spinePx/2, OY + tH * .55);
+    ctx.rotate(-Math.PI/2);
+    const stSz = Math.max(7, Math.min(spinePx * .38, 20));
+    ctx.font = `bold ${stSz}px "${tf}"`;
+    ctx.fillStyle = backCol;
+    ctx.textAlign = 'center';
+    const shortT = title.length > 26 ? title.substring(0,25)+'…' : title;
+    ctx.fillText(shortT, 0, 0);
+    ctx.restore();
+    // Spine author
+    ctx.save();
+    ctx.translate(sx + spinePx/2, OY + tH * .82);
+    ctx.rotate(-Math.PI/2);
+    const saSz = Math.max(6, Math.min(spinePx * .26, 13));
+    ctx.font = `${saSz}px "${af}"`;
+    ctx.fillStyle = 'rgba(19,16,12,.75)';
+    ctx.textAlign = 'center';
+    ctx.fillText(author, 0, 0);
+    ctx.restore();
+  }
+
+  // ── FRONT COVER ──
+  if (src) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    await new Promise((res) => { img.onload = res; img.onerror = res; img.src = src; });
+    if (img.complete && img.naturalWidth) {
+      ctx.drawImage(img, fx, OY, tW, tH);
+    }
+    // Readability scrim
+    const grad = ctx.createLinearGradient(fx, OY, fx, OY + tH);
+    grad.addColorStop(0, 'rgba(13,10,7,.6)');
+    grad.addColorStop(.45, 'rgba(13,10,7,.1)');
+    grad.addColorStop(1, 'rgba(13,10,7,.7)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(fx, OY, tW, tH);
+  } else {
+    ctx.fillStyle = '#16110d';
+    ctx.fillRect(fx, OY, tW, tH);
+    ctx.fillStyle = spineCol;
+    ctx.fillRect(fx, OY, tW, Math.round(tH * .07));
+  }
+
+  // Decorative rules
+  ctx.strokeStyle = 'rgba(184,146,42,.5)';
+  ctx.lineWidth = 1;
+  const r1y = OY + Math.round(tH * .12);
+  const r2y = OY + Math.round(tH * .87);
+  ctx.beginPath(); ctx.moveTo(fx+18, r1y); ctx.lineTo(fx+tW-18, r1y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(fx+18, r2y); ctx.lineTo(fx+tW-18, r2y); ctx.stroke();
+
+  // Front: Title
+  ctx.textAlign = 'center';
+  const tSz = Math.max(13, Math.min(tW * .10, 44));
+  const tLineH = tSz * 1.35;
+  const tMaxW  = tW * .80;
+  ctx.font = `bold ${tSz}px "${tf}"`;
+  const nLines = countLines(ctx, title, tMaxW);
+  const tBlockH = nLines * tLineH;
+  const tStartY = OY + tH * .23 - tBlockH * .3;
+  ctx.fillStyle = titleCol;
+  const afterTitle = wrapText(ctx, title, fx + tW/2, tStartY, tMaxW, tLineH);
+
+  // Subtitle
+  if (subtitle) {
+    const sSz = Math.round(tSz * .52);
+    ctx.font = `italic ${sSz}px "${tf}"`;
+    ctx.fillStyle = 'rgba(244,237,224,.72)';
+    wrapText(ctx, subtitle, fx + tW/2, afterTitle + tSz*.3, tMaxW*.88, sSz * 1.3);
+  }
+
+  // Author signature
+  const aSz = Math.max(11, Math.min(tW * .075, 34));
+  ctx.font = `${aSz}px "${af}"`;
+  ctx.fillStyle = authorCol;
+  ctx.fillText(author, fx + tW/2, OY + tH * .795);
+
+  // GP logo imprint on front
+  if (gpLogo) {
+    const lsz = Math.min(tW * .10, 26);
+    ctx.globalAlpha = .65;
+    ctx.drawImage(gpLogo, fx + (tW-lsz)/2, OY + tH - lsz - Math.round(tH*.035), lsz, lsz);
+    ctx.globalAlpha = 1;
+  }
+
+  // Bleed hairlines
+  ctx.strokeStyle = 'rgba(184,146,42,.2)';
+  ctx.lineWidth = .5;
+  ctx.setLineDash([3,4]);
+  ctx.beginPath(); ctx.moveTo(0,OY);       ctx.lineTo(cW,OY);       ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,OY+tH);    ctx.lineTo(cW,OY+tH);    ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(bleed,0);    ctx.lineTo(bleed,cH);    ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cW-bleed,0); ctx.lineTo(cW-bleed,cH); ctx.stroke();
+  ctx.setLineDash([]);
+
+  document.getElementById('dimsLine').textContent =
+    `Spine: ${spine.toFixed(4)}" · Full wrap: ${totalW.toFixed(3)}" × ${totalH.toFixed(3)}" · Bleed: 0.125" per side`;
+
+  lastImageSrc = src;
+  document.getElementById('dlBtn').style.display = 'block';
+}
+
+async function generateAIImage() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { setStatus('Enter your OpenAI API key.', true); return; }
+  const prompt = document.getElementById('imagePrompt').value.trim();
+  if (!prompt) { setStatus('Describe the image style first.', true); return; }
+
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+  setStatus('Requesting DALL-E 3…');
+
+  const full = `Professional book cover artwork. ${prompt}. Portrait orientation. Absolutely no text, no letters, no words, no numbers anywhere in the image. Suitable for a published nonfiction book. High quality, dramatic composition.`;
+
+  try {
+    const res = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':`Bearer ${apiKey}`},
+      body: JSON.stringify({
+        model: 'dall-e-3',
+        prompt: full,
+        size: '1024x1792',
+        quality: 'standard',
+        n: 1,
+        response_format: 'b64_json',
+      }),
+    });
+
+    const data = await res.json();
+    if (data.error) { setStatus(`Error: ${data.error.message}`, true); btn.disabled = false; return; }
+
+    const src = `data:image/png;base64,${data.data[0].b64_json}`;
+    setStatus('Image generated — rendering cover…');
+    await renderPreview(src);
+    setStatus('Done. Download your cover below.');
+  } catch(err) {
+    setStatus(`Request failed: ${err.message}`, true);
+  }
+  btn.disabled = false;
+}
+
+function downloadPNG() {
+  const canvas = document.getElementById('coverCanvas');
+  if (!canvas) return;
+  const slug = (document.getElementById('bookTitle').value || 'cover')
+    .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `${slug}-cover.png`; a.click();
+    URL.revokeObjectURL(url);
+  }, 'image/png');
+}
+</script>
+
+</body>
+</html>

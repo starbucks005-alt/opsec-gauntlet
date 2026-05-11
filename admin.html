@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GP Admin — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13100c;--ink-soft:#2a2318;--cream:#f4ede0;--gold:#b8922a;--gold-light:#d4aa4a;--rule:rgba(184,146,42,0.3);--text:#e8dece;--text-dim:#9a8e7e;--bg:#0e0b08;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.7;}
+#auth-overlay{position:fixed;inset:0;background:rgba(14,11,8,0.97);z-index:1000;display:flex;align-items:center;justify-content:center;}
+.auth-box{width:100%;max-width:400px;padding:3rem;border:1px solid var(--rule);}
+.auth-logo{font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.2rem;}
+.auth-sub{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2rem;}
+.auth-label{display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;}
+.auth-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--rule);padding:0.7rem 1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;margin-bottom:1rem;}
+.auth-input:focus{border-color:var(--gold);}
+.auth-btn{width:100%;background:var(--gold);color:var(--ink);border:none;padding:0.8rem;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;cursor:pointer;}
+.auth-btn:hover{background:var(--gold-light);}
+.auth-msg{font-family:'DM Mono',monospace;font-size:0.62rem;color:#c0392b;margin-top:0.6rem;}
+
+#app{display:none;}
+#app.visible{display:block;}
+
+.topbar{display:flex;align-items:center;gap:1.5rem;padding:0 2.5rem;height:54px;border-bottom:1px solid var(--rule);background:var(--bg);position:sticky;top:0;z-index:100;}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.1em;color:var(--gold);}
+.topbar-badge{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#c0392b;border:1px solid rgba(192,57,43,0.4);padding:0.2rem 0.6rem;}
+.topbar-user{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text-dim);margin-left:auto;}
+.topbar-signout{background:none;border:none;font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text-dim);cursor:pointer;}
+.topbar-signout:hover{color:var(--text);}
+
+.main{max-width:1200px;margin:0 auto;padding:2.5rem;}
+.page-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+.page-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);margin-bottom:0.3rem;}
+.page-sub{color:var(--text-dim);font-size:0.9rem;margin-bottom:2.5rem;}
+.divider{border:none;border-top:1px solid var(--rule);margin:2.5rem 0;}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2.5rem;}
+.stat-card{border:1px solid var(--rule);padding:1.2rem;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold-light);}
+.stat-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-top:0.2rem;}
+
+/* Tabs */
+.tab-bar{display:flex;border-bottom:1px solid var(--rule);margin-bottom:2rem;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;padding:0.7rem 1.5rem 0.7rem 0;margin-bottom:-1px;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;}
+.tab.active{border-bottom-color:var(--gold);color:var(--gold-light);}
+
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* Table */
+.submissions-table{width:100%;border-collapse:collapse;}
+.submissions-table th{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:left;padding:0.6rem 1rem;border-bottom:1px solid var(--rule);}
+.submissions-table td{padding:0.9rem 1rem;border-bottom:1px solid rgba(184,146,42,0.1);font-size:0.9rem;vertical-align:top;}
+.submissions-table tr:hover td{background:rgba(184,146,42,0.03);}
+.td-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);}
+.td-meta{font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--text-dim);margin-top:0.2rem;}
+.status-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.2rem 0.6rem;border:1px solid;}
+.status-submitted{color:var(--gold);border-color:var(--rule);}
+.status-under_review{color:#3498db;border-color:rgba(52,152,219,0.4);}
+.status-published{color:#2ecc71;border-color:rgba(46,204,113,0.4);}
+.status-rejected{color:#e74c3c;border-color:rgba(231,76,60,0.4);}
+.action-select{background:rgba(255,255,255,0.04);border:1px solid var(--rule);color:var(--text);font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.3rem 0.5rem;cursor:pointer;}
+.action-btn{background:none;border:1px solid var(--rule);color:var(--text-dim);font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.7rem;cursor:pointer;margin-left:0.4rem;}
+.action-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Rights notice */
+.rights-notice{padding:1.2rem;border:1px solid var(--rule);background:rgba(184,146,42,0.04);margin-bottom:2rem;}
+.rights-notice-title{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+.rights-notice p{font-size:0.85rem;color:var(--text-dim);line-height:1.7;}
+
+/* Gift panel */
+.gift-form{max-width:560px;border:1px solid var(--rule);padding:2rem;}
+.field-group{margin-bottom:1.2rem;}
+.field-label{display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem;}
+.field-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--rule);padding:0.7rem 1rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;}
+.field-input:focus{border-color:var(--gold);}
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:0.8rem 2rem;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;cursor:pointer;}
+.btn-gold:hover{background:var(--gold-light);}
+.status-msg{font-family:'DM Mono',monospace;font-size:0.62rem;margin-top:0.8rem;min-height:1.2rem;}
+
+/* Toast */
+#toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink-soft);border:1px solid var(--rule);padding:0.8rem 1.2rem;font-family:'DM Mono',monospace;font-size:0.6rem;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+#toast.show{opacity:1;}
+
+@media(max-width:700px){.stats-row{grid-template-columns:1fr 1fr;}}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<!-- Auth -->
+<div id="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-logo">Greylander Press</div>
+    <div class="auth-sub">Admin Access Only</div>
+    <label class="auth-label">Email</label>
+    <input class="auth-input" type="email" id="si-email" placeholder="admin@email.com">
+    <label class="auth-label">Password</label>
+    <input class="auth-input" type="password" id="si-pass" placeholder="••••••••">
+    <button class="auth-btn" onclick="doSignIn()">Sign In →</button>
+    <div class="auth-msg" id="si-msg"></div>
+  </div>
+</div>
+
+<!-- App -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-logo">Greylander Press</div>
+    <div class="topbar-badge">Admin</div>
+    <div class="topbar-user" id="topbar-user"></div>
+    <button class="theme-toggle" data-theme-toggle aria-label="Theme">
+      <span data-theme-icon>◐</span>
+      <span data-theme-label>Auto</span>
+    </button>
+    <button class="topbar-signout" onclick="doSignOut()">Sign Out</button>
+  </div>
+
+  <div class="main">
+    <div class="page-label">Dashboard</div>
+    <div class="page-title">Author Submissions</div>
+    <div class="page-sub">Manage manuscript submissions, update statuses, and gift author access.</div>
+
+    <!-- Rights notice -->
+    <div class="rights-notice">
+      <div class="rights-notice-title">✦ Author Rights Policy</div>
+      <p>All authors retain full copyright to their submitted work. Greylander Press receives a non-exclusive right to publish under the GP imprint only upon a signed publishing agreement. Submission does not transfer any rights. Gift access grants platform use only — it conveys no claim over authored content.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total Submissions</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-submitted">—</div><div class="stat-label">Awaiting Review</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-review">—</div><div class="stat-label">Under Review</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-published">—</div><div class="stat-label">Published</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab active" onclick="switchTab('submissions',this)">Submissions</button>
+      <button class="tab" onclick="switchTab('gift',this)">Gift Access</button>
+    </div>
+
+    <!-- Submissions panel -->
+    <div class="panel active" id="panel-submissions">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+        <select id="filter-status" onchange="filterSubmissions()" style="background:rgba(255,255,255,0.04);border:1px solid var(--rule);color:var(--text);font-family:'DM Mono',monospace;font-size:0.58rem;padding:0.4rem 0.8rem;cursor:pointer;">
+          <option value="">All Statuses</option>
+          <option value="submitted">Awaiting Review</option>
+          <option value="under_review">Under Review</option>
+          <option value="published">Published</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <select id="filter-type" onchange="filterSubmissions()" style="background:rgba(255,255,255,0.04);border:1px solid var(--rule);color:var(--text);font-family:'DM Mono',monospace;font-size:0.58rem;padding:0.4rem 0.8rem;cursor:pointer;">
+          <option value="">All Types</option>
+          <option value="novel">Novel</option>
+          <option value="short_story">Short Story</option>
+          <option value="poem">Poem</option>
+          <option value="play">Stage Play</option>
+          <option value="screenplay">Screenplay</option>
+        </select>
+        <button class="action-btn" onclick="loadSubmissions()">↻ Refresh</button>
+        <span id="sub-count" style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--text-dim);margin-left:auto;"></span>
+      </div>
+      <div id="submissions-wrap">
+        <table class="submissions-table">
+          <thead>
+            <tr>
+              <th>Title / Author</th>
+              <th>Type</th>
+              <th>Genre</th>
+              <th>Trim</th>
+              <th>ISBN?</th>
+              <th>Status</th>
+              <th>Submitted</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="submissions-body">
+            <tr><td colspan="8" style="color:var(--text-dim);font-style:italic;text-align:center;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Gift access panel -->
+    <div class="panel" id="panel-gift">
+      <div class="gift-form">
+        <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--cream);margin-bottom:0.3rem;">Gift Author Access</div>
+        <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:1.5rem;">Grant a writer free access to the GP Author Studio. They retain all rights to their work. A password setup email is sent automatically if the account is new.</p>
+        <div class="field-group">
+          <label class="field-label">Author Email</label>
+          <input class="field-input" type="email" id="gift-email" placeholder="author@email.com">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Credits to Grant</label>
+          <input class="field-input" type="number" id="gift-credits" value="60" min="1" max="9999">
+        </div>
+        <button class="btn-gold" onclick="grantGift()">✦ Grant Access →</button>
+        <div class="status-msg" id="gift-msg"></div>
+      </div>
+
+      <div style="margin-top:2rem;padding:1.2rem;border:1px solid var(--rule);max-width:560px;background:rgba(184,146,42,0.03);">
+        <div style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Rights Reminder</div>
+        <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.7;">Gifting platform access does not grant Greylander Press any rights to the recipient's creative work. Authors retain full copyright. Any publishing arrangement requires a separate signed agreement.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+window._sb = sb;
+
+let allSubmissions = [];
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+window.doSignIn = async () => {
+  const email = document.getElementById('si-email').value.trim();
+  const pass  = document.getElementById('si-pass').value;
+  const msg   = document.getElementById('si-msg');
+  msg.textContent = '';
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) { msg.textContent = error.message; }
+};
+
+window.doSignOut = async () => { await sb.auth.signOut(); location.reload(); };
+
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (session?.user) {
+    // Verify admin
+    const { data: profile } = await sb.from('profiles').select('is_admin').eq('id', session.user.id).single();
+    if (!profile?.is_admin) {
+      document.getElementById('si-msg').textContent = 'You do not have admin access.';
+      await sb.auth.signOut();
+      return;
+    }
+    document.getElementById('auth-overlay').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    document.getElementById('topbar-user').textContent = session.user.email;
+    await loadSubmissions();
+  }
+});
+
+// ── Submissions ───────────────────────────────────────────────────────────────
+window.loadSubmissions = async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  const res = await fetch('/.netlify/functions/admin-catalog', {
+    headers: { Authorization: 'Bearer ' + session.access_token },
+  });
+  if (!res.ok) { showToast('Failed to load submissions'); return; }
+  const d = await res.json();
+  allSubmissions = d.submissions || [];
+  renderStats(allSubmissions);
+  filterSubmissions();
+};
+
+function renderStats(subs) {
+  document.getElementById('stat-total').textContent = subs.length;
+  document.getElementById('stat-submitted').textContent = subs.filter(s => s.status === 'submitted').length;
+  document.getElementById('stat-review').textContent = subs.filter(s => s.status === 'under_review').length;
+  document.getElementById('stat-published').textContent = subs.filter(s => s.status === 'published').length;
+}
+
+window.filterSubmissions = () => {
+  const statusFilter = document.getElementById('filter-status').value;
+  const typeFilter   = document.getElementById('filter-type').value;
+  let filtered = allSubmissions;
+  if (statusFilter) filtered = filtered.filter(s => s.status === statusFilter);
+  if (typeFilter)   filtered = filtered.filter(s => s.project_type === typeFilter);
+  document.getElementById('sub-count').textContent = filtered.length + ' result' + (filtered.length !== 1 ? 's' : '');
+  renderTable(filtered);
+};
+
+function renderTable(subs) {
+  const tbody = document.getElementById('submissions-body');
+  if (!subs.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="color:var(--text-dim);font-style:italic;text-align:center;padding:2rem;">No submissions found.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = subs.map(s => {
+    const date = s.submitted_at ? new Date(s.submitted_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) : '—';
+    const type = (s.project_type || '').replace('_',' ');
+    return `<tr>
+      <td>
+        <div class="td-title">${esc(s.title)}</div>
+        <div class="td-meta">${esc(s.author_name || '—')}</div>
+        ${s.blurb ? `<div class="td-meta" style="margin-top:0.3rem;max-width:280px;white-space:normal;line-height:1.5;">${esc(s.blurb.substring(0,120))}${s.blurb.length>120?'…':''}</div>` : ''}
+      </td>
+      <td style="text-transform:capitalize;">${type}</td>
+      <td>${esc(s.genre || '—')}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.6rem;">${esc(s.trim_size || '—')}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.6rem;">${s.isbn_requested ? '✓ Yes' : 'No'}</td>
+      <td><span class="status-badge status-${s.status}">${s.status?.replace('_',' ')}</span></td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.55rem;white-space:nowrap;">${date}</td>
+      <td>
+        <select class="action-select" id="sel-${s.id}">
+          <option value="submitted" ${s.status==='submitted'?'selected':''}>Awaiting Review</option>
+          <option value="under_review" ${s.status==='under_review'?'selected':''}>Under Review</option>
+          <option value="published" ${s.status==='published'?'selected':''}>Published</option>
+          <option value="rejected" ${s.status==='rejected'?'selected':''}>Rejected</option>
+        </select>
+        <button class="action-btn" onclick="updateStatus('${s.id}')">Save</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+window.updateStatus = async (id) => {
+  const status = document.getElementById('sel-' + id).value;
+  const { data: { session } } = await sb.auth.getSession();
+  const res = await fetch('/.netlify/functions/admin-catalog', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify({ action: 'update_status', id, status }),
+  });
+  if (res.ok) {
+    const sub = allSubmissions.find(s => s.id === id);
+    if (sub) sub.status = status;
+    renderStats(allSubmissions);
+    filterSubmissions();
+    showToast('Status updated');
+  } else {
+    showToast('Update failed');
+  }
+};
+
+// ── Gift ──────────────────────────────────────────────────────────────────────
+window.grantGift = async () => {
+  const email   = document.getElementById('gift-email').value.trim();
+  const credits = document.getElementById('gift-credits').value;
+  const msg     = document.getElementById('gift-msg');
+  if (!email) { msg.textContent = 'Enter an email address.'; return; }
+  msg.style.color = 'var(--text-dim)';
+  msg.textContent = 'Granting access…';
+
+  const { data: { session } } = await sb.auth.getSession();
+  const res = await fetch('/.netlify/functions/admin-catalog', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify({ action: 'gift_access', email, credits }),
+  });
+  const d = await res.json();
+  if (res.ok) {
+    msg.style.color = 'var(--gold)';
+    msg.textContent = '✓ ' + d.message + '. Password setup email sent if new account.';
+    document.getElementById('gift-email').value = '';
+  } else {
+    msg.style.color = '#e74c3c';
+    msg.textContent = 'Error: ' + d.error;
+  }
+};
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+window.switchTab = (tab, btn) => {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+};
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show';
+  setTimeout(() => t.className = '', 2500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Greylander Press / SLR Studio — Design Token Contract
+   Single source of truth. Both modes defined explicitly.
+
+   Mode resolution:
+     1. Explicit:  <html data-theme="light">  or  <html data-theme="dark">
+     2. Auto:      no data-theme attribute → @media (prefers-color-scheme)
+
+   All components reference tokens, never raw color values. Verify WCAG AA
+   contrast (4.5:1 body text, 3:1 large text, 3:1 UI controls) in both modes
+   when adding or refactoring a component.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── DARK MODE (default) ──────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  /* Backgrounds */
+  --bg-primary:        #13100c;   /* body background */
+  --bg-secondary:      #1f1a13;   /* alternate sections */
+  --surface:           #1a1610;   /* cards, modals — slightly elevated */
+  --surface-strong:    #2a2318;   /* nested surfaces, input wells */
+
+  /* Text */
+  --text-primary:      #e8dece;   /* body text — 13.6:1 on bg-primary */
+  --text-secondary:    #d4c8b4;   /* sub-headings, less critical text */
+  --text-muted:        #b8aa98;   /* labels, meta, captions — boosted from 9a8e7e */
+
+  /* Accent */
+  --accent:            #d4aa4a;   /* gold-light — primary accent on dark — 8.2:1 on bg */
+  --accent-strong:     #b8922a;   /* gold — for filled buttons, emphasis */
+  --accent-soft:       rgba(184,146,42,0.08);   /* tinted bg fills */
+
+  /* Borders */
+  --border-default:    rgba(184,146,42,0.30);
+  --border-strong:     rgba(184,146,42,0.55);
+  --border-muted:      rgba(255,255,255,0.08);
+
+  /* Inputs */
+  --input-bg:          rgba(255,255,255,0.04);
+  --input-border:      rgba(184,146,42,0.30);
+  --input-text:        #e8dece;
+  --input-placeholder: #7a6a52;
+  --input-focus:       #d4aa4a;
+
+  /* Buttons */
+  --btn-primary-bg:        #b8922a;
+  --btn-primary-bg-hover:  #d4aa4a;
+  --btn-primary-text:      #13100c;
+  --btn-secondary-bg:      transparent;
+  --btn-secondary-text:    #c8bca8;
+  --btn-secondary-border:  rgba(184,146,42,0.30);
+  --btn-secondary-text-hover: #d4aa4a;
+
+  /* States */
+  --error:             #e74c3c;
+  --error-bg:          rgba(231,76,60,0.08);
+  --success:           #6aa83a;
+  --success-bg:        rgba(106,168,58,0.10);
+  --warning:           #d4742a;
+
+  /* Pillar bands (Gauntlet Report Card) */
+  --band-professional:    #6aa83a;   /* green — meets standard */
+  --band-competent:       #d4aa4a;   /* yellow/gold — working with weaknesses */
+  --band-developmental:   #d4742a;   /* orange — substantive issues */
+  --band-foundational:    #c0392b;   /* red — fundamental problems */
+
+  /* Overlay scrims */
+  --scrim-strong:      rgba(14,11,8,0.94);
+  --scrim-soft:        rgba(14,11,8,0.65);
+
+  /* Typography */
+  --font-serif:        'Cormorant Garamond', Georgia, serif;
+  --font-display:      'Playfair Display', Georgia, serif;
+  --font-mono:         'DM Mono', ui-monospace, monospace;
+
+  /* Legacy aliases — explicit values per mode (no var() chain).
+     Existing rules across pages still reference these names; defining them
+     here makes them theme-aware without per-page edits. Refactor toward
+     canonical tokens above as the audit progresses. */
+  --ink:        #13100c;
+  --ink-soft:   #1f1a13;
+  --cream:      #e8dece;
+  --cream-dim:  #c8bca8;
+  --gold:       #b8922a;
+  --gold-light: #d4aa4a;
+  --rule:       rgba(184,146,42,0.30);
+  --text:       #e8dece;
+  --text-dim:   #b8aa98;
+  --bg:         #13100c;
+
+  color-scheme: dark;
+}
+
+/* ── LIGHT MODE ───────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-primary:        #faf6f0;
+    --bg-secondary:      #f0e8d8;
+    --surface:           #fdfaf3;
+    --surface-strong:    #efe6d0;
+
+    --text-primary:      #2a1f0e;   /* 12.4:1 on bg-primary */
+    --text-secondary:    #3a2c10;   /* 10.5:1 */
+    --text-muted:        #5c4828;   /* 7.2:1 — strong AA, was 7a6a52 (4.6:1) */
+
+    --accent:            #7a5c14;   /* 6.4:1 on bg-primary */
+    --accent-strong:     #5e4710;   /* darker for high-emphasis on light */
+    --accent-soft:       rgba(100,75,18,0.10);
+
+    --border-default:    rgba(60,45,10,0.55);    /* boosted for card visibility */
+    --border-strong:     rgba(60,45,10,0.80);
+    --border-muted:      rgba(0,0,0,0.16);
+
+    --input-bg:          rgba(0,0,0,0.07);       /* was 0.04 — more visible on cream */
+    --input-border:      rgba(90,65,15,0.45);    /* was 0.30 */
+    --input-text:        #2a1f0e;
+    --input-placeholder: #7a6a52;
+    --input-focus:       #7a5c14;
+
+    --btn-primary-bg:        #8a6a1a;
+    --btn-primary-bg-hover:  #6f5512;
+    --btn-primary-text:      #faf6f0;
+    --btn-secondary-bg:      transparent;
+    --btn-secondary-text:    #4a3a20;
+    --btn-secondary-border:  rgba(138,106,26,0.35);
+    --btn-secondary-text-hover: #8a6a1a;
+
+    --error:             #b03a2e;
+    --error-bg:          rgba(176,58,46,0.08);
+    --success:           #4a7a32;
+    --success-bg:        rgba(74,122,50,0.10);
+    --warning:           #a8551c;
+
+    --band-professional:    #4a7a32;
+    --band-competent:       #a07f25;
+    --band-developmental:   #a8551c;
+    --band-foundational:    #b03a2e;
+
+    --scrim-strong:      rgba(250,246,240,0.94);
+    --scrim-soft:        rgba(250,246,240,0.65);
+
+    /* Legacy aliases — light mode explicit values */
+    --ink:        #faf6f0;
+    --ink-soft:   #f0e8d8;
+    --cream:      #2a1f0e;
+    --cream-dim:  #3a2c10;
+    --gold:       #5e4710;
+    --gold-light: #7a5c14;
+    --rule:       rgba(60,45,10,0.55);
+    --text:       #2a1f0e;
+    --text-dim:   #5c4828;
+    --bg:         #faf6f0;
+
+    color-scheme: light;
+  }
+}
+
+/* ── EXPLICIT LIGHT (toggle override) ─────────────────────────────────────── */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-primary:        #faf6f0;
+  --bg-secondary:      #f0e8d8;
+  --surface:           #fdfaf3;
+  --surface-strong:    #efe6d0;
+
+  --text-primary:      #2a1f0e;
+  --text-secondary:    #3a2c10;
+  --text-muted:        #5c4828;
+
+  --accent:            #7a5c14;
+  --accent-strong:     #5e4710;
+  --accent-soft:       rgba(100,75,18,0.10);
+
+  --border-default:    rgba(90,65,15,0.40);
+  --border-strong:     rgba(90,65,15,0.65);
+  --border-muted:      rgba(0,0,0,0.12);
+
+  --input-bg:          rgba(0,0,0,0.07);
+  --input-border:      rgba(90,65,15,0.45);
+  --input-text:        #2a1f0e;
+  --input-placeholder: #7a6a52;
+  --input-focus:       #7a5c14;
+
+  --btn-primary-bg:        #8a6a1a;
+  --btn-primary-bg-hover:  #6f5512;
+  --btn-primary-text:      #faf6f0;
+  --btn-secondary-bg:      transparent;
+  --btn-secondary-text:    #4a3a20;
+  --btn-secondary-border:  rgba(138,106,26,0.35);
+  --btn-secondary-text-hover: #8a6a1a;
+
+  --error:             #b03a2e;
+  --error-bg:          rgba(176,58,46,0.08);
+  --success:           #4a7a32;
+  --success-bg:        rgba(74,122,50,0.10);
+  --warning:           #a8551c;
+
+  --band-professional:    #4a7a32;
+  --band-competent:       #a07f25;
+  --band-developmental:   #a8551c;
+  --band-foundational:    #b03a2e;
+
+  --scrim-strong:      rgba(250,246,240,0.94);
+  --scrim-soft:        rgba(250,246,240,0.65);
+
+  /* Legacy aliases — light mode explicit values */
+  --ink:        #faf6f0;
+  --ink-soft:   #f0e8d8;
+  --cream:      #2a1f0e;
+  --cream-dim:  #3a2c10;
+  --gold:       #5e4710;
+  --gold-light: #7a5c14;
+  --rule:       rgba(90,65,15,0.40);
+  --text:       #2a1f0e;
+  --text-dim:   #5c4828;
+  --bg:         #faf6f0;
+
+  color-scheme: light;
+}
+
+/* ── EXPLICIT DARK (toggle override; identical to root defaults) ──────────── */
+:root[data-theme="dark"] {
+  /* Inherits :root defaults; explicit selector exists so a system-light user
+     who chose Dark gets the dark values regardless of @media. */
+  color-scheme: dark;
+}
+
+/* ── Light mode card depth ────────────────────────────────────────────────── */
+/* Applied to all card/box elements so they lift off the cream background     */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .genre-card,
+  :root:not([data-theme]) .struct-card,
+  :root:not([data-theme]) .book-card,
+  :root:not([data-theme]) .phase-card,
+  :root:not([data-theme]) .gift-card,
+  :root:not([data-theme]) .fp-grey-panel-outer,
+  :root:not([data-theme]) .fp-format-box {
+    box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 0 0 1px rgba(60,45,10,0.08);
+    background: #fff;
+  }
+}
+:root[data-theme="light"] .genre-card,
+:root[data-theme="light"] .struct-card,
+:root[data-theme="light"] .book-card,
+:root[data-theme="light"] .phase-card,
+:root[data-theme="light"] .gift-card,
+:root[data-theme="light"] .fp-grey-panel-outer,
+:root[data-theme="light"] .fp-format-box {
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 0 0 1px rgba(60,45,10,0.08);
+  background: #fff;
+}
+
+/* ── Shared component: theme toggle ───────────────────────────────────────── */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--text-muted);
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+}
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+.theme-toggle [data-theme-icon] {
+  font-size: 0.95rem;
+  line-height: 1;
+}

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Made With GP — Greylander Press</title>
+<script>(function(){var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .gp-topbar {
+    display: flex; align-items: center; padding: 0 2.5rem; height: 56px;
+    border-bottom: 1px solid var(--rule); gap: 1.5rem;
+    position: sticky; top: 0; background: var(--ink); z-index: 100;
+  }
+  .gp-topbar-logo {
+    font-family: 'Playfair Display', serif; font-size: 1rem;
+    letter-spacing: 0.12em; color: var(--gold); text-decoration: none; white-space: nowrap;
+  }
+  .gp-topbar-back {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-dim); text-decoration: none; flex: 1;
+  }
+  .gp-topbar-back:hover { color: var(--gold); }
+  .gp-topbar-cta {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); border: 1px solid var(--rule);
+    padding: 0.4rem 0.9rem; cursor: pointer; background: none;
+  }
+
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700; color: var(--cream); line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .divider { width: 60px; height: 1px; background: var(--gold); margin-bottom: 3rem; }
+
+  .book-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;
+  }
+  .book-card {
+    border: 1px solid var(--rule); padding: 2rem; transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .book-cover-wrap {
+    width: 100%; aspect-ratio: 2/3; margin-bottom: 1.25rem;
+    background: rgba(184,146,42,0.06); border: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .book-cover-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .book-cover-placeholder {
+    font-family: 'Playfair Display', serif; font-size: 0.75rem; font-style: italic;
+    color: var(--text-dim); text-align: center; padding: 1rem; line-height: 1.5;
+  }
+  .book-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: var(--gold); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s;
+  }
+  .book-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .book-card:hover::before { transform: scaleY(1); }
+  .book-genre {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .book-title {
+    font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--cream); line-height: 1.3; margin-bottom: 0.5rem;
+  }
+  .book-author { font-size: 0.9rem; font-style: italic; color: var(--text-dim); margin-bottom: 1rem; }
+  .book-formats { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .format-tag {
+    font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-dim); border: 1px solid var(--rule);
+    padding: 0.2rem 0.6rem;
+  }
+  .book-amazon {
+    display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem;
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold-light); text-decoration: none;
+    border-bottom: 1px solid var(--rule); padding-bottom: 0.3rem; transition: all 0.2s; align-self: flex-start;
+  }
+  .book-amazon:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  .book-amazon::after { content: "↗"; font-size: 0.85rem; line-height: 1; }
+
+  footer {
+    background: var(--ink-soft); border-top: 1px solid var(--rule);
+    padding: 2rem; text-align: center;
+  }
+  .footer-meta {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim);
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<header class="gp-topbar">
+  <a class="gp-topbar-logo" href="index.html">GREYLANDER PRESS</a>
+  <a class="gp-topbar-back" href="index.html#journey">← Author Journey</a>
+  <button class="gp-topbar-cta" data-theme-toggle aria-label="Toggle theme">
+    <span data-theme-icon>◐</span> <span data-theme-label>Auto</span>
+  </button>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-label">Made With GP</div>
+    <h2 class="section-title">Books — <em>No GP Imprint</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--text-dim);font-size:1rem;line-height:1.6;max-width:760px;margin-top:0.5rem;margin-bottom:2rem;">Authored with GP tools. Published wherever they chose — traditional, hybrid, or self. Listed here at the author's explicit request. The tools did the work; the imprint didn't follow.</p>
+
+    <h3 class="section-subtitle" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:var(--cream);margin-top:2.5rem;margin-bottom:1rem;">MPSA Women's Operative Series — Companion Workbooks</h3>
+    <div class="book-grid">
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/ANALYST_Book1_AnalystRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 1</div>
+          <div class="book-title">Analyst</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/ANALYST_Book1_AnalystRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/PROFILER_Book2_Profiler Ribbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 2</div>
+          <div class="book-title">Profiler</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/PROFILER_Book2_Profiler Ribbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/SENTINEL_Book3_SentinelRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 3</div>
+          <div class="book-title">Sentinel</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/SENTINEL_Book3_SentinelRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/STRATEGIST_Book4_StrategistRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 4</div>
+          <div class="book-title">Strategist</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/STRATEGIST_Book4_StrategistRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/DIPLOMAT_Book5_DiplomatRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 5</div>
+          <div class="book-title">Diplomat</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/DIPLOMAT_Book5_DiplomatRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/HANDLER_Book6_HandlerRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 6</div>
+          <div class="book-title">Handler</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/HANDLER_Book6_HandlerRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/TACTICIAN_Book7_TacticianRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 7</div>
+          <div class="book-title">Tactician</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/TACTICIAN_Book7_TacticianRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/GUARDIAN_Book8_GuardianRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 8</div>
+          <div class="book-title">Guardian</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/GUARDIAN_Book8_GuardianRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/GHOST_Book9_GhostRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 9</div>
+          <div class="book-title">Ghost</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/GHOST_Book9_GhostRibbon.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/FIELD_COMMANDER_Book10_FieldCommanderRibbon.jpg">
+          <div class="book-genre">MPSA · Companion · Book 10</div>
+          <div class="book-title">Field Commander</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/COMPANION/FIELD_COMMANDER_Book10_FieldCommanderRibbon.pdf" download>Download PDF</a>
+        </div>
+    </div>
+
+    <h3 class="section-subtitle" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:var(--cream);margin-top:2.5rem;margin-bottom:1rem;">MPSA Women's Operative Series — Fiction</h3>
+    <div class="book-grid">
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/MPSA_Fiction_Book1_The_Read.jpg">
+          <div class="book-genre">MPSA · Fiction · Book 1</div>
+          <div class="book-title">The Read</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/FICTION/MPSA_Fiction_Book1_The_Read.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/MPSA_Fiction_Book2_The_Source.jpg">
+          <div class="book-genre">MPSA · Fiction · Book 2</div>
+          <div class="book-title">The Source</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/FICTION/MPSA_Fiction_Book2_The_Source.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/MPSA_Fiction_Book3_The_Ghost.jpg">
+          <div class="book-genre">MPSA · Fiction · Book 3</div>
+          <div class="book-title">The Ghost</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/FICTION/MPSA_Fiction_Book3_The_Ghost.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/MPSA_Fiction_Book4_The_Table.jpg">
+          <div class="book-genre">MPSA · Fiction · Book 4</div>
+          <div class="book-title">The Table</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/FICTION/MPSA_Fiction_Book4_The_Table.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/MPSA_Fiction_Book5_The_Watch.jpg">
+          <div class="book-genre">MPSA · Fiction · Book 5</div>
+          <div class="book-title">The Watch</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/FICTION/MPSA_Fiction_Book5_The_Watch.pdf" download>Download PDF</a>
+        </div>
+    </div>
+
+    <h3 class="section-subtitle" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:var(--cream);margin-top:2.5rem;margin-bottom:1rem;">MPSA Women's Operative Series — Handbooks</h3>
+    <div class="book-grid">
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/Handbook_1_THE_READER.jpg">
+          <div class="book-genre">MPSA · Handbook 1</div>
+          <div class="book-title">The Reader</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/HANDBOOKS/Handbook_1_THE_READER.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/Handbook_2_THE_SCOUT.jpg">
+          <div class="book-genre">MPSA · Handbook 2</div>
+          <div class="book-title">The Scout</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/HANDBOOKS/Handbook_2_THE_SCOUT.pdf" download>Download PDF</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/Handbook_3_THE_EDGE.jpg">
+          <div class="book-genre">MPSA · Handbook 3</div>
+          <div class="book-title">The Edge</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF · 115 MB</span></div>
+          <a class="book-amazon" href="https://drive.google.com/drive/folders/1clkeM9VdOPuD2lkpyckuYYAtiNtI4TPO?usp=sharing" target="_blank" rel="noopener">Download from Drive</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/Handbook_4_THE_ENVOY.jpg">
+          <div class="book-genre">MPSA · Handbook 4</div>
+          <div class="book-title">The Envoy</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF · 73 MB</span></div>
+          <a class="book-amazon" href="https://drive.google.com/drive/folders/1clkeM9VdOPuD2lkpyckuYYAtiNtI4TPO?usp=sharing" target="_blank" rel="noopener">Download from Drive</a>
+        </div>
+        <div class="book-card" data-cover="assets/MPSA BOOKS/covers/Handbook_5_THE_SHADOW.jpg">
+          <div class="book-genre">MPSA · Handbook 5</div>
+          <div class="book-title">The Shadow</div>
+          <div class="book-author">MPSA</div>
+          <div class="book-formats"><span class="format-tag">PDF</span></div>
+          <a class="book-amazon" href="assets/MPSA BOOKS/HANDBOOKS/Handbook_5_THE_SHADOW.pdf" download>Download PDF</a>
+        </div>
+    </div>
+
+    <div id="guest-grid" class="book-grid" style="margin-top:2rem;"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-meta">© 2026 Greylander Press, LLC · <a href="index.html" style="color:var(--text-dim);text-decoration:none;">Home</a> · <a href="index.html#journey" style="color:var(--text-dim);text-decoration:none;">Author Journey</a></div>
+</footer>
+
+<script>
+// Inject book cover images — local file first, Amazon CDN fallback
+document.querySelectorAll('.book-card').forEach(card => {
+  const localSrc = card.dataset.cover;
+  const link = card.querySelector('.book-amazon');
+  const title = card.querySelector('.book-title')?.textContent || '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'book-cover-wrap';
+  const img = document.createElement('img');
+  img.className = 'book-cover-img';
+  img.alt = title;
+
+  if (localSrc) {
+    img.src = localSrc;
+    img.onerror = function() {
+      wrap.innerHTML = `<div class="book-cover-placeholder">${title.slice(0,60)}</div>`;
+    };
+  } else if (link) {
+    const match = link.href.match(/\/dp\/([A-Z0-9]{10})|\/([A-Z0-9]{10})\//);
+    const asin = match ? (match[1] || match[2]) : null;
+    if (!asin) { wrap.innerHTML = `<div class="book-cover-placeholder">${title.slice(0,60)}</div>`; card.insertBefore(wrap, card.firstChild); return; }
+    img.src = `https://images-na.ssl-images-amazon.com/images/P/${asin}.01._SX600_.jpg`;
+    img.onerror = function() {
+      wrap.innerHTML = `<div class="book-cover-placeholder">${title.slice(0,60)}</div>`;
+    };
+  } else {
+    return;
+  }
+
+  wrap.appendChild(img);
+  card.insertBefore(wrap, card.firstChild);
+});
+</script>
+
+<!-- ── Guest catalog (made_with_gp listings) ──────────────────────────────── -->
+<script type="module">
+  const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+  const fmtDate = (iso) => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short' });
+  };
+  const extractLink = (blurb) => {
+    const m = (blurb || '').match(/Published:\s*(https?:\/\/\S+)/i);
+    return m ? m[1] : null;
+  };
+  const stripLink = (blurb) => (blurb || '').replace(/\s*·?\s*Published:\s*https?:\/\/\S+/i, '').trim();
+
+  const grid = document.getElementById('guest-grid');
+  const { data, error } = await sb
+    .from('submissions')
+    .select('id, title, author_name, genre, blurb, status, submitted_at')
+    .eq('listing_type', 'made_with_gp')
+    .eq('status', 'published')
+    .order('submitted_at', { ascending: false })
+    .limit(60);
+
+  if (error) {
+    // Silent fail — the MPSA cards above are already the guest content.
+  } else if (!data || data.length === 0) {
+    // Empty Supabase result is fine — nothing to render here.
+  } else {
+    grid.innerHTML = data.map((b) => {
+      const link = extractLink(b.blurb);
+      const note = stripLink(b.blurb);
+      const linkHtml = link
+        ? `<a class="book-amazon" href="${esc(link)}" target="_blank" rel="noopener">View →</a>`
+        : '';
+      return `
+        <div class="book-card">
+          <div class="book-cover-wrap"><div class="book-cover-placeholder">${esc((b.title || '').slice(0,60))}</div></div>
+          <div class="book-genre">${esc(b.genre || 'Made With GP')} · ${esc(fmtDate(b.submitted_at))}</div>
+          <div class="book-title">${esc(b.title || 'Untitled')}</div>
+          <div class="book-author">${esc(b.author_name || 'Guest Author')}</div>
+          ${note ? `<p style="font-size:0.85rem;color:var(--text-dim);font-style:italic;margin-bottom:1rem;line-height:1.6;">${esc(note)}</p>` : ''}
+          ${linkHtml}
+        </div>`;
+    }).join('');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Writing Principles — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+  .wrap{max-width:1040px;margin:0 auto;padding:3rem 2.5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--gold-light);}
+  .s-sub{color:var(--text-dim);font-size:0.95rem;margin-bottom:2.5rem;max-width:680px;}
+
+  .coach-module{margin-top:2rem;padding:1.8rem 2rem;border:1px solid var(--rule);background:rgba(184,146,42,0.03);}
+  .coach-module-head{margin-bottom:1.4rem;}
+  .coach-module-num{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+  .coach-module-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:0.3rem;}
+  .coach-module-sub{font-size:0.92rem;color:var(--text-dim);line-height:1.55;}
+  .coach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem;}
+  .coach-card{border:1px solid var(--rule);padding:1.3rem 1.4rem;cursor:pointer;transition:all 0.2s;background:rgba(0,0,0,0.18);position:relative;}
+  .coach-card:hover{border-color:var(--gold-light);}
+  .coach-card.open{border-color:var(--gold);background:rgba(184,146,42,0.06);}
+  .coach-card::after{content:'+';position:absolute;top:1.1rem;right:1.2rem;font-family:'DM Mono',monospace;font-size:1rem;color:var(--text-dim);transition:all 0.2s;line-height:1;}
+  .coach-card.open::after{content:'\2212';color:var(--gold);}
+  .coach-card-tag{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;padding-right:1.4rem;}
+  .coach-card-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--cream);margin-bottom:0.5rem;}
+  .coach-card-quick{font-size:0.88rem;color:var(--text-dim);line-height:1.5;}
+  .coach-card-detail{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--rule);}
+  .coach-card.open .coach-card-detail{display:block;}
+  .coach-detail-block{margin-bottom:0.9rem;}
+  .coach-detail-block:last-child{margin-bottom:0;}
+  .coach-detail-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+  .coach-detail-block p{color:var(--text);line-height:1.6;font-size:0.92rem;}
+  @media (max-width:800px){.coach-grid{grid-template-columns:1fr;}.coach-module{padding:1.4rem 1.2rem;}}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="novice"></div>
+
+<main class="wrap">
+  <div class="s-label">Phase 01 · Novice</div>
+  <h1 class="s-title">Core <em>Writing Principles</em></h1>
+  <p class="s-sub">Scene vs. Sequel. Show Don't Tell. Drafting Mindset. Click any card to expand. Free to use, no credits.</p>
+
+  <div class="coach-module">
+    <div class="coach-module-head">
+      <div class="coach-module-num">Module 04</div>
+      <div class="coach-module-title">Core Writing Principles</div>
+      <div class="coach-module-sub">Three foundational tools every draft is judged against.</div>
+    </div>
+    <div class="coach-grid">
+      <div class="coach-card" onclick="coachCardToggle(this)">
+        <div class="coach-card-tag">Pacing</div>
+        <div class="coach-card-name">Scene vs. Sequel</div>
+        <div class="coach-card-quick">Balance active plot progression with character processing.</div>
+        <div class="coach-card-detail">
+          <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Pacing the story too fast or lingering too long in one place.</p></div>
+          <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Does the scene end with a cliffhanger or decision, and does the sequel allow the character to process the emotional aftermath before acting again?</p></div>
+          <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Ensure high-intensity action scenes alternate with slower, reflective aftermath scenes.</p></div>
+        </div>
+      </div>
+      <div class="coach-card" onclick="coachCardToggle(this)">
+        <div class="coach-card-tag">Sensory Anchor</div>
+        <div class="coach-card-name">Show, Don't Tell</div>
+        <div class="coach-card-quick">Replace summaries with visceral, sensory descriptions.</div>
+        <div class="coach-card-detail">
+          <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Explicitly telling the reader an emotion (e.g., "She was terrified").</p></div>
+          <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Can you replace an adjective or summary statement with an action or sensory detail?</p></div>
+          <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Evoke emotion by anchoring it in a visceral, physical reaction.</p></div>
+        </div>
+      </div>
+      <div class="coach-card" onclick="coachCardToggle(this)">
+        <div class="coach-card-tag">Process</div>
+        <div class="coach-card-name">Drafting Mindset</div>
+        <div class="coach-card-quick">Separate the drafting phase (exploration) from the revision phase (precision).</div>
+        <div class="coach-card-detail">
+          <div class="coach-detail-block"><div class="coach-detail-label">The trap</div><p>Trying to edit and write at the same time, which stops the flow.</p></div>
+          <div class="coach-detail-block"><div class="coach-detail-label">The check</div><p>Are you judging the words as you type them, or just letting the story pour out?</p></div>
+          <div class="coach-detail-block"><div class="coach-detail-label">Fix</div><p>Complete the first draft without looking back. Save architecture and precision for the revision.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+window.coachCardToggle = (card) => { card.classList.toggle('open'); };
+</script>
+</body>
+</html>

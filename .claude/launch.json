@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "greylanderpress",
+      "runtimeExecutable": "C:\\Users\\w001txo\\node-portable\\node-v22.11.0-win-x64\\node.exe",
+      "runtimeArgs": ["-e", "const http=require('http'),fs=require('fs'),path=require('path');const root='C:/Users/w001txo/Desktop/ETL Lab/GLP/greylanderpress-site';http.createServer((req,res)=>{let u=req.url.split('?')[0];let f=path.join(root,u==='/'?'index.html':u);try{const d=fs.readFileSync(f);const ext=path.extname(f).slice(1);const m={html:'text/html',css:'text/css',js:'application/javascript',png:'image/png',jpg:'image/jpeg',svg:'image/svg+xml',woff2:'font/woff2',ico:'image/x-icon',docx:'application/octet-stream'};res.writeHead(200,{'Content-Type':m[ext]||'text/plain'});res.end(d);}catch(e){res.writeHead(404);res.end('404');}}).listen(3456);console.log('ready');"],
+      "port": 3456
+    }
+  ]
+}

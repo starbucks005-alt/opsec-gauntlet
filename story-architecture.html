@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Architecture — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+  .wrap{max-width:1040px;margin:0 auto;padding:3rem 2.5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--gold-light);}
+  .s-sub{color:var(--text-dim);font-size:0.95rem;margin-bottom:2.5rem;max-width:680px;}
+
+  .coach-module{margin-top:2rem;padding:1.8rem 2rem;border:1px solid var(--rule);background:rgba(184,146,42,0.03);}
+  .coach-module-head{margin-bottom:1.4rem;}
+  .coach-module-num{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+  .coach-module-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:0.3rem;}
+  .coach-module-sub{font-size:0.92rem;color:var(--text-dim);line-height:1.55;}
+  .coach-timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin:1.5rem 0 0;padding:0.5rem 0;}
+  .coach-timeline::before{content:'';position:absolute;top:calc(0.5rem + 24px);left:8.33%;right:8.33%;height:1px;background:var(--rule);z-index:0;}
+  .coach-node{background:none;border:none;padding:0.4rem 0.2rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0.4rem;position:relative;z-index:1;color:inherit;font-family:inherit;}
+  .coach-node-pct{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;color:var(--text-dim);white-space:nowrap;}
+  .coach-node-dot{width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--rule);transition:all 0.2s;}
+  .coach-node:hover .coach-node-dot{border-color:var(--gold-light);}
+  .coach-node.active .coach-node-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(184,146,42,0.18);}
+  .coach-node-name{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:700;color:var(--text-dim);text-align:center;line-height:1.2;transition:color 0.2s;}
+  .coach-node:hover .coach-node-name{color:var(--text);}
+  .coach-node.active .coach-node-name{color:var(--cream);}
+  .coach-detail{display:none;margin-top:1.6rem;padding:1.4rem 1.6rem;border-left:2px solid var(--gold);background:rgba(0,0,0,0.18);}
+  .coach-detail.open{display:block;}
+  .coach-detail-quick{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--gold-light);margin-bottom:1.1rem;line-height:1.55;}
+  .coach-detail-block{margin-bottom:0.9rem;}
+  .coach-detail-block:last-child{margin-bottom:0;}
+  .coach-detail-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+  .coach-detail-block p{color:var(--text);line-height:1.6;font-size:0.92rem;}
+  @media (max-width:600px){.coach-timeline{grid-template-columns:repeat(3,1fr);row-gap:1.5rem;}.coach-timeline::before{display:none;}.coach-module{padding:1.4rem 1.2rem;}}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="novice"></div>
+
+<main class="wrap">
+  <div class="s-label">Phase 01 · Novice</div>
+  <h1 class="s-title">Story <em>Architecture</em></h1>
+  <p class="s-sub">Six structural milestones every story turns on. Click a milestone to expand. Free to use, no credits.</p>
+
+  <div class="coach-module">
+    <div class="coach-module-head">
+      <div class="coach-module-num">Module 01</div>
+      <div class="coach-module-title">Story Architecture</div>
+      <div class="coach-module-sub">Six structural milestones from setup to climax. Click a milestone to expand.</div>
+    </div>
+    <div class="coach-timeline">
+      <button class="coach-node active" data-node="setup" onclick="coachToggle('setup')">
+        <div class="coach-node-pct">0–12%</div>
+        <div class="coach-node-dot"></div>
+        <div class="coach-node-name">Setup</div>
+      </button>
+      <button class="coach-node" data-node="launch" onclick="coachToggle('launch')">
+        <div class="coach-node-pct">12–25%</div>
+        <div class="coach-node-dot"></div>
+        <div class="coach-node-name">The Launch</div>
+      </button>
+      <button class="coach-node" data-node="midpoint" onclick="coachToggle('midpoint')">
+        <div class="coach-node-pct">25–50%</div>
+        <div class="coach-node-dot"></div>
+        <div class="coach-node-name">Midpoint</div>
+      </button>
+      <button class="coach-node" data-node="mirror" onclick="coachToggle('mirror')">
+        <div class="coach-node-pct">50%</div>
+        <div class="coach-node-dot"></div>
+        <div class="coach-node-name">The Mirror</div>
+      </button>
+      <button class="coach-node" data-node="dark-night" onclick="coachToggle('dark-night')">
+        <div class="coach-node-pct">50–75%</div>
+        <div class="coach-node-dot"></div>
+        <div class="coach-node-name">Dark Night</div>
+      </button>
+      <button class="coach-node" data-node="climax" onclick="coachToggle('climax')">
+        <div class="coach-node-pct">75–100%</div>
+        <div class="coach-node-dot"></div>
+        <div class="coach-node-name">Climax</div>
+      </button>
+    </div>
+    <div class="coach-detail open" id="coach-detail-setup">
+      <div class="coach-detail-quick">Establish the baseline reality, then disrupt it with the inciting incident.</div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>If the reader isn't hooked immediately, they will put the book down.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>Spending too much time on backstory before the inciting incident happens.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>Does the first scene show the character's everyday world? What specific event shatters that world by page 10?</p></div>
+    </div>
+    <div class="coach-detail" id="coach-detail-launch">
+      <div class="coach-detail-quick">Point of No Return. The character attempts to solve the initial problem, fails, and locks into the journey.</div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>This moves the story from passive to active. The protagonist cannot go back to the way things were.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>Making the character's reaction half-hearted or keeping them in denial too long.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What choice closes the door behind the protagonist?</p></div>
+    </div>
+    <div class="coach-detail" id="coach-detail-midpoint">
+      <div class="coach-detail-quick">Shift from reacting to the plot to taking proactive charge.</div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>A protagonist who only reacts gets boring. Here, they take the offensive.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The character remains a victim of circumstance through the middle of the book.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What piece of information forces the character to stop running and start fighting back?</p></div>
+    </div>
+    <div class="coach-detail" id="coach-detail-mirror">
+      <div class="coach-detail-quick">The stakes double; a major truth is revealed that shatters the old worldview.</div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>It acts as the emotional midpoint. The character sees a reflection of the truth they are ignoring.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The middle sags because nothing changes regarding the character's internal beliefs.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What shocking revelation forces the character to change their plan for the second half of the book?</p></div>
+    </div>
+    <div class="coach-detail" id="coach-detail-dark-night">
+      <div class="coach-detail-quick">Rock bottom. External plans fail.</div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>The lowest emotional point before the final climb. The "false victory" or failure shatters their confidence.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The stakes feel artificial because the reader doesn't feel the emotional weight.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>What failure strips the protagonist of everything they thought they needed?</p></div>
+    </div>
+    <div class="coach-detail" id="coach-detail-climax">
+      <div class="coach-detail-quick">Plot and character arc collide.</div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Why this matters</div><p>The physical plot problem and the internal character flaw must be resolved in the same action.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Common mistakes</div><p>The ending relies on pure luck rather than the character's growth.</p></div>
+      <div class="coach-detail-block"><div class="coach-detail-label">Questions to ask yourself</div><p>How does the character use what they learned in the Dark Night to win the final battle?</p></div>
+    </div>
+  </div>
+</main>
+
+<script>
+window.coachToggle = (id) => {
+  document.querySelectorAll('.coach-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.coach-node').forEach(n => n.classList.remove('active'));
+  const detail = document.getElementById('coach-detail-' + id);
+  if (detail) detail.classList.add('open');
+  const node = document.querySelector(`.coach-node[data-node="${id}"]`);
+  if (node) node.classList.add('active');
+};
+</script>
+</body>
+</html>

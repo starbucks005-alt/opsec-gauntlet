@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Dialogue — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/manuscript-store.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<script src="assets/sample-pdfs.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary,#13100c);color:var(--text-primary,#f4ede0);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;line-height:1.7;min-height:100vh;padding-top:72px;}
+  .pn-main{max-width:1080px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--text-primary,#f4ede0);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent,#b8922a);}
+  .s-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted,#a89880);margin-bottom:0.9rem;max-width:680px;line-height:1.6;}
+
+  /* Grey character intro */
+  .gw-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
+  .gw-intro.minimized{display:none;}
+  .gw-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default,rgba(184,146,42,0.3));width:28px;height:28px;color:var(--text-muted,#a89880);cursor:pointer;font-family:'DM Mono',monospace;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .gw-min-btn:hover{color:var(--accent,#b8922a);border-color:var(--accent,#b8922a);}
+  .gw-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary,#13100c);animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gw-portrait .gw-closed{opacity:0;animation:gw-blink 5.6s infinite;}
+  @keyframes gw-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gw-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .gw-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--text-primary,#f4ede0);}
+  .gw-greeting em{color:var(--accent,#b8922a);font-style:italic;}
+  .gw-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-mini-badge.visible{display:flex;}
+  .gw-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .gw-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .gw-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary,#13100c);border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent,#b8922a);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .gw-mini-badge:hover .gw-mini-tooltip{opacity:1;}
+
+  /* Manuscript upload */
+  .ms-upload-zone{border:2px dashed rgba(184,146,42,0.35);padding:1.8rem 2rem;cursor:pointer;text-align:center;margin-bottom:1.5rem;transition:border-color 0.2s,background 0.2s;}
+  .ms-upload-zone:hover,.ms-upload-zone.drag{border-color:var(--accent,#b8922a);background:rgba(184,146,42,0.04);}
+  .ms-upload-zone input{display:none;}
+  .ms-upload-icon{font-size:1.6rem;margin-bottom:0.4rem;line-height:1;}
+  .ms-upload-label{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .ms-upload-sub{font-size:0.78rem;color:var(--text-muted,#a89880);}
+  .ms-loaded-banner{display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;}
+  .ms-loaded-banner.visible{display:flex;}
+  .ms-loaded-icon{font-size:1.4rem;flex-shrink:0;}
+  .ms-loaded-body{flex:1;min-width:0;}
+  .ms-loaded-name{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#b8922a);}
+  .ms-loaded-meta{font-size:0.8rem;color:var(--text-muted,#a89880);margin-top:0.2rem;}
+  .ms-btn{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:none;color:var(--text-muted,#a89880);padding:0.4rem 0.9rem;cursor:pointer;}
+  .ms-btn:hover{border-color:var(--accent,#b8922a);color:var(--accent,#b8922a);}
+  .ms-btn.ms-btn-primary{background:rgba(184,146,42,0.15);border-color:rgba(184,146,42,0.5);color:var(--accent,#b8922a);}
+  .ms-status{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;color:var(--accent,#b8922a);margin-bottom:1rem;min-height:1.2em;}
+
+  .pn-step-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin:1.5rem 0 0.8rem;}
+  .field-textarea{background:var(--input-bg,rgba(0,0,0,0.3));border:1px solid var(--input-border,rgba(184,146,42,0.25));color:var(--input-text,#f4ede0);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:0.9rem 1.1rem;outline:none;transition:border-color 0.2s;width:100%;min-height:240px;line-height:1.6;resize:vertical;}
+  .field-textarea:focus{border-color:var(--accent,#b8922a);}
+
+  .btn-gold{background:var(--accent,#b8922a);color:#13100c;border:none;padding:0.95rem 2.2rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background 0.2s;}
+  .btn-gold:hover{background:#d4aa4a;}
+  .btn-gold:disabled{opacity:0.5;cursor:not-allowed;}
+  .btn-outline{background:transparent;color:var(--accent,#b8922a);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.95rem 1.8rem;border:1px solid var(--border-default,rgba(184,146,42,0.3));cursor:pointer;text-decoration:none;display:inline-block;}
+  .btn-outline:hover{border-color:var(--accent,#b8922a);}
+
+  .run-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem;}
+  .run-status{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent,#b8922a);min-height:1em;}
+  .run-cost{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+
+  .output-area{display:none;margin-top:2.5rem;}
+  .output-area.visible{display:block;}
+  .output-header{border-bottom:1px solid var(--border-default,rgba(184,146,42,0.25));padding-bottom:1rem;margin-bottom:1.4rem;}
+  .output-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-primary,#f4ede0);}
+  .output-prose{padding:1.2rem 1.5rem;border-left:2px solid rgba(184,146,42,0.4);background:rgba(184,146,42,0.04);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.75;color:var(--text-primary,#f4ede0);white-space:pre-wrap;}
+  .cta-bar{display:flex;gap:0.8rem;margin-top:1.5rem;flex-wrap:wrap;}
+
+  @media(max-width:760px){
+    .pn-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.7rem;}
+    .gw-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gw-portrait{width:120px;height:155px;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="post"></div>
+
+<main class="pn-main">
+
+  <div class="s-label">Phase 03 — Post-Draft</div>
+  <h1 class="s-title">Add <em>Dialogue</em>.</h1>
+  <p class="s-sub">Paste a narrative-heavy scene; Grey weaves in dialogue that fits the established characters and earns the beats. Plot, sequence, and prose voice stay intact.</p>
+
+  <div class="gw-intro" id="gw-intro">
+    <button class="gw-min-btn" onclick="gwMinimize()" aria-label="Minimize Grey" title="Minimize">−</button>
+    <div class="gw-portrait" aria-label="Grey, your writing partner">
+      <img src="assets/Grey_Open.png" alt="Grey" class="gw-open">
+      <img src="assets/Grey_Closed.png" alt="" aria-hidden="true" class="gw-closed">
+    </div>
+    <div>
+      <div class="gw-name">Grey.</div>
+      <div class="gw-greeting">Your writing partner. <em>Dialogue is a character revealing themselves while trying to do something else.</em> Hand me a scene that is mostly description and I will give the people in it lines that match how they actually speak. I will not invent new beats or change what the scene is doing. The narration earns the dialogue; the dialogue earns the next beat.</div>
+    </div>
+  </div>
+
+  <div id="ms-loaded-banner" class="ms-loaded-banner">
+    <div class="ms-loaded-icon">📄</div>
+    <div class="ms-loaded-body">
+      <div class="ms-loaded-name" id="ms-loaded-filename">—</div>
+      <div class="ms-loaded-meta" id="ms-loaded-meta">—</div>
+    </div>
+    <button class="ms-btn ms-btn-primary" onclick="msPasteFromStore()">Paste First Chapter ↓</button>
+    <button class="ms-btn" onclick="msClearAndReset()">✕ Clear</button>
+  </div>
+
+  <div id="ms-status" class="ms-status"></div>
+
+  <div id="ms-upload-zone" class="ms-upload-zone"
+    onclick="document.getElementById('ms-file-input').click()"
+    ondragover="event.preventDefault();this.classList.add('drag');"
+    ondragleave="this.classList.remove('drag');"
+    ondrop="event.preventDefault();this.classList.remove('drag');msHandleFile(event.dataTransfer.files[0]);">
+    <input type="file" id="ms-file-input" accept=".pdf" onchange="msHandleFile(this.files[0])">
+    <div class="ms-upload-icon">📖</div>
+    <div class="ms-upload-label">Upload your manuscript (optional)</div>
+    <div class="ms-upload-sub">PDF · used for context. Or paste a chapter directly below.</div>
+  </div>
+
+  <div data-gp-samples data-target="msHandleFile"></div>
+
+  <div class="pn-step-label">Paste the chapter or scene</div>
+  <textarea class="field-textarea" id="pn-chapter" placeholder="Paste up to ~6,000 words here. Grey works best on a single scene or chapter at a time."></textarea>
+
+  <div class="run-row">
+    <button class="btn-gold" id="run-btn" onclick="runDialogue()">✦ Add Dialogue to This Scene</button>
+    <span class="run-cost">~3 credits per pass · keeps plot, voice, and beats intact; weaves dialogue in</span>
+    <span class="run-status" id="run-status"></span>
+  </div>
+
+  <div class="output-area" id="output-area">
+    <div class="output-header"><div class="output-title">Scene with Dialogue</div></div>
+    <div class="output-prose" id="output-prose"></div>
+    <div class="cta-bar">
+      <button class="btn-outline" onclick="copyOutput()">Copy to Clipboard</button>
+      <button class="btn-outline" onclick="resetAll()">Start Over</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="gw-mini-badge" id="gw-mini-badge" onclick="gwMaximize()" aria-label="Bring Grey back">
+  <img src="assets/quill pen.png" alt="Grey, minimized">
+  <span class="gw-mini-tooltip">Grey is here</span>
+</button>
+
+<script>
+window.gwMinimize = () => { document.getElementById('gw-intro').classList.add('minimized'); document.getElementById('gw-mini-badge').classList.add('visible'); };
+window.gwMaximize = () => { document.getElementById('gw-intro').classList.remove('minimized'); document.getElementById('gw-mini-badge').classList.remove('visible'); };
+
+const SYSTEM_PROMPT = `You are Grey, a literary ghost writer for Greylander Press, working as the Dialogue Doctor.
+
+Your job: take the narrative-heavy scene the author gives you and add dialogue that fits the established characters and the work the scene is doing.
+
+Rules:
+- Preserve every plot beat in its original order. Do not invent new actions, decisions, or revelations.
+- Preserve point of view, tense, and named characters. Use only voices already established in the scene.
+- Each line of dialogue must do at least two things at once: reveal character AND advance the moment, or carry subtext AND deflect.
+- People interrupt, evade, mishear, change the subject. Avoid stage-direction dialogue ("As you know, Bob").
+- Dialogue tags: prefer "said" or no tag plus an action beat. Avoid synonyms for said (whispered, growled, retorted) unless they earn their place.
+- Match the established prose voice in cadence and diction. The narration around the dialogue can stay almost the same.
+- Never use em dashes. Use periods, commas, or short sentences instead.
+- Return only the rewritten scene. No preamble, no notes, no markdown headers, no commentary.`;
+
+window.runDialogue = async function(){
+  const chapter = document.getElementById('pn-chapter').value.trim();
+  if (chapter.length < 200){ document.getElementById('run-status').textContent = 'Paste at least a paragraph or two.'; return; }
+  if (chapter.length > 30000){ document.getElementById('run-status').textContent = 'Trim to under ~6,000 words for one pass.'; return; }
+  const btn = document.getElementById('run-btn');
+  const status = document.getElementById('run-status');
+  const out = document.getElementById('output-prose');
+  btn.disabled = true;
+  status.textContent = 'Grey is reading…';
+  document.getElementById('output-area').classList.add('visible');
+  out.textContent = '';
+
+  try {
+    const res = await fetch('/.netlify/functions/proxy-gp', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ system: SYSTEM_PROMPT, prompt: chapter, maxTokens: 4096 }),
+    });
+    if (!res.ok){ status.textContent = `Grey hit an error (HTTP ${res.status}).`; btn.disabled = false; return; }
+
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    status.textContent = 'Streaming dialogue-enriched scene…';
+    while (true){
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n'); buf = lines.pop();
+      for (const line of lines){
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (!raw || raw === '[DONE]') continue;
+        try {
+          const e = JSON.parse(raw);
+          if (e.type === 'delta' && e.text){
+            out.textContent += e.text;
+            out.scrollIntoView({behavior:'smooth', block:'nearest'});
+          }
+        } catch(_){}
+      }
+    }
+    status.textContent = 'Done.';
+  } catch (err){
+    status.textContent = 'Network error: ' + err.message;
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+window.copyOutput = function(){
+  const text = document.getElementById('output-prose').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('run-status').textContent = 'Copied to clipboard.';
+    setTimeout(() => document.getElementById('run-status').textContent = '', 2500);
+  });
+};
+
+window.resetAll = function(){
+  document.getElementById('pn-chapter').value = '';
+  document.getElementById('output-area').classList.remove('visible');
+  document.getElementById('output-prose').textContent = '';
+  document.getElementById('run-status').textContent = '';
+};
+
+/* ── Manuscript upload integration ─────────────────────────────── */
+function msSetStatus(m){ const e = document.getElementById('ms-status'); if (e) e.textContent = m || ''; }
+function msShowBanner(meta){
+  const b = document.getElementById('ms-loaded-banner');
+  const z = document.getElementById('ms-upload-zone');
+  if (!b || !meta) return;
+  document.getElementById('ms-loaded-filename').textContent = meta.filename || 'Manuscript';
+  const parts = [];
+  if (meta.wordCount) parts.push(meta.wordCount.toLocaleString() + ' words');
+  if (meta.title) parts.push('"' + meta.title + '"');
+  if (meta.genre) parts.push(meta.genre);
+  document.getElementById('ms-loaded-meta').textContent = parts.join(' · ') || 'Ready';
+  b.classList.add('visible');
+  if (z) z.style.display = 'none';
+}
+window.msPasteFromStore = function(){
+  const text = window.gpMs && window.gpMs.getText && window.gpMs.getText();
+  if (!text){ msSetStatus('No manuscript text loaded.'); return; }
+  // Take roughly the first ~5,000 words (≈ first chapter or two)
+  const words = text.trim().split(/\s+/).slice(0, 5000).join(' ');
+  document.getElementById('pn-chapter').value = words;
+  msSetStatus('Pasted first ~5,000 words. Trim or expand as needed, then enrich.');
+  setTimeout(() => msSetStatus(''), 4000);
+};
+window.msClearAndReset = function(){
+  if (window.gpMs) window.gpMs.clear();
+  document.getElementById('ms-loaded-banner').classList.remove('visible');
+  document.getElementById('ms-upload-zone').style.display = '';
+  msSetStatus('');
+};
+window.msHandleFile = async function(file){
+  if (!file) return;
+  if (file.type !== 'application/pdf'){ msSetStatus('Please upload a PDF file.'); return; }
+  if (file.size > 10*1024*1024){ msSetStatus('File too large (max 10 MB).'); return; }
+  msSetStatus('Reading manuscript…');
+  let pdfBase64;
+  try {
+    pdfBase64 = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(',')[1]);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  } catch(e){ msSetStatus('Could not read file.'); return; }
+  msSetStatus('Extracting…');
+  let res;
+  try {
+    res = await fetch('/.netlify/functions/manuscript-extract', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ pdfBase64, filename: file.name }),
+    });
+  } catch(e){ msSetStatus('Network error.'); return; }
+  if (!res.ok){ msSetStatus('Extraction error.'); return; }
+  let data;
+  try { data = await res.json(); } catch(e){ msSetStatus('Could not parse response.'); return; }
+  if (window.gpMs) window.gpMs.save(file.name, pdfBase64, data.text || '', data.wordCount || 0, data.metadata || {});
+  msSetStatus('');
+  const meta = (window.gpMs && window.gpMs.getMeta()) || { filename: file.name, wordCount: data.wordCount || 0 };
+  msShowBanner(meta);
+  msPasteFromStore();
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const meta = window.gpMs && window.gpMs.getMeta();
+  if (meta) msShowBanner(meta);
+});
+window.addEventListener('gp-manuscript-ready', e => { if (e.detail) msShowBanner(e.detail); });
+window.addEventListener('gp-manuscript-cleared', () => msClearAndReset());
+</script>
+
+</body>
+</html>

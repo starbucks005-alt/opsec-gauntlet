@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podcast-Style Reviewer — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/manuscript-store.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<script src="assets/sample-pdfs.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-serif);font-size:1.05rem;line-height:1.7;min-height:100vh;}
+
+  .gp-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--border-default);gap:1.5rem;position:sticky;top:0;background:var(--bg-primary);z-index:100;}
+  .gp-topbar-logo{font-family:var(--font-display);font-size:1rem;letter-spacing:0.12em;color:var(--accent);text-decoration:none;}
+  .gp-topbar-back{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;flex:1;}
+  .gp-topbar-back:hover{color:var(--accent);}
+  .credit-badge{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border-default);padding:0.25rem 0.75rem;}
+
+  .pr-main{max-width:980px;margin:0 auto;padding:3rem 2.5rem;}
+  .s-label{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;}
+  .s-title{font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--text-primary);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent);}
+  .s-sub{color:var(--text-muted);font-size:0.95rem;margin-bottom:2.5rem;max-width:680px;}
+  .divider{border:none;border-top:1px solid var(--border-default);margin:2.5rem 0;}
+
+  .step{display:none;}
+  .step.active{display:block;}
+
+  .pr-drop{border:2px dashed var(--border-default);padding:4rem 2rem;text-align:center;cursor:pointer;transition:all 0.2s;display:block;}
+  .pr-drop:hover, .pr-drop.dragover{border-color:var(--accent);background:var(--accent-soft);}
+  .pr-drop-icon{font-size:3rem;color:var(--accent);margin-bottom:1rem;line-height:1;}
+  .pr-drop-text{font-family:var(--font-display);font-size:1.3rem;color:var(--text-primary);margin-bottom:0.4rem;}
+  .pr-drop-sub{font-size:0.85rem;color:var(--text-muted);}
+  .pr-drop input{display:none;}
+  .upload-err{margin-top:1rem;color:var(--error);font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;min-height:1.2rem;}
+
+  .file-card{border:1px solid var(--accent-strong);background:var(--accent-soft);padding:1.2rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.2rem;margin-bottom:1.5rem;}
+  .file-card-icon{font-size:1.6rem;color:var(--accent);}
+  .file-card-name{font-family:var(--font-display);font-size:1.05rem;color:var(--text-primary);}
+  .file-card-size{font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);letter-spacing:0.15em;text-transform:uppercase;margin-top:0.2rem;}
+
+  .opt-section{margin-bottom:1.5rem;}
+  .opt-row{display:flex;flex-wrap:wrap;gap:0.6rem;}
+  .opt-btn{background:none;border:1px solid var(--border-default);color:var(--text-secondary);padding:0.7rem 1.2rem;font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
+  .opt-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .opt-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+  .mode-btn{width:100%;text-align:left;padding:1.1rem 1.4rem;display:flex;align-items:flex-start;gap:1rem;}
+  .mode-btn-icon{font-size:1.6rem;line-height:1;flex-shrink:0;margin-top:0.1rem;}
+  .mode-btn-body{}
+  .mode-btn-title{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+  .mode-btn-desc{font-family:var(--font-serif);font-size:0.88rem;letter-spacing:0;text-transform:none;line-height:1.5;opacity:0.75;display:block;}
+
+  .opt-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);padding:0.7rem 1rem;color:var(--input-text);font-family:var(--font-serif);font-size:0.95rem;outline:none;}
+  .opt-input:focus{border-color:var(--input-focus);}
+
+  .audio-toggle{display:flex;align-items:center;gap:0.6rem;cursor:pointer;}
+  .audio-toggle input{accent-color:var(--accent);}
+  .audio-toggle-label{font-size:0.92rem;color:var(--text-secondary);}
+  .audio-toggle-note{font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);letter-spacing:0.12em;}
+
+  .running{padding:5rem 2rem;text-align:center;}
+  .running-rune{font-size:3rem;color:var(--accent);animation:pulse 2s ease-in-out infinite;display:inline-block;line-height:1;}
+  @keyframes pulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+  .running-text{font-family:var(--font-display);font-size:1.4rem;color:var(--text-primary);margin-top:1.5rem;}
+  .running-sub{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-top:0.6rem;}
+
+  .audio-shell{border:1px solid var(--border-default);background:var(--surface);padding:1.4rem 1.6rem;margin-bottom:1.5rem;}
+  .audio-shell audio{width:100%;}
+  .audio-error{color:var(--warning);font-size:0.88rem;margin-top:0.6rem;}
+
+  .transcript{border:1px solid var(--border-default);padding:1.5rem 1.8rem;background:var(--bg-primary);max-height:60vh;overflow-y:auto;}
+  .transcript-title{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--text-primary);margin-bottom:1.2rem;}
+  .transcript-line{margin-bottom:1rem;line-height:1.7;}
+  .transcript-speaker{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-right:0.6rem;}
+  .transcript-text{color:var(--text-primary);font-size:0.98rem;}
+  .transcript-line.b .transcript-speaker{color:var(--accent-strong);}
+
+  .btn-gold{background:var(--btn-primary-bg);color:var(--btn-primary-text);border:none;padding:0.85rem 2rem;font-family:var(--font-display);font-size:0.95rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;}
+  .btn-gold:hover{background:var(--btn-primary-bg-hover);}
+  .btn-gold:disabled{opacity:0.5;cursor:not-allowed;}
+  .btn-outline{background:none;border:1px solid var(--border-default);color:var(--text-muted);padding:0.7rem 1.5rem;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+  .auth-prompt{text-align:center;padding:5rem 2rem;border:1px solid var(--border-default);max-width:560px;margin:0 auto;}
+  .auth-prompt-title{font-family:var(--font-display);font-size:1.5rem;color:var(--text-primary);margin-bottom:1rem;}
+  .auth-prompt-body{color:var(--text-muted);margin-bottom:1.5rem;}
+
+  /* Podcast hosts character intro panel (no minimize, this is a one-shot generation) */
+  .ph-intro{display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default);background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
+  .ph-portrait{position:relative;width:220px;height:160px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default);background:var(--bg-primary);animation:ph-float 5.0s ease-in-out infinite;}
+  .ph-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .ph-portrait .ph-closed{opacity:0;animation:ph-blink 5.7s infinite;}
+  @keyframes ph-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes ph-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .ph-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--accent);margin-bottom:0.4rem;}
+  .ph-greeting{font-family:var(--font-serif);font-size:1.05rem;line-height:1.6;color:var(--text-primary);}
+  .ph-greeting em{color:var(--accent);font-style:italic;}
+  @media(max-width:760px){
+    .ph-intro{grid-template-columns:140px 1fr;gap:1.2rem;padding:1.4rem;}
+    .ph-portrait{width:140px;height:100px;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="playground"></div>
+
+<main class="pr-main">
+
+  <div id="auth-required" class="auth-prompt" style="display:none;">
+    <div class="auth-prompt-title">Sign in required</div>
+    <p class="auth-prompt-body">The Podcast-Style Reviewer is credit-gated. Sign in or create a free account on the homepage first.</p>
+    <a href="index.html#auth" class="btn-gold">Sign In on Homepage →</a>
+  </div>
+
+  <div id="pr-flow" style="display:none;">
+
+    <div class="s-label">Author Playground</div>
+    <div class="s-title">Podcast-Style <em>Reviewer</em></div>
+    <p class="s-sub">Upload your manuscript. Choose Book Club (plot, characters, the thrill of the genre) or Critique (structure, pacing, arcs). Two hosts, two voices. 30 credits per generation.</p>
+
+    <div class="ph-intro">
+      <div class="ph-portrait" aria-label="The podcast hosts">
+        <img src="assets/Podcast_hosts_Open.png" alt="Two podcast hosts at the mic" class="ph-open">
+        <img src="assets/Podcast_hosts_Closed.png" alt="" aria-hidden="true" class="ph-closed">
+      </div>
+      <div>
+        <div class="ph-name">Your Hosts.</div>
+        <div class="ph-greeting">Two voices, one mic. <em>One reads as a reader, the other reads as a critic.</em> Hand us your manuscript and pick a lens. Book Club mode talks plot, character, and the thrill of the genre. Critique mode pulls apart structure, pacing, and arcs. Either way, you get an episode that sounds like a real conversation about your book.</div>
+      </div>
+    </div>
+
+    <!-- Step 1: setup -->
+    <div class="step active" id="setup-step">
+      <div class="s-label">Step 1 — Upload Manuscript</div>
+
+      <!-- Loaded manuscript banner (shown when gpMs has a PDF in session) -->
+      <div id="pr-ms-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;">
+        <span style="font-size:1.4rem;">📄</span>
+        <div style="flex:1;min-width:0;">
+          <div id="pr-ms-name" style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-accent);"></div>
+          <div id="pr-ms-meta" style="font-size:0.8rem;color:var(--text-dim);margin-top:0.2rem;"></div>
+        </div>
+        <button onclick="prUseMsFile()" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.15);color:var(--gold-accent);padding:0.4rem 0.9rem;cursor:pointer;">Use This Manuscript →</button>
+        <button onclick="document.getElementById('pr-ms-banner').style.display='none'" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.1);background:none;color:var(--text-dim);padding:0.4rem 0.9rem;cursor:pointer;">✕ Upload different</button>
+      </div>
+
+      <div style="font-family:var(--font-display);font-size:1.2rem;color:var(--text-primary);margin-bottom:1.2rem;">PDF only. Max 50 MB.</div>
+
+      <div id="drop-wrap">
+        <label class="pr-drop" id="drop-zone">
+          <input type="file" id="pdf-input" accept="application/pdf,.pdf">
+          <div class="pr-drop-icon">🎙</div>
+          <div class="pr-drop-text">Drop your manuscript PDF here</div>
+          <div class="pr-drop-sub">Or click to browse.</div>
+        </label>
+      <div data-gp-samples data-input="#pdf-input"></div>
+      </div>
+
+      <div id="file-display" style="display:none;">
+        <div class="file-card">
+          <div class="file-card-icon">📄</div>
+          <div>
+            <div class="file-card-name" id="file-name"></div>
+            <div class="file-card-size" id="file-size"></div>
+          </div>
+          <button class="btn-outline" onclick="clearFile()">Remove</button>
+        </div>
+      </div>
+
+      <div class="upload-err" id="upload-err"></div>
+
+      <hr class="divider">
+
+      <div class="opt-section">
+        <div class="s-label">Step 2 — Format</div>
+        <div class="opt-row" style="flex-direction:column;gap:0.75rem;">
+          <button class="opt-btn mode-btn active" data-mode="bookclub" onclick="pickMode(this)">
+            <span class="mode-btn-icon">📚</span>
+            <span class="mode-btn-body">
+              <span class="mode-btn-title">Book Club Episode</span>
+              <span class="mode-btn-desc">Plot, characters, and the thrill (or drama or horror) of reading it. What would you tell a friend who loves this genre?</span>
+            </span>
+          </button>
+          <button class="opt-btn mode-btn" data-mode="critique" onclick="pickMode(this)">
+            <span class="mode-btn-icon">🔍</span>
+            <span class="mode-btn-body">
+              <span class="mode-btn-title">Craft Critique</span>
+              <span class="mode-btn-desc">Pacing, structure, character arcs. Where it works, where it doesn't. Anti-sycophancy applies.</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="opt-section">
+        <div class="s-label">Step 3 — Tone</div>
+        <div class="opt-row">
+          <button class="opt-btn" data-tone="scholarly" onclick="pickTone(this)">Scholarly</button>
+          <button class="opt-btn active" data-tone="witty" onclick="pickTone(this)">Witty Banter</button>
+          <button class="opt-btn" data-tone="casual" onclick="pickTone(this)">Casual</button>
+        </div>
+      </div>
+
+      <div class="opt-section">
+        <div class="s-label">Step 4 — Focus (optional)</div>
+        <input class="opt-input" id="focus-input" placeholder="e.g., the plot twist in chapter 8, the romance subplot, the villain. Leave blank for a full discussion.">
+      </div>
+
+      <div class="opt-section">
+        <label class="audio-toggle">
+          <input type="checkbox" id="audio-toggle" checked>
+          <span class="audio-toggle-label">Render audio (ElevenLabs · two voices · ~1 to 3 min processing)</span>
+        </label>
+        <div class="audio-toggle-note">Uncheck to skip audio and get the transcript only (still 30 credits).</div>
+      </div>
+
+      <hr class="divider">
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+        <button class="btn-gold" id="run-btn" onclick="runPodcast()">Generate Episode →</button>
+        <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);">30 credits per generation</span>
+      </div>
+    </div>
+
+    <!-- Step 2: running -->
+    <div class="step" id="running-step">
+      <div class="running">
+        <div class="running-rune">🎙</div>
+        <div class="running-text" id="running-text">Generating transcript…</div>
+        <div class="running-sub" id="running-sub">Pulling pacing, arcs, and structure from the manuscript</div>
+      </div>
+    </div>
+
+    <!-- Step 3: result -->
+    <div class="step" id="result-step">
+      <div class="s-label">Episode Ready</div>
+      <h2 class="s-title" style="font-size:1.6rem;" id="ep-title">—</h2>
+
+      <div id="audio-section" style="display:none;">
+        <div class="audio-shell">
+          <audio id="audio-player" controls></audio>
+        </div>
+      </div>
+      <div id="audio-error-block" style="display:none;" class="audio-error"></div>
+
+      <div class="transcript" id="transcript"></div>
+
+      <hr class="divider">
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <button class="btn-outline" onclick="resetSetup()">Generate another episode</button>
+        <button class="btn-outline" onclick="downloadTranscript()">Download transcript (.md)</button>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script type="module">
+  const SUPABASE_URL  = 'https://siaagtgakcxvnktlqomx.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_9VibIhxkB2kk0WnksZvTpQ_-WWYdU8R';
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const state = { user: null, file: null, session: null, tone: 'witty', mode: 'bookclub', result: null };
+
+  // Defensive JSON parse (see character-interviewer for rationale)
+  async function safeJson(res, opLabel) {
+    const ct = res.headers.get('content-type') || '';
+    if (ct.includes('application/json')) return res.json();
+    const txt = await res.text().catch(() => '');
+    if (res.status === 413 || /too large|payload/i.test(txt)) {
+      throw new Error('Upload too large for the server (over 4 MB after encoding). Try a smaller PDF.');
+    }
+    if (res.status === 504 || res.status === 502) {
+      throw new Error('Server timed out during ' + opLabel + '. Try again, or use a smaller PDF.');
+    }
+    throw new Error('Server returned ' + res.status + ' (non-JSON response). Try again.');
+  }
+
+  // Fast path: getSession() reads from localStorage immediately
+  const { data: { session: cached } } = await sb.auth.getSession().catch(() => ({ data: { session: null } }));
+
+  async function initPodcast(sess) {
+    state.user = sess.user;
+    state.session = sess;
+    document.getElementById('pr-flow').style.display = 'block';
+    refreshCredits();
+  }
+
+  if (cached?.user) {
+    await initPodcast(cached);
+  } else {
+    // Slow path: wait for onAuthStateChange — don't call unsubscribe() inside callback (TDZ)
+    await new Promise((resolve) => {
+      let done = false;
+      setTimeout(() => {
+        if (!done) { done = true; document.getElementById('auth-required').style.display = 'block'; resolve(); }
+      }, 5000);
+      sb.auth.onAuthStateChange((event, sess) => {
+        if (done) return;
+        if (sess?.user) {
+          done = true; initPodcast(sess).then(resolve);
+        } else if (event === 'INITIAL_SESSION' || event === 'SIGNED_OUT') {
+          done = true; document.getElementById('auth-required').style.display = 'block'; resolve();
+        }
+      });
+    });
+  }
+
+  async function refreshCredits() {
+    try {
+      const { data } = await sb.from('gp_credits').select('balance').eq('user_id', state.user.id).single();
+      const bal = data?.balance ?? 0;
+      const cb = document.getElementById('credit-badge');
+      if (cb) cb.textContent = bal + ' credits';
+      const navCb = document.querySelector('.gp-nav-credits');
+      if (navCb) navCb.textContent = '✦ ' + bal.toLocaleString() + ' cr';
+    } catch {}
+  }
+
+  const drop = document.getElementById('drop-zone');
+  const pdfInput = document.getElementById('pdf-input');
+  drop?.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('dragover'); });
+  drop?.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+  drop?.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
+  pdfInput?.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); });
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/(1024*1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFile(file) {
+    const err = document.getElementById('upload-err');
+    err.textContent = '';
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) { err.textContent = 'PDF only.'; return; }
+    if (file.size > 4 * 1024 * 1024) { err.textContent = 'File too large for upload (max 4 MB). Compress or split the PDF.'; return; }
+    state.file = file;
+    document.getElementById('drop-wrap').style.display = 'none';
+    document.getElementById('file-display').style.display = 'block';
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('file-size').textContent = formatSize(file.size);
+  }
+
+  window.clearFile = () => {
+    state.file = null;
+    document.getElementById('pdf-input').value = '';
+    document.getElementById('drop-wrap').style.display = 'block';
+    document.getElementById('file-display').style.display = 'none';
+  };
+
+  window.pickMode = (btn) => {
+    document.querySelectorAll('.opt-btn[data-mode]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.mode;
+    const fi = document.getElementById('focus-input');
+    fi.placeholder = state.mode === 'critique'
+      ? "e.g., the protagonist's arc, the midpoint reversal, dialogue in chapter 4. Leave blank for general critique."
+      : "e.g., the plot twist in chapter 8, the romance subplot, the villain. Leave blank for a full discussion.";
+  };
+
+  window.pickTone = (btn) => {
+    document.querySelectorAll('.opt-btn[data-tone]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.tone = btn.dataset.tone;
+  };
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.runPodcast = async () => {
+    if (!state.file) { document.getElementById('upload-err').textContent = 'Upload a PDF first.'; return; }
+    const focus = document.getElementById('focus-input').value.trim();
+    const generate_audio = document.getElementById('audio-toggle').checked;
+
+    showStep('running-step');
+    document.getElementById('running-text').textContent = 'Generating transcript…';
+    document.getElementById('running-sub').textContent = 'Pulling pacing, arcs, and structure from the manuscript';
+
+    const pdfBase64 = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(',')[1]);
+      r.onerror = reject;
+      r.readAsDataURL(state.file);
+    });
+
+    if (generate_audio) {
+      // After ~12s flip the message to indicate audio rendering
+      setTimeout(() => {
+        if (document.getElementById('running-step').classList.contains('active')) {
+          document.getElementById('running-text').textContent = 'Rendering audio…';
+          document.getElementById('running-sub').textContent = 'Two voices, line-by-line through ElevenLabs';
+        }
+      }, 12000);
+    }
+
+    try {
+      const res = await fetch('/.netlify/functions/podcast-reviewer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + state.session.access_token },
+        body: JSON.stringify({ pdfBase64, tone: state.tone, mode: state.mode, focus, generate_audio }),
+      });
+      const data = await safeJson(res, 'transcript');
+      if (res.status === 402) { showStep('setup-step'); document.getElementById('upload-err').textContent = `Out of credits. Need ${data.needed}, have ${data.have}.`; return; }
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      state.result = data;
+      const cb = document.getElementById('credit-badge');
+      if (cb) cb.textContent = data.credits_remaining + ' credits';
+      const navCb = document.querySelector('.gp-nav-credits');
+      if (navCb) navCb.textContent = '✦ ' + data.credits_remaining.toLocaleString() + ' cr';
+      renderResult(data);
+      showStep('result-step');
+    } catch (e) {
+      showStep('setup-step');
+      document.getElementById('upload-err').textContent = 'Generation failed: ' + e.message;
+    }
+  };
+
+  function renderResult(data) {
+    document.getElementById('ep-title').textContent = data.title || 'Podcast Review';
+    if (data.audio_url) {
+      document.getElementById('audio-player').src = data.audio_url;
+      document.getElementById('audio-section').style.display = 'block';
+      document.getElementById('audio-error-block').style.display = 'none';
+    } else {
+      document.getElementById('audio-section').style.display = 'none';
+      if (data.audio_error) {
+        const eb = document.getElementById('audio-error-block');
+        eb.style.display = 'block';
+        eb.textContent = 'Audio render failed: ' + data.audio_error + ' — transcript below is still complete.';
+      }
+    }
+    const t = document.getElementById('transcript');
+    t.innerHTML = '';
+    (data.lines || []).forEach((l) => {
+      const div = document.createElement('div');
+      div.className = 'transcript-line ' + (l.speaker === 'A' ? 'a' : 'b');
+      const sp = document.createElement('span');
+      sp.className = 'transcript-speaker';
+      sp.textContent = l.speaker === 'A' ? 'Rachel' : 'Adam';
+      const tx = document.createElement('span');
+      tx.className = 'transcript-text';
+      tx.textContent = l.text;
+      div.appendChild(sp);
+      div.appendChild(tx);
+      t.appendChild(div);
+    });
+  }
+
+  window.resetSetup = () => {
+    state.result = null;
+    document.getElementById('upload-err').textContent = '';
+    showStep('setup-step');
+  };
+
+  window.downloadTranscript = () => {
+    if (!state.result?.transcript_md) return;
+    const blob = new Blob([state.result.transcript_md], { type: 'text/markdown' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (state.result.title || 'podcast-review').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.md';
+    a.click();
+  };
+
+  // ── Shared manuscript banner ────────────────────────────────────────────────
+  function prCheckMs() {
+    const meta = window.gpMs?.getMeta();
+    if (!meta || !window.gpMs?.hasPdf()) return;
+    const banner = document.getElementById('pr-ms-banner');
+    if (!banner) return;
+    document.getElementById('pr-ms-name').textContent = meta.filename || 'Manuscript';
+    const parts = [];
+    if (meta.wordCount) parts.push(meta.wordCount.toLocaleString() + ' words');
+    if (meta.title) parts.push('"' + meta.title + '"');
+    document.getElementById('pr-ms-meta').textContent = parts.join(' · ') || 'From current session';
+    banner.style.display = 'flex';
+  }
+
+  window.prUseMsFile = function () {
+    const meta = window.gpMs?.getMeta();
+    const file = window.gpMs?.toFile(meta?.filename);
+    if (!file) return;
+    handleFile(file);
+    document.getElementById('pr-ms-banner').style.display = 'none';
+  };
+
+  document.addEventListener('DOMContentLoaded', prCheckMs);
+  window.addEventListener('gp-manuscript-ready', prCheckMs);
+</script>
+</body>
+</html>
