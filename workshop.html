@@ -852,17 +852,28 @@ The doctor did not write. She set the pen down on the legal pad, folded her hand
 
   // ── Chapter detection ────────────────────────────────────────────────────────
   function detectChapters(text) {
-    // Match common chapter patterns: "Chapter 1", "Chapter One", "CHAPTER 1", "Part 1", "Part One"
+    // Match common chapter patterns: "Chapter 1", "Chapter One", "CHAPTER 1", "Part 1", "Part One", Roman numerals.
     const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty.one|twenty.two|twenty.three|twenty.four|twenty.five|twenty.six|twenty.seven|twenty.eight|twenty.nine|thirty|forty|fifty';
+    const roman = '[IVXLCDM]{1,8}';
     const chapterRe = new RegExp(
-      `^\\s*(chapter|part)\\s+(\\d+|${numberWords})\\b[^\\n]*`,
+      `^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`,
       'gim'
     );
 
-    const matches = [];
+    let matches = [];
     let m;
     while ((m = chapterRe.exec(text)) !== null) {
       matches.push({ title: m[0].trim(), index: m.index });
+    }
+
+    // Dedupe TOC entries: if a title repeats, keep the last occurrence (body, not contents listing).
+    if (matches.length >= 2) {
+      const seen = new Map();
+      for (const x of matches) {
+        const key = x.title.replace(/\s+/g, ' ').trim().toLowerCase();
+        seen.set(key, x);
+      }
+      matches = [...seen.values()].sort((a, b) => a.index - b.index);
     }
 
     if (matches.length >= 2) {

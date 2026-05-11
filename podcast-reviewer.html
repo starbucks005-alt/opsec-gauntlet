@@ -95,7 +95,7 @@
   .ph-intro{display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default);background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
   .ph-portrait{position:relative;width:220px;height:160px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default);background:var(--bg-primary);animation:ph-float 5.0s ease-in-out infinite;}
   .ph-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-  .ph-portrait .ph-closed{opacity:0;animation:ph-blink 5.7s infinite;}
+  .ph-portrait .ph-closed{opacity:0;animation:ph-blink 5.7s steps(1,end) infinite;}
   @keyframes ph-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
   @keyframes ph-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
   .ph-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--accent);margin-bottom:0.4rem;}

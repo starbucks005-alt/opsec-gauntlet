@@ -36,7 +36,7 @@
   .bea-mini-badge:hover .bea-mini-tooltip{opacity:1;}
   .bea-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default);background:var(--bg-primary);animation:bea-float 5.2s ease-in-out infinite;}
   .bea-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-  .bea-portrait .bea-closed{opacity:0;animation:bea-blink 5.4s infinite;}
+  .bea-portrait .bea-closed{opacity:0;animation:bea-blink 5.4s steps(1,end) infinite;}
   @keyframes bea-blink {
     0%, 95%, 100% { opacity: 0; }
     97%           { opacity: 1; }
@@ -225,6 +225,7 @@
 
     <!-- Chapter pills (shown after Pick a Chapter) -->
     <div id="bea-chapter-grid" class="ms-chapter-grid"></div>
+    <div id="bea-chapter-guide" style="display:none;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.08);color:var(--text-primary);padding:0.7rem 1rem;margin-bottom:1.2rem;font-size:0.85rem;line-height:1.5;"></div>
 
     <!-- Form step -->
     <div id="bea-step-form">
@@ -420,11 +421,21 @@
 
   // Naive chapter splitter — same heuristic as Workshop
   function detectChapters(text) {
-    const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty';
-    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${numberWords})\\b[^\\n]*`, 'gim');
-    const matches = [];
+    const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|twenty-nine|thirty|forty|fifty';
+    const roman = '[IVXLCDM]{1,8}';
+    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`, 'gim');
+    let matches = [];
     let m;
     while ((m = re.exec(text)) !== null) matches.push({ title: m[0].trim(), index: m.index });
+    // Dedupe TOC entries: if a title repeats, keep the last occurrence (body, not contents listing).
+    if (matches.length >= 2) {
+      const seen = new Map();
+      for (const x of matches) {
+        const key = x.title.replace(/\s+/g, ' ').trim().toLowerCase();
+        seen.set(key, x);
+      }
+      matches = [...seen.values()].sort((a, b) => a.index - b.index);
+    }
     if (matches.length >= 2) {
       const out = [];
       for (let i = 0; i < matches.length && i < 60; i++) {
@@ -459,6 +470,22 @@
         document.getElementById('bea-chapter-title').value = ch.title;
         document.getElementById('bea-chapter-text').value  = ch.text.slice(0, 15000);
         updateCharCount();
+        const guide = document.getElementById('bea-chapter-guide');
+        if (guide) {
+          const chars = Math.min(ch.text.length, 15000).toLocaleString();
+          guide.innerHTML = `Loaded <strong>${ch.title.replace(/[<>&]/g,'')}</strong> (${chars} chars). Next: pick a pass below and click <strong>"Send to Bea"</strong> at the bottom. <a href="#" id="bea-pick-again" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">Pick a different chapter</a>`;
+          guide.style.display = 'block';
+          const again = document.getElementById('bea-pick-again');
+          if (again) again.onclick = (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.ms-chapter-pill').forEach(p => p.classList.remove('active'));
+            document.getElementById('bea-chapter-title').value = '';
+            document.getElementById('bea-chapter-text').value = '';
+            updateCharCount();
+            guide.style.display = 'none';
+            grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          };
+        }
       };
       grid.appendChild(btn);
     });

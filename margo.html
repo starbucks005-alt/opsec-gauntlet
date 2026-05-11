@@ -199,6 +199,7 @@
       <a href="workshop.html" style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px;margin-left:0.3rem;">✕ Use a different one</a>
     </div>
     <div id="mg-chapter-grid" class="ms-chapter-grid"></div>
+    <div id="mg-chapter-guide" style="display:none;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.08);color:var(--text-primary);padding:0.7rem 1rem;margin-bottom:1.2rem;font-size:0.85rem;line-height:1.5;"></div>
 
     <div id="mg-step-form">
       <div class="form-row">
@@ -339,10 +340,20 @@
     document.getElementById('mg-ms-banner').classList.add('visible');
   }
   function detectChapters(text) {
-    const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty';
-    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${numberWords})\\b[^\\n]*`, 'gim');
-    const matches = []; let m;
+    const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|twenty-nine|thirty|forty|fifty';
+    const roman = '[IVXLCDM]{1,8}';
+    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`, 'gim');
+    let matches = []; let m;
     while ((m = re.exec(text)) !== null) matches.push({ title: m[0].trim(), index: m.index });
+    // Dedupe TOC entries: if a title repeats, keep the last occurrence (body, not contents listing).
+    if (matches.length >= 2) {
+      const seen = new Map();
+      for (const x of matches) {
+        const key = x.title.replace(/\s+/g, ' ').trim().toLowerCase();
+        seen.set(key, x);
+      }
+      matches = [...seen.values()].sort((a, b) => a.index - b.index);
+    }
     if (matches.length >= 2) {
       const out = [];
       for (let i = 0; i < matches.length && i < 60; i++) {
@@ -375,6 +386,22 @@
         document.getElementById('mg-chapter-title').value = ch.title;
         document.getElementById('mg-chapter-text').value = ch.text.slice(0, 15000);
         updateCharCount();
+        const guide = document.getElementById('mg-chapter-guide');
+        if (guide) {
+          const chars = Math.min(ch.text.length, 15000).toLocaleString();
+          guide.innerHTML = `Loaded <strong>${ch.title.replace(/[<>&]/g,'')}</strong> (${chars} chars). Next: click <strong>"Hand it to Margo"</strong> at the bottom. <a href="#" id="mg-pick-again" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">Pick a different chapter</a>`;
+          guide.style.display = 'block';
+          const again = document.getElementById('mg-pick-again');
+          if (again) again.onclick = (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.ms-chapter-pill').forEach(p => p.classList.remove('active'));
+            document.getElementById('mg-chapter-title').value = '';
+            document.getElementById('mg-chapter-text').value = '';
+            updateCharCount();
+            guide.style.display = 'none';
+            grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          };
+        }
       };
       grid.appendChild(btn);
     });

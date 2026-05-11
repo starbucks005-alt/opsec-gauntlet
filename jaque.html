@@ -26,7 +26,7 @@
   .jq-min-btn:hover{color:var(--accent);border-color:var(--accent);}
   .jq-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default);background:var(--bg-primary);animation:jq-float 5.0s ease-in-out infinite;}
   .jq-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-  .jq-portrait .jq-closed{opacity:0;animation:jq-blink 5.6s infinite;}
+  .jq-portrait .jq-closed{opacity:0;animation:jq-blink 5.6s steps(1,end) infinite;}
   @keyframes jq-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
   @keyframes jq-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
   .jq-greeting{font-family:var(--font-serif);font-size:1.05rem;line-height:1.6;color:var(--text-primary);}
