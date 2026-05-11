@@ -494,11 +494,25 @@
   function detectChapters(text) {
     const numberWords = 'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|twenty-one|twenty-two|twenty-three|twenty-four|twenty-five|twenty-six|twenty-seven|twenty-eight|twenty-nine|thirty|thirty-one|thirty-two|forty|fifty';
     const roman = '[IVXLCDM]{1,8}';
-    const re = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`, 'gim');
-    let matches = []; let m;
-    while ((m = re.exec(text)) !== null) {
-      matches.push({ rawTitle: m[0].trim(), title: cleanChapterTitle(m[0].trim()), index: m.index });
+    // Strict: matches at the start of a line (preserves the original behavior for clean PDFs).
+    const strictRe = new RegExp(`^\\s*(chapter|part)\\s+(\\d+|${roman}|${numberWords})\\b[^\\n]*`, 'gim');
+    // Tolerant: matches mid-line headings where pdf-parse didn't insert a line break. Requires the "Chapter N: Capital-Letter Title" shape so we don't pick up prose mentions like "chapter 13 was rough".
+    const tolerantRe = new RegExp(`(?<=^|\\s)(Chapter|Part|CHAPTER|PART)\\s+(\\d+|${roman}|${numberWords})[\\s:\\.\\-]*[A-Z][^\\n]{0,100}`, 'g');
+    const found = new Map();
+    let m;
+    while ((m = strictRe.exec(text)) !== null) {
+      const lead = m[0].search(/\S/);
+      const idx = lead >= 0 ? m.index + lead : m.index;
+      const heading = (lead >= 0 ? m[0].slice(lead) : m[0]).trim();
+      if (heading) found.set(idx, { rawTitle: heading, title: cleanChapterTitle(heading), index: idx });
     }
+    while ((m = tolerantRe.exec(text)) !== null) {
+      const heading = m[0].trim();
+      if (heading && !found.has(m.index)) {
+        found.set(m.index, { rawTitle: heading, title: cleanChapterTitle(heading), index: m.index });
+      }
+    }
+    let matches = [...found.values()].sort((a, b) => a.index - b.index);
     let tocOnlyDropped = 0;
     if (matches.length >= 2) {
       // Dedupe: same cleaned title appearing more than once → keep the last occurrence (body wins over TOC).
