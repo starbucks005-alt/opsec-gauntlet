@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan a Memoir — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary,#13100c);color:var(--text-primary,#f4ede0);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;line-height:1.7;min-height:100vh;padding-top:72px;}
+  .pn-main{max-width:1080px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--text-primary,#f4ede0);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent,#b8922a);}
+  .s-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted,#a89880);margin-bottom:0.9rem;max-width:680px;line-height:1.6;}
+
+  .gw-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.5rem;}
+  .gw-intro.minimized{display:none;}
+  .gw-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default,rgba(184,146,42,0.3));width:28px;height:28px;color:var(--text-muted,#a89880);cursor:pointer;font-family:'DM Mono',monospace;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .gw-min-btn:hover{color:var(--accent,#b8922a);border-color:var(--accent,#b8922a);}
+  .gw-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary,#13100c);animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gw-portrait .gw-closed{opacity:0;animation:gw-blink 5.6s steps(1,end) infinite;}
+  @keyframes gw-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gw-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .gw-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--text-primary,#f4ede0);}
+  .gw-greeting em{color:var(--accent,#b8922a);font-style:italic;}
+  .gw-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-mini-badge.visible{display:flex;}
+  .gw-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .gw-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .gw-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary,#13100c);border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent,#b8922a);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .gw-mini-badge:hover .gw-mini-tooltip{opacity:1;}
+
+  .pn-step-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin:2rem 0 1rem;}
+
+  .len-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
+  .len-card{border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:1.25rem;cursor:pointer;transition:all 0.2s;position:relative;background:rgba(0,0,0,0.15);}
+  .len-card:hover{border-color:var(--accent,#b8922a);transform:translateY(-2px);}
+  .len-card.selected{border-color:var(--accent,#b8922a);background:rgba(184,146,42,0.08);}
+  .len-card.selected::before{content:'✓';position:absolute;top:0.6rem;right:0.7rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent,#b8922a);}
+  .len-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .len-words{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .len-hint{font-size:0.78rem;color:var(--text-muted,#a89880);line-height:1.5;}
+
+  .field-group{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  .field-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .field-input,.field-textarea,.field-select{background:var(--input-bg,rgba(0,0,0,0.3));border:1px solid var(--input-border,rgba(184,146,42,0.25));color:var(--input-text,#f4ede0);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;width:100%;}
+  .field-input:focus,.field-textarea:focus,.field-select:focus{border-color:var(--accent,#b8922a);}
+  .field-textarea{min-height:88px;line-height:1.55;resize:vertical;}
+  .pn-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .btn-gold{background:var(--accent,#b8922a);color:#13100c;border:none;padding:0.95rem 2.2rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background 0.2s;}
+  .btn-gold:hover{background:#d4aa4a;}
+  .btn-outline{background:transparent;color:var(--accent,#b8922a);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.95rem 1.8rem;border:1px solid var(--border-default,rgba(184,146,42,0.3));cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--accent,#b8922a);}
+
+  .scene-area{display:none;margin-top:3rem;}
+  .scene-area.visible{display:block;}
+  .scene-header{border-bottom:1px solid var(--border-default,rgba(184,146,42,0.25));padding-bottom:1.4rem;margin-bottom:1.8rem;}
+  .scene-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .scene-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .scene-row{display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid rgba(184,146,42,0.1);}
+  .scene-row:last-child{border-bottom:none;}
+  .scene-num{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;color:var(--accent,#b8922a);min-width:3rem;padding-top:0.3rem;}
+  .scene-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.2rem;}
+  .scene-desc{font-size:0.92rem;color:var(--text-muted,#a89880);line-height:1.6;}
+  .cta-bar{display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap;align-items:center;}
+
+  @media(max-width:760px){
+    .pn-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.7rem;}
+    .pn-two-col{grid-template-columns:1fr;}
+    .gw-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gw-portrait{width:120px;height:155px;}
+    .len-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="pre"></div>
+
+<main class="pn-main">
+
+  <div class="s-label">Phase 02 — Pre-Project</div>
+  <h1 class="s-title">Plan a <em>Memoir</em>.</h1>
+  <p class="s-sub">Memoir is not autobiography. Pick the slice of your life that wants telling, name the transformation, and Grey lays out a spine that earns the reader's attention chapter by chapter.</p>
+
+  <div class="gw-intro" id="gw-intro">
+    <button class="gw-min-btn" onclick="gwMinimize()" aria-label="Minimize Grey" title="Minimize">−</button>
+    <div class="gw-portrait" aria-label="Grey, your writing partner">
+      <img src="assets/Grey_Open.png" alt="Grey, looking up from the page" class="gw-open">
+      <img src="assets/Grey_Closed.png" alt="" aria-hidden="true" class="gw-closed">
+    </div>
+    <div>
+      <div class="gw-name">Grey.</div>
+      <div class="gw-greeting">Your writing partner. <em>Memoir lives or dies on what you decide to leave out.</em> Autobiography catalogues a life. Memoir argues for a transformation. Tell me the slice, the turn, and the voice; I'll build the spine that makes the reader trust you by chapter three.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 1 — Choose Your Form</div>
+  <div class="len-grid">
+    <div class="len-card" data-len="vignette" onclick="selectLen(this)">
+      <div class="len-name">Short Memoir / Vignette</div>
+      <div class="len-words">15,000 to 25,000 words</div>
+      <div class="len-hint">One period, one transformation. Six chapters. The lyric form. Hybrid memoir-essay sits here too.</div>
+    </div>
+    <div class="len-card" data-len="themed" onclick="selectLen(this)">
+      <div class="len-name">Themed Memoir</div>
+      <div class="len-words">50,000 to 70,000 words</div>
+      <div class="len-hint">The market default. One arc through one chapter of life (illness, loss, calling, transition). <em>Wild</em>, <em>Educated</em>, <em>The Glass Castle</em>.</div>
+    </div>
+    <div class="len-card" data-len="coming-of-age" onclick="selectLen(this)">
+      <div class="len-name">Coming-of-Age</div>
+      <div class="len-words">60,000 to 80,000 words</div>
+      <div class="len-hint">Childhood through young adulthood. The threshold story. Twelve chapters from earliest image to leaving.</div>
+    </div>
+    <div class="len-card" data-len="life" onclick="selectLen(this)">
+      <div class="len-name">Life Memoir</div>
+      <div class="len-words">80,000 to 120,000 words</div>
+      <div class="len-hint">Whole life or a major career. Sixteen chapters across decades. Best when the public knows your name or your work.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 2 — Your Memoir</div>
+
+  <div class="field-group">
+    <label class="field-label" for="mm-title">Working Title</label>
+    <input class="field-input" type="text" id="mm-title" placeholder="e.g., Always the Tallest in the Room">
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="mm-subtitle">Subtitle (optional)</label>
+    <input class="field-input" type="text" id="mm-subtitle" placeholder="e.g., A life played from above the rim">
+  </div>
+
+  <div class="pn-two-col">
+    <div class="field-group">
+      <label class="field-label" for="mm-slice">What slice of your life is this?</label>
+      <input class="field-input" type="text" id="mm-slice" placeholder="The years, the role, the chapter">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="mm-voice">Voice</label>
+      <select class="field-select" id="mm-voice">
+        <option value="retrospective">Retrospective, looking back with earned distance</option>
+        <option value="close">Close-in, present-tense, as it happened</option>
+        <option value="braided">Braided, then-and-now alternating</option>
+        <option value="lyric">Lyric, image-first, hybrid memoir-essay</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="mm-transformation">What changed in you?</label>
+    <textarea class="field-textarea" id="mm-transformation" rows="3" placeholder="The before-and-after of the inner life. Memoir argues for a transformation; this is the argument."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="mm-pivot">The pivotal event or moment</label>
+    <textarea class="field-textarea" id="mm-pivot" rows="3" placeholder="The scene a reader will remember after they close the book."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="mm-theme">What is the memoir really about, underneath?</label>
+    <input class="field-input" type="text" id="mm-theme" placeholder="The deeper question. e.g., inheritance, identity, belonging, the cost of difference">
+  </div>
+
+  <button class="btn-gold" onclick="generateScenes()">Build My Chapter Spine →</button>
+
+  <div class="scene-area" id="scene-area">
+    <div class="scene-header">
+      <div class="scene-title" id="scene-title">—</div>
+      <div class="scene-meta" id="scene-meta">—</div>
+    </div>
+    <div id="scene-rows"></div>
+
+    <div class="cta-bar">
+      <a href="publish.html" class="btn-outline">Submit to GP →</a>
+      <button class="btn-outline" onclick="resetAll()">Start Over</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="gw-mini-badge" id="gw-mini-badge" onclick="gwMaximize()" aria-label="Bring Grey back">
+  <img src="assets/quill pen.png" alt="Grey, minimized">
+  <span class="gw-mini-tooltip">Grey is here</span>
+</button>
+
+<script>
+let _len = null;
+
+function selectLen(card){
+  document.querySelectorAll('.len-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  _len = card.dataset.len;
+}
+
+window.gwMinimize = () => {
+  document.getElementById('gw-intro').classList.add('minimized');
+  document.getElementById('gw-mini-badge').classList.add('visible');
+};
+window.gwMaximize = () => {
+  document.getElementById('gw-intro').classList.remove('minimized');
+  document.getElementById('gw-mini-badge').classList.remove('visible');
+};
+
+const LEN_LABEL = {
+  "vignette":      "Short Memoir / Vignette",
+  "themed":        "Themed Memoir",
+  "coming-of-age": "Coming-of-Age Memoir",
+  "life":          "Life Memoir"
+};
+
+// Memoir spine is NOT problem-method-application. It's setup → disruption →
+// reckoning → transformation → aftermath. Each form expands or compresses
+// that arc. Voice modulates how each chapter is rendered, not the structure.
+
+function buildScenes(len, slice, transformation, pivot, theme){
+  const s = slice || "this chapter of your life";
+  const t = transformation || "the change you came through";
+  const p = pivot || "the central event";
+  const th = theme || "what you were really wrestling with";
+
+  if (len === "vignette"){
+    return [
+      {n:"1", t:"The Image",              d:`Open in the most vivid moment of ${s}. No setup. Trust the reader to follow you in. The image is the argument.`},
+      {n:"2", t:"Who I Was Before",       d:`A short chapter establishing baseline. Voice, world, the things you took for granted.`},
+      {n:"3", t:"The Disruption",         d:`The event that broke the pattern. ${p}. Render it in scene, not summary.`},
+      {n:"4", t:"What I Tried to Hold",   d:`The honest middle. What you grabbed for, who you blamed, the version of yourself you fought to keep.`},
+      {n:"5", t:"What I Had to Let Go",   d:`The chapter that earns the transformation. What you finally set down, and what it cost to set down.`},
+      {n:"6", t:"The New Light",          d:`Close on the new ordinary. Not a moral, an image. The reader feels ${t} without you naming it.`},
+    ];
+  }
+
+  if (len === "themed"){
+    return [
+      {n:"1",  t:"Inciting Image",         d:`Drop the reader into ${s} at its most charged moment. In media res. Let the scene carry the why.`},
+      {n:"2",  t:"The World Before",       d:`The life you had before the story began. Texture, place, smell, the people who made the room feel like a room.`},
+      {n:"3",  t:"The People Who Made Me", d:`Two or three figures the reader needs to know to understand you. Render them in scene, not portrait.`},
+      {n:"4",  t:"The Crack Appears",      d:`The first hint the pattern won't hold. A line said at a meal, a moment in a doorway. Small, specific.`},
+      {n:"5",  t:"The Break",              d:`${p}. The scene that turns the book. Don't outrun it; let it land at full length.`},
+      {n:"6",  t:"Walking Into It",        d:`The decision to engage rather than retreat. The reader has to feel the weight of choosing.`},
+      {n:"7",  t:"The First Real Test",    d:`Outside pressure meets internal fear. You discover what you don't yet have.`},
+      {n:"8",  t:"The Person Who Saw Me",  d:`The other character who recognized something in you. Not a savior, a witness. Memoir thaws here.`},
+      {n:"9",  t:"The Low Point",          d:`Where you almost quit, broke, or gave the reader the right to give up on you. Be honest. Honesty is the contract.`},
+      {n:"10", t:"The Pivot",              d:`Not a triumph yet. The shift in how you saw the question. ${th} becomes visible.`},
+      {n:"11", t:"The New Eyes",           d:`Applying the shift. Render one scene that you would have read differently before, lived differently now.`},
+      {n:"12", t:"Coming Back Different",  d:`Close on the changed life. Acknowledge what's still unfinished. Memoir earns its keep by refusing the neat ending.`},
+    ];
+  }
+
+  if (len === "coming-of-age"){
+    return [
+      {n:"1",  t:"Earliest Image",         d:`Open with a sensory memory the reader can stand inside. The room, the light, the smell of the place that made you.`},
+      {n:"2",  t:"The Family Map",         d:`Who lived there. The rules said and unsaid. The hierarchy. The silences.`},
+      {n:"3",  t:"First Awakening",        d:`The first moment you recognized yourself as separate. A line said by an adult, a glance returned, a fear named.`},
+      {n:"4",  t:"The Outside World",      d:`School, the street, the first time difference cost you something.`},
+      {n:"5",  t:"The Inheritance",        d:`What you were given to carry. Stories about your blood, your body, your name. ${th} traced backward.`},
+      {n:"6",  t:"The First Lie I Believed", d:`The thing the adults told you that you held onto. The crack in it. When you first felt the crack.`},
+      {n:"7",  t:"The Rebellion",          d:`The first time you said no to the inheritance. Small or large. The cost.`},
+      {n:"8",  t:"The First Loss",         d:`A death, a leaving, a friendship ending. What it taught you about love and time.`},
+      {n:"9",  t:"The First Love (any kind)", d:`The other person who showed you a different way to be a person.`},
+      {n:"10", t:"The Threshold",          d:`The summer or the year of leaving. ${p}. The doorway you stood in.`},
+      {n:"11", t:"Looking Back at the House", d:`What you saw the moment after you walked out. What you carried, what you left.`},
+      {n:"12", t:"Who I Am Now",           d:`Close with the adult voice that opened the book. Let the reader feel how the child became the narrator.`},
+    ];
+  }
+
+  // life memoir
+  return [
+    {n:"1",  t:"The First Memory",            d:`The earliest image you can trust. Place, weather, body. Open here so the reader meets the child who became you.`},
+    {n:"2",  t:"Childhood World",             d:`The shape of the life before agency. Family geography, neighborhood, the rules of the house.`},
+    {n:"3",  t:"The People",                  d:`Parents, siblings, the adults who mattered. Render each in a defining scene.`},
+    {n:"4",  t:"School Years",                d:`The institutions that taught you who you were, and the ways they got it wrong.`},
+    {n:"5",  t:"Coming-of-Age",               d:`The threshold. The first real choice. Where you started becoming the version of you the rest of the book is about.`},
+    {n:"6",  t:"The Launch",                  d:`Early adulthood. The job, the move, the partner, the leaving.`},
+    {n:"7",  t:"The First Big Choice",        d:`The decision that set the trajectory. The road not taken named in passing.`},
+    {n:"8",  t:"Building the Career",         d:`The decade of becoming the thing people would later know you for. The hours nobody saw.`},
+    {n:"9",  t:"The Peak",                    d:`The summit, however the world reads it. The view from up there. The thing you couldn't say at the time.`},
+    {n:"10", t:"The Cost",                    d:`What it took. The marriage strained, the body used, the friendships that didn't survive the climb.`},
+    {n:"11", t:"The Reckoning",               d:`${p}. The moment the story turned. Loss, diagnosis, departure, a phone call. Render it long.`},
+    {n:"12", t:"The Quiet Years",             d:`After the public chapter. The work nobody applauded. The slower version of yourself you had to meet.`},
+    {n:"13", t:"Late Wisdom",                 d:`What you understand now that you couldn't have understood then. ${th} fully visible.`},
+    {n:"14", t:"Loss",                        d:`The deaths and departures of the late chapters. Render two or three with full breath, not as a list.`},
+    {n:"15", t:"Integration",                 d:`The version of the life you can hold all of, not the highlight reel. ${t}.`},
+    {n:"16", t:"What I Want Remembered",      d:`The final image. Not a thesis. The single sentence or scene you want to leave on the table.`},
+  ];
+}
+
+window.generateScenes = function(){
+  if (!_len){ alert("Please choose a form first."); return; }
+  const title = document.getElementById("mm-title").value.trim() || "Untitled Memoir";
+  const subtitle = document.getElementById("mm-subtitle").value.trim();
+  const slice = document.getElementById("mm-slice").value.trim();
+  const voice = document.getElementById("mm-voice").value;
+  const transformation = document.getElementById("mm-transformation").value.trim();
+  const pivot = document.getElementById("mm-pivot").value.trim();
+  const theme = document.getElementById("mm-theme").value.trim();
+
+  const scenes = buildScenes(_len, slice, transformation, pivot, theme);
+  const VOICE_LABEL = {
+    "retrospective": "Retrospective voice",
+    "close":         "Close-in present-tense",
+    "braided":       "Braided then-and-now",
+    "lyric":         "Lyric, image-first"
+  };
+  document.getElementById("scene-title").textContent = subtitle ? `${title}: ${subtitle}` : title;
+  document.getElementById("scene-meta").textContent = `${LEN_LABEL[_len]} · ${scenes.length} Chapters · ${VOICE_LABEL[voice]}`;
+
+  const container = document.getElementById("scene-rows");
+  container.innerHTML = "";
+  scenes.forEach(scene => {
+    const row = document.createElement("div");
+    row.className = "scene-row";
+    row.innerHTML = `<div class="scene-num">Ch. ${scene.n}</div><div><div class="scene-name">${scene.t}</div><div class="scene-desc">${scene.d}</div></div>`;
+    container.appendChild(row);
+  });
+
+  const area = document.getElementById("scene-area");
+  area.classList.add("visible");
+  setTimeout(() => area.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+};
+
+window.resetAll = function(){
+  _len = null;
+  document.querySelectorAll(".len-card").forEach(c => c.classList.remove("selected"));
+  ["mm-title","mm-subtitle","mm-slice","mm-transformation","mm-pivot","mm-theme"].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = "";
+  });
+  document.getElementById("mm-voice").value = "retrospective";
+  document.getElementById("scene-area").classList.remove("visible");
+};
+</script>
+
+</body>
+</html>
