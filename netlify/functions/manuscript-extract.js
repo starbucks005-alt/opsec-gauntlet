@@ -9,10 +9,45 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 const Anthropic = require('@anthropic-ai/sdk').default;
-const pdfParse  = require('pdf-parse/lib/pdf-parse.js');
+const pdfjsLib  = require('pdfjs-dist/legacy/build/pdf.js');
 
-const MODEL   = 'claude-sonnet-4-6';
+pdfjsLib.GlobalWorkerOptions.workerSrc = false;
+
+const MODEL    = 'claude-sonnet-4-6';
 const TEXT_CAP = 600000; // chars stored in client — covers a ~110k-word novel with headroom
+
+async function extractText(buf) {
+  const data = new Uint8Array(buf);
+  const loadingTask = pdfjsLib.getDocument({
+    data,
+    useWorkerFetch:  false,
+    isEvalSupported: false,
+    disableFontFace: true,
+  });
+  const pdf = await loadingTask.promise;
+
+  let fullText = '';
+  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    const page    = await pdf.getPage(pageNum);
+    const content = await page.getTextContent();
+
+    let lastY   = null;
+    let pageBuf = '';
+    for (const item of content.items) {
+      if (!item.str) continue;
+      const y = item.transform[5];
+      if (lastY !== null && Math.abs(y - lastY) > 2) {
+        fullText += pageBuf.trimEnd() + '\n';
+        pageBuf = '';
+      }
+      pageBuf += item.str;
+      lastY = y;
+    }
+    if (pageBuf.trim()) fullText += pageBuf.trimEnd() + '\n';
+    fullText += '\n';
+  }
+  return fullText;
+}
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -23,16 +58,15 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body); }
   catch { return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
-  const { pdfBase64, filename } = body || {};
+  const { pdfBase64 } = body || {};
   if (!pdfBase64) return { statusCode: 400, body: JSON.stringify({ error: 'pdfBase64 required' }) };
 
-  /* ── Step 1: text extraction via pdf-parse ────────────────────────────────── */
+  /* ── Step 1: text extraction via pdfjs-dist (preserves line breaks) ───────── */
   let text = '';
   let wordCount = 0;
   try {
     const buf = Buffer.from(pdfBase64, 'base64');
-    const parsed = await pdfParse(buf);
-    text      = parsed.text || '';
+    text      = await extractText(buf);
     wordCount = text.split(/\s+/).filter(Boolean).length;
   } catch (e) {
     return { statusCode: 500, body: JSON.stringify({ error: 'PDF parse error: ' + e.message }) };

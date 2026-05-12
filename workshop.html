@@ -88,6 +88,65 @@
   }
   .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
 
+  /* ── Hand-off panel ── */
+  .ws-handoff-panel{
+    border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);
+    padding:1.4rem 1.6rem;margin-bottom:2rem;color:var(--text);line-height:1.55;
+  }
+  .ws-handoff-header{
+    font-size:0.95rem;color:var(--text);margin-bottom:1.2rem;
+  }
+  .ws-handoff-header strong{
+    color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;
+  }
+  .ws-handoff-option{
+    display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;
+  }
+  .ws-handoff-num{
+    font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);
+    font-weight:700;line-height:1;width:2.2rem;text-align:center;
+  }
+  .ws-handoff-title{
+    font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);
+    font-weight:700;margin-bottom:0.25rem;
+  }
+  .ws-handoff-desc{
+    font-size:0.88rem;color:var(--text-dim);margin-bottom:0.8rem;
+  }
+  .ws-handoff-cast{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.7rem;
+    margin-top:0.6rem;
+  }
+  .ws-handoff-card{
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:0.8rem 0.6rem;border:1px solid rgba(184,146,42,0.35);
+    text-decoration:none;color:var(--text);transition:border-color 0.15s,background 0.15s,transform 0.15s;
+    background:rgba(255,255,255,0.02);
+  }
+  .ws-handoff-card:hover{
+    border-color:var(--gold);background:rgba(184,146,42,0.08);transform:translateY(-1px);
+  }
+  .ws-handoff-card img{
+    width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:0.5rem;
+    border:1px solid rgba(184,146,42,0.35);
+  }
+  .ws-handoff-card-name{
+    font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--text);
+  }
+  .ws-handoff-card-role{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--gold);margin-top:0.15rem;
+  }
+  .ws-handoff-or{
+    display:flex;align-items:center;text-align:center;
+    margin:1.2rem 0;color:var(--text-dim);
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;
+  }
+  .ws-handoff-or::before,.ws-handoff-or::after{
+    content:'';flex:1;height:1px;background:rgba(184,146,42,0.25);
+  }
+  .ws-handoff-or span{padding:0 0.9rem;}
+
   /* ── Step 2: two-column layout ── */
   .ws-work-layout{
     display:grid;grid-template-columns:2fr 1fr;gap:2.5rem;align-items:start;
@@ -331,7 +390,7 @@
         <button onclick="document.getElementById('ws-ms-banner').style.display='none'" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.15);background:none;color:var(--text-dim);padding:0.4rem 0.9rem;cursor:pointer;">Replace this manuscript</button>
       </div>
       <div style="font-size:0.85rem;color:var(--text-dim);margin-bottom:1.2rem;line-height:1.55;">
-        Dropping a new PDF below replaces whatever is currently loaded. Every Post-Draft tool (Jules, Bea, Margo, the Professor) reads from the most recently <strong>analyzed</strong> manuscript. Selecting a file is not the same as committing it. You must click <strong>Analyze Manuscript</strong> to finish.
+        Dropping a new PDF below replaces whatever is currently loaded. Every Post-Draft tool (Jules, Bea, Margo, the Professor) reads from the most recently loaded manuscript. Selecting a file is not the same as committing it. Click <strong>Next</strong> below to finish loading.
       </div>
 
       <label class="ws-drop" id="ws-drop">
@@ -354,7 +413,7 @@
         </div>
         <div id="ws-trunc-warn" style="display:none;margin-top:1.2rem;padding:1rem 1.2rem;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.07);font-size:0.9rem;line-height:1.6;color:var(--text);"></div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
-          <button class="btn-gold" id="ws-analyze-btn" onclick="wsAnalyze()" disabled>Analyze Manuscript →</button>
+          <button class="btn-gold" id="ws-analyze-btn" onclick="wsAnalyze()" disabled>Next →</button>
           <span id="ws-parse-status" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);"></span>
         </div>
       </div>
@@ -369,13 +428,49 @@
         <button onclick="wsOpenAuth()" class="btn-gold" style="padding:0.6rem 1.2rem;font-size:0.85rem;">Sign in →</button>
       </div>
       <!-- Hand-off panel: route to other Post-Draft tools -->
-      <div style="border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.4rem;margin-bottom:1.6rem;font-size:0.9rem;line-height:1.55;color:var(--text);">
-        <strong style="color:var(--gold);font-family:'Playfair Display',serif;font-size:1rem;">Your manuscript is loaded.</strong> Use Grey below for enrich / diagnose / rebuild, or hand it to another reader — they'll already have your chapters:
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.7rem;">
-          <a href="jules.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Jules · Rewrite Partner →</a>
-          <a href="bea.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Bea · Copy Editor →</a>
-          <a href="margo.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Margo · Beta Reader →</a>
-          <a href="professor.html" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:0.45rem 0.9rem;text-decoration:none;">Professor · Fact-Check →</a>
+      <div class="ws-handoff-panel">
+        <div class="ws-handoff-header">
+          <strong>Your manuscript is loaded.</strong> Two ways to use it from here:
+        </div>
+
+        <div class="ws-handoff-option">
+          <div class="ws-handoff-num">1</div>
+          <div class="ws-handoff-body">
+            <div class="ws-handoff-title">Hand it to another team member.</div>
+            <div class="ws-handoff-desc">They already have your chapters loaded. No re-uploading.</div>
+            <div class="ws-handoff-cast">
+              <a href="jules.html" class="ws-handoff-card">
+                <img src="assets/Jules-Eyes-Open.png" alt="Jules">
+                <div class="ws-handoff-card-name">Jules</div>
+                <div class="ws-handoff-card-role">Rewrite Partner</div>
+              </a>
+              <a href="bea.html" class="ws-handoff-card">
+                <img src="assets/Bea_Open.png" alt="Bea">
+                <div class="ws-handoff-card-name">Bea</div>
+                <div class="ws-handoff-card-role">Copy Editor</div>
+              </a>
+              <a href="margo.html" class="ws-handoff-card">
+                <img src="assets/Margo_fun.png" alt="Margo">
+                <div class="ws-handoff-card-name">Margo</div>
+                <div class="ws-handoff-card-role">Beta Reader</div>
+              </a>
+              <a href="professor.html" class="ws-handoff-card">
+                <img src="assets/Professor_Open.png" alt="Professor">
+                <div class="ws-handoff-card-name">The Professor</div>
+                <div class="ws-handoff-card-role">Fact-Check</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ws-handoff-or"><span>OR</span></div>
+
+        <div class="ws-handoff-option">
+          <div class="ws-handoff-num">2</div>
+          <div class="ws-handoff-body">
+            <div class="ws-handoff-title">Stay here and work with Grey.</div>
+            <div class="ws-handoff-desc">Enrich prose, add dialogue, continue writing, diagnose, or rebuild structure — pick a chapter below.</div>
+          </div>
         </div>
       </div>
 

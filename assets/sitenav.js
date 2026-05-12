@@ -143,7 +143,7 @@
   mount.innerHTML = `
     <nav class="gp-sitenav">
       <a href="index.html" class="gp-sitenav-logo">
-        <img src="gp-logo.png" alt="GP"> Greylander Press
+        <img src="assets/gp-logo-transparent.png" alt="GP"> Greylander Press
       </a>
       <ul class="gp-sitenav-links">${linksHtml}</ul>
       <div class="gp-sitenav-auth" id="gp-sitenav-auth">

@@ -44,9 +44,10 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
+    column-gap: 1.5rem;
     height: 72px;
     padding: 0 2rem 0 2.5rem;
     background: rgba(19,16,12,0.96);
@@ -69,31 +70,28 @@
   }
 
   .nav-links {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
     display: flex;
     align-items: stretch;
     list-style: none;
     height: 100%;
     justify-content: center;
     gap: 0;
+    min-width: 0;
   }
 
   .nav-links li { display: flex; align-items: stretch; }
 
   .nav-links a {
     font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
+    font-size: 0.6rem;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
     color: rgba(244,237,224,0.7);
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    padding: 0 0.7rem;
     border-bottom: 3px solid transparent;
     transition: color 0.2s, border-color 0.2s;
     white-space: nowrap;
@@ -1627,6 +1625,13 @@
   .phase-card-play { border-color: rgba(184,146,42,0.4); background: rgba(184,146,42,0.03); }
   .phase-card-play .phase-card-tag::before { content: '◇ '; }
 
+  /* Full-row card — larger type so it fills the wide space */
+  .phase-card-wide { padding: 1.8rem 2rem; min-height: 0; }
+  .phase-card-wide .phase-card-icon { font-size: 2.6rem; margin-bottom: 0.55rem; }
+  .phase-card-wide .phase-card-name { font-size: 1.7rem; margin-bottom: 0.55rem; }
+  .phase-card-wide .phase-card-desc { font-size: 1.05rem; line-height: 1.55; }
+  .phase-card-wide .phase-card-tag  { font-size: 0.65rem; margin-top: 1rem; }
+
   /* ── The Cast — standalone Playground section, sits outside the phase numbering ── */
   .cast-section { max-width: 1200px; margin: 5rem auto; padding: 0 2.5rem; }
   .cast-header { text-align: center; margin-bottom: 2.8rem; }
@@ -1891,6 +1896,12 @@
           <div class="phase-card-desc">Free verse, sonnet, haiku, villanelle, ballad, or ode. Structure guide for your chosen form.</div>
           <div class="phase-card-tag">Poem Planner →</div>
         </a>
+        <a class="phase-card" href="plan-selfhelp.html">
+          <div class="phase-card-icon">🧭</div>
+          <div class="phase-card-name">Plan a Self-Help Book</div>
+          <div class="phase-card-desc">Short read, standard, memoir-style, or comprehensive guide. Reader, pain, promise, method — a chapter spine that earns the back cover.</div>
+          <div class="phase-card-tag">Self-Help Planner →</div>
+        </a>
         <a class="phase-card" href="kdp-templates.html">
           <div class="phase-card-icon">📄</div>
           <div class="phase-card-name">KDP Manuscript Templates</div>
@@ -1975,7 +1986,7 @@
       <h3 class="phase-title">Author Post-Draft. <em>Critique &amp; Diagnose.</em></h3>
       <p class="phase-desc">Your manuscript is complete. These readers tell you what's working and what isn't.</p>
       <div class="phase-cards">
-        <a class="phase-card" href="workshop.html" style="grid-column: 1 / -1;">
+        <a class="phase-card phase-card-wide" href="workshop.html" style="grid-column: 1 / -1;">
           <div class="phase-card-icon">📤</div>
           <div class="phase-card-name">Upload Your Manuscript</div>
           <div class="phase-card-desc">Upload once. Jules, Bea, Margo, and the Professor all read from the same file — no re-uploading.</div>
@@ -2527,7 +2538,8 @@ if (!session) {
   </button>`;
 } else {
   const email = session.user.email;
-  const shortEmail = email.length > 22 ? email.slice(0, 20) + '…' : email;
+  const atIdx = email.indexOf('@');
+  const shortEmail = atIdx > 0 && atIdx <= 12 ? email.slice(0, atIdx) : (email.length > 12 ? email.slice(0, 10) + '…' : email);
 
   const { data: creds } = await sb
     .from('gp_credits')

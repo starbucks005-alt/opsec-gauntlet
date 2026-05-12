@@ -25,7 +25,7 @@
     /* ── Save ──────────────────────────────────────────────────────────────── */
     save(filename, pdfBase64, text, wordCount, meta) {
       try { sessionStorage.setItem(PDF_KEY,  pdfBase64 || ''); } catch (e) {}
-      try { sessionStorage.setItem(TEXT_KEY, (text || '').slice(0, 150000)); } catch (e) {}
+      try { sessionStorage.setItem(TEXT_KEY, (text || '').slice(0, 600000)); } catch (e) {}
       try {
         localStorage.setItem(META_KEY, JSON.stringify({
           filename:     filename      || '',

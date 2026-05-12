@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan a Self-Help Book — Greylander Press</title>
+<script>(function(){try{var t=localStorage.getItem('gp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/theme.js" defer></script>
+<script src="assets/sitenav.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-primary,#13100c);color:var(--text-primary,#f4ede0);font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;line-height:1.7;min-height:100vh;padding-top:72px;}
+  .pn-main{max-width:1080px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+  .s-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#b8922a);margin-bottom:0.6rem;}
+  .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--text-primary,#f4ede0);line-height:1.2;margin-bottom:0.5rem;}
+  .s-title em{font-style:italic;color:var(--accent,#b8922a);}
+  .s-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted,#a89880);margin-bottom:0.9rem;max-width:680px;line-height:1.6;}
+
+  .gw-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin:1.8rem 0 2.5rem;}
+  .gw-intro.minimized{display:none;}
+  .gw-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default,rgba(184,146,42,0.3));width:28px;height:28px;color:var(--text-muted,#a89880);cursor:pointer;font-family:'DM Mono',monospace;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .gw-min-btn:hover{color:var(--accent,#b8922a);border-color:var(--accent,#b8922a);}
+  .gw-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid var(--border-default,rgba(184,146,42,0.3));background:var(--bg-primary,#13100c);animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .gw-portrait .gw-closed{opacity:0;animation:gw-blink 5.6s steps(1,end) infinite;}
+  @keyframes gw-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
+  @keyframes gw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .gw-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .gw-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--text-primary,#f4ede0);}
+  .gw-greeting em{color:var(--accent,#b8922a);font-style:italic;}
+  .gw-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;animation:gw-float 5.0s ease-in-out infinite;}
+  .gw-mini-badge.visible{display:flex;}
+  .gw-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .gw-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .gw-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary,#13100c);border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent,#b8922a);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .gw-mini-badge:hover .gw-mini-tooltip{opacity:1;}
+
+  .pn-step-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent,#b8922a);margin:2rem 0 1rem;}
+
+  .len-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
+  .len-card{border:1px solid var(--border-default,rgba(184,146,42,0.3));padding:1.25rem;cursor:pointer;transition:all 0.2s;position:relative;background:rgba(0,0,0,0.15);}
+  .len-card:hover{border-color:var(--accent,#b8922a);transform:translateY(-2px);}
+  .len-card.selected{border-color:var(--accent,#b8922a);background:rgba(184,146,42,0.08);}
+  .len-card.selected::before{content:'✓';position:absolute;top:0.6rem;right:0.7rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent,#b8922a);}
+  .len-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .len-words{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--accent,#b8922a);margin-bottom:0.4rem;}
+  .len-hint{font-size:0.78rem;color:var(--text-muted,#a89880);line-height:1.5;}
+
+  .field-group{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+  .field-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .field-input,.field-textarea{background:var(--input-bg,rgba(0,0,0,0.3));border:1px solid var(--input-border,rgba(184,146,42,0.25));color:var(--input-text,#f4ede0);font-family:'Cormorant Garamond',serif;font-size:1.05rem;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;width:100%;}
+  .field-input:focus,.field-textarea:focus{border-color:var(--accent,#b8922a);}
+  .field-textarea{min-height:88px;line-height:1.55;resize:vertical;}
+  .pn-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .btn-gold{background:var(--accent,#b8922a);color:#13100c;border:none;padding:0.95rem 2.2rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background 0.2s;}
+  .btn-gold:hover{background:#d4aa4a;}
+  .btn-outline{background:transparent;color:var(--accent,#b8922a);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.95rem 1.8rem;border:1px solid var(--border-default,rgba(184,146,42,0.3));cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--accent,#b8922a);}
+
+  .scene-area{display:none;margin-top:3rem;}
+  .scene-area.visible{display:block;}
+  .scene-header{border-bottom:1px solid var(--border-default,rgba(184,146,42,0.25));padding-bottom:1.4rem;margin-bottom:1.8rem;}
+  .scene-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.25rem;}
+  .scene-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#a89880);}
+  .scene-row{display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid rgba(184,146,42,0.1);}
+  .scene-row:last-child{border-bottom:none;}
+  .scene-num{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;color:var(--accent,#b8922a);min-width:3rem;padding-top:0.3rem;}
+  .scene-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-primary,#f4ede0);margin-bottom:0.2rem;}
+  .scene-desc{font-size:0.92rem;color:var(--text-muted,#a89880);line-height:1.6;}
+  .cta-bar{display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap;align-items:center;}
+
+  @media(max-width:760px){
+    .pn-main{padding:2rem 1.5rem;}
+    .s-title{font-size:1.7rem;}
+    .pn-two-col{grid-template-columns:1fr;}
+    .gw-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
+    .gw-portrait{width:120px;height:155px;}
+    .len-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LBRZ01WNX1');
+</script>
+</head>
+<body>
+
+<div id="gp-nav" data-page="pre"></div>
+
+<main class="pn-main">
+
+  <div class="s-label">Phase 02 — Pre-Project</div>
+  <h1 class="s-title">Plan a <em>Self-Help</em> Book.</h1>
+  <p class="s-sub">Pick the form. Sketch your reader, their pain, and your promise. Grey will lay out the chapter spine sized to fit, with the beats every working self-help book hits.</p>
+
+  <div class="gw-intro" id="gw-intro">
+    <button class="gw-min-btn" onclick="gwMinimize()" aria-label="Minimize Grey" title="Minimize">−</button>
+    <div class="gw-portrait" aria-label="Grey, your writing partner">
+      <img src="assets/Grey_Open.png" alt="Grey, looking up from the page" class="gw-open">
+      <img src="assets/Grey_Closed.png" alt="" aria-hidden="true" class="gw-closed">
+    </div>
+    <div>
+      <div class="gw-name">Grey.</div>
+      <div class="gw-greeting">Your writing partner. <em>Self-help is a promise made and kept.</em> The reader is in pain or in transition; your book is the path. Tell me your reader, what hurts, and what they'll have at the end. I'll lay out a chapter spine that earns the back-cover claim.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 1 — Choose Your Form</div>
+  <div class="len-grid">
+    <div class="len-card" data-len="short" onclick="selectLen(this)">
+      <div class="len-name">Short Read</div>
+      <div class="len-words">15,000 to 25,000 words</div>
+      <div class="len-hint">One big idea, lean. About 80 to 120 pages. Audiobook-friendly. Reads in an afternoon.</div>
+    </div>
+    <div class="len-card" data-len="standard" onclick="selectLen(this)">
+      <div class="len-name">Standard Self-Help</div>
+      <div class="len-words">40,000 to 60,000 words</div>
+      <div class="len-hint">The market default. 150 to 220 pages. Eight to ten chapters with worked examples.</div>
+    </div>
+    <div class="len-card" data-len="memoir" onclick="selectLen(this)">
+      <div class="len-name">Memoir-Style</div>
+      <div class="len-words">50,000 to 75,000 words</div>
+      <div class="len-hint">Your story interwoven with the framework. Each chapter pairs an episode from your life with the lesson it earned.</div>
+    </div>
+    <div class="len-card" data-len="comprehensive" onclick="selectLen(this)">
+      <div class="len-name">Comprehensive</div>
+      <div class="len-words">60,000 to 90,000 words</div>
+      <div class="len-hint">The field guide. Twelve+ chapters, research, case studies, exercises, common failure modes, and maintenance.</div>
+    </div>
+  </div>
+
+  <div class="pn-step-label">Step 2 — Your Book</div>
+
+  <div class="field-group">
+    <label class="field-label" for="sh-title">Working Title</label>
+    <input class="field-input" type="text" id="sh-title" placeholder="e.g., Aging on Purpose">
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="sh-subtitle">Subtitle (the promise)</label>
+    <input class="field-input" type="text" id="sh-subtitle" placeholder="e.g., A field guide to the second half of life">
+  </div>
+
+  <div class="pn-two-col">
+    <div class="field-group">
+      <label class="field-label" for="sh-reader">Who is this book for?</label>
+      <input class="field-input" type="text" id="sh-reader" placeholder="The exact reader. Be specific.">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="sh-authority">Why you to write it?</label>
+      <input class="field-input" type="text" id="sh-authority" placeholder="Your authority. Lived experience or earned expertise.">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="sh-pain">What is your reader struggling with?</label>
+    <textarea class="field-textarea" id="sh-pain" rows="3" placeholder="The specific pain or transition that brought them to this book."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="sh-promise">What will they have by the end?</label>
+    <textarea class="field-textarea" id="sh-promise" rows="3" placeholder="The before-and-after. What changes in their thinking, behavior, or daily life."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="sh-framework">Your framework or method (optional)</label>
+    <input class="field-input" type="text" id="sh-framework" placeholder="An acronym, a model, a set of principles. e.g., the P.A.I.D. framework">
+  </div>
+
+  <button class="btn-gold" onclick="generateScenes()">Build My Chapter Spine →</button>
+
+  <div class="scene-area" id="scene-area">
+    <div class="scene-header">
+      <div class="scene-title" id="scene-title">—</div>
+      <div class="scene-meta" id="scene-meta">—</div>
+    </div>
+    <div id="scene-rows"></div>
+
+    <div class="cta-bar">
+      <a href="publish.html" class="btn-outline">Submit to GP →</a>
+      <button class="btn-outline" onclick="resetAll()">Start Over</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="gw-mini-badge" id="gw-mini-badge" onclick="gwMaximize()" aria-label="Bring Grey back">
+  <img src="assets/quill pen.png" alt="Grey, minimized">
+  <span class="gw-mini-tooltip">Grey is here</span>
+</button>
+
+<script>
+let _len = null;
+
+function selectLen(card){
+  document.querySelectorAll('.len-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  _len = card.dataset.len;
+}
+
+window.gwMinimize = () => {
+  document.getElementById('gw-intro').classList.add('minimized');
+  document.getElementById('gw-mini-badge').classList.add('visible');
+};
+window.gwMaximize = () => {
+  document.getElementById('gw-intro').classList.remove('minimized');
+  document.getElementById('gw-mini-badge').classList.remove('visible');
+};
+
+const LEN_LABEL = {
+  short:         'Short Read',
+  standard:      'Standard Self-Help',
+  memoir:        'Memoir-Style Self-Help',
+  comprehensive: 'Comprehensive Guide'
+};
+
+// Helpful frame: every working self-help book opens with a hook, frames a
+// problem, makes a promise, delivers a method, walks the reader through
+// applying it, names the resistance they will hit, and lands a new identity.
+// The four forms reorder and expand that spine.
+
+function buildScenes(len, reader, pain, promise, framework){
+  const fw = framework ? `the ${framework}` : 'your method';
+  const r  = reader || 'your reader';
+
+  if (len === 'short'){
+    return [
+      {n:'1', t:'Open with the Hook',        d:`A story, a stat, or a moment that puts ${r} in the room. They see themselves in the first three pages or they put the book down.`},
+      {n:'2', t:'Frame the Problem',          d:`Name the pain precisely. ${pain || 'The thing your reader can\'t put into words yet.'} Give it a label. The label is half the relief.`},
+      {n:'3', t:'The Promise',                d:`What changes by the last page. ${promise || 'The before and after, concrete and specific.'}`},
+      {n:'4', t:'The Method',                 d:`The single big idea of the book. ${fw[0].toUpperCase() + fw.slice(1)} explained in plain language with one worked example.`},
+      {n:'5', t:'How to Apply It This Week',  d:`Three to five concrete actions ${r} can do in the next seven days. Each one small, specific, and measurable.`},
+      {n:'6', t:'What Changes',               d:`Close with the new ordinary. The reader's life six months from now if they keep doing the work.`},
+    ];
+  }
+
+  if (len === 'standard'){
+    return [
+      {n:'1',  t:'Hook + Promise',           d:`Open with the story that earned you the right to write this book. State the promise on page one or two. ${r} commits or closes.`},
+      {n:'2',  t:'The Problem, Named',       d:`Define the pain in language ${r} hasn't quite had. ${pain || 'The thing they\'ve been working around for years.'}`},
+      {n:'3',  t:'Why Now, Why You',         d:`Why this book exists. What the other books on the shelf got wrong, or didn't say. Your specific authority.`},
+      {n:'4',  t:'The Framework',            d:`Introduce ${fw} as the spine of the rest of the book. One image or acronym that holds it together.`},
+      {n:'5',  t:'Principle One',            d:`The first leg of the method. Story → principle → worked example → reflection prompt.`},
+      {n:'6',  t:'Principle Two',            d:`The second leg. Build on principle one. Show why it doesn't work without principle one in place.`},
+      {n:'7',  t:'Principle Three',          d:`The third leg. The hard one. The chapter that makes the book matter.`},
+      {n:'8',  t:'Putting It Together',      d:`How the principles compose. A full case study walking ${r} through one cycle.`},
+      {n:'9',  t:'When the Resistance Hits', d:`The places ${r} will quit. Name them. Show what to do when willpower runs out.`},
+      {n:'10', t:'The New Ordinary',         d:`Close on the changed life. Not a victory lap, a description of the new baseline.`},
+    ];
+  }
+
+  if (len === 'memoir'){
+    return [
+      {n:'1',  t:'Opening Scene',            d:`A vivid moment from your own life that drops ${r} into the world. Let the scene carry the why-this-book.`},
+      {n:'2',  t:'The Pain I Knew',          d:`Your version of ${pain || 'the central pain'}. Name it from inside, not from above. The reader hears their own voice.`},
+      {n:'3',  t:'What I Tried First (and Why It Failed)', d:`The false starts. The diet, the therapist, the productivity system, the move. Honest, specific, useful.`},
+      {n:'4',  t:'The Turn',                 d:`The moment something shifted. The conversation, the reading, the loss, the diagnosis. The pivot that became this book.`},
+      {n:'5',  t:'Principle One, Earned',    d:`The first lesson tied to the episode that taught it to you. Story first, principle second.`},
+      {n:'6',  t:'Principle Two, Earned',    d:`The next lesson and the moment you got it wrong. Failure makes the principle credible.`},
+      {n:'7',  t:'Principle Three, Earned',  d:`The hardest one. The piece you nearly missed. The one ${r} will reread later.`},
+      {n:'8',  t:'How I Use It Now',         d:`Daily life with the framework in place. Routines, ratios, edges, and slip-ups. Make it ordinary.`},
+      {n:'9',  t:"What I'd Tell My Younger Self", d:`The chapter that doubles as the back-cover blurb. Compressed wisdom in one voice.`},
+      {n:'10', t:'An Invitation, Not a Prescription', d:`Close with what you hope for ${r}. Acknowledge their version will not look like yours.`},
+    ];
+  }
+
+  // comprehensive
+  return [
+    {n:'1',  t:'Hook and Promise',                d:`Open with the most arresting story or stat. State the promise clearly. ${r} should know within five pages whether to keep reading.`},
+    {n:'2',  t:'The Landscape',                   d:`What's currently being said about this problem and where it falls short. Other books, common advice, popular myths.`},
+    {n:'3',  t:'The Problem, Decomposed',         d:`Break the problem into its real components. ${pain || 'The underlying mechanics most readers haven\'t seen.'}`},
+    {n:'4',  t:'The Evidence',                    d:`Research, data, clinical experience, longitudinal patterns. Credible, named sources. This is the chapter that earns your authority on the page.`},
+    {n:'5',  t:'The Framework Introduced',        d:`${fw[0].toUpperCase() + fw.slice(1)} as the unifying model. One memorable image.`},
+    {n:'6',  t:'Principle One in Depth',          d:`Theory, mechanism, then practice. Worked example. Common misunderstanding addressed.`},
+    {n:'7',  t:'Principle Two in Depth',          d:`Same shape. Pair with principle one to show how they reinforce.`},
+    {n:'8',  t:'Principle Three in Depth',        d:`The hardest principle. Where most readers and most other books stop short.`},
+    {n:'9',  t:'Case Studies',                    d:`Three to five real people (anonymized) who applied the framework. Different starting points, different outcomes. Honest about what didn't work.`},
+    {n:'10', t:'Common Failure Modes',            d:`Where readers typically quit, plateau, or backslide. Diagnose each one and offer a specific intervention.`},
+    {n:'11', t:'Putting It Together',             d:`The full sequence. A reader-led walkthrough of the framework applied across an entire cycle.`},
+    {n:'12', t:'Maintenance and Identity',        d:`Long-term practice. How this becomes who ${r} is, not just what they do.`},
+    {n:'13', t:'When to Ask for More Help',       d:`The honest chapter. The signs that a book is not enough and a professional is the right next step. Resources.`},
+    {n:'14', t:'Closing Charge',                  d:`Final image. The promise restated, now earned. A short invitation to begin tomorrow.`},
+  ];
+}
+
+window.generateScenes = function(){
+  if (!_len){ alert('Please choose a form first.'); return; }
+  const title = document.getElementById('sh-title').value.trim() || 'Untitled';
+  const subtitle = document.getElementById('sh-subtitle').value.trim();
+  const reader = document.getElementById('sh-reader').value.trim() || 'your reader';
+  const pain   = document.getElementById('sh-pain').value.trim();
+  const promise= document.getElementById('sh-promise').value.trim();
+  const framework = document.getElementById('sh-framework').value.trim();
+
+  const scenes = buildScenes(_len, reader, pain, promise, framework);
+  const meta = `${LEN_LABEL[_len]} · ${scenes.length} Chapters`;
+  document.getElementById('scene-title').textContent = subtitle ? `${title}: ${subtitle}` : title;
+  document.getElementById('scene-meta').textContent = meta;
+
+  const container = document.getElementById('scene-rows');
+  container.innerHTML = '';
+  scenes.forEach(scene => {
+    const row = document.createElement('div');
+    row.className = 'scene-row';
+    row.innerHTML = `<div class="scene-num">Ch. ${scene.n}</div><div><div class="scene-name">${scene.t}</div><div class="scene-desc">${scene.d}</div></div>`;
+    container.appendChild(row);
+  });
+
+  const area = document.getElementById('scene-area');
+  area.classList.add('visible');
+  setTimeout(() => area.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+};
+
+window.resetAll = function(){
+  _len = null;
+  document.querySelectorAll('.len-card').forEach(c => c.classList.remove('selected'));
+  ['sh-title','sh-subtitle','sh-reader','sh-authority','sh-pain','sh-promise','sh-framework'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('scene-area').classList.remove('visible');
+};
+</script>
+
+</body>
+</html>
