@@ -16,7 +16,8 @@
       "Bash(curl -sS -X GET https://slrstudio.online/.netlify/functions/get-credits -w \"\\\\nHTTP: %{http_code}\\\\n\")",
       "Bash(grep -iE \"deploy|\\\\.ps1$|\\\\.sh$|\\\\.bat$|\\\\.cmd$\")",
       "PowerShell($nodeDir = \"C:\\\\Users\\\\w001txo\\\\node-portable\\\\node-v22.11.0-win-x64\"; $env:PATH = \"$nodeDir;$env:PATH\"; $env:NETLIFY_AUTH_TOKEN = \\(Get-Content \"C:\\\\Users\\\\w001txo\\\\Desktop\\\\ETL Lab\\\\GLP\\\\nf-token.txt\" -Raw\\).Trim\\(\\); Set-Location \"C:\\\\Users\\\\w001txo\\\\Desktop\\\\ETL Lab\\\\GLP\\\\greylanderpress-site\"; & \"$nodeDir\\\\netlify.cmd\" deploy --prod --dir . --functions netlify/functions --message \"fix: portrait quality high->medium to fit 26s timeout; surface timeout errors as readable text\" 2>&1 | Select-Object -Last 15)",
-      "PowerShell($dest = \"C:\\\\Users\\\\w001txo\\\\Desktop\\\\ETL Lab\\\\GLP\\\\greylanderpress-site\\\\assets\\\\fonts\\\\Caveat-Regular.ttf\"; try { Invoke-WebRequest -Uri \"https://github.com/googlefonts/caveat/raw/main/fonts/ttf/Caveat-Regular.ttf\" -OutFile $dest -ErrorAction Stop; \\(Get-Item $dest\\).Length } catch { \"FAILED: \" + $_.Exception.Message })"
+      "PowerShell($dest = \"C:\\\\Users\\\\w001txo\\\\Desktop\\\\ETL Lab\\\\GLP\\\\greylanderpress-site\\\\assets\\\\fonts\\\\Caveat-Regular.ttf\"; try { Invoke-WebRequest -Uri \"https://github.com/googlefonts/caveat/raw/main/fonts/ttf/Caveat-Regular.ttf\" -OutFile $dest -ErrorAction Stop; \\(Get-Item $dest\\).Length } catch { \"FAILED: \" + $_.Exception.Message })",
+      "Bash(awk '/^  comfrey:/,/^  [a-z]+:|^\\\\}/' \"C:/Users/w001txo/Desktop/ETL Lab/THE_DOSE/js/data/plant-garden.js\")"
     ]
   }
 }
