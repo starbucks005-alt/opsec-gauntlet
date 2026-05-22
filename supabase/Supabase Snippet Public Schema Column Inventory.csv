@@ -1,0 +1,102 @@
+table_name,column_name,data_type,is_nullable,column_default
+gauntlet_pattern3_flags,id,uuid,NO,gen_random_uuid()
+gauntlet_pattern3_flags,run_id,uuid,YES,null
+gauntlet_pattern3_flags,created_at,timestamp with time zone,NO,now()
+gauntlet_pattern3_flags,paragraph_text,text,NO,null
+gauntlet_pattern3_flags,paragraph_index,integer,YES,null
+gauntlet_pattern3_flags,sensory_word_count,integer,YES,null
+gauntlet_pattern3_flags,abstract_verb_count,integer,YES,null
+gauntlet_pattern3_flags,sentence_count,integer,YES,null
+gauntlet_pattern3_flags,reviewed,boolean,NO,false
+gauntlet_pattern3_flags,is_false_positive,boolean,YES,null
+gauntlet_pattern3_flags,reviewer_note,text,YES,null
+gauntlet_pattern3_fp_rate,total_flagged,bigint,YES,null
+gauntlet_pattern3_fp_rate,total_reviewed,bigint,YES,null
+gauntlet_pattern3_fp_rate,false_positives,bigint,YES,null
+gauntlet_pattern3_fp_rate,fp_rate_pct,numeric,YES,null
+gauntlet_runs,id,uuid,NO,gen_random_uuid()
+gauntlet_runs,user_id,uuid,NO,null
+gauntlet_runs,created_at,timestamp with time zone,NO,now()
+gauntlet_runs,manuscript_filename,text,YES,null
+gauntlet_runs,manuscript_word_count,integer,YES,null
+gauntlet_runs,manuscript_page_count,integer,YES,null
+gauntlet_runs,scope,text,NO,null
+gauntlet_runs,excerpt_context,jsonb,YES,null
+gauntlet_runs,honesty_score,text,YES,null
+gauntlet_runs,pillar_bands,jsonb,YES,null
+gauntlet_runs,pillar_findings,jsonb,YES,null
+gauntlet_runs,stagnation_flags,jsonb,YES,null
+gauntlet_runs,chapter_heat_map,jsonb,YES,null
+gauntlet_runs,executive_summary,text,YES,null
+gauntlet_runs,red_ink_list,jsonb,YES,null
+gauntlet_runs,tool_recommendations,jsonb,YES,null
+gauntlet_runs,model,text,NO,'claude-sonnet-4-6'::text
+gauntlet_runs,pass_count,integer,NO,3
+gauntlet_runs,pass_raw_bands,jsonb,YES,null
+gauntlet_runs,validator_regens,integer,NO,0
+gauntlet_runs,parsed_text,text,YES,null
+gauntlet_runs,elapsed_runtime_ms,integer,YES,null
+gauntlet_runs,user_feedback,jsonb,YES,null
+gauntlet_runs,credits_charged,integer,NO,0
+gauntlet_runs,status,text,NO,'running'::text
+gauntlet_runs,error_message,text,YES,null
+gauntlet_runs,user_scope,text,YES,null
+gauntlet_validator_failures,id,uuid,NO,gen_random_uuid()
+gauntlet_validator_failures,run_id,uuid,YES,null
+gauntlet_validator_failures,user_id,uuid,YES,null
+gauntlet_validator_failures,created_at,timestamp with time zone,NO,now()
+gauntlet_validator_failures,scope,text,YES,null
+gauntlet_validator_failures,prompt_excerpt,text,YES,null
+gauntlet_validator_failures,attempts,jsonb,YES,null
+honest_reviews,id,uuid,NO,gen_random_uuid()
+honest_reviews,user_id,uuid,NO,null
+honest_reviews,created_at,timestamp with time zone,NO,now()
+honest_reviews,published_at,timestamp with time zone,YES,null
+honest_reviews,tier,text,NO,null
+honest_reviews,book_title,text,NO,null
+honest_reviews,book_author,text,NO,null
+honest_reviews,book_publisher,text,YES,null
+honest_reviews,book_year,integer,YES,null
+honest_reviews,book_isbn,text,YES,null
+honest_reviews,cover_image_url,text,YES,null
+honest_reviews,manuscript_filename,text,YES,null
+honest_reviews,manuscript_word_count,integer,YES,null
+honest_reviews,manuscript_page_count,integer,YES,null
+honest_reviews,honesty_score,text,YES,null
+honest_reviews,test_bands,jsonb,YES,null
+honest_reviews,test_findings,jsonb,YES,null
+honest_reviews,executive_summary,text,YES,null
+honest_reviews,pull_quote,text,YES,null
+honest_reviews,full_book_brief,jsonb,YES,null
+honest_reviews,sampled_chapter_indices,jsonb,YES,null
+honest_reviews,pass_raw_bands,jsonb,YES,null
+honest_reviews,validator_regens,integer,NO,0
+honest_reviews,parsed_text,text,YES,null
+honest_reviews,model,text,NO,'claude-sonnet-4-6'::text
+honest_reviews,pass_count,integer,NO,3
+honest_reviews,elapsed_runtime_ms,integer,YES,null
+honest_reviews,chapter_evaluations,jsonb,YES,null
+honest_reviews,status,text,NO,'queued'::text
+honest_reviews,error_message,text,YES,null
+honest_reviews,credits_charged,integer,NO,0
+honest_reviews,notify_choice,text,YES,'wait'::text
+honest_reviews,notify_email,text,YES,null
+honest_reviews,notify_sent_at,timestamp with time zone,YES,null
+honest_reviews,is_published,boolean,NO,false
+honest_reviews,slug,text,YES,null
+honest_reviews,headline,text,YES,null
+profiles,id,uuid,NO,null
+profiles,email,text,NO,null
+profiles,subscription_tier,text,NO,'individual'::text
+profiles,billing_period,text,NO,'monthly'::text
+profiles,subscription_status,text,NO,'active'::text
+profiles,stripe_customer_id,text,YES,null
+profiles,stripe_subscription_id,text,YES,null
+profiles,is_admin,boolean,NO,false
+profiles,created_at,timestamp with time zone,NO,now()
+profiles,updated_at,timestamp with time zone,NO,now()
+users,id,uuid,NO,uuid_generate_v4()
+users,email,text,NO,null
+users,plan_tier,text,NO,'free'::text
+users,created_at,timestamp with time zone,NO,now()
+users,updated_at,timestamp with time zone,NO,now()

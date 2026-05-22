@@ -1,0 +1,1069 @@
+Production-Ready System Specification: The Gauntlet Engine
+This document provides a cohesive, unified, and noise-free architectural spec designed directly for Claude Code to implement the core product backend, frontend, AI orchestration layer, database, and ElevenLabs API integration.
+1. System Architecture Overview
+The platform consists of a single-page application (SPA) front-end, a robust REST API backend, and an intelligent AI Orchestration layer that drives multi-lens evaluation pipelines without hardcoded logic.
++-----------------------------------------------------------+
+|                        FRONT-END                          |
+|  User Dashboard | Submission Flow | Judge Selection UI    |
+|  Gauntlet Matrix Panel | Conflict Resolution Viewer       |
++------------------------------+----------------------------+
+| API Requests (JSON)
+v
++-----------------------------------------------------------+
+|                        BACK-END                           |
+|  REST API Routing | Database Models | Pipeline Orchestrator|
++------------------------------+----------------------------+
+| Orchestration Events
+v
++-----------------------------------------------------------+
+|                  AI ORCHESTRATION LAYER                   |
+|  LLM Prompt Injection | Triangulation &amp; Heatmap Matrix    |
+|  Risk Tier Calculation | ElevenLabs TTS Audio Synthesis    |
++-----------------------------------------------------------+
+2. Database Schema
+The Postgres database structure maps the entire assessment lifecycle, ensuring full audit compliance, idempotent evaluation steps, and state preservation for judge swapping or evidence updates.
+SQL
+-- Core User Account Data
+CREATE TABLE users (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+email VARCHAR(255) UNIQUE NOT NULL,
+role VARCHAR(50) NOT NULL DEFAULT 'user',
+org_id UUID,
+preferences JSONB DEFAULT '{}'::jsonb,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- User Idea Submissions
+CREATE TABLE submissions (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+type VARCHAR(50) NOT NULL, -- 'idea', 'product', 'claim', 'story', 'prototype', 'health_concept', 'research_concept'
+title VARCHAR(255) NOT NULL,
+description TEXT NOT NULL,
+goal_audience TEXT,
+environment TEXT,
+constraints TEXT,
+self_assessment JSONB,
+status VARCHAR(50) NOT NULL DEFAULT 'draft', -- 'draft', 'in_evaluation', 'complete'
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Parsed Structural Elements of a Submission
+CREATE TABLE claims (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+submission_id UUID REFERENCES submissions(id) ON DELETE CASCADE,
+text TEXT NOT NULL,
+type VARCHAR(50),
+strength VARCHAR(50),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Supporting Documentation or References
+CREATE TABLE evidence_items (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+submission_id UUID REFERENCES submissions(id) ON DELETE CASCADE,
+claim_id UUID REFERENCES claims(id) ON DELETE SET NULL,
+source TEXT NOT NULL,
+type VARCHAR(50), -- 'RCT', 'observational', 'citation_text', 'url', 'file_upload'
+relevance VARCHAR(50), -- 'direct', 'indirect', 'weak'
+quality VARCHAR(50), -- 'high', 'medium', 'low'
+notes TEXT,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Master Evaluation Record
+CREATE TABLE evaluation_runs (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+submission_id UUID REFERENCES submissions(id) ON DELETE CASCADE,
+triad UUID[] NOT NULL, -- Array of 3 Judge IDs
+status VARCHAR(50) NOT NULL DEFAULT 'pending', -- 'pending', 'processing', 'conflict_resolution', 'complete'
+model_version VARCHAR(50) NOT NULL,
+orchestration_version VARCHAR(50) NOT NULL,
+risk_score NUMERIC(3, 2),
+risk_tier VARCHAR(50),
+composite_score NUMERIC(3, 2),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+completed_at TIMESTAMP WITH TIME ZONE
+);
+-- Individual Judge Analysis Outputs
+CREATE TABLE judge_evaluations (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+judge_id VARCHAR(50) NOT NULL,
+stage VARCHAR(50) NOT NULL, -- 'clarity', 'evidence', 'risk', 'feasibility', 'impact', 'final'
+dimension_scores JSONB NOT NULL, -- Vector tracking: structure, viability, risk, narrative, evidence, clinical, cultural, psych
+raw_output TEXT NOT NULL,
+confidence NUMERIC(3, 2) NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Cross-Analysis Mapping Matrix
+CREATE TABLE triangulations (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+triangulation_matrix JSONB NOT NULL, -- Agreement, conflict, and coverage tracking
+heatmap JSONB NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Risk Architecture Drivers
+CREATE TABLE risk_assessments (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+risk_tier VARCHAR(50) NOT NULL,
+risk_score NUMERIC(3, 2) NOT NULL,
+risk_drivers JSONB NOT NULL, -- dimensionRisk, riskFlags, subDimensionSeverity, conflictPenalty
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Tracking Modality Changes via Action Items
+CREATE TABLE evidence_assessments (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+evidence_status VARCHAR(50) NOT NULL,
+evidence_gaps JSONB NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- ElevenLabs Synthesized Files
+CREATE TABLE audio_clips (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+judge_id VARCHAR(50) NOT NULL,
+type VARCHAR(50) NOT NULL, -- 'micro_comment', 'stage_summary', 'final_summary', 'conflict_explanation'
+storage_url TEXT NOT NULL,
+duration INT NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE reports (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+report_object JSONB NOT NULL,
+pdf_url TEXT,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+3. Production Judge Roster &amp; Lenses
+To eliminate naming collision or whimsical artifacts, judges are constructed as functional character actors defined by rigorous cognitive architectures and vector-based dimensions.
+JSON
+{
+"judges": [
+{
+"id": "judge_structural",
+"name": "Dr. Rowan Hale",
+"lens_label": "Structural Logic",
+"voice_id": "EXAVITQu4vr4xnSDxMaL",
+"description": "Detects whether the idea holds together logically.",
+"evaluates": ["structure", "narrative", "viability"],
+"strengths": { "analytical": 0.95, "risk_sensitivity": 0.40 },
+"blind_spots": ["Low tolerance for ambiguity"],
+"tone_rules": ["Precise", "Methodical", "Deconstructive"],
+"cadence": { "pace": "measured", "rhythm": "staccato" },
+"timbre": { "texture": "dry", "warmth": 0.30 },
+"intonation": "flat",
+"confidence_curve": "stable"
+},
+{
+"id": "judge_viability",
+"name": "Alex Mercer",
+"lens_label": "Operational Feasibility",
+"voice_id": "IKne3meq5aAsO9vcaUMH",
+"description": "Determines whether the idea works realistically in production configurations.",
+"evaluates": ["viability", "structure", "risk"],
+"strengths": { "analytical": 0.85, "risk_sensitivity": 0.65 },
+"blind_spots": ["Overlooks abstract value patterns"],
+"tone_rules": ["Pragmatic", "Direct", "Friction-focused"],
+"cadence": { "pace": "brisk", "rhythm": "direct" },
+"timbre": { "texture": "crisp", "warmth": 0.45 },
+"intonation": "downward",
+"confidence_curve": "linear"
+},
+{
+"id": "judge_ethics",
+"name": "Dr. Selene Ward",
+"lens_label": "Ethical and Systemic Risk",
+"voice_id": "jBpfwcrSjaorv90N799y",
+"description": "Identifies harm vectors, systemic impact, and unintended secondary consequences.",
+"evaluates": ["risk", "cultural", "psych"],
+"strengths": { "analytical": 0.90, "risk_sensitivity": 0.95 },
+"blind_spots": ["Hyper-sensitive to low-probability liabilities"],
+"tone_rules": ["Skeptical", "Inquisitive", "Precautionary"],
+"cadence": { "pace": "slow", "rhythm": "deliberate" },
+"timbre": { "texture": "deep", "warmth": 0.50 },
+"intonation": "wavering",
+"confidence_curve": "cautious"
+},
+{
+"id": "judge_narrative",
+"name": "Mira Santos",
+"lens_label": "Narrative and Identity",
+"voice_id": "LcfcDJNUP1GQ99T8C3yX",
+"description": "Evaluates coherence of the underlying story, positioning, and target messaging.",
+"evaluates": ["narrative", "psych"],
+"strengths": { "analytical": 0.75, "risk_sensitivity": 0.35 },
+"blind_spots": ["Overweights narrative symmetry over operational numbers"],
+"tone_rules": ["Expressive", "Analytical", "Resonance-driven"],
+"cadence": { "pace": "dynamic", "rhythm": "flowing" },
+"timbre": { "texture": "smooth", "warmth": 0.75 },
+"intonation": "melodic",
+"confidence_curve": "ascendant"
+},
+{
+"id": "judge_psych",
+"name": "Dr. Asha Kade",
+"lens_label": "Psychological Impact",
+"voice_id": "piTKgcLEGmPEeZs6PaFX",
+"description": "Evaluates cognitive load, behavioral friction, and psychological feedback loops.",
+"evaluates": ["psych", "narrative"],
+"strengths": { "analytical": 0.88, "risk_sensitivity": 0.60 },
+"blind_spots": ["Assumes rational user behavioral compliance"],
+"tone_rules": ["Observant", "Empathetic", "Diagnostic"],
+"cadence": { "pace": "moderate", "rhythm": "even" },
+"timbre": { "texture": "warm", "warmth": 0.80 },
+"intonation": "balanced",
+"confidence_curve": "parabolic"
+},
+{
+"id": "judge_cultural",
+"name": "Dara Kim",
+"lens_label": "Cultural and Safety Context",
+"voice_id": "TxGEqn7ZgAMmIatYjII8",
+"description": "Evaluates local/global contextual fitness, baseline safety guidelines, and general accessibility.",
+"evaluates": ["cultural", "clinical", "risk"],
+"strengths": { "analytical": 0.82, "risk_sensitivity": 0.80 },
+"blind_spots": ["Over-indexes on local group paradigms"],
+"tone_rules": ["Measured", "Rooted", "Protective"],
+"cadence": { "pace": "calm", "rhythm": "measured" },
+"timbre": { "texture": "soft", "warmth": 0.65 },
+"intonation": "stable",
+"confidence_curve": "plateau"
+},
+{
+"id": "judge_evidence",
+"name": "Dr. Lian Zhou",
+"lens_label": "Evidence and Mechanism",
+"voice_id": "VR6AeaXN60t9N0Y9D70U",
+"description": "Evaluates scientific grounding, causal validation, mechanisms of action, and citation rigor.",
+"evaluates": ["evidence", "structure", "clinical"],
+"strengths": { "analytical": 0.98, "risk_sensitivity": 0.50 },
+"blind_spots": ["Dismisses highly viable innovative heuristics that lack existing empiricism"],
+"tone_rules": ["Empirical", "Rigorous", "Data-constrained"],
+"cadence": { "pace": "rapid", "rhythm": "dense" },
+"timbre": { "texture": "sharp", "warmth": 0.20 },
+"intonation": "inflexible",
+"confidence_curve": "stepwise"
+},
+{
+"id": "judge_clinical",
+"name": "Dr. Marcus Vance",
+"lens_label": "Clinical Validity",
+"voice_id": "pNInz6obpgmo5Idw7w06",
+"description": "Evaluates clinical safety thresholds, medical-biological feasibility, and regulatory exposure pathways.",
+"evaluates": ["clinical", "evidence", "risk"],
+"strengths": { "analytical": 0.94, "risk_sensitivity": 0.85 },
+"blind_spots": ["Strictly adheres to institutional frameworks, missing novel operational edges"],
+"tone_rules": ["Authoritative", "Objective", "Risk-mitigating"],
+"cadence": { "pace": "deliberate", "rhythm": "precise" },
+"timbre": { "texture": "clear", "warmth": 0.40 },
+"intonation": "authoritative",
+"confidence_curve": "asymptotic"
+}
+]
+}
+4. Back-End API Routing Map
+The API acts as the declarative orchestrator for the lifecycle of data mutation, matching, tracking, and audio assembly.
+/auth
+POST  /login                              -&gt; Returns session token &amp; user roles
+GET   /me                                 -&gt; Retrieves profile configurations
+/submissions
+POST  /                                   -&gt; Instantiates a new entry; accepts form boundaries
+GET   /                                   -&gt; Lists user submissions with status tags
+GET   /{id}                               -&gt; Retrieves complete description, claims, and links
+PATCH /{id}                               -&gt; Mutation interface for active draft fields
+POST  /{id}/claims                        -&gt; Appends extracted core assertions
+POST  /{id}/evidence                      -&gt; Attaches supportive files, URLs, or notes
+POST  /{id}/recommend_judges              -&gt; Runs vector matching logic to surface optimal triad
+/evaluation_runs
+POST  /submissions/{id}/evaluate          -&gt; Initiates async assessment loop for selected triad
+GET   /{id}                               -&gt; Polls matrix statuses, scores, and calculated drivers
+POST  /{id}/conflicts/{dimension}/drill_deeper -&gt; Evaluates specific sub-dimensions
+POST  /{id}/conflicts/{dimension}/swap_judge   -&gt; Swaps judge, preserves state, triggers partial re-run
+POST  /{id}/conflicts/{dimension}/rerun_stage  -&gt; Re-runs evaluation step following input modification
+POST  /{id}/evidence_gaps                 -&gt; Pulls localized gaps requiring targeted user answers
+POST  /{id}/evidence_augment              -&gt; Submits payload to update sparse data models
+/reports
+GET   /evaluation_runs/{id}/report        -&gt; Retrieves structured payload mapping matrix/heatmap
+GET   /evaluation_runs/{id}/report.pdf    -&gt; Streams compiled PDF print layouts
+/audio
+GET   /evaluation_runs/{id}/audio_manifest -&gt; Returns indexed storage URLs for audio player nodes
+GET   /{audio_id}                         -&gt; Serves synthesized file streams
+5. Core Algorithmic Frameworks
+A. Judge Selection Recommendation Engine
+When a user finishes intake, the system extracts claims and generates a required requirement vector:
+$$R = [structure, viability, risk, narrative, evidence, clinical, cultural, psych]$$
+Each dimension is explicitly valued between 0 and 1.
+The engine computes the cosine similarity between $R$ and each Judge's built-in vector signature ($Lj$).
+Valid combinations of 3 judges are generated adhering to constraints: No duplicate lenses, no overlapping blind spots.
+Every potential triad is scored via the following optimizing equation:
+$$\text{triadScore} = 0.35 \cdot \text{COV} + 0.25 \cdot \text{COMP} + 0.20 \cdot \text{TYPE} + 0.10 \cdot \text{RISK} + 0.10 \cdot \text{EVID}$$
+Coverage ($\text{COV}$): Percentage of active dimensions in $R$ addressed by the combination.
+Complementarity ($\text{COMP}$): Distance matrix tracking divergence between individual judge competencies.
+Type Weighting ($\text{TYPE}$): Submission contextual matching weight (e.g., Clinical concepts boost judge_clinical and judge_evidence).
+Risk/Evidence Adequacy ($\text{RISK}$, $\text{EVID}$): Flags that boost analytical sensitivity scores when risk or validation thresholds are high.
+B. The 3-Judge Triangulation Mechanism
+During active pipelines, judges output isolated 5-dimensional vectors containing normalized scores from 0 to 1.
+[Dimension Evaluation Loop]
+/      |      \
+/       |       \
+Judge A Vector  Judge B Vector  Judge C Vector
+\       |       /
+\      |      /
+[Dimension-by-Dimension Comparison]
+/               |               \
+Spread &lt;= 0.15          Spread &gt;= 0.35         Uncovered
+v                       v                    v
+[Agreement Zone]       [Conflict Zone]       [Coverage Gap]
+Consensus Finding     Blindspot Exposure     Warning Generated
+Agreement Zone: Identified where all three chosen judges return values inside a $\pm 0.15$ spread. This explicitly establishes high-confidence consensus.
+Conflict Zone: Generated when the mathematical spread across active outputs is $\ge 0.35$. This exposes critical system blindspots.
+Weighted Composite Scoring:
+$$S = \sum (\text{judge\_weight} \cdot \text{judge\_vector})$$
+C. Risk Tier &amp; Assessment Calculation
+The absolute Risk Tier (Low, Moderate, High, Critical) is determined by an aggregated risk engine scoring framework:
+JSON
+{
+"riskScore": 0.68,
+"riskTier": "High",
+"drivers": {
+"dimensionRisk": 0.42,
+"riskFlags": 0.15,
+"subDimensionSeverity": 0.20,
+"conflictPenalty": 0.10,
+"submissionTypeWeight": 0.10
+}
+}
+dimensionRisk: Baseline mathematical mean across risk vectors.
+riskFlags: Scalar increases applied per structural exception thrown by judge_ethics or judge_clinical.
+conflictPenalty: Weighted additions applied when conflict spreads on safety dimensions exceed $\ge 0.35$.
+6. Dynamic Evaluation &amp; Mutation Workflows
+A. The 5-Stage Pipeline Heuristics
+Submissions cycle through five sequential passes. Judges review each pass strictly filtered through their functional analytical lens:
+Stage 1: Clarity
+judge_structural -&gt; Checks structural layout and internal logic consistency.
+judge_narrative -&gt; Checks story structure and readability alignment.
+judge_psych -&gt; Measures entry barrier overhead and user friction.
+judge_evidence -&gt; Audits mechanistic definitions and claims layout.
+Stage 2: Evidence
+judge_evidence -&gt; Scores data strength and reference validity.
+judge_clinical -&gt; Verifies scientific plausibility and data parameters.
+judge_cultural -&gt; Inspects situational field data and case records.
+judge_structural -&gt; Audits internal validation logic for fallacies.
+Stage 3: Risk
+judge_ethics -&gt; Scans for systemic vulnerabilities and downstream misuse.
+judge_clinical -&gt; Analyzes biological or operational vulnerabilities.
+judge_cultural -&gt; Flags socio-environmental complications.
+judge_viability -&gt; Flags single points of operational failure.
+Stage 4: Feasibility
+judge_viability -&gt; Gauges real-world execution, overhead, and constraints.
+judge_structural -&gt; Evaluates implementation logic dependencies.
+Stage 5: Impact
+judge_psych -&gt; Projects behavioral changes and retention metrics.
+judge_narrative -&gt; Measures market messaging resonance.
+judge_ethics -&gt; Weights public-good outputs.
+B. State-Preserving Judge Swap Workflow
+When a judge is replaced via the UI mid-run, the engine preserves historical data, avoiding unnecessary API or compute execution:
+[User Triggers Swap]
+v
+1. Freeze Existing Data -------------------&gt; Keeps untouched evaluations,
+v                                     triangulation rows, &amp; heatmaps.
+2. Purge Target Judge Records -------------&gt; Drops old judge outputs from database.
+v
+3. Execute New Judge Pipeline -------------&gt; Runs 5-stage evaluation loop for
+v                                     newly added judge only.
+4. Matrix Recalculation -------------------&gt; Recomputes Triangulation Matrix &amp;
+v                                     Risk Tier with new composite vector.
+5. Update Complete Evaluation Object ------&gt; Returns mutated report payload.
+C. Evidence Augmentation Loop
+Triggers automatically if the evidence score falls $&lt; 0.45$, or if judge_evidence/judge_clinical throws an explicit validation error.
+[System Identifies Gap] -&gt; [Isolate to Claim ID] -&gt; [Render Targeted UI Prompt]
+|
+[Recalculate Matrix &amp; Risk] &lt;- [Re-Run Evidential Lenses] &lt;- [User Uploads Source]
+Isolate Gaps: Gaps are mapped to a distinct JSON object:
+JSON
+{ "claimId": "CLM-002", "gapType": "Data sufficiency", "severity": "High" }
+Targeted Prompts: The interface prompts the user for specific evidence (e.g., "For Claim 2, do you have any human trial data or peer-reviewed citations supporting this effect?").
+Targeted Re-Evaluation: On submission, only the affected dimensions for active judges are rescored. The rest of the engine state remains frozen.
+7. AI Prompt Structure (Orchestration Modules)
+No pipeline behavior is hardcoded. Execution is driven by independent structural configurations. Below are the base routing blueprints for prompt compilation:
+A. User Intent Interpreter Prompt Specification
+JSON
+{
+"module_id": "intent_interpreter",
+"system_instruction": "You are the data parsing intake engine for the platform. Process raw user entries into clean JSON objects. Isolate core operational statements, separate distinct assumptions, track specified constraints, and explicitly map evidentiary validation sources.",
+"required_output_format": {
+"structured_summary": "string",
+"claims": [{ "id": "string", "text": "string", "type": "string" }],
+"assumptions": ["string"],
+"constraints": ["string"],
+"evidence_discovered": [{ "claim_id": "string", "source_text": "string", "type": "string" }]
+}
+}
+B. Judge Character Actor Prompts
+Every evaluation call injects the judge’s individual character actor profile.
+Inject Context: {judge_name} evaluating via {lens_label} Lens.
+Personality Constraints: Adhere strictly to these tone guidelines: {tone_rules}. Maintain a {cadence} delivery style with a {timbre} vocal model.
+Evaluation Instructions:
+Analyze the provided submission file matching Stage: {stage_name}.
+Output evaluations focusing exclusively on your target metrics: {evaluates}.
+Do not comment on dimensions outside your assigned profile.
+Challenge assumptions directly. Do not cushion analytical feedback. Highlight contradictions or structural failures immediately.
+Your output must render as a valid JSON object matching this schema:
+{
+"dimension_scores": { "structure": 0.0, "viability": 0.0, "risk": 0.0, "narrative": 0.0, "evidence": 0.0, "clinical": 0.0, "cultural": 0.0, "psych": 0.0 },
+"stage_critique": "string",
+"critical_flaws": ["string"],
+"risk_flags": ["string"],
+"confidence_rating": 0.0
+}
+C. Meta-Evaluator / Synthesis Brain Prompt Specification
+This engine module processes all compiled judge summaries, triangulation grids, and risk flags to construct the master analytical report.
+JSON
+{
+"module_id": "synthesis_brain",
+"system_instruction": "You are the executive intelligence synthesis engine. Analyze the outputs of the 3 active judges alongside the calculated Triangulation Matrix. Highlight confirmed zones of consensus, explain root causes of high-spread conflict points, compile calculated risk tiers, and generate a sequence of prioritized actionable next steps.",
+"required_output_format": {
+"executive_summary": "string",
+"consensus_findings": ["string"],
+"conflict_analysis": [{ "dimension": "string", "explanation": "string" }],
+"prioritized_action_plan": [{ "step": "int", "action": "string", "rationale": "string" }]
+}
+}
+8. ElevenLabs Voice Logic Specification
+The system uses ElevenLabs API endpoints to generate custom voice audio that maps directly to the character profile's epistemological framework.
+[Text Segment Generated]
+v
+[Query Backend For Judge Profile]
+v
+[Fetch voice_id &amp; Dynamic Form Parameters]
+v
+[Construct ElevenLabs Payload]
+v
+POST https://api.elevenlabs.io/v1/text-to-speech/{voice_id}
+TTS API Request Body Structure
+JSON
+{
+"text": "Your structural logic contains an unvalidated causal leap between step two and step three. The operational data does not support this progression.",
+"model_id": "eleven_monolingual_v1",
+"voice_settings": {
+"stability": 0.85,
+"similarity_boost": 0.75,
+"style": 0.15,
+"use_speaker_boost": true
+}
+}
+stability: Scaled up for precise judges (judge_structural, judge_evidence) to minimize vocal fluctuation; scaled down for narrative or risk profiles to convey active expression or caution.
+style: Adjusted dynamically to match profile parameters (intonation, cadence).
+9. Frontend User Experience Layout Architecture
+The user interface is engineered to visualize multi-lens structural analysis without unnecessary UI clutter.
+A. Interactive Submission Dashboard
+Displays a paginated master grid tracking all active user entries.
+Each row features a clean metadata readout: Submission Title, Type, Status Indicator, Calculated Risk Tier Badge, and Composite Score Trend Line.
+Primary Call to Action: New Submission Intake Engine.
+B. Triangulation Matrix &amp; Heatmap Grid
+Implements an interactive data table displaying the calculated outputs of the three active judges across evaluated dimensions.
+Rows indicate system dimensions; columns track individual judge scoring outputs.
+The Heatmap Channel: Cells dynamically apply custom status styling depending on the values:
+Agreement Zones (Low Delta) render in clean, muted tones.
+Conflict Zones ($\ge 0.35$ Variance) flash clear alert flags alongside a prominent Drill Deeper button.
+Coverage Gaps (Null Values) show high-contrast missing indicators with an integrated Swap Judge recommendation utility.
+C. Active Pipeline Matrix View
+A multi-column kanban execution panel rendering live progression through the 5 evaluation passes (Clarity $\rightarrow$ Evidence $\rightarrow$ Risk $\rightarrow$ Feasibility $\rightarrow$ Impact).
+As each judge process completes, its specific grid cell fills with the calculated score, actionable micro-critiques, and a localized inline audio player node wired to the ElevenLabs synthesis stream.
+10. Execution Sequence Checklist for Claude Code
+To build out the system incrementally, execute the development sequence in the following order:
+Database Base Layer: Run the Postgres SQL schema migrations creating core relational boundaries.
+Intake API Foundations: Construct the backend model controllers handling entry uploads, claims decomposition, and metadata updates.
+Recommendation Pipeline Engine: Implement the cosine-similarity matrix engine and structural constraints validation for judge selection.
+Core Gauntlet Pipeline: Build the orchestration pipeline loops handling multi-lens sequential prompts and LLM structural responses.
+Triangulation Engine: Wire the mathematical calculations driving agreement discovery, variance flagging, and composite score weightings.
+Dynamic Flow Controllers: Implement the state-preserving state-preservation mutations for Judge Swap and localized Evidence Augmentation.
+Audio Synthesis Architecture: Integrate ElevenLabs API endpoints to map text components into streaming audio records.
+Frontend Interface Compilation: Build out the single-page application views (Dashboard, Matrix Heatmap, Interactive Pipeline panels) connected to the backend API.
+1. Unified Project Layout &amp; System Topology
+gauntlet-engine/
+├── schema.sql                        # Core database migrations
+├── config/
+│   ├── judges_master.json            # Character actor cognitive profiles &amp; IDs
+│   ├── weights_matrix.json           # Dynamic submission-type mapping
+│   └── intent_interpreter_spec.json  # NLU parsing parameters
+├── src/
+│   ├── core/
+│   │   ├── recommendation.go         # Vector matching engine
+│   │   ├── triangulation.go          # Consensus &amp; conflict mathematical layers
+│   │   └── risk_tiering.go           # Algorithmic hazard calculation
+│   ├── pipeline/
+│   │   ├── workflow.go               # 5-Stage evaluation pipeline execution
+│   │   ├── mutations.go              # State-preserving judge swap &amp; evidence loops
+│   │   └── elevenlabs.go             # Voice synthesis client
+│   └── api/
+│       └── routes.go                 # REST endpoints
+└── README.md                         # Operational developer instructions
+2. Complete Database Migration (schema.sql)
+SQL
+-- schema.sql
+-- Core User Account Data
+CREATE TABLE users (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+email VARCHAR(255) UNIQUE NOT NULL,
+role VARCHAR(50) NOT NULL DEFAULT 'user',
+org_id UUID,
+preferences JSONB DEFAULT '{}'::jsonb,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- User Idea Submissions
+CREATE TABLE submissions (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+type VARCHAR(50) NOT NULL, -- 'idea', 'product', 'claim', 'story', 'prototype', 'health_concept', 'research_concept'
+title VARCHAR(255) NOT NULL,
+description TEXT NOT NULL,
+goal_audience TEXT,
+environment TEXT,
+constraints TEXT,
+self_assessment JSONB,
+status VARCHAR(50) NOT NULL DEFAULT 'draft', -- 'draft', 'in_evaluation', 'complete'
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Parsed Structural Elements of a Submission
+CREATE TABLE claims (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+submission_id UUID REFERENCES submissions(id) ON DELETE CASCADE,
+text TEXT NOT NULL,
+type VARCHAR(50),
+strength VARCHAR(50),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Supporting Documentation or References
+CREATE TABLE evidence_items (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+submission_id UUID REFERENCES submissions(id) ON DELETE CASCADE,
+claim_id UUID REFERENCES claims(id) ON DELETE SET NULL,
+source TEXT NOT NULL,
+type VARCHAR(50), -- 'RCT', 'observational', 'citation_text', 'url', 'file_upload'
+relevance VARCHAR(50), -- 'direct', 'indirect', 'weak'
+quality VARCHAR(50), -- 'high', 'medium', 'low'
+notes TEXT,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Master Evaluation Record
+CREATE TABLE evaluation_runs (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+submission_id UUID REFERENCES submissions(id) ON DELETE CASCADE,
+triad UUID[] NOT NULL, -- Array of exactly 3 Judge IDs
+status VARCHAR(50) NOT NULL DEFAULT 'pending', -- 'pending', 'processing', 'conflict_resolution', 'complete'
+model_version VARCHAR(50) NOT NULL,
+orchestration_version VARCHAR(50) NOT NULL,
+risk_score NUMERIC(3, 2),
+risk_tier VARCHAR(50),
+composite_score NUMERIC(3, 2),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+completed_at TIMESTAMP WITH TIME ZONE
+);
+-- Individual Judge Analysis Outputs
+CREATE TABLE judge_evaluations (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+judge_id VARCHAR(50) NOT NULL,
+stage VARCHAR(50) NOT NULL, -- 'clarity', 'evidence', 'risk', 'feasibility', 'impact'
+dimension_scores JSONB NOT NULL, -- Evaluative vector tracking
+raw_output TEXT NOT NULL,
+confidence NUMERIC(3, 2) NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Cross-Analysis Mapping Matrix
+CREATE TABLE triangulations (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+triangulation_matrix JSONB NOT NULL, -- Agreement, conflict, and coverage tracking
+heatmap JSONB NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Risk Architecture Drivers
+CREATE TABLE risk_assessments (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+risk_tier VARCHAR(50) NOT NULL,
+risk_score NUMERIC(3, 2) NOT NULL,
+risk_drivers JSONB NOT NULL, -- dimensionRisk, riskFlags, subDimensionSeverity, conflictPenalty
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Tracking Modality Changes via Action Items
+CREATE TABLE evidence_assessments (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+evidence_status VARCHAR(50) NOT NULL,
+evidence_gaps JSONB NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- ElevenLabs Synthesized Files
+CREATE TABLE audio_clips (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+judge_id VARCHAR(50) NOT NULL,
+type VARCHAR(50) NOT NULL, -- 'micro_comment', 'stage_summary', 'final_summary'
+storage_url TEXT NOT NULL,
+duration INT NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- System Report Archive
+CREATE TABLE reports (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+evaluation_run_id UUID REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+report_object JSONB NOT NULL,
+pdf_url TEXT,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+3. Master Judge Calibration Profile (config/judges_master.json)
+JSON
+{
+"judges": [
+{
+"id": "judge_grey",
+"name": "Grey",
+"lens_label": "Structural Coherence",
+"voice_id": "EXAVITQu4vr4xnSDxMaL",
+"evaluates": ["structure", "viability", "evidence"],
+"strengths": { "analytical": 0.95, "risk_sensitivity": 0.40 },
+"blind_spots": ["Low tolerance for ambiguity"],
+"tone_rules": ["Precise", "Methodical", "Deconstructive"],
+"cadence": { "pace": "measured", "rhythm": "staccato" },
+"timbre": { "texture": "dry", "warmth": 0.30 },
+"intonation": "flat",
+"confidence_curve": "stable"
+},
+{
+"id": "judge_mj",
+"name": "MJ",
+"lens_label": "Practical Viability",
+"voice_id": "IKne3meq5aAsO9vcaUMH",
+"evaluates": ["viability", "structure", "risk"],
+"strengths": { "analytical": 0.85, "risk_sensitivity": 0.65 },
+"blind_spots": ["Overlooks abstract value patterns"],
+"tone_rules": ["Pragmatic", "Direct", "Friction-focused"],
+"cadence": { "pace": "brisk", "rhythm": "direct" },
+"timbre": { "texture": "crisp", "warmth": 0.45 },
+"intonation": "downward",
+"confidence_curve": "linear"
+},
+{
+"id": "judge_silas",
+"name": "Silas",
+"lens_label": "Ethical &amp; Risk",
+"voice_id": "jBpfwcrSjaorv90N799y",
+"evaluates": ["risk", "cultural", "psych"],
+"strengths": { "analytical": 0.90, "risk_sensitivity": 0.95 },
+"blind_spots": ["Hyper-sensitive to low-probability liabilities"],
+"tone_rules": ["Skeptical", "Inquisitive", "Precautionary"],
+"cadence": { "pace": "slow", "rhythm": "deliberate" },
+"timbre": { "texture": "deep", "warmth": 0.50 },
+"intonation": "wavering",
+"confidence_curve": "cautious"
+},
+{
+"id": "judge_jaque",
+"name": "Jaque",
+"lens_label": "Narrative &amp; Identity",
+"voice_id": "LcfcDJNUP1GQ99T8C3yX",
+"evaluates": ["narrative", "psych"],
+"strengths": { "analytical": 0.75, "risk_sensitivity": 0.35 },
+"blind_spots": ["Overweights narrative symmetry over operational numbers"],
+"tone_rules": ["Expressive", "Analytical", "Resonance-driven"],
+"cadence": { "pace": "dynamic", "rhythm": "flowing" },
+"timbre": { "texture": "smooth", "warmth": 0.75 },
+"intonation": "melodic",
+"confidence_curve": "ascendant"
+},
+{
+"id": "judge_amara",
+"name": "Amara",
+"lens_label": "Psychological Impact",
+"voice_id": "piTKgcLEGmPEeZs6PaFX",
+"evaluates": ["psych", "narrative"],
+"strengths": { "analytical": 0.88, "risk_sensitivity": 0.60 },
+"blind_spots": ["Assumes rational user behavioral compliance"],
+"tone_rules": ["Observant", "Empathetic", "Diagnostic"],
+"cadence": { "pace": "moderate", "rhythm": "even" },
+"timbre": { "texture": "warm", "warmth": 0.80 },
+"intonation": "balanced",
+"confidence_curve": "parabolic"
+},
+{
+"id": "judge_cambodian_nurse",
+"name": "Cambodian Nurse",
+"lens_label": "Safety &amp; Cultural Context",
+"voice_id": "TxGEqn7ZgAMmIatYjII8",
+"evaluates": ["cultural", "clinical", "risk"],
+"strengths": { "analytical": 0.82, "risk_sensitivity": 0.80 },
+"blind_spots": ["Over-indexes on localized group paradigms"],
+"tone_rules": ["Measured", "Rooted", "Protective"],
+"cadence": { "pace": "calm", "rhythm": "measured" },
+"timbre": { "texture": "soft", "warmth": 0.65 },
+"intonation": "stable",
+"confidence_curve": "plateau"
+},
+{
+"id": "judge_nutritionist",
+"name": "Nutritionist",
+"lens_label": "Evidence &amp; Mechanism",
+"voice_id": "VR6AeaXN60t9N0Y9D70U",
+"evaluates": ["evidence", "structure", "clinical"],
+"strengths": { "analytical": 0.98, "risk_sensitivity": 0.50 },
+"blind_spots": ["Dismisses highly viable innovative heuristics lacking empirical tracking"],
+"tone_rules": ["Empirical", "Rigorous", "Data-constrained"],
+"cadence": { "pace": "rapid", "rhythm": "dense" },
+"timbre": { "texture": "sharp", "warmth": 0.20 },
+"intonation": "inflexible",
+"confidence_curve": "stepwise"
+},
+{
+"id": "judge_doctor",
+"name": "Doctor",
+"lens_label": "Clinical Risk",
+"voice_id": "pNInz6obpgmo5Idw7w06",
+"evaluates": ["clinical", "evidence", "risk"],
+"strengths": { "analytical": 0.94, "risk_sensitivity": 0.85 },
+"blind_spots": ["Strictly adheres to conventional institutional paradigms"],
+"tone_rules": ["Authoritative", "Objective", "Risk-mitigating"],
+"cadence": { "pace": "deliberate", "rhythm": "precise" },
+"timbre": { "texture": "clear", "warmth": 0.40 },
+"intonation": "authoritative",
+"confidence_curve": "asymptotic"
+}
+]
+}
+4. Back-End API Routing Architecture (src/api/routes.go)
+Go
+package api
+import "github.com/gin-gonic/gin"
+func RegisterRoutes(router *gin.Engine) {
+// Session boundaries
+auth := router.Group("/auth")
+{
+auth.POST("/login", LoginHandler)
+auth.GET("/me", MeHandler)
+}
+// Intake interface controllers
+submissions := router.Group("/submissions")
+{
+submissions.POST("/", CreateSubmissionHandler)
+submissions.GET("/", ListSubmissionsHandler)
+submissions.GET("/:id", GetSubmissionHandler)
+submissions.PATCH("/:id", UpdateSubmissionHandler)
+submissions.POST("/:id/claims", ExtractClaimsHandler)
+submissions.POST("/:id/evidence", AttachEvidenceHandler)
+submissions.POST("/:id/recommend_judges", RecommendJudgesHandler)
+}
+// Pipeline execution loops
+runs := router.Group("/evaluation_runs")
+{
+runs.POST("/submissions/:id/evaluate", ExecuteEvaluationHandler)
+runs.GET("/:id", PollRunStatusHandler)
+runs.POST("/:id/conflicts/:dimension/drill_deeper", ActivateDrillDeeperHandler)
+runs.POST("/:id/conflicts/:dimension/swap_judge", ExecuteJudgeSwapHandler)
+runs.POST("/:id/conflicts/:dimension/rerun_stage", RerunStageHandler)
+runs.POST("/:id/evidence_gaps", FetchEvidenceGapsHandler)
+runs.POST("/:id/evidence_augment", SupplementEvidenceHandler)
+}
+// Documentation compiling
+reports := router.Group("/reports")
+{
+reports.GET("/evaluation_runs/:id/report", GetStructuredReportHandler)
+reports.GET("/evaluation_runs/:id/report.pdf", ExportPDFReportHandler)
+}
+// ElevenLabs pipeline delivery
+audio := router.Group("/audio")
+{
+audio.GET("/evaluation_runs/:id/audio_manifest", GetAudioManifestHandler)
+audio.GET("/:audio_id", StreamAudioClipHandler)
+}
+}
+5. Algorithmic Mathematical Formulations
+A. Judge Selection Matrix Recommendation
+When a user finishes input ingestion, the platform maps the submission contents into a target requirement vector:
+R=[structure,viability,risk,narrative,evidence,clinical,cultural,psych]
+The engine calculates the cosine similarity match score against each judge's primary lens profile (Lj):
+matchj​=∥R∥∥Lj​∥R⋅Lj​​
+All available judges are combined into arrays of exactly 3 candidates. Triads containing duplicate lenses or matching blind spots are flagged as invalid.
+Every functional triad is scored and sorted according to the optimization equation:
+triadScore=0.35⋅COV+0.25⋅COMP+0.20⋅TYPE+0.10⋅RISK+0.10⋅EVID
+Coverage (COV): The sum of active elements inside R explicitly covered by the candidate triad.
+Complementarity (COMP): The spatial distance tracking divergence among chosen competency vectors, preventing analytical groupthink.
+Type Weighting (TYPE): Contextual modifier derived from submission classifications (e.g., a Health Concept scales up base weights for judge_doctor and judge_nutritionist).
+Risk/Evidence Sensitivity multipliers (RISK, EVID): Scalers that amplify analytical precision when raw inputs contain validation deficiencies or extreme liability signals.
+B. The 3-Judge Dimension Triangulation Pipeline
+During pipeline execution, each judge outputs an isolated 5-dimensional evaluation vector tracking normalized floats from 0 to 1. The engine executes a cell-by-cell matrix cross-comparison:
+Agreement Zone: Calculated where the value delta between all three judges across an active dimension sits within a tight bound of ±0.15. This defines high-confidence system consensus.
+Conflict Zone: Triggered when the mathematical spread between the highest and lowest scores across a single dimension matches or exceeds a variance threshold of ≥0.35. This automatically flags system blind spot exposures.
+Dynamic Triad Weighting Composite:
+S=j=1∑3​(finalWeightj​⋅judge_vectorj​)
+finalWeightj​=∑(finalWeights)baseWeightj​×relevanceFactorj​×userSelectionFactorj​​
+C. Risk Tier Aggregation Matrix
+The system outputs an explicit risk classification (Low, Moderate, High, Critical) computed through an additive penalty scoring framework:
+Rfinal​=min(1.0,D+F+S+C+W)
+Dimension Risk (D): The baseline weighted mean computed across all threat-facing vectors: Risk, Clinical, Cultural, and Psychological.
+Risk Flag Multiplier (F): A severity scaler. Add +0.15 for each unique instance where an individual judge returns a value &gt;0.7 inside a threat dimension, and an additional +0.05 if multiple judges flag the identical dimension.
+Sub-Dimension Severity (S): The sum of the top 3 highest calculated sub-dimension risk ratings (Low: 0.05, Moderate: 0.10, High: 0.20, Critical: 0.30).
+Conflict Penalty (C): Captures analytical uncertainty as structural risk. Where a variance or split exists on a key safety dimension, penalties are injected into the model calculations:
+Mild Conflict (0.35 to 0.45 Spread): +0.05
+Moderate Conflict (0.45 to 0.55 Spread): +0.10
+Severe Conflict (≥0.55 Spread): +0.20
+Contextual Type Modifier (W): Fixed regulatory risk baseline weights adjusted by submission category parameters: Health Concept: +0.20; Research Concept: +0.15; Claim: +0.15; Product/Prototype: +0.10; Idea: +0.05; Story: +0.03.
+6. Pipeline Workflow Routing Heuristics
+A. The 5-Stage Multi-Lens Evaluation Pass
+Submissions cycle through five sequential passes. Judges review each pass strictly filtered through their functional analytical lens:
+DOCX
+[Submission Ingestion]
+v
+STAGE 1: CLARITY      --&gt; Grey (Structural) | Jaque (Narrative) | Amara (Psych) | Nutritionist (Mechanistic)
+v
+STAGE 2: EVIDENCE     --&gt; Nutritionist (Strength) | Doctor (Clinical) | Nurse (Safety) | Grey (Logical)
+v
+STAGE 3: RISK         --&gt; Silas (Ethical) | Doctor (Clinical) | Nurse (Cultural) | MJ (Operational)
+v
+STAGE 4: FEASIBILITY  --&gt; MJ (Viability) | Forager (Practical) | Grey (Structural)
+v
+STAGE 5: IMPACT       --&gt; Amara (Psychological) | Jaque (Narrative) | Silas (Societal)
+v
+[Triangulation Synthesis]
+B. State-Preserving Judge Swap Subsystem
+If a user replaces an active judge via the matrix console to resolve a conflict or cover a gap, the controller locks unaffected records to prevent full-pipeline reprocessing overhead:
+DOCX
+State Isolation: Freeze all historical evaluation inputs, triangulation rows, and generated heatmap objects from the remaining two active judges.
+DOCX
+Purge Targets: Erase the target database rows and active storage objects mapped exclusively to the outgoing judge code.
+Targeted Pipeline Execution: Fire the 5-stage evaluation workflow only for the newly initialized incoming judge profile to generate its isolated score vector.
+DOCX
+Partial Re-Triangulation: Recompute the triangulation matrix, update cell spreads, adjust dynamic weight configurations, and refresh the composite risk boundaries using the new combined triad values.
+DOCX
+Vocal Adaptation: Trigger async ElevenLabs API processes to synthesize fresh commentary matching the incoming judge’s identity specs.
+DOCX
+C. Evidence Augmentation Loop
+Triggers automatically if the evidence score falls &lt;0.45, or if judge_evidence/judge_clinical throws an explicit validation error.
+[Engine Detects Evidence Gap] -&gt; [Lock State &amp; Map to Claim ID]
+v
+[Re-evaluate Specific Lenses] &lt;- [User Uploads Source Documentation] &lt;- [Render Target UI Prompt Node]
+v
+[Update Matrix Heatmap]
+7. Core AI Orchestration Prompts
+A. User Intent Interpreter Spec
+JSON
+{
+"module_id": "intent_interpreter",
+"system_instruction": "You are the platform's data parsing intake engine. Convert raw user descriptions into validated structural objects. Segment explicit operational claims, break out unverified dependencies, isolate targeted customer profiles, and catalogue explicitly referenced evidence sources.",
+"required_output_format": {
+"structured_summary": "string",
+"claims": [{ "id": "string", "text": "string", "type": "string" }],
+"assumptions": ["string"],
+"constraints": ["string"],
+"evidence_discovered": [{ "claim_id": "string", "source_text": "string", "type": "string" }]
+}
+}
+B. Character Actor Evaluator Execution Frame
+Context Module: Operating as Character Actor {judge_name} utilizing the {lens_label} Lens.
+Execution Guardrails: Adhere strictly to the defined vocal delivery criteria: {tone_rules}. Maintain a {cadence} delivery layout with a {timbre} sonic footprint.
+Task Directives:
+Analyze the submitted idea payload against evaluation block Stage: {stage_name}.
+Deliver structural critiques focused entirely on your specialized competencies: {evaluates}. Do not comment on external dimensions outside your assigned profile bounds.
+Challenge basic assumptions cleanly. Avoid soft introductory buffers or conversational cushioning. Expose analytical vulnerabilities, logic cracks, or data contradictions directly.
+Your complete output payload must match this structural JSON design schema without deviation:
+{
+"dimension_scores": { "structure": 0.0, "viability": 0.0, "risk": 0.0, "narrative": 0.0, "evidence": 0.0, "clinical": 0.0, "cultural": 0.0, "psych": 0.0 },
+"stage_critique": "string",
+"critical_flaws": ["string"],
+"risk_flags": ["string"],
+"confidence_rating": 0.0
+}
+C. Synthesis Brain Specification
+JSON
+{
+"module_id": "synthesis_brain",
+"system_instruction": "You are the primary strategic executive intelligence engine. Review the complete array of compiled judge logs, multi-dimensional score maps, and calculated triangulation layers. Isolate confirmed validation zones, break down the root causes of high-spread user blind spot conflicts, explain risk aggregation paths, and compile a sequence of prioritized actionable execution tasks. Stay aligned with judge conclusions without overriding raw dimensional inputs.",
+"required_output_format": {
+"executive_summary": "string",
+"consensus_findings": ["string"],
+"conflict_analysis": [{ "dimension": "string", "explanation": "string" }],
+"prioritized_action_plan": [{ "step": "int", "action": "string", "rationale": "string" }]
+}
+}
+8. ElevenLabs Voice API Execution
+Audio generation maps directly to character definitions to enforce sensory differentiation across active lenses.
+DOCX
+Go
+// StreamAudioComponent targets the ElevenLabs V1 API endpoint
+package pipeline
+import (
+"bytes"
+"encoding/json"
+"net/http"
+)
+type VoiceSettings struct {
+Stability       float64 `json:"stability"`
+SimilarityBoost float64 `json:"similarity_boost"`
+Style           float64 `json:"style"`
+UseSpeakerBoost bool    `json:"use_speaker_boost"`
+}
+type ElevenLabsPayload struct {
+Text          string        `json:"text"`
+ModelID       string        `json:"model_id"`
+VoiceSettings VoiceSettings `json:"voice_settings"`
+}
+func SynthesizeJudgeVoice(voiceID string, script string, stability float64, style float64) (*http.Response, error) {
+url := "https://api.elevenlabs.io/v1/text-to-speech/" + voiceID
+payload := ElevenLabsPayload{
+Text:    script,
+ModelID: "eleven_monolingual_v1",
+VoiceSettings: VoiceSettings{
+Stability:       stability,     // High (0.85) for empirical lenses, moderate for narrative
+SimilarityBoost: 0.75,
+Style:           style,
+UseSpeakerBoost: true,
+},
+}
+body, _ := json.Marshal(payload)
+req, _ := http.NewRequest("POST", url, bytes.NewBuffer(body))
+req.Header.Set("Content-Type", "application/json")
+req.Header.Set("xi-api-key", "${ELEVENLABS_API_KEY}")
+client := &amp;http.Client{}
+return client.Do(req)
+}
+9. Target Interface Component Mappings
+A. Central Intake &amp; Tracking Console
+Displays a production-level data grid tracking historical submission artifacts.
+Exposes summary columns: Submission Title, Type Metadata, Evaluation Progress Bar, Risk Tier Badge Status, and Composite Score Index.
+B. Interactive Triangulation Grid &amp; Heatmap
+Renders an analytical data dashboard showing active judge outputs stacked alongside evaluated platform dimensions.
+Heatmap Channel Thresholds:
+Low-Spread Cells (Delta ≤0.15): Muted, neutral background tones highlighting high-confidence system consensus.
+DOCX
+High-Spread Conflict Cells (Delta ≥0.35): Visual alert badges displayed instantly with a prominent Drill Deeper interactive diagnostic trigger.
+DOCX+ 1
+Null Gaps: High-contrast warning layouts featuring an inline Swap Judge recommendation utility to adjust active parameters.
+DOCX
+C. Live Kanban Pipeline Status Matrix
+Tracks the live progression of evaluations across the five functional stages (Clarity → Evidence → Risk → Feasibility → Impact).
+DOCX
+As async evaluation tasks finalize, system cells render local dimension tracking metrics, text micro-critiques, and an embedded custom audio playback widget streaming corresponding ElevenLabs audio objects.
+10. Developer Execution Protocol for Claude Code
+Execute initialization commands within the environment sequentially using this roadmap to ensure stable builds:
+Database Bootstrap: Execute migrations via schema.sql to compile database tables, indexes, and primary relations.
+Metadata Setup: Seed config/judges_master.json parameters to establish baseline character profiles and vector paths.
+Core Algorithmic Engines: Compile the Go source modules to build out the vector recommendation mechanics, multi-lens triangulation logic, and calculated risk evaluation matrices.
+State Orchestration Components: Program mutation hooks ensuring clean performance tracking across Judge Swap execution blocks and targeted Evidence Augmentation flows.
+Audio Pipeline Delivery: Hook up the external ElevenLabs client infrastructure to map text blocks into playable binary media files.
+Interface Aggregation: Build out front-end SPA dashboard components, linking matrix consoles, kanban pipelines, and audio playheads directly to API endpoints.
+Core Architectural Realism Engine: Mirroring The Dose for The Gauntlet
+To capture the living, cinematic realism of The Dose—where characters feel like distinct human specialists with a history, a lane, and a voice—Claude Code must move beyond treating judges as static system prompts or simple task-based entities. In The Dose, the magic comes from cast members acting like real experts sitting at a desk, engaging in back-and-forth multi-turn conversations, and referencing deep contextual knowledge.
+For The Gauntlet, mirroring this means making the AI panel feel like high-stakes character actors who interact not just with the user, but with each other, while completely bypassing the technical latency and timeout friction experienced during The Dose development.
+1. Architectural Upgrades for Character Realism
+To make the panel feel alive and interactive, Claude Code should implement three advanced orchestration layers:
+A. Cross-Judge Dialogue &amp; Conversational Interaction Loops
+Instead of three isolated critiques appearing sequentially on a dashboard, the judges should analyze the submission, identify where their evaluation metrics conflict, and generate a dynamic, conversational script.
+The Interaction Pattern: If Grey gives an idea a high structural score but MJ highlights massive operational friction, the system triggers a cross-dialogue prompt module.
+The Output: The user reads a conversationally formatted debate before diving into the cold metrics (e.g., “Grey, you're looking at this purely on paper. In the field, user adoption drops to zero under this constraint.”). This mirrors the multi-specialist desk feel of your existing applications.
+B. Memory Retention &amp; Relational Trackers
+To make interactions lifelike, judges must possess persistent situational memory across a single user session or evaluation run.
+Intra-Run Memory: If a user triggers the Evidence Augmentation Loop to address a gap flagged by the Nutritionist, when the Nutritionist re-evaluates the submission, the new text must explicitly acknowledge the update (e.g., “You provided the observational data I asked for. Let's look at how this changes the mechanism balance...”).
+Cross-Stage Referencing: Stage 5 (Impact) judges should read and reference structural concerns raised back in Stage 2 (Evidence) to create an unbroken narrative thread.
+C. Behavioral Dynamic Variance Controls
+To prevent responses from feeling like recycled boilerplate AI templates, Claude Code can map emotional and tone multipliers directly into the LLM system parameters based on the submission's calculated scores:
+The Realism Matrix: If an idea triggers a Critical Risk Tier, the Doctor character actor should shift from an "objective, analytical" profile to a "highly direct, urgent, precautionary" communication state, automatically tightening sentence lengths and scaling down conversation fillers.
+2. Solving the ElevenLabs Timeout and Latency Friction
+The latency and timeout issues during the development of The Dose occurred because the system attempted to generate long blocks of voice text in a single, blocking HTTP request. If ElevenLabs took longer than 10-15 seconds to process a dense script, the web client or server gateway aborted the connection.
+To prevent this in The Gauntlet, Claude Code must implement Asynchronous Decoupled Processing with Event-Driven Delivery.
++--------------------------------------------------------------------------+
+|                     USER CLICKS "RUN THE GAUNTLET"                      |
++------------------------------------+-------------------------------------+
+|
+v
++--------------------------------------------------------------------------+
+|                  EXECUTE 5-STAGE PIPELINE (FAST TEXT)                     |
+|  LLM generates structural text matrices, JSON scores, and text scripts.  |
++------------------------------------+-------------------------------------+
+|
+v
++--------------------------------------------------------------------------+
+|                 STREAM CHRONOLOGICAL TEXT RUN TO FRONTEND                |
+|  User instantly reads text evaluations. No waiting for audio generation. |
++------------------------------------+-------------------------------------+
+|
+v
++--------------------------------------------------------------------------+
+|               ASYNC WORKER QUEUE TRIPPED (BACKGROUND POOL)                |
+|  System breaks scripts into small chunks and passes them to ElevenLabs.  |
++------------------------------------+-------------------------------------+
+|
+v
++--------------------------------------------------------------------------+
+|                     AUDIO CACHED IN OBJECT STORAGE                       |
+|   Files are written to storage disks; URLs are logged to database rows.   |
++------------------------------------+-------------------------------------+
+|
+v
++--------------------------------------------------------------------------+
+|                     WEBSOCKETS FLASH PLAYER UI NODES                     |
+|  Audio play buttons transition from "Generating..." to active state.     |
++--------------------------------------------------------------------------+
+Code Implementation Strategy for Claude Code (src/pipeline/elevenlabs.go)
+To achieve zero-timeout audio streaming, force Claude Code to chunk scripts dynamically and pipe responses immediately to storage handlers using non-blocking workers:
+Go
+package pipeline
+import (
+"context"
+"io"
+"net/http"
+"strings"
+"sync"
+)
+// DispatchAudioGeneration handles non-blocking chunked voice synthesis
+func DispatchAudioGeneration(ctx context.Context, runID string, judgeID string, fullScript string) {
+// Step 1: Split script by sentence structures to keep ElevenLabs payload small and swift
+chunks := SplitScriptIntoSentences(fullScript, 2) // Max 2 sentences per API request
+var wg sync.WaitGroup
+for idx, chunk := range chunks {
+wg.Add(1)
+go func(index int, textChunk string) {
+defer wg.Done()
+// Call the client execution module (as mapped in the primary specification)
+resp, err := CallElevenLabsAPI(judgeID, textChunk)
+if err != nil {
+LogPipelineError(runID, "ElevenLabs Chunk Generation Failed", err)
+return
+}
+defer resp.Body.Close()
+// Step 2: Stream chunked binary bytes directly to your object file storage destination
+storageURL, _ := StreamBinaryToStorage(runID, judgeID, index, resp.Body)
+// Step 3: Write partial segments directly into database rows
+SaveAudioClipRow(runID, judgeID, index, storageURL)
+// Step 4: Emit a WebSocket event to live-update the corresponding web UI player node
+EmitWebSocketAudioReady(runID, judgeID, index, storageURL)
+}(idx, chunk)
+}
+}
+func SplitScriptIntoSentences(text string, maxSentences int) []string {
+// Splits text logically by punctuation marks without corrupting context flows
+sentences := strings.SplitAfter(text, ". ")
+var chunks []string
+var currentChunk []string
+for _, sentence := range sentences {
+currentChunk = append(currentChunk, sentence)
+if len(currentChunk) &gt;= maxSentences {
+chunks = append(chunks, strings.Join(currentChunk, " "))
+currentChunk = nil
+}
+}
+if len(currentChunk) &gt; 0 {
+chunks = append(chunks, strings.Join(currentChunk, " "))
+}
+return chunks
+}
+3. Execution Prompts to Pass directly to Claude Code
+When initializing the build workspace within Claude Code, present the unified system specification alongside this execution sequence block to configure the character actors and stability loops correctly:
+"Using the System Specification alongside the character mechanics derived from our existing portfolio structures, execute these precise setup commands:"
+Bash
+1. "Review the character actor definitions inside 'config/judges_master.json'. Ensure their tone_rules, communication cadences, and blind spots are designed to act like deep human specialists with distinct backstories, rather than functional system prompts."
+2. "Build the cross-judge dialogue loop module within 'src/core/triangulation.go' to allow judges to directly address and debate conflicting dimension evaluation scores before exporting the final data."
+3. "Implement the asynchronous audio dispatch processing mechanism inside 'src/pipeline/elevenlabs.go' to chunk text strings dynamically, eliminating blocking execution loops and preventing network timeouts."
+4. "Wire the database storage targets so that partial binary chunks stream smoothly to the storage layout, updating live interface components immediately via WebSockets as soon as processing concludes."
