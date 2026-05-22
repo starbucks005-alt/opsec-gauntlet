@@ -177,7 +177,7 @@ Devon is the only one on the panel who treats her like a person first. She has n
 **Namespace convention:**
 - Functions: `tg-` prefix (tg-eval-init.js, tg-eval-background.js)
 - Database tables: `tg_` prefix (tg_submissions, tg_evaluations, tg_judge_outputs)
-- HTML files: `the-gauntlet.html` pattern
+- HTML files: The Gauntlet root page is `index.html` (renamed from `the-gauntlet.html`). Future Gauntlet sub-pages use the `tg-` prefix.
 
 **Judge config:** Each judge entry in `config/judges_master.json` must include:
 - id, name, domain, lens label
