@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +16,16 @@
 <meta name="twitter:title" content="The Gauntlet · Diagnostic Critique Engine">
 <meta name="twitter:description" content="Nine expert AI judges. Eight dimensions of analysis. Math-based scoring. Your idea gets a path, not a verdict.">
 <meta name="twitter:image" content="https://the-gauntlet.netlify.app/the-gauntlet-logo.png">
-<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<!-- Theme is locked to dark on this page; tokens.css base palette applies. -->
 <link rel="stylesheet" href="assets/tokens.css">
-<script src="assets/theme.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
-    --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#161310; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
     --velvet:#5a1a1a; --velvet-deep:#3a0f0f;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -64,13 +64,15 @@
   /* ── Selection counter bar ───────────────────────────────────────────────── */
   .tg-counter-bar{
     display:flex;align-items:center;justify-content:space-between;
-    border:1px solid var(--rule);background:rgba(255,255,255,0.02);
-    padding:1rem 1.5rem;margin-bottom:2rem;
-    font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;
-    text-transform:uppercase;color:var(--text-dim);
+    border:1px solid var(--gold);background:rgba(0,0,0,0.6);
+    padding:1.3rem 1.9rem;margin-bottom:2.5rem;
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold-light);
+    box-shadow:0 0 28px -10px rgba(212,170,74,0.35),
+               inset 0 1px 0 rgba(212,170,74,0.15);
   }
   .tg-counter-num{
-    color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1.4rem;
+    color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1.7rem;
     font-weight:700;letter-spacing:0;
   }
   .tg-counter-num .pick{color:var(--gold);}
@@ -82,21 +84,66 @@
   }
   .hs-square{
     position:relative;
-    border:1px solid var(--rule);background:rgba(255,255,255,0.02);
+    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
     cursor:pointer;overflow:hidden;
     display:flex;flex-direction:column;
-    transition:border-color 0.2s,background 0.2s,opacity 0.6s,transform 0.6s;
+    transition:border-color 0.25s,background 0.25s,box-shadow 0.3s,
+               transform 0.8s cubic-bezier(0.4,0,0.2,1),
+               opacity 0.8s,filter 0.8s;
   }
-  .hs-square:hover{border-color:var(--gold-light);background:rgba(184,146,42,0.05);}
+
+  /* Recommended squares carry a subtle gold aura that pulses while idle. */
+  .hs-square.has-rec{
+    animation:tg-rec-aura 3.2s ease-in-out infinite;
+  }
+  @keyframes tg-rec-aura{
+    0%, 100% { box-shadow:0 0 0 0 rgba(212,170,74,0); }
+    50%      { box-shadow:0 0 24px 0 rgba(212,170,74,0.28); }
+  }
+
+  /* Hover — dramatic warm lighting. Suppressed for audience and during reveal. */
+  .hs-square:hover:not(.is-audience):not(.is-spotlight){
+    animation:none;
+    border-color:var(--gold-light);
+    background:rgba(184,146,42,0.07);
+    box-shadow:0 0 0 1px rgba(212,170,74,0.5),
+               0 0 32px -2px rgba(212,170,74,0.48);
+    transform:translateY(-3px);
+  }
+  .hs-square:hover:not(.is-audience):not(.is-spotlight) .hs-portrait{
+    filter:brightness(1.12);
+    transition:filter 0.25s ease-out;
+  }
+
+  /* Selected during pick phase (before triad is locked). */
   .hs-square.is-selected{
-    border-color:var(--gold);background:rgba(184,146,42,0.10);
-    box-shadow:inset 0 0 0 1px var(--gold);
+    animation:none;
+    border-color:var(--gold);background:rgba(184,146,42,0.12);
+    box-shadow:inset 0 0 0 2px var(--gold),
+               0 0 36px -4px rgba(212,170,74,0.50);
   }
-  .hs-square.is-dimmed{
-    opacity:0.18;pointer-events:none;transform:scale(0.95);
+  .hs-square.is-selected .hs-name{color:var(--gold-light);}
+
+  /* Spotlight — the three chosen judges after triad lock. Fully lit. */
+  .hs-square.is-spotlight{
+    animation:none;
+    border-color:var(--gold);background:rgba(184,146,42,0.14);
+    transform:scale(1.04);
+    box-shadow:inset 0 0 0 2px var(--gold),
+               0 0 56px -2px rgba(212,170,74,0.55),
+               0 12px 36px -8px rgba(0,0,0,0.7);
+    z-index:2;
   }
-  .hs-square.is-moving{
-    opacity:0;transform:translateY(80px) scale(0.85);pointer-events:none;
+  .hs-square.is-spotlight .hs-portrait{filter:brightness(1.08) contrast(1.04);}
+
+  /* Audience — the six unchosen. Recede, desaturate, still visible, watching. */
+  .hs-square.is-audience{
+    animation:none;
+    opacity:0.4;transform:scale(0.92);
+    filter:saturate(0.35) brightness(0.78);
+    pointer-events:none;
+    border-color:rgba(184,146,42,0.18);
+    box-shadow:none;
   }
 
   /* Portrait area with blink */
@@ -152,7 +199,6 @@
     font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
     color:var(--cream);line-height:1.2;
   }
-  .hs-square.is-selected .hs-name{color:var(--gold-light);}
   .hs-domain{
     font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--text-dim);line-height:1.5;
@@ -266,23 +312,36 @@
 
   .tg-panel{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;}
   .tg-panel-judge{
-    border:1px solid var(--gold);background:rgba(184,146,42,0.06);
-    padding:1.3rem 1.5rem;min-width:200px;max-width:240px;
-    transform:translateY(20px);opacity:0;
-    transition:transform 0.7s ease-out,opacity 0.7s ease-out;
+    border:2px solid var(--gold);
+    background:linear-gradient(180deg,rgba(184,146,42,0.14) 0%,rgba(184,146,42,0.04) 100%);
+    width:220px;overflow:hidden;
+    box-shadow:0 0 56px -6px rgba(212,170,74,0.55),
+               0 18px 36px -10px rgba(0,0,0,0.75);
+    transform:translateY(30px);opacity:0;
+    transition:transform 0.8s ease-out,opacity 0.8s ease-out;
   }
   .tg-panel-judge:nth-child(1){transition-delay:1.3s;}
   .tg-panel-judge:nth-child(2){transition-delay:1.5s;}
   .tg-panel-judge:nth-child(3){transition-delay:1.7s;}
   .tg-stage.is-revealing .tg-panel-judge{transform:translateY(0);opacity:1;}
 
+  .tg-panel-portrait{
+    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
+    border-bottom:1px solid var(--gold);
+  }
+  .tg-panel-portrait img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;
+    filter:brightness(1.05) contrast(1.03);
+  }
+  .tg-panel-info{padding:0.9rem 1rem 1.1rem;text-align:center;}
   .tg-panel-name{
     font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
     color:var(--gold-light);margin-bottom:0.3rem;
   }
   .tg-panel-domain{
     font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;
-    text-transform:uppercase;color:var(--text-dim);
+    text-transform:uppercase;color:var(--text-dim);line-height:1.4;
   }
 
   .tg-stage-actions{
@@ -306,7 +365,9 @@
     .tg-modal{padding:1.5rem;}
     .tg-modal-name{font-size:1.5rem;}
     .tg-panel{gap:1rem;}
-    .tg-panel-judge{min-width:140px;padding:1rem;}
+    .tg-panel-judge{width:150px;}
+    .tg-panel-info{padding:0.7rem 0.7rem 0.9rem;}
+    .tg-panel-name{font-size:0.95rem;}
   }
 </style>
 </head>
@@ -445,6 +506,7 @@
       const sq = document.createElement('div');
       sq.className = 'hs-square';
       const isRec = HARDCODED_RECOMMENDED.includes(judge.id);
+      if (isRec) sq.classList.add('has-rec');
       sq.dataset.judgeId = judge.id;
 
       const imgName = imageFirstName(judge.name);
@@ -560,26 +622,35 @@
   function lockAndReveal(){
     state.locked = true;
 
-    // Phase 1: dim unselected, lift selected
+    // Phase 1: the three chosen become spotlit, the six unchosen become audience.
+    // Nobody disappears. Audience recedes, desaturates, stays visible, watches.
     grid.querySelectorAll('.hs-square').forEach(sq => {
       const id = sq.dataset.judgeId;
+      sq.classList.remove('is-selected');
       if (state.selected.has(id)) {
-        sq.classList.add('is-moving');
+        sq.classList.add('is-spotlight');
       } else {
-        sq.classList.add('is-dimmed');
+        sq.classList.add('is-audience');
       }
     });
 
-    // Phase 2: populate stage panel
+    // Phase 2: populate stage panel — larger lit cards with portraits.
     panel.innerHTML = '';
     state.selected.forEach(id => {
       const j = state.judges.find(x => x.id === id);
       if (!j) return;
+      const imgName = imageFirstName(j.name);
+      const openSrc = 'Judges/' + imgName + '_eyes_open.jpg';
       const card = document.createElement('div');
       card.className = 'tg-panel-judge';
       card.innerHTML = `
-        <div class="tg-panel-name">${escapeHtml(j.name)}</div>
-        <div class="tg-panel-domain">${escapeHtml(j.domain)}</div>
+        <div class="tg-panel-portrait">
+          <img src="${openSrc}" alt="${escapeHtml(j.name)}">
+        </div>
+        <div class="tg-panel-info">
+          <div class="tg-panel-name">${escapeHtml(j.name)}</div>
+          <div class="tg-panel-domain">${escapeHtml(j.domain)}</div>
+        </div>
       `;
       panel.appendChild(card);
     });
@@ -599,7 +670,7 @@
     stage.setAttribute('aria-hidden', 'true');
     panel.innerHTML = '';
     grid.querySelectorAll('.hs-square').forEach(sq => {
-      sq.classList.remove('is-selected','is-dimmed','is-moving');
+      sq.classList.remove('is-selected','is-spotlight','is-audience');
     });
     counter.textContent = '0';
     window.scrollTo({ top:0, behavior:'smooth' });
