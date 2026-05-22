@@ -188,7 +188,7 @@
       ],
       "inter_judge_dynamics": [
         {
-          "with": "astrid_cruz",
+          "with": "astrid_lund",
           "note": "His upbringing surfaces. Astrid catches every single instance. She does not let it pass. He goes quiet because somewhere underneath he knows she is right."
         }
       ],
@@ -197,8 +197,8 @@
     },
 
     {
-      "id": "astrid_cruz",
-      "name": "Astrid Cruz",
+      "id": "astrid_lund",
+      "name": "Astrid Lund",
       "domain": "Law & Intellectual Property",
       "lens": "Legal exposure, IP protection, compliance gaps",
       "background": "IP and startup attorney. 20 years at the intersection of innovation and litigation. Has seen every liability exposure before you have.",
@@ -280,7 +280,7 @@
       ],
       "inter_judge_dynamics": [
         {
-          "with": "astrid_cruz",
+          "with": "astrid_lund",
           "note": "Intrigued by Astrid in a way he has not examined closely. She has noticed. Neither has decided what to do about it."
         }
       ],
