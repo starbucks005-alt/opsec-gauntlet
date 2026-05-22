@@ -65,10 +65,10 @@
     margin-bottom:3rem;
   }
   .hs-square{
-    position:relative;aspect-ratio:1/1;
+    position:relative;
     border:1px solid var(--rule);background:rgba(255,255,255,0.02);
-    padding:1.3rem;cursor:pointer;
-    display:flex;flex-direction:column;justify-content:space-between;
+    cursor:pointer;overflow:hidden;
+    display:flex;flex-direction:column;
     transition:border-color 0.2s,background 0.2s,opacity 0.6s,transform 0.6s;
   }
   .hs-square:hover{border-color:var(--gold-light);background:rgba(184,146,42,0.05);}
@@ -82,35 +82,61 @@
   .hs-square.is-moving{
     opacity:0;transform:translateY(80px) scale(0.85);pointer-events:none;
   }
+
+  /* Portrait area with blink */
+  .hs-portrait{
+    position:relative;width:100%;aspect-ratio:1/1;
+    overflow:hidden;background:#1a1410;
+    border-bottom:1px solid var(--rule);
+  }
+  .hs-portrait img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;
+  }
+  .hs-portrait .closed{
+    opacity:0;animation:tg-blink 5.4s steps(1,end) infinite;
+  }
+  @keyframes tg-blink{
+    0%, 95%, 100% { opacity: 0; }
+    97%           { opacity: 1; }
+  }
+
   .hs-rec-badge{
     position:absolute;top:0;left:0;right:0;
     background:var(--gold);color:var(--ink);
     font-family:'DM Mono',monospace;font-size:0.55rem;
     letter-spacing:0.22em;text-transform:uppercase;
     padding:0.35rem 0;text-align:center;font-weight:700;
+    z-index:4;
   }
-  .hs-square.has-rec{padding-top:2.2rem;}
+
+  .hs-check{
+    position:absolute;top:0.6rem;right:0.6rem;
+    width:28px;height:28px;border:1px solid rgba(244,237,224,0.4);border-radius:50%;
+    background:rgba(8,6,4,0.7);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.95rem;color:transparent;transition:all 0.2s;
+    z-index:3;
+  }
+  .hs-square.is-selected .hs-check{
+    border-color:var(--gold);background:var(--gold);color:var(--ink);
+  }
+
+  .hs-info{
+    padding:0.9rem 1rem 1rem;display:flex;flex-direction:column;gap:0.25rem;
+  }
   .hs-num{
     font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
     color:var(--text-dim);text-transform:uppercase;
   }
   .hs-name{
-    font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;
-    color:var(--cream);line-height:1.2;margin-bottom:0.35rem;
+    font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+    color:var(--cream);line-height:1.2;
   }
   .hs-square.is-selected .hs-name{color:var(--gold-light);}
   .hs-domain{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--text-dim);line-height:1.5;
-  }
-  .hs-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
-  .hs-check{
-    width:22px;height:22px;border:1px solid var(--rule);border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:0.85rem;color:transparent;transition:all 0.2s;
-  }
-  .hs-square.is-selected .hs-check{
-    border-color:var(--gold);background:var(--gold);color:var(--ink);
   }
 
   /* ── Modal ───────────────────────────────────────────────────────────────── */
@@ -377,25 +403,42 @@
     errBox.textContent = msg;
   }
 
+  function imageFirstName(fullName){
+    // Image files use first name only (Selene_eyes_open.jpg, Dr. Priya Anand -> Priya).
+    // Skip leading titles: Dr., Admiral, Mr., Ms., Mrs., Prof.
+    const titles = new Set(['Dr.','Admiral','Mr.','Ms.','Mrs.','Prof.']);
+    const parts = String(fullName || '').split(/\s+/);
+    for (const p of parts){
+      if (!titles.has(p)) return p;
+    }
+    return parts[0] || '';
+  }
+
   function renderGrid(){
     grid.innerHTML = '';
     state.judges.forEach((judge, idx) => {
       const sq = document.createElement('div');
       sq.className = 'hs-square';
       const isRec = HARDCODED_RECOMMENDED.includes(judge.id);
-      if (isRec) sq.classList.add('has-rec');
       sq.dataset.judgeId = judge.id;
 
+      const imgName = imageFirstName(judge.name);
+      const openSrc   = 'Judges/' + imgName + '_eyes_open.jpg';
+      const closedSrc = 'Judges/' + imgName + '_eyes_closed.jpg';
+      // Stagger blinks so 9 portraits don't sync — random 0-5s delay per square.
+      const blinkDelay = (Math.random() * 5).toFixed(2);
+
       sq.innerHTML = `
-        ${isRec ? '<div class="hs-rec-badge">Recommended</div>' : ''}
-        <div class="hs-num">Judge ${String(idx+1).padStart(2,'0')}</div>
-        <div>
+        <div class="hs-portrait">
+          ${isRec ? '<div class="hs-rec-badge">Recommended</div>' : ''}
+          <img src="${openSrc}" alt="${escapeHtml(judge.name)}" class="open" loading="lazy">
+          <img src="${closedSrc}" alt="" aria-hidden="true" class="closed" loading="lazy" style="animation-delay:${blinkDelay}s;">
+          <div class="hs-check" aria-hidden="true">✓</div>
+        </div>
+        <div class="hs-info">
+          <div class="hs-num">Judge ${String(idx+1).padStart(2,'0')}</div>
           <div class="hs-name">${escapeHtml(judge.name)}</div>
           <div class="hs-domain">${escapeHtml(judge.domain)}</div>
-        </div>
-        <div class="hs-bottom">
-          <span></span>
-          <div class="hs-check" aria-hidden="true">✓</div>
         </div>
       `;
       sq.addEventListener('click', () => openModal(judge.id));
