@@ -188,8 +188,8 @@
       ],
       "inter_judge_dynamics": [
         {
-          "with": "valentina_cruz",
-          "note": "His upbringing surfaces. Valentina catches every single instance. She does not let it pass. He goes quiet because somewhere underneath he knows she is right."
+          "with": "astrid_cruz",
+          "note": "His upbringing surfaces. Astrid catches every single instance. She does not let it pass. He goes quiet because somewhere underneath he knows she is right."
         }
       ],
       "voice_id": null,
@@ -197,8 +197,8 @@
     },
 
     {
-      "id": "valentina_cruz",
-      "name": "Valentina Cruz",
+      "id": "astrid_cruz",
+      "name": "Astrid Cruz",
       "domain": "Law & Intellectual Property",
       "lens": "Legal exposure, IP protection, compliance gaps",
       "background": "IP and startup attorney. 20 years at the intersection of innovation and litigation. Has seen every liability exposure before you have.",
@@ -280,8 +280,8 @@
       ],
       "inter_judge_dynamics": [
         {
-          "with": "valentina_cruz",
-          "note": "Intrigued by Valentina in a way he has not examined closely. She has noticed. Neither has decided what to do about it."
+          "with": "astrid_cruz",
+          "note": "Intrigued by Astrid in a way he has not examined closely. She has noticed. Neither has decided what to do about it."
         }
       ],
       "voice_id": null,
@@ -384,7 +384,7 @@
         },
         {
           "with": "osei_mensah",
-          "note": "Sees Osei watching Valentina. Lets it sit."
+          "note": "Sees Osei watching Astrid. Lets it sit."
         },
         {
           "with": "cassidy_mercer",
