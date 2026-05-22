@@ -28,9 +28,11 @@
     background:var(--bg);z-index:100;
   }
   .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
     font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
     color:var(--gold);text-decoration:none;white-space:nowrap;
   }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
   .tg-topbar-back{
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--text-dim);text-decoration:none;flex:1;
@@ -39,6 +41,10 @@
 
   /* ── Main ────────────────────────────────────────────────────────────────── */
   .tg-main{max-width:1100px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+
+  /* Hero logo (full lockup) */
+  .tg-hero{text-align:center;margin:0 auto 3rem;max-width:560px;}
+  .tg-hero img{max-width:100%;height:auto;display:block;margin:0 auto;}
 
   .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
   .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.7rem;}
@@ -94,11 +100,14 @@
     object-fit:cover;display:block;
   }
   .hs-portrait .closed{
-    opacity:0;animation:tg-blink 5.4s steps(1,end) infinite;
+    opacity:0;animation:tg-blink 5.4s linear infinite;
+    will-change:opacity;
   }
+  /* Smooth fade rather than steps() snap so swap between open/closed
+     frames does not read as a flash on small portraits. ~270ms blink. */
   @keyframes tg-blink{
-    0%, 95%, 100% { opacity: 0; }
-    97%           { opacity: 1; }
+    0%, 94%, 100% { opacity: 0; }
+    96%, 97%      { opacity: 1; }
   }
 
   .hs-rec-badge{
@@ -294,11 +303,18 @@
 <body>
 
 <header class="tg-topbar">
-  <a class="tg-topbar-logo" href="index.html">THE GAUNTLET</a>
+  <a class="tg-topbar-logo" href="index.html">
+    <img src="Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
+  </a>
   <a class="tg-topbar-back" href="index.html">← back to home</a>
 </header>
 
 <main class="tg-main">
+
+  <div class="tg-hero">
+    <img src="the-gauntlet-logo.png" alt="The Gauntlet · Diagnostic Critique Engine">
+  </div>
 
   <div class="s-label">Step 2 of 3 · Choose Your Panel</div>
   <h1 class="s-title">Pick <em>three judges</em> to run your idea through The Gauntlet.</h1>
@@ -431,8 +447,8 @@
       sq.innerHTML = `
         <div class="hs-portrait">
           ${isRec ? '<div class="hs-rec-badge">Recommended</div>' : ''}
-          <img src="${openSrc}" alt="${escapeHtml(judge.name)}" class="open" loading="lazy">
-          <img src="${closedSrc}" alt="" aria-hidden="true" class="closed" loading="lazy" style="animation-delay:${blinkDelay}s;">
+          <img src="${openSrc}" alt="${escapeHtml(judge.name)}" class="open">
+          <img src="${closedSrc}" alt="" aria-hidden="true" class="closed" style="animation-delay:${blinkDelay}s;">
           <div class="hs-check" aria-hidden="true">✓</div>
         </div>
         <div class="hs-info">
