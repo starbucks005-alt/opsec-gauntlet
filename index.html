@@ -361,7 +361,20 @@
     filter:brightness(0.85) contrast(0.95);
   }
   .tg-stage.is-revealing .tg-set-prop{opacity:1;}
-  .tg-set-prop img{display:block;height:100%;width:auto;}
+  .tg-set-prop img{
+    display:block;height:100%;width:auto;
+    animation:tg-sh-shift 5.5s ease-in-out infinite;
+  }
+  /* Stage hands sway slightly — weight shift on their feet, never still. */
+  @keyframes tg-sh-shift{
+    0%, 100% { transform:translateY(0)   translateX(0); }
+    25%      { transform:translateY(-2px) translateX(2px); }
+    50%      { transform:translateY(-1px) translateX(4px); }
+    75%      { transform:translateY(-2px) translateX(2px); }
+  }
+  /* Stagger so the two hands don't sway in unison. */
+  .tg-set-sh-left img  { animation-delay: 0s;   }
+  .tg-set-sh-right img { animation-delay: 2.6s; }
 
   /* Stage hands at the curtain edges */
   .tg-set-sh-left{ left:-12px;  bottom:8px; height:170px; }
@@ -430,7 +443,30 @@
     filter:brightness(0.7) contrast(0.9) saturate(0.7);
   }
   .tg-audience.is-revealing .tg-set-pa{opacity:0.85;}
-  .tg-set-pa img{display:block;height:100%;width:auto;}
+  .tg-set-pa img{
+    display:block;height:100%;width:auto;
+    animation:tg-pa-walk 12s ease-in-out infinite;
+  }
+  /* PAs drift back and forth behind the audience — loitering walk, never */
+  /* still. Slight Y bob on every step gives the rhythm of foot-falls.    */
+  @keyframes tg-pa-walk{
+    0%   { transform:translateX(0)    translateY(0); }
+    20%  { transform:translateX(40px) translateY(-3px); }
+    40%  { transform:translateX(80px) translateY(0); }
+    60%  { transform:translateX(80px) translateY(-3px); }
+    80%  { transform:translateX(40px) translateY(0); }
+    100% { transform:translateX(0)    translateY(-3px); }
+  }
+  /* The right-side PA reverses direction so the two cross paths. */
+  .tg-set-pa-right img{animation-name:tg-pa-walk-rev;animation-delay:3s;}
+  @keyframes tg-pa-walk-rev{
+    0%   { transform:translateX(0)     translateY(0); }
+    20%  { transform:translateX(-40px) translateY(-3px); }
+    40%  { transform:translateX(-80px) translateY(0); }
+    60%  { transform:translateX(-80px) translateY(-3px); }
+    80%  { transform:translateX(-40px) translateY(0); }
+    100% { transform:translateX(0)     translateY(-3px); }
+  }
   .tg-set-pa-left{ left:1%; }
   .tg-set-pa-right{ right:1%; }
   @media (max-width:900px){
