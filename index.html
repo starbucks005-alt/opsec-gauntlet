@@ -540,10 +540,16 @@
     display:none;border:1px solid var(--rule);background:rgba(0,0,0,0.55);
     box-shadow:inset 0 0 40px -10px rgba(0,0,0,0.7);
     overflow:hidden;
+    /* opacity starts at 0 on the BASE rule so the element is invisible the
+       instant it switches from display:none to display:flex. Otherwise the
+       browser renders one frame at default opacity 1 before the lock rule
+       cascades, which reads as a flash. */
+    opacity:0;
+    transition:opacity 0.8s ease-in;
+    transition-delay:3.9s;
   }
   body.is-locked .tg-chat{
     display:flex;flex-direction:column;height:100%;min-height:680px;
-    opacity:0;transition:opacity 0.8s ease-in;transition-delay:3.9s;
   }
   body.is-locked .tg-chat.is-revealing{opacity:1;}
 
