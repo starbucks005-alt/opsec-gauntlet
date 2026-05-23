@@ -145,13 +145,13 @@
   .band-inner.mid{max-width:960px;}
 
   /* ── Hero ────────────────────────────────────────────────────────────────── */
-  /* Hero is constrained to a single viewport so the judges grid is the next */
-  /* thing the user sees, not paragraphs of text. Content is vertically      */
-  /* centered inside the viewport-sized band.                                */
+  /* Content-driven height. A previous version locked the hero to            */
+  /* min-height:calc(100vh - 60px) with flex centering, which made the band  */
+  /* swallow the viewport at every zoom level and hide the judges grid       */
+  /* below. Padding alone keeps the hero compact but never forces it to be   */
+  /* taller than its content.                                                */
   .hero{
-    min-height:calc(100vh - 60px);
-    padding:3rem 2.5rem 3rem;text-align:center;
-    display:flex;align-items:center;justify-content:center;
+    padding:5rem 2.5rem 4.5rem;text-align:center;
     background-image:
       radial-gradient(ellipse 80% 60% at center top, rgba(184,146,42,0.10) 0%, transparent 70%),
       repeating-linear-gradient(
@@ -483,7 +483,7 @@
     .band,.hero,.insight,.diff-strip,.panel-band,.helpers-band,.close-band{
       padding-left:1.3rem;padding-right:1.3rem;
     }
-    .hero{padding-top:3rem;padding-bottom:3rem;min-height:calc(100vh - 56px);}
+    .hero{padding-top:3rem;padding-bottom:3rem;}
     .insight{padding-top:5rem;padding-bottom:5rem;}
     .insight-hook{margin-bottom:3rem;}
     .panel-grid{grid-template-columns:repeat(2,1fr);}
