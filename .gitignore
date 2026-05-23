@@ -26,6 +26,12 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Office lock files (appear while a .docx/.xlsx is open)
+~$*
+
+# Internal drafts — earlier asset iterations kept off the deploy
+_drafts/
+
 # Oversized assets — exceed GitHub's 100 MB limit; not used by the live site.
 # If any of these become site-linked, host them on Netlify Large Media or external storage.
 assets/MPSA BOOKS/HANDBOOKS/*.pdf
