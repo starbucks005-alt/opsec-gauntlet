@@ -382,10 +382,30 @@
     background:#14151a;
   }
   .helper-card-photo img{
+    position:absolute;inset:0;
     width:100%;height:100%;object-fit:cover;display:block;
     transition:filter 0.3s;
   }
   .helper-card:hover .helper-card-photo img{filter:brightness(1.08);}
+
+  /* Blink pair on the homepage helper preview, matching the Chamber judges
+     grid. Eight cards, staggered so they never blink in unison. */
+  .helper-card-photo .blink-closed{
+    opacity:0;
+    animation:tg-home-blink 5.4s steps(1,end) infinite;
+  }
+  @keyframes tg-home-blink{
+    0%, 95%, 100% { opacity: 0; }
+    97%           { opacity: 1; }
+  }
+  .helpers-grid .helper-card:nth-child(1) .blink-closed{animation-delay:0s;}
+  .helpers-grid .helper-card:nth-child(2) .blink-closed{animation-delay:0.7s;}
+  .helpers-grid .helper-card:nth-child(3) .blink-closed{animation-delay:1.4s;}
+  .helpers-grid .helper-card:nth-child(4) .blink-closed{animation-delay:2.1s;}
+  .helpers-grid .helper-card:nth-child(5) .blink-closed{animation-delay:2.8s;}
+  .helpers-grid .helper-card:nth-child(6) .blink-closed{animation-delay:3.5s;}
+  .helpers-grid .helper-card:nth-child(7) .blink-closed{animation-delay:4.2s;}
+  .helpers-grid .helper-card:nth-child(8) .blink-closed{animation-delay:4.9s;}
   .helper-crossover{
     position:absolute;top:0.5rem;left:0.5rem;
     background:rgba(10,10,10,0.85);border:1px solid var(--gold);
@@ -652,59 +672,81 @@
 
     <div class="helpers-grid">
       <a class="helper-card" href="/Helpers/wren-scout.html">
-        <div class="helper-card-photo"><img src="Helpers/Wren_Profile.jpg" alt="Wren Calloway"></div>
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Wren_eyes_open.jpg" alt="Wren Calloway">
+          <img class="blink-closed" src="Helpers/Wren_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Wren Calloway</div>
           <div class="helper-card-role">The Scout</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
-        <div class="helper-card-photo"><img src="Helpers/Carol_Profile.jpg" alt="Carol Haynes"></div>
+      <a class="helper-card" href="/Helpers/carol-screener.html">
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Carol_eyes_open.jpg" alt="Carol Haynes">
+          <img class="blink-closed" src="Helpers/Carol_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Carol Haynes</div>
           <div class="helper-card-role">The Screener</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
-        <div class="helper-card-photo"><img src="Helpers/Matthew_Profile.jpg" alt="Matthew Vance"></div>
+      <a class="helper-card" href="/Helpers/matthew-behaviorist.html">
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Matthew_eyes_open.jpg" alt="Matthew Vance">
+          <img class="blink-closed" src="Helpers/Matthew_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Matthew Vance</div>
           <div class="helper-card-role">The Behaviorist</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
-        <div class="helper-card-photo"><img src="Helpers/Arjun_Profile.jpg" alt="Arjun Mehta"></div>
+      <a class="helper-card" href="/Helpers/arjun-delivery.html">
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Arjun_eyes_open.jpg" alt="Arjun Mehta">
+          <img class="blink-closed" src="Helpers/Arjun_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Arjun Mehta</div>
           <div class="helper-card-role">The Delivery Expert</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
-        <div class="helper-card-photo"><img src="Helpers/Zara_Profile.jpg" alt="Zara Cole"></div>
+      <a class="helper-card" href="/Helpers/zara-influencer.html">
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Zara_eyes_open.jpg" alt="Zara Cole">
+          <img class="blink-closed" src="Helpers/Zara_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Zara Cole</div>
           <div class="helper-card-role">The Influencer</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
-        <div class="helper-card-photo"><img src="Helpers/Reid_Profile.jpg" alt="Reid Callum"></div>
+      <a class="helper-card" href="/Helpers/reid-marketing.html">
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Reid_eyes_open.jpg" alt="Reid Callum">
+          <img class="blink-closed" src="Helpers/Reid_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Reid Callum</div>
           <div class="helper-card-role">The Marketing Expert</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
+      <a class="helper-card" href="/Helpers/jules-rewrite.html">
         <div class="helper-card-photo">
           <div class="helper-crossover">From Greylander Press</div>
-          <img src="Helpers/Jules_Profile.jpg" alt="Jules">
+          <img class="blink-open" src="Helpers/Jules_eyes_open.jpg" alt="Jules">
+          <img class="blink-closed" src="Helpers/Jules_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Jules</div>
           <div class="helper-card-role">The Rewrite Partner</div>
         </div>
       </a>
-      <a class="helper-card" href="/Helpers/">
-        <div class="helper-card-photo"><img src="Helpers/Grant_Profile.jpg" alt="Grant Ellis"></div>
+      <a class="helper-card" href="/Helpers/grant-coach.html">
+        <div class="helper-card-photo">
+          <img class="blink-open" src="Helpers/Grant_eyes_open.jpg" alt="Grant Ellis">
+          <img class="blink-closed" src="Helpers/Grant_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
         <div class="helper-card-body">
           <div class="helper-card-name">Grant Ellis</div>
           <div class="helper-card-role">The Coach</div>
