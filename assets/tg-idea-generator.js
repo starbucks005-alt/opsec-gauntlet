@@ -85,6 +85,7 @@
     step: 0,                  // 0..3 questions, 4 loading, 5 result
     answers: { world:'', blocker:'', stage:'', description:'' },
     otherTexts: { world:'', blocker:'' },
+    framing: null,            // Wren's one-line reaction before the seed
     seed: null,
   };
 
@@ -238,6 +239,11 @@
       }
 
       .tg-ig-result{padding:0.3rem 0 0.2rem;}
+      .tg-ig-framing{
+        font-family:'Playfair Display',serif;font-style:italic;
+        font-size:1.05rem;line-height:1.55;color:var(--gold-light,#d4aa4a);
+        margin:0 0 0.9rem;padding:0 0.2rem;
+      }
       .tg-ig-seed{
         font-family:'Playfair Display',serif;font-size:1.2rem;line-height:1.55;
         color:#f4ede0;
@@ -318,6 +324,7 @@
     state.step = 0;
     state.answers = { world:'', blocker:'', stage:'', description:'' };
     state.otherTexts = { world:'', blocker:'' };
+    state.framing = null;
     state.seed = null;
     backdrop.classList.add('is-open');
     render();
@@ -517,7 +524,8 @@
         throw new Error(`seed ${resp.status}: ${detail || resp.statusText}`);
       }
       const data = await resp.json();
-      state.seed = data.seed || '';
+      state.framing = data.framing || '';
+      state.seed    = data.seed    || '';
       state.step = QUESTIONS.length + 1;
       render();
     } catch (err) {
@@ -542,48 +550,82 @@
   function renderResult(){
     bodyEl.innerHTML = `
       <div class="tg-ig-eyebrow">Your concept seed</div>
-      <h2 class="tg-ig-title">Here it is, <em>in your voice</em>.</h2>
+      <h2 class="tg-ig-title">Wren is <em>reading it back</em>.</h2>
       <div class="tg-ig-result">
-        <div class="tg-ig-seed">${escapeHtml(state.seed)}</div>
         <div class="tg-ig-handoff">
           <div class="tg-ig-handoff-portrait">
             <img src="Helpers/Wren_Profile.jpg" alt="Wren Calloway">
           </div>
           <div class="tg-ig-handoff-text">
             <div class="tg-ig-handoff-name">Wren Calloway</div>
-            <div class="tg-ig-handoff-line">The Scout is on it. Listening now ▶</div>
+            <div class="tg-ig-handoff-line" id="tg-ig-wren-status">Speaking ▶</div>
           </div>
         </div>
+        ${state.framing ? `<p class="tg-ig-framing">${escapeHtml(state.framing)}</p>` : ''}
+        <div class="tg-ig-seed">${escapeHtml(state.seed)}</div>
       </div>
     `;
     navEl.innerHTML = `
-      <button class="tg-ig-btn" id="tg-ig-close">Close</button>
+      <button class="tg-ig-btn" id="tg-ig-replay">Play again</button>
       <a class="tg-ig-btn tg-ig-btn-primary" href="/Helpers/wren-scout.html">Open Wren's profile →</a>
     `;
-    navEl.querySelector('#tg-ig-close').addEventListener('click', close);
+    navEl.querySelector('#tg-ig-replay').addEventListener('click', () => {
+      playWrenReadback();
+    });
 
-    // Wren introduces herself: autoplay her role clip through the existing
-    // tg-voice function (same path the Hear-Selene button uses).
-    playWrenIntro();
+    // Wren actually reads the seed back. POST to the voice function with
+    // framing + seed as a single text payload, voiced as Wren.
+    playWrenReadback();
   }
 
   let wrenAudio = null;
-  function playWrenIntro(){
+  let wrenAudioUrl = null;
+  function setWrenStatus(text){
+    const el = document.getElementById('tg-ig-wren-status');
+    if (el) el.textContent = text;
+  }
+
+  async function playWrenReadback(){
+    // Stop any previous play (replay case).
+    if (wrenAudio){
+      try { wrenAudio.pause(); } catch(_){}
+      wrenAudio = null;
+    }
+    if (wrenAudioUrl){
+      try { URL.revokeObjectURL(wrenAudioUrl); } catch(_){}
+      wrenAudioUrl = null;
+    }
+
+    const text = [state.framing, state.seed].filter(Boolean).join(' ').trim();
+    if (!text) return;
+
+    setWrenStatus('Warming up...');
+
     try {
-      if (wrenAudio){
-        try { wrenAudio.pause(); } catch(_){}
-        wrenAudio = null;
-      }
-      const url = `${VOICE_ENDPOINT}?character=wren_calloway&mode=role&v=${encodeURIComponent(VOICE_VERSION)}`;
-      wrenAudio = new Audio(url);
-      // play() may reject if the user dismissed the modal or autoplay was
-      // blocked. Either case is harmless - they can hit Wren's profile
-      // page and play it there.
-      wrenAudio.play().catch(err => {
-        if (err && err.name !== 'AbortError') console.warn('[tg-ideagen] wren autoplay blocked', err);
+      const resp = await fetch(VOICE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ character: 'wren_calloway', text }),
       });
+      if (!resp.ok){
+        const detail = await resp.text().catch(() => '');
+        throw new Error(`voice ${resp.status}: ${detail || resp.statusText}`);
+      }
+      const blob = await resp.blob();
+      wrenAudioUrl = URL.createObjectURL(blob);
+      wrenAudio = new Audio(wrenAudioUrl);
+      wrenAudio.addEventListener('ended',  () => setWrenStatus('Done. Tap Play again to hear it.'));
+      wrenAudio.addEventListener('error',  () => setWrenStatus('Audio failed. Tap Play again.'));
+      wrenAudio.addEventListener('playing',() => setWrenStatus('Speaking ▶'));
+      try {
+        await wrenAudio.play();
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+        setWrenStatus('Tap Play again to hear it.');
+      }
     } catch (err) {
-      console.warn('[tg-ideagen] wren intro failed', err);
+      console.warn('[tg-ideagen] wren readback failed', err);
+      setWrenStatus('Audio unavailable. Read it above.');
     }
   }
 

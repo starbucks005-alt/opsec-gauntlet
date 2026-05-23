@@ -88,44 +88,75 @@ function buildSpeechText(characterId, script) {
   return pausePrefix + namePrefix + script;
 }
 
+// Length cap on arbitrary POST text. Keeps the function from being abused
+// as a free TTS proxy for long-form content. ~1500 chars is comfortably
+// longer than any seed + framing pairing the Idea Generator will produce.
+const POST_TEXT_CAP = 1500;
+
 exports.handler = async (event) => {
-  // CORS preflight (Netlify default origin only; tighten if needed)
+  // CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
       },
     };
   }
-  if (event.httpMethod !== 'GET') {
+  if (!['GET', 'POST'].includes(event.httpMethod)) {
     return { statusCode: 405, body: 'Method not allowed' };
   }
 
-  const qs = event.queryStringParameters || {};
-  const character = (qs.character || '').trim();
-  const mode = (qs.mode || '').trim().toLowerCase();
+  // ── Resolve character + text ────────────────────────────────────────────
+  // GET  : character + mode (bio|role) -> pulled from voice_scripts.json
+  // POST : character + text            -> caller-supplied text (capped)
+  //
+  // POST cannot be cached (text varies per call). GET responses cache for
+  // 24h, busted via the &v=<ver> param the client appends.
+  let character = '';
+  let text = '';
+  let isCustomText = false;
 
-  if (!character || !mode) {
-    return jsonError(400, 'character and mode query params required');
-  }
-  if (!/^[a-z0-9_]+$/.test(character)) {
-    return jsonError(400, 'invalid character id');
-  }
-  if (!['bio', 'role'].includes(mode)) {
-    return jsonError(400, 'mode must be bio or role');
+  if (event.httpMethod === 'POST') {
+    let body;
+    try { body = JSON.parse(event.body || '{}'); }
+    catch { return jsonError(400, 'invalid json body'); }
+
+    character = String(body.character || '').trim();
+    const customText = String(body.text || '').trim();
+    if (!character || !customText) {
+      return jsonError(400, 'character and text required for POST');
+    }
+    if (!/^[a-z0-9_]+$/.test(character)) {
+      return jsonError(400, 'invalid character id');
+    }
+    if (customText.length > POST_TEXT_CAP) {
+      return jsonError(400, `text exceeds ${POST_TEXT_CAP} char cap`);
+    }
+    text = '. ' + customText;   // leading pause buffer; same trick as GET
+    isCustomText = true;
+  } else {
+    const qs = event.queryStringParameters || {};
+    character = (qs.character || '').trim();
+    const mode = (qs.mode || '').trim().toLowerCase();
+    if (!character || !mode) {
+      return jsonError(400, 'character and mode query params required');
+    }
+    if (!/^[a-z0-9_]+$/.test(character)) {
+      return jsonError(400, 'invalid character id');
+    }
+    if (!['bio', 'role'].includes(mode)) {
+      return jsonError(400, 'mode must be bio or role');
+    }
+    const rawText = findScript(character, mode);
+    if (!rawText) return jsonError(404, 'no script for that character + mode');
+    text = buildSpeechText(character, rawText);
   }
 
   const voiceId = findVoiceId(character);
   if (!voiceId) return jsonError(404, 'character not found or has no voice');
-
-  const rawText = findScript(character, mode);
-  if (!rawText) return jsonError(404, 'no script for that character + mode');
-
-  // Apply the pause buffer + auto name intro before handing off to ElevenLabs.
-  const text = buildSpeechText(character, rawText);
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {
@@ -165,8 +196,9 @@ exports.handler = async (event) => {
     headers: {
       'Content-Type': 'audio/mpeg',
       'Content-Length': String(buf.length),
-      // Audio for a given character+mode is deterministic; cache one day.
-      'Cache-Control': 'public, max-age=86400',
+      // GET responses (character+mode) are deterministic, cache one day.
+      // POST responses (arbitrary text) cannot be cached safely.
+      'Cache-Control': isCustomText ? 'no-store' : 'public, max-age=86400',
       'Access-Control-Allow-Origin': '*',
     },
     body: buf.toString('base64'),
