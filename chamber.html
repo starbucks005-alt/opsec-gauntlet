@@ -19,6 +19,7 @@
 <!-- Theme is locked to dark on this page; tokens.css base palette applies. -->
 <link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/tg-recommend.js"></script>
+<script src="assets/tg-voice.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -247,6 +248,33 @@
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;
     text-transform:uppercase;color:var(--text-dim);
   }
+  /* Voice playback row inside the modal. Two pill buttons in the same gold +
+     monospace register as the rest of the modal chrome. is-playing flips the
+     button to filled gold so it's obvious which clip is talking; is-loading
+     keeps the click intent visible while ElevenLabs warms up. */
+  .tg-voice-row{display:flex;gap:0.7rem;margin-top:0.3rem;}
+  .tg-voice-btn{
+    flex:1;display:inline-flex;align-items:center;justify-content:center;gap:0.55rem;
+    background:rgba(0,0,0,0.5);border:1px solid var(--rule);
+    color:var(--gold-light);
+    padding:0.75rem 0.9rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;
+    text-transform:uppercase;font-weight:700;
+    transition:border-color 0.2s,color 0.2s,background 0.2s;
+  }
+  .tg-voice-btn:hover:not(:disabled){
+    border-color:var(--gold);color:var(--gold);background:rgba(184,146,42,0.08);
+  }
+  .tg-voice-btn.is-loading{opacity:0.7;cursor:wait;}
+  .tg-voice-btn.is-playing{
+    background:var(--gold);color:var(--ink);border-color:var(--gold);
+  }
+  .tg-voice-btn .tg-voice-pip{
+    width:16px;height:16px;border:1px solid currentColor;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.5rem;line-height:1;
+  }
+
   .tg-modal-actions{
     display:flex;gap:1rem;justify-content:flex-end;align-items:center;
     margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--rule);
@@ -788,6 +816,20 @@
       <div class="tg-modal-section-body" id="m-blind"></div>
     </div>
 
+    <div class="tg-modal-section">
+      <div class="tg-modal-section-label">Listen</div>
+      <div class="tg-voice-row">
+        <button type="button" class="tg-voice-btn" id="m-voice-bio"
+                data-tg-voice data-character="" data-mode="bio">
+          <span class="tg-voice-pip">▶</span>Their Story
+        </button>
+        <button type="button" class="tg-voice-btn" id="m-voice-role"
+                data-tg-voice data-character="" data-mode="role">
+          <span class="tg-voice-pip">▶</span>Their Role
+        </button>
+      </div>
+    </div>
+
     <div class="tg-modal-actions">
       <span class="tg-modal-status" id="m-status"></span>
       <button class="btn-outline" id="m-cancel">Close</button>
@@ -954,6 +996,18 @@
 
     $('m-notes').textContent = j.character_notes || '';
 
+    // Point the two voice buttons at the active judge. tg-voice.js reads
+    // data-character + data-mode on click and plays the ElevenLabs clip.
+    // Clear any stale playing/loading state from the previous modal open.
+    ['m-voice-bio','m-voice-role'].forEach(btnId => {
+      const b = $(btnId);
+      if (!b) return;
+      b.dataset.character = judgeId;
+      b.classList.remove('is-playing','is-loading');
+      b.removeAttribute('data-playing');
+      b.removeAttribute('aria-busy');
+    });
+
     const blind = $('m-blind');
     blind.innerHTML = '';
     const blindList = document.createElement('ul');
@@ -989,6 +1043,10 @@
   }
 
   function closeModal(){
+    // If a voice clip is mid-playback, click the playing button so the
+    // tg-voice handler stops the audio cleanly before the modal closes.
+    const playing = document.querySelector('[data-tg-voice][data-playing="true"]');
+    if (playing) playing.click();
     modalBackdrop.classList.remove('is-open');
     state.activeJudgeId = null;
   }
