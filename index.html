@@ -53,10 +53,6 @@
   /* ── Main ────────────────────────────────────────────────────────────────── */
   .tg-main{max-width:1100px;margin:0 auto;padding:3rem 2.5rem 5rem;}
 
-  /* Hero logo (full lockup) */
-  .tg-hero{text-align:center;margin:0 auto 3rem;max-width:560px;}
-  .tg-hero img{max-width:100%;height:auto;display:block;margin:0 auto;}
-
   .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
   .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.7rem;}
   .s-title em{font-style:italic;color:var(--gold-light);}
@@ -522,14 +518,6 @@
   body.is-locked .s-title,
   body.is-locked .s-sub,
   body.is-locked .s-label{display:none;}
-  body.is-locked .tg-hero{
-    margin-bottom:1.5rem;
-    transition:margin 0.6s ease-out;
-  }
-  body.is-locked .tg-hero img{
-    max-width:280px;
-    transition:max-width 0.6s ease-out;
-  }
 
   /* ── Chat panel ──────────────────────────────────────────────────────────── */
   /* Lives in the right column after lock. Active judges (the panel) speak in */
@@ -680,10 +668,6 @@
 </header>
 
 <main class="tg-main">
-
-  <div class="tg-hero">
-    <img src="the-gauntlet-logo.png" alt="The Gauntlet · Diagnostic Critique Engine">
-  </div>
 
   <div class="s-label">Step 2 of 3 · Choose Your Panel</div>
   <h1 class="s-title">Pick <em>three judges</em> to run your idea through The Gauntlet.</h1>
