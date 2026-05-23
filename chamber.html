@@ -203,45 +203,59 @@
   }
 
   /* ── Modal ───────────────────────────────────────────────────────────────── */
+  /* Backdrop is translucent enough that the judges grid behind it stays
+     visible - the user remembers they are still inside the panel selection
+     while reading a profile. Padding sits tight to the viewport edges so
+     the modal has more room. */
   .tg-modal-backdrop{
-    position:fixed;inset:0;background:rgba(8,6,4,0.85);
+    position:fixed;inset:0;background:rgba(8,6,4,0.55);
+    backdrop-filter:blur(3px);
     display:none;align-items:flex-start;justify-content:center;
-    padding:5vh 2rem;z-index:500;overflow-y:auto;
+    padding:2vh 1.5rem;z-index:500;overflow-y:auto;
   }
   .tg-modal-backdrop.is-open{display:flex;}
   .tg-modal{
     background:var(--bg);border:1px solid var(--gold);
-    max-width:640px;width:100%;padding:2.5rem;position:relative;
+    max-width:760px;width:100%;padding:1.6rem 1.9rem 1.6rem;
+    position:relative;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,0.85),
+               0 0 60px -10px rgba(184,146,42,0.25);
   }
   .tg-modal-close{
-    position:absolute;top:1rem;right:1rem;
-    background:none;border:none;color:var(--text-dim);font-size:1.5rem;
-    cursor:pointer;padding:0.5rem;line-height:1;
+    position:absolute;top:0.5rem;right:0.7rem;
+    background:rgba(10,10,10,0.6);border:none;color:var(--cream);
+    font-size:1.5rem;line-height:1;
+    cursor:pointer;padding:0.3rem 0.6rem;border-radius:50%;
+    z-index:4;
   }
-  .tg-modal-close:hover{color:var(--gold);}
+  .tg-modal-close:hover{color:var(--gold);background:rgba(10,10,10,0.85);}
+  /* Two-column header: portrait left, identity block right. Eliminates the
+     thin-strip cropping that happened when a tall portrait was forced into
+     a wide modal-width hero band. */
   .tg-modal-hero{
-    width:calc(100% + 5rem);margin:-2.5rem -2.5rem 1.5rem;
-    height:260px;overflow:hidden;
-    background:#0a0a0a;border-bottom:1px solid var(--rule);
-    position:relative;
+    display:grid;grid-template-columns:160px 1fr;gap:1.2rem;
+    margin:0 0 1.2rem;padding-bottom:1.1rem;
+    border-bottom:1px solid var(--rule);
+    align-items:flex-end;
   }
-  .tg-modal-hero img{
+  .tg-modal-hero-portrait{
+    width:160px;height:160px;overflow:hidden;
+    border:1px solid var(--rule);background:#0a0a0a;
+  }
+  .tg-modal-hero-portrait img{
     width:100%;height:100%;display:block;
-    object-fit:cover;object-position:center 30%;
+    object-fit:cover;object-position:center top;
   }
-  .tg-modal-hero::after{
-    content:'';position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(180deg,transparent 55%,rgba(10,10,10,0.65) 100%);
-  }
-  .tg-modal-eyebrow{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
-  .tg-modal-name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:0.4rem;}
-  .tg-modal-domain{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--gold-light);margin-bottom:1.5rem;}
-  .tg-modal-section{margin-bottom:1.4rem;}
+  .tg-modal-hero-identity{display:flex;flex-direction:column;gap:0.35rem;}
+  .tg-modal-eyebrow{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);}
+  .tg-modal-name{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--cream);line-height:1.1;}
+  .tg-modal-domain{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--gold-light);}
+  .tg-modal-section{margin-bottom:0.95rem;}
   .tg-modal-section-label{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
-    text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem;
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem;
   }
-  .tg-modal-section-body{font-size:1rem;line-height:1.65;color:var(--text);}
+  .tg-modal-section-body{font-size:0.95rem;line-height:1.55;color:var(--text);}
   .tg-modal-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
   .tg-modal-tag{
     border:1px solid var(--rule);padding:0.25rem 0.7rem;
@@ -276,8 +290,8 @@
   }
 
   .tg-modal-actions{
-    display:flex;gap:1rem;justify-content:flex-end;align-items:center;
-    margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--rule);
+    display:flex;gap:0.8rem;justify-content:flex-end;align-items:center;
+    margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--rule);
   }
   .tg-modal-status{
     font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;
@@ -691,8 +705,10 @@
     .hs-grid{grid-template-columns:repeat(2,1fr);}
     .tg-main{padding:2rem 1.2rem 4rem;}
     .s-title{font-size:1.8rem;}
-    .tg-modal{padding:1.5rem;}
+    .tg-modal{padding:1.3rem;}
     .tg-modal-name{font-size:1.5rem;}
+    .tg-modal-hero{grid-template-columns:1fr;gap:0.9rem;}
+    .tg-modal-hero-portrait{width:120px;height:120px;}
     .tg-panel{gap:1rem;}
     .tg-panel-judge{width:150px;}
     .tg-panel-info{padding:0.7rem 0.7rem 0.9rem;}
@@ -786,10 +802,14 @@
 <div class="tg-modal-backdrop" id="tg-modal-backdrop" role="dialog" aria-modal="true">
   <div class="tg-modal">
     <button class="tg-modal-close" id="tg-modal-close" aria-label="Close">×</button>
-    <div class="tg-modal-hero" id="m-hero"></div>
-    <div class="tg-modal-eyebrow" id="m-eyebrow"></div>
-    <h2 class="tg-modal-name" id="m-name"></h2>
-    <div class="tg-modal-domain" id="m-domain"></div>
+    <div class="tg-modal-hero">
+      <div class="tg-modal-hero-portrait" id="m-hero"></div>
+      <div class="tg-modal-hero-identity">
+        <div class="tg-modal-eyebrow" id="m-eyebrow"></div>
+        <h2 class="tg-modal-name" id="m-name"></h2>
+        <div class="tg-modal-domain" id="m-domain"></div>
+      </div>
+    </div>
 
     <div class="tg-modal-section">
       <div class="tg-modal-section-label">Background</div>
