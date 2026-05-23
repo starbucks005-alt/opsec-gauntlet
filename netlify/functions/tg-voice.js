@@ -20,11 +20,21 @@ const judges = require('../../config/judges_master.json');
 const helpers = require('../../config/helpers_master.json');
 const scripts = require('../../config/voice_scripts.json');
 
-const MODEL_ID = 'eleven_monolingual_v1';
+// eleven_multilingual_v2 is the current ElevenLabs default and what voices
+// sound like when previewed in the ElevenLabs UI. eleven_monolingual_v1
+// (previously here) is the oldest model, much flatter and more obviously
+// synthetic — Matthew read as robotic for that reason.
+const MODEL_ID = 'eleven_multilingual_v2';
+
+// Voice settings tuned for less robotic delivery:
+//   stability          0.40  - lower = more expressive variation in tone
+//   similarity_boost   0.85  - higher = closer match to the trained voice
+//   style              0.35  - mid = some stylistic interpretation
+//   use_speaker_boost  true  - sharpens the speaker identity
 const VOICE_SETTINGS = {
-  stability: 0.55,
-  similarity_boost: 0.75,
-  style: 0.20,
+  stability: 0.40,
+  similarity_boost: 0.85,
+  style: 0.35,
   use_speaker_boost: true,
 };
 
