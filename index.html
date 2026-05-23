@@ -147,13 +147,11 @@
   .band-inner.mid{max-width:960px;}
 
   /* ── Hero ────────────────────────────────────────────────────────────────── */
-  /* Content-driven height. A previous version locked the hero to            */
-  /* min-height:calc(100vh - 60px) with flex centering, which made the band  */
-  /* swallow the viewport at every zoom level and hide the judges grid       */
-  /* below. Padding alone keeps the hero compact but never forces it to be   */
-  /* taller than its content.                                                */
+  /* Hero IS the audition. Composite on the right, tagline + audio button   */
+  /* on the left. The user can hear a real judge speak before any scroll,   */
+  /* without reading paragraphs about why we think the panel is good.       */
   .hero{
-    padding:5rem 2.5rem 4.5rem;text-align:center;
+    padding:4.5rem 2rem 4rem;
     background-image:
       radial-gradient(ellipse 80% 60% at center top, rgba(184,146,42,0.10) 0%, transparent 70%),
       repeating-linear-gradient(
@@ -167,29 +165,64 @@
       radial-gradient(circle at 80% 70%, rgba(90,26,26,0.08) 0%, transparent 45%);
     background-color:var(--bg);
   }
+  /* Two-column hero: text + audio audition on the left, composite portrait
+     of all nine judges on the right. Composite carries the visual weight
+     so the left side stays light: one short line of context, one big
+     audio button, one outline CTA into the Chamber. */
+  .hero-split{
+    display:grid;grid-template-columns:1fr 1.35fr;
+    gap:3.5rem;align-items:center;
+    max-width:1480px;margin:0 auto;
+  }
+  .hero-split-text{max-width:520px;}
   .hero-eyebrow{
     font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
   }
   .hero-title{
-    font-family:'Playfair Display',serif;font-size:clamp(3rem,6.5vw,5.2rem);
+    font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.4rem);
     font-weight:700;color:var(--cream);line-height:0.98;letter-spacing:-0.015em;
     margin-bottom:1.2rem;
   }
   .hero-title em{font-style:italic;color:var(--gold-light);}
   .hero-tagline{
-    font-family:'Playfair Display',serif;font-style:italic;font-size:1.25rem;
-    color:var(--gold-light);line-height:1.55;margin-bottom:0.6rem;letter-spacing:0.02em;
+    font-family:'Cormorant Garamond',serif;font-size:1.2rem;
+    color:var(--text);line-height:1.55;margin-bottom:1.8rem;
   }
-  .hero-tagline em{font-style:normal;color:var(--text-dim);margin:0 0.6rem;}
-  .hero-moat{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:1.15rem;color:var(--text-dim);margin-top:2.5rem;
-    max-width:540px;margin-left:auto;margin-right:auto;line-height:1.6;
-  }
-  .hero-moat strong{color:var(--cream);font-weight:600;font-style:normal;}
+  .hero-tagline strong{color:var(--gold-light);font-weight:600;}
   .hero-cta-row{
-    margin-top:3.5rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+    display:flex;gap:1rem;flex-wrap:wrap;align-items:center;
+  }
+
+  /* Audition button — the loudest control on the page. Primary gold,
+     enlarged play pip, mild pulse so the eye lands on it before the
+     outline CTA. is-playing flips to outlined-cream so it's obvious
+     audio is live. */
+  .btn-audition{position:relative;padding-left:1.6rem;}
+  .btn-audition .audition-pip{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;
+    border:1.5px solid currentColor;font-size:0.65rem;line-height:1;
+    margin-right:0.5rem;
+  }
+  .btn-audition.is-loading{opacity:0.75;cursor:wait;}
+  .btn-audition.is-playing{
+    background:var(--cream);color:var(--ink);
+    box-shadow:0 0 0 2px var(--gold-light),0 8px 32px -4px var(--crimson-glow);
+  }
+
+  .hero-split-image{
+    position:relative;
+    border:1px solid var(--rule);
+    box-shadow:0 0 56px -6px rgba(212,170,74,0.28),
+               0 16px 48px -12px rgba(0,0,0,0.7);
+  }
+  .hero-split-image img{display:block;width:100%;height:auto;}
+
+  @media (max-width:980px){
+    .hero-split{grid-template-columns:1fr;gap:2.2rem;text-align:center;}
+    .hero-split-text{max-width:none;margin:0 auto;}
+    .hero-cta-row{justify-content:center;}
   }
 
   /* Buttons */
@@ -219,91 +252,19 @@
     border-color:var(--gold-light);
   }
 
-  /* ── Differentiator strip ────────────────────────────────────────────────── */
-  .diff-strip{padding:7rem 2.5rem;}
+  /* ── Differentiator strip (one line) ─────────────────────────────────── */
+  /* Quiet support beat, not a feature wall. Three phrases. One eyebrow.   */
+  .diff-strip{padding:3.5rem 2.5rem;text-align:center;}
   .diff-eyebrow{
-    text-align:center;
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.32em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;
   }
-  .diff-title{
-    text-align:center;
-    font-family:'Playfair Display',serif;font-size:clamp(2rem,3.6vw,2.8rem);
-    font-weight:700;color:var(--cream);line-height:1.15;
-    margin-bottom:4.5rem;letter-spacing:-0.005em;
+  .diff-line{
+    font-family:'Playfair Display',serif;font-size:clamp(1rem,1.6vw,1.3rem);
+    color:var(--text);line-height:1.5;
+    max-width:920px;margin:0 auto;
   }
-  .diff-title em{font-style:italic;color:var(--gold-light);}
-  .diff-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
-    max-width:1080px;margin:0 auto;
-  }
-  .diff-card{
-    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
-    padding:2.6rem 2rem 2.4rem;position:relative;
-    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
-  }
-  .diff-card:hover{
-    border-color:var(--gold-light);
-    box-shadow:0 0 32px -4px rgba(212,170,74,0.3);
-    transform:translateY(-3px);
-  }
-  .diff-card-num{
-    font-family:'Playfair Display',serif;font-style:italic;
-    font-size:3.5rem;font-weight:700;color:var(--gold);
-    line-height:0.9;margin-bottom:1.2rem;opacity:0.85;
-  }
-  .diff-card-title{
-    font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;
-    color:var(--cream);line-height:1.2;margin-bottom:1rem;
-  }
-  .diff-card-title em{font-style:italic;color:var(--gold-light);}
-  .diff-card-body{
-    font-size:1.02rem;line-height:1.7;color:var(--text-dim);
-  }
-  .diff-card-body strong{color:var(--text);font-weight:600;}
-
-  /* ── The Panel preview ───────────────────────────────────────────────────── */
-  /* Two-column layout: text + CTA on the left, composite portrait on the
-     right. The image is display-only; the per-judge deep-link experience
-     lives inside the Chamber, not on the homepage. */
-  .panel-band{padding:5rem 2rem 4.5rem;}
-  .panel-band .band-inner{max-width:1480px;}
-  .panel-split{
-    display:grid;
-    grid-template-columns:1fr 1.5fr;
-    gap:4rem;
-    align-items:center;
-  }
-  .panel-split-text{max-width:520px;}
-  .panel-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
-  }
-  .panel-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2.2rem,3.6vw,3rem);
-    font-weight:700;color:var(--cream);line-height:1.05;
-    margin-bottom:1.6rem;letter-spacing:-0.01em;
-  }
-  .panel-title em{font-style:italic;color:var(--gold-light);}
-  .panel-body{
-    font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.7;
-    color:var(--text);margin-bottom:1.1rem;
-  }
-  .panel-body em{font-style:italic;color:var(--cream);}
-  .panel-body strong{color:var(--gold-light);font-weight:600;}
-  .panel-split-cta{margin-top:1.5rem;display:flex;}
-  .panel-split-image{
-    position:relative;
-    border:1px solid var(--rule);
-    box-shadow:0 0 56px -6px rgba(212,170,74,0.25),
-               0 16px 48px -12px rgba(0,0,0,0.7);
-  }
-  .panel-split-image img{display:block;width:100%;height:auto;}
-  @media (max-width:980px){
-    .panel-split{grid-template-columns:1fr;gap:2.5rem;}
-    .panel-split-text{max-width:none;text-align:center;margin:0 auto;}
-    .panel-split-cta{justify-content:center;}
-  }
+  .diff-line strong{color:var(--cream);font-weight:600;}
 
   /* ── The Helpers preview ─────────────────────────────────────────────────── */
   .helpers-band{padding:8rem 2.5rem 7rem;}
@@ -476,7 +437,7 @@
     .helpers-grid{grid-template-columns:repeat(2,1fr);}
   }
   @media (max-width:740px){
-    .band,.hero,.diff-strip,.panel-band,.helpers-band,.close-band{
+    .band,.hero,.diff-strip,.helpers-band,.close-band{
       padding-left:1.3rem;padding-right:1.3rem;
     }
     .hero{padding-top:3rem;padding-bottom:3rem;}
@@ -499,71 +460,25 @@
   </nav>
 </header>
 
-<!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+<!-- ── Hero (audition) ──────────────────────────────────────────────────── -->
+<!-- Composite portrait on the right. Tagline + audio button on the left.   -->
+<!-- The user can press play and hear a judge before scrolling. The audio  -->
+<!-- IS the demo - no separate Panel section needed.                       -->
 <section class="hero proscenium">
-  <div class="band-inner narrow">
-    <div class="hero-eyebrow">Diagnostic Critique Engine</div>
-    <h1 class="hero-title">Where ideas get <em>tested</em>.</h1>
-    <p class="hero-tagline">Radical Honesty <em>·</em> Uncompromising Rigor <em>·</em> No Sycophancy</p>
-    <p class="hero-moat">Nine expert AI judges. Eight evaluation dimensions. <strong>Math, not opinion.</strong> Not a verdict. A map of where your idea goes next.</p>
-    <div class="hero-cta-row">
-      <a class="btn btn-primary" href="/chamber.html">Enter The Chamber →</a>
-      <a class="btn btn-outline" href="/about.html">Read The Standard</a>
-    </div>
-  </div>
-</section>
-
-<div class="footlight"></div>
-
-<!-- ── The Panel ────────────────────────────────────────────────────────── -->
-<!-- Two-column: text + CTA on the left, composite portrait on the right.   -->
-<!-- The image is display-only here. Choosing a panel happens in the Chamber.-->
-<section class="panel-band velvet-elevated proscenium">
-  <div class="band-inner">
-    <div class="panel-split">
-      <div class="panel-split-text">
-        <div class="panel-eyebrow">The Panel</div>
-        <h2 class="panel-title">Nine judges. Nine domains. <em>One room.</em></h2>
-        <p class="panel-body">Each judge brings a domain, a lens, and a worldview. <strong>You choose three to run your idea through.</strong> The math recommends. The final pick is yours.</p>
-        <p class="panel-body">The other six sit in the audience and chime in. This is not a focus group. It is not a friendly review. <em>It is the most serious cross-disciplinary panel your idea will ever face.</em></p>
-        <div class="panel-split-cta">
-          <a class="btn btn-primary" href="/chamber.html">Enter The Chamber →</a>
-        </div>
-      </div>
-      <div class="panel-split-image">
-        <img src="Judges/THE%20JUDGES.png" alt="The nine judges of The Gauntlet, seated at their judging stations in a 3x3 panel">
+  <div class="hero-split">
+    <div class="hero-split-text">
+      <div class="hero-eyebrow">Diagnostic Critique Engine</div>
+      <h1 class="hero-title">Where ideas get <em>tested</em>.</h1>
+      <p class="hero-tagline">Nine expert judges. Eight evaluation dimensions. <strong>Math, not opinion.</strong> Press play and hear one of them.</p>
+      <div class="hero-cta-row">
+        <button class="btn btn-primary btn-audition" type="button" data-tg-voice data-character="selene_voss" data-mode="role">
+          <span class="audition-pip" aria-hidden="true">▶</span>Hear Selene
+        </button>
+        <a class="btn btn-outline" href="/chamber.html">Enter The Chamber →</a>
       </div>
     </div>
-  </div>
-</section>
-
-<div class="footlight"></div>
-
-<!-- ── Differentiator strip ─────────────────────────────────────────────── -->
-<!-- Condensed. Three reasons the verdict cannot be charmed.                -->
-<section class="diff-strip velvet-elevated">
-  <div class="band-inner">
-    <div class="diff-eyebrow">Why This Is Different</div>
-    <h2 class="diff-title">Three reasons the verdict <em>cannot be charmed</em>.</h2>
-
-    <div class="diff-grid">
-      <article class="diff-card">
-        <div class="diff-card-num">i.</div>
-        <h3 class="diff-card-title">The math runs the <em>score</em>.</h3>
-        <p class="diff-card-body">Cosine similarity. Triangulation spreads. Risk tier formulas. The judges have opinions and personalities. <strong>The scoring functions do not.</strong> Sycophancy in prose cannot leak into the metrics that drive the routing report.</p>
-      </article>
-
-      <article class="diff-card">
-        <div class="diff-card-num">ii.</div>
-        <h3 class="diff-card-title">Each judge pulls <em>current data</em>.</h3>
-        <p class="diff-card-body">Selene reads what is actually happening in AI right now. Marcus pulls real market comps. Grace tracks live regulatory exposure. <strong>Not training data from last year.</strong> Domain-scoped retrieval before a single evaluation runs.</p>
-      </article>
-
-      <article class="diff-card">
-        <div class="diff-card-num">iii.</div>
-        <h3 class="diff-card-title">This is not <em>ChatGPT</em>.</h3>
-        <p class="diff-card-body">Helpful AI tools tell you what you want to hear because the algorithm learned that positive responses get better engagement. The Gauntlet was built on the opposite principle. <strong>The truth, delivered by people who know their domain.</strong></p>
-      </article>
+    <div class="hero-split-image">
+      <img src="Judges/THE%20JUDGES.png" alt="The nine judges of The Gauntlet, seated at their judging stations in a 3x3 panel">
     </div>
   </div>
 </section>
@@ -722,6 +637,18 @@
     <div class="helpers-cta-row">
       <a class="btn btn-outline" href="/Helpers/">All Helper Profiles →</a>
     </div>
+  </div>
+</section>
+
+<div class="footlight"></div>
+
+<!-- ── Why This Is Different (one line) ─────────────────────────────────── -->
+<!-- Supporting evidence after the cool has happened. Three short phrases    -->
+<!-- under one eyebrow. Quiet through-line, not a feature wall.              -->
+<section class="diff-strip velvet-elevated">
+  <div class="band-inner">
+    <div class="diff-eyebrow">Why This Is Different</div>
+    <p class="diff-line"><strong>Math, not opinion.</strong> · <strong>Current data, not training.</strong> · <strong>Built to disagree, not to flatter.</strong></p>
   </div>
 </section>
 
