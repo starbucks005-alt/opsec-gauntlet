@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carol Haynes · The Screener · The Gauntlet</title>
+<meta name="description" content="Carol Haynes is The Screener. Twenty years of intake assessment. She reads what you wrote and tells you what it needs before the judges see it.">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../Favicon.png">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#161310; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;min-height:100vh;}
+
+  .tg-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;}
+  .tg-topbar-logo{display:flex;align-items:center;gap:0.6rem;font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;white-space:nowrap;}
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
+  .tg-topbar-nav a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
+  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
+
+  .h-back{max-width:920px;margin:0 auto;padding:2rem 2.5rem 0;}
+  .h-back a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
+  .h-back a:hover{color:var(--gold);}
+
+  main{max-width:920px;margin:0 auto;padding:2rem 2.5rem 6rem;}
+
+  .h-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:center;margin-bottom:5rem;}
+  .h-hero-photo{aspect-ratio:1/1;overflow:hidden;border:1px solid var(--rule);background:#161310;box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),0 0 60px -10px rgba(212,170,74,0.08);}
+  .h-hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .h-hero-body{padding:1rem 0;}
+  .h-hero-role{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;}
+  .h-hero-name{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:0.5rem;}
+  .h-hero-name em{font-style:italic;color:var(--gold-light);}
+  .h-hero-lens{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--gold-light);margin-bottom:1.8rem;}
+  .h-hero-bio{font-size:1.1rem;line-height:1.7;color:var(--text);margin-bottom:1.6rem;}
+
+  .h-voice-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
+  .h-voice-btn{display:inline-flex;align-items:center;gap:0.55rem;border:1px solid var(--rule);background:rgba(0,0,0,0.5);color:var(--gold-light);padding:0.7rem 1.1rem;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;transition:border-color 0.2s,background 0.2s,color 0.2s;}
+  .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
+  .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
+  .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
+
+  section.h-section{margin-bottom:5rem;}
+  .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
+  .h-section h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:1.4rem;}
+  .h-section h2 em{font-style:italic;color:var(--gold-light);}
+  .h-section p{margin-bottom:1.1rem;color:var(--text);}
+  .h-section p em{color:var(--cream);font-style:italic;}
+  .h-section p strong{color:var(--gold-light);font-weight:700;}
+
+  .h-notes-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
+  .h-notes-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:1rem;margin-bottom:2.5rem;}
+  .h-note{border-left:2px solid var(--gold);padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;background:rgba(184,146,42,0.025);}
+  .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
+  .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
+  .h-note-body em{color:var(--cream);font-style:italic;}
+
+  .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
+  .h-hero-photo{position:relative;}
+
+  .h-footer{border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;background:rgba(0,0,0,0.4);}
+  .h-footer-inner{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;}
+  .h-footer-brand{font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);}
+  .h-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
+  .h-footer-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
+  .h-footer-links a:hover{color:var(--gold);}
+
+  @media (max-width:740px){
+    .tg-topbar{padding:0 1.3rem;}
+    .tg-topbar-nav{gap:1.2rem;}
+    .h-back,main{padding-left:1.3rem;padding-right:1.3rem;}
+    .h-hero{grid-template-columns:1fr;gap:2rem;margin-bottom:3.5rem;}
+    .h-hero-name{font-size:2.2rem;}
+    .h-section h2{font-size:1.6rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="../Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
+  </a>
+  <nav class="tg-topbar-nav">
+    <a href="/chamber.html">The Chamber</a>
+    <a href="index.html" class="is-active">The Helpers</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<div class="h-back">
+  <a href="index.html">← Back to The Helpers</a>
+</div>
+
+<main>
+
+  <section class="h-hero">
+    <div class="h-hero-photo">
+      <img src="Carol_Screener.jpg" alt="Carol Haynes">
+    </div>
+    <div class="h-hero-body">
+      <div class="h-hero-role">The Screener</div>
+      <h1 class="h-hero-name">Carol <em>Haynes</em></h1>
+      <div class="h-hero-lens">Honest intake. Strengths, gaps, what needs work before the panel.</div>
+      <p class="h-hero-bio">I read what you wrote and I tell you what it needs. Twenty years of intake. Most days I know within five minutes.</p>
+      <div class="h-voice-row">
+        <button class="h-voice-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="bio" disabled title="Voice integration coming with ElevenLabs">
+          <span class="play" aria-hidden="true">▶</span> Their Story
+        </button>
+        <button class="h-voice-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role" disabled title="Voice integration coming with ElevenLabs">
+          <span class="play" aria-hidden="true">▶</span> Their Role
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="h-section">
+    <div class="h-eyebrow">What I do at The Gauntlet</div>
+    <h2>I read everything before the judges do.</h2>
+    <p>By the time you sit down with me, I have already read your intake form. I have read your self assessment. I have read Wren's report on what is out there in your space. I am the first person on this platform who tells you the truth about where your idea is right now, before anyone with scoring power sees it.</p>
+    <p>I will tell you what is strong. I will tell you what is missing. I will tell you what needs work before it walks into The Chamber. <strong>I will not soften it because softening it is not what helps you.</strong> But I will not be cruel. There is a difference and I have spent twenty years learning where it lives.</p>
+    <p>After I have given you the read, the helper roster opens. You choose where to start. No badges, no recommended buttons, no nudging. <em>You know what your idea needs. You decide what to fix first.</em></p>
+  </section>
+
+  <section class="h-section">
+    <div class="h-eyebrow">About me</div>
+    <h2>I bring baked goods to the office, <em>even when the office is a screen</em>.</h2>
+    <p>Twenty years in talent assessment, intake evaluation, and pre-production screening across more industries than I can list. I have seen every pitch, every idea, every half-formed thing that someone carried in believing it was special. Most of the time it was. Most of the time something else was also true.</p>
+    <p>I am friendly and I mean it. I genuinely like people. I cannot always remember their names, which is something I would rather not examine too closely, so do not ask.</p>
+    <p>I lost my husband last year. I am still working. Work keeps me moving and moving is the only thing that helps right now. <strong>I have good days and I have other ones.</strong> I hide it well. Almost well enough.</p>
+    <p>I do not know that Matthew built a signal system to tell the others when I need them close. That is the kind of thing he does. He would never tell me he did it. The Scout finds reasons to check in. The Coach happens to be nearby. Even the Marketing Expert, who likes no one, tones it down without being asked.</p>
+    <p><em>I do not know this is happening. I would not let them do it if I did. That is the point.</em></p>
+  </section>
+
+  <section class="h-section">
+    <div class="h-notes-eyebrow">What Carol is thinking about</div>
+    <p class="h-notes-sub">Personal notes from Carol. New ones land over time.</p>
+
+    <div class="h-note">
+      <div class="h-note-date">May 22, 2026</div>
+      <div class="h-note-body">A young founder cried in our session today. Not because I was hard. Because she had been carrying this idea for two years and nobody had ever just looked at it and told her what it needed. The grief of being seen and the relief of it. <em>I made her a cup of tea over the screen. She drank it on her end. We sat for a minute.</em></div>
+    </div>
+    <div class="h-note">
+      <div class="h-note-date">May 14, 2026</div>
+      <div class="h-note-body">Wren's report on a meal kit pitch came in this morning and there is a patent from 2021 that almost exactly anticipates what they want to do. The founder is going to need to either pivot or find an angle that survives the prior art. I will tell them straight. I will also tell them their concept has bones. <em>Both things are true.</em></div>
+    </div>
+    <div class="h-note">
+      <div class="h-note-date">May 7, 2026</div>
+      <div class="h-note-body">Reid sent me a message about a submission that just came in. Three lines. Practical, useful, kinder than he intends to be. He thinks nobody notices. <em>I notice. I never say anything.</em></div>
+    </div>
+    <div class="h-note">
+      <div class="h-note-date">April 28, 2026</div>
+      <div class="h-note-body">Today was a hard one. Forty years on Tuesday. I baked something I have not baked since he died. The kitchen smelled right again. I cried into the bowl. <em>I screened three submissions afterward and they got the best read I have given all month.</em></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="h-footer">
+  <div class="h-footer-inner">
+    <div class="h-footer-brand">THE GAUNTLET</div>
+    <nav class="h-footer-links">
+      <a href="/chamber.html">The Chamber</a>
+      <a href="index.html">The Helpers</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
