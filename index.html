@@ -408,7 +408,7 @@
     position:relative;z-index:2;
   }
   .tg-aud-judge{
-    width:110px;border:1px solid rgba(184,146,42,0.25);
+    width:180px;border:1px solid rgba(184,146,42,0.25);
     background:rgba(0,0,0,0.5);overflow:hidden;
     filter:saturate(0.5) brightness(0.78);
     opacity:0.72;
@@ -430,9 +430,14 @@
     object-fit:cover;display:block;
   }
   .tg-aud-name{
-    font-family:'Playfair Display',serif;font-size:0.72rem;font-weight:700;
-    color:var(--cream);text-align:center;padding:0.5rem 0.4rem;
-    line-height:1.15;
+    font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
+    color:var(--cream);text-align:center;padding:0.7rem 0.5rem 0.85rem;
+    line-height:1.2;
+  }
+  .tg-aud-domain{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--text-dim);
+    text-align:center;padding:0 0.5rem 0.85rem;line-height:1.4;
   }
 
   /* PAs walking behind the audience row */
@@ -474,6 +479,29 @@
     .tg-set-pa{display:none;}
   }
 
+  /* ── Locked-state two-column layout: judges left, chat right ─────────────── */
+  /* Stage + audience stack on the left; chat panel runs full-height on the   */
+  /* right. Edge-to-edge on wide screens — no more big empty gutters once     */
+  /* the panel is locked in.                                                  */
+  .tg-set-area{display:none;}
+  body.is-locked .tg-set-area{
+    display:grid;
+    grid-template-columns:minmax(0,1.55fr) minmax(360px,0.6fr);
+    gap:1.6rem;align-items:stretch;
+    margin-top:1rem;
+  }
+  body.is-locked .tg-set-left{
+    display:flex;flex-direction:column;gap:1.4rem;min-width:0;
+  }
+  body.is-locked .tg-main{
+    max-width:100%;padding:1.5rem 1.5rem 4rem;
+  }
+
+  @media (max-width:1100px){
+    body.is-locked .tg-set-area{grid-template-columns:1fr;}
+    body.is-locked .tg-chat{min-height:520px;}
+  }
+
   /* Lock transition. Three phases:
        1. is-fading-grid: grid + supporting text fade smoothly (no pop).
        2. is-locked: grid removed from layout; closed curtain in view.
@@ -502,6 +530,120 @@
     max-width:280px;
     transition:max-width 0.6s ease-out;
   }
+
+  /* ── Chat panel ──────────────────────────────────────────────────────────── */
+  /* Lives in the right column after lock. Active judges (the panel) speak in */
+  /* gold-light bold; audience judges speak in dimmed regular weight; system  */
+  /* notes in italic gold; the user's own messages in cream. Real dialogue is */
+  /* deferred — this scaffold provides the surface for it.                    */
+  .tg-chat{
+    display:none;border:1px solid var(--rule);background:rgba(0,0,0,0.55);
+    box-shadow:inset 0 0 40px -10px rgba(0,0,0,0.7);
+    overflow:hidden;
+  }
+  body.is-locked .tg-chat{
+    display:flex;flex-direction:column;height:100%;min-height:680px;
+    opacity:0;transition:opacity 0.8s ease-in;transition-delay:3.9s;
+  }
+  body.is-locked .tg-stage.is-revealing ~ .tg-set-area .tg-chat,
+  body.is-locked .tg-set-area .tg-chat.is-revealing{opacity:1;}
+
+  .tg-chat-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 1.2rem;border-bottom:1px solid var(--rule);
+    background:rgba(0,0,0,0.4);
+  }
+  .tg-chat-title{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);font-weight:700;
+  }
+  .tg-chat-sub{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);
+  }
+
+  .tg-chat-stream{
+    flex:1;min-height:0;overflow-y:auto;
+    padding:1.1rem 1.2rem;
+    display:flex;flex-direction:column;gap:1.1rem;
+    scrollbar-width:thin;
+  }
+  .tg-chat-stream::-webkit-scrollbar{width:6px;}
+  .tg-chat-stream::-webkit-scrollbar-thumb{background:rgba(184,146,42,0.35);}
+
+  .tg-chat-msg{display:flex;flex-direction:column;gap:0.3rem;}
+  .tg-chat-msg-head{
+    display:flex;align-items:baseline;gap:0.55rem;
+    font-family:'DM Mono',monospace;font-size:0.58rem;
+    letter-spacing:0.16em;text-transform:uppercase;
+  }
+  .tg-chat-msg-name{color:var(--gold-light);font-weight:700;}
+  .tg-chat-msg-role{color:var(--text-dim);font-weight:400;}
+  .tg-chat-msg-body{
+    font-family:'Cormorant Garamond',serif;font-size:1rem;
+    line-height:1.55;color:var(--text);
+  }
+
+  /* Audience judges speak quieter. */
+  .tg-chat-msg.is-audience .tg-chat-msg-name{color:var(--text-dim);font-weight:500;}
+  .tg-chat-msg.is-audience .tg-chat-msg-body{color:var(--text-dim);font-style:italic;}
+
+  /* System notes — stage directions. */
+  .tg-chat-msg.is-system{
+    border-top:1px dashed rgba(184,146,42,0.18);
+    border-bottom:1px dashed rgba(184,146,42,0.18);
+    padding:0.5rem 0;text-align:center;
+  }
+  .tg-chat-msg.is-system .tg-chat-msg-body{
+    color:var(--gold);font-style:italic;font-size:0.85rem;
+  }
+
+  /* User's own messages. */
+  .tg-chat-msg.is-user .tg-chat-msg-name{color:var(--cream);}
+  .tg-chat-msg.is-user .tg-chat-msg-body{color:var(--cream);}
+
+  .tg-chat-typing{
+    display:none;padding:0.5rem 1.2rem 0.6rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--gold-light);
+  }
+  .tg-chat-typing.is-active{display:block;}
+  .tg-chat-typing em{font-style:italic;color:var(--gold);}
+  .tg-chat-typing::after{
+    content:'';display:inline-block;width:1.5em;text-align:left;
+    animation:tg-chat-dots 1.4s steps(4,end) infinite;
+  }
+  @keyframes tg-chat-dots{
+    0%   { content:''; }
+    25%  { content:'.'; }
+    50%  { content:'..'; }
+    75%  { content:'...'; }
+    100% { content:''; }
+  }
+
+  .tg-chat-input-row{
+    display:flex;gap:0.6rem;
+    padding:0.9rem 1.1rem;
+    border-top:1px solid var(--rule);
+    background:rgba(0,0,0,0.4);
+  }
+  .tg-chat-input{
+    flex:1;min-width:0;
+    background:rgba(255,255,255,0.05);border:1px solid var(--rule);
+    color:var(--text);padding:0.65rem 0.9rem;
+    font-family:'Cormorant Garamond',serif;font-size:0.95rem;outline:none;
+  }
+  .tg-chat-input::placeholder{color:var(--text-dim);font-style:italic;}
+  .tg-chat-input:focus{border-color:var(--gold);}
+  .tg-chat-send{
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0 1.1rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;
+    letter-spacing:0.2em;text-transform:uppercase;font-weight:700;
+    cursor:pointer;
+  }
+  .tg-chat-send:hover:not(:disabled){background:var(--gold-light);}
+  .tg-chat-send:disabled{opacity:0.4;cursor:not-allowed;}
 
   /* ── Error state ─────────────────────────────────────────────────────────── */
   .tg-err{
@@ -552,41 +694,61 @@
 
   <div class="hs-grid" id="hs-grid"></div>
 
-  <section class="tg-stage" id="tg-stage" aria-hidden="true">
-    <div class="tg-stage-frame">
-      <div class="tg-curtain tg-curtain-left"></div>
-      <div class="tg-curtain tg-curtain-right"></div>
-      <div class="tg-stage-floor"></div>
+  <div class="tg-set-area" id="tg-set-area">
+    <div class="tg-set-left">
 
-      <div class="tg-set-prop tg-set-sh-left" aria-hidden="true">
-        <img src="STAGE HANDS/SH1.png" alt="">
-      </div>
-      <div class="tg-set-prop tg-set-sh-right" aria-hidden="true">
-        <img src="STAGE HANDS/SH2.png" alt="">
-      </div>
+      <section class="tg-stage" id="tg-stage" aria-hidden="true">
+        <div class="tg-stage-frame">
+          <div class="tg-curtain tg-curtain-left"></div>
+          <div class="tg-curtain tg-curtain-right"></div>
+          <div class="tg-stage-floor"></div>
 
-      <div class="tg-stage-content">
-        <div class="tg-stage-eyebrow">Your Panel</div>
-        <h2 class="tg-stage-title">The three judges who will <em>run your gauntlet</em>.</h2>
-        <div class="tg-panel" id="tg-panel"></div>
-        <div class="tg-stage-actions">
-          <button class="btn-outline" id="tg-reset">Start over</button>
-          <button class="btn-gold" id="tg-continue" disabled title="Stage 1 not built yet">Run the Gauntlet</button>
+          <div class="tg-set-prop tg-set-sh-left" aria-hidden="true">
+            <img src="STAGE HANDS/SH1.png" alt="">
+          </div>
+          <div class="tg-set-prop tg-set-sh-right" aria-hidden="true">
+            <img src="STAGE HANDS/SH2.png" alt="">
+          </div>
+
+          <div class="tg-stage-content">
+            <div class="tg-stage-eyebrow">Your Panel</div>
+            <h2 class="tg-stage-title">The three judges who will <em>run your gauntlet</em>.</h2>
+            <div class="tg-panel" id="tg-panel"></div>
+            <div class="tg-stage-actions">
+              <button class="btn-outline" id="tg-reset">Start over</button>
+              <button class="btn-gold" id="tg-continue" disabled title="Stage 1 not built yet">Run the Gauntlet</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section class="tg-audience" id="tg-audience" aria-hidden="true">
-    <div class="tg-audience-eyebrow">The Audience</div>
-    <div class="tg-audience-row" id="tg-audience-row"></div>
-    <div class="tg-set-pa tg-set-pa-left" aria-hidden="true">
-      <img src="STAGE HANDS/PA1.png" alt="">
+      <section class="tg-audience" id="tg-audience" aria-hidden="true">
+        <div class="tg-audience-eyebrow">The Audience</div>
+        <div class="tg-audience-row" id="tg-audience-row"></div>
+        <div class="tg-set-pa tg-set-pa-left" aria-hidden="true">
+          <img src="STAGE HANDS/PA1.png" alt="">
+        </div>
+        <div class="tg-set-pa tg-set-pa-right" aria-hidden="true">
+          <img src="STAGE HANDS/PA2.png" alt="">
+        </div>
+      </section>
+
     </div>
-    <div class="tg-set-pa tg-set-pa-right" aria-hidden="true">
-      <img src="STAGE HANDS/PA2.png" alt="">
-    </div>
-  </section>
+
+    <aside class="tg-chat" id="tg-chat" aria-label="Judge chat">
+      <header class="tg-chat-header">
+        <span class="tg-chat-title">The Chamber</span>
+        <span class="tg-chat-sub">Live</span>
+      </header>
+      <div class="tg-chat-stream" id="tg-chat-stream"></div>
+      <div class="tg-chat-typing" id="tg-chat-typing"></div>
+      <form class="tg-chat-input-row" id="tg-chat-form">
+        <input type="text" class="tg-chat-input" id="tg-chat-input"
+               placeholder="Speak to the panel..." autocomplete="off" maxlength="600">
+        <button type="submit" class="tg-chat-send" id="tg-chat-send">Send</button>
+      </form>
+    </aside>
+  </div>
 
 </main>
 
@@ -830,7 +992,9 @@
     });
 
     // Phase 2b: populate audience row with the six unchosen judges, in their
-    // original grid order. Smaller cards, no blink (audience watches, doesn't perform).
+    // original grid order. Normal-size cards so they're readable when they
+    // chime in via chat; still dimmed and desaturated so the stage hierarchy
+    // holds.
     audienceRow.innerHTML = '';
     state.judges.forEach(j => {
       if (state.selected.has(j.id)) return;
@@ -845,9 +1009,15 @@
           <img src="${openSrc}" alt="${escapeHtml(j.name)}">
         </div>
         <div class="tg-aud-name">${escapeHtml(j.name)}</div>
+        <div class="tg-aud-domain">${escapeHtml(j.domain)}</div>
       `;
       audienceRow.appendChild(card);
     });
+
+    // Phase 2c: seed the chat with system + sample messages so the four
+    // message types (system, active, audience, user) are visually distinct.
+    // Real judge dialogue lands in a later gate.
+    seedChat();
 
     // Phase 3: theatrical reveal in three timed beats.
     //   T=0       grid + counter + step copy fade out (700ms opacity).
@@ -869,11 +1039,104 @@
     }, 1500);
   }
 
+  // ── Chat scaffold ────────────────────────────────────────────────────────
+  // Real judge dialogue is a later gate. This scaffold proves the layout,
+  // typing indicator, and user input loop, and visually differentiates the
+  // four message types.
+
+  const chatStream = $('tg-chat-stream');
+  const chatInput  = $('tg-chat-input');
+  const chatForm   = $('tg-chat-form');
+  const chatTyping = $('tg-chat-typing');
+
+  function addChatMessage(opts){
+    // opts: { kind: 'active'|'audience'|'user'|'system', name, role, body }
+    if (!chatStream) return;
+    const msg = document.createElement('div');
+    msg.className = 'tg-chat-msg is-' + (opts.kind || 'system');
+    if (opts.kind === 'system'){
+      msg.innerHTML = `<div class="tg-chat-msg-body">${escapeHtml(opts.body)}</div>`;
+    } else {
+      const role = opts.role ? `<span class="tg-chat-msg-role">${escapeHtml(opts.role)}</span>` : '';
+      msg.innerHTML = `
+        <div class="tg-chat-msg-head">
+          <span class="tg-chat-msg-name">${escapeHtml(opts.name || '')}</span>
+          ${role}
+        </div>
+        <div class="tg-chat-msg-body">${escapeHtml(opts.body || '')}</div>
+      `;
+    }
+    chatStream.appendChild(msg);
+    chatStream.scrollTop = chatStream.scrollHeight;
+  }
+
+  function showTyping(name){
+    if (!chatTyping) return;
+    chatTyping.innerHTML = `<em>${escapeHtml(name)}</em> is typing`;
+    chatTyping.classList.add('is-active');
+  }
+  function hideTyping(){
+    if (!chatTyping) return;
+    chatTyping.classList.remove('is-active');
+  }
+
+  function seedChat(){
+    if (!chatStream) return;
+    chatStream.innerHTML = '';
+    addChatMessage({ kind:'system', body:'The judges are taking their seats.' });
+
+    // Demo the active vs audience differentiation. Picks the first chosen and
+    // first unchosen judge so the demo uses real names from the current panel.
+    const chosenList = state.judges.filter(j => state.selected.has(j.id));
+    const audienceList = state.judges.filter(j => !state.selected.has(j.id));
+    const firstActive   = chosenList[0];
+    const firstAudience = audienceList[0];
+
+    if (firstActive){
+      setTimeout(() => {
+        showTyping(firstActive.name);
+        setTimeout(() => {
+          hideTyping();
+          addChatMessage({
+            kind:'active',
+            name:firstActive.name,
+            role:'On the panel',
+            body:'Walk us through what you have actually built. No elevator pitch.'
+          });
+        }, 1800);
+      }, 1000);
+    }
+    if (firstAudience){
+      setTimeout(() => {
+        addChatMessage({
+          kind:'audience',
+          name:firstAudience.name,
+          role:'Audience',
+          body:'Watch the language carefully here. There are pre-commitments hiding in the framing.'
+        });
+      }, 4200);
+    }
+  }
+
+  function onChatSubmit(e){
+    e.preventDefault();
+    const raw = chatInput.value.trim();
+    if (!raw) return;
+    addChatMessage({ kind:'user', name:'You', body:raw });
+    chatInput.value = '';
+    // Real judge response wiring lands in a later gate. For now, the user's
+    // message simply enters the stream so the input loop is testable.
+  }
+
+  if (chatForm) chatForm.addEventListener('submit', onChatSubmit);
+
   function resetAll(){
     state.selected.clear();
     state.locked = false;
     document.body.classList.remove('is-locked','is-fading-grid');
     stage.classList.remove('is-revealing');
+    if (chatStream) chatStream.innerHTML = '';
+    hideTyping();
     stage.setAttribute('aria-hidden', 'true');
     audience.classList.remove('is-revealing');
     audience.setAttribute('aria-hidden', 'true');
