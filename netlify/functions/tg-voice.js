@@ -42,6 +42,42 @@ function findScript(characterId, mode) {
   return entry[mode] || null;
 }
 
+// Display name for the character, stripped of any parenthetical content
+// (e.g. "Admiral Grace Nakamura (Ret.)" -> "Admiral Grace Nakamura") so the
+// voice does not pronounce "parenthesis Ret dot".
+function getCharacterDisplayName(characterId) {
+  const j = (judges.judges || []).find(x => x.id === characterId);
+  const h = (helpers.helpers || []).find(x => x.id === characterId);
+  const raw = (j && j.name) || (h && h.name) || '';
+  return raw.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+}
+
+// Build the text actually sent to ElevenLabs. Two transforms applied:
+//
+//   1. Leading pause buffer. Without ". " up front, ElevenLabs starts the
+//      audio mid-phoneme and HTML Audio playback clips the first word on the
+//      client. The leading period is voiced as silence, not as "dot".
+//
+//   2. Auto-prepended name intro. Terry's rule: every clip starts with the
+//      character's full name. We detect whether the script already opens
+//      with the character's first name and only prepend if it does not, so
+//      bios that already say "I'm Selene Voss." are not double-named.
+function buildSpeechText(characterId, script) {
+  const displayName = getCharacterDisplayName(characterId);
+
+  // First name = first token after dropping honorifics. Used only to test
+  // whether the script's opening already introduces the character.
+  const baseName = displayName.replace(/^(Dr\.|Admiral|Prof\.|Mr\.|Ms\.|Mrs\.)\s+/i, '');
+  const firstName = (baseName.split(/\s+/)[0] || '').toLowerCase();
+  const opening = script.substring(0, 60).toLowerCase();
+  const alreadyIntroduced = firstName && opening.includes(firstName);
+
+  const namePrefix = (displayName && !alreadyIntroduced) ? `I'm ${displayName}. ` : '';
+  const pausePrefix = '. ';
+
+  return pausePrefix + namePrefix + script;
+}
+
 exports.handler = async (event) => {
   // CORS preflight (Netlify default origin only; tighten if needed)
   if (event.httpMethod === 'OPTIONS') {
@@ -75,8 +111,11 @@ exports.handler = async (event) => {
   const voiceId = findVoiceId(character);
   if (!voiceId) return jsonError(404, 'character not found or has no voice');
 
-  const text = findScript(character, mode);
-  if (!text) return jsonError(404, 'no script for that character + mode');
+  const rawText = findScript(character, mode);
+  if (!rawText) return jsonError(404, 'no script for that character + mode');
+
+  // Apply the pause buffer + auto name intro before handing off to ElevenLabs.
+  const text = buildSpeechText(character, rawText);
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {
