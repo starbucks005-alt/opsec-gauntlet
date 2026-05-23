@@ -108,3 +108,6 @@
   [functions.tg-voice]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-idea-generator]
+    timeout = 26
