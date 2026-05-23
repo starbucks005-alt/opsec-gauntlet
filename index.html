@@ -309,43 +309,35 @@
     font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;
     color:var(--gold-light);line-height:1.5;
   }
-  .panel-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
-    max-width:1080px;margin:0 auto 3rem;
+  /* The panel preview is one composite portrait of all nine judges seated
+     in their judging stations, with invisible click hotspots overlaid on
+     each cell so the per-judge deep-link to /chamber.html?judge=<id> still
+     works. The image itself carries the names and domains so we do not
+     render them again as separate captions. */
+  .panel-composite{
+    position:relative;max-width:1080px;margin:0 auto 3rem;
+    border:1px solid var(--rule);
+    box-shadow:0 0 56px -6px rgba(212,170,74,0.25),
+               0 16px 48px -12px rgba(0,0,0,0.7);
   }
-  .panel-card{
-    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
-    overflow:hidden;display:flex;flex-direction:column;
-    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
+  .panel-composite img{display:block;width:100%;height:auto;}
+  .panel-composite-hotspots{
+    position:absolute;inset:0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(3,1fr);
   }
-  .panel-card:hover{
-    border-color:var(--gold);
-    box-shadow:0 0 36px -6px rgba(212,170,74,0.4);
-    transform:translateY(-4px);
+  .panel-composite-hotspot{
+    display:block;
+    text-decoration:none;color:transparent;
+    transition:background 0.18s,box-shadow 0.18s;
   }
-  .panel-card-photo{
-    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
-    background:#14151a;
+  .panel-composite-hotspot:hover{
+    background:rgba(184,146,42,0.10);
+    box-shadow:inset 0 0 0 2px var(--gold-light),
+               inset 0 0 48px -6px rgba(212,170,74,0.4);
   }
-  .panel-card-photo img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    transition:filter 0.3s,transform 0.4s;
-  }
-  .panel-card:hover .panel-card-photo img{
-    filter:brightness(1.08);transform:scale(1.03);
-  }
-  .panel-card-body{
-    padding:1.1rem 1.2rem 1.3rem;border-top:1px solid var(--rule);
-    background:rgba(184,146,42,0.04);
-  }
-  .panel-card-name{
-    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
-    color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
-  }
-  .panel-card-domain{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
-    text-transform:uppercase;color:var(--gold);line-height:1.5;
-  }
+  .panel-composite-hotspot:focus{outline:2px solid var(--gold);outline-offset:-2px;}
   .panel-cta-row{display:flex;justify-content:center;}
 
   /* ── The Helpers preview ─────────────────────────────────────────────────── */
@@ -516,7 +508,6 @@
   @media (max-width:980px){
     .insight-pair{grid-template-columns:1fr;gap:2rem;}
     .diff-grid{grid-template-columns:1fr;gap:1.4rem;}
-    .panel-grid{grid-template-columns:repeat(3,1fr);gap:0.8rem;}
     .helpers-grid{grid-template-columns:repeat(2,1fr);}
   }
   @media (max-width:740px){
@@ -526,7 +517,6 @@
     .hero{padding-top:3rem;padding-bottom:3rem;}
     .insight{padding-top:5rem;padding-bottom:5rem;}
     .insight-hook{margin-bottom:3rem;}
-    .panel-grid{grid-template-columns:repeat(2,1fr);}
     .tg-topbar{padding:0 1.3rem;}
     .tg-topbar-nav{gap:1.3rem;}
   }
@@ -573,70 +563,19 @@
       <p class="panel-sub">You choose three. The math recommends. The final pick is yours.</p>
     </div>
 
-    <div class="panel-grid">
-      <a class="panel-card" href="/chamber.html?judge=selene_voss">
-        <div class="panel-card-photo"><img src="Judges/Selene_eyes_open.jpg" alt="Selene Voss"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Selene Voss</div>
-          <div class="panel-card-domain">AI &amp; Emerging Tech</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=marcus_holt">
-        <div class="panel-card-photo"><img src="Judges/Marcus_eyes_open.jpg" alt="Marcus Holt"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Marcus Holt</div>
-          <div class="panel-card-domain">Crypto, PE &amp; Alt Finance</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=priya_anand">
-        <div class="panel-card-photo"><img src="Judges/Priya_eyes_open.jpg" alt="Dr. Priya Anand"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Dr. Priya Anand</div>
-          <div class="panel-card-domain">Health &amp; Life Sciences</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=raymond_chen">
-        <div class="panel-card-photo"><img src="Judges/Raymond_eyes_open.jpg" alt="Raymond Chen"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Raymond Chen</div>
-          <div class="panel-card-domain">Business &amp; Operations</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=astrid_lund">
-        <div class="panel-card-photo"><img src="Judges/Astrid_eyes_open.jpg" alt="Astrid Lund"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Astrid Lund</div>
-          <div class="panel-card-domain">Law &amp; Intellectual Property</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=osei_mensah">
-        <div class="panel-card-photo"><img src="Judges/Osei_eyes_open.jpg" alt="Dr. Osei Mensah"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Dr. Osei Mensah</div>
-          <div class="panel-card-domain">Science &amp; Research</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=grace_nakamura">
-        <div class="panel-card-photo"><img src="Judges/Grace_eyes_open.jpg" alt="Admiral Grace Nakamura"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Admiral Grace Nakamura (Ret.)</div>
-          <div class="panel-card-domain">Gov, Policy &amp; National Security</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=devon_sloane">
-        <div class="panel-card-photo"><img src="Judges/Devon_eyes_open.jpg" alt="Devon Sloane"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Devon Sloane</div>
-          <div class="panel-card-domain">Media &amp; Entertainment</div>
-        </div>
-      </a>
-      <a class="panel-card" href="/chamber.html?judge=cassidy_mercer">
-        <div class="panel-card-photo"><img src="Judges/Cassidy_eyes_open.jpg" alt="Dr. Cassidy Mercer"></div>
-        <div class="panel-card-body">
-          <div class="panel-card-name">Dr. Cassidy Mercer</div>
-          <div class="panel-card-domain">Behavioral Science &amp; Psych</div>
-        </div>
-      </a>
+    <div class="panel-composite">
+      <img src="Judges/THE%20JUDGES.png" alt="The nine judges of The Gauntlet, seated at their judging stations in a 3x3 panel">
+      <div class="panel-composite-hotspots" role="navigation" aria-label="Judge profiles">
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=selene_voss" aria-label="Open Selene Voss profile">Selene Voss</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=marcus_holt" aria-label="Open Marcus Holt profile">Marcus Holt</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=priya_anand" aria-label="Open Dr. Priya Anand profile">Dr. Priya Anand</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=raymond_chen" aria-label="Open Raymond Chen profile">Raymond Chen</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=astrid_lund" aria-label="Open Astrid Lund profile">Astrid Lund</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=osei_mensah" aria-label="Open Dr. Osei Mensah profile">Dr. Osei Mensah</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=grace_nakamura" aria-label="Open Admiral Grace Nakamura profile">Admiral Grace Nakamura</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=devon_sloane" aria-label="Open Devon Sloane profile">Devon Sloane</a>
+        <a class="panel-composite-hotspot" href="/chamber.html?judge=cassidy_mercer" aria-label="Open Dr. Cassidy Mercer profile">Dr. Cassidy Mercer</a>
+      </div>
     </div>
 
     <div class="panel-cta-row">
