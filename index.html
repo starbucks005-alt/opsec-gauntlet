@@ -14,6 +14,7 @@
 <meta property="og:url" content="https://the-gauntlet.netlify.app/">
 <link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/tg-im.js" defer></script>
+<script src="assets/tg-voice.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -426,14 +427,17 @@
     font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--gold);
   }
-  /* Action row on each preview card: Profile link + IM me button.
-     Profile takes the user to the helper's individual page; IM me opens the
-     in-page chat modal handled by tg-im.js. Both are reachable without
-     navigating away first. */
+  /* Action row on each preview card. Three actions:
+       - Profile (link, left, gold text)         -> helper's individual page
+       - Role    (button, right, gold filled)    -> plays role voice clip
+       - IM me   (button, right, gold filled)    -> opens chat modal
+     Role and IM me are grouped on the right so Profile gets its own
+     visual anchor on the left without crowding the audio + chat actions. */
   .helper-card-actions{
     display:flex;align-items:center;justify-content:space-between;
     gap:0.6rem;padding:0 1rem 1rem;
   }
+  .helper-card-action-group{display:flex;gap:0.45rem;}
   .helper-card-profile{
     font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--gold);text-decoration:none;
@@ -443,14 +447,22 @@
   .helper-card-profile:hover{
     color:var(--gold-light);border-bottom-color:var(--gold-light);
   }
-  .helper-card-im{
+  .helper-card-im,
+  .helper-card-role-btn{
     background:var(--gold);color:var(--ink);border:none;
-    padding:0.55rem 0.9rem;cursor:pointer;
+    padding:0.55rem 0.85rem;cursor:pointer;
     font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
     text-transform:uppercase;font-weight:700;
-    transition:background 0.2s;
+    transition:background 0.2s,box-shadow 0.2s;
   }
-  .helper-card-im:hover{background:var(--gold-light);}
+  .helper-card-im:hover,
+  .helper-card-role-btn:hover{background:var(--gold-light);}
+  /* Audible play states (tg-voice.js toggles these). */
+  .helper-card-role-btn.is-loading{opacity:0.65;cursor:wait;}
+  .helper-card-role-btn.is-playing{
+    background:var(--gold-light);
+    box-shadow:inset 0 0 0 2px var(--cream);
+  }
   .helpers-cta-row{display:flex;justify-content:center;}
 
   /* ── Closing CTA ─────────────────────────────────────────────────────────── */
@@ -710,7 +722,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/wren-scout.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="wren_calloway" data-mode="role" aria-label="Hear Wren describe her role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -724,7 +739,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/carol-screener.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role" aria-label="Hear Carol describe her role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -738,7 +756,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/matthew-behaviorist.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role" aria-label="Hear Matthew describe his role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -752,7 +773,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/arjun-delivery.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="arjun_mehta" data-mode="role" aria-label="Hear Arjun describe his role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -766,7 +790,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/zara-influencer.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="zara_cole" data-mode="role" aria-label="Hear Zara describe her role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -780,7 +807,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/reid-marketing.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="reid_callum" data-mode="role" aria-label="Hear Reid describe his role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -795,7 +825,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/jules-rewrite.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="jules" data-name="Jules">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="jules" data-mode="role" aria-label="Hear Jules describe her role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="jules" data-name="Jules">IM me</button>
+          </div>
         </div>
       </article>
       <article class="helper-card">
@@ -809,7 +842,10 @@
         </div>
         <div class="helper-card-actions">
           <a class="helper-card-profile" href="/Helpers/grant-coach.html">Profile</a>
-          <button class="helper-card-im" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM me</button>
+          <div class="helper-card-action-group">
+            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="grant_ellis" data-mode="role" aria-label="Hear Grant describe his role">Role</button>
+            <button class="helper-card-im" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM me</button>
+          </div>
         </div>
       </article>
     </div>

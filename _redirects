@@ -23,9 +23,8 @@
 /workshop.html                 /workshop.html           200
 /workshop                      /workshop.html           200
 
-# Helper tier — lowercase URL → existing capital folder.
-# The folder is capital because the eye/profile image naming convention is
-# shared across other Greylander properties and cannot be renamed here.
-/helpers       /Helpers/       301!
-/helpers/      /Helpers/       301!
-/helpers/*     /Helpers/:splat 301!
+# Helper tier lives at /Helpers/ (capital). Internal links use the capital
+# form. Earlier lowercase->capital redirect rules caused a Netlify redirect
+# loop that broke the entire helper roster (including the voice buttons that
+# live on that page), so the rules were removed. If a user hand-types
+# lowercase /helpers, they will get a 404 - acceptable cost.
