@@ -23,6 +23,13 @@
   'use strict';
 
   const ENDPOINT = '/.netlify/functions/tg-voice';
+
+  // Cache-busting version. Bump this any time we want every browser to
+  // re-fetch audio (model upgrade, voice-settings tune, script rewrite).
+  // The function ignores the param; it only changes the URL so the
+  // browser's HTTP cache treats it as a new resource and refetches.
+  const VOICE_VERSION = '2026-05-23-v2';
+
   const audioCache = new Map();     // key: character|mode → blob URL
   let currentAudio = null;          // currently-playing HTMLAudioElement
   let currentButton = null;
@@ -46,7 +53,7 @@
   async function fetchAudio(character, mode){
     const k = key(character, mode);
     if (audioCache.has(k)) return audioCache.get(k);
-    const url = `${ENDPOINT}?character=${encodeURIComponent(character)}&mode=${encodeURIComponent(mode)}`;
+    const url = `${ENDPOINT}?character=${encodeURIComponent(character)}&mode=${encodeURIComponent(mode)}&v=${encodeURIComponent(VOICE_VERSION)}`;
     const resp = await fetch(url, { credentials: 'omit' });
     if (!resp.ok){
       const text = await resp.text().catch(() => '');
