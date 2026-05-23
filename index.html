@@ -272,7 +272,8 @@
     min-height:340px;
   }
 
-  /* Curtains: two halves that slide outward */
+  /* Curtains: two halves that slide outward — slow and theatrical so the
+     viewer can actually watch the reveal happen. */
   .tg-curtain{
     position:absolute;top:0;bottom:0;width:50%;
     background:repeating-linear-gradient(
@@ -283,7 +284,7 @@
       var(--velvet-deep) 36px
     );
     box-shadow:inset 0 0 60px rgba(0,0,0,0.6);
-    z-index:5;transition:transform 1.4s cubic-bezier(0.7,0,0.3,1);
+    z-index:5;transition:transform 2.6s cubic-bezier(0.65,0,0.35,1);
   }
   .tg-curtain-left{left:0;border-right:2px solid #2a0808;}
   .tg-curtain-right{right:0;border-left:2px solid #2a0808;}
@@ -296,7 +297,7 @@
   }
 
   .tg-stage-content{
-    opacity:0;transition:opacity 0.6s ease-in;transition-delay:1.0s;
+    opacity:0;transition:opacity 0.7s ease-in;transition-delay:2.7s;
     text-align:center;position:relative;z-index:2;
   }
   .tg-stage.is-revealing .tg-stage-content{opacity:1;}
@@ -320,9 +321,9 @@
     transform:translateY(30px);opacity:0;
     transition:transform 0.8s ease-out,opacity 0.8s ease-out;
   }
-  .tg-panel-judge:nth-child(1){transition-delay:1.3s;}
-  .tg-panel-judge:nth-child(2){transition-delay:1.5s;}
-  .tg-panel-judge:nth-child(3){transition-delay:1.7s;}
+  .tg-panel-judge:nth-child(1){transition-delay:3.1s;}
+  .tg-panel-judge:nth-child(2){transition-delay:3.35s;}
+  .tg-panel-judge:nth-child(3){transition-delay:3.6s;}
   .tg-stage.is-revealing .tg-panel-judge{transform:translateY(0);opacity:1;}
 
   .tg-panel-portrait{
@@ -346,7 +347,7 @@
 
   .tg-stage-actions{
     margin-top:2.5rem;display:flex;justify-content:center;gap:1rem;
-    opacity:0;transition:opacity 0.4s ease-in;transition-delay:2.0s;
+    opacity:0;transition:opacity 0.5s ease-in;transition-delay:4.0s;
   }
   .tg-stage.is-revealing .tg-stage-actions{opacity:1;}
 
@@ -355,7 +356,7 @@
   /* All positioned absolutely; cutouts on transparent PNG backgrounds.       */
   .tg-set-prop{
     position:absolute;pointer-events:none;
-    opacity:0;transition:opacity 1.2s ease-in;transition-delay:1.6s;
+    opacity:0;transition:opacity 1.2s ease-in;transition-delay:3.3s;
     z-index:3;
     filter:brightness(0.85) contrast(0.95);
   }
@@ -376,7 +377,7 @@
     position:relative;margin-top:1.5rem;padding:2.5rem 1rem 3rem;
     border:1px solid var(--rule);background:rgba(0,0,0,0.5);
     display:none;
-    opacity:0;transition:opacity 0.8s ease-in;transition-delay:1.9s;
+    opacity:0;transition:opacity 0.9s ease-in;transition-delay:3.7s;
     overflow:hidden;
   }
   .tg-stage.is-revealing + .tg-audience{display:block;}
@@ -425,7 +426,7 @@
     position:absolute;pointer-events:none;
     bottom:0;height:140px;width:auto;
     opacity:0;z-index:1;
-    transition:opacity 1.2s ease-in;transition-delay:2.3s;
+    transition:opacity 1.2s ease-in;transition-delay:4.3s;
     filter:brightness(0.7) contrast(0.9) saturate(0.7);
   }
   .tg-audience.is-revealing .tg-set-pa{opacity:0.85;}
@@ -436,14 +437,34 @@
     .tg-set-pa{display:none;}
   }
 
-  /* On lock, the grid disappears and the counter changes. */
+  /* Lock transition. Three phases:
+       1. is-fading-grid: grid + supporting text fade smoothly (no pop).
+       2. is-locked: grid removed from layout; closed curtain in view.
+                     Anticipation beat holds here before the curtain parts.
+       3. .tg-stage.is-revealing: curtains open (2.6s), content fades in. */
+  .hs-grid,.tg-counter-bar,.s-label,.s-title,.s-sub{
+    transition:opacity 0.7s ease-out;
+  }
+  body.is-fading-grid .hs-grid,
+  body.is-fading-grid .tg-counter-bar,
+  body.is-fading-grid .s-label,
+  body.is-fading-grid .s-title,
+  body.is-fading-grid .s-sub{
+    opacity:0;pointer-events:none;
+  }
   body.is-locked .hs-grid{display:none;}
   body.is-locked .tg-counter-bar{display:none;}
   body.is-locked .s-title,
   body.is-locked .s-sub,
   body.is-locked .s-label{display:none;}
-  body.is-locked .tg-hero{margin-bottom:1rem;}
-  body.is-locked .tg-hero img{max-width:280px;}
+  body.is-locked .tg-hero{
+    margin-bottom:1.5rem;
+    transition:margin 0.6s ease-out;
+  }
+  body.is-locked .tg-hero img{
+    max-width:280px;
+    transition:max-width 0.6s ease-out;
+  }
 
   /* ── Error state ─────────────────────────────────────────────────────────── */
   .tg-err{
@@ -790,22 +811,30 @@
       audienceRow.appendChild(card);
     });
 
-    // Phase 3: switch the page to locked layout (grid hides, audience appears),
-    // rise the curtain.
-    document.body.classList.add('is-locked');
+    // Phase 3: theatrical reveal in three timed beats.
+    //   T=0       grid + counter + step copy fade out (700ms opacity).
+    //   T=700ms   grid removed from layout; closed curtain comes into view.
+    //             Scroll the viewer to the stage so they're positioned to watch.
+    //   T=1500ms  anticipation beat with the closed curtain held in view.
+    //   T=1500ms+ curtains begin parting (2.6s), then content fades in per
+    //             the CSS transition-delays.
+    document.body.classList.add('is-fading-grid');
+    setTimeout(() => {
+      document.body.classList.add('is-locked');
+      stage.scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 700);
     setTimeout(() => {
       stage.classList.add('is-revealing');
       stage.setAttribute('aria-hidden', 'false');
       audience.classList.add('is-revealing');
       audience.setAttribute('aria-hidden', 'false');
-      stage.scrollIntoView({ behavior:'smooth', block:'start' });
-    }, 700);
+    }, 1500);
   }
 
   function resetAll(){
     state.selected.clear();
     state.locked = false;
-    document.body.classList.remove('is-locked');
+    document.body.classList.remove('is-locked','is-fading-grid');
     stage.classList.remove('is-revealing');
     stage.setAttribute('aria-hidden', 'true');
     audience.classList.remove('is-revealing');
