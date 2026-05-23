@@ -459,15 +459,13 @@
     .tg-set-pa{display:none;}
   }
 
-  /* ── Locked-state two-column layout: judges left, chat right ─────────────── */
-  /* Stage + audience stack on the left; chat panel runs full-height on the   */
-  /* right. Edge-to-edge on wide screens — no more big empty gutters once     */
-  /* the panel is locked in.                                                  */
+  /* ── Locked-state layout: stage + audience scroll on the left, chat is a ── */
+  /* fixed sidebar on the right that NEVER scrolls out of view. The chat      */
+  /* messages scroll internally; the input is always pinned to the bottom of  */
+  /* the chat panel.                                                          */
   .tg-set-area{display:none;}
   body.is-locked .tg-set-area{
-    display:grid;
-    grid-template-columns:minmax(0,1.55fr) minmax(360px,0.6fr);
-    gap:1.6rem;align-items:stretch;
+    display:block;
     margin-top:1rem;
   }
   body.is-locked .tg-set-left{
@@ -477,9 +475,31 @@
     max-width:100%;padding:1.5rem 1.5rem 4rem;
   }
 
-  @media (max-width:1100px){
-    body.is-locked .tg-set-area{grid-template-columns:1fr;}
-    body.is-locked .tg-chat{min-height:520px;}
+  /* Desktop: chat is position:fixed against the right viewport edge. */
+  @media (min-width:900px){
+    body.is-locked .tg-chat{
+      position:fixed;
+      top:56px;              /* sits below the 56px topbar */
+      right:0;
+      bottom:0;
+      width:clamp(360px,32vw,480px);
+      height:auto;
+      z-index:50;
+      border-right:none;
+    }
+    /* Reserve room on the right so the scrollable content can't slide */
+    /* under the fixed chat. */
+    body.is-locked .tg-main{
+      padding-right:calc(clamp(360px,32vw,480px) + 1.5rem);
+    }
+  }
+
+  /* Below 900px the chat returns to the document flow under the stage. */
+  @media (max-width:899px){
+    body.is-locked .tg-chat{
+      margin-top:1.5rem;
+      min-height:520px;
+    }
   }
 
   /* Lock transition. Three phases:
@@ -528,7 +548,7 @@
     transition:opacity 0.6s ease-in;
   }
   body.is-locked .tg-chat{
-    display:flex;flex-direction:column;height:100%;min-height:680px;
+    display:flex;flex-direction:column;
   }
   body.is-locked .tg-chat.is-revealing{opacity:1;}
 
