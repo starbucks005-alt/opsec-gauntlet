@@ -88,6 +88,9 @@
   .r-card-photo{
     position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
     background:#14151a;border-bottom:1px solid var(--rule);
+    /* The photo is the click target that opens the helper's profile page,
+       mirroring how the judges grid opens a modal on portrait click. */
+    display:block;text-decoration:none;color:inherit;cursor:pointer;
   }
   .r-card-photo img{
     position:absolute;inset:0;width:100%;height:100%;
@@ -233,10 +236,10 @@
   <div class="r-grid">
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="wren-scout.html" aria-label="Visit Wren Calloway's page">
         <img class="blink-open" src="Wren_eyes_open.jpg" alt="Wren Calloway">
         <img class="blink-closed" src="Wren_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Wren Calloway</div>
         <div class="r-card-role">The Scout</div>
@@ -253,10 +256,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="carol-screener.html" aria-label="Visit Carol Haynes's page">
         <img class="blink-open" src="Carol_eyes_open.jpg" alt="Carol Haynes">
         <img class="blink-closed" src="Carol_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Carol Haynes</div>
         <div class="r-card-role">The Screener</div>
@@ -273,10 +276,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="matthew-behaviorist.html" aria-label="Visit Matthew Vance's page">
         <img class="blink-open" src="Matthew_eyes_open.jpg" alt="Matthew Vance">
         <img class="blink-closed" src="Matthew_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Matthew Vance</div>
         <div class="r-card-role">The Behaviorist</div>
@@ -293,10 +296,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="arjun-delivery.html" aria-label="Visit Arjun Mehta's page">
         <img class="blink-open" src="Arjun_eyes_open.jpg" alt="Arjun Mehta">
         <img class="blink-closed" src="Arjun_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Arjun Mehta</div>
         <div class="r-card-role">The Delivery Expert</div>
@@ -313,10 +316,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="zara-influencer.html" aria-label="Visit Zara Cole's page">
         <img class="blink-open" src="Zara_eyes_open.jpg" alt="Zara Cole">
         <img class="blink-closed" src="Zara_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Zara Cole</div>
         <div class="r-card-role">The Influencer</div>
@@ -333,10 +336,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="reid-marketing.html" aria-label="Visit Reid Callum's page">
         <img class="blink-open" src="Reid_eyes_open.jpg" alt="Reid Callum">
         <img class="blink-closed" src="Reid_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Reid Callum</div>
         <div class="r-card-role">The Marketing Expert</div>
@@ -353,11 +356,11 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="jules-rewrite.html" aria-label="Visit Jules's page">
         <div class="r-card-crossover">From Greylander Press</div>
         <img class="blink-open" src="Jules_eyes_open.jpg" alt="Jules">
         <img class="blink-closed" src="Jules_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Jules</div>
         <div class="r-card-role">The Rewrite Partner</div>
@@ -374,10 +377,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo r-card-photo-blink">
+      <a class="r-card-photo r-card-photo-blink" href="grant-coach.html" aria-label="Visit Grant Ellis's page">
         <img class="blink-open" src="Grant_eyes_open.jpg" alt="Grant Ellis">
         <img class="blink-closed" src="Grant_eyes_closed.jpg" alt="" aria-hidden="true">
-      </div>
+      </a>
       <div class="r-card-body">
         <div class="r-card-name">Grant Ellis</div>
         <div class="r-card-role">The Coach</div>
