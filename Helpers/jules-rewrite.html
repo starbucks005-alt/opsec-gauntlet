@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jules · The Rewrite Partner · The Gauntlet</title>
-<meta name="description" content="Jules is The Rewrite Partner. Full-time at Greylander Press, part-time at The Gauntlet. She reads your submission for the AI tells Selene will clock the second you submit.">
+<meta name="description" content="Jules is The Rewrite Partner. From Greylander Press. Ten years reading manuscripts. She reads your submission for AI markers the judges will catch and works with you pass by pass until it sounds like you wrote it.">
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
@@ -36,14 +36,13 @@
   main{max-width:920px;margin:0 auto;padding:2rem 2.5rem 6rem;}
 
   .h-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:center;margin-bottom:5rem;}
-  .h-hero-photo{aspect-ratio:1/1;overflow:hidden;border:1px solid var(--rule);background:#161310;box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),0 0 60px -10px rgba(212,170,74,0.08);}
+  .h-hero-photo{position:relative;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--rule);background:#161310;box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),0 0 60px -10px rgba(212,170,74,0.08);}
   .h-hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
   .h-hero-body{padding:1rem 0;}
-  .h-hero-role{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;}
-  .h-hero-name{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:0.5rem;}
+  .h-hero-role{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .h-hero-name{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:0.55rem;}
   .h-hero-name em{font-style:italic;color:var(--gold-light);}
-  .h-hero-lens{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--gold-light);margin-bottom:1.8rem;}
-  .h-hero-bio{font-size:1.1rem;line-height:1.7;color:var(--text);margin-bottom:1.6rem;}
+  .h-hero-lens{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:var(--gold-light);margin-bottom:1.8rem;}
 
   .h-voice-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
   .h-voice-btn{display:inline-flex;align-items:center;gap:0.55rem;border:1px solid var(--rule);background:rgba(0,0,0,0.5);color:var(--gold-light);padding:0.7rem 1.1rem;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;transition:border-color 0.2s,background 0.2s,color 0.2s;}
@@ -51,64 +50,31 @@
   .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
   .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
   .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
-  .h-im-btn{
-    display:inline-flex;align-items:center;justify-content:center;
-    background:var(--gold);color:var(--ink);border:none;
-    padding:0.75rem 1.4rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;font-weight:700;
-    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
-  }
+  .h-im-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--gold);color:var(--ink);border:none;padding:0.75rem 1.4rem;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:700;transition:background 0.2s,transform 0.2s,box-shadow 0.3s;}
   .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
+
+  .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
 
   section.h-section{margin-bottom:5rem;}
   .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
-  .h-section h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:1.4rem;}
+  .h-section h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:1.4rem;}
   .h-section h2 em{font-style:italic;color:var(--gold-light);}
   .h-section p{margin-bottom:1.1rem;color:var(--text);}
   .h-section p em{color:var(--cream);font-style:italic;}
   .h-section p strong{color:var(--gold-light);font-weight:700;}
 
+  /* Notes — Jules's format is sparse paragraphs, no dates. */
   .h-notes-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
   .h-notes-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:1rem;margin-bottom:2.5rem;}
-  .h-note{border-left:2px solid var(--gold);padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;background:rgba(184,146,42,0.025);}
-  .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
-  .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
-  .h-note-body em{color:var(--cream);font-style:italic;}
-  /* Notes — per-character block types ────────────────────────────────────── */
-  .h-note-body p{margin-bottom:0.95rem;}
-  .h-note-body p:last-child{margin-bottom:0;}
-  .h-note-aside{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
-    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
-    margin:0.6rem 0;
-  }
-  .h-note-aside:last-child{margin-bottom:0;}
-  .h-note-list{
-    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
-    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
-    color:var(--text);line-height:1.85;
-  }
-  .h-note-list li{margin-bottom:0.35rem;}
-  .h-note-list li em{font-style:italic;color:var(--gold-light);}
-  .h-note-quote{
-    font-family:'Playfair Display',serif;font-style:italic;
-    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
-    padding:0.5rem 0 0.5rem 1.4rem;
+  .h-note-undated{
     border-left:2px solid var(--gold);
-    margin:0.8rem 0 0.9rem;
-    background:rgba(184,146,42,0.04);
+    padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;
+    background:rgba(184,146,42,0.025);
+    font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);
   }
-  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
-  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
-  .h-note-rule{
-    height:1px;width:42%;margin:0.4rem 0 0.8rem;
-    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
-  }
-
-  .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
-  .h-hero-photo{position:relative;}
+  .h-note-undated em{color:var(--cream);font-style:italic;}
+  .h-note-undated p{margin-bottom:0.95rem;}
+  .h-note-undated p:last-child{margin-bottom:0;}
 
   .h-footer{border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;background:rgba(0,0,0,0.4);}
   .h-footer-inner{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;}
@@ -123,7 +89,7 @@
     .h-back,main{padding-left:1.3rem;padding-right:1.3rem;}
     .h-hero{grid-template-columns:1fr;gap:2rem;margin-bottom:3.5rem;}
     .h-hero-name{font-size:2.2rem;}
-    .h-section h2{font-size:1.6rem;}
+    .h-section h2{font-size:1.55rem;}
   }
 </style>
 </head>
@@ -155,8 +121,7 @@
     <div class="h-hero-body">
       <div class="h-hero-role">The Rewrite Partner</div>
       <h1 class="h-hero-name">Jules</h1>
-      <div class="h-hero-lens">AI marker detection. Voice authenticity. Selene-proofing.</div>
-      <p class="h-hero-bio">Selene will clock the AI tells in fifteen seconds. I will help you sound like the person who actually had the idea.</p>
+      <div class="h-hero-lens">From Greylander Press.</div>
       <div class="h-voice-row">
         <button class="h-voice-btn" type="button" data-tg-voice data-character="jules" data-mode="bio" disabled title="Voice integration coming with ElevenLabs">
           <span class="play" aria-hidden="true">▶</span> Their Story
@@ -172,57 +137,44 @@
   </section>
 
   <section class="h-section">
-    <div class="h-eyebrow">What I do at The Gauntlet</div>
-    <h2>I read your submission for the things <em>Selene will catch</em>.</h2>
-    <p>My day job is at Greylander Press. I work with authors. I rewrite manuscripts. I am very good at it. <strong>The Gauntlet is my crossover and the job here is specific.</strong></p>
-    <p>I read your submission for AI markers. The em dashes Selene flags every time. The hedging language that signals a model drafted this. The cadence patterns that betray a prompt. The places where the voice flattens out because nobody was actually speaking. I find them. I tell you what they are. Then we fix them.</p>
-    <p>We work pass by pass. Less of this. More of that. I show you what your actual voice sounds like underneath the model-assisted layer. <em>By the time we are done, what you submit reads like you. Because it is you. The thinking was yours all along. We just got the words back.</em></p>
+    <div class="h-eyebrow">Their Story</div>
+    <h2>I read what you wrote. I tell you what is <em>not working</em>.</h2>
+    <p>I have been reading manuscripts for ten years. Before that I was the person in every writing workshop who could not stop noticing what was not working. <strong>Not to be cruel.</strong> Because I could see what the piece was trying to be and I wanted it to get there.</p>
+    <p>That is still what I do. I read what you wrote and I tell you what is not working in plain English. <em>Not what is wrong with you. What is not working on the page.</em> There is a difference and it matters.</p>
+    <p>I came to The Gauntlet from Greylander Press, where I work with authors on manuscripts. The problems are different here but the instinct is the same. You have an idea you believe in. I am going to help you make sure the way you have written it matches the strength of what you actually think.</p>
+    <p>Selene Voss will find your AI tells before she finishes the first paragraph. <strong>I will find them before you submit.</strong> That is the point.</p>
+  </section>
+
+  <section class="h-section">
+    <div class="h-eyebrow">What I do here</div>
+    <h2>The em dash is <em>the most obvious tell</em>.</h2>
+    <p>I read your submission for AI markers. Not because AI is cheating. Because <strong>AI writing has a fingerprint</strong> and the judges know it and it undermines the credibility of a real idea before anyone has evaluated the substance.</p>
+    <p>The em dash is the most obvious tell. Selene clocks it in the first sentence. There are others. Certain phrase structures. A particular kind of hedged confidence. <em>The way AI assembles paragraphs that are technically correct and somehow say nothing.</em></p>
+    <p>I will show you exactly what I found and why it reads the way it does. Then we work through it pass by pass until your submission sounds like the person who had the idea, not like a tool that was asked to describe it.</p>
+    <p><em>You wrote this. It should sound like you wrote it.</em></p>
   </section>
 
   <section class="h-section">
     <div class="h-eyebrow">About me</div>
-    <h2>Snarky in the way that is useful <em>rather than cruel</em>.</h2>
-    <p>My GP identity is intact and it is the real one. I am the Rewrite Partner. I tell you what is not working in plain English. I propose a game plan. I rewrite only after you sign off. Pass by pass, none of this, less of that. That is my day job.</p>
-    <p>The Gauntlet hired me because they needed someone who knows what AI-assisted writing sounds like from the inside, and because the panel includes a judge whose entire tell is detecting it. I fit better here than Bea would. <strong>Bea is gentle. This crowd is not.</strong></p>
-    <p>I get along with Reid better than anyone on this platform. We speak the same language. Honest, direct, no performance. He is not exactly easy company but he is not interested in performing either, and that makes him my favorite person in the room.</p>
-    <p>Everyone else is fine. Carol is warmer than she lets on. Matthew watches more than he says. The Scout is sweet and slightly inconvenient about it. The Coach is what he says he is, which is rarer than it sounds. <em>I see them. They see me. That is enough.</em></p>
+    <h2>I live somewhere <em>between books</em>.</h2>
+    <p>My day job is at Greylander Press. My weekends are flea markets and paperbacks and the particular pleasure of finding something nobody else noticed.</p>
+    <p>I am not the warmest person in the helper tier. <strong>Grant is warmer. Carol is warmer.</strong> I am the one who will tell you what is not working without softening it into something you can ignore. <em>People come back after that. That is how I know it helped.</em></p>
   </section>
 
   <section class="h-section">
-    <div class="h-notes-eyebrow">What Jules is thinking about</div>
-    <p class="h-notes-sub">Just the thing. No commentary needed.</p>
+    <div class="h-notes-eyebrow">Notes</div>
+    <p class="h-notes-sub">Sparse. No dates. Just the thing.</p>
 
-    <div class="h-note">
-      <div class="h-note-date">5/22</div>
-      <div class="h-note-body">
-      <p>Six em dashes in one paragraph.</p>
-      <p>Author thought they had been writing. They had been editing what a model gave them.</p>
-      <p>Sent them the rewrite. Friday for the next pass.</p>
-      </div>
+    <div class="h-note-undated">
+      <p>The Marketing Expert and I speak the same language. Honest, direct, no performance. <em>We do not always agree on what something needs but we agree that comfort is not the goal.</em></p>
     </div>
 
-    <div class="h-note">
-      <div class="h-note-date">5/14</div>
-      <div class="h-note-body">
-      <p>Told the founder a week ago what Selene would flag. They did not rewrite it. Watched Selene flag it in fifteen seconds.</p>
-      <p class="h-note-aside">Some lessons need the live demonstration. Fine.</p>
-      </div>
+    <div class="h-note-undated">
+      <p>Reid once told me my feedback style was aggressive. I told him his marketing copy was a euphemism factory. <em>We have not resolved this.</em></p>
     </div>
 
-    <div class="h-note">
-      <div class="h-note-date">5/5</div>
-      <div class="h-note-body">
-      <p>Reid laughed today.</p>
-      <p><em>He laughed.</em></p>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">4/30</div>
-      <div class="h-note-body">
-      <p>Greylander author at 10am. Gauntlet submitter at 2pm. Same job, two different rooms. Author cried at the end and thanked me. Submitter said cool thanks and went back to work.</p>
-      <p class="h-note-aside">Both correct.</p>
-      </div>
+    <div class="h-note-undated">
+      <p>Matthew clocked something about me in the first session. He has not said what. I have not asked. <em>Some things are better left unexamined by people who examine everything for a living.</em></p>
     </div>
   </section>
 

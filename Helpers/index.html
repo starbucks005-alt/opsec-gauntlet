@@ -95,6 +95,18 @@
   }
   .r-card:hover .r-card-photo img{filter:brightness(1.08);}
 
+  /* Blinking-eyes card (Jules's roster card uses the eye-pair animation
+     to mark her as the crossover character with the live work portrait,
+     instead of the static lifestyle Profile shot.) */
+  .r-card-photo-blink .blink-closed{
+    opacity:0;
+    animation:tg-roster-blink 5.4s steps(1,end) infinite;
+  }
+  @keyframes tg-roster-blink{
+    0%, 95%, 100% { opacity: 0; }
+    97%           { opacity: 1; }
+  }
+
   /* Cross-over badge (Jules) */
   .r-card-crossover{
     position:absolute;top:0.7rem;left:0.7rem;z-index:2;
@@ -326,9 +338,10 @@
     </article>
 
     <article class="r-card">
-      <div class="r-card-photo">
+      <div class="r-card-photo r-card-photo-blink">
         <div class="r-card-crossover">From Greylander Press</div>
-        <img src="Jules_Profile.jpg" alt="Jules">
+        <img class="blink-open" src="Jules_eyes_open.jpg" alt="Jules">
+        <img class="blink-closed" src="Jules_eyes_closed.jpg" alt="" aria-hidden="true">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Jules</div>
