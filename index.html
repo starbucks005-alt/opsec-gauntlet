@@ -545,8 +545,7 @@
     display:flex;flex-direction:column;height:100%;min-height:680px;
     opacity:0;transition:opacity 0.8s ease-in;transition-delay:3.9s;
   }
-  body.is-locked .tg-stage.is-revealing ~ .tg-set-area .tg-chat,
-  body.is-locked .tg-set-area .tg-chat.is-revealing{opacity:1;}
+  body.is-locked .tg-chat.is-revealing{opacity:1;}
 
   .tg-chat-header{
     display:flex;align-items:center;justify-content:space-between;
@@ -1036,6 +1035,7 @@
       stage.setAttribute('aria-hidden', 'false');
       audience.classList.add('is-revealing');
       audience.setAttribute('aria-hidden', 'false');
+      if (chat) chat.classList.add('is-revealing');
     }, 1500);
   }
 
@@ -1044,6 +1044,7 @@
   // typing indicator, and user input loop, and visually differentiates the
   // four message types.
 
+  const chat       = $('tg-chat');
   const chatStream = $('tg-chat-stream');
   const chatInput  = $('tg-chat-input');
   const chatForm   = $('tg-chat-form');
@@ -1140,6 +1141,7 @@
     stage.setAttribute('aria-hidden', 'true');
     audience.classList.remove('is-revealing');
     audience.setAttribute('aria-hidden', 'true');
+    if (chat) chat.classList.remove('is-revealing');
     panel.innerHTML = '';
     audienceRow.innerHTML = '';
     grid.querySelectorAll('.hs-square').forEach(sq => {
