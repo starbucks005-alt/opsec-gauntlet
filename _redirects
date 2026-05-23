@@ -22,3 +22,10 @@
 /workshop.html  mode=rebuild   /structural-rebuild.html 301
 /workshop.html                 /workshop.html           200
 /workshop                      /workshop.html           200
+
+# Helper tier — lowercase URL → existing capital folder.
+# The folder is capital because the eye/profile image naming convention is
+# shared across other Greylander properties and cannot be renamed here.
+/helpers       /Helpers/       301!
+/helpers/      /Helpers/       301!
+/helpers/*     /Helpers/:splat 301!

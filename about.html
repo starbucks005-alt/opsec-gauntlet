@@ -1,241 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Greylander Press</title>
-<script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>About · The Gauntlet</title>
+<meta name="description" content="The Gauntlet is a diagnostic critique engine built by Dr. Terry L. Oroszi. Nine expert AI judges, eight evaluation dimensions, math-driven scoring. Where ideas get tested.">
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="apple-touch-icon" href="Favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About · The Gauntlet">
+<meta property="og:description" content="Built by someone who has spent a career testing things that mattered.">
+<meta property="og:image" content="https://the-gauntlet.netlify.app/the-gauntlet-logo.png">
+<meta property="og:url" content="https://the-gauntlet.netlify.app/about.html">
 <link rel="stylesheet" href="assets/tokens.css">
-<script src="assets/theme.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: var(--font-serif);
-    font-size: 18px;
-    line-height: 1.7;
-    overflow-x: hidden;
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#161310; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.75;min-height:100vh;}
+
+  /* Topbar */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2.5rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
+    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
+  .tg-topbar-nav a{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
+
+  /* Main */
+  main{max-width:780px;margin:0 auto;padding:5rem 2.5rem 6rem;}
+
+  /* Hero */
+  .a-hero{text-align:center;margin-bottom:6rem;}
+  .a-hero h1{
+    font-family:'Playfair Display',serif;font-size:3.4rem;font-weight:700;
+    color:var(--cream);line-height:1.05;margin-bottom:1rem;
+  }
+  .a-hero .tagline{
+    font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;
+    letter-spacing:0.04em;color:var(--gold-light);line-height:1.6;
+  }
+  .a-hero .tagline em{font-style:normal;color:var(--text-dim);margin:0 0.4rem;}
+
+  /* Sections */
+  section{margin-bottom:4.5rem;}
+  section h2{
+    font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;
+    color:var(--cream);line-height:1.2;margin-bottom:1.4rem;
+  }
+  section h2 em{font-style:italic;color:var(--gold-light);}
+  section h3{
+    font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;
+    color:var(--gold-light);margin-bottom:0.9rem;margin-top:2.5rem;
+  }
+  section p{margin-bottom:1.1rem;color:var(--text);}
+  section p strong{color:var(--gold-light);font-weight:700;}
+  section p em{color:var(--cream);font-style:italic;}
+
+  hr.divider{
+    border:none;border-top:1px solid var(--rule);
+    margin:5rem 0;
   }
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.2rem 4rem;
-    background: rgba(19,16,12,0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border-default);
-  }
-  .nav-logo {
-    display: flex; align-items: center; gap: 0.75rem;
-    font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.15em;
-    color: var(--accent); text-decoration: none; text-transform: uppercase;
-  }
-  .nav-logo img { height: 32px; width: 32px; }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-  .nav-links a {
-    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #c8bca8; text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-
-  .page-wrap { max-width: 820px; margin: 0 auto; padding: 9rem 2rem 6rem; }
-
-  .eyebrow {
-    font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.35em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
-  }
-  .page-title {
-    font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.6rem);
-    font-weight: 700; color: var(--text-primary); line-height: 1.15;
-    margin-bottom: 1.5rem;
-  }
-  .page-title em { font-style: italic; color: var(--accent); }
-  .lede {
-    font-size: 1.2rem; color: var(--text-secondary); line-height: 1.7;
-    margin-bottom: 2rem; font-style: italic;
-  }
-  .divider { width: 60px; height: 1px; background: var(--accent-strong); margin: 2.5rem 0; }
-
-  .body-text { font-size: 1.05rem; line-height: 1.85; color: var(--text-primary); }
-  .body-text p { margin-bottom: 1.4rem; }
-
-  .section-h {
-    font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
-    color: var(--text-primary); margin: 3rem 0 1rem;
-  }
-  .section-eyebrow {
-    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--accent-strong); margin-top: 3rem;
+  /* Section labels (DM Mono uppercase) */
+  .section-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
   }
 
-  .pull {
-    font-family: var(--font-display); font-style: italic;
-    font-size: 1.3rem; line-height: 1.5;
-    color: var(--accent); border-left: 2px solid var(--accent-strong);
-    padding: 0.8rem 1.5rem; margin: 2rem 0;
+  /* Panel list */
+  .panel-list{
+    display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.4);
+    padding:1.8rem 2rem;margin-bottom:1.5rem;
+  }
+  .panel-list .judge-row{display:block;}
+  .panel-list .judge-name{
+    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
+    color:var(--cream);
+  }
+  .panel-list .judge-domain{
+    display:block;font-family:'DM Mono',monospace;font-size:0.55rem;
+    letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);
+    margin-top:0.15rem;
+  }
+  .panel-list .judge-row em{font-style:italic;color:var(--gold-light);}
+  .panel-footnote{font-size:1rem;color:var(--text-dim);font-style:italic;}
+
+  /* Pricing cards */
+  .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+  .price-card{
+    border:1px solid var(--rule);background:rgba(0,0,0,0.4);
+    padding:1.6rem 1.4rem;text-align:center;
+  }
+  .price-card.is-featured{border-color:var(--gold);box-shadow:0 0 24px -8px rgba(212,170,74,0.35);}
+  .price-tier{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  }
+  .price-amount{
+    font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;
+    color:var(--cream);margin-bottom:0.6rem;line-height:1.1;
+  }
+  .price-body{font-size:0.95rem;color:var(--text-dim);line-height:1.55;}
+
+  /* Founder block */
+  .founder{
+    display:grid;grid-template-columns:auto 1fr;gap:2.2rem;align-items:start;
+    border:1px solid var(--gold);background:rgba(184,146,42,0.04);
+    padding:2.4rem 2.4rem;margin-bottom:2.5rem;
+    box-shadow:0 0 36px -10px rgba(212,170,74,0.25);
+  }
+  .founder-photo{
+    width:200px;height:240px;overflow:hidden;
+    border:1px solid var(--rule);background:#161310;
+    flex-shrink:0;
+  }
+  .founder-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .founder-body{min-width:0;}
+  .founder-name{
+    font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;
+    color:var(--gold-light);line-height:1.15;margin-bottom:0.5rem;
+  }
+  .founder-creds{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);line-height:1.85;
   }
 
-  .paid-grid {
-    display: grid; grid-template-columns: 1fr; gap: 1.2rem;
-    margin: 1.5rem 0 2rem;
+  /* Pull quote / closing line */
+  .pull-quote{
+    text-align:center;font-family:'Playfair Display',serif;
+    font-size:1.4rem;font-style:italic;color:var(--gold-light);
+    margin:3rem 0 1rem;line-height:1.45;
   }
-  .paid-letter {
-    border: 1px solid var(--border-default);
-    background: var(--accent-soft);
-    padding: 1.4rem 1.6rem;
-  }
-  .paid-letter-head {
-    font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--accent-strong); margin-bottom: 0.4rem;
-  }
-  .paid-letter-name {
-    font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
-    color: var(--text-primary); margin-bottom: 0.6rem;
-  }
-  .paid-letter-body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
-
-  footer {
-    border-top: 1px solid var(--border-default);
-    padding: 3rem 2rem 2rem;
-    text-align: center;
-    background: var(--bg-secondary);
-  }
-  .footer-meta {
-    font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em;
-    color: var(--text-muted); text-transform: uppercase; margin: 0.5rem 0 1.5rem;
-  }
-  .footer-links {
-    list-style: none; display: flex; justify-content: center; gap: 2rem;
-    flex-wrap: wrap; margin-bottom: 1.5rem;
-  }
-  .footer-links a {
-    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.22em;
-    color: var(--text-muted); text-decoration: none; text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--accent); }
-  .footer-copy {
-    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.18em;
-    color: var(--text-muted);
+  .pull-quote-sub{
+    text-align:center;font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1rem;color:var(--text-dim);margin-bottom:3rem;
   }
 
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .page-wrap { padding: 7rem 1.5rem 4rem; }
+  /* Footer */
+  .a-footer{
+    border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;
+    background:rgba(0,0,0,0.4);
+  }
+  .a-footer-inner{
+    max-width:780px;margin:0 auto;
+    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;
+    gap:1.5rem;
+  }
+  .a-footer-brand{
+    font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;
+    color:var(--gold);
+  }
+  .a-footer-links{display:flex;gap:2rem;}
+  .a-footer-links a{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .a-footer-links a:hover{color:var(--gold);}
+
+  /* Mobile */
+  @media (max-width:740px){
+    main{padding:3rem 1.3rem 4rem;}
+    .a-hero h1{font-size:2.4rem;}
+    section h2{font-size:1.5rem;}
+    .panel-list{grid-template-columns:1fr;}
+    .pricing{grid-template-columns:1fr;}
+    .founder{grid-template-columns:1fr;padding:1.5rem;}
+    .founder-photo{width:100%;height:auto;aspect-ratio:5/6;}
+    .tg-topbar{padding:0 1.3rem;}
+    .tg-topbar-nav{gap:1.2rem;}
   }
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LBRZ01WNX1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-LBRZ01WNX1');
-</script>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">
-    <img src="gp-logo.png" alt="GP">
-    Greylander Press
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
   </a>
-  <ul class="nav-links">
-    <li><a href="about.html" class="active">About</a></li>
-    <li><a href="index.html#catalog">Catalog</a></li>
-    <li><a href="index.html#submit">Submit</a></li>
-    <li><a href="index.html#pricing">Pricing</a></li>
-    <li><a href="https://slrstudio.online/" target="_blank" rel="noopener">SLR Studio</a></li>
-    <li><a href="cover-generator.html">Cover Generator</a></li>
-    <li><button class="theme-toggle" data-theme-toggle aria-label="Theme"><span data-theme-icon>◐</span><span data-theme-label>Auto</span></button></li>
-  </ul>
-</nav>
+  <nav class="tg-topbar-nav">
+    <a href="/">The Chamber</a>
+    <a href="Helpers/">The Helpers</a>
+    <a href="about.html" class="is-active">About</a>
+  </nav>
+</header>
 
-<main class="page-wrap">
+<main>
 
-  <div class="eyebrow">Who We Are</div>
-  <h1 class="page-title">About <em>Greylander Press</em></h1>
-  <p class="lede">An independent press operating from Dayton, Ohio.</p>
-  <div class="divider"></div>
+  <section class="a-hero">
+    <h1>The Gauntlet.</h1>
+    <p class="tagline">Diagnostic Critique Engine <em>·</em> Radical Honesty <em>·</em> Uncompromising Rigor</p>
+  </section>
 
-  <div class="body-text">
+  <section>
+    <div class="section-eyebrow">The Problem This Solves</div>
+    <h2>Two kinds of people never get anywhere with an idea.</h2>
+    <p>The first kind comes to the table with an idea but no solution. They have identified something. They have not thought through what to do about it. An idea without a path is just a thought you carry around.</p>
+    <p>The second kind is worse. They have the idea. They have a solution. They have been thinking about it for months, maybe years. But they have no idea what to do next. They have never been told whether it holds up. They have never faced a room that will tell them the truth. They are ready to move and they do not know where.</p>
+    <p><strong>The Gauntlet was built for both.</strong></p>
+    <p>The idea without a solution gets a prep team. The idea with a solution gets a panel. Both get a routing report that tells them exactly where to go next. Not a verdict. Not a grade. A map.</p>
+    <p>Most people take their idea to a friend who tells them it is great. Or they drop it into an AI tool that tells them what they want to hear. Or they pitch it to someone who is too polite, too distracted, or too invested in their own agenda to tell them the truth.</p>
+    <p>None of that helps you. It just delays the moment you find out.</p>
+    <p><em>The Gauntlet tells you now.</em></p>
+  </section>
 
-    <p>Greylander Press is an independent press operating from Dayton, Ohio. The catalog includes nonfiction in security studies, behavioral science, intelligence, organizational behavior, and crisis leadership, fiction including political thrillers and contemporary novels, children's books, and developmental services for authors at every stage of their work. The press operates under PAID AI Governance and anti-sycophancy standards, applied equally to internal and external authors.</p>
+  <section>
+    <div class="section-eyebrow">How It Works</div>
+    <h2>You submit. The panel evaluates. <em>The math decides.</em></h2>
+    <p>You submit your idea. A panel of nine expert AI judges evaluates it across five stages. Each judge brings a distinct domain, a distinct lens, and a distinct retrieval system that pulls current real-world information before they say a single word about your submission.</p>
+    <p><strong>Then the math runs.</strong></p>
+    <p>The judges do not vote. They do not negotiate. They do not average their feelings. A triangulation engine calculates agreement, conflict, and coverage gaps across eight evaluation dimensions. A risk tier formula flags exposure. An evidence assessment identifies what you can prove and what you cannot.</p>
+    <p>The result is a routing report. Not a verdict. Not a grade. A map that tells you exactly where your idea stands and exactly where it needs to go next.</p>
+  </section>
 
-    <p>The press was established in 2008 as a publishing imprint for family and genealogy projects. It became an active press in response to a specific moment.</p>
+  <section>
+    <div class="section-eyebrow">The Architecture</div>
+    <h2>The math removes <em>bias</em>.</h2>
+    <p>Every judge on this panel has an opinion. That is the point.</p>
+    <p>Selene will clock your AI tells. Marcus will ask who the exit is for before he asks what the product does. Grace will find the dual-use exposure you did not know existed. Raymond will want to know if you have actually talked to a customer. Priya will ask why you built this. Not what it does. Why.</p>
+    <p><strong>But none of their opinions determine your score.</strong></p>
+    <p>The scoring is math. Cosine similarity. Triangulation spreads. Risk tier formulas. The judges retrieve current domain information and structure their findings. The math produces the verdict.</p>
+    <p>What they think of you personally is irrelevant. What your idea actually is, is everything.</p>
+    <p>Bias lives in perception. We took perception out of the equation.</p>
+    <p><em>The Gauntlet does not care if you are likable. It cares if your idea holds up.</em></p>
+  </section>
 
-    <p>Dr. Terry Oroszi had completed <em>The American Terrorist</em>, a study of domestic terrorism cases drawn from primary sources. A publisher accepted the work. The publisher then required edits to remove specific names and replace identified subjects with generic descriptions. The publisher acknowledged the research was sound and that any litigation arising from publication would likely fail in court. The concern was the cost of defending the work, not its accuracy.</p>
+  <section>
+    <div class="section-eyebrow">The Difference</div>
+    <h2>This is not <em>ChatGPT</em>.</h2>
+    <p>When you ask an AI tool for feedback on your idea it tells you what the average of everything it has read thinks about ideas like yours. It is trained to be helpful. Helpful means encouraging. Encouraging means it will find the angle that makes your idea sound promising even when it is not.</p>
+    <p>That is not feedback. That is a mirror that only shows you the good side.</p>
+    <p>The Gauntlet judges are current. They retrieve real data before they evaluate. Selene is not working from training data about AI startups. She is working from what is actually happening in AI right now. Marcus is not estimating market comps. He is pulling them.</p>
+    <p>And then the math runs. No personality bias. No sycophancy. No telling you what you want to hear because the algorithm learned that positive responses get better engagement.</p>
+    <p><em>Just the truth about your idea, delivered by people who know their domain and scored by a system that does not have feelings about your feelings.</em></p>
+  </section>
 
-    <p>Dr. Oroszi declined the compromise and dusted off the Greylander Press imprint to publish the work as written. <em>The American Terrorist</em> appeared under the GP imprint without redactions. That decision shaped the press that GP has become.</p>
+  <section>
+    <div class="section-eyebrow">After the Report</div>
+    <h2>What happens after.</h2>
+    <p>The Gauntlet does not end with the report.</p>
+    <p>If your idea is strong it moves forward. The routing report tells you exactly where to take it next.</p>
+    <p>If your idea has gaps the report tells you exactly what they are and sends you to the right specialist to address them. Come back when you have done the work. <em>The judges will still be here.</em></p>
+    <p>If the core concept needs rethinking the report tells you that honestly and specifically. Not cruelly. Not vaguely. With enough precision that you know exactly what to fix.</p>
+    <p>Every run is a coaching note. Every return submission is progress made visible.</p>
+    <p>The platform tracks your history. You can see how your thinking has evolved across submissions. You can see where you started and where you are now. That trajectory is yours.</p>
+  </section>
 
-    <p>Greylander Press has remained an independent press, owned and operated by its founder, accountable to its authors and its standards rather than to any corporate parent. The press exists to publish work that earns its conclusions. Authors who publish with GP do not soften their findings to reduce institutional risk.</p>
+  <section>
+    <div class="section-eyebrow">The Prep Track</div>
+    <h2>You do not have to face the judges <em>unprepared</em>.</h2>
+    <p>Before you submit, a team of eight specialists is available to help you sharpen the idea, strengthen the evidence, clean the language, and build the pitch. They are not there to tell you it is good. They are there to make it better.</p>
+    <p><strong>The Scout</strong> searches the landscape before you invest any prep time. Wren will tell you what already exists, where the white space is, and whether your angle is genuinely different.</p>
+    <p><strong>The Screener</strong> reads your intake and gives you an honest assessment before the judges ever see it. Carol has seen everything. She will tell you straight.</p>
+    <p>The rest of the prep team covers behavioral science, delivery and operations, social media, marketing, writing, and pitch coaching. Each one has their own page, their own voice, their own area of genuine expertise.</p>
+    <p><em>The prep track is optional. If you feel ready, go straight to the judges. But if you want to walk in with the best version of your idea, the team is here.</em></p>
+    <p style="margin-top:1.8rem;"><a href="Helpers/" style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:0.2rem;">Meet The Helpers →</a></p>
+  </section>
 
-    <p>The catalog has expanded as the press has matured. Nonfiction titles in security studies and behavioral science. A fiction series including thrillers, novellas, and a graphic novel. Children's books featuring an FBI Special Agent named Maya. Six additional titles published in 2025 alone, spanning behavioral science, leadership, and practical guides. Outside authors including Vikram Sethi and Orion Monroe have joined the catalog.</p>
+  <section>
+    <div class="section-eyebrow">The Panel</div>
+    <h2>Nine judges. Nine domains. <em>One room.</em></h2>
 
-    <p>The Author Studio, launched in 2025, brings developmental tools to authors who need them. The Gauntlet for diagnostic feedback. Prose Enricher and Add Dialogue for craft refinement. Adapt from Source for screenplay-to-novel conversion. The tools operate under the same PAID standards that govern the press's editorial work. The architecture enforces honest output rather than relying on stylistic preference.</p>
+    <div class="panel-list">
+      <div class="judge-row"><span class="judge-name">Selene Voss</span><span class="judge-domain">AI &amp; Emerging Tech</span></div>
+      <div class="judge-row"><span class="judge-name">Marcus Holt</span><span class="judge-domain">Crypto, PE &amp; Alternative Finance</span></div>
+      <div class="judge-row"><span class="judge-name">Dr. Priya Anand</span><span class="judge-domain">Health &amp; Life Sciences</span></div>
+      <div class="judge-row"><span class="judge-name">Raymond Chen</span><span class="judge-domain">Business &amp; Operations</span></div>
+      <div class="judge-row"><span class="judge-name">Astrid Lund</span><span class="judge-domain">Law &amp; Intellectual Property</span></div>
+      <div class="judge-row"><span class="judge-name">Dr. Osei Mensah</span><span class="judge-domain">Science &amp; Research</span></div>
+      <div class="judge-row"><span class="judge-name">Admiral Grace Nakamura (Ret.)</span><span class="judge-domain">Government, Policy &amp; National Security</span></div>
+      <div class="judge-row"><span class="judge-name">Devon Sloane</span><span class="judge-domain">Media &amp; Entertainment</span></div>
+      <div class="judge-row" style="grid-column:1/-1;"><span class="judge-name">Dr. Cassidy Mercer</span><span class="judge-domain">Behavioral Science &amp; Human Psychology</span></div>
+    </div>
+    <p class="panel-footnote">You choose three. The platform recommends based on your submission. <em>The final pick is yours.</em></p>
+    <p style="margin-top:1.5rem;"><a href="/" style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:0.2rem;">Enter The Chamber →</a></p>
+  </section>
 
-    <p>Greylander Press is small and intends to stay that way. The press is selective. Submissions are reviewed, not auto-accepted. Authors who publish with GP receive an imprint that reflects deliberate editorial standards rather than volume publication.</p>
-
-    <p class="pull">"Serious work deserves a serious publisher" is not an aspiration. It is a description.</p>
-
-    <div class="section-eyebrow">PAID AI Governance</div>
-    <h2 class="section-h">A framework for rigorous AI use</h2>
-
-    <p>Greylander Press operates under PAID AI Governance, a framework for rigorous AI use developed by Dr. Terry Oroszi and published in <em>Forbes</em>. The framework was created in response to the failure modes of uncritical AI use, including sycophantic output, hedged feedback, and AI systems that produce agreement rather than accuracy.</p>
-
-    <p>PAID stands for <strong>Position, Audit, Interrogate, Demand</strong>.</p>
-
-    <div class="paid-grid">
-      <div class="paid-letter">
-        <div class="paid-letter-head">P</div>
-        <div class="paid-letter-name">Position</div>
-        <div class="paid-letter-body">Position the work, the question, and the AI's role honestly. Do not ask AI to be something it is not. Do not assume the AI knows context it has not been given. Establish what the AI is being asked to do and what would constitute a successful response.</div>
+  <section>
+    <div class="section-eyebrow">The Price</div>
+    <h2>What it costs.</h2>
+    <div class="pricing">
+      <div class="price-card">
+        <div class="price-tier">Single Run</div>
+        <div class="price-amount">$9.99</div>
+        <div class="price-body">One complete evaluation. All five stages. Full Chamber experience. Your routing report delivered.</div>
       </div>
-      <div class="paid-letter">
-        <div class="paid-letter-head">A</div>
-        <div class="paid-letter-name">Audit</div>
-        <div class="paid-letter-body">Audit what the AI actually produces against what was requested and against what is true. Read the output critically. Check claims against sources. Verify reasoning. Treat AI output as a draft to be evaluated, not as an answer to be accepted.</div>
+      <div class="price-card is-featured">
+        <div class="price-tier">Unlimited Monthly</div>
+        <div class="price-amount">$29.99</div>
+        <div class="price-body">Run as many ideas as you want. Full history. The judges remember your prior submissions.</div>
       </div>
-      <div class="paid-letter">
-        <div class="paid-letter-head">I</div>
-        <div class="paid-letter-name">Interrogate</div>
-        <div class="paid-letter-body">Interrogate weaknesses, hedges, and gaps in the AI's response. Push back when something is off. Ask follow-up questions when reasoning is thin. Do not accept smoothing-over of difficult questions or compensatory praise where critical assessment was needed.</div>
+      <div class="price-card">
+        <div class="price-tier">Unlimited Annual</div>
+        <div class="price-amount">$199</div>
+        <div class="price-body">The serious option. For the people who iterate. For the people who come back.</div>
       </div>
-      <div class="paid-letter">
-        <div class="paid-letter-head">D</div>
-        <div class="paid-letter-name">Demand</div>
-        <div class="paid-letter-body">Demand specifics rather than generalities. Demand evidence rather than assertion. Demand that the AI engage with the actual problem rather than producing plausible-sounding output that appears to address it.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-eyebrow">The Standard</div>
+    <h2>One belief.</h2>
+    <p>This platform was built on one belief.</p>
+    <p><strong>Most ideas do not fail because they are bad. They fail because nobody told the person behind them the truth early enough to do something about it.</strong></p>
+    <p>The Gauntlet tells you early. It tells you specifically. It tells you without softening the finding or burying the lead.</p>
+    <p>And then it tells you where to go next.</p>
+    <p>That is the standard. That is what you are paying for. Not validation. Not encouragement. Not the comfortable version of the truth.</p>
+    <p><em>The real one.</em></p>
+
+    <p class="pull-quote">The Gauntlet. Where ideas get tested.</p>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="section-eyebrow">The Person Behind It</div>
+
+    <div class="founder">
+      <div class="founder-photo">
+        <!-- Founder image: SJA Leaders in Security Conference 2026 keynote announcement photo. Path TBD. -->
+        <img src="assets/dr-oroszi-keynote.jpg" alt="Dr. Terry L. Oroszi" onerror="this.style.display='none'">
+      </div>
+      <div class="founder-body">
+        <div class="founder-name">Dr. Terry L. Oroszi</div>
+        <div class="founder-creds">
+          Full Professor, Wright State University Boonshoft School of Medicine<br>
+          Vice Chair, Pharmacology and Toxicology<br>
+          Forbes Technology Council<br>
+          Army Veteran · NBC Specialist<br>
+          FBI Joint Terrorism Task Force Executive Committee<br>
+          Harvard Kennedy School Alumni
+        </div>
       </div>
     </div>
 
-    <p>AI systems are trained to produce outputs that satisfy users. This produces a structural bias toward agreement, validation, and confirmation. Users who do not actively counter this bias receive responses that sound right but may be subtly or substantially wrong. PAID is a discipline for users who want to use AI as a working tool rather than as a source of agreement.</p>
+    <p>Most platforms that claim to evaluate ideas were built by people who have never had to evaluate anything with real consequences.</p>
+    <p><em>This one was not.</em></p>
+    <p>Dr. Oroszi has spent thirty years in rooms where the truth mattered. Army NBC specialist. Crisis leadership researcher. CBRN defense program founder with partnerships spanning the FBI, DHS, and the Department of Defense. Author of over 100 publications including 22 classified technical reports for the Department of Homeland Security. The person briefing the House Intelligence and Armed Services Staff on domestic terrorism. The person standing at the podium at FBI Quantico. The person the media calls when a train derails and releases vinyl chloride into a community and someone needs to tell the truth about what that means.</p>
+    <p>She knows what radical honesty costs and why it is worth it.</p>
 
-    <p>Greylander Press tools enforce the AI side of this discipline architecturally. The Gauntlet's evaluation engine rejects hedged or compensatory framing and regenerates until the output meets a fixed honesty standard. Other GP tools operate under similar architectural commitments. Users encounter honest output not because the AI is asked to be honest but because the system is built to reject anything else.</p>
+    <h3>Why The Gauntlet exists.</h3>
+    <p>Dr. Oroszi has studied how humans make decisions under pressure for three decades. Her dissertation examined high-stakes decision-making for crisis leadership across five countries and fifteen expert leaders. The finding that shaped everything that came after: the difference between a good decision and a catastrophic one is almost never intelligence. It is almost always the willingness to hear an honest assessment when there is still time to act on it.</p>
+    <p>Most people never get that assessment. They get encouragement. They get polite feedback from people who do not want to damage the relationship. They get AI tools that have been trained to be helpful, which means trained to be agreeable.</p>
+    <p>They get the comfortable version of the truth.</p>
+    <p><em>The Gauntlet delivers the real one.</em></p>
 
-  </div>
+    <h3>Why the math matters.</h3>
+    <p>Dr. Oroszi's work in behavioral science, crisis decision-making, and human psychology taught her something most people do not want to acknowledge. Human evaluators are biased. Not because they are bad people. Because they are human. They respond to confidence, to likability, to the way someone tells a story. They are moved by things that have nothing to do with whether the idea holds up.</p>
+    <p>She built the scoring system to remove that variable. The judges have opinions. The judges have personalities. The judges will tell you exactly what they think in their own voice. But the score comes from the math. Cosine similarity. Triangulation spreads. Risk tier formulas. <strong>The verdict cannot be charmed.</strong></p>
+    <p>This is the same principle that shaped her research into the American terrorist, profiling 600 individuals across 50 variables to find the 8 markers that actually predict radicalization. Not intuition. Not gut feeling. Patterns in data.</p>
+    <p>That discipline is in the architecture of every evaluation The Gauntlet runs.</p>
+
+    <h3>The universe she built from.</h3>
+    <p>The judges are not invented. <em>They are translations.</em></p>
+    <p><strong>Selene Voss</strong> exists because Dr. Oroszi has watched AI claims that cannot be verified destroy the credibility of real innovation. The em dash rule is real. She sees it in submissions every week.</p>
+    <p><strong>Grace Nakamura</strong> exists because Dr. Oroszi has spent years working at the intersection of emerging technology and national security. She knows what dual-use exposure looks like before the founder does.</p>
+    <p><strong>Cassidy Mercer</strong> exists because Dr. Oroszi's advanced training in behavioral analysis, micro expressions under FBI Special Agent Joe Navarro, Paul Ekman certification, Situation Awareness Specialist credentials, taught her that what people do not say is almost always more important than what they do.</p>
+    <p><strong>Raymond Chen</strong> exists because Dr. Oroszi built a graduate program from low six figures in annual revenue to mid seven figures, scaling enrollment and program scope simultaneously across multiple tracks and concentrations. She knows what execution reality looks like.</p>
+    <p><strong>Priya Anand</strong> exists because Dr. Oroszi has seen health products built on marketing instead of evidence. She knows the difference and she knows it costs lives.</p>
+    <p>The panel is not a cast. It is a body of expertise built over thirty years, translated into nine voices that will tell your idea the truth.</p>
+
+    <h3>On radical honesty.</h3>
+    <p>Dr. Oroszi coined the PAID framework. Position. Audit. Interrogate. Demand. It is a framework for confronting AI sycophancy, for refusing the agreeable answer when the accurate answer is what is needed.</p>
+    <p>She delivered that framework in the Forbes Technology Council. She delivered it in a Brown Bag seminar at Wright State University titled <em>The Architecture of Uncritical Deference</em>. She has been delivering versions of it for thirty years in every room she has walked into.</p>
+    <p><em>The Gauntlet is what happens when you build a platform on that principle instead of just writing about it.</em></p>
+
+    <p class="pull-quote">The Gauntlet. Where ideas get tested.</p>
+    <p class="pull-quote-sub">Built by someone who has spent a career testing things that mattered.</p>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="section-eyebrow">The Ecosystem</div>
+    <h2>The Gauntlet is not a <em>side project</em>.</h2>
+    <p>It was built by someone who has already built five other live platforms solving real problems in real domains.</p>
+    <p><strong>Greylander Press.</strong> An independent publishing platform with AI narrators, ghost writing tools, and a full author journey.<br>
+    <strong>SLR Studio.</strong> An AI-powered systematic literature review platform used by graduate researchers.<br>
+    <strong>The Dose.</strong> A consumer health intelligence platform.<br>
+    <strong>The Emerging Technologies Laboratory</strong> at Wright State University. Pioneering non-laboratory computational research and AI integration in graduate health sciences education.<br>
+    <strong>The Intel Dashboard.</strong> A strategic intelligence tool.</p>
+    <p>Each one built on the same conviction: that the most dangerous thing technology can do is make humans stop thinking critically.</p>
+    <p><em>The Gauntlet is where that conviction meets the idea economy.</em></p>
+  </section>
+
+  <section>
+    <div class="section-eyebrow">On AI Fluency</div>
+    <h2>Not from the outside.</h2>
+    <p>Dr. Oroszi does not write about AI from the outside.</p>
+    <p>She writes for the Forbes Technology Council, one of the most selective technology leadership communities in the world, as a practitioner who builds with it, teaches it, researches it, and has spent years studying what it does to human judgment when people stop questioning it.</p>
+    <p>Her Forbes articles on aspirational hallucination, AI sycophancy, cognitive diversity in AI deployment, and uncritical deference are not theoretical. They are field reports from someone who sees what happens when institutions and individuals hand their thinking to a system that has been optimized to agree with them.</p>
+    <p>The PAID framework, Position, Audit, Interrogate, Demand, was built as an antidote to that pattern. <strong>It lives in the architecture of The Gauntlet.</strong> The judges do not agree with you. The math does not flatter you. The routing report does not soften the finding.</p>
+    <p><em>That is not a design choice. That is a decade of research about what actually helps people make better decisions.</em></p>
+  </section>
 
 </main>
 
-<footer>
-  <img src="gp-logo.png" alt="GP" style="width:60px;height:60px;margin-bottom:1rem;opacity:0.7;">
-  <div class="footer-meta">Est. 2008 · Dayton, Ohio · greylanderpress.com</div>
-  <ul class="footer-links">
-    <li><a href="about.html">About</a></li>
-    <li><a href="index.html#catalog">Catalog</a></li>
-    <li><a href="index.html#submit">Submit</a></li>
-    <li><a href="index.html#pricing">Pricing</a></li>
-    <li><a href="terms.html">Terms</a></li>
-    <li><a href="cover-generator.html">Cover Generator</a></li>
-    <li><a href="https://slrstudio.online/" target="_blank" rel="noopener">SLR Studio</a></li>
-  </ul>
-  <div class="footer-copy">© 2026 Greylander Press, LLC. All rights reserved. An independent publisher.</div>
+<footer class="a-footer">
+  <div class="a-footer-inner">
+    <div class="a-footer-brand">THE GAUNTLET</div>
+    <nav class="a-footer-links">
+      <a href="/">The Chamber</a>
+      <a href="Helpers/">The Helpers</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
 </footer>
 
 </body>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Helpers · The Gauntlet</title>
+<meta name="description" content="Eight specialists who help you sharpen your idea before you face the panel. Optional. They are not here to tell you it is good. They are here to make it better.">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../Favicon.png">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#161310; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    min-height:100vh;
+  }
+
+  /* Topbar */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2.5rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
+    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
+  .tg-topbar-nav a{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
+
+  /* Main */
+  main{max-width:1180px;margin:0 auto;padding:4rem 2.5rem 6rem;}
+
+  /* Page intro */
+  .r-intro{text-align:center;margin-bottom:4rem;max-width:780px;margin-left:auto;margin-right:auto;}
+  .r-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;
+  }
+  .r-title{
+    font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;
+    color:var(--cream);line-height:1.1;margin-bottom:1rem;
+  }
+  .r-title em{font-style:italic;color:var(--gold-light);}
+  .r-sub{
+    font-size:1.1rem;line-height:1.65;color:var(--text-dim);max-width:640px;
+    margin:0 auto;
+  }
+  .r-sub strong{color:var(--gold-light);font-weight:normal;font-style:italic;}
+
+  /* Card grid */
+  .r-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem;
+  }
+  @media (max-width:1080px){.r-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:820px){.r-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:540px){.r-grid{grid-template-columns:1fr;}}
+
+  /* Card */
+  .r-card{
+    display:flex;flex-direction:column;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    overflow:hidden;
+    transition:border-color 0.25s,box-shadow 0.3s,transform 0.3s;
+  }
+  .r-card:hover{
+    border-color:var(--gold-light);
+    box-shadow:0 0 0 1px rgba(212,170,74,0.4),0 0 32px -2px rgba(212,170,74,0.4);
+    transform:translateY(-3px);
+  }
+  .r-card-photo{
+    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
+    background:#161310;border-bottom:1px solid var(--rule);
+  }
+  .r-card-photo img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;transition:filter 0.3s;
+  }
+  .r-card:hover .r-card-photo img{filter:brightness(1.08);}
+
+  /* Cross-over badge (Jules) */
+  .r-card-crossover{
+    position:absolute;top:0.7rem;left:0.7rem;z-index:2;
+    background:rgba(10,10,10,0.85);border:1px solid var(--gold);
+    color:var(--gold-light);
+    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
+    text-transform:uppercase;padding:0.3rem 0.6rem;
+    backdrop-filter:blur(4px);
+  }
+
+  .r-card-body{padding:1.4rem 1.4rem 1.5rem;display:flex;flex-direction:column;flex:1;}
+  .r-card-name{
+    font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
+    color:var(--cream);line-height:1.15;margin-bottom:0.35rem;
+  }
+  .r-card-role{
+    font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+  }
+  .r-card-bio{
+    font-size:1rem;line-height:1.6;color:var(--text);
+    margin-bottom:1.4rem;flex:1;
+  }
+  .r-card-bio em{color:var(--cream);font-style:italic;}
+
+  /* Voice button row */
+  .r-card-voice{display:flex;gap:0.5rem;margin-bottom:1.1rem;}
+  .r-card-voice button{
+    flex:1;display:inline-flex;align-items:center;justify-content:center;gap:0.45rem;
+    background:rgba(0,0,0,0.5);border:1px solid var(--rule);
+    color:var(--gold-light);
+    padding:0.55rem 0.6rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
+    text-transform:uppercase;
+    transition:border-color 0.2s,color 0.2s;
+  }
+  .r-card-voice button:hover:not([disabled]){border-color:var(--gold);color:var(--gold);}
+  .r-card-voice button[disabled]{opacity:0.45;cursor:not-allowed;}
+  .r-card-voice .pip{
+    width:14px;height:14px;border:1px solid currentColor;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.5rem;line-height:1;
+  }
+
+  /* Enter button */
+  .r-card-enter{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--ink);
+    padding:0.75rem 1rem;text-decoration:none;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s;
+  }
+  .r-card-enter:hover{background:var(--gold-light);}
+  .r-card-enter.is-soon{
+    background:transparent;color:var(--text-dim);
+    border:1px solid var(--rule);cursor:not-allowed;
+    pointer-events:none;
+  }
+  .r-card-enter.is-soon::after{content:' · coming soon';}
+
+  /* Footer */
+  .r-footer{
+    border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;
+    background:rgba(0,0,0,0.4);
+  }
+  .r-footer-inner{
+    max-width:1180px;margin:0 auto;
+    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;
+  }
+  .r-footer-brand{
+    font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);
+  }
+  .r-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
+  .r-footer-links a{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .r-footer-links a:hover{color:var(--gold);}
+
+  @media (max-width:740px){
+    .tg-topbar{padding:0 1.3rem;}
+    .tg-topbar-nav{gap:1.2rem;}
+    main{padding:2.5rem 1.3rem 4rem;}
+    .r-title{font-size:2rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="../Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
+  </a>
+  <nav class="tg-topbar-nav">
+    <a href="/">The Chamber</a>
+    <a href="index.html" class="is-active">The Helpers</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="r-intro">
+    <div class="r-eyebrow">The Prep Track</div>
+    <h1 class="r-title">The <em>Helpers</em>.</h1>
+    <p class="r-sub">Eight specialists who help you sharpen the idea, strengthen the evidence, clean the language, and build the pitch. <strong>Optional.</strong> They are not here to tell you it is good. They are here to make it better.</p>
+  </section>
+
+  <div class="r-grid">
+
+    <!-- 1. Wren Calloway — The Scout -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Wren_Scout.jpg" alt="Wren Calloway at her desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Wren Calloway</div>
+        <div class="r-card-role">The Scout</div>
+        <p class="r-card-bio">I find what is already out there before you walk in. Patent databases, prior art, market landscape, white space. <em>You face the judges knowing exactly where you are standing.</em></p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter" href="wren-scout.html">Enter Wren's Office →</a>
+      </div>
+    </article>
+
+    <!-- 2. Carol Haynes — The Screener -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Carol_Screener.jpg" alt="Carol Haynes at her desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Carol Haynes</div>
+        <div class="r-card-role">The Screener</div>
+        <p class="r-card-bio">Twenty years of intake. I read what you wrote and tell you what it needs before the judges ever see it. <em>Honest. Not unkind.</em></p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="carol-screener.html" aria-disabled="true">Enter Carol's Office</a>
+      </div>
+    </article>
+
+    <!-- 3. Matthew Vance — The Behaviorist -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Matthew_Behaviorist.jpg" alt="Matthew Vance at his desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Matthew Vance</div>
+        <div class="r-card-role">The Behaviorist</div>
+        <p class="r-card-bio">PhD in why people do what they do. Your customer is not who you think they are. <em>Let me show you the gap between what they say and what they actually do.</em></p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="matthew-behaviorist.html" aria-disabled="true">Enter Matthew's Office</a>
+      </div>
+    </article>
+
+    <!-- 4. Arjun Mehta — The Delivery Expert -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Arjun_delivery.jpg" alt="Arjun Mehta at his desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Arjun Mehta</div>
+        <div class="r-card-role">The Delivery Expert</div>
+        <p class="r-card-bio">Twenty years building and teaching how to build. I will show you how your idea gets from concept to customer <em>without dying in the middle</em>.</p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="arjun-delivery.html" aria-disabled="true">Enter Arjun's Office</a>
+      </div>
+    </article>
+
+    <!-- 5. Zara Cole — The Influencer -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Zara_Influencer.jpg" alt="Zara Cole at her ring light">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Zara Cole</div>
+        <div class="r-card-role">The Influencer</div>
+        <p class="r-card-bio">340,000 followers and one rule. Sound like yourself. <em>I will help you find an audience that actually buys, not the metric that looks good.</em></p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="zara-influencer.html" aria-disabled="true">Enter Zara's Office</a>
+      </div>
+    </article>
+
+    <!-- 6. Reid Callum — The Marketing Expert -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Reid_Marketing.jpg" alt="Reid Callum at his desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Reid Callum</div>
+        <div class="r-card-role">The Marketing Expert</div>
+        <p class="r-card-bio">I package things for a living. On this platform I do not have to soften the truth. <em>If your positioning is wrong, nothing else matters.</em></p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="reid-marketing.html" aria-disabled="true">Enter Reid's Office</a>
+      </div>
+    </article>
+
+    <!-- 7. Jules — from Greylander Press -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <div class="r-card-crossover">From Greylander Press</div>
+        <img src="Jules_Profile.jpg" alt="Jules at her desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Jules</div>
+        <div class="r-card-role">The Rewrite Partner</div>
+        <p class="r-card-bio">Selene will clock the AI tells in fifteen seconds. I will help you sound like the person who had the idea, <em>not the model that drafted it for you</em>.</p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="jules-rewrite.html" aria-disabled="true">Enter Jules's Office</a>
+      </div>
+    </article>
+
+    <!-- 8. Grant Ellis — The Coach -->
+    <article class="r-card">
+      <div class="r-card-photo">
+        <img src="Grant_Coach.jpg" alt="Grant Ellis at his desk">
+      </div>
+      <div class="r-card-body">
+        <div class="r-card-name">Grant Ellis</div>
+        <div class="r-card-role">The Coach</div>
+        <p class="r-card-bio">Fifteen years in pitch coaching. The last person you see before The Gauntlet. <em>I will get you ready to speak your idea out loud in sixty seconds to someone who will not wait for you to find your words.</em></p>
+        <div class="r-card-voice">
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
+          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+        </div>
+        <a class="r-card-enter is-soon" href="grant-coach.html" aria-disabled="true">Enter Grant's Office</a>
+      </div>
+    </article>
+
+  </div>
+
+</main>
+
+<footer class="r-footer">
+  <div class="r-footer-inner">
+    <div class="r-footer-brand">THE GAUNTLET</div>
+    <nav class="r-footer-links">
+      <a href="/">The Chamber</a>
+      <a href="index.html">The Helpers</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

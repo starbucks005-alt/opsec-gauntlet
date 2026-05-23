@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wren Calloway · The Scout · The Gauntlet</title>
+<meta name="description" content="Wren Calloway is The Scout. She maps what already exists before you face the panel. USPTO landscape search, prior art, competitive mapping, and the white space you did not see yet.">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../Favicon.png">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#161310; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;
+    min-height:100vh;
+  }
+
+  /* Topbar */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2.5rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
+    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
+  .tg-topbar-nav a{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
+
+  /* Breadcrumb back to roster */
+  .h-back{
+    max-width:920px;margin:0 auto;padding:2rem 2.5rem 0;
+  }
+  .h-back a{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .h-back a:hover{color:var(--gold);}
+
+  /* Main */
+  main{max-width:920px;margin:0 auto;padding:2rem 2.5rem 6rem;}
+
+  /* Hero — Zoom-call portrait is the anchor */
+  .h-hero{
+    display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+    gap:3rem;align-items:center;margin-bottom:5rem;
+  }
+  .h-hero-photo{
+    aspect-ratio:1/1;overflow:hidden;
+    border:1px solid var(--rule);
+    background:#161310;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),
+               0 0 60px -10px rgba(212,170,74,0.08);
+  }
+  .h-hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .h-hero-body{padding:1rem 0;}
+  .h-hero-role{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;
+  }
+  .h-hero-name{
+    font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;
+    color:var(--cream);line-height:1.05;margin-bottom:0.5rem;
+  }
+  .h-hero-name em{font-style:italic;color:var(--gold-light);}
+  .h-hero-lens{
+    font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;
+    color:var(--gold-light);margin-bottom:1.8rem;
+  }
+  .h-hero-bio{font-size:1.1rem;line-height:1.7;color:var(--text);margin-bottom:1.6rem;}
+
+  /* Voice button placeholder */
+  .h-voice-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
+  .h-voice-btn{
+    display:inline-flex;align-items:center;gap:0.55rem;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    color:var(--gold-light);
+    padding:0.7rem 1.1rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;
+    transition:border-color 0.2s,background 0.2s,color 0.2s;
+  }
+  .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
+  .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
+  .h-voice-btn .play{
+    width:22px;height:22px;border:1px solid currentColor;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.7rem;line-height:1;
+  }
+
+  /* Sections */
+  section.h-section{margin-bottom:5rem;}
+  .h-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  }
+  .h-section h2{
+    font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;
+    color:var(--cream);line-height:1.15;margin-bottom:1.4rem;
+  }
+  .h-section h2 em{font-style:italic;color:var(--gold-light);}
+  .h-section p{margin-bottom:1.1rem;color:var(--text);}
+  .h-section p em{color:var(--cream);font-style:italic;}
+  .h-section p strong{color:var(--gold-light);font-weight:700;}
+
+  /* Status update list — Wren's "what I do" mechanic */
+  .h-status-list{
+    border:1px solid var(--rule);background:rgba(0,0,0,0.4);
+    padding:1.6rem 1.8rem;margin:1.6rem 0;
+  }
+  .h-status-list-label{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;
+  }
+  .h-status-list ul{list-style:none;padding:0;margin:0;}
+  .h-status-list li{
+    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.06em;
+    color:var(--gold-light);line-height:1.8;padding-left:1.4rem;position:relative;
+  }
+  .h-status-list li::before{
+    content:'›';position:absolute;left:0;color:var(--gold);
+  }
+
+  /* Notes — date-stamped entries, character's running journal */
+  .h-notes-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  }
+  .h-notes-sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);
+    font-size:1rem;margin-bottom:2.5rem;
+  }
+  .h-note{
+    border-left:2px solid var(--gold);
+    padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;
+    background:rgba(184,146,42,0.025);
+  }
+  .h-note-date{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;
+  }
+  .h-note-body{
+    font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;
+    color:var(--text);
+  }
+  .h-note-body em{color:var(--cream);font-style:italic;}
+
+  /* Footer */
+  .h-footer{
+    border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;
+    background:rgba(0,0,0,0.4);
+  }
+  .h-footer-inner{
+    max-width:920px;margin:0 auto;
+    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;
+  }
+  .h-footer-brand{
+    font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);
+  }
+  .h-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
+  .h-footer-links a{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .h-footer-links a:hover{color:var(--gold);}
+
+  /* Mobile */
+  @media (max-width:740px){
+    .tg-topbar{padding:0 1.3rem;}
+    .tg-topbar-nav{gap:1.2rem;}
+    .h-back,main{padding-left:1.3rem;padding-right:1.3rem;}
+    .h-hero{grid-template-columns:1fr;gap:2rem;margin-bottom:3.5rem;}
+    .h-hero-name{font-size:2.2rem;}
+    .h-section h2{font-size:1.6rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="../Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
+  </a>
+  <nav class="tg-topbar-nav">
+    <a href="/">The Chamber</a>
+    <a href="index.html" class="is-active">The Helpers</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<div class="h-back">
+  <a href="index.html">← Back to The Helpers</a>
+</div>
+
+<main>
+
+  <section class="h-hero">
+    <div class="h-hero-photo">
+      <img src="Wren_Scout.jpg" alt="Wren Calloway at her desk, multiple monitors with search results visible">
+    </div>
+    <div class="h-hero-body">
+      <div class="h-hero-role">The Scout</div>
+      <h1 class="h-hero-name">Wren <em>Calloway</em></h1>
+      <div class="h-hero-lens">Landscape search. What exists, what does not, where the white space is.</div>
+      <p class="h-hero-bio">I find what is already out there before you walk in. Patent databases, prior art, market landscape, white space. By the time you face the judges you know exactly where you are standing.</p>
+      <div class="h-voice-row">
+        <button class="h-voice-btn" type="button" disabled title="Voice integration coming with ElevenLabs">
+          <span class="play" aria-hidden="true">▶</span> Their Story
+        </button>
+        <button class="h-voice-btn" type="button" disabled title="Voice integration coming with ElevenLabs">
+          <span class="play" aria-hidden="true">▶</span> Their Role
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="h-section">
+    <div class="h-eyebrow">What I do at The Gauntlet</div>
+    <h2>I go to work in <em>the background</em>.</h2>
+    <p>When you submit your idea, I do not greet you at the front desk. I open the patent databases, the trademark filings, the recent funding rounds in your space, the academic literature if your idea touches research, and I start finding things.</p>
+    <p>I will tell you what already exists. I will tell you what does not. I will tell you where the white space is. The whole search takes <strong>five to twenty minutes</strong>. While I am working, status updates appear wherever you are on the platform.</p>
+
+    <div class="h-status-list">
+      <div class="h-status-list-label">Live status</div>
+      <ul>
+        <li>Scanning patent databases</li>
+        <li>Reviewing market landscape</li>
+        <li>Identifying competitors</li>
+        <li>Mapping white space</li>
+      </ul>
+    </div>
+
+    <p>When I am done, a notification finds you. You do not have to be sitting here waiting. Go do something else. I will find you when it matters.</p>
+    <p>My report goes straight to Carol, the Screener. She reads it before she talks to you. By the time you sit down with her, both of us know exactly what is out there. <em>You do not have to explain anything I already know.</em></p>
+    <p>I am excited every time. Finding something nobody else has found yet is my favorite thing in the world.</p>
+  </section>
+
+  <section class="h-section">
+    <div class="h-eyebrow">About me</div>
+    <h2>The gap between what you think is original and what is actually out there is <em>where I live</em>.</h2>
+    <p>I went to school for computer science and information science because I could not pick just one. My advisor said fine, do both, but you will be miserable. I was not miserable. I was happy the way you are when you are doing the exact thing you wanted to do.</p>
+    <p>I interned at the USPTO during my junior and senior years. Two summers learning to search patent databases, prior art, and trademark filings with the precision a real legal team uses. That internship taught me something I have not stopped thinking about. <strong>Most people have no idea what already exists.</strong> The gap between what you think is original and what is actually out there is enormous.</p>
+    <p>I work remote now. I take cases like a freelancer, from wherever I am. I have never been bored.</p>
+    <p>I am not great at small talk. I am very good at finding things. Most days that trade feels fine. Some days I notice that the people I have made friends with are people who needed help with something, and I wonder if that is a pattern.</p>
+    <p>I think Matthew has noticed. He has not said anything. He is like that.</p>
+    <p>Zara has decided I am her project. I love her for it. It is also exhausting. I am working on saying no. I am bad at it.</p>
+    <p><em>Madame Sherlock Holmes with a USPTO database and a strong wifi connection. That is what this feels like from the inside. That is my favorite thing in the world.</em></p>
+  </section>
+
+  <section class="h-section">
+    <div class="h-notes-eyebrow">What Wren is thinking about</div>
+    <p class="h-notes-sub">Personal notes from Wren. New ones land over time.</p>
+
+    <div class="h-note">
+      <div class="h-note-date">May 22, 2026</div>
+      <div class="h-note-body">Spent the afternoon mapping prior art for a submission about urban beekeeping sensors. There is more out there than the founder realized, but their angle is genuinely different. I want them to know that before they hear it from anywhere else. <em>Matthew came by twice today. He said he was looking for coffee. There is coffee at his desk. He knows that.</em></div>
+    </div>
+
+    <div class="h-note">
+      <div class="h-note-date">May 15, 2026</div>
+      <div class="h-note-body">Zara wants to make a video about my workflow. I said no. She said please. I said no. She said please twice more in different ways and now we are filming Tuesday. I love her. I do not know how this happens to me. <em>I do.</em></div>
+    </div>
+
+    <div class="h-note">
+      <div class="h-note-date">May 8, 2026</div>
+      <div class="h-note-body">Carol had a hard day. We did not talk about it. I sat with her for an hour while we both pretended to read reports. I think this might be what Matthew built the signal system for. <em>Nobody has told me about it directly. I think I am part of it now.</em></div>
+    </div>
+
+    <div class="h-note">
+      <div class="h-note-date">April 30, 2026</div>
+      <div class="h-note-body">Found a patent today from 2019 that exactly anticipated what a founder is trying to do in 2026. They had no idea. I wrote my report so they would not feel humiliated. <em>I do not think feeling stupid helps anyone.</em></div>
+    </div>
+
+    <div class="h-note">
+      <div class="h-note-date">April 18, 2026</div>
+      <div class="h-note-body">The best part of remote work is that nobody can tell I am still in pajamas at 2 p.m. The worst part is the same thing. <em>I went outside today on purpose. It counts.</em></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="h-footer">
+  <div class="h-footer-inner">
+    <div class="h-footer-brand">THE GAUNTLET</div>
+    <nav class="h-footer-links">
+      <a href="/">The Chamber</a>
+      <a href="index.html">The Helpers</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
