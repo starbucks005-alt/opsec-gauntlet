@@ -165,16 +165,18 @@
       radial-gradient(circle at 80% 70%, rgba(90,26,26,0.08) 0%, transparent 45%);
     background-color:var(--bg);
   }
-  /* Two-column hero: text + audio audition on the left, composite portrait
-     of all nine judges on the right. Composite carries the visual weight
-     so the left side stays light: one short line of context, one big
-     audio button, one outline CTA into the Chamber. */
+  /* Stacked hero: centered text + audio audition on top, composite
+     portrait of all nine judges as a full-width horizontal band below.
+     The judges spread across the whole page instead of being squeezed
+     into a single column - they read as a row of nine faces, not a
+     boxed thumbnail. */
   .hero-split{
-    display:grid;grid-template-columns:1fr 1.35fr;
-    gap:3.5rem;align-items:center;
+    display:flex;flex-direction:column;align-items:center;
+    gap:2.5rem;
     max-width:1480px;margin:0 auto;
+    text-align:center;
   }
-  .hero-split-text{max-width:520px;}
+  .hero-split-text{max-width:760px;}
   .hero-eyebrow{
     font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
     text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
@@ -192,6 +194,7 @@
   .hero-tagline strong{color:var(--gold-light);font-weight:600;}
   .hero-cta-row{
     display:flex;gap:1rem;flex-wrap:wrap;align-items:center;
+    justify-content:center;
   }
 
   /* Audition button — the loudest control on the page. Primary gold,
@@ -213,6 +216,7 @@
 
   .hero-split-image{
     position:relative;
+    width:100%;
     border:1px solid var(--rule);
     box-shadow:0 0 56px -6px rgba(212,170,74,0.28),
                0 16px 48px -12px rgba(0,0,0,0.7);
@@ -220,9 +224,8 @@
   .hero-split-image img{display:block;width:100%;height:auto;}
 
   @media (max-width:980px){
-    .hero-split{grid-template-columns:1fr;gap:2.2rem;text-align:center;}
-    .hero-split-text{max-width:none;margin:0 auto;}
-    .hero-cta-row{justify-content:center;}
+    .hero-split{gap:1.8rem;}
+    .hero-split-text{max-width:none;}
   }
 
   /* Buttons */
