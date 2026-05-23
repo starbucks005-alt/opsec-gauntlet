@@ -147,8 +147,8 @@ exports.handler = async (event) => {
     if (!/^[a-z0-9_]+$/.test(character)) {
       return jsonError(400, 'invalid character id');
     }
-    if (!['bio', 'role'].includes(mode)) {
-      return jsonError(400, 'mode must be bio or role');
+    if (!['bio', 'role', 'intro'].includes(mode)) {
+      return jsonError(400, 'mode must be bio, role, or intro');
     }
     const rawText = findScript(character, mode);
     if (!rawText) return jsonError(404, 'no script for that character + mode');
