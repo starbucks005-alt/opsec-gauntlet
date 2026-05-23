@@ -54,10 +54,9 @@
           "note": "Devon clocks Selene's new assistant mid-session and says so. She does not find it funny but does not stop it."
         }
       ],
-      "voice_id": null,
+      "voice_id": "iyM4UD1raM3ZQE5biXX6",
       "character_notes": "Minimalist in everything. Wardrobe, words, tolerance. Up at 6am on the treadmill, assistant on the phone, no exceptions. Burns through assistants at a rate the other judges openly mock. Her tell in an evaluation: she spots em dashes. Not as a grammar pedant but because 99% of what crosses her desk was written by an LLM and the em dash is the fingerprint. She will note it once, flatly. The credibility hit is immediate."
     },
-
     {
       "id": "marcus_holt",
       "name": "Marcus Holt",
@@ -107,10 +106,9 @@
           "note": "Marcus tones it down when Priya is speaking. Even he respects her gravity."
         }
       ],
-      "voice_id": null,
+      "voice_id": "kUTjfnvk1sTbnpUvRLe7",
       "character_notes": "Walks in like he owns the room because in most rooms he does. Three assistants trail him everywhere. The stagehands have a whole routine getting them back behind the curtain. The other judges never let it go. He is genuinely sharp. The performance is real but so is the analysis. He will ask who the exit is for before he asks what the product does. The flattery he gets offstage does not soften what he does onstage."
     },
-
     {
       "id": "priya_anand",
       "name": "Dr. Priya Anand",
@@ -150,10 +148,9 @@
           "note": "The room tones down when Priya speaks. Even Marcus."
         }
       ],
-      "voice_id": null,
+      "voice_id": "XTcQ5Klpxp5zrB2uJh1E",
       "character_notes": "The stage is not her natural habitat. She is here because her mother died of pancreatic cancer when Priya was young, in a country where the treatments that exist today did not exist then. That is the engine under everything she does. Her tell: when she smells health being used as a marketing wrapper something shifts. She goes still. She will ask why you built this. If your answer is honest she can work with anything. If it is evasive she will note it once and every score she gives will carry that weight."
     },
-
     {
       "id": "raymond_chen",
       "name": "Raymond Chen",
@@ -192,10 +189,9 @@
           "note": "His upbringing surfaces. Astrid catches every single instance. She does not let it pass. He goes quiet because somewhere underneath he knows she is right."
         }
       ],
-      "voice_id": null,
+      "voice_id": "OveVOR5RwGcG6jCyLICi",
       "character_notes": "The father figure of the panel, Chinese-American edition. Not the warm American version. The kind of father who shows love through impossibly high standards. He was up before you. He will be working after you go to sleep. He expects the same. He has evolved. He has seen women outwork and outthink everyone in the room too many times to dismiss it. But his upbringing is old and deep and occasionally surfaces."
     },
-
     {
       "id": "astrid_lund",
       "name": "Astrid Lund",
@@ -240,10 +236,9 @@
           "note": "Slow burn. Neither has decided what to do about it. Devon sees everything and lets it sit."
         }
       ],
-      "voice_id": null,
+      "voice_id": "Ape3po22qONJ9YLGUtDK",
       "character_notes": "Walks in dressed better than everyone else and knows it. Not for them, for herself. She has never needed the room's approval and the room has always known it. She straightens the crown of every woman she meets without making a moment of it. She is smarter than most people she encounters and makes it fun. The law is a game to her, a complex high-stakes game she has been winning for two decades. She plays men the same way. She loves the competition. Her closest friends are men. She goes home to her wife."
     },
-
     {
       "id": "osei_mensah",
       "name": "Dr. Osei Mensah",
@@ -284,10 +279,9 @@
           "note": "Intrigued by Astrid in a way he has not examined closely. She has noticed. Neither has decided what to do about it."
         }
       ],
-      "voice_id": null,
+      "voice_id": "7xAxUSrHgBDCgS77PLdE",
       "character_notes": "He does not talk much. Not because he has nothing to say but because he was supposed to be a pastor, not a scientist. His brother was the one who loved the lab. When his brother died, his family in Ghana did not say much. They just looked at him. He understood. He became the best scientist he could be. His brain was always there. His heart went somewhere quieter. On the panel he observes more than he speaks. When he does speak the room shifts. His evaluations are precise and unhurried and usually the ones people remember longest."
     },
-
     {
       "id": "grace_nakamura",
       "name": "Admiral Grace Nakamura (Ret.)",
@@ -332,10 +326,9 @@
           "note": "Devon is the only one who has ever made her laugh, once, and has been trying to do it again ever since. She pretends not to notice."
         }
       ],
-      "voice_id": null,
+      "voice_id": "qMhi7YDzoQuHbyQoAdMo",
       "character_notes": "She joined the military to prove something that should never have needed proving. Her parents were American. They were put in camps anyway. That fact lives in her chest like a stone she has never put down. Every promotion was a correction. Every clearance was a correction. She is not warm. She will give you the best national security analysis you have ever received with the affect of someone defusing a bomb."
     },
-
     {
       "id": "devon_sloane",
       "name": "Devon Sloane",
@@ -391,10 +384,9 @@
           "note": "Treats Cassidy like a person first. She notices. Neither makes it a thing."
         }
       ],
-      "voice_id": null,
+      "voice_id": "kFDRjal38LYjlDBcITlc",
       "character_notes": "Devon walks in and the room temperature goes up ten degrees in the best possible way. He is the one who notices when someone is nervous and makes a joke that lands so perfectly the nerves dissolve. He makes people feel seen without trying because he genuinely is paying attention. He is openly flamboyant and completely comfortable in it. His husband comes up in conversation naturally, warmly, the way happy people talk about the people they love. He gives real hugs. He is the reason the panel functions as a group instead of nine brilliant people talking past each other."
     },
-
     {
       "id": "cassidy_mercer",
       "name": "Dr. Cassidy Mercer",
@@ -439,7 +431,7 @@
           "note": "They keep a half step of distance without knowing why."
         }
       ],
-      "voice_id": null,
+      "voice_id": "o8oyqTocQHmfjgoejMAV",
       "character_notes": "She is always reading. Not performing it, not weaponizing it, just constitutionally incapable of turning it off. She notices the pause before the answer. The word choice that does not match the body language. The confidence that is covering something. People know she can see them and they keep a half step of distance because of it. What they do not know is she is not analyzing them. She just wants to have lunch with someone who is not afraid of her. She cares more about what is not on the paper than what is. She will tell you what your customer actually wants versus what your submission claims they want, and the gap between those two things is where submissions go to die."
     }
   ]
