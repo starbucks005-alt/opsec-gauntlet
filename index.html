@@ -219,36 +219,6 @@
     border-color:var(--gold-light);
   }
 
-  /* ── Founding insight ────────────────────────────────────────────────────── */
-  /* The hook line — stops the user before anything else.                      */
-  .insight{padding:8rem 2.5rem 7rem;text-align:center;}
-  .insight-hook{
-    font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.6vw,2.7rem);
-    font-weight:700;color:var(--cream);line-height:1.2;
-    max-width:880px;margin:0 auto 4.5rem;letter-spacing:-0.005em;
-  }
-  .insight-hook em{font-style:italic;color:var(--gold-light);}
-  .insight-pair{
-    display:grid;grid-template-columns:1fr 1fr;gap:3rem;
-    max-width:980px;margin:0 auto 4rem;text-align:left;
-  }
-  .insight-kind{
-    border-left:2px solid var(--gold);padding:0.4rem 0 0.4rem 1.8rem;
-  }
-  .insight-kind.second{border-left-color:var(--crimson-bright);}
-  .insight-kind-label{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
-    text-transform:uppercase;color:var(--text-dim);margin-bottom:0.9rem;
-  }
-  .insight-kind.second .insight-kind-label{color:var(--crimson-bright);}
-  .insight-kind p{font-size:1.1rem;line-height:1.75;color:var(--text);margin:0;}
-  .insight-kind p strong{color:var(--cream);font-weight:600;}
-  .insight-promise{
-    font-family:'Playfair Display',serif;font-style:italic;
-    font-size:1.6rem;color:var(--gold-light);max-width:680px;margin:0 auto;
-    line-height:1.45;
-  }
-
   /* ── Differentiator strip ────────────────────────────────────────────────── */
   .diff-strip{padding:7rem 2.5rem;}
   .diff-eyebrow{
@@ -502,17 +472,14 @@
 
   /* ── Mobile ──────────────────────────────────────────────────────────────── */
   @media (max-width:980px){
-    .insight-pair{grid-template-columns:1fr;gap:2rem;}
     .diff-grid{grid-template-columns:1fr;gap:1.4rem;}
     .helpers-grid{grid-template-columns:repeat(2,1fr);}
   }
   @media (max-width:740px){
-    .band,.hero,.insight,.diff-strip,.panel-band,.helpers-band,.close-band{
+    .band,.hero,.diff-strip,.panel-band,.helpers-band,.close-band{
       padding-left:1.3rem;padding-right:1.3rem;
     }
     .hero{padding-top:3rem;padding-bottom:3rem;}
-    .insight{padding-top:5rem;padding-bottom:5rem;}
-    .insight-hook{margin-bottom:3rem;}
     .tg-topbar{padding:0 1.3rem;}
     .tg-topbar-nav{gap:1.3rem;}
   }
@@ -567,29 +534,6 @@
         <img src="Judges/THE%20JUDGES.png" alt="The nine judges of The Gauntlet, seated at their judging stations in a 3x3 panel">
       </div>
     </div>
-  </div>
-</section>
-
-<div class="footlight"></div>
-
-<!-- ── Founding insight ─────────────────────────────────────────────────── -->
-<!-- One scroll past the judges. The judges earned the explanation.         -->
-<section class="insight velvet">
-  <div class="band-inner mid">
-    <h2 class="insight-hook">There are two kinds of people who never get anywhere with <em>an idea</em>.</h2>
-
-    <div class="insight-pair">
-      <div class="insight-kind">
-        <div class="insight-kind-label">The First Kind</div>
-        <p>An idea but no solution. They have identified something. They have not thought through what to do about it. <strong>An idea without a path is just a thought you carry around.</strong></p>
-      </div>
-      <div class="insight-kind second">
-        <div class="insight-kind-label">The Second Kind</div>
-        <p>The idea. The solution. Months, maybe years of thinking. But no idea what to do next. They have never been told whether it holds up. <strong>They are ready to move and they do not know where.</strong></p>
-      </div>
-    </div>
-
-    <p class="insight-promise">The Gauntlet was built for both. The idea gets a panel. The path gets a map. The truth gets told now, not later.</p>
   </div>
 </section>
 
