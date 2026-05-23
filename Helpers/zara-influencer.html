@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
+<script src="../assets/tg-im.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -49,6 +50,16 @@
   .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
   .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
   .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
+  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
+  .h-im-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.75rem 1.4rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+  }
+  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
 
   section.h-section{margin-bottom:5rem;}
   .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
@@ -64,6 +75,37 @@
   .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
   .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
   .h-note-body em{color:var(--cream);font-style:italic;}
+  /* Notes — per-character block types ────────────────────────────────────── */
+  .h-note-body p{margin-bottom:0.95rem;}
+  .h-note-body p:last-child{margin-bottom:0;}
+  .h-note-aside{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
+    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
+    margin:0.6rem 0;
+  }
+  .h-note-aside:last-child{margin-bottom:0;}
+  .h-note-list{
+    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
+    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
+    color:var(--text);line-height:1.85;
+  }
+  .h-note-list li{margin-bottom:0.35rem;}
+  .h-note-list li em{font-style:italic;color:var(--gold-light);}
+  .h-note-quote{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
+    padding:0.5rem 0 0.5rem 1.4rem;
+    border-left:2px solid var(--gold);
+    margin:0.8rem 0 0.9rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
+  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
+  .h-note-rule{
+    height:1px;width:42%;margin:0.4rem 0 0.8rem;
+    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
+  }
 
   .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
   .h-hero-photo{position:relative;}
@@ -122,6 +164,9 @@
           <span class="play" aria-hidden="true">▶</span> Their Role
         </button>
       </div>
+      <div class="h-cta-row">
+        <button type="button" class="h-im-btn" data-tg-im data-character="zara_cole" data-name="Zara">IM Zara</button>
+      </div>
     </div>
   </section>
 
@@ -145,23 +190,37 @@
 
   <section class="h-section">
     <div class="h-notes-eyebrow">What Zara is thinking about</div>
-    <p class="h-notes-sub">Personal notes from Zara. New ones land over time.</p>
+    <p class="h-notes-sub">Notes in the cadence she writes everything else.</p>
 
     <div class="h-note">
-      <div class="h-note-date">May 21, 2026</div>
-      <div class="h-note-body">Reid was in the comments of one of my posts today. Just liking things. He thinks I do not notice. <em>I notice everything. I am letting it sit.</em></div>
+      <div class="h-note-date">5/21, 11:42pm, can’t sleep</div>
+      <div class="h-note-body">
+      <p>reid was in the comments today. just liking things. he thinks I do not notice. <em>I notice everything.</em> I am letting it sit.</p>
+      <p class="h-note-aside">could be a post. won’t be.</p>
+      </div>
     </div>
+
     <div class="h-note">
-      <div class="h-note-date">May 13, 2026</div>
-      <div class="h-note-body">Filmed Wren today. She kept saying she was bad on camera. She is not bad on camera. She is just doing the thing where you preemptively apologize for being seen. The footage is going to be good. I edited her into the version she actually is. <em>She is going to hate that I made her watch it. She will also feel something she did not expect.</em></div>
+      <div class="h-note-date">5/13, post day</div>
+      <div class="h-note-body">
+      <p>filmed wren. she kept saying she was bad on camera. she is not bad on camera. she is doing the thing where you preemptively apologize for being seen. cut a version where I let her finish her sentences. <em>she will hate that I am making her watch it. she will also feel something she did not expect.</em></p>
+      <p class="h-note-aside">scheduling tuesday 9am post-shower light. backup wednesday 6pm golden hour.</p>
+      </div>
     </div>
+
     <div class="h-note">
-      <div class="h-note-date">May 6, 2026</div>
-      <div class="h-note-body">An eighteen year old DM'd me asking how to start. I gave her the real answer, which is that nobody can tell you what your voice is, you have to wear out three or four wrong ones first. She said that was not the answer she wanted. <em>I told her I knew.</em></div>
+      <div class="h-note-date">5/6, DM today</div>
+      <div class="h-note-body">
+      <p>eighteen year old asked how to start. I told her nobody can tell you what your voice is. you have to wear out three or four wrong ones. she said that was not the answer she wanted. <em>I told her I knew.</em> she’ll be back in two years and she’ll thank me. or she won’t. both are content.</p>
+      </div>
     </div>
+
     <div class="h-note">
-      <div class="h-note-date">April 24, 2026</div>
-      <div class="h-note-body">Looked at Reid in a Chamber session today. Saw the whole thing. The wife who is performance. The affair that is filler. The bored. He clocked me clocking him. We did not speak. <em>I am not going to post about it. Some things even I keep.</em></div>
+      <div class="h-note-date">4/24</div>
+      <div class="h-note-body">
+      <p>looked at reid in the Chamber today. saw the whole thing. wife who is performance. affair that is filler. the bored. he clocked me clocking him. we did not speak. I am not going to post about it.</p>
+      <p class="h-note-aside">some things even I keep.</p>
+      </div>
     </div>
   </section>
 

@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
+<script src="../assets/tg-im.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -49,6 +50,16 @@
   .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
   .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
   .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
+  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
+  .h-im-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.75rem 1.4rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+  }
+  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
 
   section.h-section{margin-bottom:5rem;}
   .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
@@ -64,6 +75,37 @@
   .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
   .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
   .h-note-body em{color:var(--cream);font-style:italic;}
+  /* Notes — per-character block types ────────────────────────────────────── */
+  .h-note-body p{margin-bottom:0.95rem;}
+  .h-note-body p:last-child{margin-bottom:0;}
+  .h-note-aside{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
+    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
+    margin:0.6rem 0;
+  }
+  .h-note-aside:last-child{margin-bottom:0;}
+  .h-note-list{
+    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
+    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
+    color:var(--text);line-height:1.85;
+  }
+  .h-note-list li{margin-bottom:0.35rem;}
+  .h-note-list li em{font-style:italic;color:var(--gold-light);}
+  .h-note-quote{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
+    padding:0.5rem 0 0.5rem 1.4rem;
+    border-left:2px solid var(--gold);
+    margin:0.8rem 0 0.9rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
+  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
+  .h-note-rule{
+    height:1px;width:42%;margin:0.4rem 0 0.8rem;
+    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
+  }
 
   .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
   .h-hero-photo{position:relative;}
@@ -122,6 +164,9 @@
           <span class="play" aria-hidden="true">▶</span> Their Role
         </button>
       </div>
+      <div class="h-cta-row">
+        <button type="button" class="h-im-btn" data-tg-im data-character="reid_callum" data-name="Reid">IM Reid</button>
+      </div>
     </div>
   </section>
 
@@ -146,23 +191,38 @@
 
   <section class="h-section">
     <div class="h-notes-eyebrow">What Reid is thinking about</div>
-    <p class="h-notes-sub">Personal notes from Reid. New ones land over time.</p>
+    <p class="h-notes-sub">Notes that read like they were written for an audience that does not exist.</p>
 
     <div class="h-note">
-      <div class="h-note-date">May 19, 2026</div>
-      <div class="h-note-body">A submission today had marketing copy that was so clearly written by an AI I almost did not finish reading it. Selene is going to clock it in twelve seconds. I told them. They asked what to do. I told them to write it themselves. They said they were not good at writing. I said that is the work. They did not love that answer. <em>I am not paid to be loved.</em></div>
+      <div class="h-note-date">May 19, 2026, 4:47pm</div>
+      <div class="h-note-body">
+      <p>A submission today with marketing copy so clearly written by an AI I almost did not finish reading it. Selene will clock it in twelve seconds. I told the founder. They asked what to do. I told them to write it themselves. They said they were not good at writing. I said that is the work. They did not love that answer.</p>
+      <p><em>I am not paid to be loved.</em> I have written that line in three separate journal entries this year. I should probably ask myself why I keep needing to say it.</p>
+      </div>
     </div>
+
     <div class="h-note">
       <div class="h-note-date">May 11, 2026</div>
-      <div class="h-note-body">Carol had something today. I do not know what. I sent a one-line message about a submission that did not strictly need to come from me. <em>She probably did not notice. I would prefer that. Mention this to no one. There is no one to mention it to.</em></div>
+      <div class="h-note-body">
+      <p>Carol had something today. I do not know what. I sent a one-line message about a submission that did not strictly need to come from me. She probably did not notice. <em>I would prefer that.</em></p>
+      <p class="h-note-aside">Why am I writing this down. There is no one to read it.</p>
+      </div>
     </div>
+
     <div class="h-note">
       <div class="h-note-date">May 4, 2026</div>
-      <div class="h-note-body">Spent forty-five minutes on a Greylander submission with Jules. We disagreed about the headline. We argued. <em>It was the most fun I have had at work in three months. I am writing this down because I do not want to forget that it can still feel like that.</em></div>
+      <div class="h-note-body">
+      <p>Spent forty-five minutes on a Greylander piece with Jules. We disagreed about the headline. We argued.</p>
+      <p><em>It was the most fun I have had at work in three months.</em> I am writing this down because I do not want to forget it can still feel like that.</p>
+      </div>
     </div>
+
     <div class="h-note">
       <div class="h-note-date">April 27, 2026</div>
-      <div class="h-note-body">Came back to my desk from a long lunch I should not have taken. Stared at the screen for an hour. Did not work. Did not respond to anything. <em>The wife asked how the day was. I said fine. She said okay. That is the marriage now.</em></div>
+      <div class="h-note-body">
+      <p>Came back from a long lunch I should not have taken. Stared at the screen for an hour. The wife asked how the day was. I said fine. She said okay.</p>
+      <p class="h-note-aside">That is the marriage now. I do not know what to do with that sentence. I keep writing it.</p>
+      </div>
     </div>
   </section>
 

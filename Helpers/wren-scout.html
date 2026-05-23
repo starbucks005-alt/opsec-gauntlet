@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
+<script src="../assets/tg-im.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -104,6 +105,16 @@
     display:inline-flex;align-items:center;justify-content:center;
     font-size:0.7rem;line-height:1;
   }
+  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
+  .h-im-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.75rem 1.4rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+  }
+  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
 
   /* Sections */
   section.h-section{margin-bottom:5rem;}
@@ -161,6 +172,37 @@
     color:var(--text);
   }
   .h-note-body em{color:var(--cream);font-style:italic;}
+  /* Notes — per-character block types ────────────────────────────────────── */
+  .h-note-body p{margin-bottom:0.95rem;}
+  .h-note-body p:last-child{margin-bottom:0;}
+  .h-note-aside{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
+    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
+    margin:0.6rem 0;
+  }
+  .h-note-aside:last-child{margin-bottom:0;}
+  .h-note-list{
+    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
+    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
+    color:var(--text);line-height:1.85;
+  }
+  .h-note-list li{margin-bottom:0.35rem;}
+  .h-note-list li em{font-style:italic;color:var(--gold-light);}
+  .h-note-quote{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
+    padding:0.5rem 0 0.5rem 1.4rem;
+    border-left:2px solid var(--gold);
+    margin:0.8rem 0 0.9rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
+  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
+  .h-note-rule{
+    height:1px;width:42%;margin:0.4rem 0 0.8rem;
+    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
+  }
 
   /* Footer */
   .h-footer{
@@ -229,6 +271,9 @@
           <span class="play" aria-hidden="true">▶</span> Their Role
         </button>
       </div>
+      <div class="h-cta-row">
+        <button type="button" class="h-im-btn" data-tg-im data-character="wren_calloway" data-name="Wren">IM Wren</button>
+      </div>
     </div>
   </section>
 
@@ -267,31 +312,38 @@
 
   <section class="h-section">
     <div class="h-notes-eyebrow">What Wren is thinking about</div>
-    <p class="h-notes-sub">Personal notes from Wren. New ones land over time.</p>
+    <p class="h-notes-sub">Personal notes from Wren. New ones land over time. She does not edit.</p>
 
     <div class="h-note">
       <div class="h-note-date">May 22, 2026</div>
-      <div class="h-note-body">Spent the afternoon mapping prior art for a submission about urban beekeeping sensors. There is more out there than the founder realized, but their angle is genuinely different. I want them to know that before they hear it from anywhere else. <em>Matthew came by twice today. He said he was looking for coffee. There is coffee at his desk. He knows that.</em></div>
+      <div class="h-note-body">
+      <p>Spent the afternoon mapping prior art for a submission about urban beekeeping sensors. There is more out there than the founder realized but their angle is genuinely different. Sixteen patents that touch this space and only two come within a mile of what they want to do. I wrote my report so they would not feel ambushed when they see the rest of the landscape.</p>
+      <p>Also, Matthew came by my desk twice today. He said he was looking for coffee. <em>There is coffee at his desk.</em> I do not know what this means. I think it means something. Maybe.</p>
+      </div>
     </div>
 
     <div class="h-note">
-      <div class="h-note-date">May 15, 2026</div>
-      <div class="h-note-body">Zara wants to make a video about my workflow. I said no. She said please. I said no. She said please twice more in different ways and now we are filming Tuesday. I love her. I do not know how this happens to me. <em>I do.</em></div>
+      <div class="h-note-date">May 17, 2026</div>
+      <div class="h-note-body">
+      <p class="h-note-aside">Sunday, I do not normally work on Sundays but the founder needed it Monday.</p>
+      <p>Submission was a clean-energy storage idea. The white space here is real and the founder did not know it. I spent four hours on Saturday and another two today running the prior-art trees and I think I have something good for Carol. The whole thing comes down to one citation in a Norwegian filing from 2019 that nobody in this space seems to have noticed. <em>I love this part of my job.</em></p>
+      <p class="h-note-aside">Cup of tea count today: four. Should be three.</p>
+      </div>
     </div>
 
     <div class="h-note">
       <div class="h-note-date">May 8, 2026</div>
-      <div class="h-note-body">Carol had a hard day. We did not talk about it. I sat with her for an hour while we both pretended to read reports. I think this might be what Matthew built the signal system for. <em>Nobody has told me about it directly. I think I am part of it now.</em></div>
+      <div class="h-note-body">
+      <p>Zara emailed at 11pm asking if I want to be in a content thing she is filming. I do not want to be in a content thing she is filming. <em>I said yes.</em> I do not know how this happens to me. Actually I do.</p>
+      </div>
     </div>
 
     <div class="h-note">
       <div class="h-note-date">April 30, 2026</div>
-      <div class="h-note-body">Found a patent today from 2019 that exactly anticipated what a founder is trying to do in 2026. They had no idea. I wrote my report so they would not feel humiliated. <em>I do not think feeling stupid helps anyone.</em></div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">April 18, 2026</div>
-      <div class="h-note-body">The best part of remote work is that nobody can tell I am still in pajamas at 2 p.m. The worst part is the same thing. <em>I went outside today on purpose. It counts.</em></div>
+      <div class="h-note-body">
+      <p>Found a patent today from 2019 that exactly anticipated what a founder is trying to do in 2026. The founder had no idea. I wrote my report so they would not feel humiliated. There is a way to tell someone their idea has already been done that makes them feel like an investigator, not an idiot.</p>
+      <p class="h-note-aside">Brevity helps. Sympathy helps more.</p>
+      </div>
     </div>
   </section>
 

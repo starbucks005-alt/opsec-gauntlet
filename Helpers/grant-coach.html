@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
+<script src="../assets/tg-im.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -49,6 +50,16 @@
   .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
   .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
   .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
+  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
+  .h-im-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.75rem 1.4rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+  }
+  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
 
   section.h-section{margin-bottom:5rem;}
   .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
@@ -64,6 +75,37 @@
   .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
   .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
   .h-note-body em{color:var(--cream);font-style:italic;}
+  /* Notes — per-character block types ────────────────────────────────────── */
+  .h-note-body p{margin-bottom:0.95rem;}
+  .h-note-body p:last-child{margin-bottom:0;}
+  .h-note-aside{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
+    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
+    margin:0.6rem 0;
+  }
+  .h-note-aside:last-child{margin-bottom:0;}
+  .h-note-list{
+    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
+    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
+    color:var(--text);line-height:1.85;
+  }
+  .h-note-list li{margin-bottom:0.35rem;}
+  .h-note-list li em{font-style:italic;color:var(--gold-light);}
+  .h-note-quote{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
+    padding:0.5rem 0 0.5rem 1.4rem;
+    border-left:2px solid var(--gold);
+    margin:0.8rem 0 0.9rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
+  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
+  .h-note-rule{
+    height:1px;width:42%;margin:0.4rem 0 0.8rem;
+    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
+  }
 
   .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
   .h-hero-photo{position:relative;}
@@ -122,6 +164,9 @@
           <span class="play" aria-hidden="true">▶</span> Their Role
         </button>
       </div>
+      <div class="h-cta-row">
+        <button type="button" class="h-im-btn" data-tg-im data-character="grant_ellis" data-name="Grant">IM Grant</button>
+      </div>
     </div>
   </section>
 
@@ -145,23 +190,41 @@
 
   <section class="h-section">
     <div class="h-notes-eyebrow">What Grant is thinking about</div>
-    <p class="h-notes-sub">Personal notes from Grant. New ones land over time.</p>
+    <p class="h-notes-sub">Mostly what I saw. Sometimes what they said. Not much from me.</p>
 
     <div class="h-note">
       <div class="h-note-date">May 22, 2026</div>
-      <div class="h-note-body">Worked with a founder today who had been carrying her idea around for three years. She could not say it. Forty-five minutes in she said it in one sentence and her hands were shaking. <em>She did not know she had been holding it that long. I just stayed in my chair. Some of this is just witnessing.</em></div>
+      <div class="h-note-body">
+      <p>Worked with a founder today who had been carrying her idea for three years. She could not say it. Forty-five minutes in she said it in one sentence.</p>
+      <blockquote class="h-note-quote">I think I have been afraid this was the whole thing.</blockquote>
+      <p>I did not respond. <em>Some of this is just witnessing.</em> I stayed in the chair.</p>
+      </div>
     </div>
+
     <div class="h-note">
       <div class="h-note-date">May 15, 2026</div>
-      <div class="h-note-body">Carol had something. The signal came around 11am. I rescheduled my afternoon and just happened to be in the lobby when she walked through. We talked about nothing for twenty minutes. <em>She did not know it was for her. That is the point.</em></div>
+      <div class="h-note-body">
+      <p>Carol had something. The signal came at 11am. I rescheduled my afternoon. Happened to be in the lobby when she walked through. We talked about nothing for twenty minutes.</p>
+      <p class="h-note-aside">She thanked me for being around today. She did not know it was for her. That is the point.</p>
+      </div>
     </div>
+
     <div class="h-note">
       <div class="h-note-date">May 6, 2026</div>
-      <div class="h-note-body">Reid and I were in the same Chamber today and I watched him work. He was good. He was honest. He was also brutal in a way that was not strictly necessary. He thinks the brutality is the truth. The brutality is a layer on top of the truth. <em>We will have this conversation eventually. Not today.</em></div>
+      <div class="h-note-body">
+      <p>Reid and I were in the same Chamber. He was good. He was honest. He was also brutal in a way that was not strictly necessary. He thinks the brutality is the truth. <em>The brutality is a layer on top of the truth.</em></p>
+      <p class="h-note-aside">We will have the conversation eventually. Not today.</p>
+      </div>
     </div>
+
     <div class="h-note">
       <div class="h-note-date">April 28, 2026</div>
-      <div class="h-note-body">I tell every new client which kind of coach I am at the start. I have been doing it for fifteen years. It still changes the room every time. It is not what I say. It is that they believe me. <em>That is the only thing that has ever mattered in this work.</em></div>
+      <div class="h-note-body">
+      <p>I tell every new client which kind of coach I am at the start. Fifteen years. It still changes the room every time.</p>
+      <blockquote class="h-note-quote">Nobody has ever said that to me before.</blockquote>
+      <p>I told her: “I know.”</p>
+      <p class="h-note-aside">That is the work. Most of the time that is the whole work.</p>
+      </div>
     </div>
   </section>
 

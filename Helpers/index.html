@@ -8,6 +8,8 @@
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
+<script src="../assets/tg-im.js" defer></script>
+<script src="../assets/tg-voice.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -137,23 +139,27 @@
     font-size:0.5rem;line-height:1;
   }
 
-  /* Enter button */
-  .r-card-enter{
-    display:inline-flex;align-items:center;justify-content:center;
-    background:var(--gold);color:var(--ink);
-    padding:0.75rem 1rem;text-decoration:none;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+  /* Card actions — IM + Visit pair per The Dose pattern */
+  .r-card-actions{
+    display:flex;align-items:center;gap:1rem;justify-content:space-between;
+    margin-top:auto;
+  }
+  .r-card-im{
+    flex:0 0 auto;
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.75rem 1.1rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
     text-transform:uppercase;font-weight:700;
-    transition:background 0.2s;
+    transition:background 0.2s,transform 0.2s;
   }
-  .r-card-enter:hover{background:var(--gold-light);}
-  .r-card-enter.is-soon{
-    background:transparent;color:var(--text-dim);
-    border:1px solid var(--rule);cursor:not-allowed;
-    pointer-events:none;
+  .r-card-im:hover{background:var(--gold-light);}
+  .r-card-visit{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--gold);text-decoration:none;
+    border-bottom:1px solid transparent;padding-bottom:0.15rem;
+    transition:color 0.2s,border-color 0.2s;
   }
-  .r-card-enter.is-soon::after{content:' · coming soon';}
-
+  .r-card-visit:hover{color:var(--gold-light);border-bottom-color:var(--gold-light);}
   /* Footer */
   .r-footer{
     border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;
@@ -205,144 +211,160 @@
 
   <div class="r-grid">
 
-    <!-- 1. Wren Calloway — The Scout -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Wren_Scout.jpg" alt="Wren Calloway at her desk">
+        <img src="Wren_Scout.jpg" alt="Wren Calloway">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Wren Calloway</div>
         <div class="r-card-role">The Scout</div>
         <p class="r-card-bio">I find what is already out there before you walk in. Patent databases, prior art, market landscape, white space. <em>You face the judges knowing exactly where you are standing.</em></p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="wren_calloway" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="wren_calloway" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="wren-scout.html">Enter Wren's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="wren_calloway" data-name="Wren">IM Wren</button>
+          <a class="r-card-visit" href="wren-scout.html">Visit Wren →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 2. Carol Haynes — The Screener -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Carol_Screener.jpg" alt="Carol Haynes at her desk">
+        <img src="Carol_Screener.jpg" alt="Carol Haynes">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Carol Haynes</div>
         <div class="r-card-role">The Screener</div>
         <p class="r-card-bio">Twenty years of intake. I read what you wrote and tell you what it needs before the judges ever see it. <em>Honest. Not unkind.</em></p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="carol_haynes" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="carol_haynes" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="carol-screener.html">Enter Carol's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="carol_haynes" data-name="Carol">IM Carol</button>
+          <a class="r-card-visit" href="carol-screener.html">Visit Carol →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 3. Matthew Vance — The Behaviorist -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Matthew_Behaviorist.jpg" alt="Matthew Vance at his desk">
+        <img src="Matthew_Behaviorist.jpg" alt="Matthew Vance">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Matthew Vance</div>
         <div class="r-card-role">The Behaviorist</div>
         <p class="r-card-bio">PhD in why people do what they do. Your customer is not who you think they are. <em>Let me show you the gap between what they say and what they actually do.</em></p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="matthew_vance" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="matthew_vance" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="matthew-behaviorist.html">Enter Matthew's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="matthew_vance" data-name="Matthew">IM Matthew</button>
+          <a class="r-card-visit" href="matthew-behaviorist.html">Visit Matthew →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 4. Arjun Mehta — The Delivery Expert -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Arjun_delivery.jpg" alt="Arjun Mehta at his desk">
+        <img src="Arjun_delivery.jpg" alt="Arjun Mehta">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Arjun Mehta</div>
         <div class="r-card-role">The Delivery Expert</div>
         <p class="r-card-bio">Twenty years building and teaching how to build. I will show you how your idea gets from concept to customer <em>without dying in the middle</em>.</p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="arjun_mehta" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="arjun_mehta" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="arjun-delivery.html">Enter Arjun's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM Arjun</button>
+          <a class="r-card-visit" href="arjun-delivery.html">Visit Arjun →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 5. Zara Cole — The Influencer -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Zara_Influencer.jpg" alt="Zara Cole at her ring light">
+        <img src="Zara_Influencer.jpg" alt="Zara Cole">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Zara Cole</div>
         <div class="r-card-role">The Influencer</div>
         <p class="r-card-bio">340,000 followers and one rule. Sound like yourself. <em>I will help you find an audience that actually buys, not the metric that looks good.</em></p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="zara_cole" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="zara_cole" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="zara-influencer.html">Enter Zara's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="zara_cole" data-name="Zara">IM Zara</button>
+          <a class="r-card-visit" href="zara-influencer.html">Visit Zara →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 6. Reid Callum — The Marketing Expert -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Reid_Marketing.jpg" alt="Reid Callum at his desk">
+        <img src="Reid_Marketing.jpg" alt="Reid Callum">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Reid Callum</div>
         <div class="r-card-role">The Marketing Expert</div>
         <p class="r-card-bio">I package things for a living. On this platform I do not have to soften the truth. <em>If your positioning is wrong, nothing else matters.</em></p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="reid_callum" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="reid_callum" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="reid-marketing.html">Enter Reid's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="reid_callum" data-name="Reid">IM Reid</button>
+          <a class="r-card-visit" href="reid-marketing.html">Visit Reid →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 7. Jules — from Greylander Press -->
     <article class="r-card">
       <div class="r-card-photo">
         <div class="r-card-crossover">From Greylander Press</div>
-        <img src="Jules_Profile.jpg" alt="Jules at her desk">
+        <img src="Jules_Profile.jpg" alt="Jules">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Jules</div>
         <div class="r-card-role">The Rewrite Partner</div>
         <p class="r-card-bio">Selene will clock the AI tells in fifteen seconds. I will help you sound like the person who had the idea, <em>not the model that drafted it for you</em>.</p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="jules" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="jules" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="jules-rewrite.html">Enter Jules's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="jules" data-name="Jules">IM Jules</button>
+          <a class="r-card-visit" href="jules-rewrite.html">Visit Jules →</a>
+        </div>
       </div>
     </article>
 
-    <!-- 8. Grant Ellis — The Coach -->
     <article class="r-card">
       <div class="r-card-photo">
-        <img src="Grant_Coach.jpg" alt="Grant Ellis at his desk">
+        <img src="Grant_Coach.jpg" alt="Grant Ellis">
       </div>
       <div class="r-card-body">
         <div class="r-card-name">Grant Ellis</div>
         <div class="r-card-role">The Coach</div>
         <p class="r-card-bio">Fifteen years in pitch coaching. The last person you see before The Gauntlet. <em>I will get you ready to speak your idea out loud in sixty seconds to someone who will not wait for you to find your words.</em></p>
         <div class="r-card-voice">
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Story</button>
-          <button type="button" disabled title="Voice coming soon"><span class="pip">▶</span> Role</button>
+          <button type="button" data-tg-voice data-character="grant_ellis" data-mode="bio" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Story</button>
+          <button type="button" data-tg-voice data-character="grant_ellis" data-mode="role" disabled title="Voice integration coming with ElevenLabs"><span class="pip">▶</span> Their Role</button>
         </div>
-        <a class="r-card-enter" href="grant-coach.html">Enter Grant's Office →</a>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="grant_ellis" data-name="Grant">IM Grant</button>
+          <a class="r-card-visit" href="grant-coach.html">Visit Grant →</a>
+        </div>
       </div>
     </article>
 
-  </div>
+    </div>
 
 </main>
 

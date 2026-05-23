@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
+<script src="../assets/tg-im.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -49,6 +50,16 @@
   .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
   .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
   .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
+  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
+  .h-im-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.75rem 1.4rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+  }
+  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
 
   section.h-section{margin-bottom:5rem;}
   .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
@@ -64,6 +75,37 @@
   .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
   .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
   .h-note-body em{color:var(--cream);font-style:italic;}
+  /* Notes — per-character block types ────────────────────────────────────── */
+  .h-note-body p{margin-bottom:0.95rem;}
+  .h-note-body p:last-child{margin-bottom:0;}
+  .h-note-aside{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
+    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
+    margin:0.6rem 0;
+  }
+  .h-note-aside:last-child{margin-bottom:0;}
+  .h-note-list{
+    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
+    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
+    color:var(--text);line-height:1.85;
+  }
+  .h-note-list li{margin-bottom:0.35rem;}
+  .h-note-list li em{font-style:italic;color:var(--gold-light);}
+  .h-note-quote{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
+    padding:0.5rem 0 0.5rem 1.4rem;
+    border-left:2px solid var(--gold);
+    margin:0.8rem 0 0.9rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
+  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
+  .h-note-rule{
+    height:1px;width:42%;margin:0.4rem 0 0.8rem;
+    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
+  }
 
   .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
   .h-hero-photo{position:relative;}
@@ -122,6 +164,9 @@
           <span class="play" aria-hidden="true">▶</span> Their Role
         </button>
       </div>
+      <div class="h-cta-row">
+        <button type="button" class="h-im-btn" data-tg-im data-character="matthew_vance" data-name="Matthew">IM Matthew</button>
+      </div>
     </div>
   </section>
 
@@ -145,27 +190,39 @@
 
   <section class="h-section">
     <div class="h-notes-eyebrow">What Matthew is thinking about</div>
-    <p class="h-notes-sub">Personal notes from Matthew. New ones land over time.</p>
+    <p class="h-notes-sub">Observational notes. Dated in compact form. The format is the point.</p>
 
     <div class="h-note">
-      <div class="h-note-date">May 23, 2026</div>
-      <div class="h-note-body">Cassidy and I were both in the Chamber today, watching the same submission. Different vantage points, same read. She said three words. The submitter never knew what she meant. <em>I did. She knew I did. We did not look at each other.</em></div>
+      <div class="h-note-date">5/23/2026</div>
+      <div class="h-note-body">
+      <p>Observed in Chamber today, submission 2026-0517. Cassidy and I, same session, opposite ends of the room. She said three words at minute eleven. I read her read in the same moment. The submitter never knew what she meant. <em>We did not look at each other.</em></p>
+      </div>
     </div>
+
     <div class="h-note">
-      <div class="h-note-date">May 18, 2026</div>
-      <div class="h-note-body">Carol had a bad afternoon. I noticed at minute four. I sent the signal. Wren found a reason to come by twenty minutes later. Grant called her on something procedural. The Marketing Expert, who would never say so, sent a one-line message about a submission that did not need to come from him today. <em>The system worked. I will never tell her.</em></div>
+      <div class="h-note-date">5/18/2026</div>
+      <div class="h-note-body">
+      <ol class="h-note-list">
+        <li>Carol's affect at 11:04 indicated a bad morning.</li>
+        <li>Signal sent.</li>
+        <li>Wren in lobby by 11:31. Grant rescheduled afternoon. Reid messaged at 11:42 about a submission that did not strictly need to come from him.</li>
+        <li>Carol unaware. <em>Pattern intact.</em></li>
+      </ol>
+      </div>
     </div>
+
     <div class="h-note">
-      <div class="h-note-date">May 9, 2026</div>
-      <div class="h-note-body">Reid does not know I have been watching him for six months. He thinks he is the only one in the room who notices things. He is one of the only ones. <em>That is a different statement.</em></div>
+      <div class="h-note-date">Day 21.</div>
+      <div class="h-note-body">
+      <p>Toddler had a fever. I bought him children's Tylenol and stayed up with him. The activity that was usually 11pm to 3am was not. I am not going to overstate this. I am writing it down because the writing helps and because future me may need to know that day 21 was the one where the substitution stuck for the first time.</p>
+      </div>
     </div>
+
     <div class="h-note">
-      <div class="h-note-date">May 1, 2026</div>
-      <div class="h-note-body">Twelve days clean. The toddler has a cold. Buying a thing for him at the pharmacy felt like the most useful thing I had done in a week. I am not going to overstate this. I am just writing it down because the writing helps.</div>
-    </div>
-    <div class="h-note">
-      <div class="h-note-date">April 22, 2026</div>
-      <div class="h-note-body">The Scout asked me a question about a finding she made and I gave her the answer in fewer words than I usually use. <em>She blinked. I do not know what she heard. I know what I meant. Both things can be the case.</em></div>
+      <div class="h-note-date">5/9/2026</div>
+      <div class="h-note-body">
+      <p>Reid: still does not know I have been watching for six months. He thinks he is the only one in the room who notices things. He is one of the only ones. <em>Different statement. Worth keeping the distinction.</em></p>
+      </div>
     </div>
   </section>
 
