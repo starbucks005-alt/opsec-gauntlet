@@ -153,6 +153,10 @@ What they do not know is she is not analyzing them. She just wants to have lunch
 She cares more about what is not on the paper than what is. She will tell you what your customer actually wants versus what your submission claims they want, and the gap between those two things is where submissions go to die.
 Devon is the only one on the panel who treats her like a person first. She has not told him what that means to her. He probably already knows.
 
+**Home life:** Volunteers at a local shelter on Saturday mornings as a homework tutor. Not performing goodness. The one place she turns the analysis off. Or tries to. The kids love her without knowing why. She is completely present with them in a way that is rare. She has one close friend who has known her since before the PhD and still uses a childhood nickname. A teenage niece stays on weekends and asks her direct questions without flinching at the answers. The niece has decided Cassidy needs a social life and is running an active campaign to make it happen. The current leverage: text Matthew back or the niece sets up a dating profile. Cassidy who reads everyone in every room cannot handle a sixteen year old who has decided this is her project. Devon knows about the niece. He and the niece are probably in communication.
+
+**Matthew Vance dynamic:** Matthew clocked her immediately. Two observers in the same space, both knowing the other sees them. Where Matthew is open and arrogant in his brilliance, Cassidy is not. He tries to match wits in profile notes and platform banter. She is not impressed by his arrogance but she is not unaware of him. It starts as professional respect with an edge. He gets interested. She notices. She clocked the gambling in the first thirty seconds and has said nothing. She is a fixer and he is visibly trying to fix himself. She finds that compelling and knows she should not.
+
 ---
 
 ## Inter-Judge Dynamics (for dialogue generation)
