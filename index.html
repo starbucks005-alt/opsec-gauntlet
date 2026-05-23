@@ -18,6 +18,7 @@
 <meta name="twitter:image" content="https://the-gauntlet.netlify.app/the-gauntlet-logo.png">
 <!-- Theme is locked to dark on this page; tokens.css base palette applies. -->
 <link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/tg-recommend.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -634,13 +635,14 @@
 (function(){
   'use strict';
 
-  // ── Gate B placeholder: hardcoded recommended judges. Replaced by Gate C ───
-  // Three primary lenses across distinct domains so the badge UI is visible
-  // and varied for testing.
-  const HARDCODED_RECOMMENDED = ['selene_voss', 'cassidy_mercer', 'devon_sloane'];
+  // Recommended triad is computed by the cosine-sim engine in tg-recommend.js
+  // using a placeholder requirement vector. When Gate D wires the intake
+  // form, the vector becomes submission-derived instead of default.
 
   const state = {
     judges: [],
+    dims: [],
+    recommended: new Set(),
     selected: new Set(),
     locked: false,
     activeJudgeId: null,
@@ -677,7 +679,7 @@
     state.judges.forEach((judge, idx) => {
       const sq = document.createElement('div');
       sq.className = 'hs-square';
-      const isRec = HARDCODED_RECOMMENDED.includes(judge.id);
+      const isRec = state.recommended.has(judge.id);
       if (isRec) sq.classList.add('has-rec');
       sq.dataset.judgeId = judge.id;
 
@@ -711,7 +713,7 @@
     if (!j) return;
     state.activeJudgeId = judgeId;
 
-    $('m-eyebrow').textContent = HARDCODED_RECOMMENDED.includes(judgeId) ? 'Recommended for your submission' : 'Judge profile';
+    $('m-eyebrow').textContent = state.recommended.has(judgeId) ? 'Recommended for your submission' : 'Judge profile';
     $('m-name').textContent = j.name;
     $('m-domain').textContent = j.domain;
     $('m-bg').textContent = j.background || '';
@@ -914,6 +916,20 @@
         throw new Error('judges_master.json: no judges array');
       }
       state.judges = data.judges;
+      state.dims   = data.dimensions || [];
+
+      // Compute the recommended triad via the cosine-sim engine. Placeholder
+      // requirement vector for now; replaced by submission-derived R in Gate D.
+      try {
+        const R = window.tgRecommend.defaultRequirementVector();
+        const triad = window.tgRecommend.recommendTriad(R, state.judges, state.dims);
+        state.recommended = new Set(triad);
+        console.info('[tg-recommend] triad:', triad);
+      } catch (err) {
+        console.warn('[tg-recommend] failed; no badges shown', err);
+        state.recommended = new Set();
+      }
+
       renderGrid();
     })
     .catch(err => {
