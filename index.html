@@ -13,6 +13,7 @@
 <meta property="og:image" content="https://the-gauntlet.netlify.app/the-gauntlet-logo.png">
 <meta property="og:url" content="https://the-gauntlet.netlify.app/">
 <link rel="stylesheet" href="assets/tokens.css">
+<script src="assets/tg-im.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -380,6 +381,8 @@
   .helper-card-photo{
     position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
     background:#14151a;
+    /* Photo doubles as the click target to the helper's individual page. */
+    display:block;text-decoration:none;color:inherit;cursor:pointer;
   }
   .helper-card-photo img{
     position:absolute;inset:0;
@@ -414,7 +417,7 @@
     text-transform:uppercase;padding:0.25rem 0.5rem;
     backdrop-filter:blur(4px);
   }
-  .helper-card-body{padding:0.95rem 1rem 1.1rem;}
+  .helper-card-body{padding:0.95rem 1rem 0.7rem;}
   .helper-card-name{
     font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
     color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
@@ -423,6 +426,31 @@
     font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--gold);
   }
+  /* Action row on each preview card: Profile link + IM me button.
+     Profile takes the user to the helper's individual page; IM me opens the
+     in-page chat modal handled by tg-im.js. Both are reachable without
+     navigating away first. */
+  .helper-card-actions{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:0.6rem;padding:0 1rem 1rem;
+  }
+  .helper-card-profile{
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);text-decoration:none;
+    border-bottom:1px solid transparent;padding-bottom:0.15rem;
+    transition:color 0.2s,border-color 0.2s;
+  }
+  .helper-card-profile:hover{
+    color:var(--gold-light);border-bottom-color:var(--gold-light);
+  }
+  .helper-card-im{
+    background:var(--gold);color:var(--ink);border:none;
+    padding:0.55rem 0.9rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
+    text-transform:uppercase;font-weight:700;
+    transition:background 0.2s;
+  }
+  .helper-card-im:hover{background:var(--gold-light);}
   .helpers-cta-row{display:flex;justify-content:center;}
 
   /* ── Closing CTA ─────────────────────────────────────────────────────────── */
@@ -671,87 +699,119 @@
     </div>
 
     <div class="helpers-grid">
-      <a class="helper-card" href="/Helpers/wren-scout.html">
-        <div class="helper-card-photo">
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/wren-scout.html" aria-label="Wren Calloway profile">
           <img class="blink-open" src="Helpers/Wren_eyes_open.jpg" alt="Wren Calloway">
           <img class="blink-closed" src="Helpers/Wren_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Wren Calloway</div>
           <div class="helper-card-role">The Scout</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/carol-screener.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/wren-scout.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/carol-screener.html" aria-label="Carol Haynes profile">
           <img class="blink-open" src="Helpers/Carol_eyes_open.jpg" alt="Carol Haynes">
           <img class="blink-closed" src="Helpers/Carol_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Carol Haynes</div>
           <div class="helper-card-role">The Screener</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/matthew-behaviorist.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/carol-screener.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/matthew-behaviorist.html" aria-label="Matthew Vance profile">
           <img class="blink-open" src="Helpers/Matthew_eyes_open.jpg" alt="Matthew Vance">
           <img class="blink-closed" src="Helpers/Matthew_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Matthew Vance</div>
           <div class="helper-card-role">The Behaviorist</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/arjun-delivery.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/matthew-behaviorist.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/arjun-delivery.html" aria-label="Arjun Mehta profile">
           <img class="blink-open" src="Helpers/Arjun_eyes_open.jpg" alt="Arjun Mehta">
           <img class="blink-closed" src="Helpers/Arjun_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Arjun Mehta</div>
           <div class="helper-card-role">The Delivery Expert</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/zara-influencer.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/arjun-delivery.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/zara-influencer.html" aria-label="Zara Cole profile">
           <img class="blink-open" src="Helpers/Zara_eyes_open.jpg" alt="Zara Cole">
           <img class="blink-closed" src="Helpers/Zara_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Zara Cole</div>
           <div class="helper-card-role">The Influencer</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/reid-marketing.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/zara-influencer.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/reid-marketing.html" aria-label="Reid Callum profile">
           <img class="blink-open" src="Helpers/Reid_eyes_open.jpg" alt="Reid Callum">
           <img class="blink-closed" src="Helpers/Reid_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Reid Callum</div>
           <div class="helper-card-role">The Marketing Expert</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/jules-rewrite.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/reid-marketing.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/jules-rewrite.html" aria-label="Jules profile">
           <div class="helper-crossover">From Greylander Press</div>
           <img class="blink-open" src="Helpers/Jules_eyes_open.jpg" alt="Jules">
           <img class="blink-closed" src="Helpers/Jules_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Jules</div>
           <div class="helper-card-role">The Rewrite Partner</div>
         </div>
-      </a>
-      <a class="helper-card" href="/Helpers/grant-coach.html">
-        <div class="helper-card-photo">
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/jules-rewrite.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="jules" data-name="Jules">IM me</button>
+        </div>
+      </article>
+      <article class="helper-card">
+        <a class="helper-card-photo" href="/Helpers/grant-coach.html" aria-label="Grant Ellis profile">
           <img class="blink-open" src="Helpers/Grant_eyes_open.jpg" alt="Grant Ellis">
           <img class="blink-closed" src="Helpers/Grant_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+        </a>
         <div class="helper-card-body">
           <div class="helper-card-name">Grant Ellis</div>
           <div class="helper-card-role">The Coach</div>
         </div>
-      </a>
+        <div class="helper-card-actions">
+          <a class="helper-card-profile" href="/Helpers/grant-coach.html">Profile</a>
+          <button class="helper-card-im" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM me</button>
+        </div>
+      </article>
     </div>
 
     <div class="helpers-cta-row">
