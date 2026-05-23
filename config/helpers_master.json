@@ -1,0 +1,78 @@
+{
+  "schema_version": "slice-1",
+  "helpers": [
+    {
+      "id": "wren_calloway",
+      "name": "Wren Calloway",
+      "role": "The Scout",
+      "domain": "Landscape search, prior art, white space mapping",
+      "voice_id": "pJTksjyNqolN4WqUeDJ6",
+      "page": "Helpers/wren-scout.html",
+      "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "carol_haynes",
+      "name": "Carol Haynes",
+      "role": "The Screener",
+      "domain": "Honest intake assessment, helper roster opener",
+      "voice_id": "NVSXwO9SVce65FaZEQJ2",
+      "page": "Helpers/carol-screener.html",
+      "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "matthew_vance",
+      "name": "Matthew Vance",
+      "role": "The Behaviorist",
+      "domain": "Why people adopt or do not adopt, behavioral psychology",
+      "voice_id": "31IImo9aNMotphGYjqkV",
+      "page": "Helpers/matthew-behaviorist.html",
+      "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "arjun_mehta",
+      "name": "Arjun Mehta",
+      "role": "The Delivery Expert",
+      "domain": "Operations, sourcing, logistics, execution reality",
+      "voice_id": "3DUurDPoNFpgQSgH5bWz",
+      "page": "Helpers/arjun-delivery.html",
+      "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "zara_cole",
+      "name": "Zara Cole",
+      "role": "The Influencer",
+      "domain": "Social media strategy, authentic audience reach",
+      "voice_id": "nFwTWcFdyZXl5ajxEg1h",
+      "page": "Helpers/zara-influencer.html",
+      "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "reid_callum",
+      "name": "Reid Callum",
+      "role": "The Marketing Expert",
+      "domain": "Packaging, positioning, brutal honesty",
+      "voice_id": "bcerEnP2l2x0F53jQxVK",
+      "page": "Helpers/reid-marketing.html",
+      "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "jules",
+      "name": "Jules",
+      "role": "The Rewrite Partner",
+      "domain": "AI marker detection, voice authenticity, Selene-proofing",
+      "voice_id": "bc3gSpow7WFbF4u55GaO",
+      "page": "Helpers/jules-rewrite.html",
+      "home_platform": "greylander_press",
+      "crossover_note": "Full-time at Greylander Press. Part-time at The Gauntlet. Same Jules, same voice ID, Gauntlet-specific role (Selene-proofing). The Gauntlet stores its own copy of the voice ID rather than proxying through the GP voice endpoint, so this site can run standalone."
+    },
+    {
+      "id": "grant_ellis",
+      "name": "Grant Ellis",
+      "role": "The Coach",
+      "domain": "Elevator pitch, verbal delivery, pressure testing",
+      "voice_id": "tLS2q4NK1lgLMS1gnxPt",
+      "page": "Helpers/grant-coach.html",
+      "home_platform": "the_gauntlet"
+    }
+  ]
+}
