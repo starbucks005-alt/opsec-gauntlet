@@ -68,8 +68,6 @@ A "Choose This Judge" button appears on the expanded profile. The user selects t
 
 This is the entry point to every evaluation. The grid is the first thing the user sees after submitting their idea.
 
-**Recommendation badge mechanic.** After idea submission, a cosine-similarity engine reads the submission against the nine judges' dimension vectors and identifies the three judges with the best lens match. Those three squares display a "Recommended" badge in the grid. The user still clicks three squares themselves — the recommendation does not pre-select anyone. The math is transparent, the choice stays with the user, and there is no friction from a pre-selection the user has to undo if they disagree with it. The recommendation is visible without being presumptuous.
-
 ---
 
 ## The Nine Judges
@@ -177,7 +175,7 @@ Devon is the only one on the panel who treats her like a person first. She has n
 **Namespace convention:**
 - Functions: `tg-` prefix (tg-eval-init.js, tg-eval-background.js)
 - Database tables: `tg_` prefix (tg_submissions, tg_evaluations, tg_judge_outputs)
-- HTML files: The Gauntlet root page is `index.html` (renamed from `the-gauntlet.html`). Future Gauntlet sub-pages use the `tg-` prefix.
+- HTML files: `the-gauntlet.html` pattern
 
 **Judge config:** Each judge entry in `config/judges_master.json` must include:
 - id, name, domain, lens label
@@ -191,7 +189,7 @@ Devon is the only one on the panel who treats her like a person first. She has n
 **Scoring:** Math-based. Cosine similarity for judge selection. Triangulation spreads for agreement/conflict detection (agreement ≤0.15, conflict ≥0.35). Risk tier formula. LLM retrieves and structures evidence. Math produces scores. Keep scoring functions auditable and separate from LLM calls.
 
 **First build slice (locked):**
-Intake form → Hollywood Squares grid (cosine-sim badges three squares as recommended; user picks three) → Stage 1 Clarity only → triangulation matrix → static text routing report. No ElevenLabs, no judge swap, no drill-deeper, no production layer yet.
+Intake form → cosine-sim judge recommendation → Stage 1 Clarity only → triangulation matrix → static text routing report. No ElevenLabs, no judge swap, no drill-deeper, no production layer yet.
 
 **Build sequence after first slice:**
 All 5 stages → risk tiering → evidence augmentation → judge swap → cross-judge dialogue → ElevenLabs async chunked TTS → production layer (stagehands, audience UI, helper tier routing).
@@ -214,3 +212,126 @@ All 5 stages → risk tiering → evidence augmentation → judge swap → cross
 ---
 
 *This document is the source of truth for The Gauntlet product. CLAUDE.md governs workflow. This document governs what we are building and why.*
+
+---
+
+## Audience Voice Layer (Future Gate — Do Not Build Yet)
+
+### What It Is
+
+The six unchosen judges do not disappear after the user selects their panel of three. They become the audience. They are present, watching, and vocal throughout the evaluation.
+
+### What They Do
+
+- React to what the stage judges say in real time during evaluation
+- Heckle, agree, push back, or add color from their own domain perspective
+- Talk to each other in the audience
+- Occasionally address the stage judges directly
+- Can be acknowledged or ignored by the stage judges
+
+### What They Are Not
+
+- They carry zero scoring weight. Their commentary does not affect the triangulation matrix, the risk tier, or the routing report.
+- They are not a second evaluation panel. They are texture, energy, and character.
+- They do not replace or override the stage judges.
+
+### Character Rules
+
+Each audience judge reacts through the lens of their domain and personality. Examples:
+
+- Marcus in the audience watching a weak financial model: "I give it six months before the cap table implodes."
+- Devon watching a submission with no narrative: "Honey, I've seen better story structure in a cereal box."
+- Cassidy watching someone oversell their user research: "They said what users want. Not what users do. Different thing."
+- Grace watching a dual-use tech pitch: "Three governments could weaponize that in a weekend."
+
+### Dialogue System Requirements (When Built)
+
+- Audience commentary is generated per evaluation stage, not in real time per word
+- Each audience judge gets one to three reactions per stage maximum, not a running commentary
+- Reactions are domain-specific and character-voiced
+- Reactions can reference what specific stage judges said
+- Cross-audience dialogue between unchosen judges is permitted and encouraged
+- Devon and Cassidy dynamic, Osei and Astrid slow burn, Marcus entourage gag, Grace stoicism, all inter-judge dynamics from the spec apply in the audience as well as on stage
+
+### Visual State During Audience Mode
+
+- Six unchosen judges recede to 40% opacity, slightly scaled down, desaturated but visible
+- They are in the background, present, watching
+- When an audience judge speaks, their card briefly brightens and their dialogue appears
+- After speaking, they return to audience state
+- The room feels energized and inhabited, not empty
+
+### Why This Matters
+
+The unchosen judges make the room feel alive. The user chose three judges but the other six have opinions. That tension, the ones you did not pick watching and reacting, is what makes The Gauntlet feel like a real event rather than a form submission.
+
+*Build this after the full five-stage pipeline is working. It requires judge outputs to exist before audience reactions can reference them.*
+
+---
+
+## Chat Interface (Core UX — Build Before Gate D Evaluation Pipeline)
+
+### The Experience
+
+After the user selects their three judges and clicks Run the Gauntlet, the page transitions to a split screen layout.
+
+- **Left side:** The three chosen judges, portrait cards, lit, vivid, on stage. The six unchosen judges visible below or behind them as the audience, dimmed, watching.
+- **Right side:** A live chat window. This is where the evaluation happens.
+
+The user submitted their idea. Now they watch the room react.
+
+### Chat Participants and Visual Identity
+
+**Stage judges (chosen three)**
+- Names and messages appear in gold
+- Bold, authoritative, domain-specific language
+- Longer messages, formal evaluation tone
+- Typing indicator: "Selene Voss is typing..." in gold before her message lands
+
+**Audience judges (unchosen six)**
+- Names and messages appear in silver or dim amber
+- Shorter, more reactive, less formal
+- They chime in from the audience, not delivering verdicts, adding color
+- Typing indicator: same format but in their muted color
+
+**The user**
+- Standard chat input at the bottom of the chat window
+- Can ask follow up questions, push back, request clarification
+- Judges respond in character
+- User messages appear in a neutral color, clearly distinct from judge messages
+
+### The Typing Indicator
+
+This is the primary theatrical element. "Marcus Holt is typing..." appears with his name in his color while the user waits. The anticipation before his message lands is the experience. Do not skip or shortcut this mechanic. It must feel real.
+
+### Chat Flow During Evaluation
+
+The evaluation pipeline runs the five stages in sequence. The chat surfaces the results as a conversation, not a report dump.
+
+Stage by stage the judges speak. They may agree, disagree, or reference each other. Audience judges react between stage outputs. The user can interject at any point.
+
+The chat does not replace the evaluation math. The math still runs. The chat is how the results are delivered to the user.
+
+### The Report
+
+At the end of all five stages the chat produces a final message from each stage judge with their summary verdict. Then a "Generate Report" button appears in the chat. The user clicks it and receives the full routing report as a downloadable PDF or formatted page.
+
+The report is the deliverable. The chat is the experience that leads to it.
+
+### Layout Notes for CC
+
+- Split screen after judge selection and Run the Gauntlet click
+- Judges panel on the left, approximately 40% of screen width
+- Chat window on the right, approximately 60% of screen width
+- Chat window has a dark background matching the stage environment
+- Gold left border on stage judge messages
+- Muted silver or amber left border on audience judge messages
+- User input fixed at the bottom of the chat window
+- Typing indicator appears above the input when any judge is composing
+- Mobile: judges panel collapses to a thumbnail strip above the chat window
+
+### Build Sequence Note
+
+The chat interface shell, the visual layout, the typing indicator mechanic, the color-coded participants, must be built before Gate D wires in the real evaluation pipeline. Gate D feeds real judge outputs into the chat. The chat must exist first for Gate D to have somewhere to send them.
+
+*This is the product. Everything else serves this experience.*
