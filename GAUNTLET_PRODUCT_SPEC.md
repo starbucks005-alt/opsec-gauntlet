@@ -339,3 +339,167 @@ The report is the deliverable. The chat is the experience that leads to it.
 The chat interface shell, the visual layout, the typing indicator mechanic, the color-coded participants, must be built before Gate D wires in the real evaluation pipeline. Gate D feeds real judge outputs into the chat. The chat must exist first for Gate D to have somewhere to send them.
 
 *This is the product. Everything else serves this experience.*
+
+---
+
+## Pricing
+
+**Single Run — $9.99**
+One complete evaluation. All five stages. Full Chamber experience. Routing report delivered.
+
+**Unlimited Monthly — $29.99**
+Run as many ideas as desired. Full run history. Return submission tracking. Judges reference prior runs.
+
+**Unlimited Annual — $199**
+Approximately $16.50 per month. Rewards commitment. Predictable revenue.
+
+These are launch prices. Raise them once testimonials, case studies, and demonstrated outcomes exist.
+
+**Cross-platform note:** Greylander Press users may receive bundled access or discounts. Evaluate once both platforms have an established user base.
+
+---
+
+## Paywall Structure
+
+**Free tier — The Experience:**
+- Full judges grid, all nine characters, Hollywood Squares
+- Click any judge, read full profile, hear voice introduction
+- Full helper tier roster, read every character
+- Demo run, pre-recorded or simulated Chamber session
+- Complete the intake form, Scout launches, user invests in the process
+- Paywall triggers at the exact moment the Screener is about to deliver the assessment
+
+**Paywall moment copy:**
+*Your panel is ready. The Chamber is open. Your Scout has returned.*
+*This is where it gets real.*
+
+The wall appears after investment, not before. The user has filled in their idea, the Scout has run, the anticipation is real. That is the moment the value of paying is most viscerally understood.
+
+---
+
+## Post-Judging Flow
+
+**Run history:**
+Every submission is saved. The user can see all prior runs, judge findings, scores, and how their thinking has evolved across submissions. Progress is visible. Improvement is measurable.
+
+**Return submissions:**
+When a user resubmits the same idea the platform recognizes it. The Screener acknowledges the return. The judges can reference prior run findings in their current assessment. The Chamber feels like a continuation not a reset.
+
+**Post-judging helper routing:**
+The routing report identifies specific gaps and sends the user to specific helpers. Weak evidence routes to Wren for another Scout pass. Weak positioning routes to Reid. Weak pitch delivery routes to Grant. The helpers are the bridge between runs, not just the pre-judging prep track.
+
+**Three outcome types:**
+
+1. **Strong across the board** — idea holds up, triangulation shows agreement, risk tier manageable, report says move forward
+2. **Mixed** — strong in some dimensions, weak in others, report identifies gaps and routes to specific helpers
+3. **Not ready** — core concept has fundamental problems, report is honest about it, tells user specifically what to rethink before returning
+
+In all three cases the report is generated and delivered. The tone is never a verdict. It is always a coaching note between runs.
+
+---
+
+## The Report
+
+Delivered at the end of all five stages. Generated from the full Chamber session, judge outputs, triangulation matrix, risk tier, and evidence assessment.
+
+**Format:**
+- Summary of what each stage judge found
+- Triangulation matrix showing where judges agreed and conflicted
+- Risk tier with specific flags
+- Evidence gaps identified
+- Top 3 strengths
+- Top 3 risks
+- Top 3 leverage points
+- Specific next steps with helper routing
+- Downloadable as PDF
+
+**Voice delivery:**
+The report is read aloud using ElevenLabs. Each judge delivers their section in their own voice. The Synthesis Brain delivers the final routing recommendation.
+
+The report is the deliverable. The Chamber was the experience that earned it.
+
+---
+
+## Reid Callum — Post-Judging Export and Branding
+
+After the routing report is delivered Reid steps in with an optional branded export service.
+
+**What Reid offers post-judging:**
+
+**Branded Report Export**
+Reid takes the routing report and packages it professionally. A polished PDF or presentation deck the user can take to investors, partners, or a team. Formatted, designed, on-brand. Not a raw data dump. A document that looks like it came from someone who knows what they are doing.
+
+**Logo Creation**
+For ideas that do not have a visual identity yet Reid offers logo generation. He has been packaging things his whole career. He knows what makes something look real versus look like a side project. This is the one time he does it because he believes in the process not because someone is paying him to perform enthusiasm he does not feel.
+
+**Reid's tone in this context:**
+He will tell you if your idea name is wrong before he designs the logo. That is not him being difficult. That is him doing his job. You can ignore him. He will note that you ignored him and do it anyway.
+
+**Pricing:**
+Branded export and logo creation are add-on services. Pricing TBD. Start low consistent with platform launch pricing philosophy.
+
+---
+
+## All Judges Are AI Agents — Architecture Reminder
+
+Every judge is an AI agent with scoped domain retrieval. Before evaluating a submission each judge goes out and pulls current domain-specific information relevant to what they are reviewing.
+
+- Selene pulls AI funding data, technical benchmarks, LLM capability assessments
+- Marcus pulls market comps, cap table structures, exit multiples
+- Priya pulls clinical trial data, FDA regulatory precedent, published research
+- Raymond pulls market sizing data, operational benchmarks, burn rate comparables
+- Astrid pulls IP filings, patent landscape, relevant case law
+- Osei pulls published research, peer review standards, methodology benchmarks
+- Grace pulls defense procurement data, DHS policy, dual-use technology precedent
+- Devon pulls audience demographic data, content performance benchmarks, cultural trend data
+- Cassidy pulls consumer behavior data, behavioral economics research, decision science literature
+
+The judging itself is math. Cosine similarity, triangulation spreads, risk tier formula. The LLM retrieves and structures evidence. The math produces the scores. The character delivers the finding. Bias lives in retrieval and framing, not in scoring. All scoring functions are auditable and separate from any LLM call.
+
+This is what separates The Gauntlet from asking ChatGPT for feedback. The judges are current. The scoring is math. The verdict is earned.
+
+
+## Idea Generator
+
+A modal, not a page. Dark and theatrical, consistent with the platform palette. Triggered from the homepage Path B: "Help me find one."
+
+No character, no voice, no persona. Pure tool. Stepped format, one question per screen, progress indicator at top.
+
+### Four Questions
+
+**Question 1 — What is your world?**
+Radio buttons:
+- Technology
+- Health and science
+- Business and finance
+- Law and policy
+- Media and entertainment
+- Education
+- Other (free text)
+
+**Question 2 — What stops you from making it happen?**
+Radio buttons:
+- I do not know if anyone actually wants it
+- I would not know where to start building it
+- I do not know how to talk about it or sell it
+- I am not sure it is original enough
+- I do not have the time or resources yet
+- Other (free text)
+
+**Question 3 — How far along are you?**
+Radio buttons:
+- Just a feeling nothing written down yet
+- I have described it to someone
+- I have notes or a rough outline
+- I have tried to build or research it already
+
+**Question 4 — Describe it in your own words.**
+Free text required. Placeholder: "One sentence is enough to start."
+
+### Output
+
+AI generates a concept seed from all four inputs. Final screen displays the seed. Wren then introduces herself and the Scout search launches.
+
+### Routing Note
+
+Question 2 answers map to the helper tier for downstream routing.
