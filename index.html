@@ -218,6 +218,20 @@
     cursor:pointer;padding:0.5rem;line-height:1;
   }
   .tg-modal-close:hover{color:var(--gold);}
+  .tg-modal-hero{
+    width:calc(100% + 5rem);margin:-2.5rem -2.5rem 1.5rem;
+    height:260px;overflow:hidden;
+    background:#0a0a0a;border-bottom:1px solid var(--rule);
+    position:relative;
+  }
+  .tg-modal-hero img{
+    width:100%;height:100%;display:block;
+    object-fit:cover;object-position:center 30%;
+  }
+  .tg-modal-hero::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,transparent 55%,rgba(10,10,10,0.65) 100%);
+  }
   .tg-modal-eyebrow{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
   .tg-modal-name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:0.4rem;}
   .tg-modal-domain{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--gold-light);margin-bottom:1.5rem;}
@@ -744,6 +758,7 @@
 <div class="tg-modal-backdrop" id="tg-modal-backdrop" role="dialog" aria-modal="true">
   <div class="tg-modal">
     <button class="tg-modal-close" id="tg-modal-close" aria-label="Close">×</button>
+    <div class="tg-modal-hero" id="m-hero"></div>
     <div class="tg-modal-eyebrow" id="m-eyebrow"></div>
     <h2 class="tg-modal-name" id="m-name"></h2>
     <div class="tg-modal-domain" id="m-domain"></div>
@@ -917,6 +932,10 @@
     const j = state.judges.find(x => x.id === judgeId);
     if (!j) return;
     state.activeJudgeId = judgeId;
+
+    // Profile hero image. File pattern: Judges/Firstname_Profile.jpg
+    const heroFirst = imageFirstName(j.name);
+    $('m-hero').innerHTML = '<img src="Judges/' + escapeHtml(heroFirst) + '_Profile.jpg" alt="' + escapeHtml(j.name) + '" onerror="this.style.display=\'none\'">';
 
     $('m-eyebrow').textContent = state.recommended.has(judgeId) ? 'Recommended for your submission' : 'Judge profile';
     $('m-name').textContent = j.name;
