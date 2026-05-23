@@ -285,7 +285,7 @@
       var(--velvet-deep) 36px
     );
     box-shadow:inset 0 0 60px rgba(0,0,0,0.6);
-    z-index:5;transition:transform 2.6s cubic-bezier(0.65,0,0.35,1);
+    z-index:5;transition:transform 3.4s cubic-bezier(0.65,0,0.35,1);
   }
   .tg-curtain-left{left:0;border-right:2px solid #2a0808;}
   .tg-curtain-right{right:0;border-left:2px solid #2a0808;}
@@ -298,7 +298,7 @@
   }
 
   .tg-stage-content{
-    opacity:0;transition:opacity 0.7s ease-in;transition-delay:2.7s;
+    opacity:0;transition:opacity 0.7s ease-in;transition-delay:3.5s;
     text-align:center;position:relative;z-index:2;
   }
   .tg-stage.is-revealing .tg-stage-content{opacity:1;}
@@ -322,9 +322,9 @@
     transform:translateY(30px);opacity:0;
     transition:transform 0.8s ease-out,opacity 0.8s ease-out;
   }
-  .tg-panel-judge:nth-child(1){transition-delay:3.1s;}
-  .tg-panel-judge:nth-child(2){transition-delay:3.35s;}
-  .tg-panel-judge:nth-child(3){transition-delay:3.6s;}
+  .tg-panel-judge:nth-child(1){transition-delay:3.9s;}
+  .tg-panel-judge:nth-child(2){transition-delay:4.15s;}
+  .tg-panel-judge:nth-child(3){transition-delay:4.4s;}
   .tg-stage.is-revealing .tg-panel-judge{transform:translateY(0);opacity:1;}
 
   .tg-panel-portrait{
@@ -348,7 +348,7 @@
 
   .tg-stage-actions{
     margin-top:2.5rem;display:flex;justify-content:center;gap:1rem;
-    opacity:0;transition:opacity 0.5s ease-in;transition-delay:4.0s;
+    opacity:0;transition:opacity 0.5s ease-in;transition-delay:4.8s;
   }
   .tg-stage.is-revealing .tg-stage-actions{opacity:1;}
 
@@ -357,7 +357,7 @@
   /* All positioned absolutely; cutouts on transparent PNG backgrounds.       */
   .tg-set-prop{
     position:absolute;pointer-events:none;
-    opacity:0;transition:opacity 1.2s ease-in;transition-delay:3.3s;
+    opacity:0;transition:opacity 1.2s ease-in;transition-delay:4.1s;
     z-index:3;
     filter:brightness(0.85) contrast(0.95);
   }
@@ -391,7 +391,7 @@
     position:relative;margin-top:1.5rem;padding:2.5rem 1rem 3rem;
     border:1px solid var(--rule);background:rgba(0,0,0,0.5);
     display:none;
-    opacity:0;transition:opacity 0.9s ease-in;transition-delay:3.7s;
+    opacity:0;transition:opacity 0.9s ease-in;transition-delay:4.5s;
     overflow:hidden;
   }
   .tg-stage.is-revealing + .tg-audience{display:block;}
@@ -445,33 +445,13 @@
     position:absolute;pointer-events:none;
     bottom:0;height:140px;width:auto;
     opacity:0;z-index:1;
-    transition:opacity 1.2s ease-in;transition-delay:4.3s;
+    transition:opacity 1.2s ease-in;transition-delay:5.1s;
     filter:brightness(0.7) contrast(0.9) saturate(0.7);
   }
   .tg-audience.is-revealing .tg-set-pa{opacity:0.85;}
   .tg-set-pa img{
     display:block;height:100%;width:auto;
-    animation:tg-pa-walk 12s ease-in-out infinite;
-  }
-  /* PAs drift back and forth behind the audience — loitering walk, never */
-  /* still. Slight Y bob on every step gives the rhythm of foot-falls.    */
-  @keyframes tg-pa-walk{
-    0%   { transform:translateX(0)    translateY(0); }
-    20%  { transform:translateX(40px) translateY(-3px); }
-    40%  { transform:translateX(80px) translateY(0); }
-    60%  { transform:translateX(80px) translateY(-3px); }
-    80%  { transform:translateX(40px) translateY(0); }
-    100% { transform:translateX(0)    translateY(-3px); }
-  }
-  /* The right-side PA reverses direction so the two cross paths. */
-  .tg-set-pa-right img{animation-name:tg-pa-walk-rev;animation-delay:3s;}
-  @keyframes tg-pa-walk-rev{
-    0%   { transform:translateX(0)     translateY(0); }
-    20%  { transform:translateX(-40px) translateY(-3px); }
-    40%  { transform:translateX(-80px) translateY(0); }
-    60%  { transform:translateX(-80px) translateY(-3px); }
-    80%  { transform:translateX(-40px) translateY(0); }
-    100% { transform:translateX(0)     translateY(-3px); }
+    /* PAs stand still. Earlier walk loop read as distracting back-and-forth. */
   }
   .tg-set-pa-left{ left:1%; }
   .tg-set-pa-right{ right:1%; }
@@ -540,13 +520,12 @@
     display:none;border:1px solid var(--rule);background:rgba(0,0,0,0.55);
     box-shadow:inset 0 0 40px -10px rgba(0,0,0,0.7);
     overflow:hidden;
-    /* opacity starts at 0 on the BASE rule so the element is invisible the
-       instant it switches from display:none to display:flex. Otherwise the
-       browser renders one frame at default opacity 1 before the lock rule
-       cascades, which reads as a flash. */
+    /* Chat panel lands EARLY in the reveal so the system message
+       ("The judges are taking their seats.") is on screen before the
+       curtain opens. opacity:0 on the base rule prevents a flash when
+       display flips to flex. */
     opacity:0;
-    transition:opacity 0.8s ease-in;
-    transition-delay:3.9s;
+    transition:opacity 0.6s ease-in;
   }
   body.is-locked .tg-chat{
     display:flex;flex-direction:column;height:100%;min-height:680px;
@@ -1019,30 +998,44 @@
       audienceRow.appendChild(card);
     });
 
-    // Phase 2c: seed the chat with system + sample messages so the four
-    // message types (system, active, audience, user) are visually distinct.
-    // Real judge dialogue lands in a later gate.
-    seedChat();
+    // Phase 2c: the chat is seeded in two parts. The system message lands
+    // immediately when the chat panel arrives on screen so the user reads
+    // "The judges are taking their seats." while the curtain is still closed.
+    // The sample active/audience messages come later, after the curtain has
+    // opened, scheduled inside the reveal-timeline setTimeouts below.
+    seedChatSystem();
 
-    // Phase 3: theatrical reveal in three timed beats.
+    // Phase 3: theatrical reveal in measured beats.
     //   T=0       grid + counter + step copy fade out (700ms opacity).
-    //   T=700ms   grid removed from layout; closed curtain comes into view.
-    //             Scroll the viewer to the stage so they're positioned to watch.
-    //   T=1500ms  anticipation beat with the closed curtain held in view.
-    //   T=1500ms+ curtains begin parting (2.6s), then content fades in per
-    //             the CSS transition-delays.
+    //   T=700ms   layout locks. Chat panel fades in WITH its system message
+    //             ("The judges are taking their seats."). Closed curtain is
+    //             visible behind the stage frame. Scroll viewer to the stage.
+    //   T=700ms → T=2400ms   chat holds for ~1.7s. The user reads the system
+    //             message and sees the curtain about to part.
+    //   T=2400ms  stage + audience get is-revealing. Curtains begin opening
+    //             (3.4s). Per the CSS transition-delays the stage content
+    //             and judge cards fade in once the curtains have opened.
+    //   T=4900ms+ sample chat dialogue (active judge typing, then message;
+    //             audience judge chimes in) lands after the stage is set.
     document.body.classList.add('is-fading-grid');
+
     setTimeout(() => {
       document.body.classList.add('is-locked');
+      if (chat) chat.classList.add('is-revealing');
       stage.scrollIntoView({ behavior:'smooth', block:'start' });
     }, 700);
+
     setTimeout(() => {
       stage.classList.add('is-revealing');
       stage.setAttribute('aria-hidden', 'false');
       audience.classList.add('is-revealing');
       audience.setAttribute('aria-hidden', 'false');
-      if (chat) chat.classList.add('is-revealing');
-    }, 1500);
+    }, 2400);
+
+    // Schedule the sample dialogue to land after the curtain finishes opening.
+    // Active judge "typing" appears ~5.0s in, message ~7.0s. Audience chimes
+    // in ~8.5s. Real dialogue replaces this in a later gate.
+    seedChatDemoMessages(5000);
   }
 
   // ── Chat scaffold ────────────────────────────────────────────────────────
@@ -1087,14 +1080,20 @@
     chatTyping.classList.remove('is-active');
   }
 
-  function seedChat(){
+  function seedChatSystem(){
+    // Called the moment the chat panel becomes visible, so the user reads
+    // this while the curtain is still closed. Pure scaffolding — the real
+    // judges-taking-seats sequence ships in a later dialogue gate.
     if (!chatStream) return;
     chatStream.innerHTML = '';
     addChatMessage({ kind:'system', body:'The judges are taking their seats.' });
+  }
 
-    // Demo the active vs audience differentiation. Picks the first chosen and
-    // first unchosen judge so the demo uses real names from the current panel.
-    const chosenList = state.judges.filter(j => state.selected.has(j.id));
+  function seedChatDemoMessages(startMs){
+    // Scheduled to land AFTER the curtain finishes opening so the chat
+    // doesn't compete with the visual reveal. Demonstrates the active vs
+    // audience message styling using real names from the current panel.
+    const chosenList   = state.judges.filter(j => state.selected.has(j.id));
     const audienceList = state.judges.filter(j => !state.selected.has(j.id));
     const firstActive   = chosenList[0];
     const firstAudience = audienceList[0];
@@ -1110,8 +1109,8 @@
             role:'On the panel',
             body:'Walk us through what you have actually built. No elevator pitch.'
           });
-        }, 1800);
-      }, 1000);
+        }, 2000);
+      }, startMs);
     }
     if (firstAudience){
       setTimeout(() => {
@@ -1121,7 +1120,7 @@
           role:'Audience',
           body:'Watch the language carefully here. There are pre-commitments hiding in the framing.'
         });
-      }, 4200);
+      }, startMs + 3500);
     }
   }
 
