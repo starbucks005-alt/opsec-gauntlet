@@ -98,16 +98,17 @@
   }
   .r-card:hover .r-card-photo img{filter:brightness(1.08);}
 
-  /* Blinking-eyes card (Jules's roster card uses the eye-pair animation
-     to mark her as the crossover character with the live work portrait,
-     instead of the static lifestyle Profile shot.) */
+  /* Blinking-eyes pair on every roster card. Uses a smooth fade between the
+     open and closed frames (no steps()) so the swap reads as a natural blink
+     instead of a binary snap. Closed-eye frame fades in over ~120ms, holds
+     briefly, then fades out — same pattern the Chamber judges grid uses. */
   .r-card-photo-blink .blink-closed{
     opacity:0;
-    animation:tg-roster-blink 5.4s steps(1,end) infinite;
+    animation:tg-roster-blink 5.4s linear infinite;
   }
   @keyframes tg-roster-blink{
-    0%, 95%, 100% { opacity: 0; }
-    97%           { opacity: 1; }
+    0%, 94%, 100% { opacity: 0; }
+    96%, 97%      { opacity: 1; }
   }
   /* Stagger blinks across the 8 cards so they don't pop in unison. */
   .r-grid .r-card:nth-child(1) .r-card-photo-blink .blink-closed{animation-delay:0s;}

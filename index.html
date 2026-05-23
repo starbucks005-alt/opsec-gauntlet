@@ -293,8 +293,13 @@
   .diff-card-body strong{color:var(--text);font-weight:600;}
 
   /* ── The Panel preview ───────────────────────────────────────────────────── */
-  .panel-band{padding:8rem 2.5rem 7rem;}
-  .panel-header{text-align:center;max-width:780px;margin:0 auto 4rem;}
+  /* Wide band so the judge composite fills the viewport rather than floating
+     inside a narrow column with empty crimson sky on either side. */
+  .panel-band{padding:4.5rem 1.5rem 4rem;}
+  /* Override the default 1180px band-inner cap so the composite can extend
+     to its own 1480px max. */
+  .panel-band .band-inner{max-width:1520px;}
+  .panel-header{text-align:center;max-width:780px;margin:0 auto 2.5rem;}
   .panel-eyebrow{
     font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
     text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
@@ -315,7 +320,11 @@
      works. The image itself carries the names and domains so we do not
      render them again as separate captions. */
   .panel-composite{
-    position:relative;max-width:1080px;margin:0 auto 3rem;
+    position:relative;
+    /* Let the composite breathe across the viewport. 1480px caps it on
+       ultrawide displays so individual faces do not pixelate, but on
+       standard laptop widths (1400-1600px) the image fills the band. */
+    max-width:1480px;margin:0 auto 2rem;
     border:1px solid var(--rule);
     box-shadow:0 0 56px -6px rgba(212,170,74,0.25),
                0 16px 48px -12px rgba(0,0,0,0.7);
@@ -385,14 +394,15 @@
   .helper-card:hover .helper-card-photo img{filter:brightness(1.08);}
 
   /* Blink pair on the homepage helper preview, matching the Chamber judges
-     grid. Eight cards, staggered so they never blink in unison. */
+     grid. Smooth fade (no steps()) so the swap between open and closed
+     frames reads as a natural blink instead of a binary snap. */
   .helper-card-photo .blink-closed{
     opacity:0;
-    animation:tg-home-blink 5.4s steps(1,end) infinite;
+    animation:tg-home-blink 5.4s linear infinite;
   }
   @keyframes tg-home-blink{
-    0%, 95%, 100% { opacity: 0; }
-    97%           { opacity: 1; }
+    0%, 94%, 100% { opacity: 0; }
+    96%, 97%      { opacity: 1; }
   }
   .helpers-grid .helper-card:nth-child(1) .blink-closed{animation-delay:0s;}
   .helpers-grid .helper-card:nth-child(2) .blink-closed{animation-delay:0.7s;}
