@@ -785,6 +785,61 @@
 (function(){
   'use strict';
 
+  // Per-judge demo lines for the chat scaffold. Each judge speaks in their
+  // own register — Selene's clipped AI-tell radar, Marcus's exit-mechanics
+  // habit, Priya's quiet "why" question, etc. Whichever judge lands in
+  // the firstActive or firstAudience slot uses their own voice, not a
+  // generic line. These are placeholders until the real audience
+  // commentary gate (post-Gate D) routes character-specific lines per
+  // judge per stage.
+  const JUDGE_DEMO_LINES = {
+    selene_voss: {
+      active:   "Did a model write this, or did you?",
+      audience: "Mm. The em dashes."
+    },
+    marcus_holt: {
+      active:   "Walk me through the cap table. Who gets paid first?",
+      audience: "Cap table or it didn't happen."
+    },
+    priya_anand: {
+      active:   "Before you tell me what it does, tell me why you built it.",
+      audience: "I want to hear that answer."
+    },
+    raymond_chen: {
+      active:   "Show me the unit economics. The math, not the projection.",
+      audience: "Real number or they don't have one."
+    },
+    astrid_lund: {
+      active:   "What's the worst-case lawsuit, and who files it?",
+      audience: "Watch the language. Every word is evidence."
+    },
+    osei_mensah: {
+      active:   "Where is the data?",
+      audience: "I'm waiting for the methodology."
+    },
+    grace_nakamura: {
+      active:   "Tell me exactly how this gets weaponized.",
+      audience: "Three uses I can think of. None of them legal."
+    },
+    devon_sloane: {
+      active:   "Don't pitch me. Open with the friction.",
+      audience: "Honey, that opening had less spine than soft serve."
+    },
+    cassidy_mercer: {
+      active:   "What do your users actually do? Not what they say they want.",
+      audience: "What they don't say is the real answer."
+    }
+  };
+
+  function judgeLine(judgeId, kind){
+    const lines = JUDGE_DEMO_LINES[judgeId];
+    if (lines && lines[kind]) return lines[kind];
+    // Defensive fallback if a new judge ships without a demo line.
+    return kind === 'active'
+      ? 'Walk us through what you have actually built.'
+      : 'Good question. Make them work for it.';
+  }
+
   // Recommended triad is computed by the cosine-sim engine in tg-recommend.js
   // using a placeholder requirement vector. When Gate D wires the intake
   // form, the vector becomes submission-derived instead of default.
@@ -1111,7 +1166,7 @@
             kind:'active',
             name:firstActive.name,
             role:'On the panel',
-            body:'Walk us through what you have actually built. No elevator pitch.'
+            body:judgeLine(firstActive.id, 'active')
           });
         }, 2000);
       }, startMs);
@@ -1122,7 +1177,7 @@
           kind:'audience',
           name:firstAudience.name,
           role:'Audience',
-          body:'Good question. Make them work for it.'
+          body:judgeLine(firstAudience.id, 'audience')
         });
       }, startMs + 3500);
     }
