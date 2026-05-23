@@ -1337,6 +1337,18 @@
       }
 
       renderGrid();
+
+      // If the user arrived from a homepage panel card with ?judge=<id>,
+      // pop that judge's modal immediately so the click feels like a
+      // direct deep-link to that profile rather than a generic landing.
+      // Strict allowlist against state.judges so a bad/handcrafted query
+      // string cannot force the modal open with an unknown id.
+      try {
+        const requestedId = new URLSearchParams(window.location.search).get('judge');
+        if (requestedId && state.judges.some(j => j.id === requestedId)) {
+          openModal(requestedId);
+        }
+      } catch (_) { /* URL parse failure is harmless; just skip auto-open. */ }
     })
     .catch(err => {
       console.error('[the-gauntlet]', err);
