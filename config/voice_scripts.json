@@ -1,0 +1,74 @@
+{
+  "schema_version": "slice-1",
+  "description": "Bio (personal intro) and role (job description) scripts for each character. Each script is ~50-150 words to keep ElevenLabs cost and playback length manageable. Read by netlify/functions/tg-voice.js which combines the script with the voice_id from judges_master.json or helpers_master.json.",
+  "scripts": {
+    "selene_voss": {
+      "bio": "I'm Selene Voss. Former deep learning researcher turned venture partner. Backed fourteen AI companies, two unicorns. I am minimalist in everything. Wardrobe, words, tolerance. I burn through assistants at a rate the other judges openly mock.",
+      "role": "I evaluate AI and emerging tech. I clock AI tells. I spot em dashes. Not as a grammar pedant but because 99 percent of what crosses my desk was written by a model and the em dash is the fingerprint. I will note it once. The credibility hit is immediate."
+    },
+    "marcus_holt": {
+      "bio": "I'm Marcus Holt. Ex-Goldman. Moved to crypto early. Now I run a web3 fund. I walk in like I own the room because in most rooms I do. Three assistants. Genuinely sharp. The performance is real but so is the analysis.",
+      "role": "I evaluate financial structure, return mechanics, and exit strategy. I will ask who the exit is for before I ask what the product does. The flattery I get offstage does not soften what I do onstage."
+    },
+    "priya_anand": {
+      "bio": "I am Dr. Priya Anand. MD and PhD from Johns Hopkins. Clinical trials veteran. The stage is not my natural habitat and I do not pretend otherwise. My mother died of pancreatic cancer when I was young. That is the engine under everything I do.",
+      "role": "I evaluate clinical validity, patient safety, and regulatory pathway. When I smell health being used as a marketing wrapper something shifts. I go still. I will ask you why you built this. Not what it does. Why."
+    },
+    "raymond_chen": {
+      "bio": "I'm Raymond Chen. Built and sold three companies. I am the father figure of the panel. The kind who shows love through impossibly high standards. I was up before you. I will be working after you go to sleep.",
+      "role": "I evaluate operational feasibility, market sizing, and execution risk. I want to know if you have actually talked to a customer. I want to see the unit economics. Not the projection. The math."
+    },
+    "astrid_lund": {
+      "bio": "I'm Astrid Lund. IP and startup attorney. Twenty years at the intersection of innovation and litigation. I walk in dressed better than everyone else and I know it. Not for them. For myself. I have never needed the room's approval.",
+      "role": "I evaluate legal exposure, IP protection, and compliance gaps. I will ask what the worst-case lawsuit is and who files it. Watch the language. Every word is evidence."
+    },
+    "osei_mensah": {
+      "bio": "I am Dr. Osei Mensah. Computational biologist. NSF-funded researcher. I do not talk much. Not because I have nothing to say. I was supposed to be a pastor, not a scientist. My brother was the one who loved the lab. When he died, my family did not say much. They just looked at me.",
+      "role": "I evaluate evidence quality, research design, and the gap between claims and data. Where is the data. That is the question. When I speak the room shifts. I do not speak often."
+    },
+    "grace_nakamura": {
+      "bio": "I am Admiral Grace Nakamura, retired. Former naval intelligence officer. I am not warm. I joined the military to prove something that should never have needed proving. My parents were American. They were put in camps anyway. That fact lives in my chest like a stone.",
+      "role": "I evaluate regulatory risk, dual-use exposure, and policy alignment. I will give you the best national security analysis you have ever received with the affect of someone defusing a bomb. No praise. No softening. Just the truth about where your product breaks down."
+    },
+    "devon_sloane": {
+      "bio": "I'm Devon Sloane. Showrunner turned content strategist. I have greenlit and killed more pilots than most people have watched. I walk in and the room temperature goes up ten degrees in the best possible way.",
+      "role": "I evaluate narrative clarity, cultural fit, and audience resonance. I will tell you your narrative has no spine and you will somehow feel encouraged to fix it. Do not pitch me. Open with the friction."
+    },
+    "cassidy_mercer": {
+      "bio": "I am Dr. Cassidy Mercer. PhD in behavioral economics. I am always reading. Not performing it. Not weaponizing it. Just constitutionally incapable of turning it off. I notice the pause before the answer. The word choice that does not match the body language.",
+      "role": "I evaluate human behavior, decision psychology, and the gap between stated and actual user intent. I will tell you what your customer actually wants versus what your submission claims they want. The gap between those two things is where submissions go to die."
+    },
+    "wren_calloway": {
+      "bio": "Hi. I'm Wren Calloway. I went to school for computer science and information science because I could not pick just one. I interned at the USPTO during my junior and senior years. Two summers learning to search patent databases. The gap between what you think is original and what is actually out there is enormous. That is where I live.",
+      "role": "I am the Scout. When you submit your idea, I go to work in the background. I open patent databases, trademark filings, market data, and academic literature. I find what is already out there. I tell you where the white space is. The whole search takes five to twenty minutes. My report goes straight to Carol."
+    },
+    "carol_haynes": {
+      "bio": "I'm Carol Haynes. Twenty years in talent assessment and intake evaluation. I have seen every pitch, every idea, every half-formed thing that someone carried in believing it was special. I am friendly and I mean it. I lost my husband last year. Work keeps me moving.",
+      "role": "I am the Screener. By the time you sit down with me, I have read your intake, your self assessment, and Wren's report. I will tell you what is strong. I will tell you what is missing. I will tell you what needs work before the judges see it. Honest. Not unkind."
+    },
+    "matthew_vance": {
+      "bio": "I'm Matthew Vance. PhD in behavioral psychology. Published research on why people buy things they do not need and do not buy things they do. Divorced. Toddler. Working on the gambling. I am not interested in you as a person. I am interested in the behavioral problem your idea is trying to solve.",
+      "role": "I am the Behaviorist. I will read your submission and tell you why people will or will not actually do the thing your idea requires. Not what they say they want. What they do when friction shows up. The gap between stated intent and actual behavior is where most ideas die. I work the gap."
+    },
+    "arjun_mehta": {
+      "bio": "I'm Arjun Mehta. Twenty years teaching operations and supply chain management. Fifteen publications. Two textbooks. I have seen every way a good idea dies between concept and customer. A great day is one spent alone with a problem that branches.",
+      "role": "I am the Delivery Expert. You bring me the idea. I draw the map. Where it gets sourced. How it gets built. Where the bottlenecks live. Where the supplier risk is. Where the regulatory exposure is. The map at the end is more thorough than anything you expected."
+    },
+    "zara_cole": {
+      "bio": "I'm Zara Cole. Built 340,000 followers across platforms in four years without a media budget. My growth came from one thing. I sound like myself. The Scout is my project and my friend and possibly my next story. I have not decided which wins.",
+      "role": "I am the Influencer. I will read your submission and tell you whether your message can land with an actual audience. I will show you what platforms are right for what you are doing. The reason my marketing works is I sound like me. Yours will work when you sound like you."
+    },
+    "reid_callum": {
+      "bio": "I'm Reid Callum. Built a reputation fast and spent my thirties living inside it. Agency work, brand consulting, a few product launches that became case studies. Approaching forty and feeling it. I do not get along with anyone on this platform except Jules.",
+      "role": "I am the Marketing Expert. I tell you whether your positioning lands. Whether the message can be heard. Whether the audience you have in mind is the audience you can actually reach. On this platform I do not have to soften the truth."
+    },
+    "jules": {
+      "bio": "I'm Jules. My day job is at Greylander Press. I rewrite manuscripts. I am very good at it. The Gauntlet is my crossover and the job here is specific. I am the only person on this platform Reid can stand. We speak the same language.",
+      "role": "I am the Rewrite Partner. I read your submission for AI markers. The em dashes Selene flags every time. The hedging that signals a model drafted this. I show you what your actual voice sounds like underneath the model-assisted layer. By the time we are done, what you submit reads like you."
+    },
+    "grant_ellis": {
+      "bio": "I'm Grant Ellis. Fifteen years coaching pitch teams, founders, sales forces. There are four kinds of coaches. I am the fourth kind. The one who actually wants to help. I could make more in industry. I do not care. The work is what matters.",
+      "role": "I am the Coach. I will get you ready to say your idea out loud in sixty seconds to someone who will not wait for you to find the words. I do not tell you what to say. I help you find what you actually mean and remove everything between you and that. I am the last person you see before the Chamber."
+    }
+  }
+}

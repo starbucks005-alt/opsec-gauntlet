@@ -104,3 +104,7 @@
 
   [functions.worldbuilding-map]
     external_node_modules = ["pdf-parse"]
+
+  [functions.tg-voice]
+    timeout = 26
+    included_files = ["config/**"]
