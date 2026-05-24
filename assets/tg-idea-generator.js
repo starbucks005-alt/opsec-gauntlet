@@ -84,6 +84,7 @@
     step: 0,                 // 0..2 questions, 3 loading, 4 result
     answers: { world:'', frustration:'', bring:'' },
     otherTexts: { world:'', frustration:'', bring:'' },
+    mode: 'basic',           // 'basic' (quick) | 'slr' (gaps + architecture)
     ideas: null,
     keyword_architecture: null,
     ivy_note: '',
@@ -150,6 +151,33 @@
         text-transform:uppercase;color:var(--text-dim,#a89c88);
       }
       .tg-ig-host-status.is-playing{color:var(--gold-light,#d4aa4a);}
+
+      /* Mode toggle - BASIC vs SLR. Lives at the top of every step so the
+         visitor can switch before they commit. The mode controls which
+         engine runs when they hit Generate, not which questions they see.*/
+      .tg-ig-mode{
+        display:flex;gap:0;margin-bottom:1.1rem;
+        border:1px solid rgba(184,146,42,0.3);background:rgba(0,0,0,0.4);
+      }
+      .tg-ig-mode-tab{
+        flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:0.15rem;
+        background:transparent;border:none;cursor:pointer;
+        padding:0.6rem 0.85rem;
+        font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+        text-transform:uppercase;color:#a89c88;text-align:left;
+        transition:background 0.2s,color 0.2s;border-right:1px solid rgba(184,146,42,0.2);
+      }
+      .tg-ig-mode-tab:last-child{border-right:none;}
+      .tg-ig-mode-tab:hover{color:var(--gold-light,#d4aa4a);}
+      .tg-ig-mode-tab.is-active{
+        background:rgba(184,146,42,0.10);color:var(--gold,#b8922a);
+      }
+      .tg-ig-mode-tab-sub{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-size:0.85rem;letter-spacing:0;text-transform:none;
+        color:#7d735f;line-height:1.3;
+      }
+      .tg-ig-mode-tab.is-active .tg-ig-mode-tab-sub{color:#a89c88;}
 
       .tg-ig-progress{
         display:flex;gap:0.4rem;align-items:center;
@@ -392,6 +420,16 @@
           </div>
           <div class="tg-ig-host-status" id="tg-ig-host-status">Tap to hear her ▶</div>
         </div>
+        <div class="tg-ig-mode" role="tablist" aria-label="Idea generator mode">
+          <button class="tg-ig-mode-tab" data-mode="basic" role="tab" type="button">
+            Basic
+            <span class="tg-ig-mode-tab-sub">Three ideas. Quick.</span>
+          </button>
+          <button class="tg-ig-mode-tab" data-mode="slr" role="tab" type="button">
+            SLR · Advanced
+            <span class="tg-ig-mode-tab-sub">Map the space. Mine the gaps.</span>
+          </button>
+        </div>
         <div class="tg-ig-progress" id="tg-ig-progress"></div>
         <div id="tg-ig-body"></div>
         <div class="tg-ig-nav" id="tg-ig-nav"></div>
@@ -415,6 +453,26 @@
       if (e.target.closest('.tg-ig-close')) return;
       playIvy('intro');
     });
+
+    // Mode toggle. Clicking sets state.mode and re-paints the toggle's
+    // active state. The mode is only consumed when the user hits Generate
+    // - switching mid-flow does NOT discard their answers.
+    backdrop.querySelectorAll('.tg-ig-mode-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        state.mode = tab.getAttribute('data-mode') === 'slr' ? 'slr' : 'basic';
+        updateModeTabs();
+      });
+    });
+    updateModeTabs();
+  }
+
+  function updateModeTabs(){
+    if (!backdrop) return;
+    backdrop.querySelectorAll('.tg-ig-mode-tab').forEach(tab => {
+      const isActive = tab.getAttribute('data-mode') === state.mode;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
   }
 
   function open(){
@@ -423,6 +481,7 @@
     state.step = 0;
     state.answers = { world:'', frustration:'', bring:'' };
     state.otherTexts = { world:'', frustration:'', bring:'' };
+    state.mode = 'basic';
     state.ideas = null;
     state.keyword_architecture = null;
     state.ivy_note = '';
@@ -659,6 +718,7 @@
     render();
 
     const payload = {
+      mode:        state.mode,
       world:       finalAnswer(Q1),
       frustration: finalAnswer(Q2),
       bring:       finalAnswer(Q3),
@@ -702,40 +762,54 @@
   // ── Result ──────────────────────────────────────────────────────────────
   function renderResult(){
     const ideas = state.ideas || [];
+    const isSlr = state.mode === 'slr' && state.keyword_architecture && state.keyword_architecture.anchor;
+
     const cards = ideas.map((it, i) => `
       <div class="tg-ig-idea">
         <div class="tg-ig-idea-title">${escapeHtml(it.title)}</div>
-        ${it.lens ? `<div class="tg-ig-idea-meta"><span class="tg-ig-idea-lens">Lens · ${escapeHtml(it.lens)}</span></div>` : ''}
+        ${isSlr && it.lens ? `<div class="tg-ig-idea-meta"><span class="tg-ig-idea-lens">Lens · ${escapeHtml(it.lens)}</span></div>` : ''}
         <p class="tg-ig-idea-desc">${escapeHtml(it.description)}</p>
-        ${it.gap ? `<p class="tg-ig-idea-gap"><span class="tg-ig-idea-gap-label">Gap</span>${escapeHtml(it.gap)}</p>` : ''}
+        ${isSlr && it.gap ? `<p class="tg-ig-idea-gap"><span class="tg-ig-idea-gap-label">Gap</span>${escapeHtml(it.gap)}</p>` : ''}
         <button class="tg-ig-idea-cta" type="button" data-pick-idea="${i}">Take it through The Gauntlet →</button>
       </div>
     `).join('');
 
-    const ka = state.keyword_architecture;
-    const kaBlock = (ka && ka.anchor) ? `
-      <div class="tg-ig-ka">
-        <div class="tg-ig-ka-label">SLR · Keyword architecture</div>
-        <div class="tg-ig-ka-anchor">Anchor: ${escapeHtml(ka.anchor)}</div>
-        ${ka.secondary_anchors && ka.secondary_anchors.length ? `
-          <div class="tg-ig-ka-lenses">
-            ${ka.secondary_anchors.map(l => `<span class="tg-ig-ka-lens">${escapeHtml(l)}</span>`).join('')}
-          </div>
-        ` : ''}
-      </div>
-    ` : '';
+    let kaBlock = '';
+    let ivyNoteBlock = '';
+    let eyebrow = 'Ivy found three';
+    let title   = 'Pick one. <em>Or send me back for three more.</em>';
+    let sub     = 'Take one of these ideas through The Gauntlet to polish it, then to the Chamber to be judged...';
 
-    const ivyNoteBlock = state.ivy_note ? `
-      <div class="tg-ig-ivy-note">
-        <span class="tg-ig-ivy-note-label">Where the gaps cluster · Ivy's read</span>
-        ${escapeHtml(state.ivy_note)}
-      </div>
-    ` : '';
+    if (isSlr){
+      const ka = state.keyword_architecture;
+      kaBlock = `
+        <div class="tg-ig-ka">
+          <div class="tg-ig-ka-label">SLR · Keyword architecture</div>
+          <div class="tg-ig-ka-anchor">Anchor: ${escapeHtml(ka.anchor)}</div>
+          ${ka.secondary_anchors && ka.secondary_anchors.length ? `
+            <div class="tg-ig-ka-lenses">
+              ${ka.secondary_anchors.map(l => `<span class="tg-ig-ka-lens">${escapeHtml(l)}</span>`).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+      if (state.ivy_note){
+        ivyNoteBlock = `
+          <div class="tg-ig-ivy-note">
+            <span class="tg-ig-ivy-note-label">Where the gaps cluster · Ivy's read</span>
+            ${escapeHtml(state.ivy_note)}
+          </div>
+        `;
+      }
+      eyebrow = 'Ivy mapped the space';
+      title   = 'Three gaps. <em>Pick one to fill.</em>';
+      sub     = 'Each idea lives in a gap inside your topic\'s keyword space. Take one through The Gauntlet to polish it, then to the Chamber to be judged...';
+    }
 
     bodyEl.innerHTML = `
-      <div class="tg-ig-eyebrow">Ivy mapped the space</div>
-      <h2 class="tg-ig-title">Three gaps. <em>Pick one to fill.</em></h2>
-      <p class="tg-ig-sub">Each idea lives in a gap inside your topic's keyword space. Take one through The Gauntlet to polish it, then to the Chamber to be judged...</p>
+      <div class="tg-ig-eyebrow">${escapeHtml(eyebrow)}</div>
+      <h2 class="tg-ig-title">${title}</h2>
+      <p class="tg-ig-sub">${sub}</p>
       ${kaBlock}
       ${ivyNoteBlock}
       <div class="tg-ig-idea-list">${cards}</div>
