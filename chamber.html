@@ -901,6 +901,14 @@
   // 'Cap table' becomes 'who owns what.' 'Unit economics' becomes 'what it
   // costs vs. what you sell it for.' 'Deposition' becomes 'in court.'
   // The judges keep their domain - they just translate.
+  //
+  // 'active' = line the judge speaks when ON the panel, addressed to the
+  //            submission.
+  // 'audience' = line the judge speaks when in the gallery, BUT only used
+  //            as a fallback. The first audience heckle in any session is
+  //            now pulled from HECKLES_ABOUT_ACTIVE so it actually targets
+  //            whoever is on the panel (Marcus brought 3 assistants again,
+  //            Selene's already counted the long dashes, etc.).
   const JUDGE_DEMO_LINES = {
     selene_voss: {
       active:   "Did a model write this, or did you?",
@@ -948,6 +956,23 @@
       ? 'Walk us through what you have actually built.'
       : 'Good question. Make them work for it.';
   }
+
+  // What the gallery says about the judge currently on the panel.
+  // Each active judge has a personal tag the others note from the audience.
+  // The audience judge's name is still attached so it reads as their voice
+  // commenting on the active judge's personal quirk - the kind of dig
+  // colleagues throw at each other across a panel.
+  const HECKLES_ABOUT_ACTIVE = {
+    selene_voss:    "Selene's already counted the long dashes. Watch.",
+    marcus_holt:    "Marcus brought all three assistants today. Of course.",
+    priya_anand:    "Priya is going to ask 'why' before she asks anything else.",
+    raymond_chen:   "Raymond was up at four. He has already read this twice.",
+    astrid_lund:    "Astrid is checking your phrasing for legal exposure right now.",
+    osei_mensah:    "Osei has not spoken yet. When he does, listen.",
+    grace_nakamura: "Grace is finding a national security angle. She always does.",
+    devon_sloane:   "Devon is about to tell you your story has no spine.",
+    cassidy_mercer: "Cassidy already clocked the pause before you answered."
+  };
 
   // Recommended triad is computed by the cosine-sim engine in tg-recommend.js
   // using a placeholder requirement vector. When Gate D wires the intake
@@ -1344,11 +1369,16 @@
     }
     if (firstAudience){
       setTimeout(() => {
+        // Prefer a heckle that targets the judge currently on the panel
+        // (Marcus -> three assistants, Selene -> long dashes, etc.). Fall
+        // back to the audience judge's own generic line if the active
+        // judge does not have a targeted heckle defined.
+        const targetedHeckle = firstActive && HECKLES_ABOUT_ACTIVE[firstActive.id];
         addChatMessage({
           kind:'audience',
           name:firstAudience.name,
           role:'Audience',
-          body:judgeLine(firstAudience.id, 'audience')
+          body: targetedHeckle || judgeLine(firstAudience.id, 'audience')
         });
       }, startMs + 3500);
     }
