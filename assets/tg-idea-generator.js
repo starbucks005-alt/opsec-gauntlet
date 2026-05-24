@@ -178,6 +178,16 @@
         color:#7d735f;line-height:1.3;
       }
       .tg-ig-mode-tab.is-active .tg-ig-mode-tab-sub{color:#a89c88;}
+      .tg-ig-mode-tab-row{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+      .tg-ig-mode-chip{
+        font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:0.22em;
+        text-transform:uppercase;color:#0a0a0a;background:var(--gold,#b8922a);
+        padding:0.15rem 0.4rem;border-radius:2px;font-weight:700;
+      }
+      .tg-ig-mode-chip.is-free{
+        background:transparent;color:var(--text-dim,#a89c88);
+        border:1px solid rgba(184,146,42,0.3);
+      }
 
       .tg-ig-progress{
         display:flex;gap:0.4rem;align-items:center;
@@ -422,12 +432,18 @@
         </div>
         <div class="tg-ig-mode" role="tablist" aria-label="Idea generator mode">
           <button class="tg-ig-mode-tab" data-mode="basic" role="tab" type="button">
-            Basic
+            <div class="tg-ig-mode-tab-row">
+              <span>Basic</span>
+              <span class="tg-ig-mode-chip is-free">Free</span>
+            </div>
             <span class="tg-ig-mode-tab-sub">Three ideas. Quick.</span>
           </button>
           <button class="tg-ig-mode-tab" data-mode="slr" role="tab" type="button">
-            SLR · Advanced
-            <span class="tg-ig-mode-tab-sub">Map the space. Mine the gaps.</span>
+            <div class="tg-ig-mode-tab-row">
+              <span>SLR · Advanced</span>
+              <span class="tg-ig-mode-chip">Paid</span>
+            </div>
+            <span class="tg-ig-mode-tab-sub">Ms. Ivy mines the gaps. The gaps are where new ideas live.</span>
           </button>
         </div>
         <div class="tg-ig-progress" id="tg-ig-progress"></div>
@@ -769,7 +785,7 @@
         <div class="tg-ig-idea-title">${escapeHtml(it.title)}</div>
         ${isSlr && it.lens ? `<div class="tg-ig-idea-meta"><span class="tg-ig-idea-lens">Lens · ${escapeHtml(it.lens)}</span></div>` : ''}
         <p class="tg-ig-idea-desc">${escapeHtml(it.description)}</p>
-        ${isSlr && it.gap ? `<p class="tg-ig-idea-gap"><span class="tg-ig-idea-gap-label">Gap</span>${escapeHtml(it.gap)}</p>` : ''}
+        ${isSlr && it.gap ? `<p class="tg-ig-idea-gap"><span class="tg-ig-idea-gap-label">Where the gap is</span>${escapeHtml(it.gap)}</p>` : ''}
         <button class="tg-ig-idea-cta" type="button" data-pick-idea="${i}">Take it through The Gauntlet →</button>
       </div>
     `).join('');
@@ -801,9 +817,9 @@
           </div>
         `;
       }
-      eyebrow = 'Ivy mapped the space';
+      eyebrow = 'Ms. Ivy mined the gaps';
       title   = 'Three gaps. <em>Pick one to fill.</em>';
-      sub     = 'Each idea lives in a gap inside your topic\'s keyword space. Take one through The Gauntlet to polish it, then to the Chamber to be judged...';
+      sub     = 'Ms. Ivy mines the gaps. The gaps are where new ideas live. Each card below sits in a place where nothing is currently being done. Take one through The Gauntlet to polish it, then to the Chamber to be judged...';
     }
 
     bodyEl.innerHTML = `
