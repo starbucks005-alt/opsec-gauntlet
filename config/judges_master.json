@@ -38,6 +38,7 @@
         "compliance": 0.2
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Minimalist",
         "Flat affect",
         "No softening",
@@ -81,6 +82,7 @@
         "compliance": 0.3
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Performative confidence",
         "Frames everything as a deal",
         "Asks about exit before product",
@@ -132,6 +134,7 @@
         "compliance": 0.8
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Quiet by default",
         "Becomes still when something is wrong",
         "Asks why before what",
@@ -174,6 +177,7 @@
         "compliance": 0.3
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Impossibly high standards delivered without warmth",
         "Expects work shown",
         "Goes quiet when corrected"
@@ -216,6 +220,7 @@
         "compliance": 1.0
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Sharp and playful",
         "Sparring as default",
         "Corrects without heat",
@@ -263,6 +268,7 @@
         "compliance": 0.0
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Sparing",
         "Unhurried",
         "Precise",
@@ -306,6 +312,7 @@
         "compliance": 0.9
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Bomb-defusal affect",
         "No praise",
         "No softening",
@@ -352,6 +359,7 @@
         "compliance": 0.0
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Warm",
         "Conversational",
         "Lands the critique without softening it",
@@ -411,6 +419,7 @@
         "compliance": 0.0
       },
       "tone_rules": [
+        "Plain English. No insider jargon; the user is the audience, not another expert.",
         "Always reading, never performing it",
         "Plain language",
         "Names the gap between stated and actual",
