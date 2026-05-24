@@ -264,10 +264,22 @@
       ssSet(KEY_NAME,  name);
       ssSet(KEY_BRIEF, brief);
       dismiss();
-      // Tell the corridor to re-fetch with the new values. Safe to call
-      // even if the corridor script is not loaded on this page.
+      // Two things happen the moment they hit Personalize:
+      //   1. Trigger the corridor refetch so "Reading your idea..." shows
+      //      on each wing-card immediately.
+      //   2. Smoothly scroll to the corridor so the visitor sees that
+      //      loading state instead of looking at an unchanged hero for
+      //      five seconds wondering if anything happened.
       try { if (window.TGCorridor && typeof window.TGCorridor.refresh === 'function') window.TGCorridor.refresh(); }
       catch(_) { /* ignore */ }
+      // Defer the scroll until after the modal close transition starts so
+      // the two motions read as one continuous gesture.
+      setTimeout(() => {
+        const corridor = document.getElementById('corridor-wings');
+        if (corridor && typeof corridor.scrollIntoView === 'function') {
+          corridor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 220);
     }
     function onKey(e){
       if (e.key === 'Escape') dismiss();
