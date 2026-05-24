@@ -14,6 +14,10 @@ yarn-error.log*
 *.pem
 nf-token.txt
 
+# Claude Code local state. The allowlist file captures literal bash commands,
+# which can include bearer tokens / API keys passed to curl. Keep it local.
+.claude/
+
 # Logs / build artifacts
 *.log
 last_deploy.log
