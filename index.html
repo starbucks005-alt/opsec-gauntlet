@@ -221,9 +221,57 @@
     box-shadow:0 0 0 2px var(--gold-light),0 8px 32px -4px var(--crimson-glow);
   }
 
+  /* Three starting lines. The visitor picks where they enter based on
+     what they have today: no idea, rough idea, or polished idea. Each
+     card stands alone with one description, one CTA, one promised
+     outcome. Bracketed-monospace button labels read like a console menu,
+     in keeping with the intel-room register. */
+  .hero-paths{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:0;
+    max-width:1320px;margin:0 auto;text-align:left;
+    border-top:1px solid rgba(212,170,74,0.25);
+    border-bottom:1px solid rgba(212,170,74,0.25);
+  }
+  .hero-path{
+    padding:2rem 1.6rem 1.6rem;
+    border-right:1px solid rgba(212,170,74,0.25);
+    display:flex;flex-direction:column;gap:1.1rem;
+  }
+  .hero-path:last-child{border-right:none;}
+  .hero-path-num{
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--cream);font-weight:600;
+  }
+  .hero-path-body{
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;
+    color:var(--text);margin:0;flex:1;
+    border-top:1px solid rgba(212,170,74,0.18);
+    padding-top:1rem;
+  }
+  .hero-path-btn{
+    display:inline-block;
+    font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.12em;
+    color:var(--cream);background:transparent;border:none;
+    padding:0.5rem 0;text-decoration:none;cursor:pointer;text-align:left;
+    transition:color 0.18s;
+  }
+  .hero-path-btn:hover{color:var(--gold-light);}
+  .hero-path-outcome{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.98rem;
+    color:var(--gold-light);margin:0;
+    border-top:1px solid rgba(212,170,74,0.18);
+    padding-top:1rem;
+  }
+
   @media (max-width:980px){
     .hero-split{gap:1.8rem;}
     .hero-split-text{max-width:none;}
+  }
+  @media (max-width:880px){
+    .hero-paths{grid-template-columns:1fr;}
+    .hero-path{border-right:none;border-bottom:1px solid rgba(212,170,74,0.25);}
+    .hero-path:last-child{border-bottom:none;}
   }
 
   /* Buttons */
@@ -602,21 +650,37 @@
 
 <!-- ── Hero (audition) ──────────────────────────────────────────────────── -->
 <!-- Composite portrait on the right. Tagline + audio button on the left.   -->
-<!-- The user can press play and hear a judge before scrolling. The audio  -->
-<!-- IS the demo - no separate Panel section needed.                       -->
+<!-- The hero is the lobby. Three starting lines, one card each. The user   -->
+<!-- picks where they enter the system based on what they have today: no    -->
+<!-- idea (go to Ivy), rough concept (pitch the EPs), polished idea (face   -->
+<!-- the panel). Each card stands alone with one description, one CTA, one  -->
+<!-- promised outcome. No narrator voice, no jargon at the cold open.       -->
 <section class="hero proscenium">
   <div class="hero-split">
     <div class="hero-split-text">
       <div class="hero-eyebrow">Diagnostic Critique Engine</div>
-      <h1 class="hero-title">Where ideas get <em>tested</em>.</h1>
-      <p class="hero-tagline">Nine expert judges. Eight evaluation dimensions. <strong>Math, not opinion.</strong> Three doors in: no idea yet — <strong>Ms. Ivy</strong> helps you find one. Have one that needs sharpening — the <strong>Wings</strong> work it with you. Ready for the verdict — walk into the <strong>Chamber</strong>.</p>
-      <div class="hero-cta-row">
-        <button class="btn btn-primary btn-audition" type="button" data-tg-idea-open>
-          <span class="audition-pip" aria-hidden="true">▶</span>Start with Ms. Ivy
-        </button>
-        <a class="btn btn-outline" href="#corridor-wings">Walk with the Wings →</a>
-        <a class="btn btn-outline" href="/intake.html">Enter The Chamber →</a>
-      </div>
+      <h1 class="hero-title">Where ideas become <em>reality</em>.</h1>
+      <p class="hero-tagline">Choose your starting line. <strong>Find a gap, fix your pitch, or face the panel.</strong></p>
+    </div>
+    <div class="hero-paths">
+      <article class="hero-path">
+        <div class="hero-path-num">1. Find an Idea</div>
+        <p class="hero-path-body">Don't have an idea yet? Sit down with Ms. Ivy, our custom AI agent, to uncover an unmapped market gap and build a concept from scratch.</p>
+        <button class="hero-path-btn" type="button" data-tg-idea-open>[ Start with Ms. Ivy ]</button>
+        <p class="hero-path-outcome">Get a tailored concept blueprint.</p>
+      </article>
+      <article class="hero-path">
+        <div class="hero-path-num">2. Polish Your Pitch</div>
+        <p class="hero-path-body">Already have a rough concept? Meet with our AI Executive Producers backstage to tear it apart, find the flaws, and fix it.</p>
+        <a class="hero-path-btn" href="#corridor-wings">[ Pitch the EPs ]</a>
+        <p class="hero-path-outcome">Get a pitch readiness scorecard.</p>
+      </article>
+      <article class="hero-path">
+        <div class="hero-path-num">3. Face the Panel</div>
+        <p class="hero-path-body">Think your strategy is bulletproof? Step straight into the Chamber and face nine brutal AI judges for the ultimate verdict.</p>
+        <a class="hero-path-btn" href="/intake.html">[ Enter the Chamber ]</a>
+        <p class="hero-path-outcome">Get your official viability report.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -629,7 +693,7 @@
 <section class="corridor-intro velvet">
   <div class="band-inner narrow">
     <div class="corridor-eyebrow">The Corridor</div>
-    <h2 class="corridor-title">Walk the gauntlet. <em>The Wings flank you.</em></h2>
+    <h2 class="corridor-title">Walk the gauntlet. <em>The Executive Producers flank you.</em></h2>
     <p class="corridor-lede">Nine specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
   </div>
 </section>
