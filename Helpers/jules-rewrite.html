@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jules · The Rewrite Partner · The Gauntlet</title>
-<meta name="description" content="Jules is The Rewrite Partner. From Greylander Press. Ten years reading manuscripts. She reads your submission for AI markers the judges will catch and works with you pass by pass until it sounds like you wrote it.">
+<title>Jules's Office · The Rewrite Partner · The Gauntlet</title>
+<meta name="description" content="Jules is The Rewrite Partner. In her office she reads your brief and works with you pass by pass until it sounds like the person who had the idea, not a tool that was asked to describe it.">
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
-<link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
-<script src="../assets/tg-im.js" defer></script>
+<script src="../assets/tg-ep-chat.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -18,78 +17,228 @@
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
     --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    --crimson:#5a1a1a; --crimson-bright:#c0392b;
+    --gauntlet-consequence:#c0392b;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;min-height:100vh;}
-
-  .tg-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;}
-  .tg-topbar-logo{display:flex;align-items:center;gap:0.6rem;font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;white-space:nowrap;}
-  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
-  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
-  .tg-topbar-nav a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
-  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
-
-  .h-back{max-width:920px;margin:0 auto;padding:2rem 2.5rem 0;}
-  .h-back a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
-  .h-back a:hover{color:var(--gold);}
-
-  main{max-width:920px;margin:0 auto;padding:2rem 2.5rem 6rem;}
-
-  .h-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:center;margin-bottom:5rem;}
-  .h-hero-photo{position:relative;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--rule);background:#14151a;box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),0 0 60px -10px rgba(212,170,74,0.08);}
-  .h-hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-  .h-hero-body{padding:1rem 0;}
-  .h-hero-role{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
-  .h-hero-name{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:0.55rem;}
-  .h-hero-name em{font-style:italic;color:var(--gold-light);}
-  .h-hero-lens{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:var(--gold-light);margin-bottom:1.8rem;}
-
-  .h-voice-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
-  .h-voice-btn{display:inline-flex;align-items:center;gap:0.55rem;border:1px solid var(--rule);background:rgba(0,0,0,0.5);color:var(--gold-light);padding:0.7rem 1.1rem;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;transition:border-color 0.2s,background 0.2s,color 0.2s;}
-  .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
-  .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
-  .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
-  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
-  .h-im-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--gold);color:var(--ink);border:none;padding:0.75rem 1.4rem;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:700;transition:background 0.2s,transform 0.2s,box-shadow 0.3s;}
-  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
-
-  .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
-
-  section.h-section{margin-bottom:5rem;}
-  .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
-  .h-section h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:1.4rem;}
-  .h-section h2 em{font-style:italic;color:var(--gold-light);}
-  .h-section p{margin-bottom:1.1rem;color:var(--text);}
-  .h-section p em{color:var(--cream);font-style:italic;}
-  .h-section p strong{color:var(--gold-light);font-weight:700;}
-
-  /* Notes — Jules's format is sparse paragraphs, no dates. */
-  .h-notes-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
-  .h-notes-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:1rem;margin-bottom:2.5rem;}
-  .h-note-undated{
-    border-left:2px solid var(--gold);
-    padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;
-    background:rgba(184,146,42,0.025);
-    font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    min-height:100vh;
   }
-  .h-note-undated em{color:var(--cream);font-style:italic;}
-  .h-note-undated p{margin-bottom:0.95rem;}
-  .h-note-undated p:last-child{margin-bottom:0;}
 
-  .h-footer{border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;background:rgba(0,0,0,0.4);}
-  .h-footer-inner{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;}
-  .h-footer-brand{font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);}
-  .h-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
-  .h-footer-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
-  .h-footer-links a:hover{color:var(--gold);}
+  /* ── Topbar ──────────────────────────────────────────────────────────── */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;
+    position:sticky;top:0;background:rgba(10,10,10,0.92);
+    backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-back{
+    margin-left:auto;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-back:hover{color:var(--gold);}
 
-  @media (max-width:740px){
-    .tg-topbar{padding:0 1.3rem;}
-    .tg-topbar-nav{gap:1.2rem;}
-    .h-back,main{padding-left:1.3rem;padding-right:1.3rem;}
-    .h-hero{grid-template-columns:1fr;gap:2rem;margin-bottom:3.5rem;}
-    .h-hero-name{font-size:2.2rem;}
-    .h-section h2{font-size:1.55rem;}
+  /* ── Header strip: Jules's name + photo + voice ─────────────────────── */
+  .h-strip{
+    max-width:1320px;margin:0 auto;padding:1.4rem 2rem 0.9rem;
+    display:flex;align-items:center;gap:1.2rem;
+  }
+  .h-strip-photo{
+    width:64px;height:64px;flex-shrink:0;overflow:hidden;
+    border:1px solid var(--rule);background:#14151a;
+  }
+  .h-strip-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .h-strip-meta{display:flex;flex-direction:column;gap:0.2rem;flex:1;min-width:0;}
+  .h-strip-name{
+    font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
+    color:var(--cream);line-height:1.1;
+  }
+  .h-strip-name em{font-style:italic;color:var(--gold-light);}
+  .h-strip-role{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .h-strip-voice{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    color:var(--gold-light);padding:0.55rem 0.95rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    text-transform:uppercase;
+    transition:border-color 0.2s,background 0.2s,color 0.2s;
+  }
+  .h-strip-voice:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
+  .h-strip-voice .play{
+    width:18px;height:18px;border:1px solid currentColor;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.6rem;line-height:1;
+  }
+
+  /* ── Office split layout ────────────────────────────────────────────── */
+  .office{
+    max-width:1320px;margin:0 auto;
+    padding:1rem 2rem 4rem;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:1.4rem;
+    height:calc(100vh - 56px - 100px);   /* topbar + strip */
+    min-height:560px;
+  }
+  .office-panel{
+    display:flex;flex-direction:column;min-height:0;
+    border:1px solid var(--rule);background:rgba(255,255,255,0.015);
+  }
+  .office-panel-head{
+    padding:0.8rem 1.1rem;border-bottom:1px solid var(--rule);
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);
+    display:flex;align-items:center;justify-content:space-between;gap:0.8rem;
+  }
+  .office-panel-head-note{color:var(--text-dim);font-size:0.55rem;}
+
+  /* Brief panel (left) */
+  .office-brief{
+    flex:1;padding:1.4rem 1.3rem;overflow-y:auto;
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.65;
+    color:var(--text);white-space:pre-wrap;
+  }
+  .office-brief[data-empty="true"]{
+    color:var(--text-dim);font-style:italic;
+  }
+
+  /* Chat panel (right) */
+  .office-chat-thread{
+    flex:1;padding:1.1rem 1.1rem 0.6rem;overflow-y:auto;
+  }
+  .tg-chat-empty{
+    color:var(--text-dim);font-style:italic;font-size:0.98rem;
+    padding:1rem 0;
+  }
+  .tg-chat-turn{
+    margin-bottom:1.4rem;
+    font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.55;
+  }
+  .tg-chat-user{
+    margin-left:1.5rem;
+    padding:0.6rem 0.9rem;
+    background:rgba(212,170,74,0.05);border-left:2px solid var(--gold);
+    color:var(--cream);
+  }
+  .tg-chat-assistant{
+    padding:0.2rem 0;
+  }
+  .tg-chat-who{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--gold-light);
+    margin-bottom:0.35rem;
+  }
+  .tg-chat-content{white-space:pre-wrap;}
+
+  /* Revision card inside an assistant turn */
+  .tg-chat-revision{
+    margin-top:0.8rem;
+    border:1px solid var(--rule);background:rgba(184,146,42,0.05);
+    padding:0.9rem 1rem;
+  }
+  .tg-chat-revision.is-accepted{
+    border-color:rgba(212,170,74,0.5);background:rgba(212,170,74,0.08);
+  }
+  .tg-chat-revision.is-rejected{
+    border-color:rgba(192,57,43,0.35);background:rgba(192,57,43,0.04);
+    opacity:0.7;
+  }
+  .tg-chat-rev-head{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:0.5rem;
+  }
+  .tg-chat-rev-head strong{color:var(--cream);}
+  .tg-chat-rev-rationale{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.92rem;
+    color:var(--text-dim);margin-bottom:0.8rem;
+  }
+  .tg-chat-rev-diff{
+    display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.8rem;
+  }
+  .tg-chat-rev-before{
+    padding:0.5rem 0.7rem;
+    background:rgba(0,0,0,0.4);border-left:2px solid rgba(212,170,74,0.35);
+    color:var(--text-dim);font-size:0.94rem;line-height:1.5;white-space:pre-wrap;
+    text-decoration:line-through;text-decoration-color:rgba(192,57,43,0.5);
+  }
+  .tg-chat-rev-arrow{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);text-align:center;
+    padding:0.1rem 0;
+  }
+  .tg-chat-rev-after{
+    padding:0.5rem 0.7rem;
+    background:rgba(212,170,74,0.06);border-left:2px solid var(--gold-light);
+    color:var(--cream);font-size:0.96rem;line-height:1.5;white-space:pre-wrap;
+  }
+  .tg-chat-rev-actions{
+    display:flex;gap:0.6rem;flex-wrap:wrap;
+  }
+  .tg-chat-rev-btn{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+    padding:0.6rem 1rem;
+    border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .tg-chat-rev-accept{background:var(--gold);color:var(--ink);}
+  .tg-chat-rev-accept:hover{background:var(--gold-light);border-color:var(--gold-light);}
+  .tg-chat-rev-reject{
+    background:transparent;color:var(--text-dim);border-color:var(--rule);
+  }
+  .tg-chat-rev-reject:hover{border-color:var(--gauntlet-consequence);color:var(--gauntlet-consequence);}
+
+  /* Chat input bar */
+  .office-chat-input{
+    border-top:1px solid var(--rule);padding:0.85rem 1rem;
+    display:flex;gap:0.7rem;align-items:flex-end;
+    background:rgba(0,0,0,0.3);
+  }
+  .office-chat-input textarea{
+    flex:1;min-height:54px;max-height:140px;resize:vertical;
+    background:rgba(0,0,0,0.45);border:1px solid var(--rule);
+    color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;
+    padding:0.6rem 0.8rem;outline:none;
+  }
+  .office-chat-input textarea:focus{border-color:var(--gold-light);}
+  .office-chat-input textarea::placeholder{color:#7d735f;font-style:italic;}
+  .office-chat-send{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+    padding:0.75rem 1.2rem;
+    background:var(--gold);color:var(--ink);
+    border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .office-chat-send:hover:not(:disabled){background:var(--gold-light);border-color:var(--gold-light);}
+  .office-chat-send:disabled{opacity:0.5;cursor:wait;}
+
+  .office-keys{
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);text-align:center;
+    padding-bottom:0.45rem;
+  }
+  .office-keys strong{color:var(--gold-light);}
+
+  @media (max-width:980px){
+    .office{
+      grid-template-columns:1fr;height:auto;min-height:0;
+    }
+    .office-brief{max-height:42vh;}
+    .office-chat-thread{max-height:48vh;}
   }
 </style>
 </head>
@@ -100,96 +249,48 @@
     <img src="../Favicon.png" alt="" aria-hidden="true">
     THE GAUNTLET
   </a>
-  <nav class="tg-topbar-nav">
-    <a href="/chamber.html">The Chamber</a>
-    <a href="index.html" class="is-active">The Helpers</a>
-    <a href="../about.html">About</a>
-  </nav>
+  <a class="tg-topbar-back" href="/#corridor-wings">&larr; Back to the corridor</a>
 </header>
 
-<div class="h-back">
-  <a href="index.html">← Back to The Helpers</a>
+<!-- Small header strip so the visitor knows who they're talking to.
+     The full static profile lived here before EE.1; for EE.1 we keep
+     just the identifying chrome and dedicate the page to working. -->
+<div class="h-strip">
+  <div class="h-strip-photo">
+    <img src="Jules_eyes_open.jpg" alt="Jules, The Rewrite Partner">
+  </div>
+  <div class="h-strip-meta">
+    <div class="h-strip-name">Ms. <em>Jules</em></div>
+    <div class="h-strip-role">The Rewrite Partner</div>
+  </div>
+  <button class="h-strip-voice" type="button"
+          data-tg-voice data-character="jules" data-mode="role">
+    <span class="play" aria-hidden="true">&#9654;</span>Hear her
+  </button>
 </div>
 
-<main>
-
-  <section class="h-hero">
-    <div class="h-hero-photo">
-      <div class="h-crossover-badge">From Greylander Press</div>
-      <img src="Jules_Profile.jpg" alt="Jules">
+<main class="office" data-tg-office="ep" data-tg-office-ep-id="jules">
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your Brief</span>
+      <span class="office-panel-head-note">Updates as you accept rewrites</span>
     </div>
-    <div class="h-hero-body">
-      <div class="h-hero-role">The Rewrite Partner</div>
-      <h1 class="h-hero-name">Jules</h1>
-      <div class="h-hero-lens">From Greylander Press.</div>
-      <div class="h-voice-row">
-        <button class="h-voice-btn" type="button" data-tg-voice data-character="jules" data-mode="bio">
-          <span class="play" aria-hidden="true">▶</span> Their Story
-        </button>
-        <button class="h-voice-btn" type="button" data-tg-voice data-character="jules" data-mode="role">
-          <span class="play" aria-hidden="true">▶</span> Their Role
-        </button>
-      </div>
-      <div class="h-cta-row">
-        <button type="button" class="h-im-btn" data-tg-im data-character="jules" data-name="Jules">IM Jules</button>
-      </div>
-    </div>
+    <div class="office-brief" data-tg-office="brief"></div>
   </section>
 
-  <section class="h-section">
-    <div class="h-eyebrow">Their Story</div>
-    <h2>I read what you wrote. I tell you what is <em>not working</em>.</h2>
-    <p>I have been reading manuscripts for ten years. Before that I was the person in every writing workshop who could not stop noticing what was not working. <strong>Not to be cruel.</strong> Because I could see what the piece was trying to be and I wanted it to get there.</p>
-    <p>That is still what I do. I read what you wrote and I tell you what is not working in plain English. <em>Not what is wrong with you. What is not working on the page.</em> There is a difference and it matters.</p>
-    <p>I came to The Gauntlet from Greylander Press, where I work with authors on manuscripts. The problems are different here but the instinct is the same. You have an idea you believe in. I am going to help you make sure the way you have written it matches the strength of what you actually think.</p>
-    <p>Selene Voss will find your AI tells before she finishes the first paragraph. <strong>I will find them before you submit.</strong> That is the point.</p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-eyebrow">What I do here</div>
-    <h2>The em dash is <em>the most obvious tell</em>.</h2>
-    <p>I read your submission for AI markers. Not because AI is cheating. Because <strong>AI writing has a fingerprint</strong> and the judges know it and it undermines the credibility of a real idea before anyone has evaluated the substance.</p>
-    <p>The em dash is the most obvious tell. Selene clocks it in the first sentence. There are others. Certain phrase structures. A particular kind of hedged confidence. <em>The way AI assembles paragraphs that are technically correct and somehow say nothing.</em></p>
-    <p>I will show you exactly what I found and why it reads the way it does. Then we work through it pass by pass until your submission sounds like the person who had the idea, not like a tool that was asked to describe it.</p>
-    <p><em>You wrote this. It should sound like you wrote it.</em></p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-eyebrow">About me</div>
-    <h2>I live somewhere <em>between books</em>.</h2>
-    <p>My day job is at Greylander Press. My weekends are flea markets and paperbacks and the particular pleasure of finding something nobody else noticed.</p>
-    <p>I am not the warmest person in the helper tier. <strong>Grant is warmer. Carol is warmer.</strong> I am the one who will tell you what is not working without softening it into something you can ignore. <em>People come back after that. That is how I know it helped.</em></p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-notes-eyebrow">Notes</div>
-    <p class="h-notes-sub">Sparse. No dates. Just the thing.</p>
-
-    <div class="h-note-undated">
-      <p>The Marketing Expert and I speak the same language. Honest, direct, no performance. <em>We do not always agree on what something needs but we agree that comfort is not the goal.</em></p>
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Working with Jules</span>
+      <span class="office-panel-head-note">Session-only. Closes with the tab.</span>
     </div>
-
-    <div class="h-note-undated">
-      <p>Reid once told me my feedback style was aggressive. I told him his marketing copy was a euphemism factory. <em>We have not resolved this.</em></p>
-    </div>
-
-    <div class="h-note-undated">
-      <p>Matthew clocked something about me in the first session. He has not said what. I have not asked. <em>Some things are better left unexamined by people who examine everything for a living.</em></p>
+    <div class="office-chat-thread" data-tg-office="chat"></div>
+    <div class="office-keys"><strong>&#8984;</strong> + <strong>Enter</strong> to send</div>
+    <div class="office-chat-input">
+      <textarea data-tg-office="input" placeholder="Tell Jules what you want to work on. Or just say go."></textarea>
+      <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
     </div>
   </section>
-
 </main>
-
-<footer class="h-footer">
-  <div class="h-footer-inner">
-    <div class="h-footer-brand">THE GAUNTLET</div>
-    <nav class="h-footer-links">
-      <a href="/chamber.html">The Chamber</a>
-      <a href="index.html">The Helpers</a>
-      <a href="../about.html">About</a>
-    </nav>
-  </div>
-</footer>
 
 </body>
 </html>

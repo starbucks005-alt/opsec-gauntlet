@@ -133,3 +133,7 @@
   [functions.tg-file-extract]
     timeout = 26
     external_node_modules = ["pdf-parse", "mammoth"]
+
+  [functions.tg-ep-chat]
+    timeout = 26
+    included_files = ["config/**"]
