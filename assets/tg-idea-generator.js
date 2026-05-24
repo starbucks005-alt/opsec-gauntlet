@@ -503,9 +503,9 @@
     state.ivy_note = '';
     backdrop.classList.add('is-open');
     render();
-    // Ivy welcomes the user. If autoplay is blocked (common on first page
-    // load before any user gesture), the host bar stays clickable.
-    playIvy('intro');
+    // No autoplay. The host bar is clickable; the user taps to hear Ivy.
+    // This avoids ambushing anyone scrolling in a meeting with audio.
+    setIvyStatus('Tap to hear her ▶', false);
   }
 
   function close(){

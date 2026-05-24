@@ -609,13 +609,13 @@
     <div class="hero-split-text">
       <div class="hero-eyebrow">Diagnostic Critique Engine</div>
       <h1 class="hero-title">Where ideas get <em>tested</em>.</h1>
-      <p class="hero-tagline">Nine expert judges. Eight evaluation dimensions. <strong>Math, not opinion.</strong> Press play and Wren will walk you through it.</p>
+      <p class="hero-tagline">Nine expert judges. Eight evaluation dimensions. <strong>Math, not opinion.</strong> Three doors in: no idea yet — <strong>Ms. Ivy</strong> helps you find one. Have one that needs sharpening — the <strong>Wings</strong> work it with you. Ready for the verdict — walk into the <strong>Chamber</strong>.</p>
       <div class="hero-cta-row">
-        <button class="btn btn-primary btn-audition" type="button" data-tg-voice data-character="wren_calloway" data-mode="intro">
-          <span class="audition-pip" aria-hidden="true">▶</span>Hear about The Gauntlet
+        <button class="btn btn-primary btn-audition" type="button" data-tg-idea-open>
+          <span class="audition-pip" aria-hidden="true">▶</span>Start with Ms. Ivy
         </button>
+        <a class="btn btn-outline" href="#corridor-wings">Walk with the Wings →</a>
         <a class="btn btn-outline" href="/intake.html">Enter The Chamber →</a>
-        <button class="btn btn-outline" type="button" data-tg-idea-open>Help me find an idea to bring</button>
       </div>
     </div>
   </div>
@@ -630,13 +630,32 @@
   <div class="band-inner narrow">
     <div class="corridor-eyebrow">The Corridor</div>
     <h2 class="corridor-title">Walk the gauntlet. <em>The Wings flank you.</em></h2>
-    <p class="corridor-lede">Eight specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
+    <p class="corridor-lede">Nine specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
   </div>
 </section>
 
-<!-- ── The Wings: 8 helpers, alternating left / right ─────────────────── -->
-<section class="corridor-wings">
+<!-- ── The Wings: 9 helpers, alternating left / right ─────────────────── -->
+<section class="corridor-wings" id="corridor-wings">
   <div class="corridor-wing wing-left" data-wing-idx="0">
+    <div class="wing-portrait">
+      <a href="/Helpers/ivy-librarian.html" aria-label="Ms. Ivy profile">
+        <img class="blink-open" src="Helpers/ivy_eyes-open.png" alt="Ms. Ivy">
+        <img class="blink-closed" src="Helpers/ivy_eyes-closed.png" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Ms. Ivy</div>
+      <div class="wing-role">The Librarian</div>
+      <p class="wing-quote">"If you do not have an idea yet, that is what I am here for. Gaps are where new ideas live. I help you find them."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="ms_ivy" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="ms_ivy" data-name="Ms. Ivy">IM Ms. Ivy</button>
+        <a class="wing-link" href="/Helpers/ivy-librarian.html">Step into her office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-right" data-wing-idx="1">
     <div class="wing-portrait">
       <a href="/Helpers/wren-scout.html" aria-label="Wren Calloway profile">
         <img class="blink-open" src="Helpers/Wren_eyes_open.jpg" alt="Wren Calloway">
@@ -655,7 +674,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-right" data-wing-idx="1">
+  <div class="corridor-wing wing-left" data-wing-idx="2">
     <div class="wing-portrait">
       <a href="/Helpers/carol-screener.html" aria-label="Carol Haynes profile">
         <img class="blink-open" src="Helpers/Carol_eyes_open.jpg" alt="Carol Haynes">
@@ -674,7 +693,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-left" data-wing-idx="2">
+  <div class="corridor-wing wing-right" data-wing-idx="3">
     <div class="wing-portrait">
       <a href="/Helpers/matthew-behaviorist.html" aria-label="Matthew Vance profile">
         <img class="blink-open" src="Helpers/Matthew_eyes_open.jpg" alt="Matthew Vance">
@@ -693,7 +712,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-right" data-wing-idx="3">
+  <div class="corridor-wing wing-left" data-wing-idx="4">
     <div class="wing-portrait">
       <a href="/Helpers/arjun-delivery.html" aria-label="Arjun Mehta profile">
         <img class="blink-open" src="Helpers/Arjun_eyes_open.jpg" alt="Arjun Mehta">
@@ -712,7 +731,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-left" data-wing-idx="4">
+  <div class="corridor-wing wing-right" data-wing-idx="5">
     <div class="wing-portrait">
       <a href="/Helpers/zara-influencer.html" aria-label="Zara Cole profile">
         <img class="blink-open" src="Helpers/Zara_eyes_open.jpg" alt="Zara Cole">
@@ -731,7 +750,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-right" data-wing-idx="5">
+  <div class="corridor-wing wing-left" data-wing-idx="6">
     <div class="wing-portrait">
       <a href="/Helpers/reid-marketing.html" aria-label="Reid Callum profile">
         <img class="blink-open" src="Helpers/Reid_eyes_open.jpg" alt="Reid Callum">
@@ -750,7 +769,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-left" data-wing-idx="6">
+  <div class="corridor-wing wing-right" data-wing-idx="7">
     <div class="wing-portrait">
       <a href="/Helpers/jules-rewrite.html" aria-label="Jules profile">
         <div class="wing-crossover">From Greylander Press</div>
@@ -770,7 +789,7 @@
     </div>
   </div>
 
-  <div class="corridor-wing wing-right" data-wing-idx="7">
+  <div class="corridor-wing wing-left" data-wing-idx="8">
     <div class="wing-portrait">
       <a href="/Helpers/grant-coach.html" aria-label="Grant Ellis profile">
         <img class="blink-open" src="Helpers/Grant_eyes_open.jpg" alt="Grant Ellis">
