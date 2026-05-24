@@ -28,7 +28,7 @@
   // re-fetch audio (model upgrade, voice-settings tune, script rewrite).
   // The function ignores the param; it only changes the URL so the
   // browser's HTTP cache treats it as a new resource and refetches.
-  const VOICE_VERSION = '2026-05-23-v7';
+  const VOICE_VERSION = '2026-05-23-v8';
 
   const audioCache = new Map();     // key: character|mode → blob URL
   let currentAudio = null;          // currently-playing HTMLAudioElement

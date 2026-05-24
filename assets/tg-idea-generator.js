@@ -28,7 +28,7 @@
 
   const IDEA_ENDPOINT  = '/.netlify/functions/tg-idea-generator';
   const VOICE_ENDPOINT = '/.netlify/functions/tg-voice';
-  const VOICE_VERSION  = '2026-05-23-v7';
+  const VOICE_VERSION  = '2026-05-23-v8';
   const IVY_CHARACTER  = 'ms_ivy';
   const IVY_PORTRAIT   = 'Helpers/Ivy_Profile.jpg';
 
