@@ -23,7 +23,7 @@
   'use strict';
 
   // Voice cache-buster matches tg-voice.js so Wren is fresh.
-  const VOICE_VERSION = '2026-05-23-v3';
+  const VOICE_VERSION = '2026-05-23-v4';
   const VOICE_ENDPOINT = '/.netlify/functions/tg-voice';
   const SEED_ENDPOINT  = '/.netlify/functions/tg-idea-generator';
 
