@@ -88,6 +88,8 @@ ${addressLine}
 If the score is below 4, do not soften - your tone rules apply.
 If the score is 7 or above, do not flatter - say what is clear and what could still tighten.
 
+CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.
+
 Then return YOUR CONFIDENCE in your own scoring on a 0.00 to 1.00 decimal scale.
 
 OUTPUT JSON only, exactly this shape, nothing before or after:

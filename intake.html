@@ -160,6 +160,7 @@
     .submit-row .btn{justify-content:center;}
   }
 </style>
+<script src="assets/tg-chamber-rules.js" defer></script>
 </head>
 <body>
 
@@ -299,6 +300,18 @@
 
     if (!title)       { status.textContent = 'Working title is required.'; status.classList.add('is-error'); return; }
     if (!description) { status.textContent = 'Description is required.';   status.classList.add('is-error'); return; }
+
+    // Profanity filter (same word list as the chamber rules modal). Blocks
+    // submission and takes the page over with the ejection screen. The
+    // chamber will not be loaded - the submission is refused at the door.
+    if (window.TGChamberRules && window.TGChamberRules.check &&
+        (window.TGChamberRules.check(title) || window.TGChamberRules.check(description) ||
+         window.TGChamberRules.check(audience) || window.TGChamberRules.check(constraints))) {
+      window.TGChamberRules.eject({
+        reason: 'Your intake contained language that violates The Chamber\'s conduct rules.',
+      });
+      return;
+    }
 
     btn.disabled = true;
     status.classList.remove('is-error');

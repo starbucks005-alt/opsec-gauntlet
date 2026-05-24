@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/tg-recommend.js"></script>
 <script src="assets/tg-voice.js" defer></script>
+<script src="assets/tg-chamber-rules.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -1640,7 +1641,7 @@
   $('tg-reset').addEventListener('click', resetAll);
 
   // ── Load judges ─────────────────────────────────────────────────────────
-  fetch('config/judges_master.json', { cache:'no-store' })
+  fetch('/config/judges_master.json', { cache:'no-store' })
     .then(r => {
       if (!r.ok) throw new Error('Failed to load judges (' + r.status + ')');
       return r.json();
