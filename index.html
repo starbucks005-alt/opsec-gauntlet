@@ -215,78 +215,9 @@
     box-shadow:0 0 0 2px var(--gold-light),0 8px 32px -4px var(--crimson-glow);
   }
 
-  /* 3x3 grid of individual judge cards. Each is a blink-pair portrait
-     + name + domain, click deep-links into the Chamber with that judge's
-     profile modal pre-opened. Replaced the single composite image after
-     Terry's call - individual squares scan better and let each judge be
-     its own click target. */
-  .hero-judges-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
-    width:100%;
-  }
-  .hero-judge-card{
-    display:flex;flex-direction:column;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
-    text-decoration:none;color:inherit;overflow:hidden;
-    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
-  }
-  .hero-judge-card:hover{
-    border-color:var(--gold);
-    box-shadow:0 0 36px -6px rgba(212,170,74,0.45);
-    transform:translateY(-4px);
-  }
-  .hero-judge-portrait{
-    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
-    background:#14151a;border-bottom:1px solid var(--rule);
-  }
-  .hero-judge-portrait img{
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;display:block;
-    transition:filter 0.3s,transform 0.4s;
-  }
-  .hero-judge-card:hover .hero-judge-portrait img{
-    filter:brightness(1.08);transform:scale(1.03);
-  }
-  /* Blink pair: closed-eye image fades in briefly each cycle. Smooth
-     fade (not steps) so the blink does not pop. Stagger via :nth-child
-     so the nine portraits never blink in unison. */
-  .hero-judge-portrait .blink-closed{
-    opacity:0;animation:tg-hero-blink 5.4s linear infinite;
-  }
-  @keyframes tg-hero-blink{
-    0%, 94%, 100% { opacity: 0; }
-    96%, 97%      { opacity: 1; }
-  }
-  .hero-judges-grid .hero-judge-card:nth-child(1) .blink-closed{animation-delay:0s;}
-  .hero-judges-grid .hero-judge-card:nth-child(2) .blink-closed{animation-delay:0.6s;}
-  .hero-judges-grid .hero-judge-card:nth-child(3) .blink-closed{animation-delay:1.2s;}
-  .hero-judges-grid .hero-judge-card:nth-child(4) .blink-closed{animation-delay:1.8s;}
-  .hero-judges-grid .hero-judge-card:nth-child(5) .blink-closed{animation-delay:2.4s;}
-  .hero-judges-grid .hero-judge-card:nth-child(6) .blink-closed{animation-delay:3.0s;}
-  .hero-judges-grid .hero-judge-card:nth-child(7) .blink-closed{animation-delay:3.6s;}
-  .hero-judges-grid .hero-judge-card:nth-child(8) .blink-closed{animation-delay:4.2s;}
-  .hero-judges-grid .hero-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
-  .hero-judge-body{
-    padding:0.95rem 1.1rem 1.1rem;
-    background:rgba(184,146,42,0.04);
-  }
-  .hero-judge-name{
-    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
-    color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
-  }
-  .hero-judge-domain{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
-    text-transform:uppercase;color:var(--gold);line-height:1.5;
-  }
-
   @media (max-width:980px){
     .hero-split{gap:1.8rem;}
     .hero-split-text{max-width:none;}
-  }
-  @media (max-width:740px){
-    .hero-judges-grid{grid-template-columns:repeat(2,1fr);gap:0.8rem;}
-    .hero-judge-body{padding:0.7rem 0.8rem 0.85rem;}
-    .hero-judge-name{font-size:0.95rem;}
   }
 
   /* Buttons */
@@ -316,137 +247,272 @@
     border-color:var(--gold-light);
   }
 
-  /* ── Differentiator strip (one line) ─────────────────────────────────── */
-  /* Quiet support beat, not a feature wall. Three phrases. One eyebrow.   */
-  .diff-strip{padding:3.5rem 2.5rem;text-align:center;}
-  .diff-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.32em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;
-  }
-  .diff-line{
-    font-family:'Playfair Display',serif;font-size:clamp(1rem,1.6vw,1.3rem);
-    color:var(--text);line-height:1.5;
-    max-width:920px;margin:0 auto;
-  }
-  .diff-line strong{color:var(--cream);font-weight:600;}
-
-  /* ── The Helpers preview ─────────────────────────────────────────────────── */
-  .helpers-band{padding:8rem 2.5rem 7rem;}
-  .helpers-header{text-align:center;max-width:820px;margin:0 auto 4rem;}
-  .helpers-eyebrow{
+  /* ── The Corridor ──────────────────────────────────────────────────────── */
+  /* The page IS the gauntlet. User scrolls = user walks. The Wings flank   */
+  /* them alternating left/right. Chamber waits at the end. Routing report  */
+  /* is the exit door.                                                       */
+  .corridor-intro{padding:5rem 2rem 3rem;text-align:center;}
+  .corridor-eyebrow{
     font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
     text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
   }
-  .helpers-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2rem,3.8vw,2.7rem);
-    font-weight:700;color:var(--cream);line-height:1.15;
-    margin-bottom:1rem;letter-spacing:-0.005em;
+  .corridor-title{
+    font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);
+    font-weight:700;color:var(--cream);line-height:1.1;letter-spacing:-0.01em;
+    margin-bottom:1.2rem;
   }
-  .helpers-title em{font-style:italic;color:var(--gold-light);}
-  .helpers-sub{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;
-    color:var(--text-dim);line-height:1.55;
+  .corridor-title em{font-style:italic;color:var(--gold-light);}
+  .corridor-lede{
+    max-width:680px;margin:0 auto;
+    font-size:1.15rem;line-height:1.65;color:var(--text);
   }
-  .helpers-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;
-    max-width:1180px;margin:0 auto 3rem;
-  }
-  .helper-card{
-    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
-    overflow:hidden;display:flex;flex-direction:column;
-    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
-  }
-  .helper-card:hover{
-    border-color:var(--gold-light);
-    box-shadow:0 0 28px -4px rgba(212,170,74,0.3);
-    transform:translateY(-3px);
-  }
-  .helper-card-photo{
-    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
-    background:#14151a;
-    /* Photo doubles as the click target to the helper's individual page. */
-    display:block;text-decoration:none;color:inherit;cursor:pointer;
-  }
-  .helper-card-photo img{
-    position:absolute;inset:0;
-    width:100%;height:100%;object-fit:cover;display:block;
-    transition:filter 0.3s;
-  }
-  .helper-card:hover .helper-card-photo img{filter:brightness(1.08);}
 
-  /* Blink pair on the homepage helper preview, matching the Chamber judges
-     grid. Smooth fade (no steps()) so the swap between open and closed
-     frames reads as a natural blink instead of a binary snap. */
-  .helper-card-photo .blink-closed{
-    opacity:0;
-    animation:tg-home-blink 5.4s linear infinite;
+  /* The Wings section — wraps the corridor walls and 8 alternating cards. */
+  .corridor-wings{
+    padding:4rem 2rem 5rem;position:relative;
+    background-color:var(--bg);
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        rgba(212,170,74,0.014) 0px,
+        rgba(212,170,74,0.014) 1px,
+        transparent 1px,
+        transparent 3px
+      );
   }
-  @keyframes tg-home-blink{
+  /* Gold wall hints on each edge — suggest corridor walls without drawing
+     them literally. Subtle. */
+  .corridor-wings::before,
+  .corridor-wings::after{
+    content:'';position:absolute;top:0;bottom:0;width:clamp(40px,6vw,90px);
+    pointer-events:none;z-index:1;
+  }
+  .corridor-wings::before{
+    left:0;
+    background:linear-gradient(90deg,
+      rgba(184,146,42,0.10) 0%,
+      rgba(184,146,42,0.02) 60%,
+      transparent 100%);
+  }
+  .corridor-wings::after{
+    right:0;
+    background:linear-gradient(270deg,
+      rgba(184,146,42,0.10) 0%,
+      rgba(184,146,42,0.02) 60%,
+      transparent 100%);
+  }
+
+  /* Each wing: 2-col grid (portrait + body). Direction flips by class. */
+  .corridor-wing{
+    display:grid;grid-template-columns:280px 1fr;gap:2.8rem;
+    align-items:center;
+    max-width:1080px;margin:0 auto 4.5rem;
+    padding:0 1rem;position:relative;z-index:2;
+    opacity:0;
+    transition:opacity 0.8s ease-out,transform 0.8s ease-out;
+  }
+  .corridor-wing.wing-left{transform:translateX(-40px);}
+  .corridor-wing.wing-right{
+    grid-template-columns:1fr 280px;
+    transform:translateX(40px);
+  }
+  .corridor-wing.wing-right .wing-portrait{order:2;}
+  .corridor-wing.wing-right .wing-body{order:1;text-align:right;}
+  .corridor-wing.is-visible{opacity:1;transform:translateX(0);}
+
+  /* Wing portrait — square, blink-pair, hover lift on the anchor inside. */
+  .wing-portrait{
+    width:280px;height:280px;overflow:hidden;
+    border:1px solid var(--rule);background:#14151a;
+    position:relative;
+    box-shadow:0 12px 36px -10px rgba(0,0,0,0.7);
+  }
+  .wing-portrait a{
+    display:block;width:100%;height:100%;text-decoration:none;
+    position:relative;
+  }
+  .wing-portrait img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;
+    transition:filter 0.3s,transform 0.5s;
+  }
+  .wing-portrait:hover img{filter:brightness(1.08);transform:scale(1.03);}
+  .wing-portrait .blink-closed{
+    opacity:0;animation:tg-wing-blink 6s linear infinite;
+  }
+  @keyframes tg-wing-blink{
     0%, 94%, 100% { opacity: 0; }
     96%, 97%      { opacity: 1; }
   }
-  .helpers-grid .helper-card:nth-child(1) .blink-closed{animation-delay:0s;}
-  .helpers-grid .helper-card:nth-child(2) .blink-closed{animation-delay:0.7s;}
-  .helpers-grid .helper-card:nth-child(3) .blink-closed{animation-delay:1.4s;}
-  .helpers-grid .helper-card:nth-child(4) .blink-closed{animation-delay:2.1s;}
-  .helpers-grid .helper-card:nth-child(5) .blink-closed{animation-delay:2.8s;}
-  .helpers-grid .helper-card:nth-child(6) .blink-closed{animation-delay:3.5s;}
-  .helpers-grid .helper-card:nth-child(7) .blink-closed{animation-delay:4.2s;}
-  .helpers-grid .helper-card:nth-child(8) .blink-closed{animation-delay:4.9s;}
-  .helper-crossover{
-    position:absolute;top:0.5rem;left:0.5rem;
+  .corridor-wing:nth-child(1) .blink-closed{animation-delay:0s;}
+  .corridor-wing:nth-child(2) .blink-closed{animation-delay:0.7s;}
+  .corridor-wing:nth-child(3) .blink-closed{animation-delay:1.4s;}
+  .corridor-wing:nth-child(4) .blink-closed{animation-delay:2.1s;}
+  .corridor-wing:nth-child(5) .blink-closed{animation-delay:2.8s;}
+  .corridor-wing:nth-child(6) .blink-closed{animation-delay:3.5s;}
+  .corridor-wing:nth-child(7) .blink-closed{animation-delay:4.2s;}
+  .corridor-wing:nth-child(8) .blink-closed{animation-delay:4.9s;}
+  .wing-crossover{
+    position:absolute;top:0.6rem;left:0.6rem;z-index:3;
     background:rgba(10,10,10,0.85);border:1px solid var(--gold);
     color:var(--gold-light);
-    font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.16em;
-    text-transform:uppercase;padding:0.25rem 0.5rem;
+    font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.16em;
+    text-transform:uppercase;padding:0.28rem 0.55rem;
     backdrop-filter:blur(4px);
   }
-  .helper-card-body{padding:0.95rem 1rem 0.7rem;}
-  .helper-card-name{
-    font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
+
+  .wing-body{display:flex;flex-direction:column;gap:0.4rem;}
+  .corridor-wing.wing-right .wing-body{align-items:flex-end;}
+  .wing-name{
+    font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
+    color:var(--cream);line-height:1.15;
+  }
+  .wing-role{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;
+  }
+  .wing-quote{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.25rem;color:var(--gold-light);line-height:1.55;
+    margin:0.2rem 0 1.2rem;max-width:520px;
+  }
+  .corridor-wing.wing-right .wing-quote{margin-left:auto;}
+
+  .wing-actions{display:flex;gap:0.55rem;align-items:center;flex-wrap:wrap;}
+  .corridor-wing.wing-right .wing-actions{justify-content:flex-end;}
+  .wing-btn{
+    display:inline-flex;align-items:center;gap:0.4rem;
+    background:rgba(0,0,0,0.5);border:1px solid var(--rule);color:var(--gold-light);
+    padding:0.55rem 0.9rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+    text-transform:uppercase;font-weight:700;
+    transition:border-color 0.2s,color 0.2s,background 0.2s;
+  }
+  .wing-btn:hover{
+    border-color:var(--gold);color:var(--gold);background:rgba(184,146,42,0.06);
+  }
+  .wing-btn.is-loading{opacity:0.7;cursor:wait;}
+  .wing-btn.is-playing{
+    background:var(--gold);color:var(--ink);border-color:var(--gold);
+  }
+  .wing-pip{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:16px;height:16px;border:1px solid currentColor;border-radius:50%;
+    font-size:0.5rem;line-height:1;
+  }
+  .wing-link{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);text-decoration:none;
+    margin-left:0.3rem;border-bottom:1px solid transparent;
+    padding-bottom:0.1rem;transition:color 0.2s,border-color 0.2s;
+  }
+  .wing-link:hover{color:var(--gold-light);border-bottom-color:var(--gold-light);}
+
+  /* Reduced motion: skip wing fade-in entrance entirely. */
+  @media (prefers-reduced-motion: reduce){
+    .corridor-wing,
+    .corridor-wing.wing-left,
+    .corridor-wing.wing-right{transform:none;opacity:1;transition:none;}
+    .wing-portrait .blink-closed{animation:none;}
+  }
+
+  /* The Threshold: the hall opens. */
+  .corridor-threshold{
+    padding:6rem 2rem 4rem;text-align:center;
+  }
+  .threshold-title{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.5rem,5.5vw,4rem);font-weight:700;
+    color:var(--cream);letter-spacing:-0.015em;line-height:1;
+    margin-bottom:1.2rem;
+  }
+  .threshold-lede{
+    max-width:640px;margin:0 auto;
+    font-size:1.2rem;line-height:1.6;color:var(--text);
+  }
+
+  /* The Judges section — 3x3 grid right after the threshold. */
+  .corridor-judges{padding:0 2rem 5rem;}
+  .corridor-judges-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
+    max-width:1080px;margin:0 auto;
+  }
+  .corridor-judge-card{
+    display:flex;flex-direction:column;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.55);
+    text-decoration:none;color:inherit;overflow:hidden;
+    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
+  }
+  .corridor-judge-card:hover{
+    border-color:var(--gold);
+    box-shadow:0 0 36px -6px rgba(212,170,74,0.45);
+    transform:translateY(-4px);
+  }
+  .corridor-judge-portrait{
+    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
+    background:#14151a;border-bottom:1px solid var(--rule);
+  }
+  .corridor-judge-portrait img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;
+    transition:filter 0.3s,transform 0.4s;
+  }
+  .corridor-judge-card:hover .corridor-judge-portrait img{
+    filter:brightness(1.08);transform:scale(1.03);
+  }
+  .corridor-judge-portrait .blink-closed{
+    opacity:0;animation:tg-wing-blink 5.4s linear infinite;
+  }
+  .corridor-judges-grid .corridor-judge-card:nth-child(1) .blink-closed{animation-delay:0s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(2) .blink-closed{animation-delay:0.6s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(3) .blink-closed{animation-delay:1.2s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(4) .blink-closed{animation-delay:1.8s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(5) .blink-closed{animation-delay:2.4s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(6) .blink-closed{animation-delay:3.0s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(7) .blink-closed{animation-delay:3.6s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(8) .blink-closed{animation-delay:4.2s;}
+  .corridor-judges-grid .corridor-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
+  .corridor-judge-body{
+    padding:0.95rem 1.1rem 1.1rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .corridor-judge-name{
+    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
     color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
   }
-  .helper-card-role{
-    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--gold);
+  .corridor-judge-domain{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--gold);line-height:1.5;
   }
-  /* Action row on each preview card. Three actions:
-       - Profile (link, left, gold text)         -> helper's individual page
-       - Role    (button, right, gold filled)    -> plays role voice clip
-       - IM me   (button, right, gold filled)    -> opens chat modal
-     Role and IM me are grouped on the right so Profile gets its own
-     visual anchor on the left without crowding the audio + chat actions. */
-  .helper-card-actions{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:0.6rem;padding:0 1rem 1rem;
+
+  /* The Exit: routing report. */
+  .corridor-exit{padding:5rem 2rem 5rem;text-align:center;}
+  .exit-title{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2rem,4vw,2.8rem);font-weight:700;
+    color:var(--cream);line-height:1.15;margin-bottom:1.2rem;
+    letter-spacing:-0.005em;
   }
-  .helper-card-action-group{display:flex;gap:0.45rem;}
-  .helper-card-profile{
-    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--gold);text-decoration:none;
-    border-bottom:1px solid transparent;padding-bottom:0.15rem;
-    transition:color 0.2s,border-color 0.2s;
+  .exit-title em{font-style:italic;color:var(--gold-light);}
+  .exit-lede{
+    max-width:680px;margin:0 auto;
+    font-size:1.1rem;line-height:1.7;color:var(--text);
   }
-  .helper-card-profile:hover{
-    color:var(--gold-light);border-bottom-color:var(--gold-light);
+
+  /* Mobile: corridor wings stack vertically, single column, no L/R flip. */
+  @media (max-width:740px){
+    .corridor-wing,
+    .corridor-wing.wing-right{
+      grid-template-columns:1fr;text-align:left;
+      gap:1.5rem;margin-bottom:3.5rem;
+    }
+    .corridor-wing.wing-right .wing-portrait,
+    .corridor-wing.wing-right .wing-body{order:unset;text-align:left;align-items:flex-start;}
+    .corridor-wing.wing-right .wing-quote{margin-left:0;}
+    .corridor-wing.wing-right .wing-actions{justify-content:flex-start;}
+    .wing-portrait{width:200px;height:200px;}
+    .corridor-judges-grid{grid-template-columns:repeat(2,1fr);gap:0.8rem;}
   }
-  .helper-card-im,
-  .helper-card-role-btn{
-    background:var(--gold);color:var(--ink);border:none;
-    padding:0.55rem 0.85rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
-    text-transform:uppercase;font-weight:700;
-    transition:background 0.2s,box-shadow 0.2s;
-  }
-  .helper-card-im:hover,
-  .helper-card-role-btn:hover{background:var(--gold-light);}
-  /* Audible play states (tg-voice.js toggles these). */
-  .helper-card-role-btn.is-loading{opacity:0.65;cursor:wait;}
-  .helper-card-role-btn.is-playing{
-    background:var(--gold-light);
-    box-shadow:inset 0 0 0 2px var(--cream);
-  }
-  .helpers-cta-row{display:flex;justify-content:center;}
 
   /* ── Closing CTA ─────────────────────────────────────────────────────────── */
   .close-band{
@@ -496,12 +562,8 @@
   .home-footer-links a:hover{color:var(--gold);}
 
   /* ── Mobile ──────────────────────────────────────────────────────────────── */
-  @media (max-width:980px){
-    .diff-grid{grid-template-columns:1fr;gap:1.4rem;}
-    .helpers-grid{grid-template-columns:repeat(2,1fr);}
-  }
   @media (max-width:740px){
-    .band,.hero,.diff-strip,.helpers-band,.close-band{
+    .band,.hero,.corridor-intro,.corridor-wings,.corridor-threshold,.corridor-judges,.corridor-exit,.close-band{
       padding-left:1.3rem;padding-right:1.3rem;
     }
     .hero{padding-top:3rem;padding-bottom:3rem;}
@@ -519,7 +581,7 @@
   </a>
   <nav class="tg-topbar-nav">
     <a href="/chamber.html">The Chamber</a>
-    <a href="/Helpers/">The Helpers</a>
+    <a href="/Helpers/">The Wings</a>
     <a href="/about.html">About</a>
   </nav>
 </header>
@@ -542,95 +604,281 @@
         <button class="btn btn-outline" type="button" data-tg-idea-open>Help me find an idea to bring</button>
       </div>
     </div>
-    <div class="hero-judges-grid" role="navigation" aria-label="Judges">
-      <a class="hero-judge-card" href="/chamber.html?judge=selene_voss">
-        <div class="hero-judge-portrait">
+  </div>
+</section>
+
+<div class="footlight"></div>
+
+<!-- ── The Corridor intro ─────────────────────────────────────────────── -->
+<!-- Primes the metaphor. The page IS the gauntlet. The user walks down a   -->
+<!-- corridor, helpers flanking from each side, chamber at the end.         -->
+<section class="corridor-intro velvet">
+  <div class="band-inner narrow">
+    <div class="corridor-eyebrow">The Corridor</div>
+    <h2 class="corridor-title">Walk the gauntlet. <em>The Wings flank you.</em></h2>
+    <p class="corridor-lede">Eight specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
+  </div>
+</section>
+
+<!-- ── The Wings: 8 helpers, alternating left / right ─────────────────── -->
+<section class="corridor-wings">
+  <div class="corridor-wing wing-left" data-wing-idx="0">
+    <div class="wing-portrait">
+      <a href="/Helpers/wren-scout.html" aria-label="Wren Calloway profile">
+        <img class="blink-open" src="Helpers/Wren_eyes_open.jpg" alt="Wren Calloway">
+        <img class="blink-closed" src="Helpers/Wren_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Wren Calloway</div>
+      <div class="wing-role">The Scout</div>
+      <p class="wing-quote">"Finding something nobody else has found yet is my favorite thing in the world."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="wren_calloway" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM Wren</button>
+        <a class="wing-link" href="/Helpers/wren-scout.html">Step into her office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-right" data-wing-idx="1">
+    <div class="wing-portrait">
+      <a href="/Helpers/carol-screener.html" aria-label="Carol Haynes profile">
+        <img class="blink-open" src="Helpers/Carol_eyes_open.jpg" alt="Carol Haynes">
+        <img class="blink-closed" src="Helpers/Carol_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Carol Haynes</div>
+      <div class="wing-role">The Screener</div>
+      <p class="wing-quote">"Knowing within five minutes what something needs is not a trick. It is what twenty years teaches you."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM Carol</button>
+        <a class="wing-link" href="/Helpers/carol-screener.html">Step into her office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-left" data-wing-idx="2">
+    <div class="wing-portrait">
+      <a href="/Helpers/matthew-behaviorist.html" aria-label="Matthew Vance profile">
+        <img class="blink-open" src="Helpers/Matthew_eyes_open.jpg" alt="Matthew Vance">
+        <img class="blink-closed" src="Helpers/Matthew_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Matthew Vance</div>
+      <div class="wing-role">The Behaviorist</div>
+      <p class="wing-quote">"The person is always lying, mostly to themselves. The gap is where I have spent my entire career."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM Matthew</button>
+        <a class="wing-link" href="/Helpers/matthew-behaviorist.html">Step into his office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-right" data-wing-idx="3">
+    <div class="wing-portrait">
+      <a href="/Helpers/arjun-delivery.html" aria-label="Arjun Mehta profile">
+        <img class="blink-open" src="Helpers/Arjun_eyes_open.jpg" alt="Arjun Mehta">
+        <img class="blink-closed" src="Helpers/Arjun_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Arjun Mehta</div>
+      <div class="wing-role">The Delivery Expert</div>
+      <p class="wing-quote">"I have seen every way a good idea dies between concept and customer. I have written about most of them."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="arjun_mehta" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM Arjun</button>
+        <a class="wing-link" href="/Helpers/arjun-delivery.html">Step into his office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-left" data-wing-idx="4">
+    <div class="wing-portrait">
+      <a href="/Helpers/zara-influencer.html" aria-label="Zara Cole profile">
+        <img class="blink-open" src="Helpers/Zara_eyes_open.jpg" alt="Zara Cole">
+        <img class="blink-closed" src="Helpers/Zara_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Zara Cole</div>
+      <div class="wing-role">The Influencer</div>
+      <p class="wing-quote">"Most marketing sounds like marketing. Mine doesn't. That gap is what I figured out."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="zara_cole" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM Zara</button>
+        <a class="wing-link" href="/Helpers/zara-influencer.html">Step into her office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-right" data-wing-idx="5">
+    <div class="wing-portrait">
+      <a href="/Helpers/reid-marketing.html" aria-label="Reid Callum profile">
+        <img class="blink-open" src="Helpers/Reid_eyes_open.jpg" alt="Reid Callum">
+        <img class="blink-closed" src="Helpers/Reid_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Reid Callum</div>
+      <div class="wing-role">The Marketing Expert</div>
+      <p class="wing-quote">"I dress the truth up every day for clients. I resent every minute of it. On this platform I do not have to soften it."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="reid_callum" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM Reid</button>
+        <a class="wing-link" href="/Helpers/reid-marketing.html">Step into his office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-left" data-wing-idx="6">
+    <div class="wing-portrait">
+      <a href="/Helpers/jules-rewrite.html" aria-label="Jules profile">
+        <div class="wing-crossover">From Greylander Press</div>
+        <img class="blink-open" src="Helpers/Jules_eyes_open.jpg" alt="Jules">
+        <img class="blink-closed" src="Helpers/Jules_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Jules</div>
+      <div class="wing-role">The Rewrite Partner</div>
+      <p class="wing-quote">"I tell you what is not working on the page. Not what is wrong with you. There is a difference."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="jules" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="jules" data-name="Jules">IM Jules</button>
+        <a class="wing-link" href="/Helpers/jules-rewrite.html">Step into her office →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-right" data-wing-idx="7">
+    <div class="wing-portrait">
+      <a href="/Helpers/grant-coach.html" aria-label="Grant Ellis profile">
+        <img class="blink-open" src="Helpers/Grant_eyes_open.jpg" alt="Grant Ellis">
+        <img class="blink-closed" src="Helpers/Grant_eyes_closed.jpg" alt="" aria-hidden="true">
+      </a>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Grant Ellis</div>
+      <div class="wing-role">The Coach</div>
+      <p class="wing-quote">"Sixty seconds to say your idea out loud to someone who will not wait for you to find your words. Let's go."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-voice data-character="grant_ellis" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM Grant</button>
+        <a class="wing-link" href="/Helpers/grant-coach.html">Step into his office →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footlight"></div>
+
+<!-- ── The Threshold: the hall opens ───────────────────────────────────── -->
+<section class="corridor-threshold velvet-elevated proscenium">
+  <div class="band-inner narrow">
+    <div class="corridor-eyebrow">You arrive at</div>
+    <h2 class="threshold-title">The Chamber.</h2>
+    <p class="threshold-lede">The hall opens. Nine judges, seated. Three will evaluate your idea. Six will chime in. The lights are on.</p>
+  </div>
+</section>
+
+<!-- ── The Judges: 3x3 grid ────────────────────────────────────────────── -->
+<section class="corridor-judges velvet-elevated proscenium">
+  <div class="band-inner">
+    <div class="corridor-judges-grid" role="navigation" aria-label="Judges">
+      <a class="corridor-judge-card" href="/chamber.html?judge=selene_voss">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Selene_eyes_open.jpg" alt="Selene Voss">
           <img class="blink-closed" src="Judges/Selene_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Selene Voss</div>
-          <div class="hero-judge-domain">AI &amp; Emerging Tech</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Selene Voss</div>
+          <div class="corridor-judge-domain">AI &amp; Emerging Tech</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=marcus_holt">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=marcus_holt">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Marcus_eyes_open.jpg" alt="Marcus Holt">
           <img class="blink-closed" src="Judges/Marcus_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Marcus Holt</div>
-          <div class="hero-judge-domain">Crypto, PE &amp; Alt Finance</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Marcus Holt</div>
+          <div class="corridor-judge-domain">Crypto, PE &amp; Alt Finance</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=priya_anand">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=priya_anand">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Priya_eyes_open.jpg" alt="Dr. Priya Anand">
           <img class="blink-closed" src="Judges/Priya_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Dr. Priya Anand</div>
-          <div class="hero-judge-domain">Health &amp; Life Sciences</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Dr. Priya Anand</div>
+          <div class="corridor-judge-domain">Health &amp; Life Sciences</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=raymond_chen">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=raymond_chen">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Raymond_eyes_open.jpg" alt="Raymond Chen">
           <img class="blink-closed" src="Judges/Raymond_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Raymond Chen</div>
-          <div class="hero-judge-domain">Business &amp; Operations</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Raymond Chen</div>
+          <div class="corridor-judge-domain">Business &amp; Operations</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=astrid_lund">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=astrid_lund">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Astrid_eyes_open.jpg" alt="Astrid Lund">
           <img class="blink-closed" src="Judges/Astrid_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Astrid Lund</div>
-          <div class="hero-judge-domain">Law &amp; Intellectual Property</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Astrid Lund</div>
+          <div class="corridor-judge-domain">Law &amp; Intellectual Property</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=osei_mensah">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=osei_mensah">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Osei_eyes_open.jpg" alt="Dr. Osei Mensah">
           <img class="blink-closed" src="Judges/Osei_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Dr. Osei Mensah</div>
-          <div class="hero-judge-domain">Science &amp; Research</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Dr. Osei Mensah</div>
+          <div class="corridor-judge-domain">Science &amp; Research</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=grace_nakamura">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=grace_nakamura">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Grace_eyes_open.jpg" alt="Admiral Grace Nakamura">
           <img class="blink-closed" src="Judges/Grace_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Admiral Grace Nakamura (Ret.)</div>
-          <div class="hero-judge-domain">Gov, Policy &amp; National Security</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Admiral Grace Nakamura (Ret.)</div>
+          <div class="corridor-judge-domain">Gov, Policy &amp; National Security</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=devon_sloane">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=devon_sloane">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Devon_eyes_open.jpg" alt="Devon Sloane">
           <img class="blink-closed" src="Judges/Devon_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Devon Sloane</div>
-          <div class="hero-judge-domain">Media &amp; Entertainment</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Devon Sloane</div>
+          <div class="corridor-judge-domain">Media &amp; Entertainment</div>
         </div>
       </a>
-      <a class="hero-judge-card" href="/chamber.html?judge=cassidy_mercer">
-        <div class="hero-judge-portrait">
+      <a class="corridor-judge-card" href="/chamber.html?judge=cassidy_mercer">
+        <div class="corridor-judge-portrait">
           <img class="blink-open" src="Judges/Cassidy_eyes_open.jpg" alt="Dr. Cassidy Mercer">
           <img class="blink-closed" src="Judges/Cassidy_eyes_closed.jpg" alt="" aria-hidden="true">
         </div>
-        <div class="hero-judge-body">
-          <div class="hero-judge-name">Dr. Cassidy Mercer</div>
-          <div class="hero-judge-domain">Behavioral Science &amp; Psych</div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Dr. Cassidy Mercer</div>
+          <div class="corridor-judge-domain">Behavioral Science &amp; Psych</div>
         </div>
       </a>
     </div>
@@ -639,170 +887,12 @@
 
 <div class="footlight"></div>
 
-<!-- ── The Helpers preview ──────────────────────────────────────────────── -->
-<section class="helpers-band velvet">
-  <div class="band-inner">
-    <div class="helpers-header">
-      <div class="helpers-eyebrow">The Prep Track</div>
-      <h2 class="helpers-title">Optional. Eight specialists. <em>If you want to walk in ready.</em></h2>
-      <p class="helpers-sub">They are not here to tell you it is good. They are here to make it better.</p>
-    </div>
-
-    <div class="helpers-grid">
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/wren-scout.html" aria-label="Wren Calloway profile">
-          <img class="blink-open" src="Helpers/Wren_eyes_open.jpg" alt="Wren Calloway">
-          <img class="blink-closed" src="Helpers/Wren_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Wren Calloway</div>
-          <div class="helper-card-role">The Scout</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/wren-scout.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="wren_calloway" data-mode="role" aria-label="Hear Wren describe her role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/carol-screener.html" aria-label="Carol Haynes profile">
-          <img class="blink-open" src="Helpers/Carol_eyes_open.jpg" alt="Carol Haynes">
-          <img class="blink-closed" src="Helpers/Carol_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Carol Haynes</div>
-          <div class="helper-card-role">The Screener</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/carol-screener.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role" aria-label="Hear Carol describe her role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/matthew-behaviorist.html" aria-label="Matthew Vance profile">
-          <img class="blink-open" src="Helpers/Matthew_eyes_open.jpg" alt="Matthew Vance">
-          <img class="blink-closed" src="Helpers/Matthew_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Matthew Vance</div>
-          <div class="helper-card-role">The Behaviorist</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/matthew-behaviorist.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role" aria-label="Hear Matthew describe his role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/arjun-delivery.html" aria-label="Arjun Mehta profile">
-          <img class="blink-open" src="Helpers/Arjun_eyes_open.jpg" alt="Arjun Mehta">
-          <img class="blink-closed" src="Helpers/Arjun_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Arjun Mehta</div>
-          <div class="helper-card-role">The Delivery Expert</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/arjun-delivery.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="arjun_mehta" data-mode="role" aria-label="Hear Arjun describe his role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/zara-influencer.html" aria-label="Zara Cole profile">
-          <img class="blink-open" src="Helpers/Zara_eyes_open.jpg" alt="Zara Cole">
-          <img class="blink-closed" src="Helpers/Zara_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Zara Cole</div>
-          <div class="helper-card-role">The Influencer</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/zara-influencer.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="zara_cole" data-mode="role" aria-label="Hear Zara describe her role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/reid-marketing.html" aria-label="Reid Callum profile">
-          <img class="blink-open" src="Helpers/Reid_eyes_open.jpg" alt="Reid Callum">
-          <img class="blink-closed" src="Helpers/Reid_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Reid Callum</div>
-          <div class="helper-card-role">The Marketing Expert</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/reid-marketing.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="reid_callum" data-mode="role" aria-label="Hear Reid describe his role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/jules-rewrite.html" aria-label="Jules profile">
-          <div class="helper-crossover">From Greylander Press</div>
-          <img class="blink-open" src="Helpers/Jules_eyes_open.jpg" alt="Jules">
-          <img class="blink-closed" src="Helpers/Jules_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Jules</div>
-          <div class="helper-card-role">The Rewrite Partner</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/jules-rewrite.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="jules" data-mode="role" aria-label="Hear Jules describe her role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="jules" data-name="Jules">IM me</button>
-          </div>
-        </div>
-      </article>
-      <article class="helper-card">
-        <a class="helper-card-photo" href="/Helpers/grant-coach.html" aria-label="Grant Ellis profile">
-          <img class="blink-open" src="Helpers/Grant_eyes_open.jpg" alt="Grant Ellis">
-          <img class="blink-closed" src="Helpers/Grant_eyes_closed.jpg" alt="" aria-hidden="true">
-        </a>
-        <div class="helper-card-body">
-          <div class="helper-card-name">Grant Ellis</div>
-          <div class="helper-card-role">The Coach</div>
-        </div>
-        <div class="helper-card-actions">
-          <a class="helper-card-profile" href="/Helpers/grant-coach.html">Profile</a>
-          <div class="helper-card-action-group">
-            <button class="helper-card-role-btn" type="button" data-tg-voice data-character="grant_ellis" data-mode="role" aria-label="Hear Grant describe his role">Role</button>
-            <button class="helper-card-im" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM me</button>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <div class="helpers-cta-row">
-      <a class="btn btn-outline" href="/Helpers/">All Helper Profiles →</a>
-    </div>
-  </div>
-</section>
-
-<div class="footlight"></div>
-
-<!-- ── Why This Is Different (one line) ─────────────────────────────────── -->
-<!-- Supporting evidence after the cool has happened. Three short phrases    -->
-<!-- under one eyebrow. Quiet through-line, not a feature wall.              -->
-<section class="diff-strip velvet-elevated">
-  <div class="band-inner">
-    <div class="diff-eyebrow">Why This Is Different</div>
-    <p class="diff-line"><strong>Math, not opinion.</strong> · <strong>Current data, not training.</strong> · <strong>Built to disagree, not to flatter.</strong></p>
+<!-- ── The Routing Report: you walk out with ───────────────────────────── -->
+<section class="corridor-exit velvet">
+  <div class="band-inner narrow">
+    <div class="corridor-eyebrow">You walk out with</div>
+    <h2 class="exit-title">A routing report. <em>Not a verdict.</em></h2>
+    <p class="exit-lede">Where your idea stands. Where the gaps are. Which specialist to see next. What to do tomorrow morning. The Gauntlet does not tell you whether your idea is good. It tells you what to do about it.</p>
   </div>
 </section>
 
@@ -824,11 +914,35 @@
     <div class="home-footer-brand">THE GAUNTLET</div>
     <nav class="home-footer-links">
       <a href="/chamber.html">The Chamber</a>
-      <a href="/Helpers/">The Helpers</a>
+      <a href="/Helpers/">The Wings</a>
       <a href="/about.html">About</a>
     </nav>
   </div>
 </footer>
+
+<script>
+// Corridor reveal: each wing fades in + slides to center as it scrolls
+// into view. Runs once per wing. Honors prefers-reduced-motion (CSS rule
+// already short-circuits the animation in that case; this script just
+// skips observing).
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wings = document.querySelectorAll('.corridor-wing');
+  if (reduce || !('IntersectionObserver' in window)){
+    wings.forEach(w => w.classList.add('is-visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('is-visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+  wings.forEach(w => observer.observe(w));
+})();
+</script>
 
 </body>
 </html>
