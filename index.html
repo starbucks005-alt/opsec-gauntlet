@@ -43,22 +43,11 @@
   }
 
   /* ── Velvet grain texture (theatrical, not dashboard) ────────────────────── */
-  /* Diagonal microthread + warm radial undertones, layered onto each band.   */
+  /* Pure black base + a fine gold microthread diagonal. The previous version */
+  /* layered low-alpha deep-crimson radials over black, which blended into a  */
+  /* muddy brown wash. Red now lives in punctuation (close-band glow,        */
+  /* footlight undertone, accent rules) instead of background wash.          */
   .velvet{
-    position:relative;
-    background-image:
-      repeating-linear-gradient(
-        135deg,
-        rgba(212,170,74,0.014) 0px,
-        rgba(212,170,74,0.014) 1px,
-        transparent 1px,
-        transparent 3px
-      ),
-      radial-gradient(circle at 18% 22%, rgba(90,26,26,0.06) 0%, transparent 38%),
-      radial-gradient(circle at 82% 78%, rgba(90,26,26,0.05) 0%, transparent 42%);
-    background-color:var(--bg);
-  }
-  .velvet-elevated{
     position:relative;
     background-image:
       repeating-linear-gradient(
@@ -67,29 +56,44 @@
         rgba(212,170,74,0.018) 1px,
         transparent 1px,
         transparent 3px
-      ),
-      radial-gradient(circle at 25% 30%, rgba(90,26,26,0.07) 0%, transparent 40%),
-      radial-gradient(circle at 75% 70%, rgba(90,26,26,0.05) 0%, transparent 45%);
+      );
+    background-color:var(--bg);
+  }
+  .velvet-elevated{
+    position:relative;
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        rgba(212,170,74,0.022) 0px,
+        rgba(212,170,74,0.022) 1px,
+        transparent 1px,
+        transparent 3px
+      );
     background-color:var(--band-elevated);
   }
 
-  /* ── Footlight divider — gold halo with central rule ────────────────────── */
+  /* ── Footlight divider ─────────────────────────────────────────────────── */
+  /* Gold halo with crimson flanks. Red shows up in the wings of each       */
+  /* divider strip - small but visibly red, not muddy.                       */
   .footlight{
     position:relative;height:42px;width:100%;
-    background:radial-gradient(ellipse 70% 100% at center bottom,
-      rgba(212,170,74,0.38) 0%,
-      rgba(212,170,74,0.10) 35%,
-      transparent 80%);
+    background:
+      radial-gradient(ellipse 18% 80% at 10% bottom, rgba(192,57,43,0.30) 0%, transparent 70%),
+      radial-gradient(ellipse 18% 80% at 90% bottom, rgba(192,57,43,0.30) 0%, transparent 70%),
+      radial-gradient(ellipse 70% 100% at center bottom,
+        rgba(212,170,74,0.42) 0%,
+        rgba(212,170,74,0.10) 35%,
+        transparent 80%);
     overflow:hidden;
   }
   .footlight::after{
     content:'';position:absolute;bottom:0;left:8%;right:8%;height:2px;
     background:linear-gradient(90deg,
-      transparent 0%,
-      var(--gold) 25%,
+      rgba(192,57,43,0.5) 0%,
+      var(--gold) 22%,
       var(--gold-light) 50%,
-      var(--gold) 75%,
-      transparent 100%);
+      var(--gold) 78%,
+      rgba(192,57,43,0.5) 100%);
     box-shadow:0 0 14px rgba(212,170,74,0.65),0 0 24px rgba(212,170,74,0.3);
   }
 
@@ -153,17 +157,19 @@
   /* without reading paragraphs about why we think the panel is good.       */
   .hero{
     padding:4.5rem 2rem 4rem;
+    /* Gold halo at top + clean black base. No crimson wash (was muddying    */
+    /* into brown). A tight crimson accent glow lives bottom-left to punch   */
+    /* the red without spreading it.                                          */
     background-image:
-      radial-gradient(ellipse 80% 60% at center top, rgba(184,146,42,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at center top, rgba(184,146,42,0.12) 0%, transparent 70%),
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.016) 0px,
-        rgba(212,170,74,0.016) 1px,
+        rgba(212,170,74,0.018) 0px,
+        rgba(212,170,74,0.018) 1px,
         transparent 1px,
         transparent 3px
       ),
-      radial-gradient(circle at 20% 30%, rgba(90,26,26,0.10) 0%, transparent 45%),
-      radial-gradient(circle at 80% 70%, rgba(90,26,26,0.08) 0%, transparent 45%);
+      radial-gradient(circle at 8% 92%, rgba(192,57,43,0.14) 0%, transparent 28%);
     background-color:var(--bg);
   }
   /* Stacked hero: centered text + audio audition on top, composite
@@ -375,8 +381,14 @@
     font-family:'Playfair Display',serif;font-style:italic;
     font-size:1.25rem;color:var(--gold-light);line-height:1.55;
     margin:0.2rem 0 1.2rem;max-width:520px;
+    padding:0.2rem 0 0.2rem 0.9rem;
+    border-left:2px solid var(--crimson-bright);
   }
-  .corridor-wing.wing-right .wing-quote{margin-left:auto;}
+  .corridor-wing.wing-right .wing-quote{
+    margin-left:auto;
+    padding:0.2rem 0.9rem 0.2rem 0;
+    border-left:none;border-right:2px solid var(--crimson-bright);
+  }
 
   .wing-actions{display:flex;gap:0.55rem;align-items:center;flex-wrap:wrap;}
   .corridor-wing.wing-right .wing-actions{justify-content:flex-end;}
@@ -517,17 +529,19 @@
   /* ── Closing CTA ─────────────────────────────────────────────────────────── */
   .close-band{
     padding:9rem 2.5rem 10rem;text-align:center;
+    /* Bright crimson glow at center reads as RED, not muddy brown - higher  */
+    /* opacity, brighter base color (#c0392b vs deep #5a1a1a).               */
     background-image:
-      radial-gradient(ellipse 90% 70% at center, rgba(90,26,26,0.18) 0%, transparent 65%),
-      radial-gradient(ellipse 60% 40% at center top, rgba(184,146,42,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 55% at center, rgba(192,57,43,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 40% at center top, rgba(184,146,42,0.12) 0%, transparent 60%),
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.018) 0px,
-        rgba(212,170,74,0.018) 1px,
+        rgba(212,170,74,0.020) 0px,
+        rgba(212,170,74,0.020) 1px,
         transparent 1px,
         transparent 3px
       );
-    background-color:var(--ink-soft);
+    background-color:var(--ink);
   }
   .close-statement{
     font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5.2vw,4rem);
