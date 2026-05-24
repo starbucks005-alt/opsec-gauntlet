@@ -123,3 +123,6 @@
 
   [functions.tg-evaluation-get]
     timeout = 10
+
+  [functions.tg-ivy-search]
+    timeout = 15
