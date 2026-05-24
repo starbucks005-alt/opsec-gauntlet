@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Routing Report · The Gauntlet</title>
+<meta name="description" content="What the panel said. Where your idea stands. What to do next.">
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="apple-touch-icon" href="Favicon.png">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    --crimson:#5a1a1a; --crimson-bright:#c0392b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    min-height:100vh;
+    background-image:
+      radial-gradient(ellipse 60% 50% at center top, rgba(184,146,42,0.08) 0%, transparent 70%),
+      repeating-linear-gradient(135deg,
+        rgba(212,170,74,0.018) 0px, rgba(212,170,74,0.018) 1px,
+        transparent 1px, transparent 3px);
+  }
+
+  /* Topbar */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2.5rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
+    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-back{
+    margin-left:auto;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-back:hover{color:var(--gold);}
+
+  main{max-width:920px;margin:0 auto;padding:3.5rem 2rem 5rem;}
+
+  /* Step indicator */
+  .step-bar{
+    display:flex;gap:0.5rem;align-items:center;margin-bottom:2rem;
+  }
+  .step-pip{flex:1;height:3px;background:var(--gold);}
+  .step-label{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);white-space:nowrap;
+  }
+
+  /* Header */
+  .report-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  }
+  .report-title{
+    font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.2rem);
+    font-weight:700;color:var(--cream);line-height:1.05;
+    letter-spacing:-0.01em;margin-bottom:0.8rem;
+  }
+  .report-title em{font-style:italic;color:var(--gold-light);}
+  .report-subline{
+    font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;
+    color:var(--gold-light);margin-bottom:0.8rem;
+  }
+  .report-meta{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);
+  }
+
+  /* Composite */
+  .composite{
+    margin:2.5rem 0;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    padding:1.8rem 2rem;
+    display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .composite::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--gold);
+  }
+  .composite.is-agreement::before{background:var(--gold-light);}
+  .composite.is-conflict::before{background:var(--crimson-bright);}
+  .composite-number{
+    font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;
+    color:var(--cream);line-height:1;letter-spacing:-0.02em;
+  }
+  .composite-number .of{
+    font-size:1.4rem;color:var(--text-dim);font-weight:400;
+  }
+  .composite-info{display:flex;flex-direction:column;gap:0.4rem;}
+  .composite-verdict-label{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .composite.is-conflict .composite-verdict-label{color:var(--crimson-bright);}
+  .composite-verdict{
+    font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
+    color:var(--cream);line-height:1.25;
+  }
+  .composite-spread{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--text-dim);font-size:1rem;
+  }
+
+  /* Section */
+  .section{margin:2.8rem 0 0;}
+  .section-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.26em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  }
+  .section-title{
+    font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;
+    color:var(--cream);line-height:1.2;margin-bottom:1.2rem;
+  }
+  .section-title em{font-style:italic;color:var(--gold-light);}
+
+  /* Findings */
+  .findings{display:flex;flex-direction:column;gap:1rem;}
+  .finding{
+    display:grid;grid-template-columns:88px 1fr auto;gap:1.1rem;
+    align-items:start;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
+    padding:1.1rem 1.2rem;
+  }
+  .finding-portrait{
+    width:88px;height:88px;overflow:hidden;
+    border:1px solid var(--rule);background:#14151a;
+  }
+  .finding-portrait img{
+    width:100%;height:100%;object-fit:cover;object-position:center top;display:block;
+  }
+  .finding-body{display:flex;flex-direction:column;gap:0.3rem;}
+  .finding-name{
+    font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;
+    color:var(--cream);line-height:1.2;
+  }
+  .finding-domain{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;
+  }
+  .finding-text{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.6;
+    color:var(--text);
+  }
+  .finding-score{
+    text-align:right;
+    font-family:'Playfair Display',serif;font-weight:700;
+    font-size:1.8rem;color:var(--gold-light);line-height:1;
+    padding-top:0.2rem;
+  }
+  .finding-score .of{font-size:0.85rem;color:var(--text-dim);font-weight:400;}
+  .finding-confidence{
+    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);margin-top:0.3rem;
+  }
+  .finding.is-error .finding-text{color:var(--text-dim);font-style:italic;}
+  .finding.is-error .finding-score{color:var(--text-dim);}
+
+  /* Routing */
+  .routing{
+    margin:2.8rem 0 0;
+    border-left:3px solid var(--crimson-bright);
+    padding:1.4rem 1.6rem;background:rgba(192,57,43,0.06);
+  }
+  .routing-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.26em;
+    text-transform:uppercase;color:var(--crimson-bright);margin-bottom:0.6rem;
+  }
+  .routing-title{
+    font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
+    color:var(--cream);line-height:1.2;margin-bottom:0.7rem;
+  }
+  .routing-body{
+    font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.65;
+    color:var(--text);margin-bottom:1.1rem;
+  }
+  .routing-cta-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
+
+  /* Actions */
+  .actions-row{
+    display:flex;gap:1rem;flex-wrap:wrap;
+    margin-top:3rem;padding-top:1.8rem;border-top:1px solid var(--rule);
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    padding:0.85rem 1.5rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;font-weight:700;text-decoration:none;
+    cursor:pointer;border:1px solid transparent;
+    transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.2s;
+  }
+  .btn-primary{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+  .btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);transform:translateY(-1px);}
+  .btn-outline{background:transparent;border-color:var(--gold);color:var(--gold);}
+  .btn-outline:hover{background:rgba(184,146,42,0.08);color:var(--gold-light);border-color:var(--gold-light);}
+
+  /* Loading / error */
+  .state-card{
+    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
+    padding:2.5rem 2rem;text-align:center;
+  }
+  .state-spinner{
+    width:48px;height:48px;border-radius:50%;
+    border:2px solid rgba(184,146,42,0.25);border-top-color:var(--gold-light);
+    margin:0 auto 1.2rem;animation:report-spin 0.9s linear infinite;
+  }
+  @keyframes report-spin{to{transform:rotate(360deg);}}
+  .state-text{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold-light);
+  }
+  .state-error .state-text{color:var(--crimson-bright);}
+
+  @media (max-width:640px){
+    main{padding:2.5rem 1.3rem 4rem;}
+    .tg-topbar{padding:0 1.3rem;}
+    .composite{grid-template-columns:1fr;gap:1rem;}
+    .composite-number{font-size:3rem;}
+    .finding{grid-template-columns:64px 1fr;}
+    .finding-portrait{width:64px;height:64px;}
+    .finding-score{grid-column:1 / -1;text-align:left;font-size:1.4rem;padding-top:0;}
+  }
+</style>
+</head>
+<body>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
+  </a>
+  <a class="tg-topbar-back" href="/">← Home</a>
+</header>
+
+<main>
+  <div class="step-bar">
+    <div class="step-pip"></div>
+    <div class="step-pip"></div>
+    <div class="step-pip"></div>
+    <span class="step-label">Done</span>
+  </div>
+
+  <div id="report-content">
+    <div class="state-card" id="state-loading">
+      <div class="state-spinner" aria-hidden="true"></div>
+      <div class="state-text">Loading your routing report</div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  const ENDPOINT      = '/.netlify/functions/tg-evaluation-get';
+  const JUDGES_CONFIG = '/config/judges_master.json';
+
+  const root = document.getElementById('report-content');
+
+  function escapeHtml(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // Image filenames use first name only; titles stripped.
+  function imageFirstName(fullName){
+    const titles = new Set(['Dr.','Admiral','Mr.','Ms.','Mrs.','Prof.']);
+    const parts = String(fullName || '').split(/\s+/);
+    for (const p of parts){ if (!titles.has(p)) return p; }
+    return parts[0] || '';
+  }
+
+  // Routing recommendation. Pure function over the triangulation result +
+  // composite score. This is the slice 1 rubric - one helper per verdict
+  // / score band. The full rubric (multi-dimension, multi-helper paths)
+  // is a downstream slice once more dimensions ship.
+  function buildRoutingRecommendation(triangulation, findings){
+    if (!triangulation){
+      return {
+        title: 'No verdict yet.',
+        body:  'The panel did not return a triangulation. Try running the evaluation again, or ask the helpers for feedback before resubmitting.',
+        helper: null,
+      };
+    }
+    const composite10 = Math.round((triangulation.composite_score || 0) * 100) / 10;
+    const verdict = triangulation.verdict
+      || (triangulation.agreement_dimensions && triangulation.agreement_dimensions.length && !(triangulation.conflict_dimensions && triangulation.conflict_dimensions.length) ? 'agreement'
+      :  triangulation.conflict_dimensions && triangulation.conflict_dimensions.length ? 'conflict'
+      :  'middle');
+
+    if (verdict === 'agreement' && composite10 >= 7){
+      return {
+        title:  'Clarity is solid. Move on to the next dimension.',
+        body:   'The panel agrees: your idea is clearly expressed. The next dimension (Novelty, Feasibility) is what we evaluate next when those slices ship.',
+        helper: null,
+      };
+    }
+    if (verdict === 'agreement' && composite10 <= 4){
+      return {
+        title:  'Clear panel agreement. Your idea is not clearly expressed yet.',
+        body:   'The judges are aligned: the description does not yet make the problem, the solution, and the audience explicit. Visit Jules in The Wings to tighten the language before resubmitting.',
+        helper: { id: 'jules', name: 'Jules', role: 'The Rewrite Partner', href: '/Helpers/jules-rewrite.html' },
+      };
+    }
+    if (verdict === 'conflict'){
+      return {
+        title:  'The judges disagree on what your idea is.',
+        body:   'A wide spread on Clarity usually means an ambiguity in how the idea is framed - different judges are reading different things. Visit Carol in The Wings; she will tell you what is strong and what is missing before you face the panel again.',
+        helper: { id: 'carol_haynes', name: 'Carol Haynes', role: 'The Screener', href: '/Helpers/carol-screener.html' },
+      };
+    }
+    // Middle ground: mixed clarity. Default to Jules for language tightening.
+    return {
+      title:  'Mixed clarity. Tighten before the next round.',
+      body:   'The panel is neither aligned nor split. The idea reads as partially clear. Visit Jules in The Wings to sharpen the language, or Reid for positioning, then resubmit.',
+      helper: { id: 'jules', name: 'Jules', role: 'The Rewrite Partner', href: '/Helpers/jules-rewrite.html' },
+    };
+  }
+
+  function formatVerdictLabel(verdict){
+    if (verdict === 'agreement') return 'Panel agreement';
+    if (verdict === 'conflict')  return 'Panel split';
+    return 'Panel mixed';
+  }
+
+  function formatSpread(matrix){
+    if (!matrix || !matrix.clarity) return '';
+    const scores = Object.values(matrix.clarity);
+    if (!scores.length) return '';
+    const min = Math.min(...scores);
+    const max = Math.max(...scores);
+    if (min === max) return `Everyone scored ${min}.`;
+    return `Scores ranged ${min} to ${max}.`;
+  }
+
+  function renderReport(data, judgesById){
+    const evalRow      = data.evaluation;
+    const subRow       = data.submission || {};
+    const judgeOutputs = data.judge_outputs || [];
+    const tri          = data.triangulation;
+
+    const composite10 = tri ? (Math.round((tri.composite_score || 0) * 100) / 10) : null;
+    const verdict = tri ? (
+      (tri.agreement_dimensions || []).length && !(tri.conflict_dimensions || []).length ? 'agreement'
+      : (tri.conflict_dimensions || []).length ? 'conflict'
+      : 'middle'
+    ) : null;
+
+    const compositeBlock = tri ? `
+      <div class="composite is-${verdict}">
+        <div class="composite-number">${composite10}<span class="of">/10</span></div>
+        <div class="composite-info">
+          <div class="composite-verdict-label">${escapeHtml(formatVerdictLabel(verdict))} on Clarity</div>
+          <div class="composite-verdict">${verdict === 'agreement' ? 'The room reads it the same way.'
+                                       : verdict === 'conflict'  ? 'The room reads it differently.'
+                                       : 'The room is partially aligned.'}</div>
+          <div class="composite-spread">${escapeHtml(formatSpread(tri.matrix))}</div>
+        </div>
+      </div>` : '';
+
+    const findingCards = judgeOutputs.map(o => {
+      const j = judgesById[o.judge_id] || { name: o.judge_id, domain: '' };
+      const firstName = imageFirstName(j.name);
+      const score = (o.dimension_scores && (o.dimension_scores.clarity ?? o.dimension_scores.Clarity)) ?? null;
+      const conf  = Math.round((o.confidence || 0) * 100);
+      return `
+        <div class="finding ${score == null ? 'is-error' : ''}">
+          <div class="finding-portrait">
+            <img src="Judges/${escapeHtml(firstName)}_eyes_open.jpg" alt="${escapeHtml(j.name)}"
+                 onerror="this.style.display='none'">
+          </div>
+          <div class="finding-body">
+            <div class="finding-name">${escapeHtml(j.name)}</div>
+            <div class="finding-domain">${escapeHtml(j.domain || '')}</div>
+            <p class="finding-text">${escapeHtml(o.stage_critique || '')}</p>
+          </div>
+          <div class="finding-score">
+            ${score == null ? '—' : score + '<span class="of">/10</span>'}
+            <div class="finding-confidence">Conf ${conf}%</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const routing = buildRoutingRecommendation(tri ? { ...tri, verdict } : null, judgeOutputs);
+    const routingBlock = `
+      <div class="routing">
+        <div class="routing-eyebrow">What to do next</div>
+        <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
+        <p class="routing-body">${escapeHtml(routing.body)}</p>
+        <div class="routing-cta-row">
+          ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)}) →</a>` : ''}
+          <a class="btn btn-outline" href="/intake.html">Bring another idea →</a>
+        </div>
+      </div>
+    `;
+
+    const submissionTitle = (subRow.title || '').trim() || 'your submission';
+    const completedAt = evalRow.completed_at ? new Date(evalRow.completed_at).toLocaleString() : '';
+
+    root.innerHTML = `
+      <div class="report-eyebrow">Routing Report</div>
+      <h1 class="report-title">Your idea has been <em>tested</em>.</h1>
+      <p class="report-subline">"${escapeHtml(submissionTitle)}"</p>
+      <div class="report-meta">Stage 1 · Clarity · Evaluation ${escapeHtml(evalRow.id.slice(0, 8))}${completedAt ? ' · ' + escapeHtml(completedAt) : ''}</div>
+
+      ${compositeBlock}
+
+      <section class="section">
+        <div class="section-eyebrow">What the panel said</div>
+        <h2 class="section-title">Three judges. <em>One dimension.</em></h2>
+        <div class="findings">${findingCards}</div>
+      </section>
+
+      ${routingBlock}
+
+      <div class="actions-row">
+        <a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel →</a>
+        <a class="btn btn-outline" href="/">Home</a>
+      </div>
+    `;
+  }
+
+  function renderError(msg){
+    root.innerHTML = `
+      <div class="state-card state-error">
+        <div class="state-text">${escapeHtml(msg)}</div>
+        <p style="margin-top:1rem;color:var(--text-dim);">
+          Try the <a href="/intake.html" style="color:var(--gold);">intake</a>
+          or head <a href="/" style="color:var(--gold);">home</a>.
+        </p>
+      </div>
+    `;
+  }
+
+  async function init(){
+    const qs = new URLSearchParams(window.location.search);
+    const evaluationId = (qs.get('evaluation') || '').trim();
+    if (!evaluationId){
+      renderError('Missing evaluation id. The link you followed did not include one.');
+      return;
+    }
+
+    try {
+      const [reportResp, judgesResp] = await Promise.all([
+        fetch(ENDPOINT + '?id=' + encodeURIComponent(evaluationId)),
+        fetch(JUDGES_CONFIG, { cache: 'no-store' }),
+      ]);
+      if (!reportResp.ok){
+        const text = await reportResp.text().catch(() => '');
+        throw new Error('Report ' + reportResp.status + ': ' + (text || reportResp.statusText));
+      }
+      if (!judgesResp.ok) throw new Error('Could not load judges config.');
+      const data        = await reportResp.json();
+      const judgesData  = await judgesResp.json();
+      const judgesById  = Object.fromEntries((judgesData.judges || []).map(j => [j.id, j]));
+      renderReport(data, judgesById);
+    } catch (err) {
+      console.warn('[tg-report]', err);
+      renderError(err.message || 'Something went wrong loading the report.');
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>

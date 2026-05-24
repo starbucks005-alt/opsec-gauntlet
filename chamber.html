@@ -1491,7 +1491,45 @@
           body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
         });
       }, when + 1200);
+      when += 1200;
     }
+
+    // Routing report CTA. Lands last so the user sees the conversation
+    // resolve, then has a clean 'walk out the other side' affordance.
+    if (payload.evaluation_id){
+      setTimeout(() => {
+        addChatMessage({
+          kind: 'system',
+          body: 'Your routing report is ready. Walk out the other side ▸',
+        });
+        showReportCta(payload.evaluation_id);
+      }, when + 1500);
+    }
+  }
+
+  // Inject a one-off "See your routing report" button into the chat stream.
+  // Plain anchor styled to match the system-note register; not a permanent
+  // chat element, just a navigation affordance.
+  function showReportCta(evaluationId){
+    if (!chatStream) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'tg-chat-msg is-system';
+    wrap.innerHTML = `
+      <div class="tg-chat-msg-body" style="text-align:center;">
+        <a href="/report.html?evaluation=${encodeURIComponent(evaluationId)}"
+           style="display:inline-block;background:var(--gold);color:var(--ink);
+                  font-family:'DM Mono',monospace;font-size:0.6rem;
+                  letter-spacing:0.22em;text-transform:uppercase;font-weight:700;
+                  padding:0.7rem 1.2rem;text-decoration:none;border:none;
+                  transition:background 0.2s;"
+           onmouseover="this.style.background='var(--gold-light)'"
+           onmouseout="this.style.background='var(--gold)'">
+          See your routing report →
+        </a>
+      </div>
+    `;
+    chatStream.appendChild(wrap);
+    chatStream.scrollTop = chatStream.scrollHeight;
   }
 
   // Render the triangulation in plain English. Scores are 0-10. Composite
