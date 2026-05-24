@@ -114,3 +114,6 @@
 
   [functions.tg-intake-submit]
     timeout = 10
+
+  [functions.tg-evaluate-clarity]
+    timeout = 26

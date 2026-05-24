@@ -1345,9 +1345,17 @@
   }
 
   function seedChatDemoMessages(startMs){
-    // Scheduled to land AFTER the curtain finishes opening so the chat
-    // doesn't compete with the visual reveal. Demonstrates the active vs
-    // audience message styling using real names from the current panel.
+    // Scheduled to land AFTER the curtain finishes opening.
+    //
+    // If the user came in with a real submission (state.submissionId set),
+    // the first chosen judge fires the REAL Stage 1 Clarity evaluation via
+    // /.netlify/functions/tg-evaluate-clarity and renders the actual
+    // finding inline. No submission means we fall back to the demo line
+    // so the chamber still has something to show when someone hits
+    // /chamber.html directly.
+    //
+    // The audience heckle stays demo for now - real audience commentary
+    // is its own future gate.
     const chosenList   = state.judges.filter(j => state.selected.has(j.id));
     const audienceList = state.judges.filter(j => !state.selected.has(j.id));
     const firstActive   = chosenList[0];
@@ -1356,23 +1364,46 @@
     if (firstActive){
       setTimeout(() => {
         showTyping(firstActive.name);
-        setTimeout(() => {
-          hideTyping();
-          addChatMessage({
-            kind:'active',
-            name:firstActive.name,
-            role:'On the panel',
-            body:judgeLine(firstActive.id, 'active')
-          });
-        }, 2000);
+        if (state.submissionId && state.selected.size === 3){
+          fireRealEvaluation(firstActive)
+            .catch(err => { console.warn('[tg-eval] failed', err); return null; })
+            .then(result => {
+              hideTyping();
+              if (result && result.finding){
+                addChatMessage({
+                  kind: 'active',
+                  name: firstActive.name,
+                  role: 'On the panel · Clarity ' + result.score + '/10',
+                  body: result.finding,
+                });
+              } else {
+                // Fallback: real eval failed for some reason, show the demo
+                // line so the chamber does not look empty.
+                addChatMessage({
+                  kind: 'active',
+                  name: firstActive.name,
+                  role: 'On the panel',
+                  body: judgeLine(firstActive.id, 'active'),
+                });
+              }
+            });
+        } else {
+          // No submission in flow - demo mode. Hold the typing indicator
+          // briefly for theatre, then show the static demo line.
+          setTimeout(() => {
+            hideTyping();
+            addChatMessage({
+              kind: 'active',
+              name: firstActive.name,
+              role: 'On the panel',
+              body: judgeLine(firstActive.id, 'active'),
+            });
+          }, 2000);
+        }
       }, startMs);
     }
     if (firstAudience){
       setTimeout(() => {
-        // Prefer a heckle that targets the judge currently on the panel
-        // (Marcus -> three assistants, Selene -> long dashes, etc.). Fall
-        // back to the audience judge's own generic line if the active
-        // judge does not have a targeted heckle defined.
         const targetedHeckle = firstActive && HECKLES_ABOUT_ACTIVE[firstActive.id];
         addChatMessage({
           kind:'audience',
@@ -1382,6 +1413,29 @@
         });
       }, startMs + 3500);
     }
+  }
+
+  // Calls the Stage 1 Clarity evaluation function for one judge on the
+  // current submission. Returns { score, finding, confidence } on success.
+  async function fireRealEvaluation(judge){
+    const triad = state.judges
+      .filter(j => state.selected.has(j.id))
+      .map(j => j.id);
+    if (triad.length !== 3) return null;
+    const resp = await fetch('/.netlify/functions/tg-evaluate-clarity', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        submission_id: state.submissionId,
+        judge_id: judge.id,
+        triad,
+      }),
+    });
+    if (!resp.ok){
+      const detail = await resp.text().catch(() => '');
+      throw new Error('eval ' + resp.status + ': ' + (detail || resp.statusText));
+    }
+    return await resp.json();
   }
 
   function onChatSubmit(e){
