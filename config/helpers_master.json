@@ -66,6 +66,16 @@
       "crossover_note": "Full-time at Greylander Press. Part-time at The Gauntlet. Same Jules, same voice ID, Gauntlet-specific role (Selene-proofing). The Gauntlet stores its own copy of the voice ID rather than proxying through the GP voice endpoint, so this site can run standalone."
     },
     {
+      "id": "ms_ivy",
+      "name": "Ms. Ivy",
+      "role": "The Librarian",
+      "domain": "Research, prior art, idea sourcing, source literacy",
+      "voice_id": "",
+      "page": "Helpers/ivy-librarian.html",
+      "home_platform": "greylander_dose",
+      "crossover_note": "Health Sciences Librarian at The Dose, where her specialty is personal (her mother got sick when she was young). At The Gauntlet she runs the Idea Generator: library-sciences trained, so her research skillset travels beyond any one domain. Same voice ID across both platforms."
+    },
+    {
       "id": "grant_ellis",
       "name": "Grant Ellis",
       "role": "The Coach",

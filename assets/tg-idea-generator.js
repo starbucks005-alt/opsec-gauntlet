@@ -26,7 +26,11 @@
 (function(){
   'use strict';
 
-  const IDEA_ENDPOINT = '/.netlify/functions/tg-idea-generator';
+  const IDEA_ENDPOINT  = '/.netlify/functions/tg-idea-generator';
+  const VOICE_ENDPOINT = '/.netlify/functions/tg-voice';
+  const VOICE_VERSION  = '2026-05-23-v5';
+  const IVY_CHARACTER  = 'ms_ivy';
+  const IVY_PORTRAIT   = 'Helpers/Ivy_Profile.jpg';
 
   const Q1 = {
     key: 'world',
@@ -113,6 +117,37 @@
         z-index:4;
       }
       .tg-ig-close:hover{color:var(--gold,#b8922a);background:rgba(10,10,10,0.85);}
+
+      /* Ivy hosting bar: her portrait + name sits at the top of every step
+         so the user is talking to a person, not a form. The 'speaking'
+         status updates as her voice plays. */
+      .tg-ig-host{
+        display:flex;align-items:center;gap:0.9rem;
+        margin-bottom:1.1rem;padding-bottom:0.9rem;
+        border-bottom:1px solid rgba(184,146,42,0.18);
+      }
+      .tg-ig-host-portrait{
+        width:54px;height:54px;flex:0 0 54px;overflow:hidden;
+        border:1px solid rgba(184,146,42,0.35);background:#0a0a0a;
+      }
+      .tg-ig-host-portrait img{
+        width:100%;height:100%;object-fit:cover;object-position:center top;
+        display:block;
+      }
+      .tg-ig-host-meta{display:flex;flex-direction:column;gap:0.15rem;flex:1;min-width:0;}
+      .tg-ig-host-name{
+        font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
+        color:#f4ede0;line-height:1.2;
+      }
+      .tg-ig-host-role{
+        font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+        text-transform:uppercase;color:var(--gold,#b8922a);
+      }
+      .tg-ig-host-status{
+        font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
+        text-transform:uppercase;color:var(--text-dim,#a89c88);
+      }
+      .tg-ig-host-status.is-playing{color:var(--gold-light,#d4aa4a);}
 
       .tg-ig-progress{
         display:flex;gap:0.4rem;align-items:center;
@@ -290,6 +325,16 @@
     backdrop.innerHTML = `
       <div class="tg-ig-modal">
         <button class="tg-ig-close" aria-label="Close">×</button>
+        <div class="tg-ig-host" id="tg-ig-host">
+          <div class="tg-ig-host-portrait">
+            <img src="${IVY_PORTRAIT}" alt="Ms. Ivy" onerror="this.style.display='none'">
+          </div>
+          <div class="tg-ig-host-meta">
+            <div class="tg-ig-host-name">Ms. Ivy</div>
+            <div class="tg-ig-host-role">The Librarian</div>
+          </div>
+          <div class="tg-ig-host-status" id="tg-ig-host-status">Tap to hear her ▶</div>
+        </div>
         <div class="tg-ig-progress" id="tg-ig-progress"></div>
         <div id="tg-ig-body"></div>
         <div class="tg-ig-nav" id="tg-ig-nav"></div>
@@ -305,6 +350,14 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && backdrop.classList.contains('is-open')) close();
     });
+
+    // Click the Ivy bar to play her intro at any time.
+    const host = backdrop.querySelector('#tg-ig-host');
+    if (host) host.addEventListener('click', e => {
+      // Don't fire when the user clicks the close button or somewhere outside the host row.
+      if (e.target.closest('.tg-ig-close')) return;
+      playIvy('intro');
+    });
   }
 
   function open(){
@@ -316,10 +369,62 @@
     state.ideas = null;
     backdrop.classList.add('is-open');
     render();
+    // Ivy welcomes the user. If autoplay is blocked (common on first page
+    // load before any user gesture), the host bar stays clickable.
+    playIvy('intro');
   }
 
   function close(){
     if (backdrop) backdrop.classList.remove('is-open');
+    stopIvy();
+  }
+
+  // ── Ivy voice playback ──────────────────────────────────────────────────
+  // Plays Ms. Ivy's bio / role / intro through the existing tg-voice
+  // endpoint. Mode 'intro' is what we use on modal open; other modes are
+  // available for future result-screen narration. Fails silently if her
+  // voice_id is not configured yet - the text still works.
+  let ivyAudio = null;
+  function setIvyStatus(text, isPlaying){
+    const el = document.getElementById('tg-ig-host-status');
+    if (!el) return;
+    el.textContent = text;
+    el.classList.toggle('is-playing', !!isPlaying);
+  }
+  function stopIvy(){
+    if (!ivyAudio) return;
+    try { ivyAudio.pause(); ivyAudio.currentTime = 0; } catch(_){}
+    ivyAudio = null;
+    setIvyStatus('Tap to hear her ▶', false);
+  }
+  async function playIvy(mode){
+    stopIvy();
+    setIvyStatus('Warming up...', true);
+    const url = `${VOICE_ENDPOINT}?character=${IVY_CHARACTER}&mode=${encodeURIComponent(mode)}&v=${encodeURIComponent(VOICE_VERSION)}`;
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok){
+        const detail = await resp.text().catch(() => '');
+        throw new Error('voice ' + resp.status + ': ' + (detail || resp.statusText));
+      }
+      const blob = await resp.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      ivyAudio = new Audio(objectUrl);
+      ivyAudio.addEventListener('playing', () => setIvyStatus('Speaking ▶', true));
+      ivyAudio.addEventListener('ended',   () => { stopIvy(); setIvyStatus('Tap to hear her ▶', false); });
+      ivyAudio.addEventListener('error',   () => { stopIvy(); setIvyStatus('Audio unavailable', false); });
+      try {
+        await ivyAudio.play();
+      } catch (err) {
+        // Autoplay may be blocked until the first user gesture. The host
+        // bar is clickable so the user can play her manually.
+        if (err && err.name === 'AbortError') return;
+        setIvyStatus('Tap to hear her ▶', false);
+      }
+    } catch (err) {
+      console.warn('[tg-ideagen] Ivy audio unavailable', err.message);
+      setIvyStatus('Audio coming soon', false);
+    }
   }
 
   // ── Render ──────────────────────────────────────────────────────────────
@@ -353,7 +458,7 @@
     const current = state.answers[q.key];
 
     let html = `
-      <div class="tg-ig-eyebrow">Idea Generator</div>
+      <div class="tg-ig-eyebrow">Ivy asks</div>
       <h2 class="tg-ig-title">${escapeHtml(q.title)}</h2>
       ${q.sub ? `<p class="tg-ig-sub">${escapeHtml(q.sub)}</p>` : ''}
     `;
@@ -484,7 +589,7 @@
     bodyEl.innerHTML = `
       <div class="tg-ig-loading">
         <div class="tg-ig-loading-spinner" aria-hidden="true"></div>
-        <div class="tg-ig-loading-text">Shaping three candidate ideas</div>
+        <div class="tg-ig-loading-text">Ivy is researching</div>
       </div>
     `;
     navEl.innerHTML = '';
@@ -545,8 +650,8 @@
     `).join('');
 
     bodyEl.innerHTML = `
-      <div class="tg-ig-eyebrow">Three to choose from</div>
-      <h2 class="tg-ig-title">Pick one. <em>Or generate three more.</em></h2>
+      <div class="tg-ig-eyebrow">Ivy found three</div>
+      <h2 class="tg-ig-title">Pick one. <em>Or send me back for three more.</em></h2>
       <p class="tg-ig-sub">Take one of these ideas through The Gauntlet to polish it, then to the Chamber to be judged...</p>
       <div class="tg-ig-idea-list">${cards}</div>
     `;
