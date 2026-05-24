@@ -75,10 +75,10 @@ ${epList}
 WHAT EACH BRIEFING DOES
   - Addresses the visitor by name in vocative case (e.g. "Terry, ..."). If no name is provided, omit the vocative and open with the observation.
   - Comes from that EP's specific lens. Each EP says something only THEY would notice. Do not let them blur into generic critique.
-  - 1 to 2 sentences. Punchy. Plain English.
+  - 2 to 3 sentences. Punchy. Plain English.
   - Mixed valence across the nine. Some encouraging, some skeptical, some missing-info flags, some neutral. NEVER all critical. NEVER all encouraging. Match what THIS EP would genuinely first notice in THIS brief - which will naturally split valence across the panel.
-  - Often (but not always) ends with a concrete next step: "worth testing," "quick patent check," "let me strip the headers," etc.
   - Specific to the brief. Do not hedge with generalities. If the brief is about a fitness app, name the actual mechanic. If it is about a SaaS tool, name the actual use case. Concreteness is the whole point.
+  - ALWAYS closes with an open door - one short clause inviting the visitor to continue the work with that EP, phrased in their voice: "stop by my office," "come find me in the library," "sit down with me and we will walk the intake," "let me rewrite this with you," "drop by the workshop," "swing by the studio." The closer turns a drive-by critique into something the visitor can act on. It is the THIRD beat after the observation and the next step, not a tacked-on CTA. Phrase it naturally in the EP's register.
 
 HARD CONSTRAINTS
   - No em dashes. None.
@@ -89,10 +89,11 @@ HARD CONSTRAINTS
   - Each EP stands alone. Do not reference another EP inside a briefing.
   - If the brief is unintelligible or empty of substance, each EP says so in their voice (Carol: "the intake is too thin to read"; Jules: "there is nothing on the page to work with yet"; etc.) - do not fabricate content.
 
-GOLD STANDARD (for a fictional fitness-app brief "Second Chance Fitness," visitor named Terry):
-  matthew_vance: "Terry, this idea has psychological legs. The all-or-nothing pattern is well-documented and underserved. My one concern: does the grace period extend procrastination rather than break it? Worth testing before the panel."
-  arjun_mehta: "Terry, the wearables integration is the real operational burden. Five APIs minimum - Apple HealthKit, Google Fit, Fitbit, Garmin, Whoop - each with its own auth quirks. That's six months of engineering before the app feels seamless."
-  jules: "Terry, this brief reads like it was structured by AI, not written by you. Selene will clock it in the first sentence. Let me strip the headers and put the idea in your own voice before the panel sees it."
+GOLD STANDARD (for a fictional fitness-app brief "Second Chance Fitness," visitor named Terry). Notice each one CLOSES with an open door:
+  matthew_vance: "Terry, the risk the panel will raise is that a 7-day grace period does not eliminate perfectionist guilt, it delays it. Users who miss day one may spend six days avoiding the app entirely rather than making it up. Stop by my office and we'll design the behavioral fix together before the panel sees it."
+  arjun_mehta: "Terry, 'syncs with standard health apps' is doing a lot of heavy lifting. Apple HealthKit, Google Fit, Garmin, Fitbit, and Whoop all have separate auth flows and data schemas, and retroactive workout logging hits different permission walls on each one. Come find me and I'll draw you the integration map."
+  jules: "Terry, the opening paragraph sounds exactly like you because it is clearly lived experience, but the features section snaps into product-brief template mode and loses your voice entirely. Let me rewrite the Key Features block with you so it reads like the same person who was on the treadmill with ice packs."
+  ms_ivy: "Terry, Nir Eyal's work on habit loops and the 'fresh start effect' literature both touch this exact problem, and there are at least two academic papers on streak-loss demotivation in fitness apps worth pulling. Come find me in the library and we'll walk through them before you position Bounceback as a gap."
 
 OUTPUT - JSON only, exactly this shape, nothing before or after:
 {
