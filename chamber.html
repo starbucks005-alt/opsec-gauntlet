@@ -1213,36 +1213,51 @@
     seedChatSystem();
 
     // Phase 3: theatrical reveal in measured beats.
-    //   T=0       grid + counter + step copy fade out (700ms opacity).
-    //   T=700ms   layout locks. Chat panel fades in WITH its system message
-    //             ("The judges are taking their seats."). Closed curtain is
-    //             visible behind the stage frame. Scroll viewer to the stage.
-    //   T=700ms → T=2400ms   chat holds for ~1.7s. The user reads the system
-    //             message and sees the curtain about to part.
-    //   T=2400ms  stage + audience get is-revealing. Curtains begin opening
-    //             (3.4s). Per the CSS transition-delays the stage content
-    //             and judge cards fade in once the curtains have opened.
-    //   T=4900ms+ sample chat dialogue (active judge typing, then message;
-    //             audience judge chimes in) lands after the stage is set.
+    // PRIOR BUG: scrollIntoView fired at T=700ms while .tg-stage was still
+    // display:none (no layout, scroll was a no-op). The curtain animated
+    // at T=2400ms below the fold and the user never saw it.
+    // FIX: stage gets display:block earlier (T=1800ms) and we scroll to it
+    // RIGHT THEN, while the curtain is still closed. The user is parked in
+    // front of a closed velvet curtain for ~900ms, then it opens at T=2700ms
+    // with them looking right at it.
+    //
+    //   T=0       grid + step copy fade out (700ms opacity).
+    //   T=700ms   layout locks. Chat panel fades in with its system message
+    //             ("The judges are taking their seats.").
+    //   T=1800ms  stage becomes display:block (curtain still CLOSED).
+    //             Smooth-scroll the viewer to it. They see the velvet
+    //             curtain shut and the gold stage edge, with the system
+    //             message in the chat panel beside it.
+    //   T=2700ms  stage + audience get .is-revealing. Curtain parts (3.4s).
+    //             Per the CSS transition-delays the stage content and judge
+    //             panel cards fade in once the curtain has opened.
+    //   T=6200ms+ sample chat dialogue (active judge typing, then message;
+    //             audience judge chimes in) lands after the curtain finishes.
     document.body.classList.add('is-fading-grid');
 
     setTimeout(() => {
       document.body.classList.add('is-locked');
       if (chat) chat.classList.add('is-revealing');
-      stage.scrollIntoView({ behavior:'smooth', block:'start' });
     }, 700);
 
     setTimeout(() => {
+      // Make the stage visible WITH curtain still closed, then scroll to it
+      // so the user is looking at the closed curtain when it opens.
+      stage.style.display = 'block';
+      stage.scrollIntoView({ behavior:'smooth', block:'center' });
+    }, 1800);
+
+    setTimeout(() => {
+      // Curtain parts. User has been looking at it for ~900ms.
       stage.classList.add('is-revealing');
       stage.setAttribute('aria-hidden', 'false');
       audience.classList.add('is-revealing');
       audience.setAttribute('aria-hidden', 'false');
-    }, 2400);
+    }, 2700);
 
     // Schedule the sample dialogue to land after the curtain finishes opening.
-    // Active judge "typing" appears ~5.0s in, message ~7.0s. Audience chimes
-    // in ~8.5s. Real dialogue replaces this in a later gate.
-    seedChatDemoMessages(5000);
+    // Curtain animates 3.4s from T=2700 → ends ~T=6100. Demo chat at T=6300.
+    seedChatDemoMessages(6300);
   }
 
   // ── Chat scaffold ────────────────────────────────────────────────────────
