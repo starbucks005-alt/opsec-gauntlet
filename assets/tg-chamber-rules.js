@@ -119,7 +119,7 @@
         font-weight: 700; color: var(--cream, #f4ecd8);
         margin: 0 0 1.2rem; letter-spacing: -0.01em;
       }
-      .tg-eject-title { color: var(--crimson-bright, #e25c4a); }
+      .tg-eject-title { color: var(--gauntlet-consequence, #c0392b); }
 
       .tg-rules-intro {
         font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.55;
