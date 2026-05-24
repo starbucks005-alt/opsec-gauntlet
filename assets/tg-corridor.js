@@ -26,8 +26,11 @@
   const ENDPOINT      = '/.netlify/functions/tg-ep-briefings';
   const KEY_NAME      = 'tg_visitor_name';
   const KEY_BRIEF     = 'tg_visitor_brief';
-  const KEY_CACHE     = 'tg_corridor_briefings_cache';
-  const KEY_CACHE_SIG = 'tg_corridor_briefings_sig';
+  // Cache keys carry a schema version. Bumping the v-suffix invalidates
+  // every stale cache when the briefings response shape changes (e.g.
+  // string -> { line, invitation }).
+  const KEY_CACHE     = 'tg_corridor_briefings_cache_v2';
+  const KEY_CACHE_SIG = 'tg_corridor_briefings_sig_v2';
   const MIN_BRIEF_LEN = 12;
 
   // ── sessionStorage helpers (private-browsing safe) ──────────────────────
@@ -52,10 +55,16 @@
     document.querySelectorAll('.corridor-wing').forEach(card => {
       const button  = card.querySelector('[data-tg-voice][data-character]');
       const quoteEl = card.querySelector('.wing-quote');
+      // The wing-link is the existing "Step into her office" anchor. When
+      // a brief is loaded we replace its text with the EP's personalized
+      // invitation. Original text is captured so we can fall back cleanly.
+      const linkEl  = card.querySelector('.wing-link');
       if (!button || !quoteEl) return;
       cards.push({
         epId:    button.dataset.character,
         quoteEl: quoteEl,
+        linkEl:  linkEl,
+        linkOriginal: linkEl ? linkEl.textContent : '',
       });
     });
     return cards;
@@ -90,6 +99,12 @@
         left: 30%; right: 0;
         background: linear-gradient(270deg, var(--gold-light, #d4aa4a), transparent);
       }
+      /* Personalized invitation on the wing-link. Brighter than the
+         default to signal it speaks specifically to this visitor. */
+      .wing-link.tg-link-tailored {
+        color: var(--gold-light, #d4aa4a);
+        border-bottom-color: var(--gold-light, #d4aa4a);
+      }
     `;
     const style = document.createElement('style');
     style.id = 'tg-corridor-styles';
@@ -103,12 +118,32 @@
 
   function applyBriefings(cards, briefings) {
     cards.forEach(c => {
-      const line = String((briefings && briefings[c.epId]) || '').trim();
+      const entry = briefings ? briefings[c.epId] : null;
+      // Tolerate both the new {line, invitation} shape and the old
+      // single-string shape from any stale cache.
+      let line = '';
+      let invitation = '';
+      if (entry && typeof entry === 'object') {
+        line       = String(entry.line       || '').trim();
+        invitation = String(entry.invitation || '').trim();
+      } else if (typeof entry === 'string') {
+        line = entry.trim();
+      }
+
       if (line) {
         c.quoteEl.textContent = '"' + line + '"';
         c.quoteEl.classList.add('tg-quote-tailored');
       }
-      // No line for this EP: leave the static quote alone.
+      // Personalized invitation replaces the static "Step into her
+      // office" link text. We keep the href (still points at the EP's
+      // helper page) and just swap the label. The UI's existing arrow
+      // (visible because the link has " →" in the original) needs to
+      // be re-added since the model is told not to include punctuation.
+      if (invitation && c.linkEl) {
+        c.linkEl.textContent = invitation + ' →';
+        c.linkEl.classList.add('tg-link-tailored');
+      }
+      // No line / no invitation: leave the static text alone.
     });
   }
 

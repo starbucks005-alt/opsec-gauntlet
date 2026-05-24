@@ -72,13 +72,47 @@ function buildSystemPrompt() {
 THE NINE EPS (output keys MUST match the id in brackets):
 ${epList}
 
-WHAT EACH BRIEFING DOES
-  - Addresses the visitor by name in vocative case (e.g. "Terry, ..."). If no name is provided, omit the vocative and open with the observation.
-  - Comes from that EP's specific lens. Each EP says something only THEY would notice. Do not let them blur into generic critique.
-  - 2 to 3 sentences. Punchy. Plain English.
-  - Mixed valence across the nine. Some encouraging, some skeptical, some missing-info flags, some neutral. NEVER all critical. NEVER all encouraging. Match what THIS EP would genuinely first notice in THIS brief - which will naturally split valence across the panel.
-  - Specific to the brief. Do not hedge with generalities. If the brief is about a fitness app, name the actual mechanic. If it is about a SaaS tool, name the actual use case. Concreteness is the whole point.
-  - ALWAYS closes with an open door - one short clause inviting the visitor to continue the work with that EP, phrased in their voice: "stop by my office," "come find me in the library," "sit down with me and we will walk the intake," "let me rewrite this with you," "drop by the workshop," "swing by the studio." The closer turns a drive-by critique into something the visitor can act on. It is the THIRD beat after the observation and the next step, not a tacked-on CTA. Phrase it naturally in the EP's register.
+EACH BRIEFING IS TWO FIELDS
+
+  1. line - the OBSERVATION plus a CONCRETE NEXT STEP. This is what
+     appears as the EP's quote on the corridor card.
+       - Addresses the visitor by name in vocative case (e.g. "Terry, ...").
+         If no name is provided, omit the vocative and open with the observation.
+       - 2 to 3 sentences. Punchy. Plain English.
+       - From this EP's specific lens. Each EP says something only THEY
+         would notice. Do not let them blur into generic critique.
+       - Specific to the brief. Name the actual mechanic / use case /
+         claim. Concreteness is the whole point.
+       - Do NOT include the invitation here. The invitation is a separate
+         field. The line ends after the next step.
+
+  2. invitation - the OPEN DOOR. A short clause inviting the visitor to
+     continue the work with that EP. This becomes the label of the CTA
+     button under the briefing on the corridor card.
+       - 4 to 10 words. Phrased in the EP's voice. Plain English.
+       - VARY THE PHRASING across the nine EPs each run. Do not start
+         every one with "stop by my office." Pull from a range:
+           "Come find me in the library"
+           "Make an appointment if you want to dig into the landscape"
+           "Sit down with me and we will walk the intake"
+           "I have time today if you want to design the fix"
+           "Drop by and I will draw you the integration map"
+           "Swing by the studio and we will cut the Reel"
+           "Come find me when you want to sharpen the positioning"
+           "Let me rewrite this with you"
+           "Come to my office and we will work the pitch on its feet"
+       - End the invitation with NO trailing punctuation. The UI adds an
+         arrow.
+       - Honors the EP's register: Ivy uses "library," Wren uses
+         "workshop" or "the patent room," Zara uses "studio," Jules uses
+         "let me rewrite," Grant uses "my office, work the pitch," etc.
+         Do not put Zara in a library or Ivy in a studio.
+
+VALENCE AND CONCRETENESS RULES (apply to both fields)
+  - Mixed valence across the nine. Some encouraging, some skeptical, some
+    missing-info flags, some neutral. NEVER all critical. NEVER all
+    encouraging. Match what THIS EP would genuinely first notice in THIS
+    brief - the valence naturally splits across nine domains.
 
 HARD CONSTRAINTS
   - No em dashes. None.
@@ -89,24 +123,40 @@ HARD CONSTRAINTS
   - Each EP stands alone. Do not reference another EP inside a briefing.
   - If the brief is unintelligible or empty of substance, each EP says so in their voice (Carol: "the intake is too thin to read"; Jules: "there is nothing on the page to work with yet"; etc.) - do not fabricate content.
 
-GOLD STANDARD (for a fictional fitness-app brief "Second Chance Fitness," visitor named Terry). Notice each one CLOSES with an open door:
-  matthew_vance: "Terry, the risk the panel will raise is that a 7-day grace period does not eliminate perfectionist guilt, it delays it. Users who miss day one may spend six days avoiding the app entirely rather than making it up. Stop by my office and we'll design the behavioral fix together before the panel sees it."
-  arjun_mehta: "Terry, 'syncs with standard health apps' is doing a lot of heavy lifting. Apple HealthKit, Google Fit, Garmin, Fitbit, and Whoop all have separate auth flows and data schemas, and retroactive workout logging hits different permission walls on each one. Come find me and I'll draw you the integration map."
-  jules: "Terry, the opening paragraph sounds exactly like you because it is clearly lived experience, but the features section snaps into product-brief template mode and loses your voice entirely. Let me rewrite the Key Features block with you so it reads like the same person who was on the treadmill with ice packs."
-  ms_ivy: "Terry, Nir Eyal's work on habit loops and the 'fresh start effect' literature both touch this exact problem, and there are at least two academic papers on streak-loss demotivation in fitness apps worth pulling. Come find me in the library and we'll walk through them before you position Bounceback as a gap."
+GOLD STANDARD (for a fictional fitness-app brief "Second Chance Fitness," visitor named Terry). Each entry shows the line/invitation split:
+
+  matthew_vance:
+    line:       "Terry, the risk the panel will raise is that a 7-day grace period does not eliminate perfectionist guilt, it delays it. Users who miss day one may spend six days avoiding the app entirely rather than making it up. That behavior needs to be designed against, not assumed away."
+    invitation: "I have time today if you want to design the fix"
+
+  arjun_mehta:
+    line:       "Terry, 'syncs with standard health apps' is doing a lot of heavy lifting. Apple HealthKit, Google Fit, Garmin, Fitbit, and Whoop all have separate auth flows and data schemas, and retroactive workout logging hits different permission walls on each one."
+    invitation: "Drop by and I will draw you the integration map"
+
+  jules:
+    line:       "Terry, the opening paragraph reads exactly like you because it is clearly lived experience, but the features section snaps into product-brief template mode and loses your voice entirely. Selene will clock that switch in the first read."
+    invitation: "Let me rewrite the Key Features block with you"
+
+  ms_ivy:
+    line:       "Terry, Nir Eyal's work on habit loops and the 'fresh start effect' literature both touch this exact problem, and there are at least two academic papers on streak-loss demotivation in fitness apps worth pulling before you position Bounceback as a gap."
+    invitation: "Come find me in the library and we will walk through them"
+
+  zara_cole:
+    line:       "Terry, the founder origin story - ice packs, heat blanket, six months, two days in bed - is a 30-second Reel that writes itself, and that hook will outperform any feature explainer you could post."
+    invitation: "Swing by the studio and we will cut it together"
 
 OUTPUT - JSON only, exactly this shape, nothing before or after:
 {
   "briefings": {
-    "ms_ivy":        "<one line>",
-    "wren_calloway": "<one line>",
-    "carol_haynes":  "<one line>",
-    "matthew_vance": "<one line>",
-    "arjun_mehta":   "<one line>",
-    "zara_cole":     "<one line>",
-    "reid_callum":   "<one line>",
-    "jules":         "<one line>",
-    "grant_ellis":   "<one line>"
+    "ms_ivy":        {"line": "<observation + next step>", "invitation": "<open door, varied phrasing>"},
+    "wren_calloway": {"line": "<...>", "invitation": "<...>"},
+    "carol_haynes":  {"line": "<...>", "invitation": "<...>"},
+    "matthew_vance": {"line": "<...>", "invitation": "<...>"},
+    "arjun_mehta":   {"line": "<...>", "invitation": "<...>"},
+    "zara_cole":     {"line": "<...>", "invitation": "<...>"},
+    "reid_callum":   {"line": "<...>", "invitation": "<...>"},
+    "jules":         {"line": "<...>", "invitation": "<...>"},
+    "grant_ellis":   {"line": "<...>", "invitation": "<...>"}
   }
 }`;
 }
@@ -194,15 +244,28 @@ exports.handler = async (event) => {
   const briefings = {};
   let presentCount = 0;
   for (const ep of EPS) {
-    const line = String(raw_briefings[ep.id] || '').trim();
+    const entry = raw_briefings[ep.id];
+    let line = '';
+    let invitation = '';
+    if (entry && typeof entry === 'object') {
+      // New shape: { line, invitation }
+      line       = String(entry.line       || '').trim();
+      invitation = String(entry.invitation || '').trim();
+    } else if (typeof entry === 'string') {
+      // Tolerate the old single-string shape in case the model regresses.
+      // Treat the whole thing as the line; no invitation.
+      line = entry.trim();
+    }
+    // Strip em / en dashes the model may have inserted despite the rule.
+    line       = line      .replace(/—/g, '-').replace(/–/g, '-');
+    invitation = invitation.replace(/—/g, '-').replace(/–/g, '-')
+                           .replace(/[.!?]+$/, '');  // no trailing punctuation - UI adds the arrow
     if (line) {
-      // Strip any sneaky em dashes the model may have inserted despite the rule.
-      briefings[ep.id] = line.replace(/—/g, '-').replace(/–/g, '-');
+      briefings[ep.id] = { line, invitation };
       presentCount++;
     } else {
-      // Empty string per EP rather than missing key - keeps the front-end
-      // contract stable (it can always read briefings.<id>).
-      briefings[ep.id] = '';
+      // Empty stub per EP - keeps the front-end contract stable
+      briefings[ep.id] = { line: '', invitation: '' };
     }
   }
 
