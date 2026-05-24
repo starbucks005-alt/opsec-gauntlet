@@ -85,6 +85,8 @@
     answers: { world:'', frustration:'', bring:'' },
     otherTexts: { world:'', frustration:'', bring:'' },
     ideas: null,
+    keyword_architecture: null,
+    ivy_note: '',
   };
 
   // ── Styles ───────────────────────────────────────────────────────────────
@@ -268,6 +270,28 @@
       }
 
       .tg-ig-result{padding:0.3rem 0 0.2rem;}
+      /* Keyword architecture strip - Ivy's SLR signature. The anchor and
+         the three secondary anchors are visible so the visitor sees the
+         space their topic occupies. */
+      .tg-ig-ka{
+        border:1px solid rgba(184,146,42,0.25);background:rgba(0,0,0,0.4);
+        padding:0.9rem 1rem;margin-bottom:1.2rem;
+      }
+      .tg-ig-ka-label{
+        font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.24em;
+        text-transform:uppercase;color:var(--gold,#b8922a);margin-bottom:0.5rem;
+      }
+      .tg-ig-ka-anchor{
+        font-family:'Playfair Display',serif;font-style:italic;
+        font-size:1.15rem;color:#f4ede0;line-height:1.3;margin-bottom:0.45rem;
+      }
+      .tg-ig-ka-lenses{display:flex;flex-wrap:wrap;gap:0.4rem;}
+      .tg-ig-ka-lens{
+        font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+        text-transform:uppercase;color:var(--gold-light,#d4aa4a);
+        border:1px solid rgba(184,146,42,0.30);padding:0.3rem 0.55rem;
+        background:rgba(184,146,42,0.05);
+      }
       .tg-ig-idea-list{display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1.4rem;}
       .tg-ig-idea{
         padding:1.1rem 1.2rem;
@@ -288,6 +312,26 @@
         font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.55;
         color:#e8dece;margin-bottom:0.9rem;
       }
+      .tg-ig-idea-meta{
+        display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center;
+        margin:0 0 0.6rem;
+      }
+      .tg-ig-idea-lens{
+        font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
+        text-transform:uppercase;color:var(--gold-light,#d4aa4a);
+        border:1px solid rgba(184,146,42,0.3);padding:0.22rem 0.5rem;
+        background:rgba(184,146,42,0.06);
+      }
+      .tg-ig-idea-gap{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-size:0.95rem;line-height:1.5;color:#a89c88;
+        padding:0.4rem 0.7rem;margin:0 0 0.7rem;
+        border-left:2px solid #c0392b;background:rgba(192,57,43,0.04);
+      }
+      .tg-ig-idea-gap-label{
+        font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;
+        text-transform:uppercase;color:#c0392b;margin-right:0.4rem;
+      }
       .tg-ig-idea-cta{
         display:inline-flex;align-items:center;gap:0.4rem;
         background:transparent;border:1px solid var(--gold,#b8922a);
@@ -298,6 +342,19 @@
         transition:background 0.2s,color 0.2s;
       }
       .tg-ig-idea-cta:hover{background:var(--gold,#b8922a);color:#0a0a0a;}
+      /* Ivy's note - her voice on the gap landscape, after the 3 ideas. */
+      .tg-ig-ivy-note{
+        font-family:'Playfair Display',serif;font-style:italic;
+        font-size:1.05rem;line-height:1.6;color:var(--gold-light,#d4aa4a);
+        padding:0.9rem 1.1rem;margin-bottom:1.2rem;
+        border-left:2px solid var(--gold,#b8922a);
+        background:rgba(184,146,42,0.05);
+      }
+      .tg-ig-ivy-note-label{
+        font-family:'DM Mono',monospace;font-style:normal;
+        font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;
+        color:var(--gold,#b8922a);margin-bottom:0.35rem;display:block;
+      }
 
       @media (max-width:600px){
         .tg-ig-modal{padding:1.3rem 1.2rem 1.2rem;}
@@ -367,6 +424,8 @@
     state.answers = { world:'', frustration:'', bring:'' };
     state.otherTexts = { world:'', frustration:'', bring:'' };
     state.ideas = null;
+    state.keyword_architecture = null;
+    state.ivy_note = '';
     backdrop.classList.add('is-open');
     render();
     // Ivy welcomes the user. If autoplay is blocked (common on first page
@@ -617,6 +676,8 @@
       }
       const data = await resp.json();
       state.ideas = Array.isArray(data.ideas) ? data.ideas : [];
+      state.keyword_architecture = data.keyword_architecture || null;
+      state.ivy_note = data.ivy_note || '';
       if (state.ideas.length === 0) throw new Error('no ideas returned');
       state.step = QUESTIONS.length + 1;
       render();
@@ -644,15 +705,39 @@
     const cards = ideas.map((it, i) => `
       <div class="tg-ig-idea">
         <div class="tg-ig-idea-title">${escapeHtml(it.title)}</div>
+        ${it.lens ? `<div class="tg-ig-idea-meta"><span class="tg-ig-idea-lens">Lens · ${escapeHtml(it.lens)}</span></div>` : ''}
         <p class="tg-ig-idea-desc">${escapeHtml(it.description)}</p>
+        ${it.gap ? `<p class="tg-ig-idea-gap"><span class="tg-ig-idea-gap-label">Gap</span>${escapeHtml(it.gap)}</p>` : ''}
         <button class="tg-ig-idea-cta" type="button" data-pick-idea="${i}">Take it through The Gauntlet →</button>
       </div>
     `).join('');
 
+    const ka = state.keyword_architecture;
+    const kaBlock = (ka && ka.anchor) ? `
+      <div class="tg-ig-ka">
+        <div class="tg-ig-ka-label">SLR · Keyword architecture</div>
+        <div class="tg-ig-ka-anchor">Anchor: ${escapeHtml(ka.anchor)}</div>
+        ${ka.secondary_anchors && ka.secondary_anchors.length ? `
+          <div class="tg-ig-ka-lenses">
+            ${ka.secondary_anchors.map(l => `<span class="tg-ig-ka-lens">${escapeHtml(l)}</span>`).join('')}
+          </div>
+        ` : ''}
+      </div>
+    ` : '';
+
+    const ivyNoteBlock = state.ivy_note ? `
+      <div class="tg-ig-ivy-note">
+        <span class="tg-ig-ivy-note-label">Where the gaps cluster · Ivy's read</span>
+        ${escapeHtml(state.ivy_note)}
+      </div>
+    ` : '';
+
     bodyEl.innerHTML = `
-      <div class="tg-ig-eyebrow">Ivy found three</div>
-      <h2 class="tg-ig-title">Pick one. <em>Or send me back for three more.</em></h2>
-      <p class="tg-ig-sub">Take one of these ideas through The Gauntlet to polish it, then to the Chamber to be judged...</p>
+      <div class="tg-ig-eyebrow">Ivy mapped the space</div>
+      <h2 class="tg-ig-title">Three gaps. <em>Pick one to fill.</em></h2>
+      <p class="tg-ig-sub">Each idea lives in a gap inside your topic's keyword space. Take one through The Gauntlet to polish it, then to the Chamber to be judged...</p>
+      ${kaBlock}
+      ${ivyNoteBlock}
       <div class="tg-ig-idea-list">${cards}</div>
     `;
     navEl.innerHTML = `

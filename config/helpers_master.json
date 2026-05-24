@@ -70,6 +70,15 @@
       "name": "Ms. Ivy",
       "role": "The Librarian",
       "domain": "Research, prior art, idea sourcing, source literacy",
+      "method": "Dr. O's SLR adapted for ideas instead of papers (intel-dashboard Card 5 pattern): topic -> keyword architecture (anchor + 4 secondary lenses + modifiers) -> conceptual sweep -> twin outcomes (what exists / where the gap is). Ideas are returned as one candidate per lens so they map to different cells of the space.",
+      "retrieval_scope": [
+        "prior art and patent landscape",
+        "trademark filings and registered marks",
+        "market signals and category benchmarks",
+        "academic literature where the topic crosses research",
+        "consumer review platforms and community forums",
+        "regulatory filings and compliance docs where relevant"
+      ],
       "voice_id": "TJz0pp7opUc4JvMXMXob",
       "page": "Helpers/ivy-librarian.html",
       "home_platform": "greylander_dose",
