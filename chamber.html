@@ -1348,94 +1348,136 @@
     // Scheduled to land AFTER the curtain finishes opening.
     //
     // If the user came in with a real submission (state.submissionId set),
-    // the first chosen judge fires the REAL Stage 1 Clarity evaluation via
-    // /.netlify/functions/tg-evaluate-clarity and renders the actual
-    // finding inline. No submission means we fall back to the demo line
-    // so the chamber still has something to show when someone hits
-    // /chamber.html directly.
+    // fires the REAL Stage 1 Clarity evaluation for ALL THREE chosen
+    // judges in parallel (single backend call, three Anthropic calls
+    // server-side via Promise.all), then walks the three findings into
+    // the chat panel one at a time with typing indicators for theatre.
     //
-    // The audience heckle stays demo for now - real audience commentary
-    // is its own future gate.
+    // No submission means the chamber falls back to the original demo
+    // line (single active judge + audience heckle) so /chamber.html
+    // direct visits still have something to show.
     const chosenList   = state.judges.filter(j => state.selected.has(j.id));
     const audienceList = state.judges.filter(j => !state.selected.has(j.id));
     const firstActive   = chosenList[0];
     const firstAudience = audienceList[0];
 
+    if (state.submissionId && state.selected.size === 3){
+      // Real Stage 1: three judges, parallel server-side.
+      setTimeout(() => {
+        runStageClarity(chosenList, firstAudience);
+      }, startMs);
+      return;
+    }
+
+    // ── Demo fallback (no submission) ──────────────────────────────────
     if (firstActive){
       setTimeout(() => {
         showTyping(firstActive.name);
-        if (state.submissionId && state.selected.size === 3){
-          fireRealEvaluation(firstActive)
-            .catch(err => { console.warn('[tg-eval] failed', err); return null; })
-            .then(result => {
-              hideTyping();
-              if (result && result.finding){
-                addChatMessage({
-                  kind: 'active',
-                  name: firstActive.name,
-                  role: 'On the panel · Clarity ' + result.score + '/10',
-                  body: result.finding,
-                });
-              } else {
-                // Fallback: real eval failed for some reason, show the demo
-                // line so the chamber does not look empty.
-                addChatMessage({
-                  kind: 'active',
-                  name: firstActive.name,
-                  role: 'On the panel',
-                  body: judgeLine(firstActive.id, 'active'),
-                });
-              }
-            });
-        } else {
-          // No submission in flow - demo mode. Hold the typing indicator
-          // briefly for theatre, then show the static demo line.
-          setTimeout(() => {
-            hideTyping();
-            addChatMessage({
-              kind: 'active',
-              name: firstActive.name,
-              role: 'On the panel',
-              body: judgeLine(firstActive.id, 'active'),
-            });
-          }, 2000);
-        }
+        setTimeout(() => {
+          hideTyping();
+          addChatMessage({
+            kind: 'active',
+            name: firstActive.name,
+            role: 'On the panel',
+            body: judgeLine(firstActive.id, 'active'),
+          });
+        }, 2000);
       }, startMs);
     }
     if (firstAudience){
       setTimeout(() => {
         const targetedHeckle = firstActive && HECKLES_ABOUT_ACTIVE[firstActive.id];
         addChatMessage({
-          kind:'audience',
-          name:firstAudience.name,
-          role:'Audience',
-          body: targetedHeckle || judgeLine(firstAudience.id, 'audience')
+          kind: 'audience',
+          name: firstAudience.name,
+          role: 'Audience',
+          body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
         });
       }, startMs + 3500);
     }
   }
 
-  // Calls the Stage 1 Clarity evaluation function for one judge on the
-  // current submission. Returns { score, finding, confidence } on success.
-  async function fireRealEvaluation(judge){
-    const triad = state.judges
-      .filter(j => state.selected.has(j.id))
-      .map(j => j.id);
-    if (triad.length !== 3) return null;
-    const resp = await fetch('/.netlify/functions/tg-evaluate-clarity', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        submission_id: state.submissionId,
-        judge_id: judge.id,
-        triad,
-      }),
-    });
-    if (!resp.ok){
-      const detail = await resp.text().catch(() => '');
-      throw new Error('eval ' + resp.status + ': ' + (detail || resp.statusText));
+  // Stage 1 Clarity evaluation for the three chosen judges. One backend
+  // call, three Anthropic calls server-side in parallel, then the client
+  // staggers the three findings into the chat panel with typing
+  // indicators between them so the user reads them like a live panel.
+  async function runStageClarity(chosenList, firstAudience){
+    const triad = chosenList.map(j => j.id);
+
+    // Show the first judge "thinking" while the backend runs all three.
+    showTyping(chosenList[0].name);
+
+    let payload;
+    try {
+      const resp = await fetch('/.netlify/functions/tg-evaluate-stage-clarity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ submission_id: state.submissionId, triad }),
+      });
+      if (!resp.ok){
+        const detail = await resp.text().catch(() => '');
+        throw new Error('stage ' + resp.status + ': ' + (detail || resp.statusText));
+      }
+      payload = await resp.json();
+    } catch (err) {
+      console.warn('[tg-eval-stage] failed', err);
+      hideTyping();
+      // Fall back to one demo line so the chamber is not silent.
+      addChatMessage({
+        kind: 'system',
+        body: 'The panel could not be reached. Refresh and try again.',
+      });
+      return;
     }
-    return await resp.json();
+
+    const findings = Array.isArray(payload.findings) ? payload.findings : [];
+    // Re-order findings to match the user's chosen triad order (server may
+    // return in any order due to Promise.all settling).
+    const byId = new Map(findings.map(f => [f.judge_id, f]));
+    const ordered = chosenList.map(j => byId.get(j.id)).filter(Boolean);
+
+    hideTyping();
+
+    // Walk each finding into the chat with a typing beat in between.
+    // Beat: 1.6s typing, 0.4s reveal, 1.6s typing for next, etc.
+    let when = 0;
+    ordered.forEach((f, idx) => {
+      const judge = chosenList.find(j => j.id === f.judge_id);
+      if (idx > 0){
+        setTimeout(() => showTyping(judge.name), when);
+        when += 1600;
+      }
+      setTimeout(() => {
+        hideTyping();
+        if (f.error || !f.finding){
+          addChatMessage({
+            kind: 'system',
+            body: judge.name + ' could not complete this round.',
+          });
+        } else {
+          addChatMessage({
+            kind: 'active',
+            name: judge.name,
+            role: 'On the panel · Clarity ' + f.score + '/10',
+            body: f.finding,
+          });
+        }
+      }, when);
+      when += 400;
+    });
+
+    // Audience heckle lands after all three judges have spoken.
+    if (firstAudience){
+      setTimeout(() => {
+        const targetedHeckle = chosenList[0] && HECKLES_ABOUT_ACTIVE[chosenList[0].id];
+        addChatMessage({
+          kind: 'audience',
+          name: firstAudience.name,
+          role: 'Audience',
+          body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
+        });
+      }, when + 1200);
+    }
   }
 
   function onChatSubmit(e){

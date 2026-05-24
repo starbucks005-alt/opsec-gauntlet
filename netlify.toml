@@ -117,3 +117,6 @@
 
   [functions.tg-evaluate-clarity]
     timeout = 26
+
+  [functions.tg-evaluate-stage-clarity]
+    timeout = 26
