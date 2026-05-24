@@ -1440,12 +1440,19 @@
     // Show the first judge "thinking" while the backend runs all three.
     showTyping(chosenList[0].name);
 
+    // Pull the visitor name from sessionStorage (saved by the welcome modal)
+    // so the judges address them by name in their findings. Empty string is
+    // fine - the evaluator treats it as "no name provided" and falls back
+    // to neutral second-person.
+    let visitorName = '';
+    try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
+
     let payload;
     try {
       const resp = await fetch('/.netlify/functions/tg-evaluate-stage-clarity', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ submission_id: state.submissionId, triad }),
+        body: JSON.stringify({ submission_id: state.submissionId, triad, visitor_name: visitorName }),
       });
       if (!resp.ok){
         const detail = await resp.text().catch(() => '');

@@ -413,10 +413,18 @@
 
     const submissionTitle = (subRow.title || '').trim() || 'your submission';
     const completedAt = evalRow.completed_at ? new Date(evalRow.completed_at).toLocaleString() : '';
+    // Pull the visitor name (saved by the welcome modal) so the report
+    // header addresses them directly. Falls back to a generic header if
+    // they came through without personalizing.
+    let visitorName = '';
+    try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
+    const headlineTitle = visitorName
+      ? `${escapeHtml(visitorName)}, your idea has been <em>tested</em>.`
+      : `Your idea has been <em>tested</em>.`;
 
     root.innerHTML = `
       <div class="report-eyebrow">Routing Report</div>
-      <h1 class="report-title">Your idea has been <em>tested</em>.</h1>
+      <h1 class="report-title">${headlineTitle}</h1>
       <p class="report-subline">"${escapeHtml(submissionTitle)}"</p>
       <div class="report-meta">Stage 1 · Clarity · Evaluation ${escapeHtml(evalRow.id.slice(0, 8))}${completedAt ? ' · ' + escapeHtml(completedAt) : ''}</div>
 

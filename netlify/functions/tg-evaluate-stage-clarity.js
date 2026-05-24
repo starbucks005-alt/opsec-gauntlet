@@ -51,9 +51,12 @@ function findJudge(judgeId){
   return (judgesMaster.judges || []).find(j => j.id === judgeId);
 }
 
-function buildSystemPrompt(judge){
+function buildSystemPrompt(judge, visitorName){
   const toneRules  = (judge.tone_rules  || []).map(r => `- ${r}`).join('\n');
   const blindSpots = (judge.blind_spots || []).map(r => `- ${r}`).join('\n');
+  const addressLine = visitorName
+    ? `Address the submitter by name in vocative case at the start of your finding (e.g. "${visitorName}, ..."). Use the name once - do not repeat it.`
+    : `Address the submitter directly in second person ("you"). No vocative name was provided.`;
   return `You are ${judge.name}, ${judge.domain} on The Gauntlet panel.
 
 Background: ${judge.background || ''}
@@ -79,6 +82,8 @@ Score CLARITY on a 0-10 integer scale:
   9-10 = exceptionally precise on problem, solution, audience, and the "why".
 
 Write a 2-3 sentence FINDING addressed directly to the submitter, in YOUR voice (use first person where natural, e.g. "I would..."). Plain English. NO insider jargon. NO em dashes. NO emojis. NO markdown. The user is not another expert.
+
+${addressLine}
 
 If the score is below 4, do not soften - your tone rules apply.
 If the score is 7 or above, do not flatter - say what is clear and what could still tighten.
@@ -146,8 +151,8 @@ function computeTriangulation(findings){
   return { matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score, verdict };
 }
 
-async function evaluateOneJudge(client, judge, userPrompt){
-  const systemPrompt = buildSystemPrompt(judge);
+async function evaluateOneJudge(client, judge, userPrompt, visitorName){
+  const systemPrompt = buildSystemPrompt(judge, visitorName);
   let response;
   try {
     response = await client.messages.create({
@@ -197,6 +202,13 @@ exports.handler = async (event) => {
 
   const submission_id = String(body.submission_id || '').trim();
   const triad         = Array.isArray(body.triad) ? body.triad.slice(0, 3) : [];
+  // Optional. Sanitize hard - this string goes straight into a system prompt,
+  // so strip anything that could look like instructions. Letters / spaces /
+  // hyphens / apostrophes only, max 60 chars.
+  const visitorName   = String(body.visitor_name || '')
+                          .trim().slice(0, 60)
+                          .replace(/[^A-Za-zÀ-ɏ\s'\-]/g, '')
+                          .trim();
 
   if (!UUID_RE.test(submission_id))         return json(400, { error: 'invalid submission_id' });
   if (triad.length !== 3)                   return json(400, { error: 'triad must be 3 judge ids' });

@@ -247,21 +247,29 @@
     });
   }
 
-  // If the user came from the Idea Generator and picked one of the three
-  // candidates, the title + description were stashed in sessionStorage.
-  // Pull them in once and clear so a manual refresh starts blank.
+  // Prefill cascade:
+  //   1. Idea Generator pick (tg_prefill_*) - cleared after read
+  //   2. Welcome modal brief (tg_visitor_brief) - left in place so the
+  //      corridor and the chamber can still consume it
+  // Order matters: idea-generator wins because it is the more deliberate
+  // act (the user actively picked one of three candidates).
   try {
     const preTitle = sessionStorage.getItem('tg_prefill_title');
     const preDesc  = sessionStorage.getItem('tg_prefill_description');
+    const t = document.getElementById('f-title');
+    const d = document.getElementById('f-description');
     if (preTitle){
-      const t = document.getElementById('f-title');
       if (t) t.value = preTitle;
       sessionStorage.removeItem('tg_prefill_title');
     }
     if (preDesc){
-      const d = document.getElementById('f-description');
       if (d) d.value = preDesc;
       sessionStorage.removeItem('tg_prefill_description');
+    } else {
+      // Fall back to the welcome-modal brief if the user didn't come
+      // from the idea generator. Don't clear - corridor still uses it.
+      const visitorBrief = sessionStorage.getItem('tg_visitor_brief');
+      if (visitorBrief && d && !d.value) d.value = visitorBrief;
     }
   } catch(_){}
 
