@@ -126,3 +126,6 @@
 
   [functions.tg-ivy-search]
     timeout = 15
+
+  [functions.tg-ep-briefings]
+    timeout = 26
