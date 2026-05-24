@@ -57,7 +57,23 @@
   .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
   .s-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.7rem;}
   .s-title em{font-style:italic;color:var(--gold-light);}
-  .s-sub{color:var(--text-dim);font-size:1rem;margin-bottom:2rem;max-width:720px;line-height:1.65;}
+  .s-sub{color:var(--text-dim);font-size:1rem;margin-bottom:1.4rem;max-width:720px;line-height:1.65;}
+
+  /* Submission strip - shows the title of the idea the user just submitted */
+  /* so they know what they are picking judges for.                          */
+  .tg-submission-strip{
+    display:flex;align-items:baseline;gap:0.9rem;
+    padding:0.85rem 1.1rem;margin-bottom:2rem;
+    border-left:2px solid var(--gold);background:rgba(184,146,42,0.06);
+  }
+  .tg-submission-label{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);white-space:nowrap;
+  }
+  .tg-submission-title{
+    font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;
+    color:var(--cream);line-height:1.3;
+  }
 
   /* ── Selection counter bar ───────────────────────────────────────────────── */
   .tg-counter-bar{
@@ -731,6 +747,14 @@
   <h1 class="s-title">Pick <em>three judges</em> to run your idea through The Gauntlet.</h1>
   <p class="s-sub">Each judge brings a domain, a lens, and a worldview. The badge marks our recommendation based on your submission. The final pick is yours.</p>
 
+  <!-- Active submission strip: title of the idea the user just submitted   -->
+  <!-- through /intake.html. Pulled from sessionStorage so we do not hit   -->
+  <!-- Supabase just to render the title. Hidden if no submission in flow. -->
+  <div id="tg-submission-strip" class="tg-submission-strip" style="display:none;">
+    <span class="tg-submission-label">Submission</span>
+    <span class="tg-submission-title" id="tg-submission-title"></span>
+  </div>
+
   <div id="tg-error" class="tg-err" style="display:none;"></div>
 
   <div class="tg-counter-bar">
@@ -928,7 +952,34 @@
     selected: new Set(),
     locked: false,
     activeJudgeId: null,
+    submissionId: null,
+    submissionTitle: '',
   };
+
+  // Pull the active submission off the URL + sessionStorage on load.
+  // The id will be passed to the evaluation pipeline in a later slice;
+  // for tonight we just surface the title so the user knows what idea
+  // they are picking judges for.
+  (function readActiveSubmission(){
+    try {
+      const qs = new URLSearchParams(window.location.search);
+      const id = qs.get('submission') || '';
+      if (id) {
+        state.submissionId = id;
+        // Title cached client-side by intake.html. Falls back to a generic
+        // label if the user landed here from a deep-link without the cache.
+        let title = '';
+        try { title = sessionStorage.getItem('tg_submission_title') || ''; } catch(_){}
+        state.submissionTitle = title || 'Submission ' + id.slice(0,8);
+        const strip = document.getElementById('tg-submission-strip');
+        const titleEl = document.getElementById('tg-submission-title');
+        if (strip && titleEl){
+          titleEl.textContent = state.submissionTitle;
+          strip.style.display = 'flex';
+        }
+      }
+    } catch (_) { /* if URLSearchParams blows up, the chamber still works */ }
+  })();
 
   const $ = (id) => document.getElementById(id);
   const grid = $('hs-grid');

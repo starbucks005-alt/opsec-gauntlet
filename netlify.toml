@@ -111,3 +111,6 @@
 
   [functions.tg-idea-generator]
     timeout = 26
+
+  [functions.tg-intake-submit]
+    timeout = 10
