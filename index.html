@@ -215,18 +215,78 @@
     box-shadow:0 0 0 2px var(--gold-light),0 8px 32px -4px var(--crimson-glow);
   }
 
-  .hero-split-image{
-    position:relative;
+  /* 3x3 grid of individual judge cards. Each is a blink-pair portrait
+     + name + domain, click deep-links into the Chamber with that judge's
+     profile modal pre-opened. Replaced the single composite image after
+     Terry's call - individual squares scan better and let each judge be
+     its own click target. */
+  .hero-judges-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
     width:100%;
-    border:1px solid var(--rule);
-    box-shadow:0 0 56px -6px rgba(212,170,74,0.28),
-               0 16px 48px -12px rgba(0,0,0,0.7);
   }
-  .hero-split-image img{display:block;width:100%;height:auto;}
+  .hero-judge-card{
+    display:flex;flex-direction:column;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    text-decoration:none;color:inherit;overflow:hidden;
+    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
+  }
+  .hero-judge-card:hover{
+    border-color:var(--gold);
+    box-shadow:0 0 36px -6px rgba(212,170,74,0.45);
+    transform:translateY(-4px);
+  }
+  .hero-judge-portrait{
+    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
+    background:#14151a;border-bottom:1px solid var(--rule);
+  }
+  .hero-judge-portrait img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;
+    transition:filter 0.3s,transform 0.4s;
+  }
+  .hero-judge-card:hover .hero-judge-portrait img{
+    filter:brightness(1.08);transform:scale(1.03);
+  }
+  /* Blink pair: closed-eye image fades in briefly each cycle. Smooth
+     fade (not steps) so the blink does not pop. Stagger via :nth-child
+     so the nine portraits never blink in unison. */
+  .hero-judge-portrait .blink-closed{
+    opacity:0;animation:tg-hero-blink 5.4s linear infinite;
+  }
+  @keyframes tg-hero-blink{
+    0%, 94%, 100% { opacity: 0; }
+    96%, 97%      { opacity: 1; }
+  }
+  .hero-judges-grid .hero-judge-card:nth-child(1) .blink-closed{animation-delay:0s;}
+  .hero-judges-grid .hero-judge-card:nth-child(2) .blink-closed{animation-delay:0.6s;}
+  .hero-judges-grid .hero-judge-card:nth-child(3) .blink-closed{animation-delay:1.2s;}
+  .hero-judges-grid .hero-judge-card:nth-child(4) .blink-closed{animation-delay:1.8s;}
+  .hero-judges-grid .hero-judge-card:nth-child(5) .blink-closed{animation-delay:2.4s;}
+  .hero-judges-grid .hero-judge-card:nth-child(6) .blink-closed{animation-delay:3.0s;}
+  .hero-judges-grid .hero-judge-card:nth-child(7) .blink-closed{animation-delay:3.6s;}
+  .hero-judges-grid .hero-judge-card:nth-child(8) .blink-closed{animation-delay:4.2s;}
+  .hero-judges-grid .hero-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
+  .hero-judge-body{
+    padding:0.95rem 1.1rem 1.1rem;
+    background:rgba(184,146,42,0.04);
+  }
+  .hero-judge-name{
+    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
+    color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
+  }
+  .hero-judge-domain{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--gold);line-height:1.5;
+  }
 
   @media (max-width:980px){
     .hero-split{gap:1.8rem;}
     .hero-split-text{max-width:none;}
+  }
+  @media (max-width:740px){
+    .hero-judges-grid{grid-template-columns:repeat(2,1fr);gap:0.8rem;}
+    .hero-judge-body{padding:0.7rem 0.8rem 0.85rem;}
+    .hero-judge-name{font-size:0.95rem;}
   }
 
   /* Buttons */
@@ -482,8 +542,97 @@
         <button class="btn btn-outline" type="button" data-tg-idea-open>Help me find an idea to bring</button>
       </div>
     </div>
-    <div class="hero-split-image">
-      <img src="Judges/THE%20JUDGES.png" alt="The nine judges of The Gauntlet, seated at their judging stations in a 3x3 panel">
+    <div class="hero-judges-grid" role="navigation" aria-label="Judges">
+      <a class="hero-judge-card" href="/chamber.html?judge=selene_voss">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Selene_eyes_open.jpg" alt="Selene Voss">
+          <img class="blink-closed" src="Judges/Selene_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Selene Voss</div>
+          <div class="hero-judge-domain">AI &amp; Emerging Tech</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=marcus_holt">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Marcus_eyes_open.jpg" alt="Marcus Holt">
+          <img class="blink-closed" src="Judges/Marcus_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Marcus Holt</div>
+          <div class="hero-judge-domain">Crypto, PE &amp; Alt Finance</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=priya_anand">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Priya_eyes_open.jpg" alt="Dr. Priya Anand">
+          <img class="blink-closed" src="Judges/Priya_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Dr. Priya Anand</div>
+          <div class="hero-judge-domain">Health &amp; Life Sciences</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=raymond_chen">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Raymond_eyes_open.jpg" alt="Raymond Chen">
+          <img class="blink-closed" src="Judges/Raymond_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Raymond Chen</div>
+          <div class="hero-judge-domain">Business &amp; Operations</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=astrid_lund">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Astrid_eyes_open.jpg" alt="Astrid Lund">
+          <img class="blink-closed" src="Judges/Astrid_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Astrid Lund</div>
+          <div class="hero-judge-domain">Law &amp; Intellectual Property</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=osei_mensah">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Osei_eyes_open.jpg" alt="Dr. Osei Mensah">
+          <img class="blink-closed" src="Judges/Osei_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Dr. Osei Mensah</div>
+          <div class="hero-judge-domain">Science &amp; Research</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=grace_nakamura">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Grace_eyes_open.jpg" alt="Admiral Grace Nakamura">
+          <img class="blink-closed" src="Judges/Grace_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Admiral Grace Nakamura (Ret.)</div>
+          <div class="hero-judge-domain">Gov, Policy &amp; National Security</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=devon_sloane">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Devon_eyes_open.jpg" alt="Devon Sloane">
+          <img class="blink-closed" src="Judges/Devon_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Devon Sloane</div>
+          <div class="hero-judge-domain">Media &amp; Entertainment</div>
+        </div>
+      </a>
+      <a class="hero-judge-card" href="/chamber.html?judge=cassidy_mercer">
+        <div class="hero-judge-portrait">
+          <img class="blink-open" src="Judges/Cassidy_eyes_open.jpg" alt="Dr. Cassidy Mercer">
+          <img class="blink-closed" src="Judges/Cassidy_eyes_closed.jpg" alt="" aria-hidden="true">
+        </div>
+        <div class="hero-judge-body">
+          <div class="hero-judge-name">Dr. Cassidy Mercer</div>
+          <div class="hero-judge-domain">Behavioral Science &amp; Psych</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
