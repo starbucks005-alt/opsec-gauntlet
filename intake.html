@@ -115,6 +115,75 @@
   }
   .field-counter.over{color:var(--crimson-bright);}
 
+  /* File upload zone. Sits above the description textarea. The user can
+     drop a PDF / DOCX / TXT or click "Choose a file." On success the
+     extracted text populates the textarea; the user can edit it before
+     submitting. Removing the file clears the association but NOT the
+     extracted text - the visitor stays in control of what they wrote. */
+  .file-drop{
+    margin-bottom:0.7rem;
+    padding:0.95rem 1.1rem;
+    border:1px dashed rgba(212,170,74,0.35);
+    background:rgba(212,170,74,0.03);
+    transition:border-color 0.18s,background 0.18s;
+  }
+  .file-drop.is-dragover{
+    border-color:var(--gold-light);
+    background:rgba(212,170,74,0.08);
+  }
+  .file-drop.is-loading{
+    border-color:var(--gold-light);
+    background:rgba(212,170,74,0.06);
+  }
+  .file-drop.is-error{
+    border-color:var(--gauntlet-consequence,#c0392b);
+    background:rgba(192,57,43,0.06);
+  }
+  .file-drop-prompt{
+    font-family:'Cormorant Garamond',serif;font-size:0.98rem;line-height:1.5;
+    color:var(--text-dim);
+  }
+  .file-drop-browse{
+    background:transparent;border:none;cursor:pointer;
+    font:inherit;
+    color:var(--gold-light);text-decoration:underline;
+    padding:0;
+  }
+  .file-drop-browse:hover{color:var(--cream);}
+  .file-drop-state{
+    display:flex;align-items:center;justify-content:space-between;gap:0.9rem;
+    flex-wrap:wrap;
+  }
+  .file-drop-name{
+    flex:1;min-width:0;
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;
+    color:var(--cream);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .file-drop-status{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--gold-light);
+  }
+  .file-drop.is-loading .file-drop-status::after{
+    content:' .'; animation:tg-file-dots 1.2s steps(4,end) infinite;
+  }
+  @keyframes tg-file-dots {
+    0%   { content:' .'; }
+    25%  { content:' ..'; }
+    50%  { content:' ...'; }
+    75%  { content:' ....'; }
+    100% { content:' .'; }
+  }
+  .file-drop.is-error .file-drop-status{color:var(--gauntlet-consequence,#c0392b);}
+  .file-drop-remove{
+    background:transparent;border:1px solid var(--rule);
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);
+    padding:0.45rem 0.85rem;cursor:pointer;
+    transition:border-color 0.18s,color 0.18s;
+  }
+  .file-drop-remove:hover{border-color:var(--gauntlet-consequence,#c0392b);color:var(--gauntlet-consequence,#c0392b);}
+
   details.optional{margin-bottom:1.8rem;}
   details.optional summary{
     cursor:pointer;
@@ -195,6 +264,21 @@
     <div class="field">
       <label class="field-label" for="f-description">Describe it <span class="req">required</span></label>
       <div class="field-help">What is the idea? What problem does it solve? Who is it for? Anything you already know.</div>
+
+      <div class="file-drop" id="file-drop">
+        <input type="file" id="f-file"
+               accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+               hidden>
+        <div class="file-drop-prompt" id="file-drop-empty">
+          Have it in a document? <button type="button" class="file-drop-browse" id="file-drop-browse">Choose a file</button> or drop one here. PDF, DOCX, or TXT. Max 4&nbsp;MB.
+        </div>
+        <div class="file-drop-state" id="file-drop-state" hidden>
+          <div class="file-drop-name" id="file-drop-name"></div>
+          <div class="file-drop-status" id="file-drop-status"></div>
+          <button type="button" class="file-drop-remove" id="file-drop-remove">Remove</button>
+        </div>
+      </div>
+
       <textarea id="f-description" name="description" maxlength="12000" required
                 placeholder="A paragraph is enough to start. Two or three is better. Do not worry about polish."></textarea>
       <div class="field-counter" id="desc-counter">0 / 12000</div>
@@ -284,6 +368,147 @@
   }
   desc.addEventListener('input', updateCount);
   updateCount();
+
+  // ── File upload + extraction ───────────────────────────────────────────
+  // The user can drop or pick a PDF / DOCX / TXT. We base64 the bytes and
+  // POST to /.netlify/functions/tg-file-extract, which returns plain text.
+  // The extracted text drops into the description field where the user
+  // can edit before submitting. Removing the file clears the association
+  // but NOT the extracted text - the user stays in control of their words.
+  const FILE_EXTRACT_ENDPOINT = '/.netlify/functions/tg-file-extract';
+  const FILE_MAX_BYTES        = 4 * 1024 * 1024;   // 4 MB binary
+  const ACCEPT_EXT            = ['pdf', 'docx', 'txt'];
+
+  const fileDrop    = document.getElementById('file-drop');
+  const fileInput   = document.getElementById('f-file');
+  const fileBrowse  = document.getElementById('file-drop-browse');
+  const fileEmpty   = document.getElementById('file-drop-empty');
+  const fileState   = document.getElementById('file-drop-state');
+  const fileName    = document.getElementById('file-drop-name');
+  const fileStatus  = document.getElementById('file-drop-status');
+  const fileRemove  = document.getElementById('file-drop-remove');
+
+  function fileFormatSize(bytes){
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function fileShowState(name, statusText, mode){
+    fileEmpty.hidden = true;
+    fileState.hidden = false;
+    fileName.textContent = name;
+    fileStatus.textContent = statusText;
+    fileDrop.classList.remove('is-loading', 'is-error');
+    if (mode === 'loading') fileDrop.classList.add('is-loading');
+    if (mode === 'error')   fileDrop.classList.add('is-error');
+  }
+  function fileReset(){
+    fileEmpty.hidden = false;
+    fileState.hidden = true;
+    fileName.textContent = '';
+    fileStatus.textContent = '';
+    fileDrop.classList.remove('is-loading', 'is-error', 'is-dragover');
+    fileInput.value = '';
+  }
+
+  function fileReadAsBase64(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result || '';
+        // result is a data URL like "data:application/pdf;base64,JVBERi0..."
+        const comma = result.indexOf(',');
+        resolve(comma >= 0 ? result.slice(comma + 1) : '');
+      };
+      reader.onerror = () => reject(new Error('Could not read file'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function fileHandlePick(file){
+    if (!file) return;
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    if (!ACCEPT_EXT.includes(ext)) {
+      fileShowState(file.name, 'Unsupported. PDF, DOCX, or TXT only.', 'error');
+      return;
+    }
+    if (file.size > FILE_MAX_BYTES) {
+      fileShowState(file.name, 'File too large. Max 4 MB.', 'error');
+      return;
+    }
+
+    fileShowState(file.name + ' (' + fileFormatSize(file.size) + ')', 'Reading', 'loading');
+
+    let base64;
+    try { base64 = await fileReadAsBase64(file); }
+    catch(_) {
+      fileShowState(file.name, 'Could not read the file.', 'error');
+      return;
+    }
+
+    let resp, data;
+    try {
+      resp = await fetch(FILE_EXTRACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, mime: file.type || '', data: base64 }),
+      });
+      data = await resp.json().catch(() => ({}));
+    } catch (err) {
+      fileShowState(file.name, 'Upload failed. Try again.', 'error');
+      return;
+    }
+
+    if (!resp.ok) {
+      // Conduct violation gets the ejection screen, same as the form-side
+      // filter. Other errors just inline.
+      if (resp.status === 422 && data && data.code === 'conduct') {
+        if (window.TGChamberRules && window.TGChamberRules.eject) {
+          window.TGChamberRules.eject({
+            reason: 'Your uploaded file contained language that violates The Chamber\'s conduct rules.',
+          });
+          return;
+        }
+      }
+      fileShowState(file.name, (data && data.error) || ('Error ' + resp.status), 'error');
+      return;
+    }
+
+    // Success. Drop the text into the description and update the counter.
+    desc.value = data.text || '';
+    updateCount();
+    const truncNote = data.truncated
+      ? ' Truncated to 12k chars - paste any missing context below.'
+      : '';
+    fileShowState(file.name + ' (' + fileFormatSize(file.size) + ')', 'Loaded' + truncNote, null);
+  }
+
+  fileBrowse.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) fileHandlePick(f);
+  });
+  fileRemove.addEventListener('click', fileReset);
+
+  // Drag-and-drop. Prevents default so the browser does not navigate away
+  // when the user drops the file outside the textarea.
+  ['dragenter', 'dragover'].forEach(evt => {
+    fileDrop.addEventListener(evt, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      fileDrop.classList.add('is-dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(evt => {
+    fileDrop.addEventListener(evt, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      fileDrop.classList.remove('is-dragover');
+    });
+  });
+  fileDrop.addEventListener('drop', (e) => {
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) fileHandlePick(f);
+  });
 
   // Submit.
   const form   = document.getElementById('intake-form');

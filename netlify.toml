@@ -129,3 +129,7 @@
 
   [functions.tg-ep-briefings]
     timeout = 26
+
+  [functions.tg-file-extract]
+    timeout = 26
+    external_node_modules = ["pdf-parse", "mammoth"]
