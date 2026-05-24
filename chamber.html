@@ -1466,7 +1466,21 @@
       when += 400;
     });
 
-    // Audience heckle lands after all three judges have spoken.
+    // Triangulation verdict. The math over the three findings (server-
+    // computed). 'agreement' = tight cluster, 'conflict' = wide spread,
+    // 'middle' = somewhere in between. Lands as a system message so it
+    // reads as the room's collective read, not any one judge's voice.
+    if (payload.triangulation){
+      setTimeout(() => {
+        addChatMessage({
+          kind: 'system',
+          body: formatTriangulationLine(payload.triangulation),
+        });
+      }, when + 1000);
+      when += 1000;
+    }
+
+    // Audience heckle lands after the verdict.
     if (firstAudience){
       setTimeout(() => {
         const targetedHeckle = chosenList[0] && HECKLES_ABOUT_ACTIVE[chosenList[0].id];
@@ -1478,6 +1492,22 @@
         });
       }, when + 1200);
     }
+  }
+
+  // Render the triangulation in plain English. Scores are 0-10. Composite
+  // is 0-1 (normalized mean). Verdict drives the framing.
+  function formatTriangulationLine(t){
+    const composite10 = Math.round((t.composite_score || 0) * 100) / 10; // back to 0-10 with 1 decimal
+    const scores = Object.values((t.matrix && t.matrix.clarity) || {});
+    const min = scores.length ? Math.min(...scores) : 0;
+    const max = scores.length ? Math.max(...scores) : 0;
+    if (t.verdict === 'agreement'){
+      return `Panel agreement on Clarity. The room reads it at ${composite10}/10. Tight cluster.`;
+    }
+    if (t.verdict === 'conflict'){
+      return `Panel split on Clarity. Scores ranged ${min} to ${max}. Your idea reads differently to different judges.`;
+    }
+    return `Panel mixed on Clarity. Average ${composite10}/10, spread ${min} to ${max}. Some room to tighten.`;
   }
 
   function onChatSubmit(e){

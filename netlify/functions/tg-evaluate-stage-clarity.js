@@ -1,14 +1,12 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   tg-evaluate-stage-clarity — Stage 1 Clarity, ALL THREE chosen judges.
+   tg-evaluate-stage-clarity — Stage 1 Clarity, all three chosen judges,
+                                plus triangulation math.
 
-   The next step after the one-judge slice. Takes a submission and the
-   triad of three chosen judges, creates one tg_evaluations row, fires
+   Takes a submission and the triad, creates one tg_evaluations row, fires
    three Anthropic calls in parallel (Promise.all), writes three
-   tg_judge_outputs rows, and returns the three findings together.
-
-   This is the foundation for triangulation - once we have three scored
-   findings on the same dimension, the triangulation math (agreement
-   <=0.15, conflict >=0.35) becomes computable.
+   tg_judge_outputs rows, computes the triangulation (agreement <=0.15,
+   conflict >=0.35 on normalized spread), writes tg_triangulations, and
+   returns everything in one payload.
 
    POST body : {
      submission_id: uuid (required)
@@ -19,7 +17,15 @@
      findings: [
        { judge_id, judge_name, score: 0-10, finding: string, confidence: 0-1 },
        ...
-     ]
+     ],
+     triangulation: {
+       matrix:               { clarity: { judge_id: score, ... } },
+       agreement_dimensions: ['clarity'] | [],
+       conflict_dimensions:  ['clarity'] | [],
+       coverage_gaps:        [],
+       composite_score:      0.00-1.00,
+       verdict:              'agreement' | 'conflict' | 'middle'
+     } | null
    }
    Env vars  : SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY
    ───────────────────────────────────────────────────────────────────────────── */
@@ -94,6 +100,50 @@ function buildUserPrompt(subRow){
     '',
     'Score CLARITY now. Return JSON only.',
   ].filter(Boolean).join('\n');
+}
+
+// Triangulation math. Pure function over scored findings.
+//
+//   matrix:               { <dimension>: { <judge_id>: score, ... } }
+//   agreement_dimensions: dimensions where (max - min) / 10 <= 0.15
+//   conflict_dimensions:  dimensions where (max - min) / 10 >= 0.35
+//   coverage_gaps:        dimensions with <2 valid scores
+//   composite_score:      mean of all valid scores, normalized 0-1
+//   verdict:              'agreement' | 'conflict' | 'middle'
+//
+// Slice 1 has one dimension (clarity), so most arrays have at most 1 entry.
+// The structure is dimension-keyed so the rest of slice 1 (more dimensions)
+// can plug into the same math without code changes.
+function computeTriangulation(findings){
+  const valid = findings.filter(f => !f.error && typeof f.score === 'number');
+  if (valid.length === 0) return null;
+
+  const dimensionScores = { clarity: valid.map(f => f.score) };
+  const matrix = { clarity: {} };
+  valid.forEach(f => { matrix.clarity[f.judge_id] = f.score; });
+
+  const agreement_dimensions = [];
+  const conflict_dimensions  = [];
+  const coverage_gaps        = [];
+
+  Object.entries(dimensionScores).forEach(([dim, scores]) => {
+    if (scores.length < 2){ coverage_gaps.push(dim); return; }
+    const min = Math.min(...scores);
+    const max = Math.max(...scores);
+    const normalizedSpread = (max - min) / 10;
+    if (normalizedSpread <= 0.15) agreement_dimensions.push(dim);
+    else if (normalizedSpread >= 0.35) conflict_dimensions.push(dim);
+  });
+
+  const flat = Object.values(dimensionScores).flat();
+  const mean = flat.reduce((a, b) => a + b, 0) / flat.length;
+  const composite_score = Math.round((mean / 10) * 100) / 100;
+
+  let verdict = 'middle';
+  if (agreement_dimensions.length && !conflict_dimensions.length) verdict = 'agreement';
+  else if (conflict_dimensions.length) verdict = 'conflict';
+
+  return { matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score, verdict };
 }
 
 async function evaluateOneJudge(client, judge, userPrompt){
@@ -244,7 +294,30 @@ exports.handler = async (event) => {
     output_id:  r.output_id || null,
   }));
 
-  // 5. Mark the evaluation completed if ALL three judges returned. Otherwise
+  // 5. Triangulation. Pure math over the findings - no LLM in this layer.
+  //    Writes tg_triangulations and includes the math in the response so
+  //    the chamber can render a verdict line after the three findings.
+  let triangulation = null;
+  try {
+    triangulation = computeTriangulation(findings);
+    if (triangulation){
+      const { error: triErr } = await supabase
+        .from('tg_triangulations')
+        .insert({
+          evaluation_id:        evaluationId,
+          matrix:               triangulation.matrix,
+          agreement_dimensions: triangulation.agreement_dimensions,
+          conflict_dimensions:  triangulation.conflict_dimensions,
+          coverage_gaps:        triangulation.coverage_gaps,
+          composite_score:      triangulation.composite_score,
+        });
+      if (triErr) console.error('[stage-clarity] triangulation insert failed', triErr);
+    }
+  } catch (err) {
+    console.error('[stage-clarity] triangulation computation failed', err);
+  }
+
+  // 6. Mark the evaluation completed if ALL three judges returned. Otherwise
   //    leave it in 'running' so a retry can finish the missing pieces.
   const allOk = findings.every(f => !f.error);
   if (allOk){
@@ -254,5 +327,5 @@ exports.handler = async (event) => {
       .eq('id', evaluationId);
   }
 
-  return json(200, { evaluation_id: evaluationId, findings });
+  return json(200, { evaluation_id: evaluationId, findings, triangulation });
 };
