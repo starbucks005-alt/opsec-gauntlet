@@ -540,14 +540,14 @@
       <div class="tg-ig-idea">
         <div class="tg-ig-idea-title">${escapeHtml(it.title)}</div>
         <p class="tg-ig-idea-desc">${escapeHtml(it.description)}</p>
-        <button class="tg-ig-idea-cta" type="button" data-pick-idea="${i}">Bring this one to the Chamber →</button>
+        <button class="tg-ig-idea-cta" type="button" data-pick-idea="${i}">Take it through The Gauntlet →</button>
       </div>
     `).join('');
 
     bodyEl.innerHTML = `
       <div class="tg-ig-eyebrow">Three to choose from</div>
       <h2 class="tg-ig-title">Pick one. <em>Or generate three more.</em></h2>
-      <p class="tg-ig-sub">Each idea is a starting point, not a finished pitch. The one you bring to the Chamber is the one you will edit before submitting.</p>
+      <p class="tg-ig-sub">Take one of these ideas through The Gauntlet to polish it, then to the Chamber to be judged...</p>
       <div class="tg-ig-idea-list">${cards}</div>
     `;
     navEl.innerHTML = `
