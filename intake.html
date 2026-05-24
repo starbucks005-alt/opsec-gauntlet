@@ -294,7 +294,7 @@
 
     btn.disabled = true;
     status.classList.remove('is-error');
-    status.textContent = 'Submitting...';
+    status.textContent = 'Reading your idea and routing the panel...';
 
     const payload = {
       user_id: getOrCreateAnonId(),
@@ -313,10 +313,16 @@
       if (!resp.ok || !data.id){
         throw new Error(data.error || ('HTTP ' + resp.status));
       }
-      // Cache the title so the Chamber can show it without a re-fetch.
+      // Cache the title + the derived requirement vector so the Chamber
+      // can show the title without a re-fetch AND feed the real vector
+      // straight into the cosine-sim recommendation engine instead of
+      // the placeholder defaultRequirementVector().
       try {
         sessionStorage.setItem('tg_submission_id',    data.id);
         sessionStorage.setItem('tg_submission_title', title);
+        if (data.requirement_vector){
+          sessionStorage.setItem('tg_submission_vector', JSON.stringify(data.requirement_vector));
+        }
       } catch(_){}
       window.location.href = '/chamber.html?submission=' + encodeURIComponent(data.id);
     } catch (err) {

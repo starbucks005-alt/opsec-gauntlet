@@ -987,6 +987,7 @@
     activeJudgeId: null,
     submissionId: null,
     submissionTitle: '',
+    submissionVector: null,   // 8-dim requirement vector derived at intake
   };
 
   // Randomize stage hand + PA assets on each chamber visit. We have 5 SH
@@ -1029,6 +1030,13 @@
         let title = '';
         try { title = sessionStorage.getItem('tg_submission_title') || ''; } catch(_){}
         state.submissionTitle = title || 'Submission ' + id.slice(0,8);
+        // Requirement vector also cached client-side by intake.html. Used
+        // by the cosine-sim engine below to produce recommendations that
+        // actually reflect the user's submission.
+        try {
+          const raw = sessionStorage.getItem('tg_submission_vector');
+          if (raw) state.submissionVector = JSON.parse(raw);
+        } catch(_){}
         const strip = document.getElementById('tg-submission-strip');
         const titleEl = document.getElementById('tg-submission-title');
         if (strip && titleEl){
@@ -1637,13 +1645,18 @@
       state.judges = data.judges;
       state.dims   = data.dimensions || [];
 
-      // Compute the recommended triad via the cosine-sim engine. Placeholder
-      // requirement vector for now; replaced by submission-derived R in Gate D.
+      // Compute the recommended triad via the cosine-sim engine. If the
+      // user came in with a real submission (submissionVector present from
+      // intake), use the requirement vector derived from THEIR text. Else
+      // fall back to the default placeholder.
       try {
-        const R = window.tgRecommend.defaultRequirementVector();
+        const R = state.submissionVector
+          ? state.submissionVector
+          : window.tgRecommend.defaultRequirementVector();
         const triad = window.tgRecommend.recommendTriad(R, state.judges, state.dims);
         state.recommended = new Set(triad);
-        console.info('[tg-recommend] triad:', triad);
+        console.info('[tg-recommend] triad:', triad,
+                     '(source:', state.submissionVector ? 'submission' : 'default', ')');
       } catch (err) {
         console.warn('[tg-recommend] failed; no badges shown', err);
         state.recommended = new Set();
