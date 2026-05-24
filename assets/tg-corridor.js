@@ -112,8 +112,37 @@
     document.head.appendChild(style);
   }
 
+  // Replace the static voice-sample quote with a clear loading message
+  // while we fetch tailored briefings. Without this the visitor sees the
+  // generic quote at 55% opacity and reads it as the real thing - then
+  // it pops to the personalized line, which feels like a glitch.
+  //
+  // The original text is stashed on the element so we can restore if the
+  // fetch fails. Linktext is stashed too (collectCards already captured
+  // linkOriginal but stashing on the element survives multiple refreshes).
   function setLoading(cards, on) {
-    cards.forEach(c => c.quoteEl.classList.toggle('tg-quote-loading', !!on));
+    cards.forEach(c => {
+      if (on) {
+        if (c.quoteEl.dataset.tgOriginalQuote === undefined) {
+          c.quoteEl.dataset.tgOriginalQuote = c.quoteEl.textContent;
+        }
+        c.quoteEl.textContent = 'Reading your idea...';
+        c.quoteEl.classList.add('tg-quote-loading');
+      } else {
+        c.quoteEl.classList.remove('tg-quote-loading');
+      }
+    });
+  }
+
+  // Restore the static voice-sample quote (used when a fetch fails -
+  // better to show the generic quote than leave the loading text up).
+  function restoreStatic(cards) {
+    cards.forEach(c => {
+      if (c.quoteEl.dataset.tgOriginalQuote !== undefined) {
+        c.quoteEl.textContent = c.quoteEl.dataset.tgOriginalQuote;
+      }
+      c.quoteEl.classList.remove('tg-quote-loading');
+    });
   }
 
   function applyBriefings(cards, briefings) {
@@ -207,11 +236,14 @@
       if (data && data.briefings) {
         applyBriefings(cards, data.briefings);
         writeCache(currentSig, data);
+      } else {
+        restoreStatic(cards);
       }
     } catch (err) {
       console.warn('[tg-corridor]', err.message);
-      setLoading(cards, false);
-      // Static quotes remain. Silent failure - no broken UI for the visitor.
+      // Restore the static quotes so the visitor doesn't end up with
+      // "Reading your idea..." stranded on every card.
+      restoreStatic(cards);
     }
   }
 
