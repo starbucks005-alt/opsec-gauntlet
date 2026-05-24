@@ -247,6 +247,24 @@
     });
   }
 
+  // If the user came from the Idea Generator and picked one of the three
+  // candidates, the title + description were stashed in sessionStorage.
+  // Pull them in once and clear so a manual refresh starts blank.
+  try {
+    const preTitle = sessionStorage.getItem('tg_prefill_title');
+    const preDesc  = sessionStorage.getItem('tg_prefill_description');
+    if (preTitle){
+      const t = document.getElementById('f-title');
+      if (t) t.value = preTitle;
+      sessionStorage.removeItem('tg_prefill_title');
+    }
+    if (preDesc){
+      const d = document.getElementById('f-description');
+      if (d) d.value = preDesc;
+      sessionStorage.removeItem('tg_prefill_description');
+    }
+  } catch(_){}
+
   // Live character counter on description.
   const desc    = document.getElementById('f-description');
   const counter = document.getElementById('desc-counter');

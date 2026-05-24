@@ -1,35 +1,36 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   tg-idea-generator.js — Homepage "Help me find one" Path B modal.
+   tg-idea-generator.js — Homepage "Help me find an idea to bring" modal.
 
-   Pure tool, no character. Stepped UI:
-     Step 1 - What is your world?            (radio)
-     Step 2 - What stops you?                (radio - routes helper tier)
-     Step 3 - How far along are you?         (radio)
-     Step 4 - Describe it in your own words. (text)
-     Step 5 - Loading / generating
-     Step 6 - Concept seed + Wren handoff
+   Pure tool, no character. The user does NOT have an idea. The modal
+   collects three pieces of context and Claude returns three distinct
+   candidate ideas. The user picks one, which auto-fills the intake form
+   so they can carry it into the Chamber.
+
+   Stepped UI:
+     Step 1 - What world interests you?          (radio)
+     Step 2 - What kind of thing frustrates you? (radio)
+     Step 3 - What would you bring to building it?(radio)
+     Step 4 - Loading / generating
+     Step 5 - Three candidate ideas + 'Bring this one to the Chamber'
+              + 'Show me 3 more' regenerate
 
    Trigger: any element with [data-tg-idea-open].
 
-   Backend: POST /.netlify/functions/tg-idea-generator with the four answers.
-   Returns { seed, blocker }. Seed is rendered as-is. Blocker is used to
-   highlight which helper picks up next (downstream routing, not built yet).
+   Backend: POST /.netlify/functions/tg-idea-generator with { world,
+   frustration, bring }. Returns { ideas: [{ title, description }, ...] }.
 
-   Self-contained: injects its own styles, builds its own DOM, plays Wren's
-   role voice through the existing tg-voice endpoint when the seed lands.
+   Self-contained: injects its own styles, builds its own DOM, hands off
+   to /intake.html via sessionStorage when the user picks an idea.
    ───────────────────────────────────────────────────────────────────────────── */
 
 (function(){
   'use strict';
 
-  // Voice cache-buster matches tg-voice.js so Wren is fresh.
-  const VOICE_VERSION = '2026-05-23-v5';
-  const VOICE_ENDPOINT = '/.netlify/functions/tg-voice';
-  const SEED_ENDPOINT  = '/.netlify/functions/tg-idea-generator';
+  const IDEA_ENDPOINT = '/.netlify/functions/tg-idea-generator';
 
   const Q1 = {
     key: 'world',
-    title: 'What is your world?',
+    title: 'What world interests you?',
     sub:   'Pick the closest. You can pick Other if nothing fits.',
     type:  'radio',
     options: [
@@ -44,49 +45,42 @@
   };
 
   const Q2 = {
-    key: 'blocker',
-    title: 'What stops you from making it happen?',
+    key: 'frustration',
+    title: 'What kind of thing frustrates you that you wish someone would fix?',
     sub:   'Whichever one feels truest right now.',
     type:  'radio',
     options: [
-      { value: 'I do not know if anyone actually wants it',         label: 'I do not know if anyone actually wants it' },
-      { value: 'I would not know where to start building it',       label: 'I would not know where to start building it' },
-      { value: 'I do not know how to talk about it or sell it',     label: 'I do not know how to talk about it or sell it' },
-      { value: 'I am not sure it is original enough',               label: 'I am not sure it is original enough' },
-      { value: 'I do not have the time or resources yet',           label: 'I do not have the time or resources yet' },
-      { value: '__other__',                                         label: 'Other', other: true },
+      { value: 'Something I have to do over and over that wastes time', label: 'Something I have to do over and over that wastes time' },
+      { value: 'Something that should be simple but is needlessly hard', label: 'Something that should be simple but is needlessly hard' },
+      { value: 'Something nobody has built yet that I wish existed',     label: 'Something nobody has built yet that I wish existed' },
+      { value: 'Something that exists but is broken or done badly',     label: 'Something that exists but is broken or done badly' },
+      { value: 'Something I know from work that outsiders do not see',  label: 'Something I know from my work that outsiders do not see' },
+      { value: '__other__',                                              label: 'Other', other: true },
     ],
   };
 
   const Q3 = {
-    key: 'stage',
-    title: 'How far along are you?',
-    sub:   '',
+    key: 'bring',
+    title: 'What would you bring to building it?',
+    sub:   'Be honest. There is no wrong answer.',
     type:  'radio',
     options: [
-      { value: 'Just a feeling nothing written down yet',     label: 'Just a feeling, nothing written down yet' },
-      { value: 'I have described it to someone',              label: 'I have described it to someone' },
-      { value: 'I have notes or a rough outline',             label: 'I have notes or a rough outline' },
-      { value: 'I have tried to build or research it already',label: 'I have tried to build or research it already' },
+      { value: 'A skill or expertise from my work',          label: 'A skill or expertise from my work' },
+      { value: 'A network of people who would care',         label: 'A network of people who would care' },
+      { value: 'Money I could put in',                       label: 'Money I could put in' },
+      { value: 'Time and patience to grind it out',          label: 'Time and patience to grind it out' },
+      { value: 'Just curiosity, no advantage yet',           label: 'Just curiosity, no advantage yet' },
+      { value: '__other__',                                  label: 'Other', other: true },
     ],
   };
 
-  const Q4 = {
-    key: 'description',
-    title: 'Describe it in your own words.',
-    sub:   'No pressure on grammar. Plain English is best.',
-    type:  'textarea',
-    placeholder: 'One sentence is enough to start.',
-  };
-
-  const QUESTIONS = [Q1, Q2, Q3, Q4];
+  const QUESTIONS = [Q1, Q2, Q3];
 
   const state = {
-    step: 0,                  // 0..3 questions, 4 loading, 5 result
-    answers: { world:'', blocker:'', stage:'', description:'' },
-    otherTexts: { world:'', blocker:'' },
-    framing: null,            // Wren's one-line reaction before the seed
-    seed: null,
+    step: 0,                 // 0..2 questions, 3 loading, 4 result
+    answers: { world:'', frustration:'', bring:'' },
+    otherTexts: { world:'', frustration:'', bring:'' },
+    ideas: null,
   };
 
   // ── Styles ───────────────────────────────────────────────────────────────
@@ -239,47 +233,42 @@
       }
 
       .tg-ig-result{padding:0.3rem 0 0.2rem;}
-      .tg-ig-framing{
-        font-family:'Playfair Display',serif;font-style:italic;
-        font-size:1.05rem;line-height:1.55;color:var(--gold-light,#d4aa4a);
-        margin:0 0 0.9rem;padding:0 0.2rem;
-      }
-      .tg-ig-seed{
-        font-family:'Playfair Display',serif;font-size:1.2rem;line-height:1.55;
-        color:#f4ede0;
-        padding:1.5rem 1.6rem;
-        background:rgba(184,146,42,0.06);
+      .tg-ig-idea-list{display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1.4rem;}
+      .tg-ig-idea{
+        padding:1.1rem 1.2rem;
+        border:1px solid rgba(184,146,42,0.30);
+        background:rgba(184,146,42,0.04);
         border-left:3px solid var(--gold,#b8922a);
-        margin-bottom:1.5rem;
+        transition:border-color 0.2s,background 0.2s;
       }
-      .tg-ig-handoff{
-        display:flex;gap:1rem;align-items:center;
-        padding:1rem;
-        border:1px solid rgba(184,146,42,0.25);background:rgba(0,0,0,0.45);
-        margin-bottom:1.3rem;
+      .tg-ig-idea:hover{
+        border-left-color:var(--gold-light,#d4aa4a);
+        background:rgba(184,146,42,0.07);
       }
-      .tg-ig-handoff-portrait{
-        width:64px;height:64px;flex:0 0 64px;overflow:hidden;
-        border:1px solid rgba(184,146,42,0.35);background:#0a0a0a;
+      .tg-ig-idea-title{
+        font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;
+        color:#f4ede0;line-height:1.25;margin-bottom:0.5rem;
       }
-      .tg-ig-handoff-portrait img{
-        width:100%;height:100%;object-fit:cover;object-position:center top;
-        display:block;
+      .tg-ig-idea-desc{
+        font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.55;
+        color:#e8dece;margin-bottom:0.9rem;
       }
-      .tg-ig-handoff-text{flex:1;}
-      .tg-ig-handoff-name{
-        font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
-        color:#f4ede0;margin-bottom:0.2rem;
+      .tg-ig-idea-cta{
+        display:inline-flex;align-items:center;gap:0.4rem;
+        background:transparent;border:1px solid var(--gold,#b8922a);
+        color:var(--gold,#b8922a);
+        font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+        text-transform:uppercase;font-weight:700;
+        padding:0.55rem 0.95rem;cursor:pointer;
+        transition:background 0.2s,color 0.2s;
       }
-      .tg-ig-handoff-line{
-        font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
-        text-transform:uppercase;color:var(--gold-light,#d4aa4a);
-      }
+      .tg-ig-idea-cta:hover{background:var(--gold,#b8922a);color:#0a0a0a;}
 
       @media (max-width:600px){
         .tg-ig-modal{padding:1.3rem 1.2rem 1.2rem;}
         .tg-ig-title{font-size:1.4rem;}
-        .tg-ig-seed{font-size:1.05rem;padding:1.1rem 1.2rem;}
+        .tg-ig-idea{padding:0.9rem 1rem;}
+        .tg-ig-idea-title{font-size:1.1rem;}
       }
     `;
     document.head.appendChild(s);
@@ -322,10 +311,9 @@
     injectStyles();
     buildShell();
     state.step = 0;
-    state.answers = { world:'', blocker:'', stage:'', description:'' };
-    state.otherTexts = { world:'', blocker:'' };
-    state.framing = null;
-    state.seed = null;
+    state.answers = { world:'', frustration:'', bring:'' };
+    state.otherTexts = { world:'', frustration:'', bring:'' };
+    state.ideas = null;
     backdrop.classList.add('is-open');
     render();
   }
@@ -452,7 +440,7 @@
     navEl.innerHTML = `
       <button class="tg-ig-btn" id="tg-ig-back" ${backDisabled ? 'disabled' : ''}>Back</button>
       <button class="tg-ig-btn tg-ig-btn-primary" id="tg-ig-next" ${nextDisabled ? 'disabled' : ''}>
-        ${isLast ? 'Generate Seed →' : 'Next →'}
+        ${isLast ? 'Generate 3 ideas →' : 'Next →'}
       </button>
     `;
     navEl.querySelector('#tg-ig-back').addEventListener('click', () => {
@@ -496,7 +484,7 @@
     bodyEl.innerHTML = `
       <div class="tg-ig-loading">
         <div class="tg-ig-loading-spinner" aria-hidden="true"></div>
-        <div class="tg-ig-loading-text">Shaping your concept seed</div>
+        <div class="tg-ig-loading-text">Shaping three candidate ideas</div>
       </div>
     `;
     navEl.innerHTML = '';
@@ -508,24 +496,23 @@
 
     const payload = {
       world:       finalAnswer(Q1),
-      blocker:     finalAnswer(Q2),
-      stage:       finalAnswer(Q3),
-      description: finalAnswer(Q4),
+      frustration: finalAnswer(Q2),
+      bring:       finalAnswer(Q3),
     };
 
     try {
-      const resp = await fetch(SEED_ENDPOINT, {
+      const resp = await fetch(IDEA_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       if (!resp.ok){
         const detail = await resp.text().catch(() => '');
-        throw new Error(`seed ${resp.status}: ${detail || resp.statusText}`);
+        throw new Error(`ideas ${resp.status}: ${detail || resp.statusText}`);
       }
       const data = await resp.json();
-      state.framing = data.framing || '';
-      state.seed    = data.seed    || '';
+      state.ideas = Array.isArray(data.ideas) ? data.ideas : [];
+      if (state.ideas.length === 0) throw new Error('no ideas returned');
       state.step = QUESTIONS.length + 1;
       render();
     } catch (err) {
@@ -533,11 +520,11 @@
       bodyEl.innerHTML = `
         <div class="tg-ig-eyebrow">Could not reach the generator</div>
         <h2 class="tg-ig-title">Something went wrong.</h2>
-        <p class="tg-ig-sub">The concept seed service did not respond. Try again, or skip to the Chamber and tell the judges directly.</p>
+        <p class="tg-ig-sub">The idea service did not respond. Try again, or head straight to the Chamber if you have your own idea.</p>
       `;
       navEl.innerHTML = `
         <button class="tg-ig-btn" id="tg-ig-retry">Try again</button>
-        <a class="tg-ig-btn tg-ig-btn-primary" href="/chamber.html">Enter The Chamber →</a>
+        <a class="tg-ig-btn tg-ig-btn-primary" href="/intake.html">Skip to intake →</a>
       `;
       navEl.querySelector('#tg-ig-retry').addEventListener('click', () => {
         state.step = QUESTIONS.length - 1;
@@ -548,85 +535,46 @@
 
   // ── Result ──────────────────────────────────────────────────────────────
   function renderResult(){
-    bodyEl.innerHTML = `
-      <div class="tg-ig-eyebrow">Your concept seed</div>
-      <h2 class="tg-ig-title">Wren is <em>reading it back</em>.</h2>
-      <div class="tg-ig-result">
-        <div class="tg-ig-handoff">
-          <div class="tg-ig-handoff-portrait">
-            <img src="Helpers/Wren_Profile.jpg" alt="Wren Calloway">
-          </div>
-          <div class="tg-ig-handoff-text">
-            <div class="tg-ig-handoff-name">Wren Calloway</div>
-            <div class="tg-ig-handoff-line" id="tg-ig-wren-status">Speaking ▶</div>
-          </div>
-        </div>
-        ${state.framing ? `<p class="tg-ig-framing">${escapeHtml(state.framing)}</p>` : ''}
-        <div class="tg-ig-seed">${escapeHtml(state.seed)}</div>
+    const ideas = state.ideas || [];
+    const cards = ideas.map((it, i) => `
+      <div class="tg-ig-idea">
+        <div class="tg-ig-idea-title">${escapeHtml(it.title)}</div>
+        <p class="tg-ig-idea-desc">${escapeHtml(it.description)}</p>
+        <button class="tg-ig-idea-cta" type="button" data-pick-idea="${i}">Bring this one to the Chamber →</button>
       </div>
+    `).join('');
+
+    bodyEl.innerHTML = `
+      <div class="tg-ig-eyebrow">Three to choose from</div>
+      <h2 class="tg-ig-title">Pick one. <em>Or generate three more.</em></h2>
+      <p class="tg-ig-sub">Each idea is a starting point, not a finished pitch. The one you bring to the Chamber is the one you will edit before submitting.</p>
+      <div class="tg-ig-idea-list">${cards}</div>
     `;
     navEl.innerHTML = `
-      <button class="tg-ig-btn" id="tg-ig-replay">Play again</button>
-      <a class="tg-ig-btn tg-ig-btn-primary" href="/Helpers/wren-scout.html">Open Wren's profile →</a>
+      <button class="tg-ig-btn" id="tg-ig-regen">Show me 3 more</button>
+      <button class="tg-ig-btn" id="tg-ig-close-result">Close</button>
     `;
-    navEl.querySelector('#tg-ig-replay').addEventListener('click', () => {
-      playWrenReadback();
+
+    // Each "Bring this one" pre-fills intake.html via sessionStorage and
+    // navigates. Intake reads tg_prefill_title + tg_prefill_description
+    // on load and pre-populates the form.
+    bodyEl.querySelectorAll('[data-pick-idea]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = parseInt(btn.getAttribute('data-pick-idea'), 10);
+        const chosen = ideas[i];
+        if (!chosen) return;
+        try {
+          sessionStorage.setItem('tg_prefill_title',       chosen.title);
+          sessionStorage.setItem('tg_prefill_description', chosen.description);
+        } catch(_){}
+        window.location.href = '/intake.html';
+      });
     });
 
-    // Wren actually reads the seed back. POST to the voice function with
-    // framing + seed as a single text payload, voiced as Wren.
-    playWrenReadback();
-  }
-
-  let wrenAudio = null;
-  let wrenAudioUrl = null;
-  function setWrenStatus(text){
-    const el = document.getElementById('tg-ig-wren-status');
-    if (el) el.textContent = text;
-  }
-
-  async function playWrenReadback(){
-    // Stop any previous play (replay case).
-    if (wrenAudio){
-      try { wrenAudio.pause(); } catch(_){}
-      wrenAudio = null;
-    }
-    if (wrenAudioUrl){
-      try { URL.revokeObjectURL(wrenAudioUrl); } catch(_){}
-      wrenAudioUrl = null;
-    }
-
-    const text = [state.framing, state.seed].filter(Boolean).join(' ').trim();
-    if (!text) return;
-
-    setWrenStatus('Warming up...');
-
-    try {
-      const resp = await fetch(VOICE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ character: 'wren_calloway', text }),
-      });
-      if (!resp.ok){
-        const detail = await resp.text().catch(() => '');
-        throw new Error(`voice ${resp.status}: ${detail || resp.statusText}`);
-      }
-      const blob = await resp.blob();
-      wrenAudioUrl = URL.createObjectURL(blob);
-      wrenAudio = new Audio(wrenAudioUrl);
-      wrenAudio.addEventListener('ended',  () => setWrenStatus('Done. Tap Play again to hear it.'));
-      wrenAudio.addEventListener('error',  () => setWrenStatus('Audio failed. Tap Play again.'));
-      wrenAudio.addEventListener('playing',() => setWrenStatus('Speaking ▶'));
-      try {
-        await wrenAudio.play();
-      } catch (err) {
-        if (err && err.name === 'AbortError') return;
-        setWrenStatus('Tap Play again to hear it.');
-      }
-    } catch (err) {
-      console.warn('[tg-ideagen] wren readback failed', err);
-      setWrenStatus('Audio unavailable. Read it above.');
-    }
+    navEl.querySelector('#tg-ig-regen').addEventListener('click', () => {
+      startGeneration();
+    });
+    navEl.querySelector('#tg-ig-close-result').addEventListener('click', close);
   }
 
   // ── Utilities ───────────────────────────────────────────────────────────
