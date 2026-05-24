@@ -774,10 +774,10 @@
           <div class="tg-stage-floor"></div>
 
           <div class="tg-set-prop tg-set-sh-left" aria-hidden="true">
-            <img src="STAGE HANDS/SH1.png" alt="">
+            <img id="tg-sh-left-img" src="STAGE HANDS/SH1.png" alt="">
           </div>
           <div class="tg-set-prop tg-set-sh-right" aria-hidden="true">
-            <img src="STAGE HANDS/SH2.png" alt="">
+            <img id="tg-sh-right-img" src="STAGE HANDS/SH2.png" alt="">
           </div>
 
           <div class="tg-stage-content">
@@ -796,10 +796,10 @@
         <div class="tg-audience-eyebrow">The Audience</div>
         <div class="tg-audience-row" id="tg-audience-row"></div>
         <div class="tg-set-pa tg-set-pa-left" aria-hidden="true">
-          <img src="STAGE HANDS/PA1.png" alt="">
+          <img id="tg-pa-left-img" src="STAGE HANDS/PA1.png" alt="">
         </div>
         <div class="tg-set-pa tg-set-pa-right" aria-hidden="true">
-          <img src="STAGE HANDS/PA2.png" alt="">
+          <img id="tg-pa-right-img" src="STAGE HANDS/PA2.png" alt="">
         </div>
       </section>
 
@@ -988,6 +988,31 @@
     submissionId: null,
     submissionTitle: '',
   };
+
+  // Randomize stage hand + PA assets on each chamber visit. We have 5 SH
+  // and 4 PA assets and were hardcoded to SH1+SH2 and PA1+PA2 - which
+  // happened to be all the same gender. Pulling from the full pool each
+  // load varies the cast over time and visibly mixes them.
+  (function randomizeStageProps(){
+    function pickTwo(max){
+      const i = Math.floor(Math.random() * max);
+      let j;
+      do { j = Math.floor(Math.random() * max); } while (j === i);
+      return [i + 1, j + 1];
+    }
+    try {
+      const [shA, shB] = pickTwo(5);
+      const [paA, paB] = pickTwo(4);
+      const shL = document.getElementById('tg-sh-left-img');
+      const shR = document.getElementById('tg-sh-right-img');
+      const paL = document.getElementById('tg-pa-left-img');
+      const paR = document.getElementById('tg-pa-right-img');
+      if (shL) shL.src = 'STAGE HANDS/SH' + shA + '.png';
+      if (shR) shR.src = 'STAGE HANDS/SH' + shB + '.png';
+      if (paL) paL.src = 'STAGE HANDS/PA' + paA + '.png';
+      if (paR) paR.src = 'STAGE HANDS/PA' + paB + '.png';
+    } catch (_) { /* random shuffle is cosmetic; chamber works either way */ }
+  })();
 
   // Pull the active submission off the URL + sessionStorage on load.
   // The id will be passed to the evaluation pipeline in a later slice;
