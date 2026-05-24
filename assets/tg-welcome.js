@@ -241,6 +241,14 @@
     const nameEl   = backdrop.querySelector('#tg-welcome-name');
     const briefEl  = backdrop.querySelector('#tg-welcome-brief');
 
+    // Pre-fill from session so users who reopen the modal (via the footer
+    // or corridor "Personalize" link) see their current values and can
+    // edit them, rather than starting from blank.
+    const existingName  = ssGet(KEY_NAME);
+    const existingBrief = ssGet(KEY_BRIEF);
+    if (existingName)  nameEl.value  = existingName;
+    if (existingBrief) briefEl.value = existingBrief;
+
     function dismiss(){
       ssSet(KEY_DISMISSED, '1');
       backdrop.classList.remove('is-open');
@@ -251,9 +259,15 @@
     function personalize(){
       const name  = (nameEl.value  || '').trim().slice(0, NAME_MAX);
       const brief = (briefEl.value || '').trim().slice(0, BRIEF_MAX);
-      if (name)  ssSet(KEY_NAME,  name);
-      if (brief) ssSet(KEY_BRIEF, brief);
+      // Always overwrite (including with empty string) so reopen-and-clear
+      // is honored. The user is in control of their own session data.
+      ssSet(KEY_NAME,  name);
+      ssSet(KEY_BRIEF, brief);
       dismiss();
+      // Tell the corridor to re-fetch with the new values. Safe to call
+      // even if the corridor script is not loaded on this page.
+      try { if (window.TGCorridor && typeof window.TGCorridor.refresh === 'function') window.TGCorridor.refresh(); }
+      catch(_) { /* ignore */ }
     }
     function onKey(e){
       if (e.key === 'Escape') dismiss();

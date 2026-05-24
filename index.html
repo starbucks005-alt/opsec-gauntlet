@@ -318,6 +318,21 @@
     margin-bottom:1.2rem;
   }
   .corridor-title em{font-style:italic;color:var(--gold-light);}
+  .corridor-personalize-line{
+    margin-top:1.4rem;
+    font-family:'Cormorant Garamond',serif;font-size:1rem;
+    color:var(--text);font-style:italic;opacity:0.78;
+  }
+  .corridor-personalize-link{
+    background:transparent;border:none;cursor:pointer;
+    font:inherit;font-style:normal;
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--gold-light);
+    margin-left:0.4rem;padding:0;
+    border-bottom:1px solid rgba(212,170,74,0.45);
+    transition:color 0.18s,border-color 0.18s;
+  }
+  .corridor-personalize-link:hover{color:var(--cream);border-bottom-color:var(--cream);}
   .corridor-lede{
     max-width:680px;margin:0 auto;
     font-size:1.15rem;line-height:1.65;color:var(--text);
@@ -697,6 +712,10 @@
     <div class="corridor-eyebrow">The Corridor</div>
     <h2 class="corridor-title">Walk the gauntlet. <em>The Executive Producers flank you.</em></h2>
     <p class="corridor-lede">Nine specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
+    <p class="corridor-personalize-line">
+      Want the specialists to speak to your idea directly?
+      <button type="button" class="corridor-personalize-link" onclick="if(window.TGWelcome)TGWelcome.open()">Personalize this for me &rarr;</button>
+    </p>
   </div>
 </section>
 
@@ -1015,6 +1034,7 @@
       <a href="/chamber.html">The Chamber</a>
       <a href="/Helpers/">The Wings</a>
       <a href="/about.html">About</a>
+      <a href="#" onclick="if(window.TGWelcome){TGWelcome.open();return false;}">Personalize</a>
     </nav>
   </div>
 </footer>
