@@ -165,3 +165,7 @@
   [functions.tg-arjun-manufacturing]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-matthew-psych]
+    timeout = 26
+    included_files = ["config/**"]
