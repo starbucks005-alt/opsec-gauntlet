@@ -217,11 +217,120 @@
   background:var(--gold, #b8922a);color:var(--ink, #0a0a0a);border-color:var(--gold, #b8922a);border-style:solid;
 }
 
+/* ── Stage B: Share-screen view ─────────────────────────────────────────
+   When the EP proposes a revision, the widget swaps from portrait to a
+   "shared screen" showing her notes on the brief: section label,
+   rationale, before/after diff, accept/reject. Portrait shrinks to a
+   PIP in the corner so the visitor still sees who is talking.
+
+   The widget grows slightly when sharing so the diff has room to read.
+   ──────────────────────────────────────────────────────────────────────── */
+.tg-zoom-widget.is-sharing{
+  width:440px;max-width:calc(100vw - 48px);
+}
+
+/* Share-screen container (injected by tg-ep-zoom.js) */
+.tg-zoom-screen{
+  display:none;flex-direction:column;
+  border:1px solid rgba(212,170,74,0.3);background:#14151a;
+  width:100%;
+  overflow:hidden;
+}
+.tg-zoom-widget.is-sharing .tg-zoom-screen{display:flex;}
+.tg-zoom-widget.is-sharing .tg-zoom-portrait{
+  position:absolute;top:0.6rem;right:0.6rem;
+  width:80px;height:80px;aspect-ratio:auto;
+  z-index:5;
+  border:2px solid rgba(212,170,74,0.5);
+  box-shadow:0 8px 20px -4px rgba(0,0,0,0.6);
+}
+.tg-zoom-widget.is-sharing .tg-zoom-stage{
+  position:relative;padding:0.5rem 0.6rem 0.6rem;gap:0.5rem;
+}
+
+.tg-zoom-screen-head{
+  padding:0.7rem 0.9rem 0.55rem;
+  border-bottom:1px solid rgba(212,170,74,0.18);
+}
+.tg-zoom-screen-eyebrow{
+  font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--gold, #b8922a);
+  margin-bottom:0.25rem;
+}
+.tg-zoom-screen-label{
+  font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
+  color:var(--cream, #f4ede0);line-height:1.25;
+  padding-right:90px; /* keep clear of the PIP */
+}
+.tg-zoom-screen-body{
+  padding:0.7rem 0.9rem;
+  display:flex;flex-direction:column;gap:0.55rem;
+  max-height:280px;overflow-y:auto;
+  font-family:'Cormorant Garamond',serif;font-size:0.92rem;line-height:1.5;
+}
+.tg-zoom-screen-rationale{
+  font-style:italic;color:var(--text-dim, #a89c88);
+  border-left:2px solid rgba(212,170,74,0.3);
+  padding:0.35rem 0 0.35rem 0.7rem;
+}
+.tg-zoom-screen-diff{display:flex;flex-direction:column;gap:0.35rem;}
+.tg-zoom-screen-before{
+  padding:0.4rem 0.55rem;
+  background:rgba(0,0,0,0.4);border-left:2px solid rgba(212,170,74,0.35);
+  color:var(--text-dim, #a89c88);font-size:0.88rem;line-height:1.5;white-space:pre-wrap;
+  text-decoration:line-through;text-decoration-color:rgba(192,57,43,0.5);
+}
+.tg-zoom-screen-arrow{
+  font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--gold, #b8922a);
+  text-align:center;padding:0.05rem 0;
+}
+.tg-zoom-screen-after{
+  padding:0.4rem 0.55rem;
+  background:rgba(212,170,74,0.06);border-left:2px solid var(--gold-light, #d4aa4a);
+  color:var(--cream, #f4ede0);font-size:0.92rem;line-height:1.5;white-space:pre-wrap;
+}
+
+.tg-zoom-screen-actions{
+  padding:0.55rem 0.9rem 0.7rem;
+  border-top:1px solid rgba(212,170,74,0.18);
+  display:flex;gap:0.45rem;flex-wrap:wrap;
+}
+.tg-zoom-screen-btn{
+  font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+  text-transform:uppercase;cursor:pointer;
+  padding:0.55rem 0.8rem;
+  border:1px solid var(--gold, #b8922a);
+  transition:all 0.18s;
+  flex:1;min-width:0;
+}
+.tg-zoom-screen-accept{background:var(--gold, #b8922a);color:#1a130a;}
+.tg-zoom-screen-accept:hover{background:var(--gold-light, #d4aa4a);border-color:var(--gold-light, #d4aa4a);}
+.tg-zoom-screen-reject{
+  background:transparent;color:var(--text-dim, #a89c88);border-color:var(--rule, rgba(184,146,42,0.3));
+}
+.tg-zoom-screen-reject:hover{border-color:var(--gauntlet-consequence, #c0392b);color:var(--gauntlet-consequence, #c0392b);}
+.tg-zoom-screen-stop{
+  background:transparent;color:var(--text-dim, #a89c88);
+  border:1px dashed var(--rule, rgba(184,146,42,0.3));
+  flex:0 0 auto;
+}
+.tg-zoom-screen-stop:hover{color:var(--gold-light, #d4aa4a);border-color:var(--gold-light, #d4aa4a);}
+
+/* When sharing, the bottom controls (Speak / Voice / Replay) get a
+   slightly smaller visual weight since the focus is the diff. */
+.tg-zoom-widget.is-sharing .tg-zoom-controls{padding-top:0.4rem;padding-bottom:0.7rem;}
+
 /* Mobile: widget takes most of the width, anchored bottom-right */
 @media (max-width:720px){
-  .tg-zoom-widget{
+  .tg-zoom-widget,
+  .tg-zoom-widget.is-sharing{
     top:auto;bottom:16px;right:16px;left:16px;
     width:auto;max-width:none;
   }
   .tg-zoom-portrait{max-height:38vh;aspect-ratio:auto;height:38vh;}
+  .tg-zoom-widget.is-sharing .tg-zoom-portrait{
+    width:60px;height:60px;
+  }
+  .tg-zoom-screen-body{max-height:42vh;}
 }

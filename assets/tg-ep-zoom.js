@@ -106,6 +106,11 @@
         try { state.currentAudio.pause(); state.currentAudio.currentTime = 0; } catch(_){}
         state.currentAudio = null;
       }
+      // If a share-screen is up, dismiss it too. The underlying revision
+      // stays pending in the chat thread so the visitor can still act on
+      // it from there - we just stop SHOWING it on the widget.
+      widget.classList.remove('is-sharing');
+      state.activeRevisionIdx = null;
       setStatus('ready');
     }
     opener.addEventListener('click', open);
@@ -113,9 +118,13 @@
 
     // ── State ───────────────────────────────────────────────────────────
     const state = {
-      voiceAutoplay: ss(KEY_VOICE_AUTO) === '1',
-      currentAudio:  null,
+      voiceAutoplay:     ss(KEY_VOICE_AUTO) === '1',
+      currentAudio:      null,
       lastAssistantText: '',
+      // Stage B: tracks which revision idx is currently visible on the
+      // share-screen. Used to avoid re-rendering on every chat mutation
+      // when the same revision is still pending.
+      activeRevisionIdx: null,
     };
 
     function applyVoiceUi() {
@@ -256,10 +265,166 @@
       return body ? String(body.textContent || '').trim() : '';
     }
 
+    // ── Stage B: share-screen view ──────────────────────────────────────
+    // The widget's center stage swaps from blinking portrait to a "shared
+    // screen" view when the EP proposes a new revision in chat. Portrait
+    // shrinks to a PIP, the diff goes front and center, accept/reject
+    // live inside the widget. Forwarding the click to the original
+    // chat-thread button keeps the brief-mutation logic in tg-ep-chat.js
+    // as the single source of truth.
+    const screenEl = (function injectShareScreen() {
+      const stage = widget.querySelector('.tg-zoom-stage');
+      if (!stage) return null;
+      const div = document.createElement('div');
+      div.className = 'tg-zoom-screen';
+      div.innerHTML = ''
+        + '<div class="tg-zoom-screen-head">'
+        +   '<div class="tg-zoom-screen-eyebrow" data-tg-zoom="screen-eyebrow">Sharing screen</div>'
+        +   '<div class="tg-zoom-screen-label" data-tg-zoom="screen-label"></div>'
+        + '</div>'
+        + '<div class="tg-zoom-screen-body" data-tg-zoom="screen-body"></div>'
+        + '<div class="tg-zoom-screen-actions">'
+        +   '<button class="tg-zoom-screen-btn tg-zoom-screen-accept" type="button" data-tg-zoom="screen-accept">Accept</button>'
+        +   '<button class="tg-zoom-screen-btn tg-zoom-screen-reject" type="button" data-tg-zoom="screen-reject">Reject</button>'
+        +   '<button class="tg-zoom-screen-btn tg-zoom-screen-stop" type="button" data-tg-zoom="screen-stop" title="Stop sharing (keeps the revision pending in the transcript)">Stop sharing</button>'
+        + '</div>';
+      // Place screen BEFORE the portrait so the portrait can absolute-
+      // position itself as the PIP overlay when sharing.
+      const portrait = stage.querySelector('.tg-zoom-portrait');
+      if (portrait) stage.insertBefore(div, portrait);
+      else stage.appendChild(div);
+      return div;
+    })();
+
+    const screenEyebrow = screenEl && screenEl.querySelector('[data-tg-zoom="screen-eyebrow"]');
+    const screenLabel   = screenEl && screenEl.querySelector('[data-tg-zoom="screen-label"]');
+    const screenBody    = screenEl && screenEl.querySelector('[data-tg-zoom="screen-body"]');
+    const screenAccept  = screenEl && screenEl.querySelector('[data-tg-zoom="screen-accept"]');
+    const screenReject  = screenEl && screenEl.querySelector('[data-tg-zoom="screen-reject"]');
+    const screenStop    = screenEl && screenEl.querySelector('[data-tg-zoom="screen-stop"]');
+
+    function escapeHtml(s){
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function stopSharing() {
+      widget.classList.remove('is-sharing');
+      state.activeRevisionIdx = null;
+      setStatus('ready');
+    }
+
+    // Find the pending revision card in the chat. Returns null if none.
+    // A "pending" revision is a .tg-chat-revision element that is NOT
+    // .is-accepted or .is-rejected.
+    function findPendingRevision() {
+      if (!chatEl) return null;
+      const cards = chatEl.querySelectorAll('.tg-chat-revision');
+      if (!cards.length) return null;
+      // The LAST pending card is the most recent proposal.
+      for (let i = cards.length - 1; i >= 0; i--) {
+        const c = cards[i];
+        if (c.classList.contains('is-accepted')) continue;
+        if (c.classList.contains('is-rejected')) continue;
+        // Only consider cards that actually have a diff (a pending card
+        // has .tg-chat-rev-diff and accept/reject buttons).
+        if (!c.querySelector('.tg-chat-rev-diff')) continue;
+        return c;
+      }
+      return null;
+    }
+
+    function readRevisionFromCard(card) {
+      if (!card) return null;
+      const operation = card.getAttribute('data-op') || 'replace';
+      const labelEl   = card.querySelector('.tg-chat-rev-head strong');
+      const ratEl     = card.querySelector('.tg-chat-rev-rationale');
+      const beforeEl  = card.querySelector('.tg-chat-rev-before');
+      const afterEl   = card.querySelector('.tg-chat-rev-after');
+      const acceptBtn = card.querySelector('[data-tg-rev-action="accept"]');
+      const rejectBtn = card.querySelector('[data-tg-rev-action="reject"]');
+      const revIdx    = acceptBtn ? acceptBtn.getAttribute('data-tg-rev-idx') : null;
+      return {
+        operation:    operation,
+        sectionLabel: labelEl  ? labelEl.textContent.trim()  : 'this section',
+        rationale:    ratEl    ? ratEl.textContent.trim()    : '',
+        before:       beforeEl ? beforeEl.textContent        : '',
+        after:        afterEl  ? afterEl.textContent         : '',
+        idx:          revIdx,
+        acceptBtn:    acceptBtn,
+        rejectBtn:    rejectBtn,
+      };
+    }
+
+    function renderShareScreen(rev) {
+      if (!screenEl || !rev) return;
+      const opLabel = rev.operation === 'append' ? 'Proposed addition' : 'Proposed rewrite';
+      const verb    = rev.operation === 'append' ? 'addition' : 'rewrite';
+      if (screenEyebrow) screenEyebrow.textContent = epName + ' is sharing — ' + opLabel;
+      if (screenLabel)   screenLabel.textContent   = rev.sectionLabel;
+      if (screenBody) {
+        let html = '';
+        if (rev.rationale) {
+          html += '<div class="tg-zoom-screen-rationale">' + escapeHtml(rev.rationale) + '</div>';
+        }
+        if (rev.operation === 'append') {
+          html += '<div class="tg-zoom-screen-diff">'
+               +   '<div class="tg-zoom-screen-after">' + escapeHtml(rev.after) + '</div>'
+               + '</div>';
+        } else {
+          html += '<div class="tg-zoom-screen-diff">'
+               +   '<div class="tg-zoom-screen-before">' + escapeHtml(rev.before) + '</div>'
+               +   '<div class="tg-zoom-screen-arrow">becomes</div>'
+               +   '<div class="tg-zoom-screen-after">'  + escapeHtml(rev.after)  + '</div>'
+               + '</div>';
+        }
+        screenBody.innerHTML = html;
+      }
+      if (screenAccept) screenAccept.textContent = 'Accept ' + verb;
+      state.activeRevisionIdx = rev.idx;
+    }
+
+    function activateShareScreen() {
+      const card = findPendingRevision();
+      if (!card) return false;
+      const rev = readRevisionFromCard(card);
+      if (!rev || !rev.acceptBtn) return false;
+      renderShareScreen(rev);
+      widget.classList.add('is-sharing');
+      // Make sure the widget itself is open so the visitor sees the share.
+      if (!widget.classList.contains('is-open')) open();
+      return true;
+    }
+
+    // Wire share-screen buttons. Accept / Reject FORWARD the click to the
+    // original chat-thread button so tg-ep-chat.js mutates state in one
+    // place. The MutationObserver below will see the card transition to
+    // .is-accepted or .is-rejected and dismiss the share-screen view.
+    if (screenAccept) {
+      screenAccept.addEventListener('click', () => {
+        const card = findPendingRevision();
+        const rev  = readRevisionFromCard(card);
+        if (rev && rev.acceptBtn) rev.acceptBtn.click();
+      });
+    }
+    if (screenReject) {
+      screenReject.addEventListener('click', () => {
+        const card = findPendingRevision();
+        const rev  = readRevisionFromCard(card);
+        if (rev && rev.rejectBtn) rev.rejectBtn.click();
+      });
+    }
+    if (screenStop) {
+      screenStop.addEventListener('click', () => stopSharing());
+    }
+
     if (chatEl) {
       // Initial pass — capture any assistant text already present.
       state.lastAssistantText = extractLastAssistantText();
       if (state.lastAssistantText && replayBtn) replayBtn.disabled = false;
+      // If a revision was already pending when the widget loaded, share it.
+      activateShareScreen();
 
       const observer = new MutationObserver(() => {
         const t = extractLastAssistantText();
@@ -276,8 +441,23 @@
           // Status flash on first assistant message to draw the eye.
           if (wasEmpty) setStatus('ready');
         }
+
+        // Share-screen state machine.
+        const pending = findPendingRevision();
+        if (pending) {
+          // A new (or unchanged) pending revision exists.
+          const rev    = readRevisionFromCard(pending);
+          const sameAsActive = rev && rev.idx === state.activeRevisionIdx;
+          if (!sameAsActive) {
+            activateShareScreen();
+          }
+        } else if (widget.classList.contains('is-sharing')) {
+          // No pending revision anymore - card was accepted or rejected,
+          // or replaced. Dismiss share-screen.
+          stopSharing();
+        }
       });
-      observer.observe(chatEl, { childList: true, subtree: true, characterData: true });
+      observer.observe(chatEl, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class'] });
     }
   }
 
