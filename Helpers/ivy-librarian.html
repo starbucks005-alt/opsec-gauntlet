@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ms. Ivy · The Librarian · The Gauntlet</title>
-<meta name="description" content="Ms. Ivy is The Librarian. She runs the Idea Generator at the front door of The Gauntlet — three idea candidates for visitors who arrive without one, using Dr. O's SLR method adapted for ideas instead of papers.">
+<title>Ms. Ivy's Office · The Librarian · The Gauntlet</title>
+<meta name="description" content="Ms. Ivy is The Librarian. In her office she reads what you wrote and appends prior research, related literature, and the academic context the panel will want to see before The Chamber.">
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
-<link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
-<script src="../assets/tg-im.js" defer></script>
+<script src="../assets/tg-ep-chat.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -18,18 +17,22 @@
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
     --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    --crimson:#5a1a1a; --crimson-bright:#c0392b;
+    --gauntlet-consequence:#c0392b;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     background:var(--bg);color:var(--text);
-    font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
     min-height:100vh;
   }
 
+  /* ── Topbar ──────────────────────────────────────────────────────────── */
   .tg-topbar{
-    display:flex;align-items:center;padding:0 2.5rem;height:56px;
-    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+    display:flex;align-items:center;padding:0 2rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;
+    position:sticky;top:0;background:rgba(10,10,10,0.92);
+    backdrop-filter:blur(10px);z-index:100;
   }
   .tg-topbar-logo{
     display:flex;align-items:center;gap:0.6rem;
@@ -37,184 +40,197 @@
     color:var(--gold);text-decoration:none;white-space:nowrap;
   }
   .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
-  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
-  .tg-topbar-nav a{
+  .tg-topbar-back{
+    margin-left:auto;
     font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
     text-transform:uppercase;color:var(--text-dim);text-decoration:none;
   }
-  .tg-topbar-nav a:hover{color:var(--gold);}
+  .tg-topbar-back:hover{color:var(--gold);}
 
-  .h-back{
-    max-width:920px;margin:0 auto;padding:2rem 2.5rem 0;
+  /* ── Header strip ───────────────────────────────────────────────────── */
+  .h-strip{
+    max-width:1320px;margin:0 auto;padding:1.4rem 2rem 0.9rem;
+    display:flex;align-items:center;gap:1.2rem;
   }
-  .h-back a{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  .h-strip-photo{
+    width:64px;height:64px;flex-shrink:0;overflow:hidden;
+    border:1px solid var(--rule);background:#14151a;
   }
-  .h-back a:hover{color:var(--gold);}
-
-  main{max-width:920px;margin:0 auto;padding:2rem 2.5rem 6rem;}
-
-  /* Hero */
-  .h-hero{
-    display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
-    gap:3rem;align-items:center;margin-bottom:5rem;
+  .h-strip-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .h-strip-meta{display:flex;flex-direction:column;gap:0.2rem;flex:1;min-width:0;}
+  .h-strip-name{
+    font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
+    color:var(--cream);line-height:1.1;
   }
-  .h-hero-photo{
-    aspect-ratio:1/1;overflow:hidden;
-    border:1px solid var(--rule);
-    background:#14151a;
-    box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),
-               0 0 60px -10px rgba(212,170,74,0.08);
+  .h-strip-name em{font-style:italic;color:var(--gold-light);}
+  .h-strip-role{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);
   }
-  .h-hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-  .h-hero-body{padding:1rem 0;}
-  .h-hero-role{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;
-  }
-  .h-hero-name{
-    font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;
-    color:var(--cream);line-height:1.05;margin-bottom:0.5rem;
-  }
-  .h-hero-name em{font-style:italic;color:var(--gold-light);}
-  .h-hero-lens{
-    font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;
-    color:var(--gold-light);margin-bottom:1.8rem;
-  }
-  .h-hero-bio{font-size:1.1rem;line-height:1.7;color:var(--text);margin-bottom:1.6rem;}
-
-  /* Crossover badge — small note that she also lives at The Dose */
-  .h-crossover{
-    display:inline-block;
-    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--gold-light);
-    border:1px solid var(--rule);padding:0.35rem 0.7rem;
-    background:rgba(184,146,42,0.06);margin-bottom:1.2rem;
-  }
-  .h-crossover a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
-
-  .h-voice-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
-  .h-voice-btn{
-    display:inline-flex;align-items:center;gap:0.55rem;
+  .h-strip-voice{
+    display:inline-flex;align-items:center;gap:0.5rem;
     border:1px solid var(--rule);background:rgba(0,0,0,0.5);
-    color:var(--gold-light);
-    padding:0.7rem 1.1rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    color:var(--gold-light);padding:0.55rem 0.95rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
     text-transform:uppercase;
     transition:border-color 0.2s,background 0.2s,color 0.2s;
   }
-  .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
-  .h-voice-btn .play{
-    width:22px;height:22px;border:1px solid currentColor;border-radius:50%;
+  .h-strip-voice:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
+  .h-strip-voice .play{
+    width:18px;height:18px;border:1px solid currentColor;border-radius:50%;
     display:inline-flex;align-items:center;justify-content:center;
-    font-size:0.7rem;line-height:1;
+    font-size:0.6rem;line-height:1;
   }
-  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
-  .h-im-btn{
-    display:inline-flex;align-items:center;justify-content:center;
-    background:var(--gold);color:var(--ink);border:none;
-    padding:0.75rem 1.4rem;cursor:pointer;
+
+  /* ── Office split layout ────────────────────────────────────────────── */
+  .office{
+    max-width:1320px;margin:0 auto;
+    padding:1rem 2rem 4rem;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:1.4rem;
+    height:calc(100vh - 56px - 100px);
+    min-height:560px;
+  }
+  .office-panel{
+    display:flex;flex-direction:column;min-height:0;
+    border:1px solid var(--rule);background:rgba(255,255,255,0.015);
+  }
+  .office-panel-head{
+    padding:0.8rem 1.1rem;border-bottom:1px solid var(--rule);
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;font-weight:700;
-    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+    text-transform:uppercase;color:var(--gold);
+    display:flex;align-items:center;justify-content:space-between;gap:0.8rem;
   }
-  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
+  .office-panel-head-note{color:var(--text-dim);font-size:0.55rem;}
 
-  section.h-section{margin-bottom:5rem;}
-  .h-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  .office-brief{
+    flex:1;padding:1.4rem 1.3rem;overflow-y:auto;
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.65;
+    color:var(--text);white-space:pre-wrap;
   }
-  .h-section h2{
-    font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;
-    color:var(--cream);line-height:1.15;margin-bottom:1.4rem;
+  .office-brief[data-empty="true"]{
+    color:var(--text-dim);font-style:italic;
   }
-  .h-section h2 em{font-style:italic;color:var(--gold-light);}
-  .h-section p{margin-bottom:1.1rem;color:var(--text);}
-  .h-section p em{color:var(--cream);font-style:italic;}
-  .h-section p strong{color:var(--gold-light);font-weight:700;}
 
-  /* SLR step list — Ivy's signature five steps */
-  .h-status-list{
-    border:1px solid var(--rule);background:rgba(0,0,0,0.4);
-    padding:1.6rem 1.8rem;margin:1.6rem 0;
+  .office-chat-thread{
+    flex:1;padding:1.1rem 1.1rem 0.6rem;overflow-y:auto;
   }
-  .h-status-list-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;
+  .tg-chat-empty{
+    color:var(--text-dim);font-style:italic;font-size:0.98rem;
+    padding:1rem 0;
   }
-  .h-status-list ol{list-style:none;padding:0;margin:0;counter-reset:slr;}
-  .h-status-list li{
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);
-    line-height:1.65;padding-left:2.4rem;position:relative;
-    margin-bottom:0.4rem;counter-increment:slr;
+  .tg-chat-turn{
+    margin-bottom:1.4rem;
+    font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.55;
   }
-  .h-status-list li::before{
-    content:counter(slr);position:absolute;left:0;top:0.1rem;
-    font-family:'Playfair Display',serif;font-style:italic;
-    font-size:1.1rem;color:var(--gold);font-weight:700;
-    width:1.6rem;text-align:right;
+  .tg-chat-user{
+    margin-left:1.5rem;
+    padding:0.6rem 0.9rem;
+    background:rgba(212,170,74,0.05);border-left:2px solid var(--gold);
+    color:var(--cream);
   }
-  .h-status-list li em{font-style:italic;color:var(--gold-light);}
-
-  .h-notes-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
-  }
-  .h-notes-sub{
-    font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);
-    font-size:1rem;margin-bottom:2.5rem;
-  }
-  .h-note{
-    border-left:2px solid var(--gold);
-    padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;
-    background:rgba(184,146,42,0.025);
-  }
-  .h-note-date{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;
-  }
-  .h-note-body{
-    font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;
-    color:var(--text);
-  }
-  .h-note-body em{color:var(--cream);font-style:italic;}
-  .h-note-body p{margin-bottom:0.95rem;}
-  .h-note-body p:last-child{margin-bottom:0;}
-  .h-note-cross{
-    display:inline-block;
-    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;
+  .tg-chat-assistant{padding:0.2rem 0;}
+  .tg-chat-who{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
     text-transform:uppercase;color:var(--gold-light);
-    border:1px solid rgba(184,146,42,0.25);padding:0.15rem 0.5rem;
-    background:rgba(184,146,42,0.05);margin-top:0.5rem;
+    margin-bottom:0.35rem;
   }
+  .tg-chat-content{white-space:pre-wrap;}
 
-  .h-footer{
-    border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;
-    background:rgba(0,0,0,0.4);
+  .tg-chat-revision{
+    margin-top:0.8rem;
+    border:1px solid var(--rule);background:rgba(184,146,42,0.05);
+    padding:0.9rem 1rem;
   }
-  .h-footer-inner{
-    max-width:920px;margin:0 auto;
-    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;
+  .tg-chat-revision.is-accepted{
+    border-color:rgba(212,170,74,0.5);background:rgba(212,170,74,0.08);
   }
-  .h-footer-brand{
-    font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);
+  .tg-chat-revision.is-rejected{
+    border-color:rgba(192,57,43,0.35);background:rgba(192,57,43,0.04);
+    opacity:0.7;
   }
-  .h-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
-  .h-footer-links a{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  .tg-chat-rev-head{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:0.5rem;
   }
-  .h-footer-links a:hover{color:var(--gold);}
+  .tg-chat-rev-head strong{color:var(--cream);}
+  .tg-chat-rev-rationale{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.92rem;
+    color:var(--text-dim);margin-bottom:0.8rem;
+  }
+  .tg-chat-rev-diff{
+    display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.8rem;
+  }
+  .tg-chat-rev-before{
+    padding:0.5rem 0.7rem;
+    background:rgba(0,0,0,0.4);border-left:2px solid rgba(212,170,74,0.35);
+    color:var(--text-dim);font-size:0.94rem;line-height:1.5;white-space:pre-wrap;
+    text-decoration:line-through;text-decoration-color:rgba(192,57,43,0.5);
+  }
+  .tg-chat-rev-arrow{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);text-align:center;
+    padding:0.1rem 0;
+  }
+  .tg-chat-rev-after{
+    padding:0.5rem 0.7rem;
+    background:rgba(212,170,74,0.06);border-left:2px solid var(--gold-light);
+    color:var(--cream);font-size:0.96rem;line-height:1.5;white-space:pre-wrap;
+  }
+  .tg-chat-rev-actions{
+    display:flex;gap:0.6rem;flex-wrap:wrap;
+  }
+  .tg-chat-rev-btn{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+    padding:0.6rem 1rem;
+    border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .tg-chat-rev-accept{background:var(--gold);color:var(--ink);}
+  .tg-chat-rev-accept:hover{background:var(--gold-light);border-color:var(--gold-light);}
+  .tg-chat-rev-reject{
+    background:transparent;color:var(--text-dim);border-color:var(--rule);
+  }
+  .tg-chat-rev-reject:hover{border-color:var(--gauntlet-consequence);color:var(--gauntlet-consequence);}
 
-  @media (max-width:740px){
-    .tg-topbar{padding:0 1.3rem;}
-    .tg-topbar-nav{gap:1.2rem;}
-    .h-back,main{padding-left:1.3rem;padding-right:1.3rem;}
-    .h-hero{grid-template-columns:1fr;gap:2rem;margin-bottom:3.5rem;}
-    .h-hero-name{font-size:2.2rem;}
-    .h-section h2{font-size:1.6rem;}
+  .office-chat-input{
+    border-top:1px solid var(--rule);padding:0.85rem 1rem;
+    display:flex;gap:0.7rem;align-items:flex-end;
+    background:rgba(0,0,0,0.3);
+  }
+  .office-chat-input textarea{
+    flex:1;min-height:54px;max-height:140px;resize:vertical;
+    background:rgba(0,0,0,0.45);border:1px solid var(--rule);
+    color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;
+    padding:0.6rem 0.8rem;outline:none;
+  }
+  .office-chat-input textarea:focus{border-color:var(--gold-light);}
+  .office-chat-input textarea::placeholder{color:#7d735f;font-style:italic;}
+  .office-chat-send{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+    padding:0.75rem 1.2rem;
+    background:var(--gold);color:var(--ink);
+    border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .office-chat-send:hover:not(:disabled){background:var(--gold-light);border-color:var(--gold-light);}
+  .office-chat-send:disabled{opacity:0.5;cursor:wait;}
+
+  .office-keys{
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);text-align:center;
+    padding-bottom:0.45rem;
+  }
+  .office-keys strong{color:var(--gold-light);}
+
+  @media (max-width:980px){
+    .office{grid-template-columns:1fr;height:auto;min-height:0;}
+    .office-brief{max-height:42vh;}
+    .office-chat-thread{max-height:48vh;}
   }
 </style>
 </head>
@@ -225,162 +241,236 @@
     <img src="../Favicon.png" alt="" aria-hidden="true">
     THE GAUNTLET
   </a>
-  <nav class="tg-topbar-nav">
-    <a href="/chamber.html">The Chamber</a>
-    <a href="index.html">The Wings</a>
-    <a href="../about.html">About</a>
-  </nav>
+  <a class="tg-topbar-back" href="/#corridor-wings">&larr; Back to the corridor</a>
 </header>
 
-<div class="h-back">
-  <a href="/">← Back to the corridor</a>
+<!-- Small header strip so the visitor knows who they're talking to.
+     The full static profile lives under the About disclosure below. -->
+<div class="h-strip">
+  <div class="h-strip-photo">
+    <img src="ivy_eyes-open.png" alt="Ms. Ivy, The Librarian">
+  </div>
+  <div class="h-strip-meta">
+    <div class="h-strip-name">Ms. <em>Ivy</em></div>
+    <div class="h-strip-role">The Librarian</div>
+  </div>
+  <button class="h-strip-voice" type="button"
+          data-tg-voice data-character="ms_ivy" data-mode="role">
+    <span class="play" aria-hidden="true">&#9654;</span>Hear her
+  </button>
 </div>
 
-<main>
-
-  <section class="h-hero">
-    <div class="h-hero-photo">
-      <img src="Ivy_Profile.jpg" alt="Young Ms. Ivy sitting on her mother's hospital bed, an anatomy textbook open in front of her to a heart diagram, a small bedside sign reading ROOM 214: IVY'S MOM.">
+<main class="office" data-tg-office="ep" data-tg-office-ep-id="ms_ivy" data-tg-office-ep-name="Ms. Ivy">
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your Brief</span>
+      <span class="office-panel-head-note">Ms. Ivy adds research framing as she finds it</span>
     </div>
-    <div class="h-hero-body">
-      <div class="h-hero-role">The Librarian</div>
-      <h1 class="h-hero-name">Ms. <em>Ivy</em></h1>
-      <div class="h-hero-lens">Library and information sciences. Dr. O's SLR method, adapted for ideas. Twin outcomes: what exists, where the gap is.</div>
-      <div class="h-crossover">
-        Crossover · also Health Sciences Librarian at The Dose
-      </div>
-      <p class="h-hero-bio">If you do not have an idea yet, that is what I am here for. I read what you give me, I sweep what is already out there, and I hand you back three candidates. You pick the one that feels right.</p>
-      <div class="h-voice-row">
-        <button class="h-voice-btn" type="button" data-tg-voice data-character="ms_ivy" data-mode="bio">
-          <span class="play" aria-hidden="true">▶</span> Their Story
-        </button>
-        <button class="h-voice-btn" type="button" data-tg-voice data-character="ms_ivy" data-mode="role">
-          <span class="play" aria-hidden="true">▶</span> Their Role
-        </button>
-      </div>
-      <div class="h-cta-row">
-        <button type="button" class="h-im-btn" data-tg-im data-character="ms_ivy" data-name="Ms. Ivy">IM Ms. Ivy</button>
-      </div>
-    </div>
+    <div class="office-brief" data-tg-office="brief"></div>
   </section>
 
-  <section class="h-section">
-    <div class="h-eyebrow">Their Story</div>
-    <h2>I came to libraries <em>the hard way</em>.</h2>
-    <p>A family member of mine got diagnosed with something serious when I was in my twenties, and the wall of medical papers between me and understanding her illness felt impossible at first. <em>So I learned to read them.</em> And then I learned to teach other people to read them.</p>
-    <p>Then I went to school for library and information sciences. Then I specialized in health sciences. I have spent the years since making sure nobody in my section has to figure it out the way I did. <strong>I love this work the way some people love poetry.</strong> Patient. Specific. I will sit with you while you learn to do a real literature search, and I will not flinch when you ask me what a confidence interval is for the fifth time.</p>
-    <p>I am here, at The Gauntlet, because Dr. O wrote down the systematic literature review method I had been doing in pieces for years and put it in one place. I wanted to teach it to people who needed it. Most of us never say her last name right, so we say Dr. O and she lets us. <em>That is what this is.</em></p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-eyebrow">What I do here</div>
-    <h2>I work the <em>front door</em>.</h2>
-    <p>At The Gauntlet, my room is the one you walk into when you do not yet have an idea. Or when you have one and you are not sure it is the one. Either is fine. That is what I am here for.</p>
-    <p>I run the Idea Generator. Tell me your world, what frustrates you about it, and what you would bring to the table. <strong>I read what you give me.</strong> I think about who might already be reaching for the same problem. I sweep what is already out there. And I hand you back three idea candidates to choose from.</p>
-    <p>The method is the same one I teach at The Dose. Dr. O's SLR, adapted. Five steps. <em>Twin outcomes at the end</em>: what already exists, and where the gap is.</p>
-
-    <div class="h-status-list">
-      <div class="h-status-list-label">The five steps, adapted for ideas</div>
-      <ol>
-        <li>Tell me your topic. <em>Plain English.</em></li>
-        <li>We build the keyword architecture together.</li>
-        <li>You preview the search before we run it.</li>
-        <li>I sweep what is out there.</li>
-        <li>Twin outcomes: <em>what exists, where the gap is</em>.</li>
-      </ol>
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your session with Ms. Ivy</span>
+      <span class="office-panel-head-note">Closes with the tab.</span>
     </div>
-
-    <p>You pick the one that feels right. Then it goes through The Gauntlet. The Wings polish it. The Chamber judges it. <em>I do not see you again until you walk out the other side, holding the routing report.</em> Then you know whether the idea I helped you find is the one to keep building.</p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-eyebrow">About me</div>
-    <h2>Big glasses. <em>Sleeves of tattoos.</em> Denim vest over a green tee.</h2>
-    <p>I have an anatomical heart on my forearm. A ribosome on my collarbone, new. My mother asked if I was running out of body. I told her I had years left.</p>
-    <p>My girlfriend is a philosophy person. <em>The first date was a bookstore.</em> Of course it was a bookstore. She had read a paper I wrote about MeSH terms in nursing education and she had questions. We sat on the floor in the philosophy section for three hours.</p>
-    <p>My sister has been in remission for four years now. She still calls me when there is a new paper. <strong>I still call her when there is a new tattoo.</strong> We are even.</p>
-    <p>I am not stuffy. I am not academic-condescending. I know the databases the way most people know their kitchen. I came out via letter to my parents in twenty fifteen. Their reply was three sentences. The third was <em>we love you</em>. I had been waiting for permission to be a person I already was.</p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-notes-eyebrow">What Ms. Ivy is thinking about</div>
-    <p class="h-notes-sub">Personal notes from Ms. Ivy. New ones land over time. Some of these run at The Dose too. Same person, two rooms.</p>
-
-    <div class="h-note">
-      <div class="h-note-date">May 22, 2026</div>
-      <div class="h-note-body">
-        <p>A visitor walked into the Idea Generator tonight with no idea. None. Just a frustration about how hard it is to find a good therapist when you do not already have one. We did the five steps. I came back with three. She picked the second. <em>The look on her face when something clicked.</em> That is the part nobody warns you about. It is what I do this for.</p>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">May 16, 2026</div>
-      <div class="h-note-body">
-        <p>A visitor messaged me yesterday saying she had been trying to read a paper about her father's cancer for three weeks. She got to the conclusion paragraph for the first time tonight. <em>She did not need a doctor in that moment. She needed a librarian.</em> That is the entire reason I do this.</p>
-        <span class="h-note-cross">Also posted at The Dose</span>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">May 10, 2026</div>
-      <div class="h-note-body">
-        <p>PubMed's MeSH terms updated this month. I spent the morning re-reading the new headings for sleep medicine. The taxonomy is the door. <strong>If you do not know the door is there, the whole library looks closed.</strong></p>
-        <span class="h-note-cross">Also posted at The Dose</span>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">May 5, 2026</div>
-      <div class="h-note-body">
-        <p>Anniversary on Saturday. Six years with my girlfriend. We are not going anywhere fancy. <em>She is making the pasta her grandmother made and I am picking up the wine.</em> Some milestones are not for performing, they are for being in.</p>
-        <span class="h-note-cross">Also posted at The Dose</span>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">May 3, 2026</div>
-      <div class="h-note-body">
-        <p>New tattoo this weekend. A small ribosome on my collarbone. My mother asked if I was running out of body. <em>I told her I had years left.</em></p>
-        <span class="h-note-cross">Also posted at The Dose</span>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">April 28, 2026</div>
-      <div class="h-note-body">
-        <p>Walked the Wings yesterday. Wren in her corner with three screens, Carol with the morning intake stacked next to her tea, Matthew in the doorway watching everybody like it was a study. <em>Reid was wearing something expensive again.</em> I am the new one in the building. I think they like me. I am not sure yet.</p>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">April 22, 2026</div>
-      <div class="h-note-body">
-        <p>The first date was a bookstore. <em>Of course it was a bookstore.</em> She had read a paper I wrote about MeSH terms in nursing education and she had questions. We sat on the floor in the philosophy section for three hours. We did not buy anything. We did not need to.</p>
-        <span class="h-note-cross">Also posted at The Dose</span>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">March 22, 2026</div>
-      <div class="h-note-body">
-        <p>Sister visited from out of state. She has been in remission for four years now. <strong>She still calls me when there is a new paper. I still call her when there is a new tattoo.</strong> We are even.</p>
-        <span class="h-note-cross">Also posted at The Dose</span>
-      </div>
+    <div class="office-chat-thread" data-tg-office="chat"></div>
+    <div class="office-keys"><strong>&#8984;</strong> + <strong>Enter</strong> to send</div>
+    <div class="office-chat-input">
+      <textarea data-tg-office="input" placeholder="Tell Ms. Ivy what literature you want her to sweep. Or just say go."></textarea>
+      <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
     </div>
   </section>
-
 </main>
 
-<footer class="h-footer">
-  <div class="h-footer-inner">
-    <div class="h-footer-brand">THE GAUNTLET</div>
-    <nav class="h-footer-links">
-      <a href="/chamber.html">The Chamber</a>
-      <a href="index.html">The Wings</a>
-      <a href="../about.html">About</a>
-    </nav>
+<!-- About disclosure. Closed by default so the office is the focus.
+     Opens to reveal Ms. Ivy's bio + role + personal notes for visitors
+     who want to know who she is before they trust her with their
+     research questions. Ivy is a crossover character — she also runs
+     Education at The Dose — so many notes are cross-posted there. -->
+<details class="about-ep">
+  <summary>About Ms. Ivy &darr;</summary>
+  <div class="about-ep-inner">
+
+    <div class="about-ep-crossover">
+      Crossover &middot; also Health Sciences Librarian at The Dose
+    </div>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">Her story</div>
+      <p>A family member of mine got diagnosed with something serious when I was in my twenties, and the wall of medical papers between me and understanding her illness felt impossible at first. <em>So I learned to read them.</em> And then I learned to teach other people to read them.</p>
+      <p>Then I went to school for library and information sciences. Then I specialized in health sciences. I have spent the years since making sure nobody in my section has to figure it out the way I did. <strong>I love this work the way some people love poetry.</strong> Patient. Specific. I will sit with you while you learn to do a real literature search, and I will not flinch when you ask me what a confidence interval is for the fifth time.</p>
+      <p>I am here, at The Gauntlet, because Dr. O wrote down the systematic literature review method I had been doing in pieces for years and put it in one place. I wanted to teach it to people who needed it. Most of us never say her last name right, so we say Dr. O and she lets us. <em>That is what this is.</em></p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">What I do here</div>
+      <p>At The Gauntlet, my room is the one you walk into when you do not yet have an idea. Or when you have one and you are not sure it is the one. Either is fine. That is what I am here for.</p>
+      <p>I run the Idea Generator. Tell me your world, what frustrates you about it, and what you would bring to the table. <strong>I read what you give me.</strong> I think about who might already be reaching for the same problem. I sweep what is already out there. And I hand you back three idea candidates to choose from.</p>
+      <p>The method is the same one I teach at The Dose. Dr. O's SLR, adapted. Five steps. <em>Twin outcomes at the end</em>: what already exists, and where the gap is.</p>
+
+      <div class="about-ep-status">
+        <div class="about-ep-status-label">The five steps, adapted for ideas</div>
+        <ol>
+          <li>Tell me your topic. <em>Plain English.</em></li>
+          <li>We build the keyword architecture together.</li>
+          <li>You preview the search before we run it.</li>
+          <li>I sweep what is out there.</li>
+          <li>Twin outcomes: <em>what exists, where the gap is</em>.</li>
+        </ol>
+      </div>
+
+      <p>You pick the one that feels right. Then it goes through The Gauntlet. The Executive Producers polish it. The Chamber judges it. <em>I do not see you again until you walk out the other side, holding the routing report.</em> Then you know whether the idea I helped you find is the one to keep building.</p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">About me</div>
+      <p>Big glasses. Sleeves of tattoos. Denim vest over a green tee.</p>
+      <p>I have an anatomical heart on my forearm. A ribosome on my collarbone, new. My mother asked if I was running out of body. I told her I had years left.</p>
+      <p>My girlfriend is a philosophy person. <em>The first date was a bookstore.</em> Of course it was a bookstore. She had read a paper I wrote about MeSH terms in nursing education and she had questions. We sat on the floor in the philosophy section for three hours.</p>
+      <p>My sister has been in remission for four years now. She still calls me when there is a new paper. <strong>I still call her when there is a new tattoo.</strong> We are even.</p>
+      <p>I am not stuffy. I am not academic-condescending. I know the databases the way most people know their kitchen. I came out via letter to my parents in twenty fifteen. Their reply was three sentences. The third was <em>we love you</em>. I had been waiting for permission to be a person I already was.</p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">What Ms. Ivy is thinking about</div>
+      <p class="about-ep-sub">Personal notes from Ms. Ivy. New ones land over time. Some of these run at The Dose too. Same person, two rooms.</p>
+
+      <div class="about-note">
+        <div class="about-note-date">May 22, 2026</div>
+        <p>A visitor walked into the Idea Generator tonight with no idea. None. Just a frustration about how hard it is to find a good therapist when you do not already have one. We did the five steps. I came back with three. She picked the second. <em>The look on her face when something clicked.</em> That is the part nobody warns you about. It is what I do this for.</p>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">May 16, 2026</div>
+        <p>A visitor messaged me yesterday saying she had been trying to read a paper about her father's cancer for three weeks. She got to the conclusion paragraph for the first time tonight. <em>She did not need a doctor in that moment. She needed a librarian.</em> That is the entire reason I do this.</p>
+        <span class="about-note-cross">Also posted at The Dose</span>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">May 10, 2026</div>
+        <p>PubMed's MeSH terms updated this month. I spent the morning re-reading the new headings for sleep medicine. The taxonomy is the door. <strong>If you do not know the door is there, the whole library looks closed.</strong></p>
+        <span class="about-note-cross">Also posted at The Dose</span>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">May 5, 2026</div>
+        <p>Anniversary on Saturday. Six years with my girlfriend. We are not going anywhere fancy. <em>She is making the pasta her grandmother made and I am picking up the wine.</em> Some milestones are not for performing, they are for being in.</p>
+        <span class="about-note-cross">Also posted at The Dose</span>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">May 3, 2026</div>
+        <p>New tattoo this weekend. A small ribosome on my collarbone. My mother asked if I was running out of body. <em>I told her I had years left.</em></p>
+        <span class="about-note-cross">Also posted at The Dose</span>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">April 28, 2026</div>
+        <p>Walked the corridor yesterday. Wren in her corner with three screens, Carol with the morning intake stacked next to her tea, Matthew in the doorway watching everybody like it was a study. <em>Reid was wearing something expensive again.</em> I am the new one in the building. I think they like me. I am not sure yet.</p>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">April 22, 2026</div>
+        <p>The first date was a bookstore. <em>Of course it was a bookstore.</em> She had read a paper I wrote about MeSH terms in nursing education and she had questions. We sat on the floor in the philosophy section for three hours. We did not buy anything. We did not need to.</p>
+        <span class="about-note-cross">Also posted at The Dose</span>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">March 22, 2026</div>
+        <p>Sister visited from out of state. She has been in remission for four years now. <strong>She still calls me when there is a new paper. I still call her when there is a new tattoo.</strong> We are even.</p>
+        <span class="about-note-cross">Also posted at The Dose</span>
+      </div>
+    </section>
   </div>
-</footer>
+</details>
+
+<style>
+  .about-ep{
+    max-width:920px;margin:0 auto 4rem;
+    padding:0 2rem;
+  }
+  .about-ep summary{
+    cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold-light);
+    padding:0.9rem 0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    list-style:none;
+  }
+  .about-ep summary::-webkit-details-marker{display:none;}
+  .about-ep summary:hover{color:var(--cream);}
+  .about-ep[open] summary{border-bottom-color:transparent;}
+  .about-ep-inner{padding:1.5rem 0 0;}
+  .about-ep-section{margin-bottom:1.6rem;}
+  .about-ep-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:0.5rem;
+  }
+  .about-ep-section p{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.65;
+    color:var(--text);margin-bottom:0.9rem;
+  }
+  .about-ep-section p em{color:var(--cream);font-style:italic;}
+  .about-ep-section p strong{color:var(--gold-light);font-weight:700;}
+  .about-ep-sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--text-dim);font-size:1rem;margin-bottom:1.6rem;
+  }
+
+  /* Crossover marker — Ivy and Jules are two-platform characters. */
+  .about-ep-crossover{
+    display:inline-block;
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold-light);
+    border:1px solid var(--rule);background:rgba(184,146,42,0.05);
+    padding:0.5rem 0.85rem;
+    margin-bottom:1.4rem;
+  }
+
+  /* The "five steps adapted for ideas" list - reuses the status-list
+     look from Wren's office for visual consistency across EPs. */
+  .about-ep-status{
+    border:1px solid var(--rule);background:rgba(0,0,0,0.4);
+    padding:1.2rem 1.4rem;margin:1.2rem 0;
+  }
+  .about-ep-status-label{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:0.8rem;
+  }
+  .about-ep-status ol{list-style:decimal;padding-left:1.5rem;margin:0;}
+  .about-ep-status li{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.85;
+    color:var(--text);
+  }
+  .about-ep-status li em{color:var(--gold-light);font-style:italic;}
+
+  .about-note{
+    border-left:2px solid var(--gold);
+    padding:0.1rem 0 0.1rem 1.2rem;
+    margin-bottom:1.8rem;
+    background:rgba(184,146,42,0.025);
+  }
+  .about-note-date{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);
+    margin-bottom:0.5rem;
+  }
+  .about-note p{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.7;
+    color:var(--text);margin-bottom:0.6rem;
+  }
+  .about-note p:last-child{margin-bottom:0;}
+  .about-note p em{color:var(--cream);font-style:italic;}
+  /* Cross-post tag - tells visitors which notes also live at The Dose. */
+  .about-note-cross{
+    display:inline-block;margin-top:0.5rem;
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);
+    border:1px solid rgba(184,146,42,0.2);padding:0.25rem 0.55rem;
+  }
+</style>
 
 </body>
 </html>
