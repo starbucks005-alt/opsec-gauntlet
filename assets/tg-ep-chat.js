@@ -79,11 +79,15 @@
     }
 
     const state = {
-      epId:         epId,
-      name:         (ss(KEY_NAME) || '').trim(),
-      brief:        (ss(KEY_BRIEF) || '').trim(),
-      conversation: ssJson(conversationKey(epId), []),
-      sending:      false,
+      epId:          epId,
+      // The page provides a display name via data-tg-office-ep-name. Used
+      // as the "who" label on assistant turns ("Jules" / "Ms. Ivy" / etc.).
+      // Falls back to the ep_id with underscores stripped if not provided.
+      epDisplayName: root.dataset.tgOfficeEpName || epId.replace(/_/g, ' '),
+      name:          (ss(KEY_NAME) || '').trim(),
+      brief:         (ss(KEY_BRIEF) || '').trim(),
+      conversation:  ssJson(conversationKey(epId), []),
+      sending:       false,
     };
 
     function renderBrief() {
@@ -124,19 +128,26 @@
       let revisionHtml = '';
       if (turn.proposed_revision) {
         const r = turn.proposed_revision;
+        const operation = r.operation || 'replace';
         const status = turn.revision_status || 'pending';
+        const verb  = operation === 'append' ? 'addition' : 'rewrite';
+        const head  = operation === 'append' ? 'Proposed addition' : 'Proposed rewrite';
         if (status === 'pending') {
+          // Append: only show the new content. Replace: show before -> after.
+          const diffHtml = (operation === 'append')
+            ? `<div class="tg-chat-rev-after">${escapeHtml(r.after)}</div>`
+            : `
+              <div class="tg-chat-rev-before">${escapeHtml(r.before)}</div>
+              <div class="tg-chat-rev-arrow">becomes</div>
+              <div class="tg-chat-rev-after">${escapeHtml(r.after)}</div>
+            `;
           revisionHtml = `
-            <div class="tg-chat-revision">
-              <div class="tg-chat-rev-head">Proposed rewrite: <strong>${escapeHtml(r.section_label)}</strong></div>
+            <div class="tg-chat-revision" data-op="${escapeHtml(operation)}">
+              <div class="tg-chat-rev-head">${head}: <strong>${escapeHtml(r.section_label)}</strong></div>
               <div class="tg-chat-rev-rationale">${escapeHtml(r.rationale)}</div>
-              <div class="tg-chat-rev-diff">
-                <div class="tg-chat-rev-before">${escapeHtml(r.before)}</div>
-                <div class="tg-chat-rev-arrow">becomes</div>
-                <div class="tg-chat-rev-after">${escapeHtml(r.after)}</div>
-              </div>
+              <div class="tg-chat-rev-diff">${diffHtml}</div>
               <div class="tg-chat-rev-actions">
-                <button class="tg-chat-rev-btn tg-chat-rev-accept" data-tg-rev-action="accept" data-tg-rev-idx="${idx}">Accept rewrite</button>
+                <button class="tg-chat-rev-btn tg-chat-rev-accept" data-tg-rev-action="accept" data-tg-rev-idx="${idx}">Accept ${verb}</button>
                 <button class="tg-chat-rev-btn tg-chat-rev-reject" data-tg-rev-action="reject" data-tg-rev-idx="${idx}">Reject</button>
               </div>
             </div>
@@ -155,9 +166,10 @@
           `;
         }
       }
+      const whoLabel = (state.epDisplayName || 'EP');
       return `
         <div class="tg-chat-turn tg-chat-assistant">
-          <div class="tg-chat-who">Jules</div>
+          <div class="tg-chat-who">${escapeHtml(whoLabel)}</div>
           <div class="tg-chat-content">${escapeHtml(turn.content)}</div>
           ${revisionHtml}
         </div>
@@ -263,21 +275,36 @@
 
       if (action === 'accept') {
         const r = turn.proposed_revision;
-        // Apply to brief - exact string replace. The function already
-        // validated that "before" appears in the brief, but the brief
-        // may have changed since (multiple accepts), so check again.
-        if (!state.brief.includes(r.before)) {
-          turn.revision_status = 'rejected';
-          state.conversation.push({
-            role: 'assistant',
-            content: 'I went to apply that rewrite and the text I was working from is no longer in your brief - probably an earlier accept changed it. Point me at the current version and I will redo it.',
-            ts: Date.now(),
-          });
-          saveConversation();
-          renderChat();
+        const operation = r.operation || 'replace';
+
+        if (operation === 'replace') {
+          // Apply to brief - exact string replace. The function already
+          // validated that "before" appears in the brief, but the brief
+          // may have changed since (multiple accepts), so check again.
+          if (!state.brief.includes(r.before)) {
+            turn.revision_status = 'rejected';
+            state.conversation.push({
+              role: 'assistant',
+              content: 'I went to apply that and the text I was working from is no longer in your brief - probably an earlier accept changed it. Point me at the current version and I will redo it.',
+              ts: Date.now(),
+            });
+            saveConversation();
+            renderChat();
+            return;
+          }
+          state.brief = state.brief.replace(r.before, r.after);
+        } else if (operation === 'append') {
+          // Append the new content with a two-line break separator. If
+          // the brief already ends with whitespace, normalize first so
+          // we do not end up with five blank lines.
+          const trimmed = state.brief.replace(/\s+$/, '');
+          state.brief = trimmed + '\n\n' + r.after;
+        } else {
+          // Unknown operation - bail out, do not mutate.
+          console.warn('[tg-ep-chat] unknown revision operation', operation);
           return;
         }
-        state.brief = state.brief.replace(r.before, r.after);
+
         ssSet(KEY_BRIEF, state.brief);
         turn.revision_status = 'accepted';
 
@@ -285,8 +312,9 @@
         const revisions = ssJson(KEY_REVISIONS, []);
         revisions.push({
           ep_id:         state.epId,
+          operation:     operation,
           section_label: r.section_label,
-          before:        r.before,
+          before:        r.before || '',
           after:         r.after,
           rationale:     r.rationale,
           accepted_at:   Date.now(),

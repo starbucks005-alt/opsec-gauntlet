@@ -269,7 +269,7 @@
   </button>
 </div>
 
-<main class="office" data-tg-office="ep" data-tg-office-ep-id="jules">
+<main class="office" data-tg-office="ep" data-tg-office-ep-id="jules" data-tg-office-ep-name="Jules">
   <section class="office-panel">
     <div class="office-panel-head">
       <span>Your Brief</span>
@@ -291,6 +291,64 @@
     </div>
   </section>
 </main>
+
+<!-- About disclosure. Closed by default so the office is the focus.
+     Opens to reveal Jules's bio + role + personal notes for visitors
+     who want to know who she is before they trust her with their text. -->
+<details class="about-ep">
+  <summary>About Jules &darr;</summary>
+  <div class="about-ep-inner">
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">Her story</div>
+      <p>I've been reading manuscripts for ten years. Before that I was the person in every writing workshop who couldn't stop noticing what wasn't working. Not to be cruel. Because I could see what the piece was trying to be and I wanted it to get there. That's still what I do. I go through what you wrote and I tell you what isn't working in plain English. Not what's wrong with you. What isn't working on the page. There's a difference and it matters.</p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">What I do here</div>
+      <p>At The Gauntlet I read your submission for AI markers, because AI writing has a fingerprint and the judges know it. The long dash is the most obvious tell. Selene clocks it in the first sentence. We work through it pass by pass until your submission sounds like the person who had the idea, not like a tool that was asked to describe it.</p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">Notes</div>
+      <p class="note">The first ten manuscripts I rewrote came back with handwritten thank-you notes. Not for the rewrites. For showing the writers what they actually meant. I keep those notes in my desk drawer. I take them out when I'm tired.</p>
+      <p class="note">If your brief sounds like a product landing page and you wrote it from the gut at 2am, that's not your voice. That's the template the gut wrote into. We can find the voice underneath. I have time.</p>
+    </section>
+  </div>
+</details>
+
+<style>
+  .about-ep{
+    max-width:920px;margin:0 auto 4rem;
+    padding:0 2rem;
+  }
+  .about-ep summary{
+    cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold-light);
+    padding:0.9rem 0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    list-style:none;
+  }
+  .about-ep summary::-webkit-details-marker{display:none;}
+  .about-ep summary:hover{color:var(--cream);}
+  .about-ep[open] summary{border-bottom-color:transparent;}
+  .about-ep-inner{padding:1.5rem 0 0;}
+  .about-ep-section{margin-bottom:1.6rem;}
+  .about-ep-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:0.5rem;
+  }
+  .about-ep-section p{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.65;
+    color:var(--text);margin-bottom:0.9rem;
+  }
+  .about-ep-section p.note{
+    border-left:2px solid var(--gold);
+    padding:0.1rem 0 0.1rem 1rem;
+    background:rgba(184,146,42,0.025);font-style:italic;color:var(--cream);
+  }
+</style>
 
 </body>
 </html>
