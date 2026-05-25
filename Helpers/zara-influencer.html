@@ -11,6 +11,7 @@
 <script src="../assets/tg-ep-chat.js" defer></script>
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
+<script src="../assets/tg-zara-post.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -290,6 +291,376 @@
     </div>
   </section>
 </main>
+
+<!-- ── Founder Content Hub. Generator + reference cards. ───────────────────
+     The chat above is where Zara talks. This hub is where the deliverable
+     gets built. Every post the generator drafts auto-appends to the
+     visitor's brief and writes a revision-log entry so it ships in the
+     DOCX export. The Founder's Code, Cringe Traps, and Never Post lists
+     are static reference - they exist so the visitor sees the rules the
+     generator is working under and can apply them on their own. -->
+<section class="zh">
+  <div class="zh-inner">
+
+    <header class="zh-head">
+      <div class="zh-eyebrow">Founder Content Hub</div>
+      <h2>Posts that don't read like marketing.</h2>
+      <p class="zh-sub">Pick a topic, platform, and tone. Zara drafts the post in your voice, anchored to your brief. Posts auto-save to your deliverable.</p>
+    </header>
+
+    <!-- Generator -->
+    <div class="zh-card zh-generator" data-zh="form">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Post generator</span>
+        <span class="zh-card-eyebrow-note">Generates one post, saves to your brief</span>
+      </div>
+
+      <div class="zh-field">
+        <label class="zh-label" for="zh-topic">Topic</label>
+        <input id="zh-topic" type="text" class="zh-input" data-zh="topic"
+               placeholder="e.g. The day we cut customer churn 40% by changing onboarding"
+               maxlength="200" />
+      </div>
+
+      <div class="zh-field">
+        <label class="zh-label">Platform</label>
+        <div class="zh-pills" data-zh="platform">
+          <button type="button" class="zh-pill is-active" data-value="instagram">Instagram</button>
+          <button type="button" class="zh-pill"           data-value="twitter">X / Twitter</button>
+          <button type="button" class="zh-pill"           data-value="tiktok">TikTok</button>
+          <button type="button" class="zh-pill"           data-value="linkedin">LinkedIn</button>
+          <button type="button" class="zh-pill"           data-value="threads">Threads</button>
+        </div>
+      </div>
+
+      <div class="zh-field">
+        <label class="zh-label">Tone</label>
+        <div class="zh-pills" data-zh="tone">
+          <button type="button" class="zh-pill is-active" data-value="build_in_public">Build in public</button>
+          <button type="button" class="zh-pill"           data-value="tactical_lesson">Tactical lesson</button>
+          <button type="button" class="zh-pill"           data-value="counter_narrative">Counter-narrative</button>
+          <button type="button" class="zh-pill"           data-value="founder_origin">Founder origin</button>
+        </div>
+      </div>
+
+      <button type="button" class="zh-generate" data-zh="generate">Generate post &rarr;</button>
+
+      <div class="zh-result" data-zh="result"></div>
+    </div>
+
+    <!-- Founder's Code -->
+    <header class="zh-section-head">
+      <h2>The Founder's Code.</h2>
+      <p class="zh-sub">Eight rules that separate a credible founder voice from recycled-claim feed noise. The generator above follows these too.</p>
+    </header>
+    <div class="zh-rules">
+      <article class="zh-rule">
+        <div class="zh-rule-num">1</div>
+        <h3 class="zh-rule-title">Show the work, not the win.</h3>
+        <p>Sharing the failure and the process beats sharing the trophy. The audience trusts what they had to think about, not what they admired from a distance.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">2</div>
+        <h3 class="zh-rule-title">Cite numbers when you have them.</h3>
+        <p>"Helped 12 customers in 3 months" beats "rapidly growing." Specifics earn trust. Vague growth language is the linguistic move of someone with nothing to back it.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">3</div>
+        <h3 class="zh-rule-title">Don't fake authenticity.</h3>
+        <p>Audiences clock the staged-vulnerability post immediately. If you wouldn't say it to one person across a kitchen table, don't say it to ten thousand on a feed.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">4</div>
+        <h3 class="zh-rule-title">Name your customer, not your category.</h3>
+        <p>"Helping nurses on twelve-hour shifts" beats "disrupting healthcare." Specific names land. Vague verbs evaporate. The narrower the customer, the wider the audience.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">5</div>
+        <h3 class="zh-rule-title">Earn the platform.</h3>
+        <p>Don't cross-post the same content to LinkedIn and TikTok. Each platform rewards a different shape. One post per platform, written for that platform.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">6</div>
+        <h3 class="zh-rule-title">Pre-launch is content too.</h3>
+        <p>Building in public is real marketing if you are building real things. Stop waiting for the launch to start the story. The launch is one post in a long thread.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">7</div>
+        <h3 class="zh-rule-title">Reply like a person, not a brand.</h3>
+        <p>Comments are where trust is built. A thoughtful reply on day one is worth more than a thousand impressions on day thirty. The audience reads the replies.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">8</div>
+        <h3 class="zh-rule-title">Update the post when you're wrong.</h3>
+        <p>Claim something, find out the data is different, post the correction. Don't quietly delete. The willingness to correct in public is what makes the rest of the feed credible long-term.</p>
+      </article>
+    </div>
+
+    <!-- Cringe Traps -->
+    <header class="zh-section-head">
+      <h2>Cringe Traps.</h2>
+      <p class="zh-sub">If your draft post has any of these, the post is the problem - not your audience's discomfort with it.</p>
+    </header>
+    <div class="zh-traps">
+      <article class="zh-trap">
+        <h3>&#9888; "We're disrupting [industry]."</h3>
+        <p>Disruption is something the audience identifies after the fact. Never something a founder claims at launch. The word marks the post as marketing.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; "Stealth mode."</h3>
+        <p>Stealth mode is what you call a project before you have to pitch it. It is not a positioning statement. The audience reads it as "I have nothing to show."</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Performative humility.</h3>
+        <p>"Just a small thing I built over the weekend that now serves 50,000 users." The flex is louder than direct ambition would have been. Drop the false framing.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; The constructed origin story.</h3>
+        <p>"I was at a dinner party and someone said..." Audiences smell a manufactured inciting incident three lines in. If the story is real, the specifics carry it. If you need to invent, don't.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Vague TAM claims.</h3>
+        <p>"$50B market" with no segmentation. Audiences who matter know you cannot address the whole market and do not want to. Name the slice you can actually win first.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; "AI-powered" without explanation.</h3>
+        <p>Saying AI does not differentiate. The thing AI lets you do that nothing else does is the only differentiator. Name THAT, not the buzzword.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Quote-tweeting your own praise.</h3>
+        <p>Sharing screenshots of people praising you reads as needy. The audience can find the praise on its own. Let it speak for itself.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Calling yourself a thought leader.</h3>
+        <p>Thought leadership is something the audience grants. Claiming it forecloses it. Show the thinking; let the label arrive on its own time.</p>
+      </article>
+    </div>
+
+    <!-- Never Post -->
+    <header class="zh-section-head">
+      <h2>Never Post.</h2>
+      <p class="zh-sub">Specific kinds of content that cross from "founder voice" into legal exposure, broken trust, or burnt rounds.</p>
+    </header>
+    <div class="zh-never">
+      <article class="zh-never-item">
+        <h3>Customer names without explicit written permission.</h3>
+        <p>Legal exposure plus reputational damage. Get permission in writing every time. "They were happy" is not permission to put their logo or name in a feed.</p>
+      </article>
+      <article class="zh-never-item">
+        <h3>Internal / leaked metrics.</h3>
+        <p>Revenue, churn, CAC, runway numbers shared accidentally can move competitors and investors against you in ways you cannot undo. Share what you decide to share, not what spilled.</p>
+      </article>
+      <article class="zh-never-item">
+        <h3>Trash-talking competitors by name.</h3>
+        <p>Naming them raises them and hands them airtime. Even when you are right. Name the problem in the market, not the company that has it.</p>
+      </article>
+      <article class="zh-never-item">
+        <h3>Confidential investor or term-sheet details.</h3>
+        <p>Violates expectations of confidentiality founders are typically legally required to maintain. Can burn the round, the relationship, and future term sheets at once.</p>
+      </article>
+      <article class="zh-never-item">
+        <h3>Employees as marketing without their consent.</h3>
+        <p>Using team members as stock-photo content for the brand is a workplace issue waiting to surface. Always ask, always have permission, always let them say no with zero pressure.</p>
+      </article>
+      <article class="zh-never-item">
+        <h3>Specific medical, legal, or financial advice.</h3>
+        <p>If your content recommends a course of action in a regulated domain without credentials and disclosure, the FTC and state regulators have acted. Stay general, or have a lawyer review.</p>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Founder Content Hub (Zara) ────────────────────────────────────── */
+  .zh{ background:rgba(255,255,255,0.012); border-top:1px solid var(--rule); padding:3.5rem 2rem 4.5rem; }
+  .zh-inner{ max-width:1320px; margin:0 auto; }
+  .zh-head{ max-width:780px; margin:0 auto 2.4rem; text-align:center; }
+  .zh-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
+  }
+  .zh-head h2,
+  .zh-section-head h2{
+    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
+    color:var(--cream); line-height:1.15; margin:0 0 0.6rem;
+  }
+  .zh-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; line-height:1.5;
+  }
+  .zh-section-head{ max-width:920px; margin:3.4rem auto 1.4rem; text-align:left; }
+
+  /* Generator card */
+  .zh-card{
+    max-width:920px; margin:0 auto;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+    padding:1.4rem 1.5rem 1.8rem;
+  }
+  .zh-card-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:0.8rem; margin-bottom:1.1rem; padding-bottom:0.7rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .zh-card-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .zh-card-eyebrow-note{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .zh-field{ margin-bottom:1rem; }
+  .zh-label{
+    display:block; font-family:'DM Mono',monospace; font-size:0.58rem;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:0.4rem;
+  }
+  .zh-input{
+    width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--rule);
+    color:var(--cream); padding:0.7rem 0.85rem;
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.4;
+    outline:none;
+  }
+  .zh-input:focus{ border-color:var(--gold-light); }
+  .zh-input::placeholder{ color:#7d735f; font-style:italic; }
+  .zh-pills{ display:flex; flex-wrap:wrap; gap:0.45rem; }
+  .zh-pill{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.16em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.55rem 0.85rem; background:transparent;
+    border:1px solid var(--rule); color:var(--text-dim);
+    transition:all 0.15s;
+  }
+  .zh-pill:hover{ color:var(--gold-light); border-color:var(--gold-light); }
+  .zh-pill.is-active{
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+  }
+  .zh-generate{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.8rem 1.4rem; margin-top:0.4rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .zh-generate:hover:not(:disabled){ background:var(--gold-light); border-color:var(--gold-light); }
+  .zh-generate:disabled{ opacity:0.55; cursor:wait; }
+
+  /* Result panel */
+  .zh-result:empty{ display:none; }
+  .zh-result{ margin-top:1.4rem; padding:1.1rem 1.2rem; border:1px solid var(--rule); background:rgba(0,0,0,0.4); }
+  .zh-result.is-loading{ border-color:rgba(212,170,74,0.35); }
+  .zh-result.is-ready{   border-color:rgba(212,170,74,0.45); background:rgba(184,146,42,0.04); }
+  .zh-result.is-error{
+    border-color:rgba(192,57,43,0.45);
+    background:rgba(192,57,43,0.04); color:var(--gauntlet-consequence);
+  }
+  .zh-result-meta{
+    display:flex; gap:0.55rem; align-items:center;
+    margin-bottom:0.8rem; flex-wrap:wrap;
+  }
+  .zh-result-platform,
+  .zh-result-tone{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+    padding:0.3rem 0.6rem; border:1px solid var(--rule);
+  }
+  .zh-result-copy{
+    margin-left:auto; font-family:'DM Mono',monospace; font-size:0.55rem;
+    letter-spacing:0.18em; text-transform:uppercase; cursor:pointer;
+    padding:0.4rem 0.8rem; background:transparent;
+    border:1px solid var(--gold); color:var(--gold);
+  }
+  .zh-result-copy:hover{ background:var(--gold); color:var(--ink); }
+  .zh-result-post{
+    font-family:'Cormorant Garamond',serif; font-size:1.02rem; line-height:1.55;
+    color:var(--cream); white-space:pre-wrap; word-wrap:break-word;
+    background:rgba(0,0,0,0.35); padding:0.9rem 1rem;
+    border-left:2px solid var(--gold-light);
+    margin:0 0 0.85rem;
+  }
+  .zh-result-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem; line-height:1.5;
+    margin-bottom:0.6rem;
+  }
+  .zh-result-saved{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .zh-result-msg{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem; line-height:1.5;
+    color:inherit;
+  }
+
+  /* Founder's Code: gold-flag rule cards */
+  .zh-rules{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-rule{
+    position:relative;
+    border:1px solid var(--rule); border-left:3px solid var(--gold);
+    background:rgba(184,146,42,0.04);
+    padding:1rem 1.1rem;
+  }
+  .zh-rule-num{
+    position:absolute; top:0.4rem; right:0.6rem;
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.4rem; color:rgba(184,146,42,0.4); line-height:1;
+  }
+  .zh-rule-title{
+    font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.4rem; padding-right:1.6rem; line-height:1.2;
+  }
+  .zh-rule p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+
+  /* Cringe Traps: crimson-flag warning cards */
+  .zh-traps{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-trap{
+    border:1px solid rgba(192,57,43,0.35); border-left:3px solid var(--gauntlet-consequence);
+    background:rgba(192,57,43,0.03); padding:1rem 1.1rem;
+  }
+  .zh-trap h3{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--gauntlet-consequence); margin:0 0 0.4rem; line-height:1.25;
+  }
+  .zh-trap p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+
+  /* Never Post: full-width crimson bands */
+  .zh-never{
+    max-width:1080px; margin:0 auto;
+    display:flex; flex-direction:column; gap:0.55rem;
+  }
+  .zh-never-item{
+    border-left:3px solid var(--gauntlet-consequence);
+    background:rgba(192,57,43,0.04);
+    padding:0.9rem 1.2rem;
+  }
+  .zh-never-item h3{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--gauntlet-consequence); margin:0 0 0.3rem; line-height:1.2;
+  }
+  .zh-never-item p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+
+  @media (max-width:880px){
+    .zh-rules,.zh-traps{ grid-template-columns:1fr; }
+    .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
+    .zh-card-eyebrow-note{ font-size:0.5rem; }
+  }
+</style>
 
 <!-- About disclosure. Closed by default so the office is the focus.
      Opens to reveal Zara's bio + role + personal notes for visitors

@@ -141,3 +141,7 @@
   [functions.tg-ep-chat]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-zara-post]
+    timeout = 26
+    included_files = ["config/**"]
