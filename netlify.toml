@@ -145,3 +145,7 @@
   [functions.tg-zara-post]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-reid-press]
+    timeout = 26
+    included_files = ["config/**"]

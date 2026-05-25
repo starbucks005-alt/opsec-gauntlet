@@ -11,6 +11,7 @@
 <script src="../assets/tg-ep-chat.js" defer></script>
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
+<script src="../assets/tg-reid-press.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -299,6 +300,406 @@
     </div>
   </section>
 </main>
+
+<!-- ── Marketing & PR Hub. Press Release Generator + reference cards. ─────
+     Chat above is where Reid talks positioning. This hub is where the
+     marketing deliverables get built. Every release the generator drafts
+     auto-appends to the visitor's brief and writes a revision-log entry
+     so it ships in the DOCX export. The Marketing Code, Marketing Don'ts,
+     and Free Distribution Platforms lists are static reference - they
+     exist so the visitor sees the rules the generator works under and
+     can apply them on their own. -->
+<section class="zh">
+  <div class="zh-inner">
+
+    <header class="zh-head">
+      <div class="zh-eyebrow">Marketing &amp; PR Hub</div>
+      <h2>News that journalists actually open.</h2>
+      <p class="zh-sub">Pick the announcement type. Reid drafts the release in your voice, anchored to your brief, with placeholders where facts are missing. Releases auto-save to your deliverable.</p>
+    </header>
+
+    <!-- Press Release Generator -->
+    <div class="zh-card rh-generator" data-rh="form">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Press release generator</span>
+        <span class="zh-card-eyebrow-note">Drafts one release, saves to your brief</span>
+      </div>
+
+      <div class="zh-field">
+        <label class="zh-label">Announcement type</label>
+        <div class="zh-pills" data-rh="announcement">
+          <button type="button" class="zh-pill is-active" data-value="product_launch">Product launch</button>
+          <button type="button" class="zh-pill"           data-value="funding_round">Funding round</button>
+          <button type="button" class="zh-pill"           data-value="milestone">Milestone</button>
+          <button type="button" class="zh-pill"           data-value="partnership">Partnership</button>
+          <button type="button" class="zh-pill"           data-value="hire">Key hire</button>
+          <button type="button" class="zh-pill"           data-value="customer_win">Customer win</button>
+        </div>
+      </div>
+
+      <div class="zh-field">
+        <label class="zh-label" for="rh-angle">Headline angle <span class="zh-label-note">(optional)</span></label>
+        <input id="rh-angle" type="text" class="zh-input" data-rh="angle"
+               placeholder="e.g. lead with the 40% cost reduction, or the named customer"
+               maxlength="200" />
+      </div>
+
+      <button type="button" class="zh-generate" data-rh="generate">Draft release &rarr;</button>
+
+      <div class="zh-result" data-rh="result"></div>
+    </div>
+
+    <!-- The Marketing Code -->
+    <header class="zh-section-head">
+      <h2>The Marketing Code.</h2>
+      <p class="zh-sub">Eight rules that separate a release a journalist opens from one that gets archived in spam. The generator above follows these too.</p>
+    </header>
+    <div class="zh-rules">
+      <article class="zh-rule">
+        <div class="zh-rule-num">1</div>
+        <h3 class="zh-rule-title">Lead with the news, not the company.</h3>
+        <p>The opener is what is new. Who it affects. What changes. Save the company introduction for the boilerplate. "Acme Corp announces" is the linguistic move of a release nobody will quote.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">2</div>
+        <h3 class="zh-rule-title">Specific numbers beat vague growth language.</h3>
+        <p>"12,000 paying customers in 18 months" gets read. "Rapid growth" gets deleted. Numbers earn the journalist's time. If you have the number, lead with it.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">3</div>
+        <h3 class="zh-rule-title">One quote that's actually quotable.</h3>
+        <p>If the quote sounds like a CEO bio read aloud, no journalist will use it. The quote should be a sentence a real person would say across a table. One quote per release. Make it count.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">4</div>
+        <h3 class="zh-rule-title">Give the journalist enough to write their own version.</h3>
+        <p>The release is a starting kit, not a finished article. Include the context paragraph that lets a reporter write their own framing. Releases without context get rewritten into something you do not control.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">5</div>
+        <h3 class="zh-rule-title">Pitch the right journalist directly.</h3>
+        <p>The free wire services are background noise for SEO. The story moves when a reporter who covers your beat reads it. Find five names. Email them with a personalized one-paragraph pitch. That is the real distribution.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">6</div>
+        <h3 class="zh-rule-title">Date the news, not the writing.</h3>
+        <p>"This week" / "soon" / "recently" tell a journalist your release is undated, which means the news is already old. Real dates. Real cities. Real timing. Treat the dateline like it matters because it does.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">7</div>
+        <h3 class="zh-rule-title">Boilerplate that says what you do, not what you aspire to.</h3>
+        <p>"We help businesses unlock their potential" is what nothing does. "Acme makes inventory software for independent pharmacies in the Midwest" is what you do. Specific boilerplates earn coverage.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">8</div>
+        <h3 class="zh-rule-title">Wire the release the same day you pitch.</h3>
+        <p>Free distribution platforms create the SEO trail and the search-indexed URL a journalist will reach for when they verify your story. Wire AND pitch on the same day. One without the other is half the work.</p>
+      </article>
+    </div>
+
+    <!-- Marketing Don'ts -->
+    <header class="zh-section-head">
+      <h2>Marketing Don'ts.</h2>
+      <p class="zh-sub">If your release does any of these, the release is the problem - not the journalist's failure to see your brilliance.</p>
+    </header>
+    <div class="zh-traps">
+      <article class="zh-trap">
+        <h3>&#9888; "Is proud to announce."</h3>
+        <p>Marks the release as a marketing memo, not news. Open with the news itself. Pride is what readers feel, not what releases declare.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Industry-leading / best-in-class / world-class.</h3>
+        <p>All three are how a release tells a journalist it has nothing to back the claim. Drop the adjective. Replace with the number, the customer, or the comparison that proves it.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Press release written like an internal memo.</h3>
+        <p>If the release explains your org structure or product roadmap before the news, you wrote it for your boss, not for a reader. Cut everything that does not move the news forward.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Buying your first thousand followers.</h3>
+        <p>A press release links back to social profiles. If those profiles look engineered, the credibility of the release evaporates. Earned reach is the only kind that matters.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Vague TAM in the boilerplate.</h3>
+        <p>"$50B market" without segmentation reads as inflated. Audiences who matter know you cannot address the whole market. Name the slice you actually serve.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Quotes from people who did not say them.</h3>
+        <p>Putting a board member or advisor's name on a manufactured quote is how trust is destroyed in one news cycle. If they did not say it, do not attribute it.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; "Revolutionary" / "game-changing" / "disruptive."</h3>
+        <p>Three words that mark a release as written by someone who has not read a real press release. Specific verbs. Concrete capabilities. Let the reader call it revolutionary if it is.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Embargoes you did not negotiate.</h3>
+        <p>"EMBARGOED UNTIL" at the top of a release with no prior agreement is meaningless and signals amateur. If you need an embargo, ask each reporter individually before you send the release.</p>
+      </article>
+    </div>
+
+    <!-- Free PR Distribution Platforms -->
+    <header class="zh-section-head">
+      <h2>Free PR Distribution Platforms.</h2>
+      <p class="zh-sub">Seven services with no-cost tiers. Best for SEO, search-engine indexing, and reaching niche audiences. Major wire services (PR Newswire, Business Wire) are paid only.</p>
+    </header>
+    <div class="zh-platforms">
+      <article class="zh-platform">
+        <h3>PRLog</h3>
+        <p><strong>What it is:</strong> Free distribution to search engines, RSS feeds, and basic social media integration.</p>
+        <p><strong>Best for:</strong> SEO and quick search-engine indexing on a low-stakes announcement.</p>
+        <p><strong>Gotcha:</strong> No major-outlet syndication. Treat it as a backlink, not a story driver.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>PR.com</h3>
+        <p><strong>What it is:</strong> Business directory plus free press release submissions to increase online visibility.</p>
+        <p><strong>Best for:</strong> Building an online presence trail when you are early and need search results to exist.</p>
+        <p><strong>Gotcha:</strong> Limited reach into mainstream press. Pairs well with direct pitching.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>IssueWire</h3>
+        <p><strong>What it is:</strong> One free press release per account, syndicated to 145+ media partner sites including Google News.</p>
+        <p><strong>Best for:</strong> Single high-priority announcement where you want Google News indexing.</p>
+        <p><strong>Gotcha:</strong> One free release per account total. Save it for the announcement that matters most.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>EIN Presswire</h3>
+        <p><strong>What it is:</strong> Risk-free trial - submit one release free to a specific distribution channel to test the service.</p>
+        <p><strong>Best for:</strong> Sampling EIN's targeted-vertical distribution before committing to a paid plan.</p>
+        <p><strong>Gotcha:</strong> Only one channel on the free tier. Pick the vertical carefully.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>1888PressRelease</h3>
+        <p><strong>What it is:</strong> Free submission and distribution. Advanced features (image embedding, front-page listing) require a paid tier.</p>
+        <p><strong>Best for:</strong> Establishing a search-indexed URL for the announcement at zero cost.</p>
+        <p><strong>Gotcha:</strong> The free tier looks like a free tier. Optics matter for some audiences.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>News By Wire</h3>
+        <p><strong>What it is:</strong> Newer platform offering free distribution to journalists across the US, UK, Europe, and Asia.</p>
+        <p><strong>Best for:</strong> International reach when you have a story that travels.</p>
+        <p><strong>Gotcha:</strong> Newer means less established journalist trust. Pair with direct pitching.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Online PR Media</h3>
+        <p><strong>What it is:</strong> Basic free submission that remains live for 90 days.</p>
+        <p><strong>Best for:</strong> Time-bounded announcements where 90 days of indexing is enough.</p>
+        <p><strong>Gotcha:</strong> The link goes stale after 90 days. Capture the URL for your records before that.</p>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Marketing & PR Hub (Reid) ─────────────────────────────────────────
+     Re-uses the .zh-* class names from Zara's Founder Content Hub so the
+     visual language is consistent across EP hubs. Adds .rh-* only for
+     pieces that are press-release-specific (headline display, platform
+     reference cards). */
+  .zh{ background:rgba(255,255,255,0.012); border-top:1px solid var(--rule); padding:3.5rem 2rem 4.5rem; }
+  .zh-inner{ max-width:1320px; margin:0 auto; }
+  .zh-head{ max-width:780px; margin:0 auto 2.4rem; text-align:center; }
+  .zh-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
+  }
+  .zh-head h2,
+  .zh-section-head h2{
+    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
+    color:var(--cream); line-height:1.15; margin:0 0 0.6rem;
+  }
+  .zh-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; line-height:1.5;
+  }
+  .zh-section-head{ max-width:920px; margin:3.4rem auto 1.4rem; text-align:left; }
+
+  /* Generator card */
+  .zh-card{
+    max-width:920px; margin:0 auto;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+    padding:1.4rem 1.5rem 1.8rem;
+  }
+  .zh-card-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:0.8rem; margin-bottom:1.1rem; padding-bottom:0.7rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .zh-card-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .zh-card-eyebrow-note{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .zh-field{ margin-bottom:1rem; }
+  .zh-label{
+    display:block; font-family:'DM Mono',monospace; font-size:0.58rem;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:0.4rem;
+  }
+  .zh-label-note{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-left:0.3rem;
+  }
+  .zh-input{
+    width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--rule);
+    color:var(--cream); padding:0.7rem 0.85rem;
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.4;
+    outline:none;
+  }
+  .zh-input:focus{ border-color:var(--gold-light); }
+  .zh-input::placeholder{ color:#7d735f; font-style:italic; }
+  .zh-pills{ display:flex; flex-wrap:wrap; gap:0.45rem; }
+  .zh-pill{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.16em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.55rem 0.85rem; background:transparent;
+    border:1px solid var(--rule); color:var(--text-dim);
+    transition:all 0.15s;
+  }
+  .zh-pill:hover{ color:var(--gold-light); border-color:var(--gold-light); }
+  .zh-pill.is-active{
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+  }
+  .zh-generate{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.8rem 1.4rem; margin-top:0.4rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .zh-generate:hover:not(:disabled){ background:var(--gold-light); border-color:var(--gold-light); }
+  .zh-generate:disabled{ opacity:0.55; cursor:wait; }
+
+  /* Result panel */
+  .zh-result:empty{ display:none; }
+  .zh-result{ margin-top:1.4rem; padding:1.1rem 1.2rem; border:1px solid var(--rule); background:rgba(0,0,0,0.4); }
+  .zh-result.is-loading{ border-color:rgba(212,170,74,0.35); }
+  .zh-result.is-ready{   border-color:rgba(212,170,74,0.45); background:rgba(184,146,42,0.04); }
+  .zh-result.is-error{
+    border-color:rgba(192,57,43,0.45);
+    background:rgba(192,57,43,0.04); color:var(--gauntlet-consequence);
+  }
+  .zh-result-meta{
+    display:flex; gap:0.55rem; align-items:center;
+    margin-bottom:0.8rem; flex-wrap:wrap;
+  }
+  .zh-result-platform{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+    padding:0.3rem 0.6rem; border:1px solid var(--rule);
+  }
+  .zh-result-copy{
+    margin-left:0; font-family:'DM Mono',monospace; font-size:0.55rem;
+    letter-spacing:0.18em; text-transform:uppercase; cursor:pointer;
+    padding:0.4rem 0.8rem; background:transparent;
+    border:1px solid var(--gold); color:var(--gold);
+  }
+  .zh-result-meta .zh-result-copy + .zh-result-copy{ margin-left:0; }
+  .zh-result-meta .zh-result-copy:first-of-type{ margin-left:auto; }
+  .zh-result-copy:hover{ background:var(--gold); color:var(--ink); }
+  .rh-headline{
+    font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700;
+    color:var(--cream); line-height:1.25;
+    padding:0.6rem 0.8rem 0.8rem; margin:0 0 0.6rem;
+    border-bottom:1px dashed var(--rule);
+  }
+  .zh-result-post{
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.6;
+    color:var(--cream); white-space:pre-wrap; word-wrap:break-word;
+    background:rgba(0,0,0,0.35); padding:0.95rem 1.1rem;
+    border-left:2px solid var(--gold-light);
+    margin:0 0 0.85rem;
+    max-height:520px; overflow-y:auto;
+  }
+  .zh-result-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem; line-height:1.5;
+    margin-bottom:0.6rem;
+  }
+  .zh-result-saved{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    line-height:1.5;
+  }
+  .zh-result-msg{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem; line-height:1.5;
+    color:inherit;
+  }
+
+  /* Marketing Code: gold-flag rule cards (3-col grid) */
+  .zh-rules{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-rule{
+    position:relative;
+    border:1px solid var(--rule); border-left:3px solid var(--gold);
+    background:rgba(184,146,42,0.04);
+    padding:1rem 1.1rem;
+  }
+  .zh-rule-num{
+    position:absolute; top:0.4rem; right:0.6rem;
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.4rem; color:rgba(184,146,42,0.4); line-height:1;
+  }
+  .zh-rule-title{
+    font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.4rem; padding-right:1.6rem; line-height:1.2;
+  }
+  .zh-rule p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+
+  /* Marketing Don'ts: crimson-flag warning cards (3-col grid) */
+  .zh-traps{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-trap{
+    border:1px solid rgba(192,57,43,0.35); border-left:3px solid var(--gauntlet-consequence);
+    background:rgba(192,57,43,0.03); padding:1rem 1.1rem;
+  }
+  .zh-trap h3{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--gauntlet-consequence); margin:0 0 0.4rem; line-height:1.25;
+  }
+  .zh-trap p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+
+  /* PR Distribution Platforms: neutral reference cards (2-col grid) */
+  .zh-platforms{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:0.85rem;
+  }
+  .zh-platform{
+    border:1px solid var(--rule);
+    background:rgba(255,255,255,0.018);
+    padding:1rem 1.15rem;
+  }
+  .zh-platform h3{
+    font-family:'Playfair Display',serif; font-size:1.08rem; font-weight:700;
+    color:var(--gold-light); margin:0 0 0.45rem; line-height:1.2;
+  }
+  .zh-platform p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0 0 0.35rem;
+  }
+  .zh-platform p:last-child{ margin-bottom:0; }
+  .zh-platform strong{ color:var(--cream); }
+
+  @media (max-width:880px){
+    .zh-rules,.zh-traps,.zh-platforms{ grid-template-columns:1fr; }
+    .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
+    .zh-card-eyebrow-note{ font-size:0.5rem; }
+  }
+</style>
 
 <!-- About disclosure. Closed by default so the office is the focus.
      Opens to reveal Reid's bio + role + personal notes for visitors
