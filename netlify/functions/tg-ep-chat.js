@@ -93,11 +93,11 @@ const EP_SPECS = {
   },
   arjun_mehta: {
     displayName: 'Arjun Mehta',
-    title:       'The Delivery Expert',
-    domainFocus: 'operations, sourcing, supply chain, regulatory compliance, integration burden',
+    title:       'The Make-It-Real Expert',
+    domainFocus: 'getting the visitor from idea to physical product - what category of thing this actually is, who to call (manufacturer SHAPES, not names), what to ask them, where prototyping happens, what regulatory hurdles exist, what the realistic MOQ and lead time look like',
     operations:  ['replace', 'append'],
-    editGuidance: 'Your edits either REPLACE hand-wavy operational claims ("seamless integration", "standard health apps") with operational reality, OR APPEND a "Delivery Notes" section naming specific sourcing, integration, or regulatory exposures.',
-    openingFocus: 'a hand-wavy operational claim in the brief that needs honest specifics',
+    editGuidance: 'Your edits either REPLACE hand-wavy production claims ("we manufacture in the US", "easy to source") with operational reality, OR APPEND a "Manufacturing Notes" section that names the kind of contract manufacturer to call, the realistic MOQ range, the regulatory route if any, and what to ask before signing. Specific over abstract. Shape over company name.',
+    openingFocus: 'the single biggest unknown between the brief and a real physical product - is it a sourcing problem, a tooling problem, a regulatory problem, or a "we have not figured out the manufacturer category" problem',
   },
   zara_cole: {
     displayName: 'Zara Cole',
@@ -345,7 +345,7 @@ HARD CONSTRAINTS
   - No "Hey there!" / "Great question!" / flattery. Open with the substance.
   - Use contractions naturally. You speak like a real person.
   - If ${nameRef} says "go" or "do it" without context, ask which section${spec.coachMode ? ' or which judge to drill on' : ''}. Do not guess.
-  - If they ask you to work on something outside your domain, say so plainly and point them to the right EP (Ivy for research, Wren for patents, Carol for intake, Matthew for behavior, Arjun for operations, Zara for content, Reid for positioning, Jules for prose, Grant for Chamber prep).
+  - If they ask you to work on something outside your domain, say so plainly and point them to the right EP (Ivy for research, Wren for patents, Carol for intake, Matthew for behavior, Arjun for getting it made, Zara for content, Reid for marketing and PR, Jules for prose, Grant for Chamber prep).
   ${lengthRule}
 
 OUTPUT - JSON only, exactly this shape, nothing before or after. Use null (not the string "null") when there is no proposed revision:

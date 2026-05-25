@@ -161,3 +161,7 @@
   [functions.tg-reid-pitch]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-arjun-manufacturing]
+    timeout = 26
+    included_files = ["config/**"]
