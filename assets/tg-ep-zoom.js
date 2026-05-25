@@ -75,6 +75,21 @@
     const voiceBtn   = widget.querySelector('.tg-zoom-voice');
     const replayBtn  = widget.querySelector('.tg-zoom-replay');
 
+    // First-tap mic-permission heads-up. The browser prompts the first
+    // time Speak is used per origin; without warning, visitors think the
+    // app is broken. Injected (not hard-coded in 9 office HTMLs) and
+    // intentionally generic - no domain name, so a URL change leaves it
+    // accurate.
+    (function injectMicNote() {
+      const controls = widget.querySelector('.tg-zoom-controls');
+      if (!controls) return;
+      if (widget.querySelector('.tg-zoom-mic-note')) return; // idempotent
+      const note = document.createElement('div');
+      note.className = 'tg-zoom-mic-note';
+      note.innerHTML = 'First tap on <strong>Speak</strong>, your browser will ask to use the mic. Say <strong>yes</strong>.';
+      controls.insertAdjacentElement('afterend', note);
+    })();
+
     const inputEl   = document.querySelector('[data-tg-office="input"]');
     const chatEl    = document.querySelector('[data-tg-office="chat"]');
 

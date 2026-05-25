@@ -164,10 +164,21 @@
 /* Controls */
 .tg-zoom-controls{
   display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;
-  padding:0.6rem 1.05rem 1rem;
+  padding:0.6rem 1.05rem 0.5rem;
   border-top:1px solid rgba(212,170,74,0.18);
   margin-top:0.4rem;
 }
+
+/* Mic permission note - injected by tg-ep-zoom.js. Sits between controls
+   and the Hear-again replay button. One-liner reminding the visitor the
+   browser will ask for mic access on the first Speak tap. */
+.tg-zoom-mic-note{
+  padding:0 1.05rem 0.55rem;
+  font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--text-dim, #a89c88);
+  line-height:1.45;text-align:center;
+}
+.tg-zoom-mic-note strong{color:var(--gold-light, #d4aa4a);font-weight:500;}
 .tg-zoom-btn{
   font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
   text-transform:uppercase;cursor:pointer;
