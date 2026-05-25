@@ -1449,12 +1449,24 @@
     let visitorName = '';
     try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
 
+    // Pull the EP corridor revision log so judges (Selene specifically) can
+    // distinguish visitor-original prose from EP-rewritten prose. The function
+    // ignores it for every judge except the AI-tell lens.
+    let revisions = [];
+    try {
+      const raw = sessionStorage.getItem('tg_ep_revisions');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) revisions = parsed;
+      }
+    } catch(_){}
+
     let payload;
     try {
       const resp = await fetch('/.netlify/functions/tg-evaluate-stage-clarity', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ submission_id: state.submissionId, triad, visitor_name: visitorName }),
+        body: JSON.stringify({ submission_id: state.submissionId, triad, visitor_name: visitorName, revisions }),
       });
       if (!resp.ok){
         const detail = await resp.text().catch(() => '');

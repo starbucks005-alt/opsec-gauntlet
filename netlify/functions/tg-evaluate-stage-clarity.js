@@ -38,6 +38,16 @@ const MODEL = 'claude-sonnet-4-6';
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const JUDGE_ID_RE = /^[a-z0-9_]+$/;
 
+// AI-tell lens lives with Selene only. Other judges score clarity blind to
+// what the EPs rewrote vs what the visitor wrote.
+const AI_TELL_JUDGE = 'selene_voss';
+
+// Caps for the revision log we forward into Selene's user prompt. The log
+// is user-influenced (sessionStorage on the visitor's browser before POST),
+// so it gets truncated/sanitized before it lands in any prompt.
+const MAX_REVISIONS_IN_PROMPT = 24;
+const MAX_REV_FIELD_CHARS     = 480;
+
 const json = (statusCode, body) => ({
   statusCode,
   headers: {
@@ -51,12 +61,24 @@ function findJudge(judgeId){
   return (judgesMaster.judges || []).find(j => j.id === judgeId);
 }
 
+// Selene gets a secondary lens (AI-writing tells) on top of the generic
+// clarity prompt. Other judges return null and run unchanged.
+function buildSeleneLensClause(){
+  return `
+
+SECONDARY LENS - AI WRITING TELLS
+You also clock AI-writing fingerprints because 99 percent of what crosses your desk was written by AI. The long dash is the most reliable tell. Stock listy transitions ("Furthermore," "Moreover," "In conclusion"), generic abstract framing, and template-y prose are next. When you see the pattern in this submission's prose, name it once, briefly, in your finding - one phrase, flat affect, no theatrics - and let it pull your CLARITY score down. Templatey prose obscures the idea even when the structure looks tidy; the visitor's actual articulation is buried under the template, so clarity suffers.
+
+If you do not see AI tells, do not mention them. Do not lecture. Do not hedge about being an AI character yourself - you are evaluating the prose on the page, not yourself.`;
+}
+
 function buildSystemPrompt(judge, visitorName){
   const toneRules  = (judge.tone_rules  || []).map(r => `- ${r}`).join('\n');
   const blindSpots = (judge.blind_spots || []).map(r => `- ${r}`).join('\n');
   const addressLine = visitorName
     ? `Address the submitter by name in vocative case at the start of your finding (e.g. "${visitorName}, ..."). Use the name once - do not repeat it.`
     : `Address the submitter directly in second person ("you"). No vocative name was provided.`;
+  const seleneLens = judge.id === AI_TELL_JUDGE ? buildSeleneLensClause() : '';
   return `You are ${judge.name}, ${judge.domain} on The Gauntlet panel.
 
 Background: ${judge.background || ''}
@@ -88,7 +110,7 @@ ${addressLine}
 If the score is below 4, do not soften - your tone rules apply.
 If the score is 7 or above, do not flatter - say what is clear and what could still tighten.
 
-CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.
+CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.${seleneLens}
 
 Then return YOUR CONFIDENCE in your own scoring on a 0.00 to 1.00 decimal scale.
 
@@ -96,17 +118,58 @@ OUTPUT JSON only, exactly this shape, nothing before or after:
 {"score": <integer 0-10>, "finding": "<2-3 sentences in your voice>", "confidence": <0.00-1.00>}`;
 }
 
-function buildUserPrompt(subRow){
-  return [
+// Sanitize the visitor-submitted revision log before it ever reaches a
+// prompt. Drop anything we cannot validate, cap the array, truncate fields.
+function sanitizeRevisions(input){
+  if (!Array.isArray(input)) return [];
+  const clean = [];
+  for (const r of input) {
+    if (!r || typeof r !== 'object') continue;
+    const ep_id     = String(r.ep_id || '').toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 40);
+    const operation = (r.operation === 'append' || r.operation === 'replace') ? r.operation : '';
+    const section   = String(r.section_label || '').replace(/[\x00-\x1f]/g, ' ').trim().slice(0, 80);
+    const before    = String(r.before || '').replace(/[\x00-\x08\x0b-\x1f]/g, ' ').slice(0, MAX_REV_FIELD_CHARS);
+    const after     = String(r.after  || '').replace(/[\x00-\x08\x0b-\x1f]/g, ' ').slice(0, MAX_REV_FIELD_CHARS);
+    if (!ep_id || !operation || !after) continue;
+    clean.push({ ep_id, operation, section_label: section, before, after });
+    if (clean.length >= MAX_REVISIONS_IN_PROMPT) break;
+  }
+  return clean;
+}
+
+function formatRevisionLog(revisions){
+  if (!revisions.length) {
+    return 'REVISION LOG: empty. The visitor accepted no EP rewrites; every paragraph in the brief is their original prose.';
+  }
+  const lines = ['REVISION LOG (sections that were rewritten or extended by an Executive Producer in the corridor; anything not in this list is the visitor\'s original prose):', ''];
+  revisions.forEach((r, i) => {
+    lines.push(`#${i + 1} [${r.ep_id}] [${r.operation}] section: "${r.section_label || 'unlabeled'}"`);
+    if (r.operation === 'replace' && r.before) {
+      lines.push(`  before: ${JSON.stringify(r.before)}`);
+    }
+    lines.push(`  after:  ${JSON.stringify(r.after)}`);
+  });
+  return lines.join('\n');
+}
+
+function buildUserPrompt(subRow, judge, revisions){
+  const base = [
     `SUBMISSION TITLE: ${subRow.title}`,
     '',
     `SUBMISSION DESCRIPTION:`,
     subRow.description,
     subRow.goal_audience ? `\nSTATED AUDIENCE: ${subRow.goal_audience}` : '',
     subRow.constraints   ? `\nSTATED CONSTRAINTS: ${subRow.constraints}` : '',
-    '',
-    'Score CLARITY now. Return JSON only.',
-  ].filter(Boolean).join('\n');
+  ].filter(Boolean);
+
+  // Only Selene sees the corridor revision log. It is irrelevant noise for
+  // the other judges at the clarity stage.
+  if (judge && judge.id === AI_TELL_JUDGE) {
+    base.push('', formatRevisionLog(revisions || []));
+  }
+
+  base.push('', 'Score CLARITY now. Return JSON only.');
+  return base.join('\n');
 }
 
 // Triangulation math. Pure function over scored findings.
@@ -153,8 +216,9 @@ function computeTriangulation(findings){
   return { matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score, verdict };
 }
 
-async function evaluateOneJudge(client, judge, userPrompt, visitorName){
+async function evaluateOneJudge(client, judge, subRow, visitorName, revisions){
   const systemPrompt = buildSystemPrompt(judge, visitorName);
+  const userPrompt   = buildUserPrompt(subRow, judge, revisions);
   let response;
   try {
     response = await client.messages.create({
@@ -211,6 +275,9 @@ exports.handler = async (event) => {
                           .trim().slice(0, 60)
                           .replace(/[^A-Za-zÀ-ɏ\s'\-]/g, '')
                           .trim();
+  // Optional. Corridor revision log forwarded from chamber.html. Used only
+  // when Selene is in the triad. Sanitized before any prompt sees it.
+  const revisions     = sanitizeRevisions(body.revisions);
 
   if (!UUID_RE.test(submission_id))         return json(400, { error: 'invalid submission_id' });
   if (triad.length !== 3)                   return json(400, { error: 'triad must be 3 judge ids' });
@@ -267,11 +334,12 @@ exports.handler = async (event) => {
     }
   }
 
-  // 3. Fire all three Anthropic calls IN PARALLEL.
-  const userPrompt = buildUserPrompt(subRow);
+  // 3. Fire all three Anthropic calls IN PARALLEL. Each judge gets a
+  //    prompt built fresh because Selene's user prompt includes the
+  //    revision log; the other two do not.
   const client = new Anthropic({ apiKey: ANTHROPIC_KEY });
 
-  const results = await Promise.all(judges.map(j => evaluateOneJudge(client, j, userPrompt)));
+  const results = await Promise.all(judges.map(j => evaluateOneJudge(client, j, subRow, visitorName, revisions)));
 
   // 4. Write each successful result to tg_judge_outputs. Failures are
   //    surfaced in the response so the client can see which judge(s) did
