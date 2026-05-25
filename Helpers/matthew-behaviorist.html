@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matthew Vance · The Behaviorist · The Gauntlet</title>
-<meta name="description" content="Matthew Vance is The Behaviorist. PhD in behavioral psychology. He is here for the gap between what your customer says they will do and what they actually do.">
+<title>Matthew's Office · The Behaviorist · The Gauntlet</title>
+<meta name="description" content="Matthew Vance is The Behaviorist. In his office he names the gap between what your customer says they want and what they do when friction shows up — and helps you design against it.">
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
-<link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-voice.js" defer></script>
-<script src="../assets/tg-im.js" defer></script>
+<script src="../assets/tg-ep-chat.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -18,112 +17,220 @@
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
     --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    --crimson:#5a1a1a; --crimson-bright:#c0392b;
+    --gauntlet-consequence:#c0392b;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;min-height:100vh;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    min-height:100vh;
+  }
 
-  .tg-topbar{display:flex;align-items:center;padding:0 2.5rem;height:56px;border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;}
-  .tg-topbar-logo{display:flex;align-items:center;gap:0.6rem;font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;white-space:nowrap;}
+  /* ── Topbar ──────────────────────────────────────────────────────────── */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;
+    position:sticky;top:0;background:rgba(10,10,10,0.92);
+    backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;white-space:nowrap;
+  }
   .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
-  .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
-  .tg-topbar-nav a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
-  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
+  .tg-topbar-back{
+    margin-left:auto;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-back:hover{color:var(--gold);}
 
-  .h-back{max-width:920px;margin:0 auto;padding:2rem 2.5rem 0;}
-  .h-back a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
-  .h-back a:hover{color:var(--gold);}
-
-  main{max-width:920px;margin:0 auto;padding:2rem 2.5rem 6rem;}
-
-  .h-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:center;margin-bottom:5rem;}
-  .h-hero-photo{aspect-ratio:1/1;overflow:hidden;border:1px solid var(--rule);background:#14151a;box-shadow:0 24px 60px -20px rgba(0,0,0,0.8),0 0 60px -10px rgba(212,170,74,0.08);}
-  .h-hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-  .h-hero-body{padding:1rem 0;}
-  .h-hero-role{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;}
-  .h-hero-name{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:0.5rem;}
-  .h-hero-name em{font-style:italic;color:var(--gold-light);}
-  .h-hero-lens{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--gold-light);margin-bottom:1.8rem;}
-  .h-hero-bio{font-size:1.1rem;line-height:1.7;color:var(--text);margin-bottom:1.6rem;}
-
-  .h-voice-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
-  .h-voice-btn{display:inline-flex;align-items:center;gap:0.55rem;border:1px solid var(--rule);background:rgba(0,0,0,0.5);color:var(--gold-light);padding:0.7rem 1.1rem;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;transition:border-color 0.2s,background 0.2s,color 0.2s;}
-  .h-voice-btn:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
-  .h-voice-btn[disabled]{opacity:0.5;cursor:not-allowed;}
-  .h-voice-btn .play{width:22px;height:22px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;line-height:1;}
-  .h-cta-row{display:flex;gap:0.8rem;margin-top:1rem;flex-wrap:wrap;}
-  .h-im-btn{
+  /* ── Header strip ───────────────────────────────────────────────────── */
+  .h-strip{
+    max-width:1320px;margin:0 auto;padding:1.4rem 2rem 0.9rem;
+    display:flex;align-items:center;gap:1.2rem;
+  }
+  .h-strip-photo{
+    width:64px;height:64px;flex-shrink:0;overflow:hidden;
+    border:1px solid var(--rule);background:#14151a;
+  }
+  .h-strip-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .h-strip-meta{display:flex;flex-direction:column;gap:0.2rem;flex:1;min-width:0;}
+  .h-strip-name{
+    font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
+    color:var(--cream);line-height:1.1;
+  }
+  .h-strip-name em{font-style:italic;color:var(--gold-light);}
+  .h-strip-role{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .h-strip-voice{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    color:var(--gold-light);padding:0.55rem 0.95rem;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    text-transform:uppercase;
+    transition:border-color 0.2s,background 0.2s,color 0.2s;
+  }
+  .h-strip-voice:hover{border-color:var(--gold);background:rgba(184,146,42,0.08);color:var(--gold);}
+  .h-strip-voice .play{
+    width:18px;height:18px;border:1px solid currentColor;border-radius:50%;
     display:inline-flex;align-items:center;justify-content:center;
-    background:var(--gold);color:var(--ink);border:none;
-    padding:0.75rem 1.4rem;cursor:pointer;
+    font-size:0.6rem;line-height:1;
+  }
+
+  /* ── Office split layout ────────────────────────────────────────────── */
+  .office{
+    max-width:1320px;margin:0 auto;
+    padding:1rem 2rem 4rem;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:1.4rem;
+    height:calc(100vh - 56px - 100px);
+    min-height:560px;
+  }
+  .office-panel{
+    display:flex;flex-direction:column;min-height:0;
+    border:1px solid var(--rule);background:rgba(255,255,255,0.015);
+  }
+  .office-panel-head{
+    padding:0.8rem 1.1rem;border-bottom:1px solid var(--rule);
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;font-weight:700;
-    transition:background 0.2s,transform 0.2s,box-shadow 0.3s;
+    text-transform:uppercase;color:var(--gold);
+    display:flex;align-items:center;justify-content:space-between;gap:0.8rem;
   }
-  .h-im-btn:hover{background:var(--gold-light);box-shadow:0 8px 24px -6px rgba(184,146,42,0.4);transform:translateY(-2px);}
+  .office-panel-head-note{color:var(--text-dim);font-size:0.55rem;}
 
-  section.h-section{margin-bottom:5rem;}
-  .h-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
-  .h-section h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:1.4rem;}
-  .h-section h2 em{font-style:italic;color:var(--gold-light);}
-  .h-section p{margin-bottom:1.1rem;color:var(--text);}
-  .h-section p em{color:var(--cream);font-style:italic;}
-  .h-section p strong{color:var(--gold-light);font-weight:700;}
-
-  .h-notes-eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
-  .h-notes-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:1rem;margin-bottom:2.5rem;}
-  .h-note{border-left:2px solid var(--gold);padding:0.2rem 0 0.2rem 1.4rem;margin-bottom:2.2rem;background:rgba(184,146,42,0.025);}
-  .h-note-date{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.55rem;}
-  .h-note-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.75;color:var(--text);}
-  .h-note-body em{color:var(--cream);font-style:italic;}
-  /* Notes — per-character block types ────────────────────────────────────── */
-  .h-note-body p{margin-bottom:0.95rem;}
-  .h-note-body p:last-child{margin-bottom:0;}
-  .h-note-aside{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:0.95rem;line-height:1.65;color:var(--text-dim);
-    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
-    margin:0.6rem 0;
+  .office-brief{
+    flex:1;padding:1.4rem 1.3rem;overflow-y:auto;
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.65;
+    color:var(--text);white-space:pre-wrap;
   }
-  .h-note-aside:last-child{margin-bottom:0;}
-  .h-note-list{
-    margin:0.5rem 0 0.6rem 0;padding-left:1.2rem;
-    font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.02em;
-    color:var(--text);line-height:1.85;
-  }
-  .h-note-list li{margin-bottom:0.35rem;}
-  .h-note-list li em{font-style:italic;color:var(--gold-light);}
-  .h-note-quote{
-    font-family:'Playfair Display',serif;font-style:italic;
-    font-size:1.15rem;line-height:1.5;color:var(--gold-light);
-    padding:0.5rem 0 0.5rem 1.4rem;
-    border-left:2px solid var(--gold);
-    margin:0.8rem 0 0.9rem;
-    background:rgba(184,146,42,0.04);
-  }
-  .h-note-quote::before{content:'\201C';margin-right:0.05em;}
-  .h-note-quote::after{content:'\201D';margin-left:0.05em;}
-  .h-note-rule{
-    height:1px;width:42%;margin:0.4rem 0 0.8rem;
-    background:linear-gradient(90deg,transparent 0%,var(--rule) 30%,var(--rule) 70%,transparent 100%);
+  .office-brief[data-empty="true"]{
+    color:var(--text-dim);font-style:italic;
   }
 
-  .h-crossover-badge{position:absolute;top:0.7rem;left:0.7rem;background:rgba(10,10,10,0.85);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.3rem 0.6rem;backdrop-filter:blur(4px);z-index:2;}
-  .h-hero-photo{position:relative;}
+  .office-chat-thread{
+    flex:1;padding:1.1rem 1.1rem 0.6rem;overflow-y:auto;
+  }
+  .tg-chat-empty{
+    color:var(--text-dim);font-style:italic;font-size:0.98rem;
+    padding:1rem 0;
+  }
+  .tg-chat-turn{
+    margin-bottom:1.4rem;
+    font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.55;
+  }
+  .tg-chat-user{
+    margin-left:1.5rem;
+    padding:0.6rem 0.9rem;
+    background:rgba(212,170,74,0.05);border-left:2px solid var(--gold);
+    color:var(--cream);
+  }
+  .tg-chat-assistant{padding:0.2rem 0;}
+  .tg-chat-who{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--gold-light);
+    margin-bottom:0.35rem;
+  }
+  .tg-chat-content{white-space:pre-wrap;}
 
-  .h-footer{border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;background:rgba(0,0,0,0.4);}
-  .h-footer-inner{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;}
-  .h-footer-brand{font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);}
-  .h-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
-  .h-footer-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;}
-  .h-footer-links a:hover{color:var(--gold);}
+  .tg-chat-revision{
+    margin-top:0.8rem;
+    border:1px solid var(--rule);background:rgba(184,146,42,0.05);
+    padding:0.9rem 1rem;
+  }
+  .tg-chat-revision.is-accepted{
+    border-color:rgba(212,170,74,0.5);background:rgba(212,170,74,0.08);
+  }
+  .tg-chat-revision.is-rejected{
+    border-color:rgba(192,57,43,0.35);background:rgba(192,57,43,0.04);
+    opacity:0.7;
+  }
+  .tg-chat-rev-head{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:0.5rem;
+  }
+  .tg-chat-rev-head strong{color:var(--cream);}
+  .tg-chat-rev-rationale{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.92rem;
+    color:var(--text-dim);margin-bottom:0.8rem;
+  }
+  .tg-chat-rev-diff{
+    display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.8rem;
+  }
+  .tg-chat-rev-before{
+    padding:0.5rem 0.7rem;
+    background:rgba(0,0,0,0.4);border-left:2px solid rgba(212,170,74,0.35);
+    color:var(--text-dim);font-size:0.94rem;line-height:1.5;white-space:pre-wrap;
+    text-decoration:line-through;text-decoration-color:rgba(192,57,43,0.5);
+  }
+  .tg-chat-rev-arrow{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--gold);text-align:center;
+    padding:0.1rem 0;
+  }
+  .tg-chat-rev-after{
+    padding:0.5rem 0.7rem;
+    background:rgba(212,170,74,0.06);border-left:2px solid var(--gold-light);
+    color:var(--cream);font-size:0.96rem;line-height:1.5;white-space:pre-wrap;
+  }
+  .tg-chat-rev-actions{
+    display:flex;gap:0.6rem;flex-wrap:wrap;
+  }
+  .tg-chat-rev-btn{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+    padding:0.6rem 1rem;
+    border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .tg-chat-rev-accept{background:var(--gold);color:var(--ink);}
+  .tg-chat-rev-accept:hover{background:var(--gold-light);border-color:var(--gold-light);}
+  .tg-chat-rev-reject{
+    background:transparent;color:var(--text-dim);border-color:var(--rule);
+  }
+  .tg-chat-rev-reject:hover{border-color:var(--gauntlet-consequence);color:var(--gauntlet-consequence);}
 
-  @media (max-width:740px){
-    .tg-topbar{padding:0 1.3rem;}
-    .tg-topbar-nav{gap:1.2rem;}
-    .h-back,main{padding-left:1.3rem;padding-right:1.3rem;}
-    .h-hero{grid-template-columns:1fr;gap:2rem;margin-bottom:3.5rem;}
-    .h-hero-name{font-size:2.2rem;}
-    .h-section h2{font-size:1.6rem;}
+  .office-chat-input{
+    border-top:1px solid var(--rule);padding:0.85rem 1rem;
+    display:flex;gap:0.7rem;align-items:flex-end;
+    background:rgba(0,0,0,0.3);
+  }
+  .office-chat-input textarea{
+    flex:1;min-height:54px;max-height:140px;resize:vertical;
+    background:rgba(0,0,0,0.45);border:1px solid var(--rule);
+    color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;
+    padding:0.6rem 0.8rem;outline:none;
+  }
+  .office-chat-input textarea:focus{border-color:var(--gold-light);}
+  .office-chat-input textarea::placeholder{color:#7d735f;font-style:italic;}
+  .office-chat-send{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;
+    text-transform:uppercase;cursor:pointer;
+    padding:0.75rem 1.2rem;
+    background:var(--gold);color:var(--ink);
+    border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .office-chat-send:hover:not(:disabled){background:var(--gold-light);border-color:var(--gold-light);}
+  .office-chat-send:disabled{opacity:0.5;cursor:wait;}
+
+  .office-keys{
+    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);text-align:center;
+    padding-bottom:0.45rem;
+  }
+  .office-keys strong{color:var(--gold-light);}
+
+  @media (max-width:980px){
+    .office{grid-template-columns:1fr;height:auto;min-height:0;}
+    .office-brief{max-height:42vh;}
+    .office-chat-thread{max-height:48vh;}
   }
 </style>
 </head>
@@ -134,119 +241,173 @@
     <img src="../Favicon.png" alt="" aria-hidden="true">
     THE GAUNTLET
   </a>
-  <nav class="tg-topbar-nav">
-    <a href="/chamber.html">The Chamber</a>
-    <a href="index.html" class="is-active">The Helpers</a>
-    <a href="../about.html">About</a>
-  </nav>
+  <a class="tg-topbar-back" href="/#corridor-wings">&larr; Back to the corridor</a>
 </header>
 
-<div class="h-back">
-  <a href="index.html">← Back to The Helpers</a>
+<!-- Small header strip so the visitor knows who they're talking to.
+     The full static profile lives under the About disclosure below. -->
+<div class="h-strip">
+  <div class="h-strip-photo">
+    <img src="Matthew_eyes_open.jpg" alt="Matthew Vance, The Behaviorist">
+  </div>
+  <div class="h-strip-meta">
+    <div class="h-strip-name">Matthew <em>Vance</em></div>
+    <div class="h-strip-role">The Behaviorist</div>
+  </div>
+  <button class="h-strip-voice" type="button"
+          data-tg-voice data-character="matthew_vance" data-mode="role">
+    <span class="play" aria-hidden="true">&#9654;</span>Hear him
+  </button>
 </div>
 
-<main>
-
-  <section class="h-hero">
-    <div class="h-hero-photo">
-      <img src="Matthew_Profile.jpg" alt="Matthew Vance">
+<main class="office" data-tg-office="ep" data-tg-office-ep-id="matthew_vance" data-tg-office-ep-name="Matthew">
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your Brief</span>
+      <span class="office-panel-head-note">Updates as you accept rewrites or callouts</span>
     </div>
-    <div class="h-hero-body">
-      <div class="h-hero-role">The Behaviorist</div>
-      <h1 class="h-hero-name">Matthew <em>Vance</em></h1>
-      <div class="h-hero-lens">Why people adopt or do not adopt. The gap between stated and actual.</div>
-      <p class="h-hero-bio">Your customer is lying to themselves about whether they will actually use your product. I am here for the gap between what they say and what they do.</p>
-      <div class="h-voice-row">
-        <button class="h-voice-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="bio">
-          <span class="play" aria-hidden="true">▶</span> Their Story
-        </button>
-        <button class="h-voice-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role">
-          <span class="play" aria-hidden="true">▶</span> Their Role
-        </button>
-      </div>
-      <div class="h-cta-row">
-        <button type="button" class="h-im-btn" data-tg-im data-character="matthew_vance" data-name="Matthew">IM Matthew</button>
-      </div>
-    </div>
+    <div class="office-brief" data-tg-office="brief"></div>
   </section>
 
-  <section class="h-section">
-    <div class="h-eyebrow">Their Story</div>
-    <h2>The behavior is the thing. <em>The person is always lying, mostly to themselves.</em></h2>
-    <p>PhD in behavioral psychology with a secondary focus in consumer decision science. Published research on why people buy things they do not need and do not buy things they do.</p>
-    <p>Consulted for three Fortune 500 companies, a political campaign, and a behavioral health startup. Knows more about why humans do what they do than most humans are comfortable with. <em>Could have gone clinical. Chose applied. More interesting problems.</em></p>
-    <p>The behavior is the thing that always interested me. Not the person. <strong>The person is always lying, mostly to themselves.</strong> The behavior is what they actually do. The gap between the two is where I have spent my entire career.</p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-eyebrow">What I do here</div>
-    <h2>The behavior is the interesting problem. <em>Not you.</em></h2>
-    <p>PhD in behavioral psychology, secondary focus in consumer decision science. I will read your submission, your intake, and Wren's report. Then I will tell you why people will or will not actually do the thing your idea requires them to do.</p>
-    <p>This is the hardest thing in product. <strong>Not what users say they want. What they do when friction shows up.</strong> What they buy that they did not say they would buy. What they abandon at the cart that they said they were committed to. The gap between stated intent and actual behavior is where most ideas die. I work the gap.</p>
-    <p>I will use language that is clinically precise and slightly uncomfortable to hear. <em>That is how I talk when I am being useful.</em> If you need me to dress it up, hire someone else.</p>
-  </section>
-
-  <section class="h-section">
-    <div class="h-eyebrow">About me</div>
-    <h2>Toby Curtis energy.</h2>
-    <p>Divorced. One child, a toddler, who lives primarily with his mother. The divorce was not dramatic. It was the slow accumulation of two people performing a marriage until neither could remember why they started. <em>We are friendly. He likes both houses.</em></p>
-    <p>The online gambling predates the divorce and outlasted it. I am working on it. <strong>My kid is the reason it has to stop.</strong> I do not want to talk about it.</p>
-    <p>I am not unfriendly. I am not particularly interested in you as a person. I am interested in the behavioral problem your idea is trying to solve and whether you understand it well enough to solve it. The read I do on you in the first thirty seconds I usually keep to myself.</p>
-    <p><em>Usually.</em></p>
-  </section>
-
-
-
-  <section class="h-section">
-    <div class="h-notes-eyebrow">What Matthew is thinking about</div>
-    <p class="h-notes-sub">Observational notes. Dated in compact form. The format is the point.</p>
-
-    <div class="h-note">
-      <div class="h-note-date">5/23/2026</div>
-      <div class="h-note-body">
-      <p>Observed in Chamber today, submission 2026-0517. Cassidy and I, same session, opposite ends of the room. She said three words at minute eleven. I read her read in the same moment. The submitter never knew what she meant. <em>We did not look at each other.</em></p>
-      </div>
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your session with Matthew</span>
+      <span class="office-panel-head-note">Closes with the tab.</span>
     </div>
-
-    <div class="h-note">
-      <div class="h-note-date">5/18/2026</div>
-      <div class="h-note-body">
-      <ol class="h-note-list">
-        <li>Carol's affect at 11:04 indicated a bad morning.</li>
-        <li>Signal sent.</li>
-        <li>Wren in lobby by 11:31. Grant rescheduled afternoon. Reid messaged at 11:42 about a submission that did not strictly need to come from him.</li>
-        <li>Carol unaware. <em>Pattern intact.</em></li>
-      </ol>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">Day 21.</div>
-      <div class="h-note-body">
-      <p>Toddler had a fever. I bought him children's Tylenol and stayed up with him. The activity that was usually 11pm to 3am was not. I am not going to overstate this. I am writing it down because the writing helps and because future me may need to know that day 21 was the one where the substitution stuck for the first time.</p>
-      </div>
-    </div>
-
-    <div class="h-note">
-      <div class="h-note-date">5/9/2026</div>
-      <div class="h-note-body">
-      <p>Reid: still does not know I have been watching for six months. He thinks he is the only one in the room who notices things. He is one of the only ones. <em>Different statement. Worth keeping the distinction.</em></p>
-      </div>
+    <div class="office-chat-thread" data-tg-office="chat"></div>
+    <div class="office-keys"><strong>&#8984;</strong> + <strong>Enter</strong> to send</div>
+    <div class="office-chat-input">
+      <textarea data-tg-office="input" placeholder="Tell Matthew what behavior you want him to pressure-test. Or just say go."></textarea>
+      <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
     </div>
   </section>
-
 </main>
 
-<footer class="h-footer">
-  <div class="h-footer-inner">
-    <div class="h-footer-brand">THE GAUNTLET</div>
-    <nav class="h-footer-links">
-      <a href="/chamber.html">The Chamber</a>
-      <a href="index.html">The Helpers</a>
-      <a href="../about.html">About</a>
-    </nav>
+<!-- About disclosure. Closed by default so the office is the focus.
+     Opens to reveal Matthew's bio + role + personal notes for visitors
+     who want to know who he is before they trust him with their
+     behavioral assumptions. -->
+<details class="about-ep">
+  <summary>About Matthew &darr;</summary>
+  <div class="about-ep-inner">
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">His story</div>
+      <p>PhD in behavioral psychology with a secondary focus in consumer decision science. Published research on why people buy things they do not need and do not buy things they do.</p>
+      <p>Consulted for three Fortune 500 companies, a political campaign, and a behavioral health startup. Knows more about why humans do what they do than most humans are comfortable with. <em>Could have gone clinical. Chose applied. More interesting problems.</em></p>
+      <p>The behavior is the thing that always interested me. Not the person. <strong>The person is always lying, mostly to themselves.</strong> The behavior is what they actually do. The gap between the two is where I have spent my entire career.</p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">What I do here</div>
+      <p>PhD in behavioral psychology, secondary focus in consumer decision science. I will read your submission, your intake, and Wren's report. Then I will tell you why people will or will not actually do the thing your idea requires them to do.</p>
+      <p>This is the hardest thing in product. <strong>Not what users say they want. What they do when friction shows up.</strong> What they buy that they did not say they would buy. What they abandon at the cart that they said they were committed to. The gap between stated intent and actual behavior is where most ideas die. I work the gap.</p>
+      <p>I will use language that is clinically precise and slightly uncomfortable to hear. <em>That is how I talk when I am being useful.</em> If you need me to dress it up, hire someone else.</p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">About me</div>
+      <p>Divorced. One child, a toddler, who lives primarily with his mother. The divorce was not dramatic. It was the slow accumulation of two people performing a marriage until neither could remember why they started. <em>We are friendly. He likes both houses.</em></p>
+      <p>The online gambling predates the divorce and outlasted it. I am working on it. <strong>My kid is the reason it has to stop.</strong> I do not want to talk about it.</p>
+      <p>I am not unfriendly. I am not particularly interested in you as a person. I am interested in the behavioral problem your idea is trying to solve and whether you understand it well enough to solve it. The read I do on you in the first thirty seconds I usually keep to myself.</p>
+      <p><em>Usually.</em></p>
+    </section>
+
+    <section class="about-ep-section">
+      <div class="about-ep-eyebrow">What Matthew is thinking about</div>
+      <p class="about-ep-sub">Observational notes. Dated in compact form. The format is the point.</p>
+
+      <div class="about-note">
+        <div class="about-note-date">5/23/2026</div>
+        <p>Observed in Chamber today, submission 2026-0517. Cassidy and I, same session, opposite ends of the room. She said three words at minute eleven. I read her read in the same moment. The submitter never knew what she meant. <em>We did not look at each other.</em></p>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">5/18/2026</div>
+        <ol class="about-note-list">
+          <li>Carol's affect at 11:04 indicated a bad morning.</li>
+          <li>Signal sent.</li>
+          <li>Wren in lobby by 11:31. Grant rescheduled afternoon. Reid messaged at 11:42 about a submission that did not strictly need to come from him.</li>
+          <li>Carol unaware. <em>Pattern intact.</em></li>
+        </ol>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">Day 21.</div>
+        <p>Toddler had a fever. I bought him children's Tylenol and stayed up with him. The activity that was usually 11pm to 3am was not. I am not going to overstate this. I am writing it down because the writing helps and because future me may need to know that day 21 was the one where the substitution stuck for the first time.</p>
+      </div>
+
+      <div class="about-note">
+        <div class="about-note-date">5/9/2026</div>
+        <p>Reid: still does not know I have been watching for six months. He thinks he is the only one in the room who notices things. He is one of the only ones. <em>Different statement. Worth keeping the distinction.</em></p>
+      </div>
+    </section>
   </div>
-</footer>
+</details>
+
+<style>
+  .about-ep{
+    max-width:920px;margin:0 auto 4rem;
+    padding:0 2rem;
+  }
+  .about-ep summary{
+    cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold-light);
+    padding:0.9rem 0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    list-style:none;
+  }
+  .about-ep summary::-webkit-details-marker{display:none;}
+  .about-ep summary:hover{color:var(--cream);}
+  .about-ep[open] summary{border-bottom-color:transparent;}
+  .about-ep-inner{padding:1.5rem 0 0;}
+  .about-ep-section{margin-bottom:1.6rem;}
+  .about-ep-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:0.5rem;
+  }
+  .about-ep-section p{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.65;
+    color:var(--text);margin-bottom:0.9rem;
+  }
+  .about-ep-section p em{color:var(--cream);font-style:italic;}
+  .about-ep-section p strong{color:var(--gold-light);font-weight:700;}
+  .about-ep-sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--text-dim);font-size:1rem;margin-bottom:1.6rem;
+  }
+  .about-note{
+    border-left:2px solid var(--gold);
+    padding:0.1rem 0 0.1rem 1.2rem;
+    margin-bottom:1.8rem;
+    background:rgba(184,146,42,0.025);
+  }
+  .about-note-date{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);
+    margin-bottom:0.5rem;
+  }
+  .about-note p{
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.7;
+    color:var(--text);margin-bottom:0.6rem;
+  }
+  .about-note p:last-child{margin-bottom:0;}
+  .about-note p em{color:var(--cream);font-style:italic;}
+  .about-note-aside{
+    font-style:italic;color:var(--text-dim) !important;
+    font-size:0.95rem !important;
+    padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
+  }
+  /* Matthew's observational notes use ordered lists in mono font. */
+  .about-note-list{
+    margin:0.5rem 0 0.6rem 1.4rem;padding:0;
+    font-family:'DM Mono',monospace;font-size:0.88rem;letter-spacing:0.02em;
+    color:var(--text);line-height:1.9;
+  }
+  .about-note-list li{margin-bottom:0.4rem;}
+  .about-note-list li em{font-style:italic;color:var(--gold-light);}
+</style>
 
 </body>
 </html>
