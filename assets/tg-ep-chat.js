@@ -334,8 +334,9 @@
     // Wire input.
     sendEl.addEventListener('click', () => sendMessage(inputEl.value));
     inputEl.addEventListener('keydown', (e) => {
-      // Cmd/Ctrl + Enter sends. Enter alone keeps newlines for multi-line drafts.
-      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      // Enter sends. Shift + Enter keeps newlines for multi-line drafts.
+      // Cmd/Ctrl + Enter still sends (legacy muscle memory from earlier UX).
+      if (e.key === 'Enter' && !e.shiftKey && !e.altKey && !e.isComposing) {
         e.preventDefault();
         sendMessage(inputEl.value);
       }
