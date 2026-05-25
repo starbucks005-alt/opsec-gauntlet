@@ -32,6 +32,10 @@
   const KEY_CACHE     = 'tg_corridor_briefings_cache_v2';
   const KEY_CACHE_SIG = 'tg_corridor_briefings_sig_v2';
   const MIN_BRIEF_LEN = 12;
+  // Hard cap on how long we wait for the briefings endpoint before we
+  // give the visitor a clear failure state. Netlify sync functions cap
+  // at 26s, so 30s gives a small grace window for network + edge.
+  const FETCH_TIMEOUT_MS = 30000;
 
   // ── sessionStorage helpers (private-browsing safe) ──────────────────────
   function ss(key)              { try { return sessionStorage.getItem(key); }      catch(_) { return null; } }
@@ -59,9 +63,12 @@
       // a brief is loaded we replace its text with the EP's personalized
       // invitation. Original text is captured so we can fall back cleanly.
       const linkEl  = card.querySelector('.wing-link');
+      const nameEl  = card.querySelector('.wing-name');
       if (!button || !quoteEl) return;
+      const epName = nameEl ? nameEl.textContent.trim() : '';
       cards.push({
         epId:    button.dataset.character,
+        epName:  epName,
         quoteEl: quoteEl,
         linkEl:  linkEl,
         linkOriginal: linkEl ? linkEl.textContent : '',
@@ -105,6 +112,38 @@
         color: var(--gold-light, #d4aa4a);
         border-bottom-color: var(--gold-light, #d4aa4a);
       }
+      /* Status banner injected above the corridor cards. Shown only while
+         briefings are loading or after a fetch failure. */
+      .tg-corridor-status {
+        max-width: 720px;
+        margin: 0 auto 1.5rem;
+        padding: 0.7rem 1rem;
+        text-align: center;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-dim, #a89c88);
+        border: 1px solid var(--rule, rgba(184,146,42,0.18));
+        background: rgba(184,146,42,0.04);
+      }
+      .tg-corridor-status.is-error {
+        color: var(--gauntlet-consequence, #c0392b);
+        border-color: rgba(192,57,43,0.35);
+        background: rgba(192,57,43,0.04);
+      }
+      .tg-corridor-status .pulse {
+        display: inline-block;
+        width: 7px; height: 7px; border-radius: 50%;
+        background: var(--gold-light, #d4aa4a);
+        margin-right: 0.55rem;
+        vertical-align: middle;
+        animation: tg-corridor-pulse 1.4s ease-in-out infinite;
+      }
+      @keyframes tg-corridor-pulse {
+        0%, 100% { opacity: 0.35; }
+        50%      { opacity: 1; }
+      }
     `;
     const style = document.createElement('style');
     style.id = 'tg-corridor-styles';
@@ -120,18 +159,53 @@
   // The original text is stashed on the element so we can restore if the
   // fetch fails. Linktext is stashed too (collectCards already captured
   // linkOriginal but stashing on the element survives multiple refreshes).
+  //
+  // Per-EP placeholder ("Ms. Ivy is reading your brief...") instead of a
+  // single generic line so the visitor sees that each card is individually
+  // pending, not a stalled static state.
   function setLoading(cards, on) {
     cards.forEach(c => {
       if (on) {
         if (c.quoteEl.dataset.tgOriginalQuote === undefined) {
           c.quoteEl.dataset.tgOriginalQuote = c.quoteEl.textContent;
         }
-        c.quoteEl.textContent = 'Reading your idea...';
+        const who = c.epName || 'This EP';
+        c.quoteEl.textContent = who + ' is reading your brief...';
         c.quoteEl.classList.add('tg-quote-loading');
       } else {
         c.quoteEl.classList.remove('tg-quote-loading');
       }
     });
+  }
+
+  // ── Status banner above the cards ─────────────────────────────────────
+  // Single banner used for both the "still working" state and the
+  // hard-failure state. Injected once, removed when the call completes
+  // successfully so the corridor is clean for the normal reading flow.
+  function findStatusAnchor() {
+    // Prefer inserting BEFORE the first corridor card so the banner sits
+    // right above the cast. Falls back to the section container.
+    const firstCard = document.querySelector('.corridor-wing');
+    if (firstCard && firstCard.parentNode) return { parent: firstCard.parentNode, anchor: firstCard };
+    const section = document.querySelector('.corridor-wings, #corridor-wings');
+    return section ? { parent: section, anchor: section.firstChild } : null;
+  }
+  function showStatus(msg, isError) {
+    const anchor = findStatusAnchor();
+    if (!anchor) return;
+    let el = document.getElementById('tg-corridor-status');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'tg-corridor-status';
+      el.className = 'tg-corridor-status';
+      anchor.parent.insertBefore(el, anchor.anchor);
+    }
+    el.classList.toggle('is-error', !!isError);
+    el.innerHTML = (isError ? '' : '<span class="pulse" aria-hidden="true"></span>') + msg;
+  }
+  function hideStatus() {
+    const el = document.getElementById('tg-corridor-status');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
   }
 
   // Restore the static voice-sample quote (used when a fetch fails -
@@ -177,17 +251,28 @@
   }
 
   // ── Fetch + cache ──────────────────────────────────────────────────────
+  // AbortController + 30s deadline so a slow / hung function does not
+  // strand the visitor on the loading state indefinitely (pre-fix bug:
+  // browser fetch has no default timeout, so a stalled Netlify edge
+  // connection could hold the placeholder for minutes).
   async function fetchBriefings(brief, name) {
-    const resp = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ brief: brief, name: name }),
-    });
-    if (!resp.ok) {
-      const text = await resp.text().catch(() => '');
-      throw new Error('briefings ' + resp.status + ' ' + text.slice(0, 160));
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort('timeout'), FETCH_TIMEOUT_MS);
+    try {
+      const resp = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brief: brief, name: name }),
+        signal: controller.signal,
+      });
+      if (!resp.ok) {
+        const text = await resp.text().catch(() => '');
+        throw new Error('briefings ' + resp.status + ' ' + text.slice(0, 160));
+      }
+      return await resp.json();
+    } finally {
+      clearTimeout(timer);
     }
-    return resp.json();
   }
 
   function readCache(currentSig) {
@@ -225,25 +310,37 @@
       const cached = readCache(currentSig);
       if (cached && cached.briefings) {
         applyBriefings(cards, cached.briefings);
+        hideStatus();
         return;
       }
     }
 
     setLoading(cards, true);
+    showStatus('Briefings usually take 10 to 20 seconds. Each EP writes their own.');
     try {
       const data = await fetchBriefings(brief, name);
       setLoading(cards, false);
       if (data && data.briefings) {
         applyBriefings(cards, data.briefings);
         writeCache(currentSig, data);
+        hideStatus();
       } else {
         restoreStatic(cards);
+        showStatus('Tailored briefings did not return. Refresh to try again.', true);
       }
     } catch (err) {
-      console.warn('[tg-corridor]', err.message);
+      const msg = (err && err.message) || String(err);
+      const isTimeout = msg.toLowerCase().includes('abort') || msg.toLowerCase().includes('timeout');
+      console.warn('[tg-corridor]', msg);
       // Restore the static quotes so the visitor doesn't end up with
-      // "Reading your idea..." stranded on every card.
+      // a per-EP "is reading your brief..." line stranded on every card.
       restoreStatic(cards);
+      showStatus(
+        isTimeout
+          ? 'Tailored briefings timed out. Refresh to try again.'
+          : 'Tailored briefings could not be generated. Refresh to try again.',
+        true
+      );
     }
   }
 
