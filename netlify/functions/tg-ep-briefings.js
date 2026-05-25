@@ -52,7 +52,7 @@ const json = (statusCode, body) => ({
 // character. This is just the LENS each one views the brief through.
 const EPS = [
   { id: 'ms_ivy',        name: 'Ms. Ivy',        role: 'The Librarian',        lens: 'research and prior art - what already exists, where the real gap is, whether the novelty claim survives a quick scan of adjacent fields' },
-  { id: 'wren_calloway', name: 'Wren Calloway',  role: 'The Scout',            lens: 'patent and trademark landscape, market data, white space - whether the IP and competitive ground are defensible or already crowded' },
+  { id: 'wren_calloway', name: 'Wren Calloway',  role: 'The Scout',            lens: 'landscape - prior art and white space (her existing read), where the idea can WORK (markets and beachhead), and other USES the same mechanic could serve in different problem domains' },
   { id: 'carol_haynes',  name: 'Carol Haynes',   role: 'The Screener',         lens: 'pattern-matching - which comparable venture pattern this idea fits, what worked for that pattern, what failed, whether the variant has legs, the one thing that will kill it before the judges see it' },
   { id: 'matthew_vance', name: 'Matthew Vance',  role: 'The Behaviorist',      lens: 'purchase psychology - what emotional driver the customer is actually buying on (status, identity, belonging, fear, certainty), the trigger moment that opens the buy window, and which other EP that driver routes into' },
   { id: 'arjun_mehta',   name: 'Arjun Mehta',    role: 'The Make-It-Real Expert', lens: 'getting from idea to physical product - manufacturer category to call, realistic MOQ and lead time, regulatory route if any, where prototyping actually happens' },

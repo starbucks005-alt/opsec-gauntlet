@@ -173,3 +173,7 @@
   [functions.tg-carol-screen]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-wren-scout]
+    timeout = 26
+    included_files = ["config/**"]

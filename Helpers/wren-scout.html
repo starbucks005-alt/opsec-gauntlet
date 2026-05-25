@@ -11,6 +11,7 @@
 <script src="../assets/tg-ep-chat.js" defer></script>
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
+<script src="../assets/tg-wren-tools.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -294,11 +295,510 @@
     <div class="office-chat-thread" data-tg-office="chat"></div>
     <div class="office-keys"><strong>Enter</strong> to send &middot; <strong>Shift</strong> + <strong>Enter</strong> for newline</div>
     <div class="office-chat-input">
-      <textarea data-tg-office="input" placeholder="Tell Wren what space you want her to scan. Or just say go."></textarea>
+      <textarea data-tg-office="input" placeholder="Tell Wren which segment to focus on, or which other domain you want her to scan. Or just say go."></textarea>
       <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
     </div>
   </section>
 </main>
+
+<!-- ── Landscape Hub. Scout Report generator + reference cards.
+     The chat above is where Wren talks. This hub is where the landscape
+     becomes a deliverable. Every report auto-appends to the brief and
+     writes a revision-log entry so it ships in the DOCX export. -->
+<section class="zh">
+  <div class="zh-inner">
+
+    <header class="zh-head">
+      <div class="zh-eyebrow">Landscape Hub</div>
+      <h2>Where it can work. Where else it could live.</h2>
+      <p class="zh-sub">Wren reads your brief and maps the landscape - the markets where the core use case fits, the single best beachhead, and OTHER USES the same mechanic could serve in different problem domains. (Terry built SLR Studio for manuscripts; the tech turned out to power pharmacovigilance and patent monitoring. That pattern is common. Wren finds it on purpose.)</p>
+    </header>
+
+    <!-- Landscape Scout Report Generator -->
+    <div class="zh-card" data-wt-tool="scout">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Landscape scout report</span>
+        <span class="zh-card-eyebrow-note">Saves to your brief, full landscape map</span>
+      </div>
+      <p class="rt-tool-blurb">Wren reads your brief and returns: 3-5 market segments where the core use case fits (each with density label and a 30-day signal to measure), the single best beachhead with reasoning, 3-5 OTHER USES the same mechanic could serve in different problem domains, 2-3 adjacent product pivots, a white-space map (with opportunity / caution / graveyard verdicts), 5-8 specific search hooks you should run yourself to verify, and the one move Wren would warn against.</p>
+      <button type="button" class="zh-generate" data-wt="generate">Scout the landscape &rarr;</button>
+      <div class="zh-result" data-wt="result"></div>
+    </div>
+
+    <!-- The Scout's Code -->
+    <header class="zh-section-head">
+      <h2>The Scout's Code.</h2>
+      <p class="zh-sub">Eight rules that separate a real landscape read from a Google search. The generator above follows these too.</p>
+    </header>
+    <div class="zh-rules">
+      <article class="zh-rule">
+        <div class="zh-rule-num">1</div>
+        <h3 class="zh-rule-title">The first search is for what already exists.</h3>
+        <p>Founders search to confirm their idea is unique. Wren searches to find what is already there. The first answer is almost always more than expected. The gap between expected and actual is the brief's first weakness.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">2</div>
+        <h3 class="zh-rule-title">Thin white space is usually thin for a reason.</h3>
+        <p>Empty quadrants on the map are sometimes opportunity. They are more often graveyards where founders have already died trying. Find the graveyard before celebrating the empty space.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">3</div>
+        <h3 class="zh-rule-title">Patent absence is not opportunity.</h3>
+        <p>No filed patent in your space means one of three things: the IP exists as trade secret, the space is too small to bother protecting, or someone tried and the application was abandoned. None of those is the founder's friend by default.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">4</div>
+        <h3 class="zh-rule-title">Where it can work is plural.</h3>
+        <p>Most ideas can serve more than one market. Wren names 3 to 5 because the second-best market often has the cleaner first signal. Do not assume the first market you imagined is the one you should walk into first.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">5</div>
+        <h3 class="zh-rule-title">Focus is choosing not to enter the others first.</h3>
+        <p>The beachhead recommendation is a TEMPORAL choice, not a permanent one. You start narrow. You expand when the first market proves out. Founders who go wide on day one die from spread, not from competition.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">6</div>
+        <h3 class="zh-rule-title">Other Uses live in adjacent domains, not adjacent products.</h3>
+        <p>Same mechanic, different problem. Your patent search tool is also a pharmacovigilance tool. Your scheduling app is also a clinical-trial coordination tool. The mechanic crosses domains; the product packaging changes.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">7</div>
+        <h3 class="zh-rule-title">Search hooks are gifts, not summaries.</h3>
+        <p>Wren hands ${''}you the exact search strings to run on the exact databases. Run them. The hits or misses tell you whether her landscape read holds. The visitor who skips this step gets a worse landscape.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">8</div>
+        <h3 class="zh-rule-title">Specific over abstract, always.</h3>
+        <p>"Healthcare professionals" is not a segment. "Regulatory writers in mid-size pharma" is. The narrower the segment label, the more usable the landscape map.</p>
+      </article>
+    </div>
+
+    <!-- Landscape Traps -->
+    <header class="zh-section-head">
+      <h2>Landscape Traps.</h2>
+      <p class="zh-sub">Eight ways founders read the landscape wrong. Each one is real. Each one shows up most weeks.</p>
+    </header>
+    <div class="zh-traps">
+      <article class="zh-trap">
+        <h3>&#9888; "Everyone in San Francisco says nobody is doing this."</h3>
+        <p>San Francisco is one city. The mechanic that died in San Francisco might be alive in Bangalore, Tel Aviv, Lagos, or a midwest manufacturing town. Geography is a search axis, not a verdict.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Googling your own product name and reading page one.</h3>
+        <p>That is not a competitive scan. That is a vanity check. A real scan uses adjacent terminology, patent classifications, and academic literature - none of which surface from typing your product name.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Treating twenty minutes as a landscape.</h3>
+        <p>Twenty minutes finds the obvious. The non-obvious takes structured search across at least three databases. Most founders never leave Google. Most landscapes are wrong as a result.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Confusing "well-funded" with "winning."</h3>
+        <p>A competitor with $80M raised may be five months from layoffs. Funded is not the same as durable. The landscape needs revenue signals, not just funding signals.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; "It worked once, so the pattern is open."</h3>
+        <p>One survivor is not a pattern. The graveyard around them is the pattern. Find the others who tried before celebrating the open lane.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Reading legacy competitors as the whole landscape.</h3>
+        <p>The competitors you have heard of are the survivors of the previous decade. The actual competitors for next year are not yet famous. Look at the recent filings, not the legacy market reports.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Mistaking Other Uses for adjacent moves.</h3>
+        <p>"Other Uses" means same mechanic, different problem domain - SLR Studio for pharmacovigilance. "Adjacent moves" means different product for a related market. Confusing them leads to a pivot that should have been a second product line.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Skipping the search hooks Wren handed you.</h3>
+        <p>The point of the search hooks is that you run them and find out whether Wren's read holds. Founders who skip them are operating on a model with no verification. The first 30 minutes after this report is when the landscape gets real.</p>
+      </article>
+    </div>
+
+    <!-- Search Resources Directory -->
+    <header class="zh-section-head">
+      <h2>Search Resources Directory.</h2>
+      <p class="zh-sub">Eight free tools Wren reaches for. None require funding. All are real.</p>
+    </header>
+    <div class="zh-platforms">
+      <article class="zh-platform">
+        <h3>Google Patents</h3>
+        <p><strong>What it is:</strong> Google's free patent search across multiple international patent offices. Fast, indexed, citation-aware.</p>
+        <p><strong>Best for:</strong> First-pass landscape - what already exists, who filed, when.</p>
+        <p><strong>Find it:</strong> patents.google.com</p>
+      </article>
+      <article class="zh-platform">
+        <h3>USPTO PatFT / AppFT</h3>
+        <p><strong>What it is:</strong> The US Patent and Trademark Office's official search of issued patents (PatFT) and pending applications (AppFT).</p>
+        <p><strong>Best for:</strong> Authoritative US filings, including the most recent activity that has not propagated to third-party indexes yet.</p>
+        <p><strong>Find it:</strong> uspto.gov - look for Patent Public Search.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>EPO Espacenet</h3>
+        <p><strong>What it is:</strong> European Patent Office search covering 130+ million patent documents from 90+ countries.</p>
+        <p><strong>Best for:</strong> International coverage, alternative inventors who never filed in the US.</p>
+        <p><strong>Find it:</strong> worldwide.espacenet.com</p>
+      </article>
+      <article class="zh-platform">
+        <h3>WIPO PatentScope</h3>
+        <p><strong>What it is:</strong> World Intellectual Property Organization's database of PCT applications and national/regional filings.</p>
+        <p><strong>Best for:</strong> Tracking PCT international filings before they enter national phase.</p>
+        <p><strong>Find it:</strong> patentscope.wipo.int</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Google Scholar</h3>
+        <p><strong>What it is:</strong> Academic literature search across journals, conferences, theses, and preprints.</p>
+        <p><strong>Best for:</strong> Catching the research that precedes commercialization. The academic record predicts the patent record by 2-5 years.</p>
+        <p><strong>Find it:</strong> scholar.google.com</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Lens.org</h3>
+        <p><strong>What it is:</strong> Free non-profit platform that combines patents AND scholarly works AND biological sequences in one search.</p>
+        <p><strong>Best for:</strong> Cross-search across patents and academic literature in a single query - the kind of search that catches Other Uses adjacencies.</p>
+        <p><strong>Find it:</strong> lens.org</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Crunchbase (free tier)</h3>
+        <p><strong>What it is:</strong> Company database with funding history, founders, and basic competitive landscape.</p>
+        <p><strong>Best for:</strong> Identifying the recent entrants in a space - the ones too new for analyst reports.</p>
+        <p><strong>Find it:</strong> crunchbase.com - free tier is enough for first-pass scanning.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Public Library Business Databases</h3>
+        <p><strong>What it is:</strong> Your local library card unlocks IBISWorld, Statista, Mintel, ThomasNet, and similar paid databases at zero cost.</p>
+        <p><strong>Best for:</strong> Sized market data and industry reports that would cost $4K each retail. Ask the business reference librarian.</p>
+        <p><strong>Find it:</strong> Your local public library website. Often hidden under "Research" or "Databases."</p>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Landscape Hub (Wren) ──────────────────────────────────────────────
+     Re-uses .zh-* / .rt-* class language. Adds .wt-* for scout-specific
+     output: segment cards with density chips, focus block, Other Uses
+     cards, adjacent-move cards, white-space gap cards with verdict chips,
+     search-hook cards. */
+  .zh{ background:rgba(255,255,255,0.012); border-top:1px solid var(--rule); padding:3.5rem 2rem 4.5rem; }
+  .zh-inner{ max-width:1320px; margin:0 auto; }
+  .zh-head{ max-width:780px; margin:0 auto 2.4rem; text-align:center; }
+  .zh-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
+  }
+  .zh-head h2,
+  .zh-section-head h2{
+    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
+    color:var(--cream); line-height:1.15; margin:0 0 0.6rem;
+  }
+  .zh-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; line-height:1.5;
+  }
+  .zh-section-head{ max-width:920px; margin:3.4rem auto 1.4rem; text-align:left; }
+
+  .zh-card{
+    max-width:920px; margin:0 auto;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+    padding:1.4rem 1.5rem 1.8rem;
+  }
+  .zh-card-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:0.8rem; margin-bottom:1.1rem; padding-bottom:0.7rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .zh-card-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .zh-card-eyebrow-note{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .rt-tool-blurb{
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem; line-height:1.5;
+    color:var(--text-dim); font-style:italic;
+    margin:0 0 1rem;
+  }
+  .zh-generate{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.8rem 1.4rem; margin-top:0.4rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .zh-generate:hover:not(:disabled){ background:var(--gold-light); border-color:var(--gold-light); }
+  .zh-generate:disabled{ opacity:0.55; cursor:wait; }
+
+  /* Result panel */
+  .zh-result:empty{ display:none; }
+  .zh-result{ margin-top:1.4rem; padding:1.1rem 1.2rem; border:1px solid var(--rule); background:rgba(0,0,0,0.4); }
+  .zh-result.is-loading{ border-color:rgba(212,170,74,0.35); }
+  .zh-result.is-ready{   border-color:rgba(212,170,74,0.45); background:rgba(184,146,42,0.04); }
+  .zh-result.is-error{
+    border-color:rgba(192,57,43,0.45);
+    background:rgba(192,57,43,0.04); color:var(--gauntlet-consequence);
+  }
+  .zh-result-meta{
+    display:flex; gap:0.55rem; align-items:center;
+    margin-bottom:0.8rem; flex-wrap:wrap;
+  }
+  .zh-result-platform{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+    padding:0.3rem 0.6rem; border:1px solid var(--rule);
+  }
+  .zh-result-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem; line-height:1.5;
+    margin-bottom:0.6rem;
+  }
+  .zh-result-saved{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    line-height:1.5;
+  }
+  .zh-result-msg{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem; line-height:1.5;
+    color:inherit;
+  }
+  .rt-out-block{ margin-bottom:0.95rem; }
+  .rt-out-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:0.45rem;
+  }
+  .wt-mini-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    margin-right:0.4rem;
+  }
+
+  /* Segments (Where it can work) */
+  .wt-segment-list{ display:flex; flex-direction:column; gap:0.5rem; }
+  .wt-segment{
+    padding:0.7rem 0.9rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold);
+  }
+  .wt-segment-head{
+    display:flex; gap:0.55rem; justify-content:space-between; align-items:baseline;
+    margin-bottom:0.3rem; flex-wrap:wrap;
+  }
+  .wt-segment h4{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--cream); margin:0; line-height:1.3;
+  }
+  .wt-density{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .wt-density-crowded{ color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.45); background:rgba(192,57,43,0.05); }
+  .wt-density-medium { color:#e8aa6f; border-color:rgba(232,170,111,0.45); background:rgba(232,170,111,0.05); }
+  .wt-density-thin   { color:#9bd4a3; border-color:rgba(155,212,163,0.45); background:rgba(155,212,163,0.05); }
+  .wt-segment-why{
+    font-family:'Cormorant Garamond',serif; font-size:0.93rem; line-height:1.4;
+    color:var(--text); margin:0 0 0.3rem;
+  }
+  .wt-segment-signal{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.9rem; line-height:1.4;
+    color:var(--text-dim); margin:0;
+  }
+  .wt-segment-signal strong{ font-style:normal; color:var(--gold-light); }
+
+  /* Focus recommendation - highlighted beachhead block */
+  .wt-focus{
+    padding:0.95rem 1.1rem;
+    background:rgba(212,170,74,0.08); border:1px solid rgba(212,170,74,0.5);
+    border-left:3px solid var(--gold-light);
+  }
+  .wt-focus-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:0.35rem;
+  }
+  .wt-focus-segment{
+    font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700;
+    color:var(--cream); line-height:1.25; margin-bottom:0.45rem;
+  }
+  .wt-focus-reason{
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem; line-height:1.5;
+    color:var(--text); margin:0;
+  }
+
+  /* Other Uses - the SLR-Studio insight, distinct visual treatment */
+  .wt-other-use-list{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:0.55rem;
+  }
+  .wt-other-use{
+    padding:0.75rem 0.9rem;
+    background:rgba(155,212,163,0.04);
+    border:1px solid rgba(155,212,163,0.3);
+    border-left:3px solid #9bd4a3;
+  }
+  .wt-other-use h4{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:#cfe9d4; margin:0 0 0.4rem; line-height:1.25;
+  }
+  .wt-other-use p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0 0 0.3rem;
+  }
+  .wt-other-use p:last-child{ margin-bottom:0; }
+
+  /* Adjacent moves */
+  .wt-adjacent-list{ display:flex; flex-direction:column; gap:0.5rem; }
+  .wt-adjacent{
+    padding:0.7rem 0.9rem;
+    background:rgba(255,255,255,0.018); border:1px solid var(--rule);
+  }
+  .wt-adjacent-move{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.5rem; line-height:1.3;
+  }
+  .wt-adjacent-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;
+  }
+  .wt-adjacent-grid p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+
+  /* White space map */
+  .wt-gap-list{ display:flex; flex-direction:column; gap:0.5rem; }
+  .wt-gap{
+    padding:0.7rem 0.9rem;
+    border:1px solid var(--rule);
+  }
+  .wt-gap-opportunity{ background:rgba(155,212,163,0.04); border-left:3px solid #9bd4a3; }
+  .wt-gap-caution    { background:rgba(232,170,111,0.04); border-left:3px solid #e8aa6f; }
+  .wt-gap-graveyard  { background:rgba(192,57,43,0.04);   border-left:3px solid var(--gauntlet-consequence); }
+  .wt-gap-head{
+    display:flex; gap:0.55rem; align-items:baseline; flex-wrap:wrap;
+    margin-bottom:0.35rem;
+  }
+  .wt-verdict{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .wt-verdict-opportunity{ color:#9bd4a3; border-color:rgba(155,212,163,0.5); }
+  .wt-verdict-caution    { color:#e8aa6f; border-color:rgba(232,170,111,0.5); }
+  .wt-verdict-graveyard  { color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.5); }
+  .wt-gap h4{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--cream); margin:0; line-height:1.3;
+  }
+  .wt-gap p{
+    font-family:'Cormorant Garamond',serif; font-size:0.93rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+
+  /* Search hooks - monospace queries with database label */
+  .wt-hook-list{ display:flex; flex-direction:column; gap:0.45rem; }
+  .wt-hook{
+    padding:0.6rem 0.85rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+  }
+  .wt-hook-query{
+    font-family:'DM Mono',monospace; font-size:0.82rem; letter-spacing:0.02em;
+    color:var(--cream);
+    padding:0.35rem 0.55rem; background:rgba(184,146,42,0.06);
+    border-left:2px solid var(--gold-light);
+    margin-bottom:0.4rem;
+    word-break:break-word;
+  }
+  .wt-hook-meta{
+    display:flex; gap:0.7rem; align-items:baseline; flex-wrap:wrap;
+  }
+  .wt-hook-where{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .wt-hook-for{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.9rem; line-height:1.4;
+    color:var(--text-dim);
+    flex:1; min-width:0;
+  }
+
+  /* "One thing not to do" */
+  .wt-dont{
+    padding:0.75rem 1rem;
+    background:rgba(192,57,43,0.05); border-left:3px solid var(--gauntlet-consequence);
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.5;
+    color:var(--cream); font-style:italic;
+  }
+
+  /* Reference grids - inherits from earlier hubs */
+  .zh-rules{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-rule{
+    position:relative;
+    border:1px solid var(--rule); border-left:3px solid var(--gold);
+    background:rgba(184,146,42,0.04);
+    padding:1rem 1.1rem;
+  }
+  .zh-rule-num{
+    position:absolute; top:0.4rem; right:0.6rem;
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.4rem; color:rgba(184,146,42,0.4); line-height:1;
+  }
+  .zh-rule-title{
+    font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.4rem; padding-right:1.6rem; line-height:1.2;
+  }
+  .zh-rule p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+  .zh-traps{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-trap{
+    border:1px solid rgba(192,57,43,0.35); border-left:3px solid var(--gauntlet-consequence);
+    background:rgba(192,57,43,0.03); padding:1rem 1.1rem;
+  }
+  .zh-trap h3{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--gauntlet-consequence); margin:0 0 0.4rem; line-height:1.25;
+  }
+  .zh-trap p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+  .zh-platforms{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:0.85rem;
+  }
+  .zh-platform{
+    border:1px solid var(--rule);
+    background:rgba(255,255,255,0.018);
+    padding:1rem 1.15rem;
+  }
+  .zh-platform h3{
+    font-family:'Playfair Display',serif; font-size:1.08rem; font-weight:700;
+    color:var(--gold-light); margin:0 0 0.45rem; line-height:1.2;
+  }
+  .zh-platform p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0 0 0.35rem;
+  }
+  .zh-platform p:last-child{ margin-bottom:0; }
+  .zh-platform strong{ color:var(--cream); }
+
+  @media (max-width:880px){
+    .zh-rules,.zh-traps,.zh-platforms{ grid-template-columns:1fr; }
+    .wt-other-use-list,.wt-adjacent-grid{ grid-template-columns:1fr; }
+    .wt-segment-head,.wt-gap-head{ flex-direction:column; align-items:flex-start; gap:0.25rem; }
+    .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
+    .zh-card-eyebrow-note{ font-size:0.5rem; }
+  }
+</style>
 
 <!-- About disclosure. Closed by default so the office is the focus.
      Opens to reveal Wren's bio + role + personal notes for visitors
