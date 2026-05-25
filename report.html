@@ -236,6 +236,7 @@
     .finding-score{grid-column:1 / -1;text-align:left;font-size:1.4rem;padding-top:0;}
   }
 </style>
+<script src="assets/tg-export.js" defer></script>
 </head>
 <body>
 
@@ -439,6 +440,7 @@
       ${routingBlock}
 
       <div class="actions-row">
+        <button type="button" class="btn btn-primary" data-tg-export>Export brief ↓</button>
         <a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel →</a>
         <a class="btn btn-outline" href="/">Home</a>
       </div>

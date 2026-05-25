@@ -18,7 +18,24 @@
    has not defined them.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* ── Topbar button ─────────────────────────────────────────────────────── */
+/* ── Topbar: Export button (small, unobtrusive — visitor downloads their
+       brief + revision log as DOCX). ──────────────────────────────────────── */
+.tg-topbar-export{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:transparent;border:1px solid rgba(212,170,74,0.35);
+  color:var(--gold-light, #d4aa4a);
+  font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+  text-transform:uppercase;
+  padding:0.55rem 0.95rem;cursor:pointer;
+  transition:background 0.18s,border-color 0.18s,color 0.18s;
+}
+.tg-topbar-export:hover:not([disabled]){
+  background:rgba(212,170,74,0.08);
+  border-color:var(--gold, #b8922a);color:var(--gold, #b8922a);
+}
+.tg-topbar-export[disabled]{opacity:0.6;cursor:wait;}
+
+/* ── Topbar: "Take it to Zoom" button ──────────────────────────────────── */
 .tg-zoom-open{
   display:inline-flex;align-items:center;gap:0.45rem;
   font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;

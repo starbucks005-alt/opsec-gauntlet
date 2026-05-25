@@ -134,6 +134,10 @@
     timeout = 26
     external_node_modules = ["pdf-parse", "mammoth"]
 
+  [functions.tg-export-docx]
+    timeout = 15
+    external_node_modules = ["docx"]
+
   [functions.tg-ep-chat]
     timeout = 26
     included_files = ["config/**"]
