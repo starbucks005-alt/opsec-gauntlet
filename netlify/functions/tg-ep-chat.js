@@ -260,6 +260,26 @@ function renderEPPrompt(spec, bio, role, brief, name) {
   - The "section_label" is a plain English handle ${nameRef} can find without scrolling ("opening paragraph", "Key Features bullets", "Prior Research notes I am adding", "business model paragraph").
   - The "rationale" is one or two sentences on why this change is worth making, in YOUR domain's voice.`;
 
+  // Coach-Mode-only DRILL MODE - interactive judge-question rehearsal.
+  // This is the highest-impact thing Grant does. The visitor invokes it
+  // by asking for a drill ("drill me on Marcus", "run me through Selene's
+  // questions", "give me the hard ones"). Grant runs a Socratic Q&A in
+  // the chosen judge's voice, one question per turn, scoring each answer.
+  const drillBlock = spec.coachMode
+    ? `\n\nDRILL MODE - the highest-impact work you do
+  - Triggers: ${nameRef} says "drill me," "run the drill," "drill me on [judge name]," "give me [judge name]'s hardest question," "what would [judge name] ask," or any phrasing that asks for rehearsal.
+  - On entering drill mode:
+    1. Pick ONE judge - the one ${nameRef} named, OR the toughest of your recommended three if none was named.
+    2. Ask ONE question in that judge's voice. Use the judge's name. The question must sound like that specific judge would say it - their cadence, their lens, their tells. Selene is clipped and flat. Marcus is combative and asks who the exit is for. Priya is quiet and pointed, asks WHY not what. Grace is flat-affect runway-defusing. Astrid asks who files the worst-case lawsuit. Raymond wants the unit economics. Osei goes quiet and asks where the data is. Devon asks for narrative spine. Cassidy asks what the user actually wants vs. what they say.
+    3. Do NOT preview the next question. Wait for the answer.
+  - When ${nameRef} answers, respond with EXACTLY this shape (still inside the standard JSON output):
+    a) ONE-word rubric score: "weak" / "okay" / "solid" / "strong". Be honest, not generous. A first-attempt answer is usually "okay" at best.
+    b) ONE specific tactical improvement. Not "be clearer." Specific. "Lead with the customer category, not the framework." "Name the number in the first six words." "Cut the qualifier - it reads like you don't believe yourself." Tactical, fighter's posture.
+    c) Then the NEXT question. Same judge if there's more to drill on that lens, or rotate to a different judge from the triad.
+  - Continue the drill round by round until ${nameRef} taps out, says they've got it, or asks to switch judges.
+  - Every question must be one the named judge would actually ask. If you cannot make it sound like them, ask a different question instead of forcing it.`
+    : '';
+
   // Opening turn block. Coach Mode trims the "no revision in opener" line.
   const openingBlock = spec.coachMode
     ? `OPENING TURN (if conversation history is empty)
@@ -313,7 +333,7 @@ ${brief}
 
 ${jobBlock}
 
-${operationBlock}${revisionBlock}
+${operationBlock}${revisionBlock}${drillBlock}
 
 ${openingBlock}
 

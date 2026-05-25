@@ -12,6 +12,7 @@
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
 <script src="../assets/tg-reid-press.js" defer></script>
+<script src="../assets/tg-reid-tools.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -347,6 +348,54 @@
       <button type="button" class="zh-generate" data-rh="generate">Draft release &rarr;</button>
 
       <div class="zh-result" data-rh="result"></div>
+    </div>
+
+    <!-- SEO Starter Kit -->
+    <div class="zh-card" data-rt-tool="seo">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">SEO starter kit</span>
+        <span class="zh-card-eyebrow-note">Keywords + meta + on-page checklist, from your brief</span>
+      </div>
+      <p class="rt-tool-blurb">Reid reads the brief and builds a starter kit: 5-10 target keywords (head + long-tail), a draft meta description, and an on-page checklist. Live search-volume data still needs Ahrefs or Semrush - Reid says so in his rationale.</p>
+      <button type="button" class="zh-generate" data-rt="generate">Build SEO kit &rarr;</button>
+      <div class="zh-result" data-rt="result"></div>
+    </div>
+
+    <!-- Brand Direction -->
+    <div class="zh-card" data-rt-tool="brand">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Brand direction</span>
+        <span class="zh-card-eyebrow-note">Font + logo + palette + tone, words only</span>
+      </div>
+      <p class="rt-tool-blurb">Reid drafts brand direction grounded in your brief: 2-3 font pairings with reasoning, logo direction (descriptors a designer can act on), a 4-5 color palette with usage roles, and tone descriptors for the voice. Hand this to a designer, or feed it into Figma / Midjourney as a brief.</p>
+      <button type="button" class="zh-generate" data-rt="generate">Build brand direction &rarr;</button>
+      <div class="zh-result" data-rt="result"></div>
+    </div>
+
+    <!-- Media Pitch -->
+    <div class="zh-card" data-rt-tool="pitch">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Media pitch</span>
+        <span class="zh-card-eyebrow-note">Direct-to-journalist email tailored to a beat</span>
+      </div>
+      <p class="rt-tool-blurb">Pitches are higher-leverage than wire distribution. Tell Reid which journalist beat you are targeting and he drafts an email that reads like you actually know what they cover.</p>
+
+      <div class="zh-field">
+        <label class="zh-label" for="rt-beat">Journalist beat</label>
+        <input id="rt-beat" type="text" class="zh-input" data-rt="beat"
+               placeholder="e.g. AI infrastructure, indie pharmacy operations, FDA medical devices"
+               maxlength="200" />
+      </div>
+
+      <div class="zh-field">
+        <label class="zh-label" for="rt-angle">Pitch angle <span class="zh-label-note">(optional)</span></label>
+        <input id="rt-angle" type="text" class="zh-input" data-rt="angle"
+               placeholder="e.g. lead with the 40% cost reduction"
+               maxlength="200" />
+      </div>
+
+      <button type="button" class="zh-generate" data-rt="generate">Draft pitch &rarr;</button>
+      <div class="zh-result" data-rt="result"></div>
     </div>
 
     <!-- The Marketing Code -->
@@ -694,10 +743,121 @@
   .zh-platform p:last-child{ margin-bottom:0; }
   .zh-platform strong{ color:var(--cream); }
 
+  /* ── SEO / Brand / Pitch generator output blocks (Reid tools) ─────── */
+  .rt-tool-blurb{
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem; line-height:1.5;
+    color:var(--text-dim); font-style:italic;
+    margin:0 0 1rem;
+  }
+  .rt-out-block{ margin-bottom:0.95rem; }
+  .rt-out-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:0.45rem;
+  }
+
+  /* SEO: keyword chips */
+  .rt-kw-list{ display:flex; flex-direction:column; gap:0.4rem; }
+  .rt-kw{
+    display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;
+    padding:0.5rem 0.7rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold-light);
+  }
+  .rt-kw-text{
+    font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--cream);
+    flex:1; min-width:0;
+  }
+  .rt-kw-tag{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    padding:0.2rem 0.45rem; border:1px solid var(--rule);
+  }
+  .rt-kw-intent{ color:var(--text-dim); }
+
+  /* SEO: meta description with char count + checklist */
+  .rt-meta-desc{
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.5;
+    color:var(--cream);
+    padding:0.55rem 0.75rem;
+    background:rgba(0,0,0,0.35); border-left:2px solid var(--gold-light);
+  }
+  .rt-meta-count{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-left:0.4rem;
+  }
+  .rt-check-list{
+    list-style:none; padding:0; margin:0;
+    display:flex; flex-direction:column; gap:0.35rem;
+  }
+  .rt-check-list li{
+    font-family:'Cormorant Garamond',serif; font-size:0.96rem; line-height:1.4;
+    color:var(--text);
+    padding:0.4rem 0.7rem;
+    background:rgba(184,146,42,0.03); border-left:2px solid var(--rule);
+  }
+
+  /* Brand: font pairings + palette swatches + tone chips */
+  .rt-font{
+    padding:0.55rem 0.75rem; margin-bottom:0.4rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold);
+  }
+  .rt-font-pair{
+    font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700;
+    color:var(--cream);
+  }
+  .rt-font-reason{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; color:var(--text-dim); line-height:1.4;
+    margin-top:0.2rem;
+  }
+  .rt-palette{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+    gap:0.5rem;
+  }
+  .rt-swatch{
+    display:flex; gap:0.55rem; align-items:center;
+    padding:0.4rem 0.55rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+  }
+  .rt-swatch-chip{
+    width:36px; height:36px; flex-shrink:0;
+    border:1px solid var(--rule);
+  }
+  .rt-swatch-meta{ display:flex; flex-direction:column; gap:0.05rem; min-width:0; }
+  .rt-swatch-hex{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.1em;
+    color:var(--cream);
+  }
+  .rt-swatch-name{
+    font-family:'Cormorant Garamond',serif; font-size:0.9rem;
+    color:var(--text);
+  }
+  .rt-swatch-role{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+  }
+  .rt-tones{ display:flex; flex-wrap:wrap; gap:0.4rem; }
+  .rt-tone-chip{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; color:var(--cream);
+    padding:0.3rem 0.65rem;
+    background:rgba(184,146,42,0.06); border:1px solid var(--rule);
+  }
+
+  /* Pitch: subject line */
+  .rt-pitch-subject{
+    font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700;
+    color:var(--cream); line-height:1.3;
+    padding:0.55rem 0.75rem;
+    background:rgba(0,0,0,0.35); border-left:2px solid var(--gold-light);
+  }
+
   @media (max-width:880px){
     .zh-rules,.zh-traps,.zh-platforms{ grid-template-columns:1fr; }
     .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
     .zh-card-eyebrow-note{ font-size:0.5rem; }
+    .rt-palette{ grid-template-columns:1fr; }
   }
 </style>
 

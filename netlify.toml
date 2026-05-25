@@ -149,3 +149,15 @@
   [functions.tg-reid-press]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-reid-seo]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-reid-brand]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-reid-pitch]
+    timeout = 26
+    included_files = ["config/**"]

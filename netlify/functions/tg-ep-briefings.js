@@ -58,7 +58,7 @@ const EPS = [
   { id: 'arjun_mehta',   name: 'Arjun Mehta',    role: 'The Delivery Expert',  lens: 'operations, sourcing, supply chain, regulatory compliance, integration burden - how the idea actually gets built and delivered' },
   { id: 'zara_cole',     name: 'Zara Cole',      role: 'The Influencer',       lens: 'social media reach, content potential, whether the message lands with real people on real platforms (TikTok, Reels, Instagram)' },
   { id: 'reid_callum',   name: 'Reid Callum',    role: 'The Marketing Expert', lens: 'positioning, brand frame, messaging - whether the audience can hear it, whether the name and framing widen or shrink the funnel' },
-  { id: 'jules',         name: 'Jules',          role: 'The Rewrite Partner',  lens: 'the brief as a piece of writing - AI markers, voice authenticity, whether it sounds like the person who had the idea or like a tool that was asked to describe it' },
+  { id: 'jules',         name: 'Jules',          role: 'The Rewrite Partner',  lens: 'voice amplification - which sections of the brief already sound like the founder and which read flatter; how to bring the rest up to match the strongest paragraph' },
   { id: 'grant_ellis',   name: 'Grant Ellis',    role: 'The Coach',            lens: 'Chamber prep - which 3 of the 9 judges this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing' },
 ];
 
