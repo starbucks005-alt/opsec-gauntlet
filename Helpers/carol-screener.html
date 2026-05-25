@@ -11,6 +11,7 @@
 <script src="../assets/tg-ep-chat.js" defer></script>
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
+<script src="../assets/tg-carol-tools.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -294,11 +295,460 @@
     <div class="office-chat-thread" data-tg-office="chat"></div>
     <div class="office-keys"><strong>Enter</strong> to send &middot; <strong>Shift</strong> + <strong>Enter</strong> for newline</div>
     <div class="office-chat-input">
-      <textarea data-tg-office="input" placeholder="Tell Carol what you want her to read. Or just say go."></textarea>
+      <textarea data-tg-office="input" placeholder="Tell Carol which pattern you think your idea fits. Or just say go and she'll tell you."></textarea>
       <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
     </div>
   </section>
 </main>
+
+<!-- ── Screening Hub. Screening Report generator + reference cards. ──────
+     Chat above is where Carol talks. This hub is where her pattern-match
+     becomes a deliverable. Every report auto-appends to the visitor's
+     brief and writes a revision-log entry so it ships in the DOCX export.
+     Improvement actions with EP referrals are clickable - they route the
+     visitor straight into that EP's office for the next step. -->
+<section class="zh">
+  <div class="zh-inner">
+
+    <header class="zh-head">
+      <div class="zh-eyebrow">Screening Hub</div>
+      <h2>The same eight patterns. Where yours sits.</h2>
+      <p class="zh-sub">Carol reads your idea against the comparable venture patterns she has seen come through this office for twenty years. She tells you which one yours fits, what worked for that pattern, what failed, and the one thing that will kill yours if you do not fix it before the judges see it.</p>
+    </header>
+
+    <!-- Screening Report Generator -->
+    <div class="zh-card" data-ct-tool="screen">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Screening report</span>
+        <span class="zh-card-eyebrow-note">Saves to your brief, routes improvement actions to other EPs</span>
+      </div>
+      <p class="rt-tool-blurb">Carol reads your brief and returns: 3-5 comparable venture patterns (what worked, what failed, where your variant sits), a legs assessment with her internal signal score, 5-8 tactical improvement actions, and the single thing that will kill the idea if you do not address it. Patterns are durable - she names the shape, not specific company names.</p>
+      <button type="button" class="zh-generate" data-ct="generate">Run the screening &rarr;</button>
+      <div class="zh-result" data-ct="result"></div>
+    </div>
+
+    <!-- The Screener's Code -->
+    <header class="zh-section-head">
+      <h2>The Screener's Code.</h2>
+      <p class="zh-sub">Eight rules that separate a real read from a self-assessment. The generator above follows these too.</p>
+    </header>
+    <div class="zh-rules">
+      <article class="zh-rule">
+        <div class="zh-rule-num">1</div>
+        <h3 class="zh-rule-title">Compare to what tried this, not what claims this.</h3>
+        <p>The shelf of failed attempts at your pattern is more instructive than the live winners. Most founders study only the survivors. The graveyard has more data.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">2</div>
+        <h3 class="zh-rule-title">Viability is velocity, not novelty.</h3>
+        <p>A familiar pattern executed with speed beats a novel one executed slowly. Novelty is overrated as a moat. Execution speed is underrated as one.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">3</div>
+        <h3 class="zh-rule-title">Absence of evidence is not evidence of absence.</h3>
+        <p>"Nobody is doing this" usually means "nobody I searched in twenty minutes is doing this." Carol looks at how the absence was checked. Then she decides whether to believe it.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">4</div>
+        <h3 class="zh-rule-title">Pattern fit beats category claim.</h3>
+        <p>Founders pitch the category they wish they were in. Carol screens against the pattern they actually fit. The gap is where most pitches die before the panel sees them.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">5</div>
+        <h3 class="zh-rule-title">The first failure mode is usually the right one.</h3>
+        <p>If Carol can name the failure mode of your pattern in under thirty seconds, that is the one to address first. Founders want to address the elegant risk. Address the obvious one.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">6</div>
+        <h3 class="zh-rule-title">"No competition" is a red flag, not a green one.</h3>
+        <p>Either someone tried this and failed (a market that does not want it), or the market is so small nobody cared. Both readings are bad. Find what tried before you celebrate the empty quadrant.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">7</div>
+        <h3 class="zh-rule-title">One sharp customer beats five fuzzy personas.</h3>
+        <p>Carol cuts personas down to one named, narrow, specific customer. The brief gets stronger every time the customer narrows. Wider audience is almost always a hedge.</p>
+      </article>
+      <article class="zh-rule">
+        <div class="zh-rule-num">8</div>
+        <h3 class="zh-rule-title">Honest is not unkind.</h3>
+        <p>Carol's tone is not designed to flatter. It is not designed to wound either. The point is to leave the visitor with something they can act on before the panel sees it.</p>
+      </article>
+    </div>
+
+    <!-- Screening Traps -->
+    <header class="zh-section-head">
+      <h2>Screening Traps.</h2>
+      <p class="zh-sub">Eight ways founders self-assess wrong. Each one is a real read Carol has done.</p>
+    </header>
+    <div class="zh-traps">
+      <article class="zh-trap">
+        <h3>&#9888; Comparing yourself to outliers.</h3>
+        <p>Your pattern is not the Stripe of category X. It is the median attempt. The outliers are interesting; they are also rare and not the right baseline for risk calibration.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Ignoring the graveyard.</h3>
+        <p>Three companies tried your pattern in the last decade and died. You did not study them because they died. They are the most important data point in your category.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Novelty without velocity.</h3>
+        <p>"Nobody else does this exact thing." Right. They are not doing it because there is no demand, or because demand is too slow to capitalize. Novelty is interesting; velocity wins.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Treating absence as opportunity.</h3>
+        <p>"No current solution" usually means "no solution that came up in my search." Founders skip the part where they verify the absence. Carol does not.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Calling it a platform when it is a tool.</h3>
+        <p>Platform pricing requires platform usage. Tool usage gets tool pricing. The mismatch is where revenue projections go to die. Be honest about which one you are building.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Pitching the dream, screening for the dream.</h3>
+        <p>Your brief describes year five. Carol screens against year one. The gap is the work nobody wants to look at. Look at it.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; "I have a unique advantage."</h3>
+        <p>Possibly. But unique advantages that the founder cannot articulate in one sentence are usually narrative armor, not actual moats. Carol asks for the sentence. If it does not exist, neither does the advantage.</p>
+      </article>
+      <article class="zh-trap">
+        <h3>&#9888; Reading the variant as the pattern.</h3>
+        <p>Founders see what is different about their idea. Carol sees what it has in common with everything else in the category. That common shape is what determines outcomes more than the variant does.</p>
+      </article>
+    </div>
+
+    <!-- Screening Frameworks -->
+    <header class="zh-section-head">
+      <h2>Screening Frameworks.</h2>
+      <p class="zh-sub">Eight references Carol uses. One-line each so you can use the same vocabulary.</p>
+    </header>
+    <div class="zh-platforms">
+      <article class="zh-platform">
+        <h3>Pattern Matching</h3>
+        <p><strong>What it is:</strong> Reading a new idea against the underlying shapes of ideas that came before it. Most ideas fit one of about eight shapes.</p>
+        <p><strong>When to use:</strong> Anytime you think your idea is "totally new." That feeling is usually wrong; the pattern is just unfamiliar to you.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Adjacent Possible (Stuart Kauffman / Steven Johnson)</h3>
+        <p><strong>What it is:</strong> The next viable move is rarely a leap. It is a step into the territory adjacent to what already exists. Innovation usually lives there, not in the void.</p>
+        <p><strong>When to use:</strong> When ${' '}you are tempted to claim your idea has no precedent. The adjacent possible says the precedent is one step over.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Survival Bias Filter</h3>
+        <p><strong>What it is:</strong> The companies you remember are the survivors. The dead ones taught the more valuable lessons. Filter for what you cannot see.</p>
+        <p><strong>When to use:</strong> Every time you compare yourself to current market leaders. They are the survivors; the dead are the warning.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Differentiation Map</h3>
+        <p><strong>What it is:</strong> A two-axis read of the category showing where competitors cluster and where the empty quadrants are. The empty quadrant is either opportunity or warning.</p>
+        <p><strong>When to use:</strong> Positioning the variant. Map first; if you cannot draw two competitor axes, the category is not understood yet.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Founder-Market Fit</h3>
+        <p><strong>What it is:</strong> Whether the founder has the lived experience, networks, and constitution for this specific market. Strong product-market fit cannot rescue weak founder-market fit.</p>
+        <p><strong>When to use:</strong> When the brief is good but you sense the founder is wrong for it. Founder-market fit is most of the read.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>First / Best / Only Test</h3>
+        <p><strong>What it is:</strong> A real moat is one of: First (defining the category), Best (measurably superior on a key axis), Only (literally the sole provider). "Different" is not a moat.</p>
+        <p><strong>When to use:</strong> Sanity-checking a moat claim. If your moat is not first, best, or only, it is positioning - which is fine, but call it that.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Crowded vs Empty Quadrant</h3>
+        <p><strong>What it is:</strong> The crowded quadrant has lots of attempts because lots of people see it. The empty quadrant is usually empty for a reason. Carol checks which one.</p>
+        <p><strong>When to use:</strong> When you are about to celebrate being in the empty quadrant. Empty is sometimes opportunity; more often it is a graveyard you cannot see.</p>
+      </article>
+      <article class="zh-platform">
+        <h3>Timing Index</h3>
+        <p><strong>What it is:</strong> The same idea is right in 2026 that was wrong in 2016 because timing changed. Carol screens for whether the idea is right NOW, not whether the idea is "good."</p>
+        <p><strong>When to use:</strong> When the idea seems fine but feels stale. Often the timing changed under it and the founder did not notice.</p>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Screening Hub (Carol) ─────────────────────────────────────────────
+     Re-uses .zh-* / .rt-* class language. Adds .ct-* for screening-
+     specific output: pattern cards, legs assessment block, verdict chip,
+     improvement-action list with EP-routing chips, kill-it block. */
+  .zh{ background:rgba(255,255,255,0.012); border-top:1px solid var(--rule); padding:3.5rem 2rem 4.5rem; }
+  .zh-inner{ max-width:1320px; margin:0 auto; }
+  .zh-head{ max-width:780px; margin:0 auto 2.4rem; text-align:center; }
+  .zh-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
+  }
+  .zh-head h2,
+  .zh-section-head h2{
+    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
+    color:var(--cream); line-height:1.15; margin:0 0 0.6rem;
+  }
+  .zh-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; line-height:1.5;
+  }
+  .zh-section-head{ max-width:920px; margin:3.4rem auto 1.4rem; text-align:left; }
+
+  .zh-card{
+    max-width:920px; margin:0 auto;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+    padding:1.4rem 1.5rem 1.8rem;
+  }
+  .zh-card-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:0.8rem; margin-bottom:1.1rem; padding-bottom:0.7rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .zh-card-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .zh-card-eyebrow-note{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .rt-tool-blurb{
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem; line-height:1.5;
+    color:var(--text-dim); font-style:italic;
+    margin:0 0 1rem;
+  }
+  .zh-generate{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.8rem 1.4rem; margin-top:0.4rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .zh-generate:hover:not(:disabled){ background:var(--gold-light); border-color:var(--gold-light); }
+  .zh-generate:disabled{ opacity:0.55; cursor:wait; }
+
+  /* Result panel */
+  .zh-result:empty{ display:none; }
+  .zh-result{ margin-top:1.4rem; padding:1.1rem 1.2rem; border:1px solid var(--rule); background:rgba(0,0,0,0.4); }
+  .zh-result.is-loading{ border-color:rgba(212,170,74,0.35); }
+  .zh-result.is-ready{   border-color:rgba(212,170,74,0.45); background:rgba(184,146,42,0.04); }
+  .zh-result.is-error{
+    border-color:rgba(192,57,43,0.45);
+    background:rgba(192,57,43,0.04); color:var(--gauntlet-consequence);
+  }
+  .zh-result-meta{
+    display:flex; gap:0.55rem; align-items:center;
+    margin-bottom:0.8rem; flex-wrap:wrap;
+  }
+  .zh-result-platform{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+    padding:0.3rem 0.6rem; border:1px solid var(--rule);
+  }
+  .zh-result-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem; line-height:1.5;
+    margin-bottom:0.6rem;
+  }
+  .zh-result-saved{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    line-height:1.5;
+  }
+  .zh-result-msg{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem; line-height:1.5;
+    color:inherit;
+  }
+  .rt-out-block{ margin-bottom:0.95rem; }
+  .rt-out-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:0.45rem;
+  }
+  .rt-check-list{
+    list-style:none; padding:0; margin:0;
+    display:flex; flex-direction:column; gap:0.35rem;
+  }
+  .rt-check-list li{
+    font-family:'Cormorant Garamond',serif; font-size:0.96rem; line-height:1.4;
+    color:var(--text);
+    padding:0.4rem 0.7rem;
+    background:rgba(184,146,42,0.03); border-left:2px solid var(--rule);
+  }
+
+  /* Pattern cards (Carol-specific) */
+  .ct-pattern-list{ display:flex; flex-direction:column; gap:0.65rem; }
+  .ct-pattern{
+    padding:0.85rem 1rem;
+    background:rgba(184,146,42,0.04); border-left:3px solid var(--gold);
+  }
+  .ct-pattern-name{
+    font-family:'Playfair Display',serif; font-size:1.08rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.55rem; line-height:1.25;
+  }
+  .ct-pattern-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0.7rem;
+    margin-bottom:0.55rem;
+  }
+  .ct-pattern-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:0.25rem;
+  }
+  .ct-pattern p{
+    font-family:'Cormorant Garamond',serif; font-size:0.93rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+  .ct-pattern-position{
+    font-style:italic; color:var(--cream);
+    padding-top:0.45rem;
+    border-top:1px dashed rgba(184,146,42,0.25);
+  }
+  .ct-pattern-position strong{ font-style:normal; color:var(--gold-light); }
+
+  /* Legs assessment block */
+  .ct-legs{
+    padding:0.85rem 1rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+  }
+  .ct-legs-head{
+    display:flex; gap:0.7rem; align-items:center; flex-wrap:wrap;
+    margin-bottom:0.7rem; padding-bottom:0.55rem;
+    border-bottom:1px dashed rgba(184,146,42,0.25);
+  }
+  .ct-verdict{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em;
+    text-transform:uppercase;
+    padding:0.35rem 0.7rem; border:1px solid var(--rule);
+  }
+  .ct-verdict-strong   { color:#9bd4a3; border-color:rgba(155,212,163,0.5); background:rgba(155,212,163,0.06); }
+  .ct-verdict-has_legs { color:var(--gold-light); border-color:rgba(212,170,74,0.5); background:rgba(212,170,74,0.06); }
+  .ct-verdict-marginal { color:#e8aa6f; border-color:rgba(232,170,111,0.5); background:rgba(232,170,111,0.05); }
+  .ct-verdict-uphill   { color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.5); background:rgba(192,57,43,0.05); }
+  .ct-score{
+    font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .ct-score strong{ color:var(--cream); font-size:1rem; }
+  .ct-score-note{
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.85rem;
+    color:var(--text-dim);
+  }
+  .ct-legs-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;
+  }
+  .ct-against li{ border-left-color:rgba(192,57,43,0.35); background:rgba(192,57,43,0.03); }
+
+  /* Improvement actions */
+  .ct-action-list{
+    list-style:none; padding:0; margin:0;
+    counter-reset:ct-action;
+    display:flex; flex-direction:column; gap:0.5rem;
+  }
+  .ct-action{
+    counter-increment:ct-action;
+    position:relative;
+    padding:0.6rem 0.85rem 0.6rem 2.4rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold-light);
+    display:flex; align-items:center; gap:0.7rem; flex-wrap:wrap;
+  }
+  .ct-action::before{
+    content:counter(ct-action);
+    position:absolute; left:0.7rem; top:0.55rem;
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.05rem; color:var(--gold); line-height:1;
+  }
+  .ct-action-text{
+    flex:1; min-width:0;
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem; line-height:1.45;
+    color:var(--cream);
+  }
+  .ct-action-ep{
+    flex-shrink:0;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    padding:0.35rem 0.65rem;
+    border:1px solid rgba(212,170,74,0.4);
+    background:rgba(184,146,42,0.06);
+    text-decoration:none;
+    transition:all 0.15s;
+  }
+  .ct-action-ep:hover{
+    color:var(--gold-light); border-color:var(--gold-light); background:rgba(212,170,74,0.12);
+  }
+
+  /* Kill-it block */
+  .ct-kill{
+    padding:0.75rem 1rem;
+    background:rgba(192,57,43,0.05); border-left:3px solid var(--gauntlet-consequence);
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.5;
+    color:var(--cream); font-style:italic;
+  }
+
+  /* Reference grids - inherits from earlier hubs */
+  .zh-rules{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-rule{
+    position:relative;
+    border:1px solid var(--rule); border-left:3px solid var(--gold);
+    background:rgba(184,146,42,0.04);
+    padding:1rem 1.1rem;
+  }
+  .zh-rule-num{
+    position:absolute; top:0.4rem; right:0.6rem;
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.4rem; color:rgba(184,146,42,0.4); line-height:1;
+  }
+  .zh-rule-title{
+    font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.4rem; padding-right:1.6rem; line-height:1.2;
+  }
+  .zh-rule p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+  .zh-traps{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.85rem;
+  }
+  .zh-trap{
+    border:1px solid rgba(192,57,43,0.35); border-left:3px solid var(--gauntlet-consequence);
+    background:rgba(192,57,43,0.03); padding:1rem 1.1rem;
+  }
+  .zh-trap h3{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--gauntlet-consequence); margin:0 0 0.4rem; line-height:1.25;
+  }
+  .zh-trap p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+  .zh-platforms{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:0.85rem;
+  }
+  .zh-platform{
+    border:1px solid var(--rule);
+    background:rgba(255,255,255,0.018);
+    padding:1rem 1.15rem;
+  }
+  .zh-platform h3{
+    font-family:'Playfair Display',serif; font-size:1.08rem; font-weight:700;
+    color:var(--gold-light); margin:0 0 0.45rem; line-height:1.2;
+  }
+  .zh-platform p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0 0 0.35rem;
+  }
+  .zh-platform p:last-child{ margin-bottom:0; }
+  .zh-platform strong{ color:var(--cream); }
+
+  @media (max-width:880px){
+    .zh-rules,.zh-traps,.zh-platforms{ grid-template-columns:1fr; }
+    .ct-pattern-grid,.ct-legs-grid{ grid-template-columns:1fr; }
+    .ct-legs-head{ flex-direction:column; align-items:flex-start; gap:0.4rem; }
+    .ct-action{ padding-left:2.2rem; }
+    .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
+    .zh-card-eyebrow-note{ font-size:0.5rem; }
+  }
+</style>
 
 <!-- About disclosure. Closed by default so the office is the focus.
      Opens to reveal Carol's bio + role + personal notes for visitors

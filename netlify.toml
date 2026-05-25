@@ -169,3 +169,7 @@
   [functions.tg-matthew-psych]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-carol-screen]
+    timeout = 26
+    included_files = ["config/**"]

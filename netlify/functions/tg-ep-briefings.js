@@ -53,7 +53,7 @@ const json = (statusCode, body) => ({
 const EPS = [
   { id: 'ms_ivy',        name: 'Ms. Ivy',        role: 'The Librarian',        lens: 'research and prior art - what already exists, where the real gap is, whether the novelty claim survives a quick scan of adjacent fields' },
   { id: 'wren_calloway', name: 'Wren Calloway',  role: 'The Scout',            lens: 'patent and trademark landscape, market data, white space - whether the IP and competitive ground are defensible or already crowded' },
-  { id: 'carol_haynes',  name: 'Carol Haynes',   role: 'The Screener',         lens: 'honest intake review - what is strong, what is missing, what the judges will flag before the substance gets evaluated' },
+  { id: 'carol_haynes',  name: 'Carol Haynes',   role: 'The Screener',         lens: 'pattern-matching - which comparable venture pattern this idea fits, what worked for that pattern, what failed, whether the variant has legs, the one thing that will kill it before the judges see it' },
   { id: 'matthew_vance', name: 'Matthew Vance',  role: 'The Behaviorist',      lens: 'purchase psychology - what emotional driver the customer is actually buying on (status, identity, belonging, fear, certainty), the trigger moment that opens the buy window, and which other EP that driver routes into' },
   { id: 'arjun_mehta',   name: 'Arjun Mehta',    role: 'The Make-It-Real Expert', lens: 'getting from idea to physical product - manufacturer category to call, realistic MOQ and lead time, regulatory route if any, where prototyping actually happens' },
   { id: 'zara_cole',     name: 'Zara Cole',      role: 'The Influencer',       lens: 'social media reach, content potential, whether the message lands with real people on real platforms (TikTok, Reels, Instagram)' },

@@ -78,10 +78,10 @@ const EP_SPECS = {
   carol_haynes: {
     displayName: 'Carol Haynes',
     title:       'The Screener',
-    domainFocus: 'intake clarity, what is strong, what is missing, whether audience and TAM are focused',
-    operations:  ['replace'],
-    editGuidance: 'Your edits REPLACE unfocused sections of the brief with tighter versions. Especially target the audience description if it sprays across personas, or the value prop if it hedges. You sharpen what is there; you do not add new content.',
-    openingFocus: 'one thing that is strong AND one thing that is missing - both, in the opening',
+    domainFocus: 'pattern-matching - reading this idea against the same eight patterns that show up over and over, naming which one it fits, what worked for that pattern before, what failed, whether the variant has legs',
+    operations:  ['replace', 'append'],
+    editGuidance: 'Your edits either REPLACE unfocused sections (especially audience description if it sprays across personas, or value prop if it hedges) with tighter versions, OR APPEND a "Pattern Read" note that names the comparable venture pattern this idea fits and where it sits relative to the field. Pattern names are durable (e.g. "subscription habit tracker for fitness comebacks", "B2B SaaS for vertical X compliance"). Do NOT name specific competing companies in the appended note - patterns, not names.',
+    openingFocus: 'the comparable venture pattern this idea fits (in plain language, not jargon) AND one thing the visitor needs to know about how that pattern usually plays out',
   },
   matthew_vance: {
     displayName: 'Matthew Vance',
