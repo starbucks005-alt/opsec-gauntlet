@@ -59,7 +59,7 @@ const EPS = [
   { id: 'zara_cole',     name: 'Zara Cole',      role: 'The Influencer',       lens: 'social media reach, content potential, whether the message lands with real people on real platforms (TikTok, Reels, Instagram)' },
   { id: 'reid_callum',   name: 'Reid Callum',    role: 'The Marketing Expert', lens: 'positioning, brand frame, messaging - whether the audience can hear it, whether the name and framing widen or shrink the funnel' },
   { id: 'jules',         name: 'Jules',          role: 'The Rewrite Partner',  lens: 'the brief as a piece of writing - AI markers, voice authenticity, whether it sounds like the person who had the idea or like a tool that was asked to describe it' },
-  { id: 'grant_ellis',   name: 'Grant Ellis',    role: 'The Coach',            lens: 'the elevator pitch - whether the hook is up front, whether the founder could say this out loud in sixty seconds and have it land' },
+  { id: 'grant_ellis',   name: 'Grant Ellis',    role: 'The Coach',            lens: 'Chamber prep - which 3 of the 9 judges this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing' },
 ];
 
 function buildSystemPrompt() {
