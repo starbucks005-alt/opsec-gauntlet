@@ -9,6 +9,8 @@
 <link rel="apple-touch-icon" href="../Favicon.png">
 <script src="../assets/tg-voice.js" defer></script>
 <script src="../assets/tg-ep-chat.js" defer></script>
+<script src="../assets/tg-ep-zoom.js" defer></script>
+<link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -249,7 +251,10 @@
     <img src="../Favicon.png" alt="" aria-hidden="true">
     THE GAUNTLET
   </a>
-  <a class="tg-topbar-back" href="/#corridor-wings">&larr; Back to the corridor</a>
+  <button type="button" class="tg-zoom-open" data-tg-zoom-open style="margin-left:auto;">
+    <span class="icon" aria-hidden="true"></span>Take it to Zoom
+  </button>
+  <a class="tg-topbar-back" href="/#corridor-wings" style="margin-left:0.9rem;">&larr; Leave</a>
 </header>
 
 <!-- Small header strip so the visitor knows who they're talking to.
@@ -410,6 +415,42 @@
     padding-left:0.5rem;border-left:1px dashed rgba(184,146,42,0.25);
   }
 </style>
+
+<!-- ── "Take it to Zoom" floating widget. Hidden until visitor clicks
+     the Take it to Zoom button. Populates from data attrs on first open. -->
+<div class="tg-zoom-widget"
+     data-tg-zoom-tagline="Tells you what's strong. Fixes what's missing."
+     data-tg-zoom-eyes-open="Carol_eyes_open.jpg"
+     data-tg-zoom-eyes-closed="Carol_eyes_closed.jpg">
+  <div class="tg-zoom-head">
+    <div class="tg-zoom-head-meta">
+      <div class="tg-zoom-name" data-tg-zoom="name"></div>
+      <div class="tg-zoom-tagline" data-tg-zoom="tagline"></div>
+    </div>
+    <button class="tg-zoom-close" type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="tg-zoom-stage">
+    <div class="tg-zoom-portrait">
+      <img class="tg-zoom-blink-open" alt="">
+      <img class="tg-zoom-blink-closed" alt="" aria-hidden="true">
+    </div>
+    <div class="tg-zoom-status">
+      <span class="dot"></span>
+      <span data-tg-zoom="status-text">Ready</span>
+    </div>
+  </div>
+  <div class="tg-zoom-controls">
+    <button class="tg-zoom-btn tg-zoom-speak" type="button">
+      <span class="mic" aria-hidden="true"></span>Speak
+    </button>
+    <button class="tg-zoom-btn tg-zoom-voice" type="button">
+      <span data-tg-zoom="voice-label">Voice: OFF</span>
+    </button>
+    <button class="tg-zoom-btn tg-zoom-replay" type="button" disabled>
+      &#9654; Hear again
+    </button>
+  </div>
+</div>
 
 </body>
 </html>
