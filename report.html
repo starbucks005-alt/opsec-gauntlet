@@ -226,6 +226,147 @@
   }
   .state-error .state-text{color:var(--crimson-bright);}
 
+  /* ── Deliverable sections (brief + work log) ──────────────────────────
+     Sourced from sessionStorage. If absent, the sections do not render
+     and the report degrades to the chamber-view it has shipped with. */
+  .toc{
+    display:flex; gap:0.4rem; flex-wrap:wrap;
+    padding:0.65rem 0.9rem; margin:1.4rem 0;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+  }
+  .toc-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold);
+    align-self:center; margin-right:0.4rem;
+  }
+  .toc a{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold-light);
+    padding:0.3rem 0.55rem; border:1px solid var(--rule);
+    text-decoration:none;
+    transition:all 0.18s;
+  }
+  .toc a:hover{ color:var(--ink); background:var(--gold-light); border-color:var(--gold-light); }
+
+  .deliverable{
+    margin:2.5rem 0;
+    border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    padding:2rem 0;
+  }
+  .deliverable-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:0.7rem;
+  }
+  .deliverable-title{
+    font-family:'Playfair Display',serif; font-size:2rem; font-weight:700;
+    color:var(--cream); line-height:1.2; margin-bottom:0.5rem;
+  }
+  .deliverable-title em{ font-style:italic; color:var(--gold-light); }
+  .deliverable-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; line-height:1.55;
+    margin-bottom:1.6rem;
+  }
+
+  /* The brief itself - the full working document */
+  .brief-block{
+    border:1px solid var(--rule); background:rgba(0,0,0,0.4);
+    padding:1.3rem 1.5rem;
+    margin-bottom:1.6rem;
+  }
+  .brief-block-head{
+    display:flex; align-items:baseline; gap:0.6rem;
+    margin-bottom:0.9rem; padding-bottom:0.65rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .brief-block-head h3{
+    font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700;
+    color:var(--cream); margin:0;
+  }
+  .brief-block-note{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-left:auto;
+  }
+  .brief-text{
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.65;
+    color:var(--text);
+    white-space:pre-wrap; word-wrap:break-word;
+    max-height:560px; overflow-y:auto;
+    padding-right:0.5rem;
+  }
+
+  /* The work log - what the EPs produced. Native <details> for collapse. */
+  .work-block summary{
+    cursor:pointer; list-style:none;
+    display:flex; align-items:center; gap:0.55rem;
+    padding:0.8rem 1rem;
+    background:rgba(184,146,42,0.04); border:1px solid var(--rule);
+    border-left:3px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .work-block summary::-webkit-details-marker{ display:none; }
+  .work-block summary:hover{ background:rgba(184,146,42,0.08); }
+  .work-ep[open] summary{ background:rgba(184,146,42,0.07); border-bottom-color:transparent; }
+  .work-ep{ margin-bottom:0.5rem; }
+  .work-ep-name{
+    font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700;
+    color:var(--cream); line-height:1.2;
+  }
+  .work-ep-role{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold-light);
+    margin-left:0.6rem;
+  }
+  .work-ep-count{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    margin-left:auto;
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .work-ep-disclose{
+    font-family:'DM Mono',monospace; font-size:0.7rem;
+    color:var(--gold-light); margin-left:0.5rem;
+  }
+  .work-ep[open] .work-ep-disclose{ transform:rotate(90deg); display:inline-block; }
+  .work-ep-body{
+    border:1px solid var(--rule); border-top:none;
+    padding:0.85rem 1rem 1rem;
+    display:flex; flex-direction:column; gap:0.7rem;
+  }
+  .work-rev{
+    padding:0.7rem 0.85rem;
+    background:rgba(0,0,0,0.3); border-left:2px solid var(--gold-light);
+  }
+  .work-rev-head{
+    display:flex; align-items:baseline; gap:0.5rem; flex-wrap:wrap;
+    margin-bottom:0.4rem;
+  }
+  .work-rev-op{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .work-rev-label{
+    font-family:'Playfair Display',serif; font-size:0.98rem; font-weight:700;
+    color:var(--cream); line-height:1.3;
+    flex:1; min-width:0;
+  }
+  .work-rev-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.9rem; line-height:1.5;
+    margin-bottom:0.5rem;
+  }
+  .work-rev-content{
+    font-family:'Cormorant Garamond',serif; font-size:0.95rem; line-height:1.55;
+    color:var(--text);
+    white-space:pre-wrap; word-wrap:break-word;
+    max-height:340px; overflow-y:auto;
+    padding:0.55rem 0.7rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--rule);
+  }
+
   @media (max-width:640px){
     main{padding:2.5rem 1.3rem 4rem;}
     .tg-topbar{padding:0 1.3rem;}
@@ -234,6 +375,10 @@
     .finding{grid-template-columns:64px 1fr;}
     .finding-portrait{width:64px;height:64px;}
     .finding-score{grid-column:1 / -1;text-align:left;font-size:1.4rem;padding-top:0;}
+    .toc{ flex-direction:column; align-items:flex-start; }
+    .toc-label{ margin-bottom:0.3rem; }
+    .brief-block-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
+    .brief-block-note{ margin-left:0; }
   }
 </style>
 <script src="assets/tg-export.js" defer></script>
@@ -279,7 +424,36 @@
   const ENDPOINT      = '/.netlify/functions/tg-evaluation-get';
   const JUDGES_CONFIG = '/config/judges_master.json';
 
+  // Brief + revisions live in sessionStorage (per-tab). DB submission text
+  // is intentionally NOT exposed by the evaluation-get function; the brief
+  // belongs to the visitor and we honor that. If sessionStorage is empty
+  // (cross-tab / later-session visitor), the brief and work sections
+  // gracefully omit and the report degrades to the chamber-view findings.
+  const KEY_BRIEF     = 'tg_visitor_brief';
+  const KEY_REVISIONS = 'tg_ep_revisions';
+
+  // EP display labels for the work log section. id matches the values
+  // tg-ep-chat.js + the per-EP hub clients write into the revision log.
+  const EP_DISPLAY = {
+    ms_ivy:        { name: 'Ms. Ivy',        role: 'The Librarian' },
+    wren_calloway: { name: 'Wren Calloway',  role: 'The Scout' },
+    carol_haynes:  { name: 'Carol Haynes',   role: 'The Screener' },
+    matthew_vance: { name: 'Matthew Vance',  role: 'The Behaviorist' },
+    arjun_mehta:   { name: 'Arjun Mehta',    role: 'The Make-It-Real Expert' },
+    zara_cole:     { name: 'Zara Cole',      role: 'The Influencer' },
+    reid_callum:   { name: 'Reid Callum',    role: 'The Marketing Expert' },
+    jules:         { name: 'Jules',          role: 'The Rewrite Partner' },
+    grant_ellis:   { name: 'Grant Ellis',    role: 'The Coach' },
+  };
+
   const root = document.getElementById('report-content');
+
+  function ss(k){ try { return sessionStorage.getItem(k); } catch(_) { return null; } }
+  function ssJson(k, fallback){
+    const raw = ss(k);
+    if (!raw) return fallback;
+    try { return JSON.parse(raw); } catch(_) { return fallback; }
+  }
 
   function escapeHtml(s){
     return String(s == null ? '' : s)
@@ -358,6 +532,76 @@
     return `Scores ranged ${min} to ${max}.`;
   }
 
+  // Group revisions by EP id, in the order EPs first appear in the log.
+  function groupRevisionsByEp(revisions){
+    const order = [];
+    const groups = {};
+    (revisions || []).forEach(r => {
+      if (!r || !r.ep_id) return;
+      if (!groups[r.ep_id]) { groups[r.ep_id] = []; order.push(r.ep_id); }
+      groups[r.ep_id].push(r);
+    });
+    return order.map(id => ({ ep_id: id, revisions: groups[id] }));
+  }
+
+  function renderBriefSection(brief){
+    if (!brief || brief.length < 12) return '';
+    return `
+      <div class="brief-block">
+        <div class="brief-block-head">
+          <h3>Your Brief</h3>
+          <span class="brief-block-note">Final state - includes everything you accepted from the EPs</span>
+        </div>
+        <div class="brief-text">${escapeHtml(brief)}</div>
+      </div>
+    `;
+  }
+
+  function renderWorkSection(revisions){
+    const groups = groupRevisionsByEp(revisions);
+    if (!groups.length) return '';
+    const groupsHtml = groups.map(g => {
+      const ep = EP_DISPLAY[g.ep_id] || { name: g.ep_id, role: '' };
+      const revsHtml = g.revisions.map(r => {
+        const op = String(r.operation || '').toLowerCase();
+        const opLabel = op === 'replace' ? 'rewrite' : op === 'append' ? 'addition' : op;
+        return `
+          <article class="work-rev">
+            <div class="work-rev-head">
+              <span class="work-rev-op">${escapeHtml(opLabel)}</span>
+              <span class="work-rev-label">${escapeHtml(r.section_label || 'section')}</span>
+            </div>
+            ${r.rationale ? `<p class="work-rev-rationale">${escapeHtml(r.rationale)}</p>` : ''}
+            ${r.after ? `<div class="work-rev-content">${escapeHtml(r.after)}</div>` : ''}
+          </article>
+        `;
+      }).join('');
+      const noun = g.revisions.length === 1 ? 'piece' : 'pieces';
+      return `
+        <details class="work-ep">
+          <summary>
+            <span class="work-ep-disclose">&rsaquo;</span>
+            <span class="work-ep-name">${escapeHtml(ep.name)}</span>
+            <span class="work-ep-role">${escapeHtml(ep.role)}</span>
+            <span class="work-ep-count">${g.revisions.length} ${noun}</span>
+          </summary>
+          <div class="work-ep-body">${revsHtml}</div>
+        </details>
+      `;
+    }).join('');
+
+    const totalRevs = groups.reduce((sum, g) => sum + g.revisions.length, 0);
+    const epCount = groups.length;
+    return `
+      <div class="work-block">
+        <div class="deliverable-eyebrow" style="margin-top:1.6rem;">What you built with the EPs</div>
+        <h3 class="deliverable-title" style="font-size:1.4rem;margin-bottom:0.4rem;">${epCount} ${epCount === 1 ? 'EP' : 'EPs'}. ${totalRevs} ${totalRevs === 1 ? 'piece' : 'pieces'}. <em>All in your deliverable.</em></h3>
+        <p class="deliverable-sub">Click an EP to see what they produced. Every piece below is also embedded in your final brief above.</p>
+        ${groupsHtml}
+      </div>
+    `;
+  }
+
   function renderReport(data, judgesById){
     const evalRow      = data.evaluation;
     const subRow       = data.submission || {};
@@ -431,21 +675,63 @@
       ? `${escapeHtml(visitorName)}, your idea has been <em>tested</em>.`
       : `Your idea has been <em>tested</em>.`;
 
+    // Pull brief + revisions from sessionStorage. These are the deliverable
+    // sections that turn the report from "verdict" into "deliverable artifact".
+    // If empty (cross-tab visitor), the sections render nothing and the
+    // report degrades to the chamber-view findings.
+    const sessionBrief = (ss(KEY_BRIEF) || '').trim();
+    const sessionRevisions = ssJson(KEY_REVISIONS, []);
+    const briefSection = renderBriefSection(sessionBrief);
+    const workSection  = renderWorkSection(sessionRevisions);
+
+    // Build the table-of-contents based on which sections will render.
+    const tocItems = [
+      { id: 'panel',       label: 'Panel' },
+      { id: 'verdict',     label: 'Verdict' },
+    ];
+    if (briefSection) tocItems.push({ id: 'brief',     label: 'Brief' });
+    if (workSection)  tocItems.push({ id: 'work',      label: 'EP Work' });
+    tocItems.push({ id: 'next', label: 'Next' });
+    const tocBlock = `
+      <div class="toc">
+        <span class="toc-label">Jump to</span>
+        ${tocItems.map(t => `<a href="#${escapeHtml(t.id)}">${escapeHtml(t.label)}</a>`).join('')}
+      </div>
+    `;
+
+    // Wrap brief + work into a single deliverable section so the visitor
+    // sees them as one block (the artifact) distinct from the panel
+    // findings (the diagnosis) and the routing recommendation (the
+    // forward path).
+    const deliverableBlock = (briefSection || workSection)
+      ? `<section class="deliverable" id="brief">
+           <div class="deliverable-eyebrow">Your Deliverable</div>
+           <h2 class="deliverable-title">What you walked out with.</h2>
+           <p class="deliverable-sub">The brief you wrote, sharpened by the EPs. Every piece they generated for you below, anchored to your idea.</p>
+           ${briefSection}
+           ${workSection ? '<div id="work"></div>' + workSection : ''}
+         </section>`
+      : '';
+
     root.innerHTML = `
       <div class="report-eyebrow">Routing Report</div>
       <h1 class="report-title">${headlineTitle}</h1>
       <p class="report-subline">"${escapeHtml(submissionTitle)}"</p>
       <div class="report-meta">Stage 1 · Clarity · Evaluation ${escapeHtml(evalRow.id.slice(0, 8))}${completedAt ? ' · ' + escapeHtml(completedAt) : ''}</div>
 
-      ${compositeBlock}
+      ${tocBlock}
 
-      <section class="section">
+      ${compositeBlock.replace('<div class="composite ', '<div id="verdict" class="composite ')}
+
+      <section class="section" id="panel">
         <div class="section-eyebrow">What the panel said</div>
         <h2 class="section-title">Three judges. <em>One dimension.</em></h2>
         <div class="findings">${findingCards}</div>
       </section>
 
-      ${routingBlock}
+      ${deliverableBlock}
+
+      <div id="next">${routingBlock}</div>
 
       <div class="actions-row">
         <button type="button" class="btn btn-primary" data-tg-export>Export brief ↓</button>
