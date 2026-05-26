@@ -757,12 +757,14 @@
       ? `${escapeHtml(visitorName)}, your idea has been <em>tested</em>.`
       : `Your idea has been <em>tested</em>.`;
 
-    // Pull brief + revisions from sessionStorage. These are the deliverable
-    // sections that turn the report from "verdict" into "deliverable artifact".
-    // If empty (cross-tab visitor), the sections render nothing and the
-    // report degrades to the chamber-view findings.
-    const sessionBrief = (ss(KEY_BRIEF) || '').trim();
-    const sessionRevisions = ssJson(KEY_REVISIONS, []);
+    // Pull brief + revisions. In sample mode (data.brief / data.revisions
+    // present in the payload), the deliverable comes pre-populated from
+    // the static JSON. In live mode, fall back to sessionStorage where
+    // the visitor's working brief + revision log live.
+    const sampleBrief     = typeof data.brief === 'string' ? data.brief.trim() : '';
+    const sampleRevisions = Array.isArray(data.revisions) ? data.revisions : null;
+    const sessionBrief     = sampleBrief || (ss(KEY_BRIEF) || '').trim();
+    const sessionRevisions = sampleRevisions || ssJson(KEY_REVISIONS, []);
     const briefSection = renderBriefSection(sessionBrief);
     const workSection  = renderWorkSection(sessionRevisions);
 
@@ -799,7 +801,7 @@
       <div class="report-eyebrow">Routing Report</div>
       <h1 class="report-title">${headlineTitle}</h1>
       <p class="report-subline">"${escapeHtml(submissionTitle)}"</p>
-      <div class="report-meta">${dimCount === 0 ? 'No dimensions scored' : dimensionsPresent.map(dimensionLabel).join(' &middot; ')} &middot; Evaluation ${escapeHtml(evalRow.id.slice(0, 8))}${completedAt ? ' &middot; ' + escapeHtml(completedAt) : ''}</div>
+      <div class="report-meta">${dimCount === 0 ? 'No dimensions scored' : dimensionsPresent.map(dimensionLabel).join(' &middot; ')} &middot; ${data.sample_id ? 'Sample Deliverable' : ('Evaluation ' + escapeHtml(String(evalRow.id || '').slice(0, 8)))}${completedAt ? ' &middot; ' + escapeHtml(completedAt) : ''}</div>
 
       ${tocBlock}
 
@@ -817,7 +819,10 @@
 
       <div class="actions-row">
         <button type="button" class="btn btn-primary" data-tg-export>Export brief ↓</button>
-        <a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel →</a>
+        ${data.sample_id
+          ? `<a class="btn btn-outline" href="/samples.html">Pick another sample →</a>
+             <a class="btn btn-outline" href="/intake.html">Try your own idea →</a>`
+          : `<a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel →</a>`}
         <a class="btn btn-outline" href="/">Home</a>
       </div>
     `;
@@ -838,18 +843,31 @@
   async function init(){
     const qs = new URLSearchParams(window.location.search);
     const evaluationId = (qs.get('evaluation') || '').trim();
-    if (!evaluationId){
+    // Sample mode: load a pre-baked deliverable from /config/sample_deliverables/<id>.json
+    // instead of hitting the evaluation endpoint. Same shape; same renderer.
+    // Lets the samples library showcase a finished deliverable without
+    // requiring a live LLM run.
+    const sampleId = (qs.get('sample') || '').trim().replace(/[^a-z0-9_-]/g, '');
+
+    if (!evaluationId && !sampleId){
       renderError('Missing evaluation id. The link you followed did not include one.');
       return;
     }
 
+    const reportUrl = sampleId
+      ? '/config/sample_deliverables/' + encodeURIComponent(sampleId) + '.json'
+      : (ENDPOINT + '?id=' + encodeURIComponent(evaluationId));
+
     try {
       const [reportResp, judgesResp] = await Promise.all([
-        fetch(ENDPOINT + '?id=' + encodeURIComponent(evaluationId)),
+        fetch(reportUrl, sampleId ? { cache: 'no-store' } : undefined),
         fetch(JUDGES_CONFIG, { cache: 'no-store' }),
       ]);
       if (!reportResp.ok){
         const text = await reportResp.text().catch(() => '');
+        if (sampleId && reportResp.status === 404){
+          throw new Error('That sample deliverable is not yet built. Try a different sample, or run the brief live.');
+        }
         throw new Error('Report ' + reportResp.status + ': ' + (text || reportResp.statusText));
       }
       if (!judgesResp.ok) throw new Error('Could not load judges config.');

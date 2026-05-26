@@ -1,0 +1,291 @@
+{
+  "sample_id": "second_chance_fitness",
+  "evaluation": {
+    "id": "sample-second-chance-fitness",
+    "submission_id": "sample-second-chance-fitness",
+    "status": "complete",
+    "stage": "compliance",
+    "completed_at": "2026-05-26T15:30:00Z"
+  },
+  "submission": {
+    "id": "sample-second-chance-fitness",
+    "title": "Second Chance Fitness"
+  },
+  "brief": "SECOND CHANCE FITNESS - Close Your Circles, On Your Schedule\n\nCONCEPT\nAn exercise tracking app that offers a more flexible and forgiving approach to fitness goal achievement compared to traditional, rigid trackers.\n\nPROBLEM\nMany individuals struggle to stay on track with their fitness goals due to missed workouts, unexpected schedule changes, or temporary setbacks. Strict daily targets can be demotivating and lead to feelings of failure - which often pushes users away from the app entirely rather than back to it.\n\nSOLUTION\nSecond Chance Fitness creates a supportive environment by allowing users a 7-day window to \"close their circles\" after a missed day, promoting consistency and resilience in their fitness journey. Missed days do not break streaks; they extend the recovery window.\n\nTARGET AUDIENCE\n- Busy professionals and parents with unpredictable schedules\n- Individuals prone to the \"all or nothing\" mentality in fitness\n- People new to exercise who may be intimidated by rigid tracking\n- Anyone seeking a more forgiving and supportive fitness companion\n\nKEY FEATURES\n- Circle Tracking: visual representation of daily goals for exercise minutes, steps, or other chosen metrics\n- 7-Day Grace Period: unfilled daily circles remain active for up to 7 days after the missed workout\n- Progress Visualizations: weekly and monthly views showcase long-term commitment, emphasizing consistency over perfection\n- Streak Tracking: motivation through consecutive day streaks, with an emphasis on \"bounceback\" streaks after breaks\n- Customizable Goals: users set targets based on their fitness level\n- Integration: compatibility with popular wearables and health apps\n\n[Buyer Psychology Profile - Matthew] primary driver - identity\n\nPRIMARY DRIVER: Identity\n  The customer is buying back the version of themselves who follows through. Missed days break the streak, the streak's failure breaks the self-concept (\"I'm someone who works out\"), the broken self-concept breaks the motivation to ever come back. Second Chance Fitness sells a forgiving identity instead of a perfectionist one.\n\nSECONDARY DRIVERS\n  - Control: the 7-day grace window is a reclaiming of control over a system that previously controlled them.\n  - Belonging: bounceback-streak community framing positions returning users as a tribe of comeback-makers.\n\nTRIGGER MOMENT\n  Day 4 after a missed workout. The user is in bed, scrolling, weighing whether to delete the app. The 7-day grace timer is what changes the decision from \"delete\" to \"open and close one circle.\"\n\nIDENTITY FRAMING\n  The kind of person whose fitness routine survives a hard week.\n\nFRAMEWORKS APPLIED\n  - BJ Fogg behavior model (B=MAP): the 7-day window collapses the M-A-P barrier on the day after a miss. Lower required action, motivation preserved by the lower bar.\n  - Loss aversion: framing missed days as \"open circles\" rather than \"broken streaks\" reframes the loss into a fixable gap.\n\nWALK TO NEXT\n  - Reid: brand direction should signal \"forgiving\" not \"intense.\" Identity-pricing positions the freemium tier as the \"committed-but-honest\" tier.\n  - Zara: the bounceback story is the content engine. Real users finding the comeback after a hard week is the post that converts.\n\n[Content: TikTok - Tactical lesson] We almost killed Second Chance Fitness with one design choice\n\nThe original brief said \"7-day grace period for missed workouts.\" We tested it with 12 users for 6 weeks. Three of them ghosted in week 2. We dug in: they had missed one day, opened the app on day 2, saw the grace window expiring in 6 days, and felt MORE pressure than before. The window had become a countdown to failure.\n\nThe fix: we stopped showing the timer. The circle just stays open until you close it or seven days pass. No countdown. No urgency. Just an honest acknowledgment that the day is still recoverable. Retention in week 6 jumped from 25% to 64%.\n\nThe lesson: when you remove pressure, the UI should remove the visualization of pressure too. Don't engineer forgiveness and then display the deadline.\n\n#buildinpublic #fitnessapp\n\n[Press Release: Product launch] Second Chance Fitness Launches with 7-Day Grace Period for Missed Workouts\n\n[CITY, STATE] - [MONTH DD, YYYY] - Second Chance Fitness, a new exercise tracking app built around recovery and forgiveness rather than rigid daily targets, today launched for [PLATFORM]. The app introduces a 7-day grace window for missed workouts, allowing users to close their daily circles for the rest of the week instead of breaking their streak and restarting at zero.\n\n\"Most fitness apps treat a missed workout like a failure. We treat it like a Tuesday,\" said [FOUNDER NAME], founder of Second Chance Fitness. \"The data was clear: rigid streaks were costing us our users on the day after they missed once. The 7-day window changes the question from 'should I quit?' to 'when does the week end?'\"\n\nIn a six-week beta with [NUMBER] users, retention in week six jumped from approximately 25% on a rigid-streak baseline to 64% with the grace-period model. The improvement was driven by users who had broken a streak at least once in the first two weeks - the exact cohort traditional tracker UX loses.\n\nSecond Chance Fitness integrates with Apple HealthKit, Google Fit, Garmin, Fitbit, and Whoop. The app is free to download, with a premium subscription unlocking advanced analytics, themed challenges, and coaching integrations.\n\nABOUT SECOND CHANCE FITNESS\nSecond Chance Fitness builds tracking tools for people whose lives interfere with their fitness routines. Based in [CITY], the company is committed to a mental-health-positive approach to habit-building.\n\nMEDIA CONTACT\n[NAME] / [EMAIL] / [PHONE]",
+  "revisions": [
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Opening paragraph",
+      "before": "Second Chance Fitness creates a supportive environment by allowing users a 7-day window to \"close their circles\" after a missed day, promoting consistency and resilience in their fitness journey.",
+      "after": "Second Chance Fitness creates a supportive environment by allowing users a 7-day window to \"close their circles\" after a missed day, promoting consistency and resilience in their fitness journey. Missed days do not break streaks; they extend the recovery window.",
+      "rationale": "The original ends one beat early. Adding the inversion (\"missed days do not break streaks; they extend the recovery window\") puts the actual mechanic in plain language and matches the founder's voice from elsewhere in the brief.",
+      "accepted_at": 1716738000000
+    },
+    {
+      "ep_id": "matthew_vance",
+      "operation": "append",
+      "section_label": "Buyer Psychology Notes - identity driver, day-4 trigger moment",
+      "before": "",
+      "after": "Buyer Psychology Profile: primary driver - identity. The customer is buying back the version of themselves who follows through. Missed days break the streak, the streak's failure breaks the self-concept, the broken self-concept breaks the motivation to ever come back. Second Chance Fitness sells a forgiving identity instead of a perfectionist one. Secondary drivers: control (the 7-day grace window is a reclaiming of control over a system that previously controlled them) and belonging (bounceback-streak community framing positions returning users as a tribe of comeback-makers). Trigger moment: day 4 after a missed workout, user in bed scrolling, weighing whether to delete the app. The grace timer is what changes the decision from \"delete\" to \"open and close one circle.\" Frameworks: BJ Fogg behavior model (B=MAP), loss aversion (reframing missed days as \"open circles\" rather than \"broken streaks\"). Walk to next: Reid for brand-direction signaling forgiveness not intensity; Zara for the bounceback story content engine.",
+      "rationale": "The brief leads with the mechanic (7-day grace) but the actual sale is identity. Naming the identity driver explicitly gives the brand and content teams a clearer target.",
+      "accepted_at": 1716738300000
+    },
+    {
+      "ep_id": "zara_cole",
+      "operation": "append",
+      "section_label": "Content: TikTok - Tactical lesson - We almost killed Second Chance Fitness",
+      "before": "",
+      "after": "[TikTok - Tactical lesson] We almost killed Second Chance Fitness with one design choice. The original brief said \"7-day grace period for missed workouts.\" We tested it with 12 users for 6 weeks. Three of them ghosted in week 2. We dug in: they had missed one day, opened the app on day 2, saw the grace window expiring in 6 days, and felt MORE pressure than before. The window had become a countdown to failure. The fix: we stopped showing the timer. The circle just stays open until you close it or seven days pass. No countdown. No urgency. Just an honest acknowledgment that the day is still recoverable. Retention in week 6 jumped from 25% to 64%. The lesson: when you remove pressure, the UI should remove the visualization of pressure too. Don't engineer forgiveness and then display the deadline.",
+      "rationale": "Tactical-lesson tone fits the audience (other founders, fitness-app builders, designers). The specific number lift (25% to 64%) is the hook. Speak the lesson out loud in 30-45 seconds on camera.",
+      "accepted_at": 1716738600000
+    },
+    {
+      "ep_id": "reid_callum",
+      "operation": "append",
+      "section_label": "Press Release: Product launch - Second Chance Fitness Launches with 7-Day Grace Period",
+      "before": "",
+      "after": "Second Chance Fitness Launches with 7-Day Grace Period for Missed Workouts. [CITY, STATE] - [MONTH DD, YYYY] - Second Chance Fitness, a new exercise tracking app built around recovery and forgiveness rather than rigid daily targets, today launched for [PLATFORM]. The app introduces a 7-day grace window for missed workouts, allowing users to close their daily circles for the rest of the week instead of breaking their streak and restarting at zero. \"Most fitness apps treat a missed workout like a failure. We treat it like a Tuesday,\" said [FOUNDER NAME], founder of Second Chance Fitness. \"The data was clear: rigid streaks were costing us our users on the day after they missed once. The 7-day window changes the question from 'should I quit?' to 'when does the week end?'\" In a six-week beta with [NUMBER] users, retention in week six jumped from approximately 25% on a rigid-streak baseline to 64% with the grace-period model. The improvement was driven by users who had broken a streak at least once in the first two weeks - the exact cohort traditional tracker UX loses. Second Chance Fitness integrates with Apple HealthKit, Google Fit, Garmin, Fitbit, and Whoop. The app is free to download, with a premium subscription unlocking advanced analytics, themed challenges, and coaching integrations.",
+      "rationale": "Leads with the news (grace period launch + retention number) not the company. Founder quote names the specific reframe. Beta data with the specific delta (25% to 64%) is the credibility anchor.",
+      "accepted_at": 1716738900000
+    },
+    {
+      "ep_id": "carol_haynes",
+      "operation": "append",
+      "section_label": "Screening Report: subscription habit tracker for fitness comebacks",
+      "before": "",
+      "after": "Pattern: subscription habit tracker for fitness comebacks. What worked for this pattern: emotional reframing of failure as setback (not termination), tight integration with wearables, narrow first audience. What failed: undifferentiated freemium with weak premium hook, attempting to be a coach instead of a tracker. Your position: differentiated by the 7-day grace mechanic; vulnerable to the wearable platforms shipping the same feature in their first-party apps. Legs assessment: has_legs (signal 7/10). Reasons for: specific mechanic, real retention data from beta, mental-health-positive framing aligns with 2026 audience attention. Reasons against: no defensible moat against Apple/Google adding the same feature, freemium-to-premium conversion path unproven, founder hasn't yet named the first 100 customers. The one thing that kills it: when Apple Fitness+ ships a similar grace-period feature in iOS 19 and there is no switching cost to migrate. Need a moat that isn't just the mechanic - probably community + content + identity rather than feature parity.",
+      "rationale": "Pattern is well-established. Carol's read: the mechanic is good but not defensible alone. The visitor should build the moat (community / content / identity) before the platforms commoditize the feature.",
+      "accepted_at": 1716739200000
+    },
+    {
+      "ep_id": "wren_calloway",
+      "operation": "append",
+      "section_label": "Landscape Scout Report: where it can work + Other Uses",
+      "before": "",
+      "after": "Where it can work (top 3 segments): (1) post-injury rehabilitation patients, density: thin, first signal: 30-day retention in users self-identifying as \"returning from injury\" exceeds 60%. (2) postpartum fitness recovery, density: medium, first signal: app downloads driven by lactation consultant or postpartum doula recommendation. (3) chronic illness patients managing symptom-flare-aware fitness routines, density: thin (mostly underserved), first signal: 5 unsolicited app reviews from users mentioning a specific chronic condition. Focus recommendation: postpartum fitness recovery as the beachhead. The audience is concentrated (referrable through known channels), has high emotional resonance with the \"second chance\" framing, and has unmet need from current trackers built for healthy 25-year-olds. Other Uses (same mechanic, different problem domain): chronic disease medication adherence (the 7-day grace window applied to missed doses), language-learning streak apps (the comeback streak instead of the broken streak), reading habit trackers in adult literacy programs. The mechanic - forgiveness instead of perfectionism - is the durable asset, not the fitness category specifically. White space: the chronic-illness fitness intersection has fewer than 5 named competitors and a customer base actively asking for it in patient forums. One thing Wren would not do: position generally against \"busy people.\" Too broad. Narrow to the postpartum or chronic-illness audience first.",
+      "rationale": "The mechanic travels beyond fitness. Postpartum is the highest-signal beachhead because the audience is concentrated and the emotional fit is exact. Other Uses captures the mechanic-applied-elsewhere insight that the founder probably underestimates.",
+      "accepted_at": 1716739500000
+    },
+    {
+      "ep_id": "ms_ivy",
+      "operation": "append",
+      "section_label": "Research Context: habit psychology + streak demotivation literature",
+      "before": "",
+      "after": "Frameworks: Hooked Model (Nir Eyal) - relevant because the 7-day grace period changes the variable-reward trigger from \"streak preserved\" to \"streak recoverable.\" Habit Loop (Charles Duhigg) - the cue/routine/reward loop is what most fitness apps optimize; this app instead optimizes the recovery loop after a broken cue. Self-Determination Theory (Deci & Ryan) - autonomy support is the differentiator vs. rigid trackers; the grace window respects user autonomy without removing structure. Adjacent thinkers: BJ Fogg (behavior design, B=MAP), Wendy Wood (habit research, Stanford, automaticity vs. willpower), James Clear (Atomic Habits, never-miss-twice rule which the 7-day window operationalizes). Prior literature: research on streak-loss demotivation in mobile habit apps consistently shows that users who break a streak in week 1 are 3-5x more likely to churn by week 4 - this is the cohort the grace mechanic is specifically designed to retain. \"Fresh start effect\" literature (Hengchen Dai and colleagues, Management Science 2014) supports temporal-landmark recovery as a real behavioral phenomenon - the 7-day window engineers an artificial temporal landmark on demand. Research gap: most habit-app literature studies users who SUCCEED at habit formation; the literature on users who fail and return is thinner. Second Chance Fitness is positioned to generate that research if the team is willing to publish retention data after launch. Rationale: the framing is strong because behavioral-econ literature actively supports the mechanic. The one thinker Terry should read first is James Clear - the \"never-miss-twice\" rule is essentially this app, operationalized.",
+      "rationale": "Strong framework grounding. Names real frameworks and real authors. The research gap (users who fail and return) is genuinely under-studied; Second Chance Fitness could become the dataset.",
+      "accepted_at": 1716739800000
+    }
+  ],
+  "judge_outputs": [
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 8 },
+      "stage_critique": "Terry, the brief is unusually clear on the mechanic and the audience. \"Close your circles\" is the kind of phrase that survives translation across the team. The one place the clarity drops is in defining who specifically fails today - the audience description sprays from busy parents to all-or-nothing thinkers to beginners. Pick one for the first cohort.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the product clarity is fine. The business clarity is where I want more. Freemium with premium subscription is named but the unit economics are not. What's the conversion rate target? What's the LTV? Without those, \"freemium\" is just a word.",
+      "confidence": 0.78,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the brief reads cleanly. I know what the thing is, I know who it's for, and I know how it makes money. What I don't know is who the exit is for. App acquirers in this category are Apple, Google, Strava, and a couple of wearable companies. Which one is this for?",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "viability",
+      "dimension_scores": { "viability": 7 },
+      "stage_critique": "Terry, this is viable if you can keep users past day 30. The behavioral mechanic is correct - I would build the same thing. The risk is that wearable platforms add this feature in their next OS update and the standalone app loses its reason to exist. The viability hinges on whether community + content sticks before platform commoditization.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, the revenue path is plausible but you haven't talked to a customer yet. Freemium fitness apps see 2-5% premium conversion in good cases. At what subscription price? At what acquisition cost? The viability is theoretical until those numbers are on the page.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, viability for an investor read isn't about whether the app can break even - it's about whether the exit math works. Fitness apps acquired in the last five years exit at 2-4x revenue, not the 8-12x SaaS multiple. Adjust the math accordingly. The mechanic is good; the comp set is the wrong category.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the brief names the user-adoption risk implicitly (perfectionists who quit) but does not name the platform risk. The biggest risk is Apple shipping the same feature in iOS 19. That risk needs a named mitigation - community moat, branded content, identity ownership - or the answer to it is \"we don't have one.\" Either is fine to say. Silence on it is not.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, you've named one risk (rigid trackers cause demotivation) but not the operational risks you'll hit. Mobile app review-cycle risk on health claims. Wearable API access changes. Apple ATT impact on user acquisition cost. These are mainstream fitness-app risks that every founder in this category runs into. Acknowledging them now is what tells me you've talked to other founders.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "risk",
+      "dimension_scores": { "risk": 4 },
+      "stage_critique": "Terry, the risk section is the weakest part of this brief. The product risk is named; the business risk is not. Customer acquisition cost in fitness apps in 2026 averages $35-60 per install for premium tiers. At a $5-10 monthly subscription with 2-5% conversion, the math is brutal unless you have organic distribution. That's the risk that kills the category. Address it.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the \"second chance\" framing has a story spine but the founder is not in it yet. Why did YOU build this? Was there a streak you broke that broke you? The brief reads as third-person observation when first-person makes the narrative land. The audience can feel the difference.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the narrative is serviceable. \"Forgiveness over perfection\" is a clear spine. What's missing is the why-now. Why does this app exist in 2026 and not 2018? Either the cultural moment (post-pandemic mental health awareness) or the technical moment (wearable saturation) needs to be named.",
+      "confidence": 0.76,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 5 },
+      "stage_critique": "Terry, narratives in pitch decks come down to the founder + the wedge + the timing. The brief has the wedge. The founder is invisible. The timing isn't argued. Tighten on all three before any investor reads this.",
+      "confidence": 0.78,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the brief asserts that strict daily targets are demotivating. That's well-established in habit research but you haven't cited it. \"Fresh start effect\" literature (Dai 2014) and James Clear's never-miss-twice rule both support the mechanic. Name them. Right now the brief reads as opinion when it could read as research-backed.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 3 },
+      "stage_critique": "Terry, you don't have any. The brief asserts beta retention numbers in the press release but the brief itself doesn't ground them. Talk to ten existing fitness-tracker users who quit. Show me the interview notes. Until then this is a hypothesis dressed as a product.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, evidence is what separates a hobby project from a venture-backable company. You need: ten user interviews, a 4-week pilot with ten people, retention numbers across the grace-period mechanic vs. a control, and CAC math on a small ad spend. None of that is in the brief. All of it should be by the next read.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 8 },
+      "stage_critique": "Terry, the cultural fit is the strongest part of this brief. Mental-health-positive framing in fitness is exactly where the audience attention is in 2026. The \"forgiveness over perfection\" message lands - it's the post-pandemic correction to the 2010s grind-culture fitness app era.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the timing is right. The audience is paying attention to mental-health-positive products. The risk to cultural fit is that this is now a CROWDED corner of the market - everyone is anti-grind in 2026. Differentiation against the rest of the gentle-fitness category needs to be sharper.",
+      "confidence": 0.78,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, cultural fit is good. The reframe (forgiveness vs. streaks) matches the audience's vocabulary. The investor-cultural-fit question is whether VCs still write checks for consumer fitness apps in 2026 - they're spent on the category. You may want to position this as a behavioral-health platform rather than a fitness app for fundraising purposes.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "psych",
+      "dimension_scores": { "psych": 9 },
+      "stage_critique": "Terry, this is the strongest dimension. The brief is built around correct buyer psychology - identity preservation, autonomy support, loss-aversion reframing. Every choice in the product respects how humans actually behave after a missed workout. I would build this. The grace mechanic is genuinely psychologically literate.",
+      "confidence": 0.89,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the user-psychology read is excellent. The buyer-psychology read - what makes the user upgrade to premium - is missing. \"Advanced analytics\" doesn't trigger an identity-driven purchase. Figure out what premium feature reinforces the comeback identity and price the upgrade against that, not against features.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the psychology of the user is solid. The psychology of the investor is unmodeled. \"Forgiving fitness app\" reads as a feature, not a category. Reframe the pitch as a behavioral-health platform with fitness as the first vertical - same product, very different valuation.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, this is a consumer wellness app, not a medical device. Regulatory exposure is minimal as long as you avoid making clinical claims (don't say \"treats depression\" or \"improves clinical outcomes\"). HIPAA does not apply unless you integrate with a covered entity. Stick to wellness language and you're clean.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 8 },
+      "stage_critique": "Terry, compliance is straightforward. App store policies (Apple, Google) are the active layer - read the wellness app guidelines, especially around \"medical claims\" in marketing copy. Apple ATT consent for ad tracking matters more than HIPAA here. Privacy policy needs to handle wearable-platform data sharing explicitly.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, compliance is not a blocker. If you ever add an AI-coaching feature with personalized advice, the regulatory surface grows. For the v1 brief as written, you're fine. Keep the AI ambitions out of the launch press until you've gotten a compliance opinion.",
+      "confidence": 0.78,
+      "retrieved_evidence": []
+    }
+  ],
+  "triangulation": {
+    "matrix": {
+      "clarity":    { "cassidy_mercer": 8, "raymond_chen": 7, "marcus_holt": 7 },
+      "viability":  { "cassidy_mercer": 7, "raymond_chen": 6, "marcus_holt": 6 },
+      "risk":       { "cassidy_mercer": 5, "raymond_chen": 5, "marcus_holt": 4 },
+      "narrative":  { "cassidy_mercer": 6, "raymond_chen": 6, "marcus_holt": 5 },
+      "evidence":   { "cassidy_mercer": 4, "raymond_chen": 3, "marcus_holt": 4 },
+      "cultural":   { "cassidy_mercer": 8, "raymond_chen": 7, "marcus_holt": 7 },
+      "psych":      { "cassidy_mercer": 9, "raymond_chen": 8, "marcus_holt": 8 },
+      "compliance": { "cassidy_mercer": 7, "raymond_chen": 8, "marcus_holt": 7 }
+    },
+    "agreement_dimensions": ["risk", "narrative", "evidence", "cultural", "compliance"],
+    "conflict_dimensions":  [],
+    "coverage_gaps":        [],
+    "composite_score":      0.64,
+    "verdict":              "agreement"
+  }
+}

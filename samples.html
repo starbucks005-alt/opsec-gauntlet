@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Ideas · The Gauntlet</title>
+<meta name="description" content="Don't have an idea yet? Pick one of these. Walk it through the EP corridor and the Chamber as if you wrote it.">
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="apple-touch-icon" href="Favicon.png">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0P5JY8M1B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R0P5JY8M1B');
+</script>
+<style>
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    --gauntlet-consequence:#c0392b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Cormorant Garamond',serif; font-size:1.05rem; line-height:1.7;
+    min-height:100vh;
+  }
+
+  .tg-topbar{
+    display:flex; align-items:center; padding:0 2.5rem; height:56px;
+    border-bottom:1px solid var(--rule); gap:1.5rem;
+    position:sticky; top:0; background:rgba(10,10,10,0.92);
+    backdrop-filter:blur(10px); z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex; align-items:center; gap:0.6rem;
+    font-family:'Playfair Display',serif; font-size:1rem; letter-spacing:0.12em;
+    color:var(--gold); text-decoration:none; white-space:nowrap;
+  }
+  .tg-topbar-logo img{ height:32px; width:32px; object-fit:contain; }
+  .tg-topbar-nav{ margin-left:auto; display:flex; gap:2rem; }
+  .tg-topbar-nav a{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--text-dim); text-decoration:none;
+  }
+  .tg-topbar-nav a:hover, .tg-topbar-nav a.is-active{ color:var(--gold); }
+
+  main{ max-width:1180px; margin:0 auto; padding:4rem 2.5rem 6rem; }
+
+  .s-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:1rem; text-align:center;
+  }
+  .s-title{
+    font-family:'Playfair Display',serif; font-size:3rem; font-weight:700;
+    color:var(--cream); line-height:1.1; text-align:center; margin-bottom:1rem;
+  }
+  .s-title em{ font-style:italic; color:var(--gold-light); }
+  .s-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1.1rem; line-height:1.55;
+    text-align:center; max-width:680px; margin:0 auto 3.5rem;
+  }
+
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+    gap:1.4rem;
+  }
+  .card{
+    display:flex; flex-direction:column;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.45);
+    padding:1.5rem 1.6rem 1.6rem;
+    transition:border-color 0.25s, box-shadow 0.3s, transform 0.3s;
+  }
+  .card:hover{
+    border-color:var(--gold-light);
+    box-shadow:0 0 0 1px rgba(212,170,74,0.4), 0 0 32px -2px rgba(212,170,74,0.4);
+    transform:translateY(-3px);
+  }
+  .card-cat{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:0.6rem;
+  }
+  .card-title{
+    font-family:'Playfair Display',serif; font-size:1.45rem; font-weight:700;
+    color:var(--cream); line-height:1.2; margin-bottom:0.45rem;
+  }
+  .card-tagline{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--gold-light); font-size:1rem; line-height:1.4;
+    margin-bottom:0.85rem;
+  }
+  .card-summary{
+    font-size:1rem; line-height:1.55; color:var(--text);
+    flex:1; margin-bottom:1.2rem;
+  }
+  .card-actions{
+    display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;
+    margin-top:auto;
+  }
+  .btn-try{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.7rem 1.1rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:background 0.18s, border-color 0.18s, color 0.18s;
+  }
+  .btn-try:hover{ background:var(--gold-light); border-color:var(--gold-light); }
+  .btn-view{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.7rem 0.95rem;
+    background:transparent; color:var(--text-dim); border:1px solid var(--rule);
+    transition:all 0.18s;
+  }
+  .btn-view:hover{ color:var(--gold-light); border-color:var(--gold-light); }
+  /* Tertiary CTA - links to the pre-baked sample deliverable. Visually
+     distinct from "Try this" (which loads the brief and walks the live
+     flow) and "View brief" (which shows the raw brief text). */
+  .btn-deliverable{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer; text-decoration:none;
+    padding:0.7rem 0.95rem; display:inline-flex; align-items:center;
+    background:rgba(155,212,163,0.06);
+    color:#9bd4a3; border:1px solid rgba(155,212,163,0.4);
+    transition:all 0.18s;
+  }
+  .btn-deliverable:hover{ background:rgba(155,212,163,0.12); color:#cfe9d4; border-color:#9bd4a3; }
+
+  /* Inline name capture revealed when "Try this idea" clicked. Pre-fills with
+     the visitor's name from sessionStorage if they've been here before. */
+  .card-prompt{
+    display:none; flex-direction:column; gap:0.55rem;
+    margin-top:0.9rem; padding-top:0.9rem;
+    border-top:1px dashed var(--rule);
+  }
+  .card.is-prompting .card-prompt{ display:flex; }
+  .card.is-prompting .card-actions{ display:none; }
+  .card-prompt label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+  }
+  .card-prompt input{
+    background:rgba(0,0,0,0.5); border:1px solid var(--rule);
+    color:var(--cream); padding:0.6rem 0.75rem;
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.4;
+    outline:none;
+  }
+  .card-prompt input:focus{ border-color:var(--gold-light); }
+  .card-prompt input::placeholder{ color:#7d735f; font-style:italic; }
+  .card-prompt-row{ display:flex; gap:0.5rem; }
+  .btn-confirm{
+    flex:1;
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.7rem 1rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:background 0.18s;
+  }
+  .btn-confirm:hover{ background:var(--gold-light); border-color:var(--gold-light); }
+  .btn-cancel{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.7rem 0.85rem;
+    background:transparent; color:var(--text-dim); border:1px solid var(--rule);
+    transition:color 0.18s, border-color 0.18s;
+  }
+  .btn-cancel:hover{ color:var(--gauntlet-consequence); border-color:var(--gauntlet-consequence); }
+
+  /* Read-only brief modal */
+  .modal-back{
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.85); backdrop-filter:blur(6px);
+    z-index:200; align-items:center; justify-content:center;
+    padding:2rem;
+  }
+  .modal-back.is-open{ display:flex; }
+  .modal{
+    background:var(--ink-soft); border:1px solid var(--gold);
+    max-width:780px; width:100%; max-height:88vh; overflow:hidden;
+    display:flex; flex-direction:column;
+    box-shadow:0 24px 80px -10px rgba(0,0,0,0.85);
+  }
+  .modal-head{
+    padding:1.3rem 1.6rem; border-bottom:1px solid var(--rule);
+    display:flex; align-items:baseline; gap:0.8rem;
+  }
+  .modal-title{
+    font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700;
+    color:var(--cream); line-height:1.2; flex:1;
+  }
+  .modal-close{
+    background:transparent; border:1px solid var(--rule);
+    color:var(--text-dim); cursor:pointer;
+    width:32px; height:32px; font-size:1.4rem; line-height:1;
+    transition:color 0.18s, border-color 0.18s;
+  }
+  .modal-close:hover{ color:var(--gauntlet-consequence); border-color:var(--gauntlet-consequence); }
+  .modal-body{
+    overflow-y:auto; padding:1.4rem 1.7rem 1.6rem;
+    font-family:'Cormorant Garamond',serif; font-size:1.02rem; line-height:1.7;
+    color:var(--text); white-space:pre-wrap; word-wrap:break-word;
+  }
+  .modal-foot{
+    padding:1rem 1.6rem; border-top:1px solid var(--rule);
+    display:flex; justify-content:flex-end; gap:0.55rem;
+  }
+
+  .status{
+    text-align:center; padding:2rem;
+    font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold-light);
+  }
+  .status.is-error{ color:var(--gauntlet-consequence); }
+
+  @media (max-width:680px){
+    main{ padding:2.5rem 1.3rem 4rem; }
+    .s-title{ font-size:2.2rem; }
+    .tg-topbar{ padding:0 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="Favicon.png" alt="" aria-hidden="true">
+    THE GAUNTLET
+  </a>
+  <nav class="tg-topbar-nav">
+    <a href="/chamber.html">The Chamber</a>
+    <a href="/Helpers/">The Executive Producers</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
+
+<main>
+  <div class="s-eyebrow">Sample Ideas</div>
+  <h1 class="s-title">Don't have an idea? <em>Try one of ours.</em></h1>
+  <p class="s-sub">Pick a concept. We'll seed it into your brief and walk you through the EP corridor and the Chamber as if you'd written it yourself. These are real concept documents Terry built before The Gauntlet existed - now they get to face the panel.</p>
+
+  <div id="grid" class="grid">
+    <div class="status" id="loading">Loading samples...</div>
+  </div>
+</main>
+
+<!-- Read-only brief preview modal -->
+<div class="modal-back" id="modal-back" role="dialog" aria-modal="true">
+  <div class="modal">
+    <header class="modal-head">
+      <h2 class="modal-title" id="modal-title"></h2>
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    </header>
+    <div class="modal-body" id="modal-body"></div>
+    <footer class="modal-foot">
+      <button class="btn-view" id="modal-close-foot">Close</button>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  const KEY_NAME  = 'tg_visitor_name';
+  const KEY_BRIEF = 'tg_visitor_brief';
+  // When a sample is loaded, we also stamp this so the corridor knows the
+  // brief came from a sample and can skip cache invalidation behavior that
+  // assumes the brief is the visitor's own typed text. Currently unused
+  // downstream but cheap to set and easy to consume later.
+  const KEY_SAMPLE_ID = 'tg_sample_id';
+
+  function ss(k){ try { return sessionStorage.getItem(k); } catch(_) { return null; } }
+  function ssSet(k, v){ try { sessionStorage.setItem(k, v); } catch(_){} }
+
+  function escapeHtml(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  const gridEl       = document.getElementById('grid');
+  const loadingEl    = document.getElementById('loading');
+  const modalBackEl  = document.getElementById('modal-back');
+  const modalTitleEl = document.getElementById('modal-title');
+  const modalBodyEl  = document.getElementById('modal-body');
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-close-foot').addEventListener('click', closeModal);
+  modalBackEl.addEventListener('click', (e) => { if (e.target === modalBackEl) closeModal(); });
+
+  function openModal(sample){
+    modalTitleEl.textContent = sample.title;
+    modalBodyEl.textContent  = sample.brief_text;
+    modalBackEl.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modalBackEl.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function renderCard(sample){
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.dataset.sampleId = sample.id;
+
+    const prefilledName = ss(KEY_NAME) || '';
+
+    // Third CTA renders only when a pre-baked deliverable JSON exists for
+     // this sample (has_deliverable flag in samples.json). Links straight
+     // to the report page in sample mode. Phase 2 of the Sample Library -
+     // visitor sees a finished artifact instantly without running the
+     // live flow.
+    const deliverableCta = sample.has_deliverable
+      ? '<a class="btn-deliverable" href="/report.html?sample=' + encodeURIComponent(sample.id) + '">See completed deliverable &rarr;</a>'
+      : '';
+
+    card.innerHTML = ''
+      + '<div class="card-cat">' + escapeHtml(sample.category || 'Idea') + '</div>'
+      + '<h2 class="card-title">' + escapeHtml(sample.title) + '</h2>'
+      + (sample.tagline ? '<p class="card-tagline">' + escapeHtml(sample.tagline) + '</p>' : '')
+      + '<p class="card-summary">' + escapeHtml(sample.summary || '') + '</p>'
+      + '<div class="card-actions">'
+      +   '<button class="btn-try"  data-action="try">Try this idea &rarr;</button>'
+      +   '<button class="btn-view" data-action="view">View brief</button>'
+      +   deliverableCta
+      + '</div>'
+      + '<div class="card-prompt">'
+      +   '<label>What should the EPs call you?</label>'
+      +   '<input type="text" placeholder="First name (optional)" maxlength="60" value="' + escapeHtml(prefilledName) + '" data-role="name">'
+      +   '<div class="card-prompt-row">'
+      +     '<button class="btn-confirm" data-action="confirm">Send me through &rarr;</button>'
+      +     '<button class="btn-cancel"  data-action="cancel">Cancel</button>'
+      +   '</div>'
+      + '</div>';
+
+    card.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.getAttribute('data-action');
+      if (action === 'try'){
+        card.classList.add('is-prompting');
+        const nameInput = card.querySelector('[data-role="name"]');
+        if (nameInput) setTimeout(() => nameInput.focus(), 50);
+      } else if (action === 'cancel'){
+        card.classList.remove('is-prompting');
+      } else if (action === 'confirm'){
+        const name = (card.querySelector('[data-role="name"]').value || '').trim().slice(0, 60);
+        loadSample(sample, name);
+      } else if (action === 'view'){
+        openModal(sample);
+      }
+    });
+
+    // Enter key on name input acts as confirm.
+    card.addEventListener('keydown', (e) => {
+      if (e.target.matches('[data-role="name"]') && e.key === 'Enter'){
+        e.preventDefault();
+        const name = (e.target.value || '').trim().slice(0, 60);
+        loadSample(sample, name);
+      }
+    });
+
+    return card;
+  }
+
+  // Load the sample brief into sessionStorage and send the visitor to the
+  // corridor on the homepage. The corridor's tg-corridor.js reads
+  // sessionStorage on load and fires the personalized briefings.
+  // We also clear the corridor briefings cache so a new sample triggers a
+  // fresh fetch instead of reusing a cached personalization from a prior
+  // sample (the cache key already includes a brief signature, but explicit
+  // is better - the keys live in tg-corridor.js as v2-suffixed entries).
+  function loadSample(sample, name){
+    if (name) ssSet(KEY_NAME, name);
+    ssSet(KEY_BRIEF, sample.brief_text);
+    ssSet(KEY_SAMPLE_ID, sample.id);
+    try {
+      sessionStorage.removeItem('tg_corridor_briefings_cache_v2');
+      sessionStorage.removeItem('tg_corridor_briefings_sig_v2');
+    } catch(_){}
+    // Also clear the per-EP revisions log so this sample run does not
+    // carry forward leftover EP work from a previous session.
+    try { sessionStorage.removeItem('tg_ep_revisions'); } catch(_){}
+    // Redirect to the homepage corridor anchor.
+    window.location.href = '/#corridor-wings';
+  }
+
+  async function init(){
+    try {
+      const resp = await fetch('/config/samples.json', { cache: 'no-store' });
+      if (!resp.ok) throw new Error('samples ' + resp.status);
+      const data = await resp.json();
+      const samples = Array.isArray(data.samples) ? data.samples : [];
+      if (!samples.length) throw new Error('no samples in config');
+      gridEl.innerHTML = '';
+      samples.forEach(s => gridEl.appendChild(renderCard(s)));
+    } catch (err) {
+      console.warn('[samples]', err);
+      loadingEl.classList.add('is-error');
+      loadingEl.textContent = 'Could not load samples. Refresh to try again.';
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
