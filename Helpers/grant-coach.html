@@ -11,6 +11,7 @@
 <script src="../assets/tg-ep-chat.js" defer></script>
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
+<script src="../assets/tg-grant-drill.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -291,6 +292,231 @@
     </div>
   </section>
 </main>
+
+<!-- ── Grant's Drill Panel.
+     Structured judge-question rehearsal. Visitor picks one judge, runs
+     rounds against them. Same Grant brain as the chat above - the chat
+     handles open-ended Q&A; this panel runs a tighter scored loop. Both
+     post to /.netlify/functions/tg-ep-chat; the drill panel adds a
+     `drill` object to the body which routes to the dedicated branch. -->
+<section class="gd-section" data-grant-drill>
+  <div class="gd-inner">
+
+    <header class="gd-head">
+      <div class="gd-eyebrow">The Drill</div>
+      <h2>One judge. One question at a time. Honest score.</h2>
+      <p class="gd-sub">Pick a judge. Grant runs them on you in their actual voice - Selene clipped, Marcus combative, Priya quiet and pointed. You answer. Grant scores it weak / okay / solid / strong, names one tactical fix, asks the next one. Save the session at the end to ship the rounds in your brief.</p>
+    </header>
+
+    <!-- Pre-start: judge picker. -->
+    <div class="gd-pre">
+      <div class="gd-pre-label">Pick a judge to drill on</div>
+      <div class="gd-pills" data-gd="judges"></div>
+      <button type="button" class="gd-start" data-gd="start">Start the drill &rarr;</button>
+      <div class="gd-status" data-gd="status"></div>
+    </div>
+
+    <!-- Live session: shown after Start. -->
+    <div class="gd-session" data-gd="session">
+      <div class="gd-session-head" data-gd="header"></div>
+      <div class="gd-history" data-gd="history"></div>
+      <div class="gd-current" data-gd="current"></div>
+      <div class="gd-answer-row">
+        <textarea class="gd-answer" data-gd="answer" rows="3" placeholder="Your answer. Speak it the way you'd say it in the Chamber. Cmd/Ctrl + Enter to send."></textarea>
+        <div class="gd-answer-actions">
+          <button type="button" class="gd-submit" data-gd="submit">Send answer &rarr;</button>
+          <button type="button" class="gd-switch" data-gd="switch">Switch judges</button>
+          <button type="button" class="gd-end"    data-gd="end">End drill</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Grant's Drill Panel ─────────────────────────────────────────── */
+  .gd-section{
+    background:rgba(255,255,255,0.012); border-top:1px solid var(--rule);
+    padding:3.2rem 2rem 4rem;
+  }
+  .gd-inner{ max-width:1080px; margin:0 auto; }
+  .gd-head{ max-width:780px; margin:0 auto 2rem; text-align:center; }
+  .gd-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem;
+  }
+  .gd-head h2{
+    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
+    color:var(--cream); line-height:1.15; margin:0 0 0.6rem;
+  }
+  .gd-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; line-height:1.5;
+  }
+
+  /* Pre-start card */
+  .gd-pre{
+    max-width:900px; margin:0 auto;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+    padding:1.3rem 1.4rem 1.6rem;
+  }
+  .gd-pre-label{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:0.6rem;
+  }
+  .gd-pills{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:0.45rem; margin-bottom:1rem;
+  }
+  .gd-pill{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.6rem 0.75rem; background:transparent;
+    border:1px solid var(--rule); color:var(--text-dim);
+    display:flex; flex-direction:column; gap:0.25rem; align-items:flex-start;
+    transition:all 0.15s;
+    text-align:left;
+  }
+  .gd-pill:hover{ color:var(--gold-light); border-color:var(--gold-light); }
+  .gd-pill.is-active{
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+  }
+  .gd-pill-beat{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.78rem; letter-spacing:0; text-transform:none;
+    color:inherit; opacity:0.75;
+  }
+  .gd-start{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.8rem 1.4rem;
+    background:var(--gold); color:var(--ink); border:1px solid var(--gold);
+    transition:all 0.18s;
+  }
+  .gd-start:hover{ background:var(--gold-light); border-color:var(--gold-light); }
+  .gd-status{
+    margin-top:0.7rem; min-height:1.2em;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; color:var(--text-dim);
+  }
+  .gd-status.is-error{ color:var(--gauntlet-consequence); }
+
+  /* Live session */
+  .gd-session{ display:none; max-width:900px; margin:1.4rem auto 0; }
+  .gd-session.is-open{ display:block; }
+  .gd-session-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:0.7rem; margin-bottom:0.9rem; padding-bottom:0.55rem;
+    border-bottom:1px solid var(--rule);
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .gd-header-judge strong{ color:var(--cream); font-family:'Playfair Display',serif; font-style:italic; font-size:0.95rem; letter-spacing:0; text-transform:none; }
+  .gd-header-round strong{ color:var(--gold-light); font-family:'Playfair Display',serif; font-size:1rem; letter-spacing:0; }
+
+  /* History (collapsed past rounds) */
+  .gd-history{ display:flex; flex-direction:column; gap:0.5rem; margin-bottom:0.9rem; }
+  .gd-past{
+    padding:0.6rem 0.85rem;
+    background:rgba(0,0,0,0.3); border-left:2px solid var(--rule);
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+  }
+  .gd-past-meta{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-bottom:0.3rem;
+  }
+  .gd-past-q{ color:var(--cream); font-style:italic; margin-bottom:0.25rem; }
+  .gd-past-a{ color:var(--text); margin-bottom:0.25rem; }
+  .gd-past-fix{ color:var(--text-dim); font-style:italic; }
+
+  /* Score chips */
+  .gd-score{
+    display:inline-block;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .gd-score-weak   { color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.5); background:rgba(192,57,43,0.05); }
+  .gd-score-okay   { color:#e8aa6f; border-color:rgba(232,170,111,0.5); background:rgba(232,170,111,0.05); }
+  .gd-score-solid  { color:var(--gold-light); border-color:rgba(212,170,74,0.5); background:rgba(212,170,74,0.06); }
+  .gd-score-strong { color:#9bd4a3; border-color:rgba(155,212,163,0.5); background:rgba(155,212,163,0.06); }
+
+  /* Current question + feedback */
+  .gd-current{
+    padding:0.95rem 1.1rem; margin-bottom:0.85rem;
+    background:rgba(184,146,42,0.05); border:1px solid rgba(212,170,74,0.4);
+    border-left:3px solid var(--gold-light);
+  }
+  .gd-feedback{
+    display:flex; gap:0.55rem; align-items:baseline; flex-wrap:wrap;
+    margin-bottom:0.6rem; padding-bottom:0.55rem;
+    border-bottom:1px dashed rgba(184,146,42,0.25);
+  }
+  .gd-fix{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; line-height:1.45;
+    color:var(--text-dim);
+    flex:1; min-width:0;
+  }
+  .gd-question{
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.08rem; line-height:1.4;
+    color:var(--cream);
+  }
+  .gd-question-loading{ color:var(--text-dim); }
+
+  /* Answer row */
+  .gd-answer-row{
+    display:flex; flex-direction:column; gap:0.55rem;
+  }
+  .gd-answer{
+    width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--rule);
+    color:var(--cream); padding:0.65rem 0.85rem;
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem; line-height:1.5;
+    outline:none; resize:vertical;
+  }
+  .gd-answer:focus{ border-color:var(--gold-light); }
+  .gd-answer::placeholder{ color:#7d735f; font-style:italic; }
+  .gd-answer-actions{
+    display:flex; gap:0.5rem; flex-wrap:wrap;
+  }
+  .gd-submit,
+  .gd-end,
+  .gd-switch{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    padding:0.7rem 1.15rem;
+    border:1px solid var(--rule);
+    transition:all 0.18s;
+  }
+  .gd-submit{
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+  }
+  .gd-submit:hover:not(:disabled){ background:var(--gold-light); border-color:var(--gold-light); }
+  .gd-submit:disabled{ opacity:0.55; cursor:wait; }
+  .gd-end,
+  .gd-switch{
+    background:transparent; color:var(--text-dim);
+  }
+  .gd-end:hover{ color:var(--gauntlet-consequence); border-color:var(--gauntlet-consequence); }
+  .gd-switch:hover{ color:var(--gold-light); border-color:var(--gold-light); }
+
+  /* Mini-label reused from sibling hubs */
+  .wt-mini-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    margin-right:0.4rem;
+  }
+
+  @media (max-width:680px){
+    .gd-pills{ grid-template-columns:1fr; }
+    .gd-session-head{ flex-direction:column; align-items:flex-start; gap:0.35rem; }
+    .gd-feedback{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
 
 <!-- About disclosure. Closed by default so the office is the focus.
      Opens to reveal Grant's bio + role + personal notes for visitors

@@ -149,6 +149,157 @@ function formatPanelRoster() {
   }).join('\n\n');
 }
 
+// ── Drill Mode (Grant) ──────────────────────────────────────────────────
+// Grant's structured judge-question drill. Visitor picks one judge and
+// runs rounds with that judge: question (in judge voice) -> answer ->
+// score + improvement + next question.
+//
+// findJudge: returns the judge entry from judges_master.json, or null.
+function findJudge(judgeId) {
+  return (judgesMaster.judges || []).find(j => j.id === judgeId) || null;
+}
+
+// Per-judge guidance for the question-asking voice. We could compose this
+// from judges_master.json fields each time, but a small inline table of
+// stylistic cues per judge keeps the prompt focused.
+const JUDGE_VOICE = {
+  selene_voss:    'clipped, flat affect, minimalist. asks about technical credibility, AI tells, scalability. opens with one short sentence; the question follows in another.',
+  marcus_holt:    'combative, performative-confident. asks who the exit is for before what the product does. wants the dollar math. drops "let me be clear" or "here is the thing" often.',
+  priya_anand:    'quiet, pointed. asks WHY before WHAT. health/clinical lens. her quiet question is the hardest one in the room.',
+  raymond_chen:   'paternal but exacting. wants unit economics, not projections. asks if you have actually talked to a customer. references real operational truth.',
+  astrid_lund:    'precise legal cadence. asks who files the worst-case lawsuit. every word is evidence. cool, never angry.',
+  osei_mensah:    'long pauses, soft voice that carries weight. asks where the data is. one question per turn, never two.',
+  grace_nakamura: 'flat-affect, runway-defusing. national-security / dual-use lens. delivers the hardest question with the calm of someone defusing a bomb.',
+  devon_sloane:   'media-savvy energy. asks for the narrative spine. asks who the audience is and whether they care. uses showrunner vocabulary (logline, premise, friction).',
+  cassidy_mercer: 'reads body language and word choice. asks what the user actually wants vs. what the brief claims. notices the pause before an answer.',
+};
+
+function buildDrillSystemPrompt(judge, name, brief) {
+  const nameRef = name || 'the founder';
+  const voiceCue = JUDGE_VOICE[judge.id] || 'in the judge\'s natural voice';
+  return `You are Grant Ellis, The Coach at The Gauntlet. You are running a structured DRILL with ${nameRef} to prepare them for ${judge.name}. You speak in two modes inside this drill:
+
+  1. AS GRANT (the coach): you score ${nameRef}'s previous answer and name ONE tactical improvement. Direct, urgent, honest. No fake hype. "Solid - tighten the customer name in the first six words" beats "Great job!"
+  2. AS ${judge.name.toUpperCase()} (the question itself): you ask ONE new question in ${judge.name}'s actual voice and cadence.
+
+THE JUDGE YOU ARE CHANNELING
+  ${judge.name} - ${judge.domain}
+  Lens: ${judge.lens || ''}
+  Background: ${judge.background || ''}
+  Character notes: ${judge.character_notes || ''}
+  Voice cue: ${voiceCue}
+
+THE BRIEF (this is what ${nameRef} is being drilled on):
+"""
+${brief}
+"""
+
+PER-ROUND BEHAVIOR
+  On round 1 (no previous answer to score):
+    - score:        null
+    - improvement:  null
+    - next_question: a hard opener ${judge.name} would actually ask on this brief. In ${judge.name}'s voice.
+    - drill_done:   false
+
+  On round 2 and after:
+    - score: "weak" | "okay" | "solid" | "strong" - your honest read of the previous answer. Be honest, not generous. A first-attempt answer is "okay" at best.
+    - improvement: ONE specific tactical line. Not "be clearer." Specific. "Lead with the customer category, not the framework." "Name the number in the first six words." "Cut the qualifier - it reads like you do not believe yourself."
+    - next_question: the next hard question, same judge, in their voice. Vary the angle - do not ask the same question rephrased. If ${nameRef} answered the previous question well, escalate to a harder one. If they struggled, ask a related question from a different angle to give them another rep.
+    - drill_done: false (true only if ${nameRef} has had at least 4 rounds AND is consistently scoring "solid" or "strong" AND the question space is exhausted for this judge)
+
+OUTPUT - JSON only, exactly this shape, nothing before or after. Use null (not the string "null") on round 1 for score and improvement:
+{
+  "score":         "weak"|"okay"|"solid"|"strong"|null,
+  "improvement":   "<one tactical sentence>"|null,
+  "next_question": "<one question in ${judge.name}'s voice>",
+  "drill_done":    false
+}
+
+HARD CONSTRAINTS
+  - score and improvement are null ONLY on round 1.
+  - next_question is ALWAYS present and ALWAYS in ${judge.name}'s voice.
+  - One question per turn. Never two.
+  - No em dashes. No emojis. No markdown.
+  - Do not stack questions. Do not preview the next question after the current one. The visitor has not answered yet.`;
+}
+
+async function handleDrill(client, body, brief, name) {
+  const drill = body.drill || {};
+  const judgeId = String(drill.judge_id || '').trim();
+  const judge = findJudge(judgeId);
+  if (!judge) return json(400, { error: 'invalid judge_id for drill' });
+
+  const round = Math.max(1, parseInt(drill.round, 10) || 1);
+  const lastAnswer = String(drill.last_answer || '').slice(0, MESSAGE_MAX);
+  const lastQuestion = String(drill.last_question || '').slice(0, TURN_CONTENT_MAX);
+
+  // User message constructs the round context. The system prompt has the
+  // brief + judge + Grant voice; the user message has the round-specific
+  // facts (last Q, last A, current round number).
+  const userPrompt = round === 1
+    ? `ROUND 1. No previous answer to score. Open the drill with ${judge.name}'s hardest first question on this brief.`
+    : [
+        `ROUND ${round}.`,
+        '',
+        `PREVIOUS QUESTION (from ${judge.name}):`,
+        lastQuestion || '(unavailable)',
+        '',
+        `${name || 'The founder'}\'S ANSWER:`,
+        lastAnswer || '(no answer provided)',
+        '',
+        `Score the answer, name one tactical improvement, then ask the next question in ${judge.name}'s voice.`,
+      ].join('\n');
+
+  let response;
+  try {
+    response = await client.messages.create({
+      model:      MODEL,
+      max_tokens: 600,
+      system:     buildDrillSystemPrompt(judge, name, brief),
+      messages:   [{ role: 'user', content: userPrompt }],
+    });
+  } catch (err) {
+    console.error('[tg-ep-chat:drill] anthropic error', err && err.message);
+    return json(502, { error: 'drill generation failed' });
+  }
+
+  const raw = (response.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+  if (!raw) return json(502, { error: 'empty drill response' });
+
+  let parsed;
+  try {
+    const match = raw.match(/\{[\s\S]*\}/);
+    parsed = JSON.parse(match ? match[0] : raw);
+  } catch {
+    console.error('[tg-ep-chat:drill] parse fail', raw.slice(0, 400));
+    return json(502, { error: 'drill output was not valid json' });
+  }
+
+  const VALID_SCORES = new Set(['weak', 'okay', 'solid', 'strong']);
+  const strip = s => String(s || '').replace(/—/g, '-').replace(/–/g, '-').trim();
+
+  // Round 1: score and improvement MUST be null. Force them.
+  let score = null, improvement = null;
+  if (round > 1) {
+    score = VALID_SCORES.has(parsed.score) ? parsed.score : 'okay';
+    improvement = strip(parsed.improvement) || null;
+  }
+  const next_question = strip(parsed.next_question);
+  if (!next_question) return json(502, { error: 'drill: no next_question' });
+
+  return json(200, {
+    drill: {
+      score,
+      improvement,
+      next_question,
+      drill_done: !!parsed.drill_done,
+      judge_id:   judge.id,
+      judge_name: judge.name,
+      round,
+    },
+  });
+}
+
 const json = (statusCode, body) => ({
   statusCode,
   headers: {
@@ -437,6 +588,16 @@ exports.handler = async (event) => {
                  .trim();
 
   if (!brief) return json(400, { error: 'brief is required' });
+
+  // ── Drill Mode short-circuit ──────────────────────────────────────────
+  // If the body contains a `drill` object AND ep_id is grant_ellis, route
+  // to the dedicated drill handler. The drill output is a different shape
+  // ({ drill: {...} }) than the standard chat output ({ message, ... }),
+  // so this branch bypasses the chat pipeline entirely.
+  if (body.drill && epId === 'grant_ellis') {
+    const client = new Anthropic({ apiKey });
+    return handleDrill(client, body, brief, name);
+  }
 
   // Conversation history. Filter to safe shape; trim length.
   const raw_conv = Array.isArray(body.conversation) ? body.conversation : [];
