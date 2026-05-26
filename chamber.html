@@ -1546,45 +1546,57 @@
     return payload;
   }
 
-  // Sequence orchestrator. Runs Stage 1 (Clarity) then Stage 2 (Viability)
-  // back to back, with a transition system message between them. After
-  // both stages settle, drops the cross-dimension composite, the audience
-  // heckle, and the report CTA.
+  // Sequence orchestrator. Runs all 8 dimensions back-to-back, with a
+  // transition system message between each. After every stage settles,
+  // drops the cross-dimension composite, the audience heckle, and the
+  // report CTA. If any stage fails midway, fires the CTA on whatever
+  // completed - visitor still has a meaningful report.
+  const STAGE_SEQUENCE = [
+    { dim: 'clarity',    label: 'Clarity',    transition: null },
+    { dim: 'viability',  label: 'Viability',  transition: 'Next dimension: Viability. Same three judges, a different question - does this hold up as a real thing.' },
+    { dim: 'risk',       label: 'Risk',       transition: 'Next: Risk. What can go wrong - and how well has the brief named it.' },
+    { dim: 'narrative',  label: 'Narrative',  transition: 'Next: Narrative. The story spine. Why now. Why you.' },
+    { dim: 'evidence',   label: 'Evidence',   transition: 'Next: Evidence. What backs the claims, beyond conviction.' },
+    { dim: 'cultural',   label: 'Cultural',   transition: 'Next: Cultural. Does this fit the moment, or has the moment moved on.' },
+    { dim: 'psych',      label: 'Psych',      transition: 'Next: Psych. Does the human side hold up - or is this built for the rational user who does not exist.' },
+    { dim: 'compliance', label: 'Compliance', transition: 'Last dimension: Compliance. The regulatory, legal, ethical layer. The thing that gets expensive when it gets ignored.' },
+  ];
+
   async function runEvaluation(chosenList, firstAudience){
-    // Stage 1: Clarity
-    const clarityPayload = await runStage('clarity', 'Clarity', chosenList);
-    if (!clarityPayload) return;  // hard failure already surfaced
+    let lastPayload = null;
 
-    // Transition into Stage 2.
-    await wait(1400);
-    addChatMessage({
-      kind: 'system',
-      body: 'Next dimension: Viability. The same three judges, a different question - does this hold up as a real thing.',
-    });
-    await wait(900);
-
-    // Stage 2: Viability
-    const viabilityPayload = await runStage('viability', 'Viability', chosenList);
-    if (!viabilityPayload) {
-      // Even on partial failure, fire the CTA if Clarity completed - the
-      // visitor still has a meaningful report.
-      await wait(1500);
-      addChatMessage({
-        kind: 'system',
-        body: 'Your routing report is ready. Walk out the other side ▸',
-      });
-      showReportCta(clarityPayload.evaluation_id);
-      return;
+    for (const stage of STAGE_SEQUENCE){
+      if (stage.transition){
+        await wait(1400);
+        addChatMessage({ kind: 'system', body: stage.transition });
+        await wait(900);
+      }
+      const payload = await runStage(stage.dim, stage.label, chosenList);
+      if (!payload){
+        // Hard failure on this stage. If prior stages succeeded, fire
+        // the CTA on whatever evaluation_id we have so the visitor still
+        // walks out with a usable report.
+        if (lastPayload && lastPayload.evaluation_id){
+          await wait(1500);
+          addChatMessage({
+            kind: 'system',
+            body: 'Your routing report is ready (partial). Walk out the other side ▸',
+          });
+          showReportCta(lastPayload.evaluation_id);
+        }
+        return;
+      }
+      lastPayload = payload;
     }
 
-    // Cross-dimension composite. The triangulation in viabilityPayload
-    // already contains BOTH dimensions (server-side upserts the matrix
-    // each stage). Land the room's collective read across everything.
-    if (viabilityPayload.triangulation){
+    // All stages done. Cross-dimension composite uses the triangulation
+    // from the LAST stage - by that point the server-side matrix has
+    // accumulated every dimension's scores.
+    if (lastPayload && lastPayload.triangulation){
       await wait(1200);
       addChatMessage({
         kind: 'system',
-        body: formatCrossDimensionVerdict(viabilityPayload.triangulation),
+        body: formatCrossDimensionVerdict(lastPayload.triangulation),
       });
     }
 
@@ -1601,14 +1613,13 @@
     }
 
     // Routing report CTA.
-    const evaluationId = viabilityPayload.evaluation_id || clarityPayload.evaluation_id;
-    if (evaluationId){
+    if (lastPayload && lastPayload.evaluation_id){
       await wait(1500);
       addChatMessage({
         kind: 'system',
         body: 'Your routing report is ready. Walk out the other side ▸',
       });
-      showReportCta(evaluationId);
+      showReportCta(lastPayload.evaluation_id);
     }
   }
 

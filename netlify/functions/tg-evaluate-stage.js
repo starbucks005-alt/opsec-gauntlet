@@ -89,6 +89,99 @@ const DIMENSIONS = {
       'Do NOT confuse novelty with viability. Novel ideas often die from viability failures.',
     ],
   },
+  risk: {
+    label: 'RISK',
+    definition: 'what can go wrong with this idea and how well the brief acknowledges it. Adoption risk (will users actually do the thing). Technical risk (can the thing be built). Market risk (will the market still want this when it ships). Regulatory risk (what governs this domain). Financial risk (what burns the runway). Execution risk (does the team have the muscles). The score reflects both the SIZE of the risks AND whether the brief names them and has a plausible plan against them.',
+    bands: [
+      '0-2  = critical risks unacknowledged. The brief reads as if nothing can go wrong. Major risk categories are silently ignored.',
+      '3-4  = some risks named but mitigation is hand-wavy or absent. Founder is aware of one or two risks; missing the rest.',
+      '5-6  = mainstream risks named with general mitigation. The serious second-order risks are still unaddressed.',
+      '7-8  = risks named specifically with named mitigations. The brief shows the founder has stress-tested the plan.',
+      '9-10 = comprehensive risk read. The founder names the risks I would have raised and shows specific mitigations or honest "we accept this" choices.',
+    ],
+    tonal_notes: [
+      'Name the risk you see, in your domain. Be specific.',
+      'A high risk that is ACKNOWLEDGED scores higher than a small risk that is HIDDEN. Awareness matters.',
+      'Do NOT score risk down just because the idea is ambitious. Ambition is not a risk - unaddressed risk is.',
+    ],
+  },
+  narrative: {
+    label: 'NARRATIVE',
+    definition: 'whether this idea has a story spine that holds up. Why now? Why this person? Why does the customer / audience care? Is there genuine stakes and friction, or is the brief written like a feature list? Strong narrative makes the idea memorable, repeatable, and pitchable. Weak narrative leaves a brief that no one can retell in their own words.',
+    bands: [
+      '0-2  = no narrative spine. Reads as a feature list with no why-now and no character.',
+      '3-4  = narrative attempted but loose. Why-now is unclear or generic. No genuine stakes.',
+      '5-6  = serviceable narrative. Why-now exists but is not compelling. The founder is in the story but not specifically.',
+      '7-8  = strong narrative. Why-now lands. The founder is in the story specifically. Stakes are real.',
+      '9-10 = exceptional narrative. The story spine is so clear that someone could retell it correctly five minutes after reading.',
+    ],
+    tonal_notes: [
+      'Narrative is not marketing - it is structure. Score the structure of the story, not its polish.',
+      'A brief with a strong product but no narrative still scores low here. That gap is real and worth naming.',
+    ],
+  },
+  evidence: {
+    label: 'EVIDENCE',
+    definition: 'what empirical grounding the brief has. Customer interviews. Pilot results. Survey data. Academic literature. Domain expert input. Real metrics, not projections. Strong evidence is specific (named sources, specific findings); weak evidence is "research shows" without a citation. Evidence is what separates a strong opinion from a tested hypothesis.',
+    bands: [
+      '0-2  = no evidence. Pure assertion. Nothing concrete to ground the claims.',
+      '3-4  = anecdotal only. Personal experience, one or two informal conversations.',
+      '5-6  = early evidence. Some customer interviews, an informal pilot, a referenced framework.',
+      '7-8  = solid evidence. Named studies, conducted pilots with results, specific customer data with numbers.',
+      '9-10 = exceptional evidence. Multiple sources triangulated, specific named studies / experts / pilots with results, the brief reads as tested rather than asserted.',
+    ],
+    tonal_notes: [
+      'Specific over vague. "We interviewed 12 nurses" beats "talked to users."',
+      'Do NOT invent citations. If the brief lacks evidence, score it for what is there, and name the gap.',
+      'A claim backed by one source is not yet evidence; it is one signal.',
+    ],
+  },
+  cultural: {
+    label: 'CULTURAL',
+    definition: 'whether this idea fits the cultural moment - the zeitgeist, the trend curve, the audience\'s current attention and language. Cultural fit means the idea reads as timely (right now, not five years ago, not five years from now) AND respects the audience\'s actual frame of reference. Cultural mismatch is when the idea is technically sound but tonally or temporally wrong.',
+    bands: [
+      '0-2  = cultural mismatch. Dead trend, wrong tone, audience moved on, or the idea is in a category the audience now distrusts.',
+      '3-4  = cultural drift. The idea is from a recent moment that has shifted. Salvageable with reframing.',
+      '5-6  = cultural fit is okay. The idea is timely but not differentiated by its timing.',
+      '7-8  = strong cultural fit. The idea is timely, the audience is paying attention, the tone matches.',
+      '9-10 = exceptional cultural timing. The idea catches a trend curve at the right moment with the right tone, and the brief shows the founder reads the room.',
+    ],
+    tonal_notes: [
+      'Be honest about timing. "Web3 social platform" in 2026 reads differently than in 2021.',
+      'Cultural fit includes language. Brief that uses dated vocabulary signals a founder out of touch with the audience.',
+    ],
+  },
+  psych: {
+    label: 'PSYCH',
+    definition: 'whether this idea respects how humans actually behave. Does it understand buyer psychology - what people emotionally need rather than what they say they want? Does it design against friction, not assume it away? Does the founder show real understanding of identity, status, loss aversion, certainty, belonging - or is the brief built for a hypothetical "rational user" who does not exist?',
+    bands: [
+      '0-2  = ignores human psychology. Built for rational-user-who-does-not-exist. Assumes adoption will happen because the product is good.',
+      '3-4  = some psychological awareness, mostly surface. Names a use case without naming the emotional driver.',
+      '5-6  = solid psychological grounding. Names the primary emotional driver of the buy, designs for friction.',
+      '7-8  = strong behavioral design. Specific emotional drivers named, identity framing clear, friction designed against.',
+      '9-10 = exceptional psychological literacy. The brief names what the customer wants to FEEL or BECOME, the trigger moment, the silent objections, and the design addresses them.',
+    ],
+    tonal_notes: [
+      'Stated preferences are not revealed preferences. A brief that takes user-stated needs at face value scores lower than one that surfaces the underlying driver.',
+      'People buy emotion and justify with logic. If the brief leads with logic, ask what emotional driver is actually doing the work.',
+    ],
+  },
+  compliance: {
+    label: 'COMPLIANCE',
+    definition: 'the regulatory, legal, ethical, accessibility, privacy, and safety layer. Whether the brief has correctly identified which regimes apply (FDA, FCC, CPSC, REACH, CPSIA, GDPR / CCPA, WCAG accessibility, COPPA if children, financial advisor regs, medical claims, etc.) AND shown awareness of their requirements. Compliance failures are usually invisible until they are very expensive.',
+    bands: [
+      '0-2  = clear compliance failures. The brief makes claims or designs that would be illegal, unsafe, or block launch in the target market.',
+      '3-4  = compliance ignored. The brief shows no awareness of the regimes that apply to its domain.',
+      '5-6  = surface awareness. The brief names a regulatory regime without showing what compliance requires.',
+      '7-8  = real compliance awareness. The brief names the route (510(k), CE mark, GDPR DPA, etc.) and shows the founder is engaging it.',
+      '9-10 = exceptional compliance design. Privacy / accessibility / safety / regulatory baked into the product design from the beginning, not bolted on.',
+    ],
+    tonal_notes: [
+      'Be specific about which regime applies and which does not. Vague compliance talk is worse than honest "we have not looked at this yet."',
+      'Compliance is NOT legal advice. Score what the brief shows; recommend the founder talk to counsel.',
+      'A consumer good with NO regulatory exposure can still score high here if the brief shows the founder verified that and addressed privacy / advertising / accessibility.',
+    ],
+  },
 };
 
 const SUPPORTED_DIMENSIONS = Object.keys(DIMENSIONS);
