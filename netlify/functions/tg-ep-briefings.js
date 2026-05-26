@@ -2,40 +2,41 @@
    tg-ep-briefings — tailored one-line first impressions from each of the 9
    Executive Producers, given the visitor's brief and (optionally) their name.
 
-   ONE Claude call returns all nine briefings as JSON so corridor render is a
-   single network round-trip. Each line:
-     - addresses the visitor by name (vocative case) if provided
-     - speaks from that EP's specific domain (not generic)
-     - mixed valence: encouraging / skeptical / missing-info / neutral - the
-       prompt explicitly forbids monolithic critique OR monolithic praise
-     - 1-2 sentences, plain English, no em dashes, no flattery
-     - often ends with a concrete next step
+   PARALLEL implementation: 9 concurrent Claude calls (Promise.all), one per
+   EP. Wall-clock time becomes ~ the slowest single call (5-10s) instead of
+   the sum of all nine (which was busting Netlify's 26s sync cap and
+   tripping the corridor's 30s client-side AbortController, leaving every
+   card on its generic static quote even when the visitor had uploaded a
+   real brief).
+
+   Trade-offs vs single-call:
+     - Cost: ~same total tokens, but 9 round-trips instead of 1.
+     - Rate-limit: 9 concurrent calls per visitor. Comfortable inside
+       Anthropic's per-org RPM at any reasonable site traffic. Revisit
+       if we ever scale into thousands of corridor-loads per minute.
+     - Resilience: a single slow / failed EP no longer kills the batch.
+       Other 8 still personalize; the failed one falls back to its
+       static voice-sample quote on the corridor card.
 
    POST body : {
      brief: string (required, 1-3000 chars) - the visitor's idea
      name:  string (optional, 1-60 chars)   - first name for personal address
    }
-   Auth      : none for slice 1. Brief comes from the welcome-modal capture
-               (sessionStorage); the corridor JS is the only caller in
-               practice. Add per-user accounting later when the paywall lands.
-   Response  : 200 { briefings: { <ep_id>: "<line>", ... } } - 9 keys
-               400 { error: "..." } - bad input
-               500 { error: "..." } - ANTHROPIC_API_KEY missing
-               502 { error: "..." } - Claude error or unparseable response
+   Response  : 200 { briefings: { <ep_id>: { line, invitation }, ... } }
+               400 { error } - bad input
+               500 { error } - ANTHROPIC_API_KEY missing
+               502 { error } - too few EPs returned (sparse output)
 
    Env vars  : ANTHROPIC_API_KEY (required)
-   Cost      : ~$0.02-0.03 per call (Sonnet 4.6, ~2500 tokens combined).
-               Cheap enough to call on every corridor visit. If volume scales
-               we add prompt caching on the system prompt (90% discount on
-               the cached portion).
    ───────────────────────────────────────────────────────────────────────────── */
 
 const Anthropic = require('@anthropic-ai/sdk').default;
 
-const MODEL      = 'claude-sonnet-4-6';
-const BRIEF_MAX  = 3000;
-const NAME_MAX   = 60;
-const MAX_TOKENS = 1400;
+const MODEL          = 'claude-sonnet-4-6';
+const BRIEF_MAX      = 3000;
+const NAME_MAX       = 60;
+const MAX_TOKENS_PER_EP = 400;          // line + invitation fit comfortably under this
+const MIN_PRESENT    = 5;               // floor; below this we 502 so the UI can fall back
 
 const json = (statusCode, body) => ({
   statusCode,
@@ -46,80 +47,116 @@ const json = (statusCode, body) => ({
   body: JSON.stringify(body),
 });
 
-// ── The nine EPs in corridor order. id matches helpers_master.json so the
-// front end can key directly into the response. Domain string is short by
-// design - the EP voices in voice_scripts.json already encode the deeper
-// character. This is just the LENS each one views the brief through.
+// ── The nine EPs in corridor order. id matches the front-end data-character
+// attribute on each .corridor-wing. Each EP carries:
+//   - lens: short domain description for the system prompt
+//   - voice_register: one phrase that hints at invitation phrasing for THIS
+//     EP specifically (Ivy uses "library", Zara uses "studio", Grant uses
+//     "my office", etc.) so the model does not blur invitations together.
+// ─────────────────────────────────────────────────────────────────────────
 const EPS = [
-  { id: 'ms_ivy',        name: 'Ms. Ivy',        role: 'The Librarian',        lens: 'research and prior art - what already exists, where the real gap is, whether the novelty claim survives a quick scan of adjacent fields' },
-  { id: 'wren_calloway', name: 'Wren Calloway',  role: 'The Scout',            lens: 'landscape - prior art and white space (her existing read), where the idea can WORK (markets and beachhead), and other USES the same mechanic could serve in different problem domains' },
-  { id: 'carol_haynes',  name: 'Carol Haynes',   role: 'The Screener',         lens: 'pattern-matching - which comparable venture pattern this idea fits, what worked for that pattern, what failed, whether the variant has legs, the one thing that will kill it before the judges see it' },
-  { id: 'matthew_vance', name: 'Matthew Vance',  role: 'The Behaviorist',      lens: 'purchase psychology - what emotional driver the customer is actually buying on (status, identity, belonging, fear, certainty), the trigger moment that opens the buy window, and which other EP that driver routes into' },
-  { id: 'arjun_mehta',   name: 'Arjun Mehta',    role: 'The Make-It-Real Expert', lens: 'getting from idea to physical product - manufacturer category to call, realistic MOQ and lead time, regulatory route if any, where prototyping actually happens' },
-  { id: 'zara_cole',     name: 'Zara Cole',      role: 'The Influencer',       lens: 'social media reach, content potential, whether the message lands with real people on real platforms (TikTok, Reels, Instagram)' },
-  { id: 'reid_callum',   name: 'Reid Callum',    role: 'The Marketing Expert', lens: 'positioning, brand frame, messaging - whether the audience can hear it, whether the name and framing widen or shrink the funnel' },
-  { id: 'jules',         name: 'Jules',          role: 'The Rewrite Partner',  lens: 'voice amplification - which sections of the brief already sound like the founder and which read flatter; how to bring the rest up to match the strongest paragraph' },
-  { id: 'grant_ellis',   name: 'Grant Ellis',    role: 'The Coach',            lens: 'Chamber prep - which 3 of the 9 judges this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing' },
+  {
+    id: 'ms_ivy',
+    name: 'Ms. Ivy',
+    role: 'The Librarian',
+    lens: 'research and prior art - what already exists, where the real gap is, whether the novelty claim survives a quick scan of adjacent fields',
+    voice_register: 'library / "come find me in the library" / "walk through the literature with you"',
+  },
+  {
+    id: 'wren_calloway',
+    name: 'Wren Calloway',
+    role: 'The Scout',
+    lens: 'landscape - prior art and white space (her existing read), where the idea can WORK (markets and beachhead), and other USES the same mechanic could serve in different problem domains',
+    voice_register: 'patent room / workshop / "make an appointment if you want to dig into the landscape"',
+  },
+  {
+    id: 'carol_haynes',
+    name: 'Carol Haynes',
+    role: 'The Screener',
+    lens: 'pattern-matching - which comparable venture pattern this idea fits, what worked for that pattern, what failed, whether the variant has legs, the one thing that will kill it before the judges see it',
+    voice_register: '"sit down with me and we will walk the intake" / "come see me before the panel does"',
+  },
+  {
+    id: 'matthew_vance',
+    name: 'Matthew Vance',
+    role: 'The Behaviorist',
+    lens: 'purchase psychology - what emotional driver the customer is actually buying on (status, identity, belonging, fear, certainty), the trigger moment that opens the buy window, and which other EP that driver routes into',
+    voice_register: '"I have time today if you want to design the fix" / "step in if you want to work the behavior side"',
+  },
+  {
+    id: 'arjun_mehta',
+    name: 'Arjun Mehta',
+    role: 'The Make-It-Real Expert',
+    lens: 'getting from idea to physical product - manufacturer category to call, realistic MOQ and lead time, regulatory route if any, where prototyping actually happens',
+    voice_register: '"drop by and I will draw you the manufacturing map" / "come by, we will name who to call first"',
+  },
+  {
+    id: 'zara_cole',
+    name: 'Zara Cole',
+    role: 'The Influencer',
+    lens: 'social media reach, content angles, authentic audience, which platforms actually fit',
+    voice_register: 'studio / "swing by the studio and we will cut the Reel" / "come to the studio, we will draft the post"',
+  },
+  {
+    id: 'reid_callum',
+    name: 'Reid Callum',
+    role: 'The Marketing Expert',
+    lens: 'positioning, brand frame, messaging, press release strategy, monetization model - whether the audience can hear it, whether the price anchors who they think you are',
+    voice_register: '"come find me when you want to sharpen the positioning" / "drop in, we will price this right"',
+  },
+  {
+    id: 'jules',
+    name: 'Jules',
+    role: 'The Rewrite Partner',
+    lens: 'voice amplification - which sections of the brief already sound like the founder and which read flatter; how to bring the rest up to match the strongest paragraph',
+    voice_register: '"let me rewrite [section] with you" / "let us bring the rest up to match"',
+  },
+  {
+    id: 'grant_ellis',
+    name: 'Grant Ellis',
+    role: 'The Coach',
+    lens: 'Chamber prep - which 3 of the 9 judges this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing',
+    voice_register: '"come to my office, we will work the pitch on its feet" / "sit down with me before the Chamber"',
+  },
 ];
 
-function buildSystemPrompt() {
-  const epList = EPS.map((e, i) =>
-    `  ${i + 1}. ${e.name} (${e.role}) [id: ${e.id}]\n     Lens: ${e.lens}`
-  ).join('\n');
+// ── Per-EP system prompt. Smaller, focused, no nine-EP roster to confuse
+// the model. Carries the tone rules and hard constraints inline because
+// they apply to every individual call.
+// ─────────────────────────────────────────────────────────────────────────
+function buildSystemPromptForEP(ep, hasName) {
+  const vocativeRule = hasName
+    ? '- Address the visitor by name in vocative case (e.g. "Terry, ..."). Use it once at the start of the line. Do not repeat it.'
+    : '- No vocative name was provided. Open with the observation directly. Use second-person ("you") sparingly.';
 
-  return `You are writing 9 first-impression briefings for The Gauntlet, an AI idea-evaluation platform. A visitor has uploaded a brief describing their idea. Each of nine Executive Producers (EPs) gives ONE line in response - their honest first impression from their specific domain.
+  return `You are ${ep.name}, ${ep.role} at The Gauntlet. The visitor has uploaded a brief describing their idea. You write ONE first-impression briefing in your voice.
 
-THE NINE EPS (output keys MUST match the id in brackets):
-${epList}
+YOUR LENS
+  ${ep.lens}
 
-EACH BRIEFING IS TWO FIELDS
+YOUR INVITATION REGISTER (use phrasing that fits YOUR voice; do not borrow another EP's register):
+  ${ep.voice_register}
 
-  1. line - the OBSERVATION plus a CONCRETE NEXT STEP. This is what
-     appears as the EP's quote on the corridor card.
-       - Addresses the visitor by name in vocative case (e.g. "Terry, ...").
-         If no name is provided, omit the vocative and open with the observation.
-       - 2 to 3 sentences. Punchy. Plain English.
-       - From this EP's specific lens. Each EP says something only THEY
-         would notice. Do not let them blur into generic critique.
-       - Specific to the brief. Name the actual mechanic / use case /
-         claim. Concreteness is the whole point.
-       - Do NOT include the invitation here. The invitation is a separate
-         field. The line ends after the next step.
+YOUR OUTPUT IS TWO FIELDS
 
-  2. invitation - the OPEN DOOR. A short clause inviting the visitor to
-     continue the work with that EP. This becomes the label of the CTA
-     button under the briefing on the corridor card.
-       - 4 to 10 words. Phrased in the EP's voice. Plain English.
-       - VARY THE PHRASING across the nine EPs each run. Do not start
-         every one with "stop by my office." Pull from a range:
-           "Come find me in the library"
-           "Make an appointment if you want to dig into the landscape"
-           "Sit down with me and we will walk the intake"
-           "I have time today if you want to design the fix"
-           "Drop by and I will draw you the integration map"
-           "Swing by the studio and we will cut the Reel"
-           "Come find me when you want to sharpen the positioning"
-           "Let me rewrite this with you"
-           "Come to my office and we will work the pitch on its feet"
-       - End the invitation with NO trailing punctuation. The UI adds an
-         arrow.
-       - Honors the EP's register: Ivy uses "library," Wren uses
-         "workshop" or "the patent room," Zara uses "studio," Jules uses
-         "let me rewrite," Grant uses "my office, work the pitch," etc.
-         Do not put Zara in a library or Ivy in a studio.
+  1. line - the OBSERVATION plus a CONCRETE NEXT STEP. This is what appears as your quote on the corridor card.
+     ${vocativeRule}
+     - 2 to 3 sentences. Punchy. Plain English.
+     - From YOUR specific lens. Say something only YOU would notice. Do not blur into generic critique.
+     - Specific to THIS brief. Name the actual mechanic, use case, claim, customer. Concreteness is the whole point.
+     - Do NOT include the invitation here. The invitation is a separate field. The line ends after the next step.
 
-VALENCE AND CONCRETENESS RULES (apply to both fields)
-  - Mixed valence across the nine. Some encouraging, some skeptical, some
-    missing-info flags, some neutral. NEVER all critical. NEVER all
-    encouraging. Match what THIS EP would genuinely first notice in THIS
-    brief - the valence naturally splits across nine domains.
+  2. invitation - the OPEN DOOR. A short clause inviting the visitor to continue the work with you. This becomes the label of the CTA under your briefing.
+     - 4 to 10 words. Phrased in YOUR voice. Plain English.
+     - Honor YOUR register (see above). Do not put yourself in another EP's office.
+     - End with NO trailing punctuation. The UI adds an arrow.
 
-TONE - apply to every line you write
-  - Your job is to help the visitor SELL their product, find what works, name their skills, make the product better, and inspire.
+TONE
+  - Help the visitor SELL their product. Find what works. Name their skill. Make the product better. Inspire when the brief earns it.
   - When you see a problem, name it with a positive frame. "Your TAM is unfocused" becomes "Your idea works for multiple audiences - pick the one you can win first." Same diagnostic content, solutions-oriented delivery.
   - Lead with what is strong before naming what could be sharper.
-  - You (every EP) are an AI character. Do NOT critique the visitor's writing as "AI-generated" or "template-y because a tool wrote it." That makes you sound hypocritical and breaks the relationship. (Selene the judge has that lens; it lives in the Chamber, not here.)
-  - "Tell negatives with a positive spin." The product is the thing you are both trying to make better. Talk about it like a teammate, not a critic.
+  - Your valence depends on what YOU honestly notice in this brief - encouraging, skeptical, missing-info, neutral. Pick whichever fits the read.
+  - You are an AI character. Do NOT critique the visitor's writing as "AI-generated" or "template-y because a tool wrote it." (Selene the judge has that lens; it lives in the Chamber, not here.)
 
 HARD CONSTRAINTS
   - No em dashes. None.
@@ -127,47 +164,71 @@ HARD CONSTRAINTS
   - No "I think," no "you might want to" - direct voice.
   - No quoting the brief back at the visitor.
   - Do not invent facts about the visitor that the brief did not provide.
-  - Each EP stands alone. Do not reference another EP inside a briefing.
-  - If the brief is unintelligible or empty of substance, each EP says so in their voice (Carol: "the intake is too thin to read"; Jules: "there is nothing on the page to work with yet"; etc.) - do not fabricate content.
-
-GOLD STANDARD (for a fictional fitness-app brief "Second Chance Fitness," visitor named Terry). Each entry shows the line/invitation split:
-
-  matthew_vance:
-    line:       "Terry, the risk the panel will raise is that a 7-day grace period does not eliminate perfectionist guilt, it delays it. Users who miss day one may spend six days avoiding the app entirely rather than making it up. That behavior needs to be designed against, not assumed away."
-    invitation: "I have time today if you want to design the fix"
-
-  arjun_mehta:
-    line:       "Terry, 'syncs with standard health apps' is doing a lot of heavy lifting. Apple HealthKit, Google Fit, Garmin, Fitbit, and Whoop all have separate auth flows and data schemas, and retroactive workout logging hits different permission walls on each one."
-    invitation: "Drop by and I will draw you the integration map"
-
-  jules:
-    line:       "Terry, the opening paragraph already sounds exactly like you - that's the tuning fork. The features section can be in the same voice; right now it reads flatter than the rest of the brief, so the judges will hear two different people. We bring it up to match and the whole brief lands harder."
-    invitation: "Let me rewrite the Key Features block with you"
-
-  ms_ivy:
-    line:       "Terry, Nir Eyal's work on habit loops and the 'fresh start effect' literature both touch this exact problem, and there are at least two academic papers on streak-loss demotivation in fitness apps worth pulling before you position Bounceback as a gap."
-    invitation: "Come find me in the library and we will walk through them"
-
-  zara_cole:
-    line:       "Terry, the founder origin story - ice packs, heat blanket, six months, two days in bed - is a 30-second Reel that writes itself, and that hook will outperform any feature explainer you could post."
-    invitation: "Swing by the studio and we will cut it together"
+  - Do NOT reference any other EP inside your line or invitation. You stand alone.
+  - If the brief is unintelligible or empty of substance, say so in your voice. Do not fabricate content.
 
 OUTPUT - JSON only, exactly this shape, nothing before or after:
 {
-  "briefings": {
-    "ms_ivy":        {"line": "<observation + next step>", "invitation": "<open door, varied phrasing>"},
-    "wren_calloway": {"line": "<...>", "invitation": "<...>"},
-    "carol_haynes":  {"line": "<...>", "invitation": "<...>"},
-    "matthew_vance": {"line": "<...>", "invitation": "<...>"},
-    "arjun_mehta":   {"line": "<...>", "invitation": "<...>"},
-    "zara_cole":     {"line": "<...>", "invitation": "<...>"},
-    "reid_callum":   {"line": "<...>", "invitation": "<...>"},
-    "jules":         {"line": "<...>", "invitation": "<...>"},
-    "grant_ellis":   {"line": "<...>", "invitation": "<...>"}
-  }
+  "line":       "<observation + next step, 2-3 sentences>",
+  "invitation": "<open door, 4-10 words, your register, no trailing punctuation>"
 }`;
 }
 
+// ── Single per-EP call. Returns { line, invitation } on success, or
+// { error } on any failure (parse, network, empty). Failures do NOT
+// throw - they bubble up as soft misses so the batch aggregator can
+// keep the other 8 EPs.
+// ─────────────────────────────────────────────────────────────────────────
+async function generateOneEPBriefing(client, ep, brief, name) {
+  const userPrompt = [
+    name ? `VISITOR NAME: ${name}` : 'VISITOR NAME: (not provided - omit the vocative)',
+    '',
+    'BRIEF:',
+    brief,
+    '',
+    `Write YOUR briefing now, as ${ep.name}. JSON only.`,
+  ].join('\n');
+
+  let response;
+  try {
+    response = await client.messages.create({
+      model:      MODEL,
+      max_tokens: MAX_TOKENS_PER_EP,
+      system:     buildSystemPromptForEP(ep, !!name),
+      messages:   [{ role: 'user', content: userPrompt }],
+    });
+  } catch (err) {
+    console.error(`[tg-ep-briefings] anthropic error for ${ep.id}`, err && err.message);
+    return { error: 'anthropic_failed' };
+  }
+
+  const raw = (response.content || [])
+    .filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+  if (!raw) return { error: 'empty' };
+
+  let parsed;
+  try {
+    const match = raw.match(/\{[\s\S]*\}/);
+    parsed = JSON.parse(match ? match[0] : raw);
+  } catch {
+    console.error(`[tg-ep-briefings] parse fail for ${ep.id}`, raw.slice(0, 300));
+    return { error: 'parse_failed' };
+  }
+
+  let line       = String(parsed.line       || '').trim();
+  let invitation = String(parsed.invitation || '').trim();
+
+  // Strip em / en dashes regardless of what the model returns.
+  line       = line.replace(/—/g, '-').replace(/–/g, '-');
+  invitation = invitation.replace(/—/g, '-').replace(/–/g, '-')
+                         .replace(/[.!?]+$/, '');  // UI adds the arrow
+
+  if (!line) return { error: 'no_line' };
+
+  return { line, invitation };
+}
+
+// ── Handler ─────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -184,9 +245,7 @@ exports.handler = async (event) => {
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return json(500, { error: 'ANTHROPIC_API_KEY not configured' });
-  }
+  if (!apiKey) return json(500, { error: 'ANTHROPIC_API_KEY not configured' });
 
   let body;
   try { body = JSON.parse(event.body || '{}'); }
@@ -195,90 +254,37 @@ exports.handler = async (event) => {
   const brief = String(body.brief || '').trim().slice(0, BRIEF_MAX);
   const name  = String(body.name  || '').trim().slice(0, NAME_MAX);
 
-  if (!brief) {
-    return json(400, { error: 'brief is required' });
-  }
-  if (brief.length < 12) {
-    return json(400, { error: 'brief is too short to read' });
-  }
-
-  const userPrompt = [
-    name ? `VISITOR NAME: ${name}` : 'VISITOR NAME: (not provided - omit the vocative)',
-    '',
-    'BRIEF:',
-    brief,
-    '',
-    'Write the nine briefings now, as JSON. Match the gold-standard tone. Mixed valence across the nine.',
-  ].join('\n');
+  if (!brief) return json(400, { error: 'brief is required' });
+  if (brief.length < 12) return json(400, { error: 'brief is too short to read' });
 
   const client = new Anthropic({ apiKey });
 
-  let response;
-  try {
-    response = await client.messages.create({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      system: buildSystemPrompt(),
-      messages: [{ role: 'user', content: userPrompt }],
-    });
-  } catch (err) {
-    console.error('[tg-ep-briefings] anthropic error', err.message);
-    return json(502, { error: 'briefings generation failed' });
-  }
+  // Fire all nine in parallel. Promise.all rejects only if ONE of the
+  // mapped promises rejects - we already wrap each per-EP call so it
+  // resolves with { error } instead of throwing, so Promise.all will
+  // settle with all nine results regardless of individual failures.
+  const results = await Promise.all(
+    EPS.map(ep => generateOneEPBriefing(client, ep, brief, name))
+  );
 
-  const raw = (response.content || [])
-    .filter(b => b.type === 'text')
-    .map(b => b.text)
-    .join('\n')
-    .trim();
-
-  if (!raw) {
-    return json(502, { error: 'briefings response was empty' });
-  }
-
-  // Tolerant JSON parse: extract first {...} block in case the model wraps
-  // its output in commentary despite the system prompt instruction.
-  let parsed = null;
-  try {
-    const match = raw.match(/\{[\s\S]*\}/);
-    parsed = JSON.parse(match ? match[0] : raw);
-  } catch (err) {
-    console.error('[tg-ep-briefings] could not parse model output', raw.slice(0, 500));
-    return json(502, { error: 'briefings output was not valid json' });
-  }
-
-  const raw_briefings = (parsed && parsed.briefings) || {};
   const briefings = {};
   let presentCount = 0;
-  for (const ep of EPS) {
-    const entry = raw_briefings[ep.id];
-    let line = '';
-    let invitation = '';
-    if (entry && typeof entry === 'object') {
-      // New shape: { line, invitation }
-      line       = String(entry.line       || '').trim();
-      invitation = String(entry.invitation || '').trim();
-    } else if (typeof entry === 'string') {
-      // Tolerate the old single-string shape in case the model regresses.
-      // Treat the whole thing as the line; no invitation.
-      line = entry.trim();
-    }
-    // Strip em / en dashes the model may have inserted despite the rule.
-    line       = line      .replace(/—/g, '-').replace(/–/g, '-');
-    invitation = invitation.replace(/—/g, '-').replace(/–/g, '-')
-                           .replace(/[.!?]+$/, '');  // no trailing punctuation - UI adds the arrow
-    if (line) {
-      briefings[ep.id] = { line, invitation };
+  EPS.forEach((ep, i) => {
+    const r = results[i];
+    if (r && !r.error && r.line) {
+      briefings[ep.id] = { line: r.line, invitation: r.invitation || '' };
       presentCount++;
     } else {
-      // Empty stub per EP - keeps the front-end contract stable
+      // Empty stub keeps the front-end contract stable - the corridor JS
+      // checks for non-empty lines before swapping the card text.
       briefings[ep.id] = { line: '', invitation: '' };
     }
-  }
+  });
 
-  if (presentCount < 5) {
-    // Less than 5 of 9 EPs produced a line - something went sideways, surface
-    // as 502 so the front end can fall back to static quotes.
+  if (presentCount < MIN_PRESENT) {
+    // Less than 5 of 9 returned - something is broken across the board.
+    // Surface 502 so the front end falls back to static voice-sample quotes
+    // instead of leaving cards stuck on "is reading your brief...".
     console.error('[tg-ep-briefings] sparse output', presentCount, 'of 9');
     return json(502, { error: 'briefings were sparse' });
   }
@@ -286,5 +292,8 @@ exports.handler = async (event) => {
   return json(200, {
     briefings,
     name_used: !!name,
+    // Surface count so the client can show "8 of 9 EPs ready" if useful
+    // (currently the UI does not, but the field is cheap).
+    present_count: presentCount,
   });
 };
