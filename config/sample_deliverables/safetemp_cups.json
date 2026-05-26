@@ -1,0 +1,287 @@
+{
+  "sample_id": "safetemp_cups",
+  "evaluation": {
+    "id": "sample-safetemp-cups",
+    "submission_id": "sample-safetemp-cups",
+    "status": "complete",
+    "stage": "compliance",
+    "completed_at": "2026-05-26T15:30:00Z"
+  },
+  "submission": {
+    "id": "sample-safetemp-cups",
+    "title": "SafeTemp Disposable Cups"
+  },
+  "brief": "SAFETEMP DISPOSABLE CUPS\n\nCONCEPT\nDisposable hot-beverage cups with an integrated non-toxic, medical-grade thermometer strip embedded along the side. The strip changes color based on drink temperature, providing an instant visual signal (green for safe, yellow for caution, red for too hot).\n\nPROBLEM\n- Hot beverages cause severe burns, particularly for young children\n- Drink temperature is hard to gauge by touch or sight alone\n- Parents and caregivers resort to time-consuming cooling methods or unsanitary tasting\n- Food establishments face liability concerns from hot-beverage incidents\n\nSCIENTIFIC GROUNDING\nA 2008 study by Dr. Fredericka Brown and Dr. Kenneth Diller established the optimal temperature range for serving hot beverages: 125-136F (54-60C). Preferred value: 136F (57.8C). SafeTemp color bands calibrated against this published research.\n\nSOLUTION\nNon-toxic, medical-grade thermometer strip embedded along the side of the cup with clearly marked temperature indicators. Strip changes color: green for safe, yellow for caution, red for too hot. Quick visual signal, no guessing, no testing.\n\nTARGET AUDIENCE\n- Parents and caregivers (core demographic)\n- Food service: coffee shops, cafes, quick-service chains\n- Institutions: schools, daycare, hospitals, eldercare\n\nPRODUCT SPECIFICATIONS\n- Materials: food-grade disposable cup substrates (paper, eco-friendly options) with non-toxic thermometer strip\n- Sizes: range of standard cup sizes (small, medium, large)\n- Customization: branding or child-friendly designs\n\nBENEFITS\n- Prevention: reduces risk of accidental burns\n- Peace of mind for parents and caregivers\n- Convenience: eliminates guesswork\n- Safety as a customer-experience feature for food establishments\n\nSOCIETAL TRENDS\n- Increased focus on child safety\n- Corporate responsibility expectations for risk minimization\n\nCHALLENGES TO ADDRESS\n- Cost: thermometer strip adds production cost\n- Adoption: building consumer and business awareness takes time\n\nNEXT STEPS\n- Prototype development: source materials, test strip accuracy and reliability\n- Safety testing: confirm food-grade materials, non-reactive strip\n- Market research: assess consumer interest and demand\n- Partnerships: cup manufacturers and food-service chains",
+  "ep_reports": [
+    {
+      "ep_id": "matthew_vance",
+      "report_type": "Buyer Psychology Profile",
+      "headline": "Parents buy peace of mind; food-service buys liability reduction",
+      "content": "TWO BUYERS, ONE PRODUCT, ALIGNED PSYCHOLOGY\n\nBUYER 1: The parent\nPrimary driver: fear-reduction. The parent has held a hot coffee with one hand and a 3-year-old with the other and felt the small jolt of \"what if.\" SafeTemp is sold against that jolt. The product converts the parent's chronic low-grade fear into a moment of confidence (\"it's green, give it to the kid\").\n\nBUYER 2: The food-service operator\nPrimary driver: liability-reduction. The operator pays insurance against scald lawsuits. SafeTemp is a visible documentation that the operator took proactive safety measures. It changes the insurance conversation, the customer-complaint conversation, and the brand-positioning conversation. Secondary driver: brand differentiation among family-friendly chains.\n\nTRIGGER MOMENTS\n- Parent: when their toddler grabs at a hot cup at Starbucks. Next visit, they look for SafeTemp at the counter.\n- Food-service operator: after the first scald-related customer complaint or insurance review.\n\nIDENTITY FRAMING\n- Parent: the kind of parent who thinks about safety even at the coffee shop\n- Food-service operator: the brand that puts safety on the cup\n\nWHY THIS WORKS\nThe color signal is a forcing function. The parent doesn't have to remember; the cup tells them. Behavioral-design literature is uniformly favorable to making the safety check passive (just looking at the cup) rather than active (touching, tasting, waiting). SafeTemp is a well-designed nudge.\n\nWALK TO NEXT EP\n- Arjun: the engineering tolerances of the color strip ARE the product\n- Wren: the institutional channel (hospitals, daycare) is the underserved buyer"
+    },
+    {
+      "ep_id": "wren_calloway",
+      "report_type": "Landscape Scout Report",
+      "headline": "Hospital and daycare procurement is the high-margin channel",
+      "content": "WHERE IT CAN WORK (top 3)\n1. Hospital systems (visitor cafes, in-room beverage service for pediatric and burn units, eldercare facilities). Density: medium-high; institutional procurement loves documented safety features.\n2. Daycare and preschool networks (mandated safety practices, parent-facing marketing benefit). Density: high; chain operators (KinderCare, Bright Horizons, Goddard) buy at scale.\n3. Coffee chains with family-friendly positioning (Starbucks family chain, Tim Hortons in Canada, McCafe). Density: high but slow-moving procurement.\n\nFOCUS RECOMMENDATION\nHospital systems as the beachhead. The buyer is risk-averse and pays a premium for documented safety. The endorsement of one hospital system unlocks every adjacent institutional sale. Pediatric burn units in particular will champion this product.\n\nADJACENT BUT DON'T GO YET\n- Generic retail (Target, Walmart) - hard to break into without an existing brand and slotting fees\n- DTC home use - low repeat purchase, hard CAC\n- Quick-service restaurants - long sales cycle, low per-unit margin\n\nOTHER USES (same technology, different application)\n- Baby bottle temperature indication (proven precedent - it exists, market is huge)\n- Hot soup containers in food delivery\n- Hot food trays in school cafeterias (mandated temperature compliance documentation)\n- Industrial / occupational safety (workers handling hot fluids)\n\nONE THING WREN WOULD NOT DO\nLead with consumer retail. The retail channel is the slowest and most capital-intensive route to revenue. Institutional first; retail later if at all."
+    },
+    {
+      "ep_id": "carol_haynes",
+      "report_type": "Pattern Screening Report",
+      "headline": "has_legs (signal 8/10). Real grounding, real audience, real liability.",
+      "content": "PATTERN: safety-feature consumer product with institutional B2B path.\n\nWHAT WORKED FOR THIS PATTERN\nNuk thermo-sensitive baby bottles (color-changing temperature indication, sold globally since the 1990s, profitable), Munchkin White Hot baby spoons (color-changes-when-too-hot, sold across baby retail), Heatproof Strip industrial sensors (B2B, decades of profitability).\n\nWHAT FAILED\nGeneric \"safety cup\" attempts at retail without institutional anchor (no consumer awareness, retail slotting fees ate the unit economics). Color-changing mug attempts that depended on novelty rather than function.\n\nYOUR POSITION\nThis is one of the strongest concepts in the sample library. It has:\n- Real scientific grounding (Brown / Diller 2008)\n- Real consumer pain (parents of young children)\n- Real B2B buyer with budget (institutional safety procurement)\n- Real precedent (color-changing temperature indication is a proven manufacturing technique)\n- Real liability tailwind (post-McDonald's-coffee-case liability environment in food service)\n\nLEGS ASSESSMENT: has_legs (signal 8/10)\n\nREASONS FOR\n- Established adjacent precedent (Nuk, Munchkin) proves the technology works at scale\n- Institutional procurement has budget for documented safety improvements\n- Liability environment in food service makes the operator BUYER, not just a possible buyer\n- Technical risk is low (the manufacturing technique exists)\n\nREASONS AGAINST\n- Per-unit cost increase has to be small (sub-3 cents) or the unit economics don't clear at coffee-cup scale\n- Initial tooling and supplier qualification is a 12-18 month investment\n- Patent landscape needs clearance (color-changing temperature strips have prior art)\n\nTHE ONE THING THAT KILLS IT\nUnderestimating the per-cup cost addition. If the strip adds more than 2-3 cents to a coffee cup that wholesales for 4-7 cents, the food-service buyer rejects on margin even if they like the safety message. Manufacturing cost discipline is everything."
+    },
+    {
+      "ep_id": "reid_callum",
+      "report_type": "Launch Press Release",
+      "headline": "Lead with the science, anchor with the hospital partnership",
+      "content": "SAFETEMP LAUNCHES THE FIRST DISPOSABLE HOT BEVERAGE CUP WITH BUILT-IN TEMPERATURE INDICATION, BACKED BY UNIVERSITY OF TEXAS BURN-SAFETY RESEARCH\n\n[CITY, STATE] - [MONTH DD, YYYY] - SafeTemp, a new line of disposable hot-beverage cups with an integrated color-changing temperature strip, today announced its first institutional deployment at [HOSPITAL SYSTEM]'s pediatric and burn-unit visitor cafes. The cup's strip changes color (green / yellow / red) calibrated to the safe-serving temperature range established by Brown and Diller's 2008 University of Texas study on hot-beverage burn risk.\n\n\"Every parent has held a hot coffee in one hand and a small child in the other and felt that moment of doubt,\" said [FOUNDER NAME], founder of SafeTemp. \"SafeTemp removes the doubt. The cup tells you. Green means safe to hand to a kid; red means wait. No guessing.\"\n\nThe SafeTemp strip is built on a non-toxic, food-grade thermochromic material that adds less than three cents to the unit cost. SafeTemp's first commercial pilot at [HOSPITAL SYSTEM] is expected to expand to all visitor and patient-service locations across the system by [YEAR].\n\nABOUT SAFETEMP\nSafeTemp is a safety-first disposable cup brand built around real-world burn prevention.\n\nMEDIA CONTACT\n[NAME] / [EMAIL] / [PHONE]"
+    },
+    {
+      "ep_id": "zara_cole",
+      "report_type": "Content Plan",
+      "headline": "Two audiences, two channels - parent TikTok and operator LinkedIn",
+      "content": "AUDIENCE 1 - PARENTS (TikTok / Instagram)\nPRIMARY POST: Parent POV, 15 seconds.\n\"My toddler grabbed my hot coffee at Starbucks last week. The cup didn't tell me anything. SafeTemp does - green means safe, red means wait. It's launching at hospitals first. If you want it at your coffee shop, comment your city and the chain.\"\n\nFOLLOW-UP\n- Week 1: founder POV - the moment that started this\n- Week 2: a-day-with-SafeTemp at the pilot hospital (b-roll)\n- Week 3: the science - 90-second explainer of the Brown/Diller study\n- Week 4: parent testimonials from pilot hospital cafes\n- Week 5: pediatric burn unit nurse POV (high emotional resonance)\n- Week 6: city-by-city demand-driving content (parents tagging their local chains)\n\nAUDIENCE 2 - FOOD-SERVICE OPERATORS (LinkedIn)\nPRIMARY POST: Founder POV (long-form).\n\"Hot-beverage burn lawsuits cost the US food-service industry an estimated [$NUMBER] in [YEAR]. SafeTemp is the first disposable cup with built-in temperature indication, calibrated against the Brown/Diller 2008 safe-temperature study. We're piloting at [HOSPITAL SYSTEM] now. If you operate a family-friendly chain, here's the conversation: SafeTemp adds less than three cents per cup and gives you a visible safety story. DM me for the pilot deck.\"\n\nFOLLOW-UP\n- Liability data shorts\n- Operator testimonials from pilot deployments\n- Brand differentiator framing for family-friendly chains\n- Trade-publication pitches (QSR Magazine, Restaurant Business)\n\nWHAT NOT TO POST\n- Anything that uses children's faces without explicit signed releases\n- Anything that compares specific brands' burn incidents\n- Anything that implies SafeTemp removes operator liability entirely (it doesn't)\n\nCONVERSION HOOK\n- Parents: petition tool. Sign to bring SafeTemp to specific chains. The petition is both lead-gen and B2B sales evidence.\n- Operators: pilot deck + first 10,000 cups free for qualified pilot partners."
+    },
+    {
+      "ep_id": "ms_ivy",
+      "report_type": "Research & Frameworks",
+      "headline": "Brown/Diller 2008 is the entire defense; build the brand around it",
+      "content": "FRAMEWORKS\n- Nudge Theory (Thaler & Sunstein): SafeTemp is a textbook nudge - it makes the safer behavior easier without removing the user's choice. The cup doesn't refuse to serve hot coffee; it labels the temperature so the user makes a better-informed decision.\n- Engineering Out the Hazard (industrial safety hierarchy): the hierarchy of controls in occupational safety prioritizes \"engineering out\" the hazard over \"warning about\" the hazard. SafeTemp is engineering-tier, not warning-tier - which makes it a real safety improvement, not just a disclaimer.\n- Hierarchy of Controls (NIOSH): SafeTemp fits the \"engineering controls\" tier, the second-strongest after \"elimination.\" PPE and warnings are weaker controls.\n\nPRIMARY RESEARCH ANCHOR\nBrown, F. and Diller, K. (2008). \"Calculating the optimum temperature for serving hot beverages.\" Burns 34(5), 648-654. This is the foundational paper. The optimal serving temperature range (125-136F / 54-60C) is calibrated against thermal-injury thresholds for human skin contact. SafeTemp's color bands are based directly on this research.\n\nADJACENT THINKERS\n- Donald Norman (The Design of Everyday Things) on affordances - the color change is a strong perceptual affordance\n- Henry Petroski (To Engineer is Human) on safety-engineering iteration\n- Kenneth Diller specifically - he's still publishing and could be approached as a scientific advisor (high credibility, would lend brand authority)\n\nPRIOR LITERATURE\n- Burn literature consistently identifies hot-beverage contact as the leading cause of scald injury in children under 5\n- Liebeck v. McDonald's (the famous 1992 coffee case) established the food-service liability baseline; SafeTemp is positioned in that landscape\n- Thermochromic material literature (industrial applications) has 60+ years of engineering validation\n\nRESEARCH GAP\nNo published consumer-behavior study on whether visual temperature indication actually changes consumer handling behavior. SafeTemp's pilot data could be the first published study. Partner with a university (Texas? Diller is at UT Austin) for the research design and credibility.\n\nONE THINKER TO READ FIRST\nKenneth Diller. He's still actively publishing and an endorsement from him would be the single highest-credibility marketing asset the brand could obtain."
+    },
+    {
+      "ep_id": "arjun_mehta",
+      "report_type": "Operations / Regulatory",
+      "headline": "Manufacturing tolerances + FDA food-contact compliance are the entire build",
+      "content": "MANUFACTURING - THE ENTIRE BUSINESS\nThe cup business is a cents-per-unit business. SafeTemp's value proposition lives or dies on whether the strip adds 1-3 cents per cup, not 5-10. The supplier qualification work is everything.\n\nTHERMOCHROMIC STRIP SOURCING\n- Multiple existing suppliers of thermochromic ink and label materials (LCR Hallcrest, Liquid Crystal Resources, smaller specialty manufacturers)\n- Required: FDA food-contact-safe formulation (21 CFR 175)\n- Required: color stability across 1000+ thermal cycles (cups typically experience one hot fill, but multi-fill applications need higher cycle tolerance)\n- Required: calibration accuracy to the green/yellow/red thresholds at ~125F / 136F / 145F\n\nCUP MANUFACTURING PARTNERSHIP\n- Standard paper cup manufacturers (Dart Container, Huhtamaki, several mid-tier domestic) have established food-contact certifications\n- Adding the thermochromic strip is either an inline print step or a post-print label application; print is cheaper but requires manufacturer cooperation\n- Tooling and qualification with a major cup manufacturer: 9-15 months\n- Minimum order quantity: 1-5M units typical for an SKU\n\nUNIT ECONOMICS DISCIPLINE\n- Standard 12oz paper coffee cup wholesales at 4-7 cents\n- SafeTemp target premium: 2-3 cents added\n- Total wholesale: 6-10 cents per cup\n- Institutional buyer (hospital, daycare) accepts the premium as risk-mitigation budget\n- Quick-service chain (Starbucks, McDonald's) needs justification - typically gets there via liability-reduction modeling\n\nREGULATORY POSTURE\n- FDA: thermochromic material must meet 21 CFR 175 (food-contact substances). Existing food-contact thermochromic formulations exist; new formulations need pre-market notification\n- Non-toxic / BPA-free / food-grade: standard CPG disclosures, achievable\n- State-by-state recycling and compostability rules apply if the brand markets eco-friendly cups (California, New York, others have stricter rules)\n- ASTM standards for color accuracy under thermal cycling: voluntary but adopted by procurement\n\nPATENT LANDSCAPE\nColor-changing temperature indication on consumer products has prior art (Nuk, Munchkin baby products). The disposable-paper-cup application appears to be unpatented or has expired prior art (early 2000s patents have aged out). Conduct a fresh patent search before manufacturing investment - $5-15K with a patent attorney.\n\nONE THING TO WATCH\nThe thermochromic strip needs to be calibrated against the actual beverage temperature inside the cup, not the outer surface temperature. The thermal gradient across paper cup wall is non-trivial. The calibration work is real engineering, not a label exercise."
+    },
+    {
+      "ep_id": "grant_ellis",
+      "report_type": "Coaching: Elevator Speech, Strengths, Presenter Prep",
+      "headline": "Lead with Brown/Diller, anchor with the hospital pilot",
+      "content": "ELEVATOR SPEECH (30 seconds)\n\"SafeTemp is a disposable hot-beverage cup with a color-changing temperature strip embedded in the side. Green means safe to hand to a kid; yellow means caution; red means too hot. The calibration is based on Brown and Diller's 2008 University of Texas burn-safety study. We add less than three cents to the cup cost, and we're piloting at [HOSPITAL SYSTEM]'s pediatric cafes. The hook is that no parent ever has to test a hot drink against their forearm again.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. Real, citable scientific grounding (Brown/Diller 2008, peer-reviewed, calibrated)\n2. Established adjacent precedent (Nuk and Munchkin both use the same technology successfully)\n3. Two real buyer groups (parents + institutional procurement) with aligned safety motivations\n4. Liability environment makes food-service operators active buyers, not just possible buyers\n5. Manufacturing technology is proven; risk is in unit-economics, not engineering\n6. Institutional pilot path (hospitals first) is a clean credibility anchor\n7. Kenneth Diller is still publishing and is potentially approachable as a scientific advisor\n8. The product is an engineering-tier safety control (Hierarchy of Controls), stronger than just a warning\n9. Visual brand opportunity - the color-changing cup is the marketing\n10. Adjacent applications (baby bottles, soup containers, school cafeterias) are real year-2 expansion paths\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Astrid Lund: she'll go to the engineering tolerances. Have these ready: thermal gradient calibration, color-strip accuracy under repeated thermal cycling, FDA food-contact certification path. Concede that the engineering work is real and that you've budgeted 12-18 months of supplier qualification.\n- Priya Anand: she'll push on the manufacturing path. Have your supplier qualification list ready - LCR Hallcrest for the thermochromic material, Dart Container or Huhtamaki for the cup. Concede on the 9-15 month tooling timeline and explain how the hospital pilot funds the team during it.\n- Raymond Chen: he'll go straight to per-cup economics. Have these ready: target 2-3 cent premium per cup, institutional buyer willingness to pay (typically up to 5-7 cents for documented safety improvements), patent search status, and a pre-launch LOI from at least one named hospital system.\n\nWHEN YOU GET STUCK\nReturn to the Brown/Diller study. The judges will respect a founder who has read the foundational paper for their category. Most haven't.\n\nDO NOT\n- Promise a national rollout without naming the first institutional pilot\n- Claim the product eliminates burn liability for operators\n- Compete with Nuk and Munchkin on baby products in v1 (different category, different distribution)\n- Underestimate the manufacturing-qualification timeline\n\nONE LINE TO REMEMBER\n\"The cup tells you. Green means safe.\""
+    }
+  ],
+  "revisions": [
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Solution paragraph",
+      "before": "Non-toxic, medical-grade thermometer strip embedded along the side of the cup with clearly marked temperature indicators. Strip changes color: green for safe, yellow for caution, red for too hot. Quick visual signal, no guessing, no testing.",
+      "after": "A non-toxic, food-grade thermochromic strip embedded along the side of the cup, calibrated to Brown and Diller's 2008 University of Texas safe-serving temperature research. The strip changes color across three bands: green (125F and below, safe to hand to a child), yellow (125-136F, caution), red (above 136F, too hot). No touch, no taste, no guess.",
+      "rationale": "Three changes: (1) \"medical-grade\" implies medical-device regulation and is the wrong descriptor; \"food-grade\" is accurate and accurate matters. (2) Adding the Brown/Diller citation in the solution paragraph makes the calibration credible. (3) Specifying the exact temperature thresholds gives the reader the actual product, not the marketing version of it.",
+      "accepted_at": 1716738000000
+    }
+  ],
+  "judge_outputs": [
+    {
+      "judge_id": "astrid_lund",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 8 },
+      "stage_critique": "Terry, the brief is unusually clear on the science and the buyer groups. The Brown/Diller citation is the kind of grounding that pulls a brief from concept to credible. The clarity gap is in manufacturing - the brief says \"thermometer strip\" without specifying the thermochromic material class or the calibration tolerances.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the clarity on the buyer groups is strong - parents, food service, institutions. Each is named and the value proposition for each is distinct. The clarity gap is on the manufacturing and supplier qualification timeline. Adding that turns the brief from concept to operational plan.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the product clarity is excellent. The unit-economics clarity is where I push - what's the wholesale premium vs. a standard cup, and what's the buyer's willingness to pay for that premium? Until those numbers are on the page, the business clarity is incomplete.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "viability",
+      "dimension_scores": { "viability": 7 },
+      "stage_critique": "Terry, the viability is real. The thermochromic technology is proven (Nuk, Munchkin), the audience is real, and the institutional procurement path makes the launch capital-efficient. The viability hinges on manufacturing partnership terms - get the cup manufacturer in writing before the consumer marketing starts.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "viability",
+      "dimension_scores": { "viability": 7 },
+      "stage_critique": "Terry, the institutional channel viability is strong. Hospital and daycare procurement budgets cover documented safety features and the per-cup premium is small. The retail channel viability is weaker - retail slotting and consumer awareness costs would absorb the capital. Stick with institutional for years 1-3.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "viability",
+      "dimension_scores": { "viability": 8 },
+      "stage_critique": "Terry, the unit economics work IF the per-cup premium stays under 3 cents and the institutional pilot anchors the credibility. The hospital pilot is the right go-to-market - one signed pilot LOI changes the conversation with every subsequent buyer. Lock that in before raising.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "risk",
+      "dimension_scores": { "risk": 6 },
+      "stage_critique": "Terry, the technical risk is real but bounded. The thermochromic calibration across paper cup wall thermal gradient needs actual engineering, not marketing. The risk that the strip is inaccurate in real-world use (a 130F latte reading green when it shouldn't) is the kind of failure that destroys the brand. Test extensively in real conditions before any pilot.",
+      "confidence": 0.87,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "risk",
+      "dimension_scores": { "risk": 6 },
+      "stage_critique": "Terry, the manufacturing risk is the supplier-dependency. One thermochromic-material supplier could hold up the entire production. Qualify multiple suppliers from day one. The brand cannot afford a single point of failure in the cup line.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "risk",
+      "dimension_scores": { "risk": 7 },
+      "stage_critique": "Terry, the financial risk is the working capital requirement. The cup business runs on minimum order quantities of millions of units - that's $50-200K in inventory per SKU before the first sale. The institutional pilot funds the cash conversion but the working capital is the constraint to size.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 8 },
+      "stage_critique": "Terry, the narrative anchored in Brown/Diller is the strongest narrative in the entire sample library. Real science. Real founders. Real burn-prevention. The story tells itself - it just needs to commit to leading with the research, not with the product features.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 7 },
+      "stage_critique": "Terry, the institutional-buyer narrative needs its own voice. \"SafeTemp is the first cup that does what it should have always done\" is a tighter line than the current narrative. The food-service operator wants the brand story in liability terms, not parent-fear terms. Build two narratives in parallel.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 7 },
+      "stage_critique": "Terry, the founder narrative is invisible. Why did THIS founder build this? Was there a personal moment? The brand will benefit from a specific founder origin story to anchor the more abstract science narrative.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 8 },
+      "stage_critique": "Terry, this is the strongest evidence base of any sample in the library. Brown/Diller 2008 is a real, citable, peer-reviewed paper. The thermochromic adjacent precedent (Nuk, Munchkin) is real product. Engineering tolerances are computable from existing materials science. The brief is anchored in actual evidence.",
+      "confidence": 0.88,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 7 },
+      "stage_critique": "Terry, the consumer-evidence layer is missing but easy to add. A 100-parent survey on the post-purchase question (\"would you pay 5 cents extra for the SafeTemp cup at your daily coffee shop?\") would be a meaningful evidence add. Until then the consumer demand is inferred from logic, not measured.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 7 },
+      "stage_critique": "Terry, the institutional-buyer evidence requires one LOI from a hospital system before the next funding round. The Brown/Diller paper is the science; the hospital LOI is the demand evidence. Both belong in the deck.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the cultural fit is solid. Child safety is a stable, multi-decade cultural priority. Disposable cup waste is the cultural countertrend - SafeTemp needs to address the sustainability question (compostable substrate option, recycled paper, etc.) or it lands wrong with the 2026 environmental consumer.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the cultural moment for documented safety in food service is favorable. Post-pandemic, consumers expect operators to demonstrate safety practices visibly. SafeTemp gives the operator a tangible artifact. The cultural read is good.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 8 },
+      "stage_critique": "Terry, the cultural opening for a science-backed consumer-safety brand is wide. The trust in research-grounded products has rebounded since 2024 and SafeTemp is positioned to ride that trust. Lean into the science in the brand voice consistently.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the safety-fear-reduction psychology is read precisely. The parent buys the moment of confidence and the institutional operator buys the moment of documented diligence. Both psychologies are coherent and the product addresses both with one design.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the procurement-officer psychology is the underleveraged angle. The hospital procurement officer is risk-averse, performance-evaluated on documented improvements, and politically exposed to incident reports. SafeTemp gives them all three wins simultaneously. Build the procurement-officer collateral specifically.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the buyer psychology is solid. The investor psychology - what makes a coffee-cup safety brand investable - is unmodeled. Position as a defensible IP-backed safety brand with adjacent expansion (baby bottles, soup containers) and the valuation conversation gets easier.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 8 },
+      "stage_critique": "Terry, the compliance path is well-trodden. FDA food-contact materials regulation is established. ASTM thermal-accuracy standards are voluntary but adoptable. The thermochromic-strip suppliers already carry the relevant certifications. The compliance work is real but achievable.",
+      "confidence": 0.87,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, the compliance posture should include state-by-state environmental rules (California, New York, others on disposable cup composition and recycling). Not a blocker; budget the legal review.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, the IP and patent compliance work is the most underestimated item. A formal freedom-to-operate search before manufacturing investment is essential. Budget $5-15K. The investment is small relative to the cost of an infringement claim post-launch.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    }
+  ],
+  "triangulation": {
+    "matrix": {
+      "clarity":    { "astrid_lund": 8, "priya_anand": 7, "raymond_chen": 7 },
+      "viability":  { "astrid_lund": 7, "priya_anand": 7, "raymond_chen": 8 },
+      "risk":       { "astrid_lund": 6, "priya_anand": 6, "raymond_chen": 7 },
+      "narrative":  { "astrid_lund": 8, "priya_anand": 7, "raymond_chen": 7 },
+      "evidence":   { "astrid_lund": 8, "priya_anand": 7, "raymond_chen": 7 },
+      "cultural":   { "astrid_lund": 7, "priya_anand": 7, "raymond_chen": 8 },
+      "psych":      { "astrid_lund": 8, "priya_anand": 8, "raymond_chen": 7 },
+      "compliance": { "astrid_lund": 8, "priya_anand": 7, "raymond_chen": 7 }
+    },
+    "agreement_dimensions": ["clarity", "viability", "risk", "narrative", "evidence", "cultural", "psych", "compliance"],
+    "conflict_dimensions":  [],
+    "coverage_gaps":        [],
+    "composite_score":      0.73,
+    "verdict":              "agreement"
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "sample_id": "sky_high_fitness",
+  "evaluation": {
+    "id": "sample-sky-high-fitness",
+    "submission_id": "sample-sky-high-fitness",
+    "status": "complete",
+    "stage": "compliance",
+    "completed_at": "2026-05-26T15:30:00Z"
+  },
+  "submission": {
+    "id": "sample-sky-high-fitness",
+    "title": "Sky High Fitness Club"
+  },
+  "brief": "SKY HIGH FITNESS CLUB - Elevating Wellness in Travel\n\nEXECUTIVE SUMMARY\nA groundbreaking concept set to redefine the airport experience by introducing premium fitness and wellness facilities within major airports across the United States. Provides travelers and airport staff with convenient access to high-quality fitness services, promoting health, well-being, and stress reduction during their journeys.\n\nPROBLEM\nTravel disrupts healthy routines, leading to sedentary behavior, stress, and a decline in overall well-being. Existing airport amenities rarely cater to the growing demand for health-conscious options, leaving travelers with limited choices for maintaining their fitness goals while on the go.\n\nSOLUTION\nA network of state-of-the-art fitness facilities within airports, offering a comprehensive range of services tailored to the needs of travelers and airport staff. The clubs feature cutting-edge exercise equipment, personalized personal training, luxurious shower and locker facilities, and nutritious food and beverage options.\n\nTARGET MARKET\n- Health-conscious travelers\n- Frequent flyers (business travelers)\n- Airport staff\n- Delayed passengers with extended layovers\n- Wellness tourists\n\nWHY FITNESS SPAS AT AIRPORTS\n- Health and wellness restoration during stressful travel\n- Improved travel experience (passengers arrive more energized)\n- Differentiation for the airport itself\n- Employee well-being for airport staff\n- Jet lag reduction (exercise regulates sleep)\n- Innovative design enhances passenger experience\n\nMARKETING AND SALES STRATEGY\n- Strategic partnerships with airlines, hotels, travel-related businesses\n- Targeted digital marketing to health-conscious travelers and frequent flyers\n- Public relations campaign\n- Loyalty program with exclusive perks\n- On-site promotions and digital signage\n\nREVENUE MODEL\nMembership fees, day passes, class fees, sales of products and services. Financial model projects profitability within two years of operation.\n\nGROWTH STRATEGY\n- Secure funding for initial expansion\n- Establish flagship locations at high-traffic airports\n- Expand to major airports nationwide\n\nNEXT STEPS\nSecure investment to launch the flagship location, negotiate space leases with the first target airport authority, hire the operating team, build out the facility, and open with a strong opening-marketing campaign.",
+  "ep_reports": [
+    {
+      "ep_id": "matthew_vance",
+      "report_type": "Buyer Psychology Profile",
+      "headline": "Primary driver - identity (the routine survivor)",
+      "content": "PRIMARY DRIVER: Identity (the routine-keeper)\nThe customer is a frequent flyer whose self-concept depends on their workout schedule. Travel weeks are the weeks they fail. The 30 minutes between gates is the gap between \"I worked out 4x this week\" and \"I missed again.\" Sky High Fitness Club sells continuity of identity, not the workout itself.\n\nSECONDARY DRIVERS\n- Status: post-shower, freshly-dressed, walking the concourse with the small post-workout high. The identity is visible to other travelers.\n- Sanity: the workout is also the meditation. The transit-stress reduction is real and is part of what is being purchased.\n\nTRIGGER MOMENT\n90+ minute layover or 2+ hour delay notification. The frequent flyer opens the airport app, sees \"Sky High Fitness Club, Terminal B, 8 min walk.\" That is the moment the impulse hardens into a transaction.\n\nIDENTITY FRAMING\nThe kind of traveler whose routine survives the travel week.\n\nWHY THE BUYER PSYCHOLOGY DIFFERS FROM CONSUMER GYM\nThe consumer-gym buyer is buying aspiration (the version of themselves who will get in shape). The Sky High buyer is buying maintenance (the version of themselves who already works out and refuses to lose it on the road). Two different sales pitches. Don't write Sky High copy that sounds like Equinox new-member onboarding.\n\nWALK TO NEXT EP\n- Carol: Roam Fitness is the direct precedent and they failed. Read their learnings carefully.\n- Arjun: airport authority lease negotiation is the operational long pole."
+    },
+    {
+      "ep_id": "wren_calloway",
+      "report_type": "Landscape Scout Report",
+      "headline": "Hub airports only; mid-tier airports kill the unit economics",
+      "content": "WHERE IT CAN WORK (top 3)\n1. Atlanta ATL, Dallas DFW, Charlotte CLT - hub airports with 100M+ annual passenger counts and high frequent-flyer concentration. Density: high. First signal: pre-launch waitlist signups from a single TSA-PreCheck ad spend.\n2. Mid-tier hubs with strong business-travel concentration (Salt Lake, Minneapolis, Detroit) - density: medium, but the operating cost per square foot is lower.\n3. International gateways with 6+ hour layover concentration (Chicago O'Hare international, Newark, Houston intercontinental).\n\nFOCUS RECOMMENDATION\nAtlanta as flagship. Highest frequent-flyer density in the country, strong Delta hub relationship potential, airport authority known to partner with premium amenity operators. One signed Atlanta location validates the concept; expansion follows.\n\nOTHER USES (same model, different real estate)\n- Cruise terminals (pre-board fitness for premium passengers)\n- Large train stations (Penn Station, Union Station DC)\n- Convention centers\n- Hotel-adjacent transit hubs\n\nThe mechanic - convenient premium fitness inside dead-time real estate - travels well beyond airports.\n\nONE THING WREN WOULD NOT DO\nPosition against \"all travelers.\" The user is specifically the frequent business flyer who already maintains a routine; the casual traveler will not pay $32 for a day pass. Narrow the audience or the marketing message becomes incoherent."
+    },
+    {
+      "ep_id": "carol_haynes",
+      "report_type": "Pattern Screening Report",
+      "headline": "has_legs (signal 6/10). Roam Fitness failed; learn why.",
+      "content": "PATTERN: airport hospitality concept.\n\nWHAT WORKED FOR THIS PATTERN\nThe Club at Mid-America (lounge model, ~$50 day pass), Centurion Lounge (Amex-funded, $650/yr access), Minute Suites (rest pods, ~$42/hr). All three are profitable. None of them do fitness.\n\nWHAT FAILED\nRoam Fitness (operated in BWI and Pittsburgh, since closed) tried this in 2017 and failed. Roam's learnings: works at hubs, fails at mid-tier; needs $25-35 day-pass pricing to clear; needs airside placement, not landside; needs partnership with airline lounges or airport authority.\n\nYOUR POSITION\nThe demand is real - frequent flyers are vocal about wanting this. The operational challenge is the unit economics: a 4000-6000 sq ft facility with showers, lockers, and trainers has high fixed cost and only clears at hub airports. The brief should acknowledge Roam's failure explicitly.\n\nLEGS ASSESSMENT: has_legs (signal 6/10)\n\nREASONS FOR\n- Real demand from frequent flyers (documented in travel surveys, vocal on social)\n- Real operational learnings from prior failures (Roam's playbook is studyable)\n- Real comp set in adjacent hospitality categories (lounges, rest pods)\n- Airport authorities increasingly differentiate via amenities\n\nREASONS AGAINST\n- Capital-intensive (~$2-4M per location buildout)\n- Depends on airport authority partnerships which are slow (12-24 months)\n- Requires hub-only placement to clear unit economics\n- Roam Fitness already tried and failed - new entrant needs a clear differentiation\n\nTHE ONE THING THAT KILLS IT\nCapital deployment ahead of validated unit economics in a single flagship location. Build one. Prove it. Then expand. Do NOT raise $20M to do 6 locations at once. That was a contributing factor in prior failures."
+    },
+    {
+      "ep_id": "reid_callum",
+      "report_type": "Launch Press Release",
+      "headline": "Lead with the flagship at Atlanta; name the routine-keeper audience",
+      "content": "SKY HIGH FITNESS CLUB OPENS FLAGSHIP AT ATLANTA HARTSFIELD-JACKSON, MARKING THE FIRST PREMIUM AIRPORT-BASED FITNESS CONCEPT OF ITS KIND\n\n[ATLANTA, GA] - [MONTH DD, YYYY] - Sky High Fitness Club, a new premium fitness and wellness brand designed for travelers and airport staff, today opened its flagship location at Hartsfield-Jackson Atlanta International Airport (ATL). The 5,200-square-foot facility, located airside in Concourse B, offers personalized training, full shower and locker amenities, and a curated healthy food and beverage menu. Day passes are $32; monthly memberships are $89; the annual membership tier includes guest passes and partner-airline status integrations.\n\n\"Frequent flyers spend 60 to 90 hours a year inside airports,\" said [FOUNDER NAME], founder of Sky High Fitness Club. \"That time is currently lost to sitting, snacking, and stress. Sky High Fitness Club gives travelers a way to land in their next city with the routine intact.\"\n\nThe Atlanta flagship is the first in a planned U.S. expansion targeting hub airports with passenger volumes above 75 million per year. The company is in active conversations with Dallas/Fort Worth International Airport, Charlotte Douglas, and Chicago O'Hare for the next three locations.\n\nABOUT SKY HIGH FITNESS CLUB\nSky High Fitness Club is a premium fitness brand built for the frequent business traveler whose routine matters as much as their itinerary.\n\nMEDIA CONTACT\n[NAME] / [EMAIL] / [PHONE]"
+    },
+    {
+      "ep_id": "zara_cole",
+      "report_type": "Content Plan",
+      "headline": "LinkedIn-first for the road warrior; Instagram for the post-shower moment",
+      "content": "PRIMARY POST - LINKEDIN (Founder POV)\n\"We track the cost of business travel in flights, hotels, and per diems. We don't track it in lost workouts. The frequent flyer who exercises 4x a week at home does 0x a week on travel weeks - and travel is 30-40% of their year. That's the gap Sky High Fitness Club exists to close. We're opening our flagship at Atlanta in [MONTH]. If you're a road warrior who has tried (and failed) to keep your routine on the road, I want to hear from you. What would you actually use? What's the dealbreaker? DM me.\"\n\n#businesstravel #wellness\n\nFOLLOW-UP CONTENT (45-day calendar)\n- Week 1: founder POV - the road warrior post (LinkedIn)\n- Week 2: facility walkthrough with key amenities (Instagram, IG Reel)\n- Week 3: trainer-team intros (LinkedIn for the road warrior audience)\n- Week 4: partnership announcements (Delta status integration, etc.)\n- Week 5: opening-day content (Atlanta launch)\n- Week 6: first-30-day member metrics (utilization, member testimonials)\n\nINSTAGRAM SECONDARY STRATEGY\nThe post-shower moment is the Instagrammable beat. \"Landed in Atlanta after a 5-hour flight, hit Sky High, in a meeting in 90 minutes feeling like a human.\" Founder POV + member POV reels.\n\nWHAT NOT TO POST\n- Anything that frames Sky High as a consumer gym (wrong audience)\n- Discount or trial offers (cheapens the premium positioning)\n- Comparison to airport lounges (different category)\n\nCONVERSION HOOK\nThe \"first-day-free\" trial for SkyMiles Diamond, Delta One, and similar premium-status travelers. The status traveler is the conversion path; the casual traveler is not."
+    },
+    {
+      "ep_id": "ms_ivy",
+      "report_type": "Research & Frameworks",
+      "headline": "Travel-stress + sedentary-travel literature supports the premise",
+      "content": "FRAMEWORKS\n- Allostatic Load (Bruce McEwen): travel produces chronic low-grade stress that accumulates as allostatic load; exercise is one of the most effective reset mechanisms.\n- Sedentary Behavior Research (Mark Tremblay et al.): prolonged sitting independent of overall activity level produces measurable health decrements; long-haul flying is the canonical case.\n- Hospitality Service Quality (Parasuraman, Zeithaml, Berry - SERVQUAL): airport amenities live or die on tangibles (cleanliness, equipment quality) and responsiveness (speed of check-in, shower availability) more than empathy or assurance.\n\nADJACENT THINKERS\n- Peter Attia (longevity / Zone 2 training; has written about training while traveling) - exact cultural anchor for the Sky High audience\n- Andrew Huberman (circadian disruption from travel, exercise as countermeasure) - secondary cultural anchor for the same audience\n- Christopher Brodt and others on business-traveler health (literature is thin but growing)\n\nPRIOR LITERATURE\nBusiness-travel health research consistently shows frequent business travelers have elevated BMI, blood pressure, and self-reported depression vs. matched non-travelers. The population-health data supports the audience need.\n\nRESEARCH GAP\nThere is little published research on airport-based wellness amenity utilization rates because no one has built the data set. Sky High Fitness Club could publish that data and create the academic literature for the category.\n\nONE THINKER TO READ FIRST\nPeter Attia. The routine-preservation framing is exactly Attia's audience. His podcast and his books speak directly to the Sky High customer."
+    },
+    {
+      "ep_id": "arjun_mehta",
+      "report_type": "Operations / Regulatory",
+      "headline": "Site selection + airport authority lease are the entire risk profile",
+      "content": "THE OPERATING ECONOMICS LIVE OR DIE AT SITE SELECTION\nRequired: airside placement (post-security), 4000-6000 sq ft, hot-water plumbing capacity for 6-12 simultaneous showers, ventilation upgrade for sweat / steam load, ADA-compliant locker rooms in both gendered and inclusive configurations.\n\nBUILD COST AND TIMELINE\n- $2-4M per flagship location depending on terminal age\n- 6-12 months of permit and construction time, longer in older terminals due to plumbing and ventilation retrofit\n- Negotiate construction lead time into lease commencement date or absorb the cost\n\nAIRPORT AUTHORITY LEASE\n- Typically 7-10 year terms\n- Percentage-of-revenue + base rent structure\n- 12-24 months of negotiation per location\n- Requires demonstrated operating capability + capital commitment\n\nOPERATING ECONOMICS\n- Operating margin: 35-45% at hub locations once stabilized\n- Structurally negative at sub-50M annual passenger airports\n- Hub-only discipline is non-negotiable\n\nSTAFFING\n- 8-12 FTE per location (front desk, trainers, attendants, cleaners)\n- 16-hour operating day (typically 5 AM to 9 PM)\n- Trainer credentialing: NASM, ACE, or ACSM minimum; CPR / AED certification required\n- Airport employee badging: each FTE needs TSA background check + airport-specific badge (60-120 days lead time)\n\nREGULATORY POSTURE\n- ADA accessibility in locker rooms and equipment areas (non-negotiable)\n- TSA security perimeter rules dictate inside vs. outside airside placement\n- Local health department for shower and locker room sanitation\n- State-by-state personal trainer credentialing (variable but mostly minimal)\n- Food and beverage handling certifications for the smoothie / snack bar\n\nONE THING TO WATCH\nThe airport authority is the dependency. The lease decision is made by a political body; the renewal in year 7 is made by a different political body. The entire business depends on continued cooperation from people the founder cannot influence. Build the airport authority relationship like a customer relationship - regular check-ins, demonstrated value, advocacy programs."
+    },
+    {
+      "ep_id": "grant_ellis",
+      "report_type": "Coaching: Elevator Speech, Strengths, Presenter Prep",
+      "headline": "Concede on Roam early; lead with the Atlanta site lock",
+      "content": "ELEVATOR SPEECH (30 seconds)\n\"Sky High Fitness Club is a premium fitness facility inside Hartsfield-Jackson Atlanta - airside, Concourse B, 5,200 square feet. Day pass $32, monthly $89. We're built for the frequent business flyer who works out 4x a week at home and 0x a week on the road. We've signed our first lease, we've raised against the flagship economics, and we've absorbed every learning from Roam Fitness's failed 2017 attempt. The hook is that 60 to 90 hours a year inside airports is currently dead time for the road warrior - we're the company that gives that time back.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. Real audience demand documented in business-travel surveys\n2. Real adjacent precedent (Centurion Lounge, Minute Suites, The Club) showing the airport-amenity model works\n3. Roam Fitness's failed attempt is studyable - the founder has learned from it\n4. Atlanta flagship at the world's busiest airport is a credibility anchor\n5. Operating discipline is hub-only, which sizes the addressable market correctly (~10 airports)\n6. The audience cultural anchor (Peter Attia, Andrew Huberman) gives instant resonance with the road-warrior cohort\n7. The unit economics work at hub scale (35-45% operating margin) and the founder has the model\n8. Partnership paths with airlines (status integration) and hotels (loyalty cross-promotion) are clear\n9. Adjacent expansion (cruise terminals, train stations, convention centers) gives optionality beyond airports\n10. The lease and buildout timelines are realistic, not over-promised\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Raymond Chen: he'll go right at the Roam Fitness comparison. Concede early. Tell him you've read Roam's playbook, what they got wrong (mid-tier airport placement), and what you'll do differently (hub-only, partnership-anchored). The concession is the credibility.\n- Marcus Holt: he'll push on capital intensity. Have these ready: $3.5M Atlanta buildout, 24-month path to operating profitability, single-flagship discipline (no second location until Atlanta is 12 months profitable). Reframe as flagship-and-prove, not raise-for-expansion.\n- Devon Sloane: she'll push on brand voice. Have your post-shower-moment narrative ready. Sky High sells routine continuity, not aspiration. Don't sound like Equinox.\n\nWHEN YOU GET STUCK\nReturn to the 60-to-90-hours-a-year number. It's specific, citable, and immediately translatable to the audience pain.\n\nDO NOT\n- Promise national rollout in the pitch\n- Compare day pass pricing to consumer gym day passes (different category)\n- Hide the Roam Fitness precedent - lead with it as a learning, not bury it\n- Pitch as venture; this is growth-equity or hospitality-real-estate capital\n\nONE LINE TO REMEMBER\n\"Land in your next city with the routine intact.\""
+    }
+  ],
+  "revisions": [
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Executive Summary",
+      "before": "A groundbreaking concept set to redefine the airport experience by introducing premium fitness and wellness facilities within major airports across the United States. Provides travelers and airport staff with convenient access to high-quality fitness services, promoting health, well-being, and stress reduction during their journeys.",
+      "after": "A premium fitness facility for frequent business travelers, located airside at major U.S. hub airports. The first location opens at Hartsfield-Jackson Atlanta. The audience is the road warrior whose workout routine survives at home but collapses on the road. Sky High Fitness Club is built to close that gap.",
+      "rationale": "Three changes: (1) cut \"groundbreaking,\" \"redefine,\" and the deck-speak openings. (2) named the audience specifically (frequent business traveler, not generic \"travelers and staff\"). (3) named the first location to anchor the concept in operational reality. The original read as concept; the revised reads as launching company.",
+      "accepted_at": 1716738000000
+    }
+  ],
+  "judge_outputs": [
+    {
+      "judge_id": "raymond_chen",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the concept is clear and the audience is clear. What's not clear is the financial ask and the path. Day pass $32, monthly $89, annual unspecified - is this a membership business or a transactional business? The two require different capital structures and very different real estate decisions.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 6 },
+      "stage_critique": "Terry, the executive summary reads like a deck. I know what it is - I don't know what stage it's at. Have you signed a lease? Talked to an airport authority? Have $4M committed? The clarity gap is between \"concept\" and \"company.\" The brief should name where on that spectrum we are.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the wellness narrative is articulate and the audience profile is sharp - the frequent flyer who loses the routine on travel weeks. The category clarity is where I push. Is this a fitness brand that happens to be in airports, or an airport-amenity company that happens to do fitness? The answer determines who the company hires, how it brands, and which exit it walks toward.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "viability",
+      "dimension_scores": { "viability": 5 },
+      "stage_critique": "Terry, viability is the hard question here. Roam Fitness did exactly this and failed. The brief doesn't explain what's different this time. What did Roam get wrong that Sky High Fitness Club will get right? Without a credible answer to that, this is a re-run of a failed experiment.",
+      "confidence": 0.87,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "viability",
+      "dimension_scores": { "viability": 5 },
+      "stage_critique": "Terry, the unit economics are the question. $2-4M buildout per location, $32 day passes, ~5,000 sq ft - what's the breakeven on day passes per day? At a $32 average ticket, you need 150-200 transactions per day to clear operating cost before debt service. That's possible at Atlanta. It's not possible at most other airports. The viability lives at hub airports only.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, the viability of the wellness narrative depends on whether the operational reality matches the brand promise. A premium wellness brand in a dingy concourse with broken shower drainage is dead on arrival. The Atlanta flagship has to be flawless - every cup of protein smoothie, every locker, every shower head - because the brand is built on premium-experience signaling.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "risk",
+      "dimension_scores": { "risk": 4 },
+      "stage_critique": "Terry, the risk section names \"adoption\" and \"location\" but misses the existential risk: airport authority dependency. The lease decision is made by a political body. The lease renewal in year 7 is made by a different political body. The entire business depends on continued cooperation from people the founder cannot influence.",
+      "confidence": 0.88,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "risk",
+      "dimension_scores": { "risk": 4 },
+      "stage_critique": "Terry, the capital risk is severe and the brief does not address it. $2-4M per location buildout is real cash. If the first flagship underperforms, the next round is impossible. The company has to prove unit economics with one location before raising the expansion round.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the brand risk is that the concept gets associated with a single bad airport experience. One viral tweet about a dirty shower, one news story about the membership being a ripoff, and the premium positioning collapses. Premium wellness brands die from one bad story, not from slow demand.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the narrative is clean - \"travel disrupts routines, this restores them.\" What's missing is the founder narrative. Why is this founder the one to build it? Did they fly 200K miles a year? Are they ex-Equinox? The investor read is heavily weighted by who the operator is.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 5 },
+      "stage_critique": "Terry, the narrative is generic wellness language. \"Revolutionizing the travel experience\" and \"making wellness accessible\" are the phrases on every airport-amenity pitch deck since 2015. The narrative needs the specific story that only this founder can tell.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 8 },
+      "stage_critique": "Terry, the wellness narrative is actually quite strong - \"land in your next city with the routine intact\" is a phrase that travels. Frequent flyers will recognize themselves in this language. The narrative weakness is on the investor side, not the consumer side. The pitch to a member is clear; the pitch to a VC is not.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the evidence base is anecdotal. \"Frequent flyers spend 60-90 hours a year in airports\" is a real number; turn that into a primary research data set. Survey 200 frequent flyers. Ask them what they would pay, how often they would use it, what would stop them.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 3 },
+      "stage_critique": "Terry, the evidence on the unit economics is missing entirely. Roam Fitness operated for 4 years before closing. Their data exists in their public closure announcement and in industry coverage. Mine it. The brief should reference Roam's actual day-pass utilization numbers, their actual member-vs-walkup mix, their actual reason for closure.",
+      "confidence": 0.87,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 5 },
+      "stage_critique": "Terry, the wellness-narrative evidence is reasonable - travel-stress research is well-established. The brand-evidence layer (who is loyal to which premium-wellness brand at airports, what they actually buy) is missing. Equinox, Barry's, SoulCycle members all travel. Are they your members? Survey your own gym's frequent-flyer cohort first.",
+      "confidence": 0.78,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the cultural moment is right. Wellness tourism is a real category and frequent-flyer wellness is the underserved segment. The pre-pandemic version of this would not have worked; the post-pandemic frequent flyer is significantly more health-conscious. Timing is favorable.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, cultural fit is fine. The investor cultural-fit question is whether VCs write checks for capital-intensive hospitality concepts in 2026. They mostly don't. This may need to be funded as real estate or hospitality, not as venture - which means different cap-table math, different growth expectations, different exit profile.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 8 },
+      "stage_critique": "Terry, the cultural read is excellent. Premium wellness has fully entered the executive-travel category - it's no longer a niche. Equinox-tier members expect to maintain their routine on the road. The cultural opening is wide.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the buyer-psychology read of the user is strong - routine continuity is the right driver. The buyer-psychology of the airport authority is unmodeled. The decision to lease space to a fitness operator is made by people whose incentives are not aligned with the operator's. Naming what the airport authority needs (revenue share, terminal differentiation, traveler-satisfaction scores) is what gets the deal signed.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "psych",
+      "dimension_scores": { "psych": 6 },
+      "stage_critique": "Terry, the user psychology is reasonable. The investor psychology - what makes this look like a venture investment vs. a private equity / real estate investment - is not addressed. The brief is selling to the wrong capital pool. Premium hospitality concepts at this capital intensity attract growth equity, not Series A venture. Reposition accordingly.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the buyer psychology of the frequent flyer is read correctly. The 90-minute layover is the moment of impulse and the brand has to be visible at that moment - airport-app integration, terminal signage, lounge cross-promotion. The psychology of the moment-of-decision is the marketing budget.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "raymond_chen",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, the compliance surface is moderate. ADA accessibility in the locker rooms and equipment areas is non-negotiable. TSA security perimeter rules dictate what can be inside vs. outside airside. Employee certifications (personal trainer credentials, food handling for the smoothie bar) are standard. Nothing exotic, but the buildout has to clear all of these or the doors don't open.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 6 },
+      "stage_critique": "Terry, the regulatory layer in airport hospitality is the airport authority's own concession-agreement requirements. Each major airport has its own rules - revenue minimums, hours of operation, employee badging, security clearance for the location's staff. None of this is in the brief.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, the brand-compliance layer matters more than the regulatory one. Premium wellness brands have to police their own member behavior - no half-naked influencer content from the locker room, no member photos posted without consent, no fitness advice from front-desk staff who aren't certified. The internal compliance discipline is what protects the brand at scale.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    }
+  ],
+  "triangulation": {
+    "matrix": {
+      "clarity":    { "raymond_chen": 7, "marcus_holt": 6, "devon_sloane": 7 },
+      "viability":  { "raymond_chen": 5, "marcus_holt": 5, "devon_sloane": 6 },
+      "risk":       { "raymond_chen": 4, "marcus_holt": 4, "devon_sloane": 5 },
+      "narrative":  { "raymond_chen": 6, "marcus_holt": 5, "devon_sloane": 8 },
+      "evidence":   { "raymond_chen": 4, "marcus_holt": 3, "devon_sloane": 5 },
+      "cultural":   { "raymond_chen": 7, "marcus_holt": 7, "devon_sloane": 8 },
+      "psych":      { "raymond_chen": 7, "marcus_holt": 6, "devon_sloane": 8 },
+      "compliance": { "raymond_chen": 7, "marcus_holt": 6, "devon_sloane": 7 }
+    },
+    "agreement_dimensions": ["clarity", "viability", "risk", "cultural", "compliance"],
+    "conflict_dimensions":  ["narrative"],
+    "coverage_gaps":        [],
+    "composite_score":      0.59,
+    "verdict":              "conflict"
+  }
+}
