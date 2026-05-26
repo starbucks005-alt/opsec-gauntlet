@@ -406,6 +406,37 @@
     object-fit:cover;display:block;
     filter:brightness(1.05) contrast(1.03);
   }
+  /* Blink pair on spotlight panel judges. Same animation as hs-grid but
+     a slower cadence (~6.4s) since these portraits are larger and a
+     longer interval keeps the blinks from reading as nervous tics. */
+  .tg-panel-portrait .closed{
+    opacity:0; animation:tg-panel-blink 6.4s linear infinite;
+    will-change:opacity;
+  }
+  @keyframes tg-panel-blink{
+    0%, 94%, 100% { opacity: 0; }
+    96%, 97%      { opacity: 1; }
+  }
+  /* Stagger so the three on stage never blink in unison. */
+  .tg-panel-judge:nth-child(1) .tg-panel-portrait .closed{ animation-delay: 0s;   }
+  .tg-panel-judge:nth-child(2) .tg-panel-portrait .closed{ animation-delay: 2.1s; }
+  .tg-panel-judge:nth-child(3) .tg-panel-portrait .closed{ animation-delay: 4.2s; }
+
+  /* Active-speaker spotlight. When a judge's finding lands in the chat,
+     the JS toggles .is-speaking on their stage card. Brief gold backlight
+     + slight scale pump, then settles back. Tied to a CSS class so the JS
+     just adds/removes a single class. */
+  .tg-panel-judge.is-speaking{
+    box-shadow:0 0 84px -4px rgba(212,170,74,0.85),
+               0 0 0 2px var(--gold),
+               0 18px 36px -10px rgba(0,0,0,0.75);
+    transform:translateY(0) scale(1.04);
+    transition:box-shadow 0.45s ease-out, transform 0.45s ease-out;
+  }
+  .tg-panel-judge.is-speaking .tg-panel-portrait img.open{
+    filter:brightness(1.18) contrast(1.05);
+    transition:filter 0.4s ease-out;
+  }
   .tg-panel-info{padding:0.9rem 1rem 1.1rem;text-align:center;}
   .tg-panel-name{
     font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
@@ -499,6 +530,37 @@
     position:absolute;inset:0;width:100%;height:100%;
     object-fit:cover;display:block;
   }
+  /* Blink pair on audience judges. Slightly faster cadence (5.0s) and
+     wider stagger across 6 cards so the gallery never reads as a unison
+     reaction. Audience portraits are also dimmed via .is-audience on the
+     parent so the blink is subtle - exactly what we want for a gallery. */
+  .tg-aud-portrait .closed{
+    opacity:0; animation:tg-aud-blink 5.0s linear infinite;
+    will-change:opacity;
+  }
+  @keyframes tg-aud-blink{
+    0%, 94%, 100% { opacity: 0; }
+    96%, 97%      { opacity: 1; }
+  }
+  .tg-aud-judge:nth-child(1) .tg-aud-portrait .closed{ animation-delay: 0s;   }
+  .tg-aud-judge:nth-child(2) .tg-aud-portrait .closed{ animation-delay: 0.8s; }
+  .tg-aud-judge:nth-child(3) .tg-aud-portrait .closed{ animation-delay: 1.6s; }
+  .tg-aud-judge:nth-child(4) .tg-aud-portrait .closed{ animation-delay: 2.4s; }
+  .tg-aud-judge:nth-child(5) .tg-aud-portrait .closed{ animation-delay: 3.2s; }
+  .tg-aud-judge:nth-child(6) .tg-aud-portrait .closed{ animation-delay: 4.0s; }
+
+  /* Active-speaker spotlight for audience heckles. When an audience judge
+     speaks (heckle lands in chat), their card briefly un-dims and lifts. */
+  .tg-aud-judge.is-speaking{
+    opacity:0.95 !important;
+    filter:saturate(1) brightness(1) !important;
+    transform:translateY(-2px) scale(1.02) !important;
+    box-shadow:0 0 32px -4px rgba(212,170,74,0.6),
+               0 0 0 1px var(--gold);
+    transition:opacity 0.4s ease-out, filter 0.4s ease-out,
+               transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  }
+
   .tg-aud-name{
     font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
     color:var(--cream);text-align:center;padding:0.7rem 0.5rem 0.85rem;
@@ -1238,17 +1300,23 @@
     });
 
     // Phase 2: populate stage panel — larger lit cards with portraits.
+    // Paired open/closed images for the blink animation. data-judge-id
+    // on the card so flashSpeaker() can find this judge when their line
+    // lands in the chat.
     panel.innerHTML = '';
     state.selected.forEach(id => {
       const j = state.judges.find(x => x.id === id);
       if (!j) return;
       const imgName = imageFirstName(j.name);
-      const openSrc = 'Judges/' + imgName + '_eyes_open.jpg';
+      const openSrc   = 'Judges/' + imgName + '_eyes_open.jpg';
+      const closedSrc = 'Judges/' + imgName + '_eyes_closed.jpg';
       const card = document.createElement('div');
       card.className = 'tg-panel-judge';
+      card.dataset.judgeId = j.id;
       card.innerHTML = `
         <div class="tg-panel-portrait">
-          <img src="${openSrc}" alt="${escapeHtml(j.name)}">
+          <img class="open"   src="${openSrc}"   alt="${escapeHtml(j.name)}">
+          <img class="closed" src="${closedSrc}" alt="" aria-hidden="true" onerror="this.style.display='none'">
         </div>
         <div class="tg-panel-info">
           <div class="tg-panel-name">${escapeHtml(j.name)}</div>
@@ -1266,14 +1334,16 @@
     state.judges.forEach(j => {
       if (state.selected.has(j.id)) return;
       const imgName = imageFirstName(j.name);
-      const openSrc = 'Judges/' + imgName + '_eyes_open.jpg';
+      const openSrc   = 'Judges/' + imgName + '_eyes_open.jpg';
+      const closedSrc = 'Judges/' + imgName + '_eyes_closed.jpg';
       const card = document.createElement('div');
       card.className = 'tg-aud-judge';
       card.dataset.judgeId = j.id;
       card.title = j.name + ' — ' + j.domain;
       card.innerHTML = `
         <div class="tg-aud-portrait">
-          <img src="${openSrc}" alt="${escapeHtml(j.name)}">
+          <img class="open"   src="${openSrc}"   alt="${escapeHtml(j.name)}">
+          <img class="closed" src="${closedSrc}" alt="" aria-hidden="true" onerror="this.style.display='none'">
         </div>
         <div class="tg-aud-name">${escapeHtml(j.name)}</div>
         <div class="tg-aud-domain">${escapeHtml(j.domain)}</div>
@@ -1348,7 +1418,10 @@
   const chatTyping = $('tg-chat-typing');
 
   function addChatMessage(opts){
-    // opts: { kind: 'active'|'audience'|'user'|'system', name, role, body }
+    // opts: { kind: 'active'|'audience'|'user'|'system', name, role, body, judgeId? }
+    // judgeId (optional) ties the message to a judge card so flashSpeaker
+    // can briefly highlight that judge's panel or audience portrait while
+    // their line is being read.
     if (!chatStream) return;
     const msg = document.createElement('div');
     msg.className = 'tg-chat-msg is-' + (opts.kind || 'system');
@@ -1366,6 +1439,28 @@
     }
     chatStream.appendChild(msg);
     chatStream.scrollTop = chatStream.scrollHeight;
+    if (opts.judgeId && (opts.kind === 'active' || opts.kind === 'audience')){
+      flashSpeaker(opts.judgeId);
+    }
+  }
+
+  // Briefly highlight the speaking judge's panel or audience card. The CSS
+  // .is-speaking class on the card pumps the spotlight; we leave it on for
+  // 3.2 seconds (long enough that the user reads the chat message and
+  // associates voice with face), then remove it. Idempotent - re-flashing
+  // a still-flashing card just resets the timer.
+  const _flashTimers = new Map();
+  function flashSpeaker(judgeId){
+    const card = document.querySelector('.tg-panel-judge[data-judge-id="' + CSS.escape(judgeId) + '"]')
+              || document.querySelector('.tg-aud-judge[data-judge-id="' + CSS.escape(judgeId) + '"]');
+    if (!card) return;
+    card.classList.add('is-speaking');
+    if (_flashTimers.has(judgeId)) clearTimeout(_flashTimers.get(judgeId));
+    const t = setTimeout(() => {
+      card.classList.remove('is-speaking');
+      _flashTimers.delete(judgeId);
+    }, 3200);
+    _flashTimers.set(judgeId, t);
   }
 
   function showTyping(name){
@@ -1526,6 +1621,7 @@
           name: judge.name,
           role: 'On the panel · ' + dimensionLabel + ' ' + f.score + '/10',
           body: f.finding,
+          judgeId: judge.id,
         });
       }
       await wait(400);
@@ -1609,6 +1705,7 @@
         name: firstAudience.name,
         role: 'Audience',
         body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
+        judgeId: firstAudience.id,
       });
     }
 
