@@ -1407,7 +1407,7 @@
     if (state.submissionId && state.selected.size === 3){
       // Real Stage 1: three judges, parallel server-side.
       setTimeout(() => {
-        runStageClarity(chosenList, firstAudience);
+        runEvaluation(chosenList, firstAudience);
       }, startMs);
       return;
     }
@@ -1440,26 +1440,25 @@
     }
   }
 
-  // Stage 1 Clarity evaluation for the three chosen judges. One backend
-  // call, three Anthropic calls server-side in parallel, then the client
-  // staggers the three findings into the chat panel with typing
-  // indicators between them so the user reads them like a live panel.
-  async function runStageClarity(chosenList, firstAudience){
+  // Wait helper for sequencing the stages with breathing room between.
+  function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+  // Generic single-stage runner. Posts to the generic stage evaluator
+  // with a dimension parameter, then staggers the 3 findings into the
+  // chat with typing beats and lands the dimension's triangulation line.
+  // Returns the payload (or null on failure). Does NOT render the
+  // cross-stage verdict, audience heckle, or report CTA - those are the
+  // sequence-level concerns owned by runEvaluation().
+  async function runStage(dimension, dimensionLabel, chosenList){
     const triad = chosenList.map(j => j.id);
 
-    // Show the first judge "thinking" while the backend runs all three.
     showTyping(chosenList[0].name);
 
-    // Pull the visitor name from sessionStorage (saved by the welcome modal)
-    // so the judges address them by name in their findings. Empty string is
-    // fine - the evaluator treats it as "no name provided" and falls back
-    // to neutral second-person.
     let visitorName = '';
     try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
 
-    // Pull the EP corridor revision log so judges (Selene specifically) can
-    // distinguish visitor-original prose from EP-rewritten prose. The function
-    // ignores it for every judge except the AI-tell lens.
+    // Revision log only matters to Selene's Clarity-stage AI-tell lens.
+    // Send it on every stage anyway - server ignores it when not needed.
     let revisions = [];
     try {
       const raw = sessionStorage.getItem('tg_ep_revisions');
@@ -1471,10 +1470,16 @@
 
     let payload;
     try {
-      const resp = await fetch('/.netlify/functions/tg-evaluate-stage-clarity', {
+      const resp = await fetch('/.netlify/functions/tg-evaluate-stage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ submission_id: state.submissionId, triad, visitor_name: visitorName, revisions }),
+        body: JSON.stringify({
+          submission_id: state.submissionId,
+          triad,
+          dimension,
+          visitor_name: visitorName,
+          revisions,
+        }),
       });
       if (!resp.ok){
         const detail = await resp.text().catch(() => '');
@@ -1482,19 +1487,16 @@
       }
       payload = await resp.json();
     } catch (err) {
-      console.warn('[tg-eval-stage] failed', err);
+      console.warn('[tg-eval-stage:' + dimension + '] failed', err);
       hideTyping();
-      // Fall back to one demo line so the chamber is not silent.
       addChatMessage({
         kind: 'system',
-        body: 'The panel could not be reached. Refresh and try again.',
+        body: 'The panel could not complete ' + dimensionLabel + '. Refresh and try again.',
       });
-      return;
+      return null;
     }
 
     const findings = Array.isArray(payload.findings) ? payload.findings : [];
-    // Re-order findings to match the user's chosen triad order (server may
-    // return in any order due to Promise.all settling).
     const byId = new Map(findings.map(f => [f.judge_id, f]));
     const ordered = chosenList.map(j => byId.get(j.id)).filter(Boolean);
 
@@ -1502,70 +1504,111 @@
 
     // Walk each finding into the chat with a typing beat in between.
     // Beat: 1.6s typing, 0.4s reveal, 1.6s typing for next, etc.
-    let when = 0;
-    ordered.forEach((f, idx) => {
+    // Use Promises chained with awaits instead of setTimeout chains so
+    // the outer orchestrator can await stage completion before
+    // sequencing the next stage.
+    for (let idx = 0; idx < ordered.length; idx++){
+      const f = ordered[idx];
       const judge = chosenList.find(j => j.id === f.judge_id);
       if (idx > 0){
-        setTimeout(() => showTyping(judge.name), when);
-        when += 1600;
-      }
-      setTimeout(() => {
+        showTyping(judge.name);
+        await wait(1600);
         hideTyping();
-        if (f.error || !f.finding){
-          addChatMessage({
-            kind: 'system',
-            body: judge.name + ' could not complete this round.',
-          });
-        } else {
-          addChatMessage({
-            kind: 'active',
-            name: judge.name,
-            role: 'On the panel · Clarity ' + f.score + '/10',
-            body: f.finding,
-          });
-        }
-      }, when);
-      when += 400;
-    });
+      }
+      if (f.error || !f.finding){
+        addChatMessage({
+          kind: 'system',
+          body: judge.name + ' could not complete ' + dimensionLabel + '.',
+        });
+      } else {
+        addChatMessage({
+          kind: 'active',
+          name: judge.name,
+          role: 'On the panel · ' + dimensionLabel + ' ' + f.score + '/10',
+          body: f.finding,
+        });
+      }
+      await wait(400);
+    }
 
-    // Triangulation verdict. The math over the three findings (server-
-    // computed). 'agreement' = tight cluster, 'conflict' = wide spread,
-    // 'middle' = somewhere in between. Lands as a system message so it
-    // reads as the room's collective read, not any one judge's voice.
+    // Per-dimension triangulation line. The matrix is multi-dimensional
+    // (accumulates as stages complete), but we only narrate THIS
+    // dimension's line here. The cross-dimension composite lands at
+    // sequence end via runEvaluation.
     if (payload.triangulation){
-      setTimeout(() => {
-        addChatMessage({
-          kind: 'system',
-          body: formatTriangulationLine(payload.triangulation),
-        });
-      }, when + 1000);
-      when += 1000;
+      await wait(1000);
+      addChatMessage({
+        kind: 'system',
+        body: formatDimensionLine(dimension, dimensionLabel, payload.triangulation),
+      });
     }
 
-    // Audience heckle lands after the verdict.
+    return payload;
+  }
+
+  // Sequence orchestrator. Runs Stage 1 (Clarity) then Stage 2 (Viability)
+  // back to back, with a transition system message between them. After
+  // both stages settle, drops the cross-dimension composite, the audience
+  // heckle, and the report CTA.
+  async function runEvaluation(chosenList, firstAudience){
+    // Stage 1: Clarity
+    const clarityPayload = await runStage('clarity', 'Clarity', chosenList);
+    if (!clarityPayload) return;  // hard failure already surfaced
+
+    // Transition into Stage 2.
+    await wait(1400);
+    addChatMessage({
+      kind: 'system',
+      body: 'Next dimension: Viability. The same three judges, a different question - does this hold up as a real thing.',
+    });
+    await wait(900);
+
+    // Stage 2: Viability
+    const viabilityPayload = await runStage('viability', 'Viability', chosenList);
+    if (!viabilityPayload) {
+      // Even on partial failure, fire the CTA if Clarity completed - the
+      // visitor still has a meaningful report.
+      await wait(1500);
+      addChatMessage({
+        kind: 'system',
+        body: 'Your routing report is ready. Walk out the other side ▸',
+      });
+      showReportCta(clarityPayload.evaluation_id);
+      return;
+    }
+
+    // Cross-dimension composite. The triangulation in viabilityPayload
+    // already contains BOTH dimensions (server-side upserts the matrix
+    // each stage). Land the room's collective read across everything.
+    if (viabilityPayload.triangulation){
+      await wait(1200);
+      addChatMessage({
+        kind: 'system',
+        body: formatCrossDimensionVerdict(viabilityPayload.triangulation),
+      });
+    }
+
+    // Audience heckle.
     if (firstAudience){
-      setTimeout(() => {
-        const targetedHeckle = chosenList[0] && HECKLES_ABOUT_ACTIVE[chosenList[0].id];
-        addChatMessage({
-          kind: 'audience',
-          name: firstAudience.name,
-          role: 'Audience',
-          body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
-        });
-      }, when + 1200);
-      when += 1200;
+      await wait(1200);
+      const targetedHeckle = chosenList[0] && HECKLES_ABOUT_ACTIVE[chosenList[0].id];
+      addChatMessage({
+        kind: 'audience',
+        name: firstAudience.name,
+        role: 'Audience',
+        body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
+      });
     }
 
-    // Routing report CTA. Lands last so the user sees the conversation
-    // resolve, then has a clean 'walk out the other side' affordance.
-    if (payload.evaluation_id){
-      setTimeout(() => {
-        addChatMessage({
-          kind: 'system',
-          body: 'Your routing report is ready. Walk out the other side ▸',
-        });
-        showReportCta(payload.evaluation_id);
-      }, when + 1500);
+    // Routing report CTA.
+    const evaluationId = viabilityPayload.evaluation_id || clarityPayload.evaluation_id;
+    if (evaluationId){
+      await wait(1500);
+      addChatMessage({
+        kind: 'system',
+        body: 'Your routing report is ready. Walk out the other side ▸',
+      });
+      showReportCta(evaluationId);
     }
   }
 
@@ -1594,20 +1637,43 @@
     chatStream.scrollTop = chatStream.scrollHeight;
   }
 
-  // Render the triangulation in plain English. Scores are 0-10. Composite
-  // is 0-1 (normalized mean). Verdict drives the framing.
-  function formatTriangulationLine(t){
-    const composite10 = Math.round((t.composite_score || 0) * 100) / 10; // back to 0-10 with 1 decimal
-    const scores = Object.values((t.matrix && t.matrix.clarity) || {});
-    const min = scores.length ? Math.min(...scores) : 0;
-    const max = scores.length ? Math.max(...scores) : 0;
+  // Per-dimension triangulation line. Reads ONLY this dimension's slice
+  // of the multi-dimensional matrix (server already merged it with prior
+  // stages). Verdict / framing per-dim is derived from the spread of
+  // THIS dimension's scores, not the cross-dim composite.
+  function formatDimensionLine(dimension, label, t){
+    const dimMatrix = (t.matrix && t.matrix[dimension]) || {};
+    const scores = Object.values(dimMatrix).filter(s => typeof s === 'number');
+    if (!scores.length) return `${label}: no scores returned.`;
+    const min = Math.min(...scores);
+    const max = Math.max(...scores);
+    const mean = scores.reduce((a, b) => a + b, 0) / scores.length;
+    const avg10 = Math.round(mean * 10) / 10;
+    const normalizedSpread = (max - min) / 10;
+    if (normalizedSpread <= 0.15){
+      return `Panel agreement on ${label}. The room reads it at ${avg10}/10. Tight cluster.`;
+    }
+    if (normalizedSpread >= 0.35){
+      return `Panel split on ${label}. Scores ranged ${min} to ${max}. Your idea reads differently to different judges.`;
+    }
+    return `Panel mixed on ${label}. Average ${avg10}/10, spread ${min} to ${max}. Some room to tighten.`;
+  }
+
+  // Cross-dimension composite verdict. Lands at the end of runEvaluation
+  // after every dimension has been scored. Uses the server's already-
+  // computed composite_score (mean across all dimensions) and the
+  // verdict it derived (agreement / conflict / middle across dimensions).
+  function formatCrossDimensionVerdict(t){
+    const composite10 = Math.round((t.composite_score || 0) * 100) / 10;
+    const dimensionCount = Object.keys(t.matrix || {}).length;
+    const noun = dimensionCount === 1 ? 'one dimension' : `${dimensionCount} dimensions`;
     if (t.verdict === 'agreement'){
-      return `Panel agreement on Clarity. The room reads it at ${composite10}/10. Tight cluster.`;
+      return `Across ${noun}, the panel agrees. Composite ${composite10}/10. The room reads this the same way.`;
     }
     if (t.verdict === 'conflict'){
-      return `Panel split on Clarity. Scores ranged ${min} to ${max}. Your idea reads differently to different judges.`;
+      return `Across ${noun}, the panel splits. Composite ${composite10}/10. At least one dimension reads differently to different judges - read the full report for where.`;
     }
-    return `Panel mixed on Clarity. Average ${composite10}/10, spread ${min} to ${max}. Some room to tighten.`;
+    return `Across ${noun}, the panel is partially aligned. Composite ${composite10}/10.`;
   }
 
   function onChatSubmit(e){

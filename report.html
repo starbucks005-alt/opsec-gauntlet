@@ -226,6 +226,24 @@
   }
   .state-error .state-text{color:var(--crimson-bright);}
 
+  /* Per-dimension grouping inside the panel section (multi-stage reports). */
+  .finding-group{ margin-bottom:1.7rem; }
+  .finding-group:last-child{ margin-bottom:0; }
+  .finding-group-title{
+    font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700;
+    color:var(--gold-light); margin:0 0 0.85rem; line-height:1.25;
+    padding-bottom:0.4rem; border-bottom:1px dashed rgba(184,146,42,0.25);
+    display:flex; align-items:baseline; gap:0.6rem;
+  }
+  .dim-chip{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.14em;
+    color:var(--cream);
+    padding:0.25rem 0.55rem; border:1px solid var(--rule);
+    background:rgba(184,146,42,0.06);
+  }
+
+  /* Update the routing recommendation copy to match multi-stage framing. */
+
   /* ── Deliverable sections (brief + work log) ──────────────────────────
      Sourced from sessionStorage. If absent, the sections do not render
      and the report degrades to the chamber-view it has shipped with. */
@@ -522,14 +540,32 @@
     return 'Panel mixed';
   }
 
-  function formatSpread(matrix){
-    if (!matrix || !matrix.clarity) return '';
-    const scores = Object.values(matrix.clarity);
-    if (!scores.length) return '';
-    const min = Math.min(...scores);
-    const max = Math.max(...scores);
-    if (min === max) return `Everyone scored ${min}.`;
-    return `Scores ranged ${min} to ${max}.`;
+  // Display label for a dimension key.
+  const DIMENSION_LABELS = {
+    clarity:    'Clarity',
+    viability:  'Viability',
+    risk:       'Risk',
+    narrative:  'Narrative',
+    evidence:   'Evidence',
+    cultural:   'Cultural',
+    psych:      'Psych',
+    compliance: 'Compliance',
+    structure:  'Structure',
+  };
+  function dimensionLabel(dim){ return DIMENSION_LABELS[dim] || String(dim || '').replace(/^\w/, c => c.toUpperCase()); }
+
+  // Spread summary across all dimensions present in the matrix.
+  function formatSpreadAll(matrix){
+    if (!matrix || typeof matrix !== 'object') return '';
+    const keys = Object.keys(matrix);
+    if (!keys.length) return '';
+    const allScores = [];
+    keys.forEach(k => Object.values(matrix[k] || {}).forEach(s => { if (typeof s === 'number') allScores.push(s); }));
+    if (!allScores.length) return '';
+    const min = Math.min(...allScores);
+    const max = Math.max(...allScores);
+    if (min === max) return `Every judge, every dimension scored ${min}.`;
+    return `Scores ranged ${min} to ${max} across ${keys.length} dimension${keys.length === 1 ? '' : 's'}.`;
   }
 
   // Group revisions by EP id, in the order EPs first appear in the log.
@@ -615,41 +651,87 @@
       : 'middle'
     ) : null;
 
+    // Discover which dimensions are present in this evaluation. Each
+    // judge_output row has a `stage` (the dimension) and a dimension_scores
+    // map (typically { <dim>: <int> }). Group outputs by dimension in the
+    // order dimensions first appear.
+    const dimensionsPresent = [];
+    const outputsByDimension = {};
+    judgeOutputs.forEach(o => {
+      // Prefer the row's stage field; fall back to any key in dimension_scores.
+      let dim = String(o.stage || '').toLowerCase();
+      if (!dim && o.dimension_scores) {
+        const k = Object.keys(o.dimension_scores)[0];
+        if (k) dim = String(k).toLowerCase();
+      }
+      if (!dim) return;
+      if (!outputsByDimension[dim]) {
+        outputsByDimension[dim] = [];
+        dimensionsPresent.push(dim);
+      }
+      outputsByDimension[dim].push(o);
+    });
+    const dimCount = dimensionsPresent.length;
+    const compositeContext = dimCount === 0 ? 'no dimensions yet'
+                          : dimCount === 1 ? `on ${dimensionLabel(dimensionsPresent[0])}`
+                          : `across ${dimCount} dimensions`;
+
     const compositeBlock = tri ? `
       <div class="composite is-${verdict}">
         <div class="composite-number">${composite10}<span class="of">/10</span></div>
         <div class="composite-info">
-          <div class="composite-verdict-label">${escapeHtml(formatVerdictLabel(verdict))} on Clarity</div>
+          <div class="composite-verdict-label">${escapeHtml(formatVerdictLabel(verdict))} ${escapeHtml(compositeContext)}</div>
           <div class="composite-verdict">${verdict === 'agreement' ? 'The room reads it the same way.'
                                        : verdict === 'conflict'  ? 'The room reads it differently.'
                                        : 'The room is partially aligned.'}</div>
-          <div class="composite-spread">${escapeHtml(formatSpread(tri.matrix))}</div>
+          <div class="composite-spread">${escapeHtml(formatSpreadAll(tri.matrix))}</div>
         </div>
       </div>` : '';
 
-    const findingCards = judgeOutputs.map(o => {
-      const j = judgesById[o.judge_id] || { name: o.judge_id, domain: '' };
-      const firstName = imageFirstName(j.name);
-      const score = (o.dimension_scores && (o.dimension_scores.clarity ?? o.dimension_scores.Clarity)) ?? null;
-      const conf  = Math.round((o.confidence || 0) * 100);
+    // Per-dimension finding blocks. Each block shows the dimension name +
+    // the 3 judge cards for that dimension. Order = dimensions first
+    // appearance in the judge_outputs array (server returns in insert
+    // order, so this respects the chamber's stage sequence).
+    const findingBlocks = dimensionsPresent.map(dim => {
+      const cards = outputsByDimension[dim].map(o => {
+        const j = judgesById[o.judge_id] || { name: o.judge_id, domain: '' };
+        const firstName = imageFirstName(j.name);
+        const score = (o.dimension_scores && (o.dimension_scores[dim] ?? o.dimension_scores[dimensionLabel(dim)])) ?? null;
+        const conf  = Math.round((o.confidence || 0) * 100);
+        return `
+          <div class="finding ${score == null ? 'is-error' : ''}">
+            <div class="finding-portrait">
+              <img src="Judges/${escapeHtml(firstName)}_eyes_open.jpg" alt="${escapeHtml(j.name)}"
+                   onerror="this.style.display='none'">
+            </div>
+            <div class="finding-body">
+              <div class="finding-name">${escapeHtml(j.name)}</div>
+              <div class="finding-domain">${escapeHtml(j.domain || '')}</div>
+              <p class="finding-text">${escapeHtml(o.stage_critique || '')}</p>
+            </div>
+            <div class="finding-score">
+              ${score == null ? '—' : score + '<span class="of">/10</span>'}
+              <div class="finding-confidence">Conf ${conf}%</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      const dimMatrix = (tri && tri.matrix && tri.matrix[dim]) || {};
+      const dimScores = Object.values(dimMatrix).filter(s => typeof s === 'number');
+      const dimMean = dimScores.length ? Math.round((dimScores.reduce((a,b)=>a+b,0)/dimScores.length) * 10) / 10 : null;
+      const dimChip = dimMean != null ? ` <span class="dim-chip">${dimMean}/10</span>` : '';
       return `
-        <div class="finding ${score == null ? 'is-error' : ''}">
-          <div class="finding-portrait">
-            <img src="Judges/${escapeHtml(firstName)}_eyes_open.jpg" alt="${escapeHtml(j.name)}"
-                 onerror="this.style.display='none'">
-          </div>
-          <div class="finding-body">
-            <div class="finding-name">${escapeHtml(j.name)}</div>
-            <div class="finding-domain">${escapeHtml(j.domain || '')}</div>
-            <p class="finding-text">${escapeHtml(o.stage_critique || '')}</p>
-          </div>
-          <div class="finding-score">
-            ${score == null ? '—' : score + '<span class="of">/10</span>'}
-            <div class="finding-confidence">Conf ${conf}%</div>
-          </div>
+        <div class="finding-group">
+          <h3 class="finding-group-title">${escapeHtml(dimensionLabel(dim))}${dimChip}</h3>
+          <div class="findings">${cards}</div>
         </div>
       `;
     }).join('');
+
+    // Section title scales by dimension count.
+    const panelTitle = dimCount === 1
+      ? 'Three judges. <em>One dimension.</em>'
+      : `Three judges. <em>${dimCount} dimensions.</em>`;
 
     const routing = buildRoutingRecommendation(tri ? { ...tri, verdict } : null, judgeOutputs);
     const routingBlock = `
@@ -717,7 +799,7 @@
       <div class="report-eyebrow">Routing Report</div>
       <h1 class="report-title">${headlineTitle}</h1>
       <p class="report-subline">"${escapeHtml(submissionTitle)}"</p>
-      <div class="report-meta">Stage 1 · Clarity · Evaluation ${escapeHtml(evalRow.id.slice(0, 8))}${completedAt ? ' · ' + escapeHtml(completedAt) : ''}</div>
+      <div class="report-meta">${dimCount === 0 ? 'No dimensions scored' : dimensionsPresent.map(dimensionLabel).join(' &middot; ')} &middot; Evaluation ${escapeHtml(evalRow.id.slice(0, 8))}${completedAt ? ' &middot; ' + escapeHtml(completedAt) : ''}</div>
 
       ${tocBlock}
 
@@ -725,8 +807,8 @@
 
       <section class="section" id="panel">
         <div class="section-eyebrow">What the panel said</div>
-        <h2 class="section-title">Three judges. <em>One dimension.</em></h2>
-        <div class="findings">${findingCards}</div>
+        <h2 class="section-title">${panelTitle}</h2>
+        ${findingBlocks}
       </section>
 
       ${deliverableBlock}
