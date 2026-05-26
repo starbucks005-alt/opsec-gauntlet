@@ -170,6 +170,18 @@
     timeout = 26
     included_files = ["config/**"]
 
+  [functions.tg-arjun-sourcing]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-arjun-regulatory]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-arjun-prototype]
+    timeout = 26
+    included_files = ["config/**"]
+
   [functions.tg-matthew-psych]
     timeout = 26
     included_files = ["config/**"]

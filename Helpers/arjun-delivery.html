@@ -317,6 +317,39 @@
       <div class="zh-result" data-at="result"></div>
     </div>
 
+    <!-- Sourcing Map Generator -->
+    <div class="zh-card" data-at-tool="sourcing">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Sourcing map</span>
+        <span class="zh-card-eyebrow-note">Bill of materials + channels per category</span>
+      </div>
+      <p class="rt-tool-blurb">Arjun reads your brief and returns the part categories that make up your product, 2-3 example components per category, and 2-3 sourcing channels per category (Mouser, Digi-Key, Alibaba, McMaster-Carr, ThomasNet, MakersRow, JLCPCB, etc.) with what each channel is best for and the trap to watch. Plus critical-path warnings naming any single-source dependencies to de-risk.</p>
+      <button type="button" class="zh-generate" data-at="generate">Build the sourcing map &rarr;</button>
+      <div class="zh-result" data-at="result"></div>
+    </div>
+
+    <!-- Regulatory Path Generator -->
+    <div class="zh-card" data-at-tool="regulatory">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Regulatory path</span>
+        <span class="zh-card-eyebrow-note">Classification + route + first step</span>
+      </div>
+      <p class="rt-tool-blurb">Arjun reads your brief and tells you whether the product touches FDA, FCC, CPSC, REACH, CPSIA, EU MDR, food/cosmetics, or privacy regimes. If yes: names the routes (510(k), Part 15, CPSIA testing, CE mark, etc.) with realistic timeline and cost ranges plus the first concrete step. If no: says so plainly and names the residual compliance items that still apply (privacy, advertising, accessibility). This is a map, not legal advice.</p>
+      <button type="button" class="zh-generate" data-at="generate">Map the regulatory path &rarr;</button>
+      <div class="zh-result" data-at="result"></div>
+    </div>
+
+    <!-- Prototype Plan Generator -->
+    <div class="zh-card" data-at-tool="prototype">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Prototype plan</span>
+        <span class="zh-card-eyebrow-note">v0 -> v0.5 -> v1, cheap to design-intent</span>
+      </div>
+      <p class="rt-tool-blurb">Arjun reads your brief and returns a three-stage prototype plan: cheap-and-fast v0, functional mock v0.5, design-intent v1. For each stage: what to build, where to build it (makerspace, Shapeways, Protolabs, kitchen table, JLCPCB, Replit, etc.), realistic cost range, realistic time range, and what learning the stage validates. Plus the signal that means you are ready to move to the next stage.</p>
+      <button type="button" class="zh-generate" data-at="generate">Stage the prototypes &rarr;</button>
+      <div class="zh-result" data-at="result"></div>
+    </div>
+
     <!-- The Maker's Code -->
     <header class="zh-section-head">
       <h2>The Maker's Code.</h2>
@@ -633,6 +666,183 @@
   .at-shape p{
     font-family:'Cormorant Garamond',serif; font-size:0.93rem; line-height:1.45;
     color:var(--text); margin:0;
+  }
+
+  /* ── Sourcing Map blocks ──────────────────────────────────────────── */
+  .at-cat-list{ display:flex; flex-direction:column; gap:0.6rem; }
+  .at-cat{
+    padding:0.8rem 0.95rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold);
+  }
+  .at-cat-name{
+    font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.45rem; line-height:1.25;
+  }
+  .at-cat-parts{
+    display:flex; flex-wrap:wrap; gap:0.4rem;
+    margin-bottom:0.55rem;
+  }
+  .at-chip{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.12em;
+    color:var(--gold-light);
+    padding:0.25rem 0.55rem;
+    background:rgba(212,170,74,0.06); border:1px solid rgba(212,170,74,0.3);
+  }
+  .at-chan-list{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:0.45rem;
+  }
+  .at-chan{
+    padding:0.55rem 0.75rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+  }
+  .at-chan-name{
+    font-family:'Playfair Display',serif; font-size:0.98rem; font-weight:700;
+    color:var(--cream); margin-bottom:0.3rem;
+  }
+  .at-chan-best,
+  .at-chan-gotcha{
+    font-family:'Cormorant Garamond',serif; font-size:0.88rem; line-height:1.4;
+    color:var(--text); margin:0 0 0.2rem;
+  }
+  .at-chan-gotcha{ margin-bottom:0; color:var(--text-dim); font-style:italic; }
+  .at-warn-list{
+    display:flex; flex-direction:column; gap:0.5rem;
+  }
+  .at-warn{
+    padding:0.7rem 0.9rem;
+    background:rgba(192,57,43,0.04); border-left:3px solid var(--gauntlet-consequence);
+  }
+  .at-warn h4{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--gauntlet-consequence); margin:0 0 0.4rem; line-height:1.25;
+  }
+  .at-warn-risk,
+  .at-warn-derisk{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0 0 0.25rem;
+  }
+  .at-warn-derisk{ margin-bottom:0; }
+
+  /* ── Regulatory Path blocks ──────────────────────────────────────── */
+  .at-class{
+    padding:0.8rem 1rem;
+    background:rgba(212,170,74,0.06); border:1px solid rgba(212,170,74,0.45);
+    border-left:3px solid var(--gold-light);
+    display:flex; gap:0.7rem; align-items:center; flex-wrap:wrap;
+  }
+  .at-class-label{
+    font-family:'Playfair Display',serif; font-size:1.08rem; font-weight:700;
+    color:var(--cream); line-height:1.3;
+    flex:1; min-width:0;
+  }
+  .at-conf{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    padding:0.25rem 0.55rem; border:1px solid var(--rule);
+  }
+  .at-conf-high   { color:#9bd4a3; border-color:rgba(155,212,163,0.5); background:rgba(155,212,163,0.06); }
+  .at-conf-medium { color:#e8aa6f; border-color:rgba(232,170,111,0.5); background:rgba(232,170,111,0.05); }
+  .at-conf-low    { color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.5); background:rgba(192,57,43,0.05); }
+  .at-route-list{ display:flex; flex-direction:column; gap:0.55rem; }
+  .at-route{
+    padding:0.75rem 0.9rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold);
+  }
+  .at-route h4{
+    font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.35rem; line-height:1.25;
+  }
+  .at-route p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0 0 0.4rem;
+  }
+  .at-route-meta{
+    display:flex; gap:1.1rem; flex-wrap:wrap;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-bottom:0.4rem;
+  }
+  .at-route-meta strong{ color:var(--gold-light); }
+  .at-route-step{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--cream); margin:0;
+    padding-top:0.35rem; border-top:1px dashed rgba(184,146,42,0.25);
+  }
+  .at-lab-list{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:0.5rem;
+  }
+  .at-lab{
+    padding:0.65rem 0.85rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+  }
+  .at-lab h4{
+    font-family:'Playfair Display',serif; font-size:0.98rem; font-weight:700;
+    color:var(--gold-light); margin:0 0 0.3rem; line-height:1.25;
+  }
+  .at-lab p{
+    font-family:'Cormorant Garamond',serif; font-size:0.9rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+
+  /* ── Prototype Plan blocks ───────────────────────────────────────── */
+  .at-stage-card-list{ display:flex; flex-direction:column; gap:0.55rem; }
+  .at-stage-card{
+    padding:0.75rem 0.95rem;
+    background:rgba(184,146,42,0.04); border-left:3px solid var(--gold);
+  }
+  .at-stage-card-head{
+    display:flex; gap:0.55rem; align-items:baseline; flex-wrap:wrap;
+    margin-bottom:0.45rem;
+  }
+  .at-stage-card-head .at-stage{
+    flex-shrink:0;
+  }
+  .at-stage-card-head h4{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--cream); margin:0; line-height:1.3;
+    flex:1; min-width:0;
+  }
+  .at-stage-where{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0 0 0.4rem;
+  }
+  .at-stage-meta{
+    display:flex; gap:1.1rem; flex-wrap:wrap;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-bottom:0.4rem;
+  }
+  .at-stage-meta strong{ color:var(--gold-light); }
+  .at-stage-learn{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); font-style:italic;
+    margin:0; padding-top:0.35rem;
+    border-top:1px dashed rgba(184,146,42,0.25);
+  }
+
+  /* Reuse .iv-gap (highlighted paragraph) and .ct-kill (crimson block)
+     from sibling hubs so the "progression note" and "one thing to avoid"
+     blocks render the same way they do elsewhere. Their styles live in
+     other hub pages; redeclare a minimal version here so this office is
+     self-contained. */
+  .iv-gap{
+    padding:0.75rem 0.95rem;
+    background:rgba(0,0,0,0.35); border:1px solid rgba(212,170,74,0.4);
+    border-left:3px solid var(--gold-light);
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem; line-height:1.5;
+    color:var(--cream);
+  }
+  .ct-kill{
+    padding:0.75rem 1rem;
+    background:rgba(192,57,43,0.05); border-left:3px solid var(--gauntlet-consequence);
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.5;
+    color:var(--cream); font-style:italic;
+  }
+  .wt-mini-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    margin-right:0.4rem;
   }
 
   /* Reference grids (rules / traps / platforms) - same shape as Reid's hub */
