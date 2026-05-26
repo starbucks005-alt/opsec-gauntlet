@@ -42,6 +42,13 @@
       render:         renderPsych,
       formatForBrief: formatPsychForBrief,
     },
+    objections: {
+      endpoint:       '/.netlify/functions/tg-matthew-objections',
+      brieflabel:     'Objection Map',
+      bodyForFetch:   () => ({}),
+      render:         renderObjections,
+      formatForBrief: formatObjectionsForBrief,
+    },
   };
 
   function ss(k){ try { return sessionStorage.getItem(k); } catch(_) { return null; } }
@@ -188,6 +195,55 @@
     return { plainText: lines.join('\n'), title: (data.primary_driver && data.primary_driver.driver) ? `primary driver - ${data.primary_driver.driver}` : '' };
   }
 
+  // ── Objection Map renderer ───────────────────────────────────────────
+  function renderObjections(data) {
+    const objections = Array.isArray(data.objections) ? data.objections : [];
+    const killer     = String(data.one_that_kills_it || '');
+    const rationale  = String(data.rationale || '');
+
+    const objHtml = objections.map((o, i) => ''
+      + '<article class="mt-obj">'
+      +   '<div class="mt-obj-head">'
+      +     '<div class="mt-obj-num">' + (i + 1) + '</div>'
+      +     '<div class="mt-obj-quote">"' + escapeHtml(o.the_objection || '') + '"</div>'
+      +     '<span class="mt-obj-driver mt-obj-driver-' + escapeHtml((o.underlying_driver || '').toLowerCase()) + '">' + escapeHtml(o.underlying_driver || '') + '</span>'
+      +   '</div>'
+      +   '<p class="mt-obj-reframe"><span class="wt-mini-label">Reframe:</span> ' + escapeHtml(o.the_reframe || '') + '</p>'
+      +   '<p class="mt-obj-action"><span class="wt-mini-label">Lives here:</span> ' + escapeHtml(o.reframe_in_action || '') + '</p>'
+      + '</article>'
+    ).join('');
+
+    return ''
+      + '<div class="rt-out-block"><div class="rt-out-label">The silent objections</div>'
+      +   '<div class="mt-obj-list">' + objHtml + '</div></div>'
+      + (killer
+          ? '<div class="rt-out-block"><div class="rt-out-label">The one that kills it</div>'
+            + '<div class="ct-kill">' + escapeHtml(killer) + '</div></div>'
+          : '')
+      + (rationale ? '<p class="zh-result-rationale">' + escapeHtml(rationale) + '</p>' : '');
+  }
+
+  function formatObjectionsForBrief(data) {
+    const lines = [];
+    lines.push('THE SILENT OBJECTIONS');
+    (data.objections || []).forEach((o, i) => {
+      lines.push(`  ${i + 1}. "${o.the_objection}"  [driver: ${o.underlying_driver}]`);
+      lines.push(`     Reframe:    ${o.the_reframe}`);
+      lines.push(`     Lives here: ${o.reframe_in_action}`);
+    });
+    if (data.one_that_kills_it) {
+      lines.push('');
+      lines.push('THE ONE THAT KILLS IT');
+      lines.push(`  ${data.one_that_kills_it}`);
+    }
+    if (data.rationale) {
+      lines.push('');
+      lines.push('NOTE');
+      lines.push(`  ${data.rationale}`);
+    }
+    return { plainText: lines.join('\n'), title: 'objection map' };
+  }
+
   async function generate(form, toolKey) {
     const cfg = TOOLS[toolKey];
     if (!cfg) return;
@@ -205,9 +261,14 @@
 
     submitBtn.disabled = true;
     const origLabel = submitBtn.textContent;
-    submitBtn.textContent = 'Reading...';
+    const loadingByTool = {
+      psych:      { btn: 'Reading...', msg: 'Matthew is reading the buyer psychology. About 20-25 seconds.' },
+      objections: { btn: 'Mapping...', msg: 'Matthew is mapping the silent objections. About 20-25 seconds.' },
+    };
+    const ld = loadingByTool[toolKey] || loadingByTool.psych;
+    submitBtn.textContent = ld.btn;
     resultEl.className = 'zh-result is-loading';
-    resultEl.innerHTML = '<div class="zh-result-msg">Matthew is reading. About 20 seconds.</div>';
+    resultEl.innerHTML = '<div class="zh-result-msg">' + ld.msg + '</div>';
 
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort('timeout'), FETCH_TIMEOUT_MS);

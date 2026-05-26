@@ -318,6 +318,17 @@
       <div class="zh-result" data-mt="result"></div>
     </div>
 
+    <!-- Objection Map Generator -->
+    <div class="zh-card" data-mt-tool="objections">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Objection map</span>
+        <span class="zh-card-eyebrow-note">The silent NO the customer never says out loud</span>
+      </div>
+      <p class="rt-tool-blurb">Most customer rejection happens in the customer's own head, before any conversation. They close the tab. They say "I'll think about it." Matthew reads your brief and surfaces 5-8 unconscious objections in the customer's own voice, ties each to the emotional driver it springs from, writes the message-level reframe that acknowledges and redirects, and names the specific place that reframe should live (landing page hero, sales-call opener, FAQ, onboarding email 2). Plus the one silent dealbreaker most likely to kill conversion.</p>
+      <button type="button" class="zh-generate" data-mt="generate">Map the objections &rarr;</button>
+      <div class="zh-result" data-mt="result"></div>
+    </div>
+
     <!-- The Behaviorist's Code -->
     <header class="zh-section-head">
       <h2>The Behaviorist's Code.</h2>
@@ -639,6 +650,63 @@
   .mt-referral p{
     font-family:'Cormorant Garamond',serif; font-size:0.93rem; line-height:1.4;
     color:var(--text); margin:0;
+  }
+
+  /* ── Objection Map blocks (.mt-obj-*) ─────────────────────────────── */
+  .mt-obj-list{ display:flex; flex-direction:column; gap:0.55rem; }
+  .mt-obj{
+    padding:0.75rem 0.95rem;
+    background:rgba(192,57,43,0.04); border-left:3px solid var(--gauntlet-consequence);
+  }
+  .mt-obj-head{
+    display:flex; gap:0.55rem; align-items:baseline; flex-wrap:wrap;
+    margin-bottom:0.5rem;
+    padding-bottom:0.45rem;
+    border-bottom:1px dashed rgba(192,57,43,0.25);
+  }
+  .mt-obj-num{
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.3rem; color:rgba(192,57,43,0.55); line-height:1;
+    flex-shrink:0;
+  }
+  .mt-obj-quote{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1rem; line-height:1.4;
+    color:var(--cream);
+    flex:1; min-width:0;
+  }
+  .mt-obj-driver{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+    flex-shrink:0;
+  }
+  .mt-obj-driver-status,
+  .mt-obj-driver-identity,
+  .mt-obj-driver-mastery     { color:var(--gold-light); border-color:rgba(212,170,74,0.45); background:rgba(212,170,74,0.06); }
+  .mt-obj-driver-control,
+  .mt-obj-driver-certainty   { color:#e8aa6f; border-color:rgba(232,170,111,0.45); background:rgba(232,170,111,0.05); }
+  .mt-obj-driver-belonging,
+  .mt-obj-driver-care        { color:#9bd4a3; border-color:rgba(155,212,163,0.45); background:rgba(155,212,163,0.05); }
+  .mt-obj-driver-fear,
+  .mt-obj-driver-vindication { color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.5); background:rgba(192,57,43,0.05); }
+  .mt-obj-driver-novelty     { color:#b4a1d4; border-color:rgba(180,161,212,0.45); background:rgba(180,161,212,0.05); }
+  .mt-obj-reframe,
+  .mt-obj-action{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0 0 0.3rem;
+  }
+  .mt-obj-action{ margin-bottom:0; color:var(--text-dim); font-style:italic; }
+  .ct-kill{
+    padding:0.75rem 1rem;
+    background:rgba(192,57,43,0.06); border-left:3px solid var(--gauntlet-consequence);
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.5;
+    color:var(--cream); font-style:italic;
+  }
+  .wt-mini-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+    margin-right:0.4rem;
   }
 
   /* Reference grids (rules / traps / platforms) - inherits Reid/Arjun pattern */
