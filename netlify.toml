@@ -181,3 +181,11 @@
   [functions.tg-wren-scout]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-ivy-generate]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-ivy-context]
+    timeout = 26
+    included_files = ["config/**"]
