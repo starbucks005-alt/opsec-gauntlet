@@ -1,5 +1,12 @@
 {
   "sample_id": "sky_high_fitness",
+  "brand_config": {
+    "brand_name": "Skyline Ventures",
+    "tagline": "Hospitality investment intelligence",
+    "initials": "SV",
+    "credit": "Prepared by Skyline Ventures",
+    "footer_credit": "Powered by The Gauntlet"
+  },
   "evaluation": {
     "id": "sample-sky-high-fitness",
     "submission_id": "sample-sky-high-fitness",
