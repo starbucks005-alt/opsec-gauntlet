@@ -1,0 +1,287 @@
+{
+  "sample_id": "healthy_life_smoothies",
+  "evaluation": {
+    "id": "sample-healthy-life-smoothies",
+    "submission_id": "sample-healthy-life-smoothies",
+    "status": "complete",
+    "stage": "compliance",
+    "completed_at": "2026-05-26T15:30:00Z"
+  },
+  "submission": {
+    "id": "sample-healthy-life-smoothies",
+    "title": "Healthy Life Smoothies"
+  },
+  "brief": "HEALTHY LIFE SMOOTHIES - Just Add Smoothies\n\nCONCEPT\nA visually-driven, interactive platform that elevates the smoothie experience for both consumers and smoothie shops / cafes. Combines a digital recipe library with curated ingredient kits and (for businesses) an interactive customer-facing menu system.\n\nTARGET AUDIENCE\n- Smoothie shops and cafes\n- Health-conscious consumers\n\nPRODUCT OFFERINGS\n- Digital Smoothie Library: high-resolution images / looping video, one drink per page with detailed recipes, educational slides on nutritional concepts\n- Curated Ingredient Kits: non-perishable kits tied to specific recipes; mail-order or in-store\n- Interactive Menu (B2B): customers browse, customize, and order via tablet interface at cafes\n- Educational content: ingredient benefits, prep tips, smoothie-type comparisons\n\nSAMPLE RECIPE LIBRARY\nPeanut Butter, Avocado Blueberry, Mango, Orange Julius, Healthy Breakfast, Fruit and Vegetable, Green Monster, Green Avocado Peach, Bloody Mary Smoothie\n\nBUSINESS BENEFITS\n- Increased customer engagement via interactive menu\n- Streamlined smoothie creation with clear recipes\n- New revenue stream: pre-portioned ingredient kit sales\n\nCONSUMER BENEFITS\n- Simplified at-home prep\n- Discovery of new recipes\n- Increased knowledge of nutritional benefits\n\nREVENUE MODEL\n- One-time purchase: downloadable digital library (consumer)\n- Subscription (B2B): monthly / annual for cafes\n- Sales of curated ingredient kits (recurring)\n- Future: revenue share from vending-machine deployments\n\nCOMPETITIVE ADVANTAGE\n- Visually stunning interface\n- Interactive features\n- Curated ingredient kits\n- Educational content layer\n\nNEXT STEPS\n- Develop digital library with high-quality images and recipes\n- Design cafe-side tablet interface\n- Prototype flash-drive / QR code distribution\n- Secure partnerships with industry collaborators\n- Begin vending-machine product development",
+  "ep_reports": [
+    {
+      "ep_id": "matthew_vance",
+      "report_type": "Buyer Psychology Profile",
+      "headline": "Two buyers, two products - and the platform treats them as one",
+      "content": "TWO DISTINCT BUYERS\nThe brief tries to address two psychologically different buyers with one product. This is the brief's largest unaddressed problem.\n\nBUYER 1: The cafe owner (B2B)\nDriver: differentiation against the next smoothie shop. Owner is buying a way to look more premium without paying for a designer. Secondary driver: labor cost reduction (the interactive menu reduces the bartender / counter person's interaction time).\n\nBUYER 2: The consumer (B2C)\nDriver: aspiration. The consumer buys the recipe library imagining the kitchen they'll have, not the kitchen they have. The high-resolution photography sells a lifestyle, not a smoothie. Secondary driver: nutritional virtue.\n\nTHE PROBLEM\nThese are two different sales motions. The B2B sale requires cafe-owner trust, hands-on demos, training, and ongoing support. The B2C sale is impulse-driven, low-touch, social-led. Same company, two go-to-market organizations, two cost structures. The brief should pick one for v1.\n\nRECOMMENDATION\nB2C first. The consumer market is reachable through Instagram/Pinterest without a sales team. Build the recipe library and ingredient kits as a DTC brand, prove the recipes and the photography, then approach cafes from a position of consumer-brand strength in year 2.\n\nWALK TO NEXT EP\n- Carol: this is the classic two-sided-platform validation problem\n- Reid: lead with the consumer brand, not the B2B platform"
+    },
+    {
+      "ep_id": "wren_calloway",
+      "report_type": "Landscape Scout Report",
+      "headline": "Wellness creator collabs are the audience, not cafes",
+      "content": "WHERE IT CAN WORK (top 3)\n1. Health-and-wellness content creators with 50K-500K followers who already post smoothie content. They will buy / license the recipe library as a content asset.\n2. DTC ingredient-kit subscribers - the Misfits Market / Imperfect Foods adjacent customer who wants curated, recipe-tied ingredient drops.\n3. Corporate wellness programs - HR departments looking for healthy-eating content for employee wellness portals.\n\nFOCUS RECOMMENDATION\nWellness content creators are the right beachhead. They will pay for the photography and recipe library because they need fresh content weekly. License the library, take a co-marketing deal. The creator's audience becomes the ingredient-kit customer.\n\nB2B CAFES - WHY NOT FIRST\nCafe owners are slow, suspicious of subscription software, low-margin, and procurement is brutal. The platform's B2B value (interactive menu, kits) is real but the sales cycle is 6-12 months per location.\n\nOTHER USES (same platform, different positioning)\n- Cocktail platform (Just Add Alcohol is the sister product)\n- Soup-of-the-week platform for meal-kit companies\n- Coffee-drink platform for coffee chains\n\nONE THING WREN WOULD NOT DO\nLead with cafe sales. The brief's enthusiasm is misplaced - cafe owners will be the last buyer, not the first."
+    },
+    {
+      "ep_id": "carol_haynes",
+      "report_type": "Pattern Screening Report",
+      "headline": "has_legs (signal 5/10). Two-sided platforms with a content layer struggle.",
+      "content": "PATTERN: content-and-commerce platform for a food category.\n\nWHAT WORKED FOR THIS PATTERN\nThe Feedfeed (food content platform, monetized via brand partnerships), Tasty (BuzzFeed's video food brand, scaled massively then declined), Food52 (community-and-commerce, profitable). The category exists.\n\nWHAT FAILED\nUntappd-for-food (multiple attempts, never reached scale), cafe-management software that tried to add a content layer (Toast considered it, didn't ship), pre-portioned kit-and-content combos that depended on cafe partnerships (most failed in the sales cycle).\n\nYOUR POSITION\nThe content layer (recipe library + photography) is the strongest part of the brief. The commerce layer (ingredient kits) is plausible. The B2B layer (cafe interactive menu) is the weakest part - it's the most expensive to build, the longest sales cycle, and the lowest unit-margin.\n\nLEGS ASSESSMENT: has_legs (signal 5/10)\n\nREASONS FOR\n- The content asset (recipes + photography) is genuinely sellable\n- Ingredient kit DTC has precedent (Misfits, Imperfect, Hungryroot)\n- Smoothie category is large and stable\n\nREASONS AGAINST\n- Three businesses (content, commerce, B2B SaaS) in one brief is too much for v1\n- The cafe-platform value proposition is unclear vs. existing POS systems\n- Direct content competitors (Food52, The Feedfeed, Bon Appetit) have built audience and brand for years\n\nTHE ONE THING THAT KILLS IT\nTrying to launch all three businesses at once. Pick the content + DTC kit business. Park the cafe platform until year 2."
+    },
+    {
+      "ep_id": "reid_callum",
+      "report_type": "Launch Press Release",
+      "headline": "Reposition as a consumer brand, not a platform",
+      "content": "HEALTHY LIFE SMOOTHIES LAUNCHES A RECIPE-AND-INGREDIENT-KIT BRAND FOR HOME SMOOTHIE BUILDERS\n\n[CITY, STATE] - [MONTH DD, YYYY] - Healthy Life Smoothies, a new direct-to-consumer brand combining a 25-recipe digital library with monthly curated ingredient kits, today launched at HealthyLifeSmoothies.com.\n\nEach monthly kit ships with non-perishable ingredients for four smoothies - protein powders, seed and nut mixes, dehydrated superfood add-ins - paired with a digital recipe card that walks the home smoothie maker through preparation, glassware, and nutritional benefits.\n\n\"Most people who buy a blender use it twice and forget about it,\" said [FOUNDER NAME], founder of Healthy Life Smoothies. \"We're shipping the curation that makes the blender worth using every morning - recipes that work, ingredients that don't expire, and the visuals that make you want to actually make the thing.\"\n\nThe monthly subscription is $39, with single-recipe ingredient packs available for $12. A free starter recipe library is available on the website. Future expansion will include partnerships with smoothie shops and cafes for shared ingredient-kit branding.\n\nABOUT HEALTHY LIFE SMOOTHIES\nHealthy Life Smoothies is a recipe-and-ingredient brand built to make healthy smoothie habits work at home.\n\nMEDIA CONTACT\n[NAME] / [EMAIL] / [PHONE]"
+    },
+    {
+      "ep_id": "zara_cole",
+      "report_type": "Content Plan",
+      "headline": "Pinterest + Instagram lead; the photography IS the marketing",
+      "content": "PRIMARY POST - INSTAGRAM REEL (Aesthetic-first)\nA 15-second time-lapse of a Green Monster smoothie being made, beautifully lit, single voiceover line: \"This took me four months to perfect. Now it takes you four minutes.\" CTA: \"link in bio for the recipe.\"\n\nThe visuals are the product. If the photography is not exceptional, the content strategy fails.\n\nFOLLOW-UP CONTENT (45-day calendar)\n- Week 1: aesthetic reel per recipe (one a day for 7 days)\n- Week 2: founder POV - the four-month-perfection story\n- Week 3: ingredient deep-dive (one ingredient, one science note, one recipe)\n- Week 4: bartender / smoothie shop owner POV - \"how I use the recipe library at my shop\" (early creator-cafe partnership)\n- Week 5: subscriber unboxing reels (5 collab creators)\n- Week 6: behind-the-scenes of the photoshoot for the next recipe drop\n\nPINTEREST STRATEGY (parallel)\nEvery recipe card optimized for Pinterest. The platform drives smoothie discovery in a way Instagram doesn't. Pin scheduling 3x daily, vertical-format recipe cards with clear nutrition callouts.\n\nWHAT NOT TO POST\n- Anything that frames the brand as a cafe-management platform (confuses the consumer audience)\n- Process-heavy founder content - the smoothies are the brand, not the founder\n- \"Just Add Alcohol\" content on the same channels (different audience, different platform)\n\nCONVERSION HOOK\nFree download of the \"7-day smoothie reset\" - email gate. Email subscribers convert to the monthly kit at 8-15% within 30 days."
+    },
+    {
+      "ep_id": "ms_ivy",
+      "report_type": "Research & Frameworks",
+      "headline": "Two-sided platforms research suggests sequential, not simultaneous",
+      "content": "FRAMEWORKS\n- Two-Sided Platform Theory (Jean-Charles Rochet, Jean Tirole): platforms with two distinct user types (consumers + cafes) require either a clear primary side first OR strong network effects between sides. The brief implies simultaneous launch, which the literature says is the harder path.\n- Jobs-to-be-Done (Clayton Christensen): the consumer job (\"make a healthy smoothie that doesn't suck\") is different from the cafe-owner job (\"make my menu look premium without hiring a designer\"). Different JTBD means different products.\n- Content-Commerce Convergence (various, post-2018 DTC literature): brands that combine editorial-quality content with product sales (Goop, Food52) have a category playbook. This is the lane.\n\nADJACENT THINKERS\n- David Sacks on PLG (product-led growth) and SaaS adoption - the B2B cafe motion needs PLG mechanics or it dies in a long enterprise sales cycle\n- Tim Spector on nutritional science (his ZOE company is the adjacent reference for nutrition-and-content businesses)\n- Marion Nestle on food labeling and the regulatory baseline for nutritional content claims\n\nPRIOR LITERATURE\nRecipe-and-kit DTC businesses (Blue Apron, HelloFresh, Sun Basket) provide unit-economics benchmarks: ingredient COGS ~30-40%, fulfillment 15-25%, churn at month 3 is the dominant retention question. The brief should anchor its model to those numbers.\n\nRESEARCH GAP\nThere's limited published research on smoothie consumption habits specifically - most nutrition literature treats smoothies as a sub-category of beverages or breakfast. A small consumer-research study (200 home smoothie makers, 8 weeks) could yield publishable findings AND great marketing material.\n\nONE THINKER TO READ FIRST\nClayton Christensen on Jobs-to-be-Done - the realization that B2B and B2C buyers have entirely different jobs is what should reshape the brief."
+    },
+    {
+      "ep_id": "arjun_mehta",
+      "report_type": "Operations / Regulatory",
+      "headline": "Photography + fulfillment are the build; cafe platform is a separate company",
+      "content": "OPERATIONAL FOOTPRINT\nThe brief describes three operations:\n1. Content production (recipe development + photography + video) - studio-style ongoing operation\n2. DTC fulfillment (ingredient kits, subscription management, customer service)\n3. B2B platform (tablet hardware, software, training, support)\n\nThese are three different operations teams. The brief should pick one or two for v1.\n\nRECOMMENDED V1 OPERATIONS\nContent + DTC fulfillment. Skip the B2B platform until DTC has proven product-market fit.\n\nCONTENT PRODUCTION REQUIREMENTS\n- Photography studio (rent or partnership with food-photo studio): $5-15K/month\n- Recipe developer / culinary lead (full-time or contract): $80-120K/year\n- Photography post-production / retouching: $2-5K per recipe drop\n- Video editing for Reels / TikTok: $2-3K/month\n\nDTC FULFILLMENT REQUIREMENTS\n- 3PL partnership for ingredient kit fulfillment: typically $4-7 per shipment + storage\n- Subscription management platform (Recharge, Skio, etc.): $200-500/month\n- Customer support tooling (Gorgias, Zendesk): $200-1000/month\n- Co-packer for ingredient kit assembly: 2-4 month onboarding\n\nINGREDIENT SOURCING\n- Protein powders: established whey / plant-protein suppliers (NOW Foods, Optimum Nutrition, multiple co-packer-grade options)\n- Dehydrated fruit, seeds, nuts: standard food-ingredient supply chain\n- Shelf-life consideration: 9-18 months for the ingredient mix; the kit format should have a printed best-by date\n\nREGULATORY POSTURE\n- FDA food labeling under 21 CFR 101 (standard)\n- Nutritional Facts Panel for each kit (calculated, not measured, requires nutrition labeling software)\n- Allergen disclosure (nuts, dairy, soy)\n- Organic / Non-GMO certifications optional, can be value-add for premium positioning\n- If health claims are made (\"supports heart health\"), FDA structure/function claim rules apply\n\nONE THING TO WATCH\nIngredient-kit shrinkage. If a kit ships with peanut butter powder and the customer gets clumped product because of shipping conditions, the brand-trust cost exceeds the refund cost. Test packaging in real shipping conditions before launching."
+    },
+    {
+      "ep_id": "grant_ellis",
+      "report_type": "Coaching: Elevator Speech, Strengths, Presenter Prep",
+      "headline": "Tell the consumer-brand story; the platform talk loses the room",
+      "content": "ELEVATOR SPEECH (30 seconds)\n\"Healthy Life Smoothies is a recipe-and-ingredient-kit subscription for home smoothie makers. We ship four smoothies' worth of curated, non-perishable ingredients every month, paired with a recipe card and the photography that makes you actually want to make the smoothie. $39 a month, free recipe library on the website. The hook is that the photography is so good people screenshot the recipe before they buy the kit.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. The recipe-and-photography content is genuinely sellable as a standalone asset\n2. Ingredient-kit DTC has working precedent (Blue Apron, HelloFresh, Misfits)\n3. Smoothie category is large, stable, and consumer-mature\n4. Pinterest and Instagram are tailor-made for the visual content strategy\n5. The brand can extend into adjacent categories (cocktails, soups, coffee) without re-platforming\n6. Founder has the recipe and photography taste that defines the brand\n7. Email and creator marketing channels work cheaply for this audience\n8. The kit format dodges most cold-chain fulfillment complexity (non-perishable)\n9. Wellness creator collab opportunities are abundant and aligned\n10. There's a clear year-2 expansion path (cafe partnerships, vending) without depending on it for year 1\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Selene Voss: she'll go right at the two-sided platform problem. Concede early. Lead with the DTC consumer brand; treat the cafe platform as year-2 optional expansion.\n- Devon Sloane: she'll push on the brand voice and visual identity. Have a portfolio shot ready - one recipe card, one Reel, one Pinterest pin. The photography quality is the entire defense.\n- Marcus Holt: he'll push on unit economics. Have these ready: target CAC ($25-40), monthly subscription LTV ($156 at 4-month churn-adjusted lifetime), ingredient COGS (~35% of revenue).\n\nWHEN YOU GET STUCK\nReturn to the photography. Hand the judges your phone with the best three recipe shots. The product sells itself when you stop trying to sell the platform.\n\nDO NOT\n- Describe the cafe platform as a primary v1 product\n- Promise the vending-machine integration (that's a sister product, not yours)\n- Compare to Blue Apron on scale - compare on niche\n- Pitch as a B2B SaaS - the room treats SaaS valuations differently than consumer brands and you'll trip the wrong frame\n\nONE LINE TO REMEMBER\n\"We ship the curation that makes the blender worth using.\""
+    }
+  ],
+  "revisions": [
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Concept paragraph",
+      "before": "A visually-driven, interactive platform that elevates the smoothie experience for both consumers and smoothie shops / cafes. Combines a digital recipe library with curated ingredient kits and (for businesses) an interactive customer-facing menu system.",
+      "after": "A recipe-and-ingredient-kit consumer brand for home smoothie makers, built around 25 photographed recipes and a monthly curated ingredient kit. A B2B cafe platform (interactive menu, shared ingredient kits) is a year-2 expansion, not part of the launch.",
+      "rationale": "The original framing tried to be both a consumer brand and a B2B platform from sentence one. That's the brief's biggest problem. The revised concept commits to consumer-first and explicitly defers the B2B work. This single rewrite is what tightens every downstream decision.",
+      "accepted_at": 1716738000000
+    }
+  ],
+  "judge_outputs": [
+    {
+      "judge_id": "selene_voss",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 6 },
+      "stage_critique": "Terry, the brief describes three businesses (content, kits, B2B platform) without naming which one is the first to ship. Clarity collapses on the question \"what does v1 look like?\" Pick one product. The cafe platform especially has to come off the v1 list.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 6 },
+      "stage_critique": "Terry, the visual identity is clear from the brief's tone but the brand positioning isn't. Are you a recipe brand, a kit brand, or a cafe-platform brand? Each has a different name, voice, and shelf. The current brief reads as all three.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 5 },
+      "stage_critique": "Terry, an investor reads this brief and asks 'what are you?' The brief should answer in one sentence and it currently takes three paragraphs. Recipe-and-kit subscription. That's the answer. The rest is optionality.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, the consumer subscription is viable - the unit economics work at $39/month with reasonable CAC. The B2B platform is not viable on the timeline implied. Build one, prove it, then expand.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, the brand viability depends on whether the photography is genuinely best-in-class. Goop succeeded because Gwyneth's taste was real. Food52 succeeded because Amanda Hesser is a great editor. The founder's taste IS the moat. If the photography is good, this works.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "viability",
+      "dimension_scores": { "viability": 5 },
+      "stage_critique": "Terry, ingredient-kit DTC is a category with significant unit-economics headwinds (look at Blue Apron's stock chart). The viability is real but requires discipline on CAC, churn, and COGS. The brief's numbers are absent. Add them.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the strategic risk is mission creep. Three products at once is the trap. The startup graveyard is full of platforms that tried to serve two audiences simultaneously. Discipline is the risk-mitigation, not capital.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the brand-execution risk is the photography. If the photography is merely good (not exceptional), the brand has no defensible aesthetic and competitors with bigger marketing budgets will copy and outspend. The taste has to be unmistakable.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, kit-DTC churn is the kill risk. Industry average is 50%+ in the first 90 days for new subscribers. Plan for it - the kit format has to deliver something you can't get cheaper at the grocery store, or the subscriber drops at month 2.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the narrative has to choose. \"The recipe brand for home smoothie makers\" is a clean, ownable narrative. \"The platform connecting consumers and cafes through a recipe-driven ingredient ecosystem\" is the deck-speak version that loses the room. Choose the human version.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 7 },
+      "stage_critique": "Terry, the founder's-taste narrative is the strongest available. Why these 25 recipes? Why this photography style? Why now? When the founder voices the personal narrative, the brand voice emerges. Lean into the founder's specific aesthetic claim.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 5 },
+      "stage_critique": "Terry, the narrative for investors is unclear because the business model is unclear. The B2B-vs-B2C ambiguity makes the narrative read like a deck nobody finished editing. Pick the consumer story. Tell it cleanly.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, no evidence on the consumer side. No pre-launch waitlist, no recipe-development user testing, no photography concept tests. The brief asserts the visual is best-in-class but the proof is invisible.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the brand-evidence layer is the proof of taste. Three recipe shots posted on the founder's personal Instagram with the resulting save / share counts would be more evidence than anything in the brief. Build a small portfolio in public before the launch.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the unit-economics evidence is missing. What's your assumed CAC? What's your assumed churn? Without numbers, the investor read is hope, not plan. Add a one-page unit-economics table to the brief.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the cultural moment for premium-curated DTC food is solid. Post-pandemic, consumers re-evaluated kitchen habits and the smoothie category benefited. The brand can ride that wave if the visuals match.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 8 },
+      "stage_critique": "Terry, the cultural fit is strong. Aesthetic food content is having a sustained moment on Pinterest and Instagram, and the smoothie category is exactly the visual category that performs there. The cultural opening is wide for a brand with real taste.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 6 },
+      "stage_critique": "Terry, the consumer cultural fit is good. The investor cultural fit for DTC food brands has softened - the category took valuation hits 2022-2024. Position this as a content-and-commerce brand rather than as a meal-kit company; the multiples are kinder.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the consumer psychology is read correctly - aspiration drives the recipe-library purchase and convenience drives the kit purchase. The buyer-psychology split between B2C and B2B is unaddressed, and that's the core strategic mistake. Pick the B2C psychology and run with it.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the buy-the-lifestyle psychology is correctly identified. The consumer is buying the version of their kitchen that exists in the photography. The brand has to deliver enough of that lifestyle to keep the subscriber post-month-3.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "psych",
+      "dimension_scores": { "psych": 6 },
+      "stage_critique": "Terry, the consumer-aspiration psychology is good. The investor-psychology read - what investor wants to fund another kit-DTC company in 2026 - is the unaddressed question. Reposition the pitch as content-first to get a different audience.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "selene_voss",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 6 },
+      "stage_critique": "Terry, the compliance is straightforward for a CPG food brand - FDA labeling, allergens, nutritional facts. The brief acknowledges none of this in detail. It's a known-cost line item; just budget for it.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "devon_sloane",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 7 },
+      "stage_critique": "Terry, the brand-compliance layer matters - influencer disclosure (FTC), recipe-content attribution if you license from anyone, photography rights chain (everything shot must be work-for-hire or licensed). These are operational hygiene items, not blockers.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "marcus_holt",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 6 },
+      "stage_critique": "Terry, the food-and-beverage compliance is achievable but the brief should specify which states the kit will ship to at launch (state-level food-handling registrations vary). Pick a launch state, get the registrations, then expand.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    }
+  ],
+  "triangulation": {
+    "matrix": {
+      "clarity":    { "selene_voss": 6, "devon_sloane": 6, "marcus_holt": 5 },
+      "viability":  { "selene_voss": 6, "devon_sloane": 6, "marcus_holt": 5 },
+      "risk":       { "selene_voss": 5, "devon_sloane": 5, "marcus_holt": 5 },
+      "narrative":  { "selene_voss": 6, "devon_sloane": 7, "marcus_holt": 5 },
+      "evidence":   { "selene_voss": 4, "devon_sloane": 4, "marcus_holt": 4 },
+      "cultural":   { "selene_voss": 7, "devon_sloane": 8, "marcus_holt": 6 },
+      "psych":      { "selene_voss": 7, "devon_sloane": 8, "marcus_holt": 6 },
+      "compliance": { "selene_voss": 6, "devon_sloane": 7, "marcus_holt": 6 }
+    },
+    "agreement_dimensions": ["clarity", "viability", "risk", "evidence", "compliance"],
+    "conflict_dimensions":  [],
+    "coverage_gaps":        [],
+    "composite_score":      0.55,
+    "verdict":              "agreement"
+  }
+}

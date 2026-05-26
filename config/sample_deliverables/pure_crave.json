@@ -1,0 +1,296 @@
+{
+  "sample_id": "pure_crave",
+  "evaluation": {
+    "id": "sample-pure-crave",
+    "submission_id": "sample-pure-crave",
+    "status": "complete",
+    "stage": "compliance",
+    "completed_at": "2026-05-26T15:30:00Z"
+  },
+  "submission": {
+    "id": "sample-pure-crave",
+    "title": "Pure Crave"
+  },
+  "brief": "PURE CRAVE - Natural Appetite-Suppressant Dessert Gum\n\nCONCEPT\nAn enjoyable and convenient gum formulated with natural ingredients to suppress appetite, specifically targeting after-meal cravings for sweets. Combines the satisfaction of a dessert-like experience with functional ingredients to address a widespread consumer need.\n\nPROBLEM\nConsumers struggle with late-night cravings or overindulgent dessert habits, leading to unhealthy weight management or difficulty sticking to nutritional plans. Existing options are either pharmaceutical (stimulants, prescription appetite suppressants) or unsatisfying low-calorie substitutes that do not address the craving itself.\n\nSOLUTION\nPure Crave is a chewing gum formulated with naturally-sourced gum base, xylitol, and a botanical blend that targets the after-meal sweet craving moment. Dessert-inspired flavors (Cinnamon Roll, Apple Pie, Caramel Apple, Apple Crumble, Chocolate Mint) deliver the indulgence; the botanicals provide subtle support for appetite management.\n\nTARGET MARKET\nPrimary: health-conscious adults looking to manage weight, reduce sugar intake, or control portion sizes. Secondary: individuals following specific dietary plans, foodies seeking unique functional treats.\n\nKEY INGREDIENTS\n- Naturally-sourced gum base: proprietary blend of chicle, arabic, and candelilla gums\n- Xylitol sweetener\n- Vitamin E (antioxidant)\n- Botanical blend: garcinia cambogia, fenugreek, gymnema sylvestre, green tea\n- Functional oils: grapefruit, peppermint, ginger, cinnamon, fennel\n\nIMPORTANT NOTES\nThe use of these botanical ingredients as appetite suppressants has not been scientifically proven; product is positioned as a supplement to a healthy diet and lifestyle, not a meal replacement.\n\nNUTRITION (per 5g piece)\n15 calories, Vitamin E 10% DV, 4g total carbs, 3.75g xylitol, 0g protein/fat/sodium.\n\nCOMPETITIVE LANDSCAPE\nSimply Gum (natural ingredient gum, $13.49/pack) is the direct competitor. Pure Crave differentiates with the appetite-suppressant positioning and dessert-flavor strategy targeting the after-meal moment.\n\nNEXT STEPS\nFinalize botanical blend ratios. Source and qualify manufacturer. Determine regulatory positioning (food vs. supplement). Develop branding and packaging design. Pilot with a focus group on the dessert-flavor / appetite-management positioning.",
+  "ep_reports": [
+    {
+      "ep_id": "matthew_vance",
+      "report_type": "Buyer Psychology Profile",
+      "headline": "Primary driver - permission to enjoy (the dessert without the guilt)",
+      "content": "PRIMARY DRIVER: Permission. The customer isn't buying appetite suppression - they're buying permission to enjoy a dessert moment without the guilt that normally follows. The dessert flavor IS the product; the appetite suppression is the moral cover.\n\nSECONDARY DRIVERS\n- Self-control as identity: \"I'm the kind of person who can stop after one\" is what the gum performs publicly.\n- Ritual: post-meal, the gum becomes the closing punctuation. Replaces the cigarette, the espresso, the actual dessert.\n\nTRIGGER MOMENT\n7-9 PM, post-dinner, the moment the customer would normally walk to the fridge. Pure Crave is the product that fills that 15-second gap between dinner and the decision to open the freezer.\n\nIDENTITY FRAMING\nThe kind of person who treats themselves AND stays on track.\n\nDANGER\nThe appetite-suppressant framing is the wrong primary lever. \"Suppressant\" is medical-adjacent language and triggers regulatory scrutiny AND consumer suspicion. Lead with \"dessert satisfaction\" and let appetite management be the quiet co-benefit. The buyer wants the flavor; the regulator hates the suppression claim.\n\nWALK TO NEXT EP\n- Reid: the brand should be a dessert brand first, a wellness brand second.\n- Arjun: the regulatory positioning question is existential - food vs. supplement determines what the label can say."
+    },
+    {
+      "ep_id": "wren_calloway",
+      "report_type": "Landscape Scout Report",
+      "headline": "GLP-1 patients are the unexpected primary audience",
+      "content": "WHERE IT CAN WORK (top 3)\n1. GLP-1 medication patients (Ozempic, Wegovy, Mounjaro). Density: very high and growing. First signal: organic Reddit / Instagram traction in r/Mounjaro and adjacent communities. These patients have suppressed appetite already but want a flavored ritual that won't break their plan.\n2. Intermittent-fasting practitioners during the eating window's close. Density: medium, vocal community on TikTok and YouTube.\n3. Post-bariatric-surgery patients managing dessert cravings within strict caloric ceilings. Density: thin but high-need.\n\nFOCUS RECOMMENDATION\nGLP-1 patients are the beachhead nobody is targeting. The category exploded in 2024-2025; consumer-product founders are still calibrating. A dessert-gum that works WITH the GLP-1 regimen (without claiming to suppress what's already suppressed) is the right wedge. The TikTok hook writes itself: \"on Mounjaro, but still need a dessert moment.\"\n\nOTHER USES (same product, different positioning)\n- Vegan dessert ritual (the gum is plant-based)\n- Tooth-friendly dessert (xylitol's documented benefit for dental health)\n- Travel-friendly portion control\n\nONE THING WREN WOULD NOT DO\nMarket as \"weight loss.\" The regulatory exposure is severe and the GLP-1 patient already has the weight-loss tool. Position as ritual, not outcome."
+    },
+    {
+      "ep_id": "carol_haynes",
+      "report_type": "Pattern Screening Report",
+      "headline": "has_legs (signal 5/10). Regulatory positioning kills it or makes it.",
+      "content": "PATTERN: functional confectionery with weight-management positioning.\n\nWHAT WORKED FOR THIS PATTERN\nSimply Gum ($13.49/pack, natural-ingredient confectionery, sold into Whole Foods and similar premium retail). Halo Top (low-calorie ice cream, the indulgence-with-cover playbook).\n\nWHAT FAILED\nEvery Western brand that led with \"appetite suppressant\" language hit FDA scrutiny - the line between food and supplement and drug claim is thin, and the FDA does not give the benefit of the doubt on craving / appetite / hunger language.\n\nYOUR POSITION\nThe product is plausible. The positioning as written is dangerous. \"Natural Appetite-Suppressant Dessert Gum\" puts \"suppressant\" right in the name - that single word is what determines whether this is a CPG launch or a supplement launch or a regulatory enforcement letter.\n\nLEGS ASSESSMENT: has_legs (signal 5/10)\n\nREASONS FOR\n- Real consumer need (post-meal dessert moment is universal)\n- GLP-1 wave creates a genuine new audience\n- Premium-confectionery channel is established (Simply Gum proved it)\n\nREASONS AGAINST\n- Botanical efficacy claims are unproven and the brief acknowledges that\n- Regulatory positioning is unresolved\n- Direct competitor (Simply Gum) has shelf space and brand recognition you don't\n\nTHE ONE THING THAT KILLS IT\nLaunching with \"appetite suppressant\" in the marketing copy and receiving an FDA warning letter in month four. Reposition before launch."
+    },
+    {
+      "ep_id": "reid_callum",
+      "report_type": "Launch Press Release",
+      "headline": "Lead with the dessert moment, not the suppression",
+      "content": "PURE CRAVE LAUNCHES DESSERT-FLAVORED FUNCTIONAL GUM FOR THE POST-DINNER MOMENT\n\n[CITY, STATE] - [MONTH DD, YYYY] - Pure Crave, a new line of natural-ingredient chewing gum in five dessert-inspired flavors, today launched at [RETAIL PARTNERS]. Built around the moment after dinner when consumers want a small sweet treat but not the calories or guilt of a full dessert, Pure Crave's lineup includes Cinnamon Roll, Apple Pie, Caramel Apple, Apple Crumble, and Chocolate Mint.\n\nEach 5-gram piece is sweetened with xylitol, contains 15 calories, and is built on a naturally-sourced gum base of chicle, arabic, and candelilla gums.\n\n\"The 8 PM dessert moment is the one consumers tell us they wish they could keep without breaking their plan,\" said [FOUNDER NAME], founder of Pure Crave. \"Pure Crave is built for that exact moment. It's not a suppressant, it's not a supplement, it's a piece of gum that tastes like dessert and ends the meal the way you wanted to end it.\"\n\nPure Crave is available at [RETAIL PARTNERS] and on PureCrave.com starting [DATE], priced at $14.99 per pack.\n\nABOUT PURE CRAVE\nPure Crave is a functional confectionery brand built around natural-ingredient indulgence.\n\nMEDIA CONTACT\n[NAME] / [EMAIL] / [PHONE]"
+    },
+    {
+      "ep_id": "zara_cole",
+      "report_type": "Content Plan",
+      "headline": "TikTok-first, GLP-1 community discovery",
+      "content": "PRIMARY POST - TIKTOK (Founder POV)\n\"I started Pure Crave because every dessert gum on the market tastes like spearmint with sugar. I wanted a gum that actually tastes like a Cinnamon Roll. Five flavors. Fifteen calories. Made for the moment after dinner when you want a little something sweet and you don't want to break your plan. Launching [DATE]. Tag a friend who needs an Apple Pie gum in their life.\"\n\n#dessertgum #postdinner #healthysweets\n\nFOLLOW-UP CONTENT (45-day calendar)\n- Week 1: founder POV - the dessert moment\n- Week 2: each flavor close-up + flavor inspiration story (5 short videos)\n- Week 3: GLP-1 community POV - \"on Mounjaro, but still want my dessert moment\" - one collab creator from r/Mounjaro\n- Week 4: founder visits Simply Gum aisle, points to the dessert-gum gap on the shelf\n- Week 5: review reels from beta-tester audience\n- Week 6: announcement of next two flavors (chosen by community vote)\n\nWHAT NOT TO POST\nAny content that frames Pure Crave as \"weight loss\" or \"suppresses appetite\" or \"replaces dessert.\" Lead with flavor, position as ritual.\n\nCONVERSION HOOK\n\"Five-flavor sampler\" - $19.99, one of each flavor, free shipping. The taste test is the conversion event. Once they try Cinnamon Roll, the repeat purchase is automatic."
+    },
+    {
+      "ep_id": "ms_ivy",
+      "report_type": "Research & Frameworks",
+      "headline": "Botanical efficacy is weak; ritual research is strong",
+      "content": "FRAMEWORKS\n- Mindful Eating (Jan Chozen Bays): post-meal closure ritual is a documented behavioral intervention in mindful-eating research. Gum is a low-friction ritual technology.\n- Habit Stacking (James Clear): post-dinner gum installs cleanly on top of an existing habit (dinner ending).\n- Sensory-Specific Satiety (Barbara Rolls, Penn State): the dessert flavor itself can satisfy the dessert craving via sensory pathway, independent of any caloric or botanical effect. This is the real mechanism.\n\nBOTANICAL EVIDENCE - HONEST READ\n- Garcinia cambogia: meta-analyses (e.g., Onakpoya 2011) show clinically insignificant effect on weight management. FDA has issued warnings about garcinia products with liver toxicity claims.\n- Fenugreek: some evidence for blood sugar modulation, weak evidence for appetite.\n- Gymnema sylvestre: small body of evidence for suppressing sweet-taste perception, which is actually relevant here (interferes with the next sweet bite) but research base is thin.\n- Green tea: well-established mild thermogenic effect at higher doses than feasible in gum.\n\nADJACENT THINKERS\n- Brian Wansink's work (Mindless Eating) has reproducibility issues - cite cautiously. Pierre Chandon (INSEAD) is the more reliable adjacent researcher on food environment and portion psychology.\n- Marion Nestle (NYU) on food-industry regulatory framing.\n\nRESEARCH GAP\nThere is little academic literature on dessert-flavored functional gum specifically. The category exists commercially but academic studies are absent. Pure Crave could fund a small consumer study post-launch.\n\nONE THINKER TO READ FIRST\nBarbara Rolls on sensory-specific satiety - this is the actual mechanism for the product, not the botanical blend."
+    },
+    {
+      "ep_id": "arjun_mehta",
+      "report_type": "Operations / Regulatory",
+      "headline": "Food vs. supplement positioning is the bet-the-company decision",
+      "content": "REGULATORY POSITIONING - THE EXISTENTIAL DECISION\nPure Crave can be marketed as a conventional food (chewing gum) OR as a dietary supplement. These are different regulatory regimes with different label rules, different claim allowances, and different audit risk.\n\nFOOD POSITIONING\n- Pros: simpler label, lower compliance overhead, retail shelf placement next to Simply Gum\n- Cons: cannot make functional claims about appetite, satiety, or weight management on the label or in marketing\n- FDA framework: Standard food labeling under 21 CFR 101\n\nSUPPLEMENT POSITIONING\n- Pros: can make structure/function claims (\"supports appetite management\") with the required FDA disclaimer\n- Cons: dietary supplement registration, NSF or USP certification expected by retailers, much higher scrutiny, different shelf (the supplement aisle, not the gum aisle)\n- DSHEA framework applies; must register with FDA and submit notification of structure/function claims within 30 days of marketing\n\nRECOMMENDATION\nLaunch as a conventional food. Marketing focuses on dessert flavor, post-meal moment, naturally-sourced ingredients. NO claims about appetite, satiety, weight, or hunger - those words do not appear on the label or in any marketing copy. The botanical blend appears in the ingredient list but is not positioned. Re-evaluate supplement positioning at year 2 if the consumer demand demands it.\n\nMANUFACTURING\nContract manufacturer with gum-base expertise required. Domestic candidates: Ford Gum, Foley's, several smaller co-packers. Lead time from formulation lock to first production run: 4-6 months. Minimum order: typically 50,000 units per SKU; with 5 SKUs that's a 250,000-unit initial commitment, roughly $150-250K at COGS.\n\nALLERGEN AND COMPLIANCE\n- Xylitol toxicity disclosure for pets (some retailers require this on label)\n- Gum-base allergens (chicle is a tree sap - tree-nut allergen disclosure if applicable)\n- Each state may have additional sweetener-disclosure requirements\n\nONE THING TO WATCH\nDo not let the marketing team print the word \"suppressant\" anywhere. The brief uses it in the concept name; that name cannot survive into production packaging."
+    },
+    {
+      "ep_id": "grant_ellis",
+      "report_type": "Coaching: Elevator Speech, Strengths, Presenter Prep",
+      "headline": "Reposition the pitch around the post-dinner moment before you walk in",
+      "content": "ELEVATOR SPEECH (30 seconds)\n\"Pure Crave is a five-flavor dessert gum built for the moment after dinner when you want something sweet without committing to a whole dessert. Cinnamon Roll, Apple Pie, Caramel Apple, Apple Crumble, Chocolate Mint. Fifteen calories per piece, naturally-sourced gum base, xylitol-sweetened. We launch at [RETAIL PARTNERS] in [MONTH] at $14.99 a pack. The hook is the 8 PM moment - the moment Simply Gum doesn't address.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. A specific, ownable consumer moment (post-dinner dessert ritual at 8 PM)\n2. Real category precedent (Simply Gum proved premium gum sells at $13+)\n3. Dessert-inspired flavor lineup that competitors don't offer\n4. Natural-ingredient story that aligns with current consumer label-reading behavior\n5. The GLP-1 patient is an unexpected, underserved audience that fits the product naturally\n6. Sensory-specific satiety is the real mechanism - flavored satisfaction is research-backed\n7. Xylitol delivers a credible tooth-friendly co-benefit\n8. Founder has the flavor obsession that makes the brand voice authentic\n9. Premium price point ($14.99) makes the margin math work\n10. The product itself is shippable today; this is execution, not science\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Priya Anand: she'll go straight for the appetite-suppressant claim. Concede early. Tell her you've already removed \"suppressant\" from all packaging and marketing. The product is positioned as conventional food with dessert flavor; appetite management is not a claim, it's an internal hypothesis you may research later.\n- Astrid Lund: she'll push on botanical efficacy. Concede that the botanical evidence is weak. Pivot to sensory-specific satiety (Barbara Rolls) as the actual mechanism. The flavor IS the product.\n- Cassidy Mercer: she'll back the consumer-psychology read but push on the GLP-1 audience question. Be ready to name the GLP-1 community specifically - it's the most defensible beachhead in the brief.\n\nWHEN YOU GET STUCK\nReturn to the 8 PM moment. The judges all know what that moment feels like. Describe it, don't argue for it.\n\nDO NOT\n- Use the words \"suppressant,\" \"weight loss,\" \"reduces hunger,\" or \"controls cravings\" in the room\n- Claim botanical efficacy\n- Compare the product to GLP-1 medications even though they're an audience\n- Defend the original brief name - acknowledge it was wrong and show the revised positioning\n\nONE LINE TO REMEMBER\n\"It's a gum that tastes like dessert and ends the meal the way you wanted to end it.\""
+    }
+  ],
+  "revisions": [
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Brief title and tagline",
+      "before": "PURE CRAVE - Natural Appetite-Suppressant Dessert Gum",
+      "after": "PURE CRAVE - The Dessert Gum",
+      "rationale": "The word \"suppressant\" is regulatory poison and customer-suspicious. The strongest framing is the product as a dessert gum; appetite management is an internal hypothesis, not a tagline. Removing the word from the title removes the largest single risk in the brief.",
+      "accepted_at": 1716738000000
+    },
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Solution paragraph - botanical framing",
+      "before": "Pure Crave is a chewing gum formulated with naturally-sourced gum base, xylitol, and a botanical blend that targets the after-meal sweet craving moment. Dessert-inspired flavors (Cinnamon Roll, Apple Pie, Caramel Apple, Apple Crumble, Chocolate Mint) deliver the indulgence; the botanicals provide subtle support for appetite management.",
+      "after": "Pure Crave is a chewing gum formulated with naturally-sourced gum base, xylitol, and dessert-inspired flavors (Cinnamon Roll, Apple Pie, Caramel Apple, Apple Crumble, Chocolate Mint) built for the post-dinner moment. The natural-ingredient profile is the story; the dessert flavor is the product.",
+      "rationale": "Removed the \"botanicals provide subtle support for appetite management\" clause - that's a regulatory exposure point with weak supporting evidence. The dessert-flavor framing is the actual product. Botanicals stay in the ingredient list but are not positioned.",
+      "accepted_at": 1716738060000
+    }
+  ],
+  "judge_outputs": [
+    {
+      "judge_id": "priya_anand",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the product is clear. The positioning is muddled. You can't be a CPG food and a functional supplement and a weight-management product simultaneously. Each is a different shelf, different label, different regulator. The brief has to pick one.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 6 },
+      "stage_critique": "Terry, the brief is internally inconsistent - it claims appetite suppression in the title but then disclaims that the botanicals' efficacy is unproven. Pick one. Either the product makes the claim and defends it scientifically, or it doesn't make the claim. The current both-and reads as either dishonest or unsure.",
+      "confidence": 0.87,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the consumer-facing clarity is good. \"Dessert gum in five flavors\" is a clear product. The branding clarity is where I push - the appetite-suppressant framing fights the dessert-pleasure framing. You can't lead with both. Lead with pleasure.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, the unit economics work if you can hit $14.99 retail and get to Simply Gum's volume. The viability risk is shelf space - premium gum is a slow-moving category and retailers are cautious. Pre-sell DTC for 12 months before approaching national retail.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "viability",
+      "dimension_scores": { "viability": 5 },
+      "stage_critique": "Terry, viability is contingent on the regulatory framing. If the FDA sends a warning letter on \"suppressant\" claims, the brand recovery cost is severe. The viability is real only if the launch positioning is bulletproof against that scrutiny.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "viability",
+      "dimension_scores": { "viability": 7 },
+      "stage_critique": "Terry, the DTC + premium-retail path is viable. The flavor lineup is the differentiator - if those flavors actually taste like dessert (executional risk), this works. The viability sits on flavor execution as much as on marketing.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "risk",
+      "dimension_scores": { "risk": 3 },
+      "stage_critique": "Terry, the regulatory risk is the entire story. \"Appetite-suppressant\" language in CPG triggers FDA scrutiny instantly. Garcinia cambogia has had a documented FDA warning letter history. The brief acknowledges botanical efficacy is unproven, which on a label is a self-incriminating admission. Reposition or do not launch.",
+      "confidence": 0.92,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "risk",
+      "dimension_scores": { "risk": 3 },
+      "stage_critique": "Terry, the safety risk is xylitol-and-pets. Xylitol is highly toxic to dogs. Premium gum brands with xylitol have faced pet-poisoning lawsuits and PR crises. The label requires clear pet-toxicity disclosure; the packaging should keep dogs in mind in households with pets. The brief doesn't acknowledge this.",
+      "confidence": 0.88,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the consumer-side risk is that GLP-1 medications already reduce the post-dinner dessert urge for the target customer. The product may be solving a problem the medication already solved. Test demand within the GLP-1 community specifically before scaling.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 5 },
+      "stage_critique": "Terry, the narrative is muddled because the positioning is muddled. Without picking food-vs-supplement, the brand can't tell a single coherent story. Pick the food framing and the narrative becomes \"dessert moment without the dessert\" - clean and ownable.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the natural-ingredient narrative is well-trod ground. \"Naturally-sourced gum base, no artificial sweeteners\" is the Simply Gum playbook. You need a narrative that goes beyond ingredient virtue - the post-dinner moment is it. Lead with the moment, support with the ingredients.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 8 },
+      "stage_critique": "Terry, when you ground the brand in the post-dinner moment instead of the suppressant claim, the narrative gets strong fast. Five flavors. Eight PM. The space between dinner and the fridge. That's a complete story. The brief just needs to commit to it.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 3 },
+      "stage_critique": "Terry, the brief explicitly says the botanicals' efficacy is unproven. That's an honest line in the brief but a damaging line on a marketing page. The evidence base for the functional positioning is absent. The evidence base for the consumer demand (DTC pre-launch waitlist, focus-group flavor scoring) is also missing.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the dental-health evidence for xylitol is the one strong evidence anchor in this brief. Use it. Xylitol has decades of peer-reviewed research on cavity prevention. That's a real, defensible claim. The botanical evidence is not. Lean into what's true.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the consumer-evidence layer is the missing piece. Has anyone actually tasted a prototype? Has the Cinnamon Roll flavor been blind-tested against an actual cinnamon roll? Without that, the product is concept-stage. Get to a tasting panel before you get to a brand.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the cultural moment is favorable. Functional CPG is having a sustained run, GLP-1 normalization is creating new consumer behaviors, and the post-pandemic dessert-comfort association is real. The product fits the moment. The positioning has to match it.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 8 },
+      "stage_critique": "Terry, the cultural fit is strong. Consumers are increasingly comfortable with the \"ritual not outcome\" framing in food. The dessert-gum moment is a recognizable cultural beat. The xylitol-as-natural-sweetener trend is in the up-cycle.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 8 },
+      "stage_critique": "Terry, the cultural opening is wide. Premium functional confectionery is one of the better-performing CPG categories in 2026. Pure Crave can land cleanly inside that wave if it doesn't trip on the regulatory positioning.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the buyer psychology is recognized in the brief but mislabeled. The customer is buying permission, not suppression. The product framing should reflect what the customer actually wants from the purchase - guilt-free dessert ritual - not what the founder thinks the customer needs (appetite control).",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the consumer psychology is sound when the brief leans into ritual. The trouble is the suppressant claim creates a different psychological frame - control, restriction, self-denial - that fights the ritual-of-pleasure frame. Pick one and the psychology coheres.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "psych",
+      "dimension_scores": { "psych": 8 },
+      "stage_critique": "Terry, the moment-of-decision psychology is dead-on. Eight PM, post-dinner, the customer at the freezer door. That's the moment Pure Crave owns. The buyer-psychology read of that moment is the strongest part of the brief.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "priya_anand",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 3 },
+      "stage_critique": "Terry, this is the failure dimension. \"Natural Appetite-Suppressant\" in the product name is the kind of language that triggers FDA enforcement. Garcinia cambogia has an active enforcement history. Until the positioning is repositioned as conventional food with no appetite or weight-management claims, this is a compliance time bomb.",
+      "confidence": 0.93,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 4 },
+      "stage_critique": "Terry, the compliance footprint covers food labeling, supplement regulations if you go that route, xylitol pet-toxicity disclosure (state-by-state), allergen disclosure on the gum base. Each of those is achievable, but the brief currently underestimates the surface. Budget legal review at $25-50K minimum before first production run.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 5 },
+      "stage_critique": "Terry, the compliance work is doable but the brief treats it as an afterthought. Marketing copy compliance review has to happen before any social post goes live. One TikTok with \"suppresses appetite\" in the caption and the FDA pays attention.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    }
+  ],
+  "triangulation": {
+    "matrix": {
+      "clarity":    { "priya_anand": 7, "astrid_lund": 6, "cassidy_mercer": 7 },
+      "viability":  { "priya_anand": 6, "astrid_lund": 5, "cassidy_mercer": 7 },
+      "risk":       { "priya_anand": 3, "astrid_lund": 3, "cassidy_mercer": 5 },
+      "narrative":  { "priya_anand": 5, "astrid_lund": 6, "cassidy_mercer": 8 },
+      "evidence":   { "priya_anand": 3, "astrid_lund": 4, "cassidy_mercer": 4 },
+      "cultural":   { "priya_anand": 7, "astrid_lund": 8, "cassidy_mercer": 8 },
+      "psych":      { "priya_anand": 7, "astrid_lund": 7, "cassidy_mercer": 8 },
+      "compliance": { "priya_anand": 3, "astrid_lund": 4, "cassidy_mercer": 5 }
+    },
+    "agreement_dimensions": ["clarity", "evidence", "cultural", "psych"],
+    "conflict_dimensions":  ["risk", "narrative", "compliance"],
+    "coverage_gaps":        [],
+    "composite_score":      0.55,
+    "verdict":              "conflict"
+  }
+}

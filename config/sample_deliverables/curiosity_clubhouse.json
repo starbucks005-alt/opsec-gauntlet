@@ -1,0 +1,287 @@
+{
+  "sample_id": "curiosity_clubhouse",
+  "evaluation": {
+    "id": "sample-curiosity-clubhouse",
+    "submission_id": "sample-curiosity-clubhouse",
+    "status": "complete",
+    "stage": "compliance",
+    "completed_at": "2026-05-26T15:30:00Z"
+  },
+  "submission": {
+    "id": "sample-curiosity-clubhouse",
+    "title": "Curiosity Clubhouse"
+  },
+  "brief": "CURIOSITY CLUBHOUSE - Chat AI for Kids\n\nCONCEPT\nA children's app where an AI buddy makes asking questions fun and rewards polite behavior. Screen time that builds positive habits. Kids embark on a learning adventure with a playful AI companion - they ask questions, explore age-appropriate topics, earn rewards, and good manners become second nature.\n\nTARGET AUDIENCE\n5-6-year-olds initially, then 7-8, then 9-10. Children level up when they age, with content / vocabulary / rewards / challenges all scaling.\n\nPROBLEM\nThere is a lack of engaging educational tools that seamlessly integrate good manners and open-ended learning. Existing children's chatbots either lecture or entertain; few do both, and almost none use the chat moment to teach politeness.\n\nSOLUTION\nA friendly AI companion (default: monkey buddy with thematic outfits - explorer, pirate, astronaut, scuba diver) that chats with kids in age-appropriate language. The AI rewards polite phrases (please, thank you) with enthusiasm, gently prompts when manners are forgotten, and answers the kid's \"why\" questions with curated, age-tiered explanations.\n\nKEY FEATURES\n- AI chatbot: polite, age-appropriate interaction\n- Manners encouragement: positive reinforcement for polite language; gentle reminders\n- Curated knowledge base: age-categorized, with safe child-oriented search fallback\n- Rewards system: tiered unlockables (themes, avatar accessories, titles, animations)\n- Age-based progression: content and challenges scale at 5-6, 7-8, 9-10\n\nAGE-BASED PROGRESSION\n- 5-6: friendly animals, nature, cozy spaces (treehouse, magical garden)\n- 7-8: fantasy and adventure, underwater / space explorers\n- 9-10: science and tech, historical explorers, greater customization\n\nVISUAL IDENTITY\nClubhouse splash screen (hand-drawn treehouse with thematic details). App colors: #18696d, #884e47, #de9c30, #dfc08b.\n\nMONETIZATION\nSubscription model with in-app purchases for bonus rewards / themes. Could integrate with parent dashboard subscription tier.\n\nTECHNICAL / SAFETY\n- Web-based, dedicated app, or smart-speaker integration\n- Meticulous attention to child data privacy (COPPA, GDPR-K compliance)\n- Robust filters to block harmful language; parental controls\n- Database structure tagged by age level\n\nDEVELOPMENT ROADMAP\nMilestone 1: basic chat + polite phrasing + \"why\" question integration + points system\nMilestone 2: themed environments, unlockable backgrounds, basic avatar customization\nMilestone 3: full age adaptation (5-6, 7-8, 9-10 content scaling)",
+  "ep_reports": [
+    {
+      "ep_id": "matthew_vance",
+      "report_type": "Buyer Psychology Profile",
+      "headline": "The parent is the buyer, not the kid - and the parent's driver is relief",
+      "content": "WHO IS BUYING\nThe parent. The kid never sees the credit card. This is a parent-purchase product disguised as a kid product.\n\nPARENT'S PRIMARY DRIVER: Relief from screen-time guilt\nThe parent's daily decision is whether to hand the iPad to the 6-year-old. Every parent feels guilty about that decision. Curiosity Clubhouse is the product that converts the guilt into a value purchase - \"my kid is learning manners and curiosity, not watching brainrot.\"\n\nSECONDARY DRIVERS\n- Status signaling: parents post their kid's progress on Instagram. The product has to be screenshot-worthy.\n- Educational coverage: the parent is buying intellectual virtue insurance for the kid.\n\nKID'S DRIVER: Fun + rewards. The kid doesn't care about manners; the manners are bolted onto a system the kid finds inherently rewarding.\n\nTRIGGER MOMENT\nSunday evening, the parent reviewing the week's screen time. Disappointment at how much was YouTube Kids slop. Curiosity Clubhouse downloaded that night, before the Monday-morning iPad handoff.\n\nIDENTITY FRAMING\nFor the parent: the kind of parent whose kid asks good questions.\n\nWALK TO NEXT EP\n- Arjun: COPPA / GDPR-K compliance is non-negotiable and shapes the product architecture\n- Reid: market to the parent, not the kid"
+    },
+    {
+      "ep_id": "wren_calloway",
+      "report_type": "Landscape Scout Report",
+      "headline": "Homeschooling and bilingual families are the underserved beachheads",
+      "content": "WHERE IT CAN WORK (top 3)\n1. Homeschooling families (US: ~3-4M households, growing). They have curriculum buying power and value structured educational tools. Density: medium-high, vocal community on Facebook and Reddit.\n2. Bilingual / heritage-language households. The AI buddy translatable into Spanish, Mandarin, Hindi, French opens a category nobody else is doing well.\n3. Working-from-home parents with elementary-school kids who need 45 minutes of meaningful occupation while the parent is on a call.\n\nFOCUS RECOMMENDATION\nHomeschooling families. The audience has buying power, makes purchase decisions deliberately, and shares product recommendations across tight community networks. Pre-launch beta into 100 homeschooling families is the right early go-to-market.\n\nADJACENT BUT DON'T GO YET\n- Schools as B2B buyers (long sales cycle, procurement is brutal for new edtech)\n- Pediatric speech / language therapy practices (regulated, slower)\n\nOTHER USES (same engine, different positioning)\n- Adult learning companion for ESL students (the manners-and-curiosity mechanic transfers)\n- Senior cognitive engagement (companion-AI for older adults)\n\nONE THING WREN WOULD NOT DO\nMarket to schools first. Schools take 12-18 months to procure new edtech and the brief should not depend on that revenue."
+    },
+    {
+      "ep_id": "carol_haynes",
+      "report_type": "Pattern Screening Report",
+      "headline": "has_legs (signal 6/10). Pattern is crowded but the manners angle is fresh.",
+      "content": "PATTERN: AI companion app for children.\n\nWHAT WORKED FOR THIS PATTERN\nKhan Academy Kids (free, scaled via Khan brand, deeply funded), Duolingo ABC (free, gamification engine), Lingokids (subscription, $14.99/month, profitable). The pattern of subscription kids edtech with strong gamification has working examples.\n\nWHAT FAILED\nMany standalone chatbot-for-kids attempts (Aristotle by Mattel was canceled pre-launch due to privacy backlash, Mycroft for Kids never reached scale). The failure mode is parent privacy panic + the perception that the AI replaces human interaction.\n\nYOUR POSITION\nThe manners-as-mechanic is genuinely differentiated. \"Polite-Phrase Reinforcement\" is a feature most parents instinctively want and no competitor leads with. The risk is that GPT-style chatbots are the wrong technology for 5-6-year-olds - even with filters, hallucination risk and inappropriate-response risk are real.\n\nLEGS ASSESSMENT: has_legs (signal 6/10)\n\nREASONS FOR\n- Differentiated angle (manners + curiosity, not just curriculum)\n- Real category precedent (Khan Academy Kids, Lingokids prove the subscription model)\n- Parents are the buyer and they have decision authority\n\nREASONS AGAINST\n- AI safety perception risk for the 5-6 demographic is severe\n- COPPA compliance is expensive and slow\n- Competing for the same screen-time minutes as YouTube Kids and Disney+ - hard to win\n\nTHE ONE THING THAT KILLS IT\nOne news cycle of \"AI chatbot tells 6-year-old something inappropriate.\" The risk is real. The mitigation is rigorously curated knowledge base, not open-ended LLM. The brief uses \"safe child-oriented search fallback\" which suggests open LLM with filters - that's the wrong architecture for this audience."
+    },
+    {
+      "ep_id": "reid_callum",
+      "report_type": "Launch Press Release",
+      "headline": "Lead with the manners mechanic, not the AI",
+      "content": "CURIOSITY CLUBHOUSE LAUNCHES A KIDS APP THAT REWARDS POLITE QUESTIONS, NOT JUST ANY QUESTIONS\n\n[CITY, STATE] - [MONTH DD, YYYY] - Curiosity Clubhouse, a new educational app for children ages 5-10, today launched on iPad and Android tablets. The app pairs a friendly cartoon AI buddy with a curated knowledge base of age-appropriate answers - and rewards children for asking questions with polite phrasing.\n\n\"Good manners shouldn't be a separate lesson - they should be how kids already talk by the time they're seven,\" said [FOUNDER NAME], founder of Curiosity Clubhouse. \"Our app gives kids a place where curiosity and politeness are part of the same conversation. They earn rewards for asking great questions in great ways.\"\n\nCuriosity Clubhouse is built on a moderated knowledge base, not an open AI chatbot. Every answer is curated by educators, age-tagged, and filtered for safety before it ever reaches a child. The app is COPPA-compliant and GDPR-K-compliant; no data is shared with third-party advertisers.\n\nThe app is $9.99 per month or $79 per year, with a free 14-day trial. Three age tiers (5-6, 7-8, 9-10) progress automatically as the child grows.\n\nABOUT CURIOSITY CLUBHOUSE\nCuriosity Clubhouse is an education-technology company building safe, curated AI companions for young learners.\n\nMEDIA CONTACT\n[NAME] / [EMAIL] / [PHONE]"
+    },
+    {
+      "ep_id": "zara_cole",
+      "report_type": "Content Plan",
+      "headline": "Parent-Instagram-first, with kid-screenshot moments engineered in",
+      "content": "PRIMARY POST - INSTAGRAM REEL (Parent POV)\n\"My 6-year-old just asked 'May I please learn about whales?' I had to record the screen so my husband would believe me. Curiosity Clubhouse rewards manners - and it's working. Link in bio for the 14-day free trial.\"\n\n#parenting #screentime #educationalapps\n\nFOLLOW-UP CONTENT (45-day calendar)\n- Week 1: parent POVs of the moment their kid said \"please\" without prompting\n- Week 2: a-day-in-the-life of the monkey buddy across age tiers\n- Week 3: the unlockable rewards reveal (themes, outfits, titles)\n- Week 4: founder POV - why we built a curated knowledge base, not an open chatbot\n- Week 5: homeschooling-family testimonials (3 collab creators)\n- Week 6: kids' actual questions reel - \"the funniest questions our buddy answered this week\"\n\nWHAT NOT TO POST\n- Anything that implies the AI is generating novel content (parents will assume hallucination)\n- Anything that shows a kid talking to the AI like it's a friend (creepy-AI perception)\n- Any content that frames the app as a parent-replacement\n\nFRAME EVERYTHING AS\nThe app is a CONVERSATION GAME, not a chatbot. The kid is the explorer. The monkey is the guide. The parent is the audience for their kid's growth.\n\nCONVERSION HOOK\nThe \"please and thank you\" 14-day challenge. Parents sign up, kid earns the \"Politeness Pro\" title in week 1, parent posts the certificate, conversion is the renewal."
+    },
+    {
+      "ep_id": "ms_ivy",
+      "report_type": "Research & Frameworks",
+      "headline": "Vygotsky's ZPD + Bandura's social learning anchor the mechanic",
+      "content": "FRAMEWORKS\n- Zone of Proximal Development (Lev Vygotsky): the AI buddy operates inside the child's ZPD - just past what they can do alone, supported by the buddy's prompts. Age-tiered content is a ZPD implementation.\n- Social Learning Theory (Albert Bandura): the AI buddy models polite behavior; the child imitates. The reward system reinforces the imitation. This is straight Bandura.\n- Operant Conditioning (B.F. Skinner, applied responsibly): rewards for polite phrasing are positive reinforcement. Used in moderation, this is well-established and works.\n- Self-Determination Theory (Deci & Ryan): the customization (avatar, themed environments) supports autonomy, which sustains intrinsic motivation in the 7-10 age band.\n\nADJACENT THINKERS\n- Maria Montessori (child-led exploration, the \"why\" question affordance is Montessori-aligned)\n- Carol Dweck (growth mindset; the \"bounceback\" reward concept could integrate here)\n- Sherry Turkle (cautionary - her work on kids and AI is critical of human-replacement framing; the brief should be in conversation with her concerns)\n\nPRIOR LITERATURE\n- Research on children's interaction with conversational agents (Druin Lab, University of Maryland) supports curated content delivery for under-8s; open-ended LLM is contraindicated for that age band.\n- The \"please and thank you\" training literature is older - manners modeling at this age primarily works through repeated parental example. Whether an AI buddy can substitute is an open research question - and a real opportunity for the company to publish.\n\nRESEARCH GAP\nLongitudinal data on whether AI-companion manners reinforcement transfers to human-context manners use is absent. Curiosity Clubhouse could partner with an academic researcher to study this. Published research becomes both marketing and credibility.\n\nONE THINKER TO READ FIRST\nVygotsky on ZPD - the age-tier design is exactly his framework, and citing him gives the homeschooling audience instant credibility."
+    },
+    {
+      "ep_id": "arjun_mehta",
+      "report_type": "Operations / Regulatory",
+      "headline": "COPPA + GDPR-K + age-gating define the entire product architecture",
+      "content": "REGULATORY POSTURE\nThis is a children's product. The compliance footprint is severe and non-negotiable.\n\nCOPPA (US, kids under 13)\n- Verifiable parental consent before any data collection\n- No behavioral advertising to children, period\n- Privacy policy must specifically detail what is collected and how it is used\n- Data deletion on parent request must be immediate and complete\n- Third-party services (analytics, crash reporting) must be COPPA-compliant or excluded\n- FTC has been actively enforcing - YouTube paid $170M in 2019; TikTok / others have been fined\n\nGDPR-K (EU)\n- Age of digital consent varies by country (13-16); product must check user country and apply local rule\n- Right-to-be-forgotten requests must be honored within 30 days\n- Data minimization is mandatory\n\nUK AGE-APPROPRIATE DESIGN CODE\n- 15 specific standards for products used by children; strict\n\nCHILDREN'S ONLINE SAFETY (varies by state in US, by country in EU)\n- California AB 2273, Texas HB 18, EU Digital Services Act all add layers\n\nAI-SPECIFIC RISK FOR CHILDREN\nFor children under 8, do NOT use open-ended LLM responses, even with filters. Use a curated knowledge base with age-tagged answers, written by educators. The brief mentions \"safe child-oriented search fallback\" - replace that with curated-only responses for the 5-6 tier, and only consider moderated LLM-assisted responses for the 9-10 tier with stringent guardrails.\n\nTECHNICAL ARCHITECTURE IMPLICATIONS\n- Authentication: parent creates account, kid uses parent-authorized profile (no kid-initiated account creation)\n- Knowledge base: locally cached for the 5-6 tier where possible, reducing data-transmission attack surface\n- Analytics: aggregated only, no individual child behavior tracking beyond what's required for the rewards system\n- Third-party SDKs: audit every single one for COPPA compliance; many crash-reporting tools are NOT compliant out of the box\n\nLAUNCH BLOCKERS\n- Privacy policy and terms of service drafted by a children's privacy attorney (budget $15-30K)\n- COPPA Safe Harbor certification (kidSAFE, ESRB Privacy Certified, TRUSTe) - $3-15K depending on certifier\n- Verifiable parental consent system in place (credit card verification, signed consent form, or other approved methods)\n\nONE THING TO WATCH\nThe FTC tightened COPPA enforcement in 2024-2025. New rules are pending on AI-specific child data use. Budget for compliance to be a moving target."
+    },
+    {
+      "ep_id": "grant_ellis",
+      "report_type": "Coaching: Elevator Speech, Strengths, Presenter Prep",
+      "headline": "Lead with the manners moment, not the AI",
+      "content": "ELEVATOR SPEECH (30 seconds)\n\"Curiosity Clubhouse is a curated AI buddy for kids ages 5-10 that rewards polite questions. The kid asks 'May I please learn about whales?' and the monkey buddy lights up, answers from an educator-vetted knowledge base, and the kid earns a Politeness Pro title. We launch on iPad in [MONTH] at $9.99 a month, with a 14-day free trial. Three age tiers, COPPA-compliant from day one, no advertising, no open-LLM hallucinations.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. A differentiated mechanic (manners + curiosity together) that no competitor leads with\n2. Curated knowledge base architecture, not open LLM - the safe choice for the under-8 audience\n3. Three age tiers with content scaling, a thoughtful ZPD-informed design\n4. COPPA-compliance baked into the architecture from day one\n5. Subscription model with category precedent (Lingokids, Khan Academy Kids)\n6. The parent is the buyer, and the brand is built to convert the parent's screen-time guilt\n7. Homeschooling-family beachhead with concentrated, referrable audience\n8. Visual identity is already designed and brand-coherent (color palette, hand-drawn aesthetic)\n9. The framework anchors (Vygotsky ZPD, Bandura social learning) give academic credibility\n10. Roadmap is realistic - basic chat first, then themes, then full age adaptation\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Cassidy Mercer: she'll back the parent-as-buyer read but push on conversion mechanics. Have your trial-to-paid conversion target ready (15-25% realistic for premium kids subscription).\n- Astrid Lund: she'll focus on the AI-safety risk for young children. Lead with \"we don't use open LLM for the 5-6 tier - it's curated knowledge base.\" That single sentence neutralizes the largest objection.\n- Grace Nakamura: she'll push on the parental-consent and data-privacy implementation. Have your COPPA Safe Harbor certifier ready (kidSAFE recommended) and your privacy attorney named.\n\nWHEN YOU GET STUCK\nReturn to the \"may I please learn about whales\" moment. The judges are parents or have been around parents. They know the moment.\n\nDO NOT\n- Position the app as \"AI for kids\" - the AI is the implementation, not the product\n- Claim the app replaces parental teaching\n- Compare to YouTube Kids - you're not competing on that ground\n- Promise schools/B2B in v1 - it's not part of the launch and slows the conversation\n\nONE LINE TO REMEMBER\n\"Curiosity is the engagement; manners is the reward.\""
+    }
+  ],
+  "revisions": [
+    {
+      "ep_id": "jules",
+      "operation": "replace",
+      "section_label": "Safety paragraph",
+      "before": "- Web-based, dedicated app, or smart-speaker integration\n- Meticulous attention to child data privacy (COPPA, GDPR-K compliance)\n- Robust filters to block harmful language; parental controls\n- Database structure tagged by age level",
+      "after": "- Dedicated app on iPad and Android tablets (smart-speaker integration deferred to v2 to reduce surface area for safety review)\n- COPPA and GDPR-K compliance built into architecture from day one, certified by a Safe Harbor program (kidSAFE or equivalent) before launch\n- No open-ended LLM responses for the 5-6 tier; curated, educator-vetted knowledge base only\n- Verifiable parental consent at account creation; no kid-initiated accounts\n- Age-tagged content database with progression locked behind parent-confirmed birthdate",
+      "rationale": "The original safety paragraph was a feature list that under-described the actual compliance work. The revised version names the architecture decision (no open LLM for the youngest tier), the certification path (Safe Harbor program), and the implementation specifics. This is the section investors and procurement officers will read first.",
+      "accepted_at": 1716738000000
+    }
+  ],
+  "judge_outputs": [
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the brief is clear on the product and the audience. The clarity gap is on the parent-as-buyer story. The marketing in the brief reads like it's for kids; the actual purchase is by a parent. Pick a primary buyer and write the brief to them.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 6 },
+      "stage_critique": "Terry, the AI architecture is ambiguous in the brief. \"Curated knowledge base + safe child-oriented search fallback\" describes two very different systems. The clarity work is to name exactly what's curated, what's LLM-generated, and what's filtered. Each has different safety implications.",
+      "confidence": 0.86,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "clarity",
+      "dimension_scores": { "clarity": 7 },
+      "stage_critique": "Terry, the educational framing is clear (manners + curiosity) and the age-tier progression is well-articulated. What's missing is the learning-outcome model. What does a child know or do differently after 30 days on the app? The brief should be able to answer that in one sentence.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "viability",
+      "dimension_scores": { "viability": 7 },
+      "stage_critique": "Terry, the subscription unit economics are plausible. $9.99/month with even 20% trial-to-paid conversion clears the CAC for direct-to-parent acquisition. Khan Academy Kids made the category viable; the question is whether the manners angle differentiates enough to break out.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "viability",
+      "dimension_scores": { "viability": 5 },
+      "stage_critique": "Terry, the viability sits on the AI-safety question. If one news cycle of \"AI chatbot says inappropriate thing to a child\" hits the brand, the recovery cost is severe - parents do not give second chances on this category. The viability is real only if the curated-only architecture is real.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "viability",
+      "dimension_scores": { "viability": 6 },
+      "stage_critique": "Terry, the homeschooling-family viability is real. The general-consumer viability is harder - parents shop heavily on free apps in this category and converting to paid requires very clear differentiation. The manners angle is differentiated; whether it's $9.99-a-month differentiated is the question.",
+      "confidence": 0.79,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the brand-perception risk is severe. Parents are deeply suspicious of AI in children's products, and one viral parent post about a weird AI response ends the brand. The risk mitigation is architectural (no open LLM for young kids), but the brief doesn't commit to that clearly.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "risk",
+      "dimension_scores": { "risk": 4 },
+      "stage_critique": "Terry, the regulatory risk is the most underestimated part of the brief. COPPA enforcement is active and FTC fines for kids' app violations have been substantial. The brief mentions COPPA in passing; it deserves a paragraph. Specifically: how is verifiable parental consent implemented? Credit card? Signed form? Government ID? Each method has trade-offs.",
+      "confidence": 0.88,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "risk",
+      "dimension_scores": { "risk": 5 },
+      "stage_critique": "Terry, the educational-credibility risk is that the manners angle reads as superficial without backing pedagogy. Cite Vygotsky, Bandura, the Druin Lab research on children and AI - that turns the product from a gimmick into a research-grounded learning tool. The risk is being dismissed by school districts and parents who do research.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 7 },
+      "stage_critique": "Terry, the \"may I please learn about whales\" moment is the strongest narrative beat available. Lead with that. The parent-screenshotting-their-kid's-polite-question reel is the entire marketing strategy in one video. Build the brand around that moment.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the safety narrative has to be louder than the feature narrative. \"Curated, not chatbot\" is the line that makes parents comfortable. The brief should lead with that line, not bury it in the technical section.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "narrative",
+      "dimension_scores": { "narrative": 6 },
+      "stage_critique": "Terry, the visual identity is strong and the world-building (treehouse, monkey buddy, themed environments) gives the narrative a coherent stage. The narrative weakness is on the educational rigor - the brief reads more entertainment than education. Pick a positioning and stay there.",
+      "confidence": 0.80,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 4 },
+      "stage_critique": "Terry, the consumer-research evidence is missing. How many parents have you talked to? How many kids have used the prototype? What do they say? Without that, the brief is a concept, not a launch plan.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 5 },
+      "stage_critique": "Terry, the safety-evidence layer is what builds trust. Show me the curated content database structure. Show me the educator-review process. Show me the moderation logs. Without those artifacts, claims about safety are unverifiable.",
+      "confidence": 0.85,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "evidence",
+      "dimension_scores": { "evidence": 5 },
+      "stage_critique": "Terry, the educational-evidence layer is where I want more. Reference the Druin Lab work on kids and conversational AI. Show a pilot with 20 families and the resulting manners-use observation log. That makes this an evidence-based product, not just a clever concept.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the parent-screen-time-guilt moment is the cultural zeitgeist of 2026 parenting. The product lands inside that wave correctly. The brand has to feel premium and safe; the visual identity in the brief reads that way.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 6 },
+      "stage_critique": "Terry, the cultural moment for AI-with-children is conflicted. Half the parents want their kids prepared for an AI-native world; half are deeply suspicious of AI talking to their kids. The brand has to navigate both. The curated-knowledge-base architecture is the right choice for the conflicted moment.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "cultural",
+      "dimension_scores": { "cultural": 7 },
+      "stage_critique": "Terry, the cultural opening for explicit-manners-teaching products is real - parents post-pandemic are reporting their kids' social skills regressed. A product framed around \"please and thank you\" lands in a clear cultural moment.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the parent psychology is correctly identified (guilt + relief). The kid psychology is reasonable but the reward system feels generic. The unique mechanic should be the manners-specific titles (Politeness Pro, Kindness Captain) - lean into those, they're the differentiator.",
+      "confidence": 0.81,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "psych",
+      "dimension_scores": { "psych": 6 },
+      "stage_critique": "Terry, the safety-trust psychology with parents is the most important psychological layer. The brand must convey safety at every touchpoint - first screen, sign-up flow, privacy disclosure. The brief doesn't yet have a coherent trust-building UX story.",
+      "confidence": 0.82,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "psych",
+      "dimension_scores": { "psych": 7 },
+      "stage_critique": "Terry, the developmental-psychology grounding is good - the age-tier progression respects how 5-, 7-, and 9-year-olds actually differ cognitively. The Bandura social-learning angle is the right framework for the manners mechanic. The psychology is sound when the brief commits to it explicitly.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "cassidy_mercer",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 6 },
+      "stage_critique": "Terry, the compliance is the bottleneck that determines whether you launch in month 6 or month 12. Budget accordingly. The marketing-launch date should be set after the COPPA Safe Harbor certification clears, not before.",
+      "confidence": 0.83,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "astrid_lund",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 5 },
+      "stage_critique": "Terry, COPPA is the dominant compliance regime and the brief mentions it once. That's not enough. The privacy policy needs to be drafted by a children's privacy specialist (not a general tech lawyer). The verifiable parental consent mechanism needs to be specified. Third-party SDK audits need to be in writing.",
+      "confidence": 0.88,
+      "retrieved_evidence": []
+    },
+    {
+      "judge_id": "grace_nakamura",
+      "stage": "compliance",
+      "dimension_scores": { "compliance": 6 },
+      "stage_critique": "Terry, the compliance footprint extends to advertising and content review. No behavioral advertising, period. Influencer partnerships need explicit FTC-compliant disclosure given kids' content. Every educator-vetted answer needs a review log for liability. Build the operational discipline now.",
+      "confidence": 0.84,
+      "retrieved_evidence": []
+    }
+  ],
+  "triangulation": {
+    "matrix": {
+      "clarity":    { "cassidy_mercer": 7, "astrid_lund": 6, "grace_nakamura": 7 },
+      "viability":  { "cassidy_mercer": 7, "astrid_lund": 5, "grace_nakamura": 6 },
+      "risk":       { "cassidy_mercer": 5, "astrid_lund": 4, "grace_nakamura": 5 },
+      "narrative":  { "cassidy_mercer": 7, "astrid_lund": 6, "grace_nakamura": 6 },
+      "evidence":   { "cassidy_mercer": 4, "astrid_lund": 5, "grace_nakamura": 5 },
+      "cultural":   { "cassidy_mercer": 7, "astrid_lund": 6, "grace_nakamura": 7 },
+      "psych":      { "cassidy_mercer": 7, "astrid_lund": 6, "grace_nakamura": 7 },
+      "compliance": { "cassidy_mercer": 6, "astrid_lund": 5, "grace_nakamura": 6 }
+    },
+    "agreement_dimensions": ["clarity", "risk", "narrative", "evidence", "cultural", "psych", "compliance"],
+    "conflict_dimensions":  [],
+    "coverage_gaps":        [],
+    "composite_score":      0.56,
+    "verdict":              "middle"
+  }
+}

@@ -593,6 +593,46 @@
     `;
   }
 
+  // EP reports: each non-Jules EP produces a discrete report on the brief.
+  // Rendered as an expandable card per EP, content shown in full.
+  function renderEpReportsSection(epReports){
+    const list = Array.isArray(epReports) ? epReports.filter(r => r && r.ep_id) : [];
+    if (!list.length) return '';
+    const cardsHtml = list.map(r => {
+      const ep = EP_DISPLAY[r.ep_id] || { name: r.ep_id, role: '' };
+      const reportType = r.report_type || 'Report';
+      const headline = r.headline ? `<p class="work-rev-rationale">${escapeHtml(r.headline)}</p>` : '';
+      const content  = r.content ? `<div class="work-rev-content">${escapeHtml(r.content)}</div>` : '';
+      return `
+        <details class="work-ep">
+          <summary>
+            <span class="work-ep-disclose">&rsaquo;</span>
+            <span class="work-ep-name">${escapeHtml(ep.name)}</span>
+            <span class="work-ep-role">${escapeHtml(ep.role)}</span>
+            <span class="work-ep-count">${escapeHtml(reportType)}</span>
+          </summary>
+          <div class="work-ep-body">
+            <article class="work-rev">
+              ${headline}
+              ${content}
+            </article>
+          </div>
+        </details>
+      `;
+    }).join('');
+
+    return `
+      <div class="work-block">
+        <div class="deliverable-eyebrow" style="margin-top:1.6rem;">EP Reports</div>
+        <h3 class="deliverable-title" style="font-size:1.4rem;margin-bottom:0.4rem;">${list.length} EP${list.length === 1 ? '' : 's'}. ${list.length} report${list.length === 1 ? '' : 's'}. <em>One per discipline.</em></h3>
+        <p class="deliverable-sub">Each EP looked at your brief through their own lens and produced a report. Click any name to read theirs in full.</p>
+        ${cardsHtml}
+      </div>
+    `;
+  }
+
+  // Jules-only revisions: copy edits to the brief itself. Kept separate
+  // from EP reports because revising is Jules's job; the other EPs report.
   function renderWorkSection(revisions){
     const groups = groupRevisionsByEp(revisions);
     if (!groups.length) return '';
@@ -612,7 +652,7 @@
           </article>
         `;
       }).join('');
-      const noun = g.revisions.length === 1 ? 'piece' : 'pieces';
+      const noun = g.revisions.length === 1 ? 'edit' : 'edits';
       return `
         <details class="work-ep">
           <summary>
@@ -627,12 +667,11 @@
     }).join('');
 
     const totalRevs = groups.reduce((sum, g) => sum + g.revisions.length, 0);
-    const epCount = groups.length;
     return `
       <div class="work-block">
-        <div class="deliverable-eyebrow" style="margin-top:1.6rem;">What you built with the EPs</div>
-        <h3 class="deliverable-title" style="font-size:1.4rem;margin-bottom:0.4rem;">${epCount} ${epCount === 1 ? 'EP' : 'EPs'}. ${totalRevs} ${totalRevs === 1 ? 'piece' : 'pieces'}. <em>All in your deliverable.</em></h3>
-        <p class="deliverable-sub">Click an EP to see what they produced. Every piece below is also embedded in your final brief above.</p>
+        <div class="deliverable-eyebrow" style="margin-top:1.6rem;">Copy Edits</div>
+        <h3 class="deliverable-title" style="font-size:1.4rem;margin-bottom:0.4rem;">${totalRevs} ${totalRevs === 1 ? 'edit' : 'edits'} from Jules. <em>Tightened, in your voice.</em></h3>
+        <p class="deliverable-sub">Jules is the only EP who edits the brief itself. The rest report; she rewrites.</p>
         ${groupsHtml}
       </div>
     `;
@@ -763,18 +802,22 @@
     // the visitor's working brief + revision log live.
     const sampleBrief     = typeof data.brief === 'string' ? data.brief.trim() : '';
     const sampleRevisions = Array.isArray(data.revisions) ? data.revisions : null;
+    const sampleEpReports = Array.isArray(data.ep_reports) ? data.ep_reports : null;
     const sessionBrief     = sampleBrief || (ss(KEY_BRIEF) || '').trim();
     const sessionRevisions = sampleRevisions || ssJson(KEY_REVISIONS, []);
-    const briefSection = renderBriefSection(sessionBrief);
-    const workSection  = renderWorkSection(sessionRevisions);
+    const epReportsList    = sampleEpReports || [];
+    const briefSection     = renderBriefSection(sessionBrief);
+    const epReportsSection = renderEpReportsSection(epReportsList);
+    const workSection      = renderWorkSection(sessionRevisions);
 
     // Build the table-of-contents based on which sections will render.
     const tocItems = [
       { id: 'panel',       label: 'Panel' },
       { id: 'verdict',     label: 'Verdict' },
     ];
-    if (briefSection) tocItems.push({ id: 'brief',     label: 'Brief' });
-    if (workSection)  tocItems.push({ id: 'work',      label: 'EP Work' });
+    if (briefSection)     tocItems.push({ id: 'brief',     label: 'Brief' });
+    if (epReportsSection) tocItems.push({ id: 'reports',   label: 'EP Reports' });
+    if (workSection)      tocItems.push({ id: 'work',      label: 'Copy Edits' });
     tocItems.push({ id: 'next', label: 'Next' });
     const tocBlock = `
       <div class="toc">
@@ -787,12 +830,13 @@
     // sees them as one block (the artifact) distinct from the panel
     // findings (the diagnosis) and the routing recommendation (the
     // forward path).
-    const deliverableBlock = (briefSection || workSection)
+    const deliverableBlock = (briefSection || epReportsSection || workSection)
       ? `<section class="deliverable" id="brief">
            <div class="deliverable-eyebrow">Your Deliverable</div>
            <h2 class="deliverable-title">What you walked out with.</h2>
-           <p class="deliverable-sub">The brief you wrote, sharpened by the EPs. Every piece they generated for you below, anchored to your idea.</p>
+           <p class="deliverable-sub">Your brief, eight EP reports, and Jules's copy edits. One per discipline, anchored to your idea.</p>
            ${briefSection}
+           ${epReportsSection ? '<div id="reports"></div>' + epReportsSection : ''}
            ${workSection ? '<div id="work"></div>' + workSection : ''}
          </section>`
       : '';
