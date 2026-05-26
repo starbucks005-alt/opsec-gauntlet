@@ -69,6 +69,25 @@
     text-align:center; max-width:680px; margin:0 auto 3.5rem;
   }
 
+  .value-anchor{
+    max-width:780px; margin:0 auto 3rem; padding:1.2rem 1.5rem;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.4);
+    display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap;
+  }
+  .value-anchor-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold); flex:0 0 auto;
+  }
+  .value-anchor-text{
+    font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--text);
+    line-height:1.5; flex:1 1 280px;
+  }
+  .value-anchor-text strong{ color:var(--cream); font-weight:600; }
+  .value-anchor-text em{ color:var(--gold-light); font-style:italic; }
+  @media (max-width:600px){
+    .value-anchor{ flex-direction:column; align-items:flex-start; gap:0.6rem; }
+  }
+
   .grid{
     display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
     gap:1.4rem;
@@ -246,6 +265,13 @@
   <div class="s-eyebrow">Sample Ideas</div>
   <h1 class="s-title">Don't have an idea? <em>Try one of ours.</em></h1>
   <p class="s-sub">Pick a concept. We'll seed it into your brief and walk you through the EP corridor and the Chamber as if you'd written it yourself. These are real concept documents Terry built before The Gauntlet existed - now they get to face the panel.</p>
+
+  <div class="value-anchor">
+    <div class="value-anchor-label">What you get</div>
+    <div class="value-anchor-text">
+      Each completed sample = <strong>8 EP reports + 24 judge findings + verdict</strong>. The structure a <em>$3,000-$15,000 consulting engagement</em> would give you, in one artifact. Click any deliverable below for the full cost breakdown.
+    </div>
+  </div>
 
   <div id="grid" class="grid">
     <div class="status" id="loading">Loading samples...</div>

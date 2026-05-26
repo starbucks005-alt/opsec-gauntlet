@@ -61,6 +61,68 @@
     text-transform:uppercase;color:var(--gold);white-space:nowrap;
   }
 
+  /* Cost anchor - sample-only, hidden under white-label */
+  .cost-anchor{
+    margin:3rem 0; padding:1.8rem 2rem;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.5);
+    position:relative;
+  }
+  .cost-anchor::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background:var(--gold);
+  }
+  .cost-anchor-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
+  }
+  .cost-anchor-title{
+    font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;
+    color:var(--cream); line-height:1.2; margin-bottom:0.4rem;
+  }
+  .cost-anchor-title em{ font-style:italic; color:var(--gold-light); }
+  .cost-anchor-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem; margin-bottom:1.4rem;
+  }
+  .cost-list{ list-style:none; padding:0; margin:0 0 1.4rem; }
+  .cost-list li{
+    display:flex; justify-content:space-between; gap:1.2rem;
+    padding:0.55rem 0; border-bottom:1px dotted rgba(184,146,42,0.16);
+    font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--text);
+  }
+  .cost-list li:last-child{ border-bottom:none; }
+  .cost-list-label{ flex:1; }
+  .cost-list-range{
+    font-family:'DM Mono',monospace; font-size:0.78rem;
+    color:var(--gold-light); white-space:nowrap;
+  }
+  .cost-anchor-totals{
+    display:grid; grid-template-columns:1fr 1fr; gap:1.4rem;
+    padding-top:1.2rem; border-top:1px solid var(--rule);
+  }
+  .cost-total{ display:flex; flex-direction:column; gap:0.2rem; }
+  .cost-total-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .cost-total-value{
+    font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700;
+    color:var(--gold-light);
+  }
+  .cost-anchor-note{
+    margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid var(--rule);
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text); font-size:1rem; line-height:1.55;
+  }
+  .cost-anchor-note strong{
+    font-style:normal; color:var(--cream); font-weight:600;
+  }
+  @media (max-width:600px){
+    .cost-anchor{ padding:1.4rem 1.2rem; }
+    .cost-anchor-totals{ grid-template-columns:1fr; gap:0.8rem; }
+    .cost-list li{ flex-direction:column; gap:0.2rem; }
+  }
+
   /* Brand block - top of the report and footer */
   .brand-block{
     border:1px solid var(--rule);background:rgba(0,0,0,0.4);
@@ -632,6 +694,58 @@
     `;
   }
 
+  // Cost anchor: honest breakdown of what a comparable deliverable would cost
+  // from professionals. Shown ONLY on sample deliverables with no white-label
+  // override - hidden on live (paid) reports and on any deliverable carrying a
+  // brand_config (white-labeled samples don't sell The Gauntlet).
+  const COST_LINES = [
+    { label: 'Buyer-psychology profile',                                           range: '$300–$1,500' },
+    { label: 'Landscape / category audit',                                         range: '$500–$3,000' },
+    { label: 'Pattern-screening with comp validation',                             range: '$200–$1,500' },
+    { label: 'Press release (PR agency or freelance copywriter)',                  range: '$150–$2,500' },
+    { label: '45-day content plan (social strategist)',                            range: '$500–$3,000' },
+    { label: 'Research-and-frameworks memo',                                       range: '$300–$1,500' },
+    { label: 'Operations / regulatory read (fractional COO or consultant)',        range: '$500–$2,500' },
+    { label: 'Coaching / presenter prep session',                                  range: '$300–$1,500' },
+    { label: 'Panel critique (24 findings, 3 reviewers - advisory-board equivalent)', range: '$500–$3,000' }
+  ];
+  function shouldShowCostAnchor(data){
+    if (!data || !data.sample_id) return false;
+    if (data.brand_config) return false; // white-labeled samples don't show it
+    if (ssJson('tg_brand_config', null)) return false; // session white-label too
+    return true;
+  }
+  function renderCostAnchor(data){
+    if (!shouldShowCostAnchor(data)) return '';
+    const linesHtml = COST_LINES.map(l => `
+      <li>
+        <span class="cost-list-label">${escapeHtml(l.label)}</span>
+        <span class="cost-list-range">${escapeHtml(l.range)}</span>
+      </li>
+    `).join('');
+    return `
+      <section class="cost-anchor" id="value">
+        <div class="cost-anchor-eyebrow">What this would cost from professionals</div>
+        <h2 class="cost-anchor-title">The honest <em>math</em>.</h2>
+        <p class="cost-anchor-sub">Real freelance and boutique-consultant rates for the line items in this deliverable.</p>
+        <ul class="cost-list">${linesHtml}</ul>
+        <div class="cost-anchor-totals">
+          <div class="cost-total">
+            <span class="cost-total-label">Floor (low-end freelance)</span>
+            <span class="cost-total-value">~$3,250</span>
+          </div>
+          <div class="cost-total">
+            <span class="cost-total-label">Mid-range (boutique)</span>
+            <span class="cost-total-value">$8,000–$15,000</span>
+          </div>
+        </div>
+        <p class="cost-anchor-note">
+          <strong>And nobody at any price tier writes all eight reports plus the panel triangulation in one integrated artifact.</strong> You'd hire 3-5 specialists who wouldn't talk to each other. The Gauntlet integrates them. That's why this exists - and why the founders who need it most can finally afford it.
+        </p>
+      </section>
+    `;
+  }
+
   // Brand block: resolves brand_config from (1) deliverable JSON, (2) session
   // override, (3) default. Default is The Gauntlet; higher-tier users can
   // set sessionStorage.tg_brand_config to white-label their deliverables.
@@ -904,6 +1018,7 @@
     if (epReportsSection) tocItems.push({ id: 'reports',   label: 'EP Reports' });
     if (workSection)      tocItems.push({ id: 'work',      label: 'Copy Edits' });
     tocItems.push({ id: 'next', label: 'Next' });
+    if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', label: 'Value' });
     const tocBlock = `
       <div class="toc">
         <span class="toc-label">Jump to</span>
@@ -929,6 +1044,7 @@
     const brand = resolveBrand(data);
     const brandTop    = renderBrandBlock(brand, 'top');
     const brandFooter = renderBrandBlock(brand, 'footer');
+    const costAnchor  = renderCostAnchor(data);
 
     root.innerHTML = `
       ${brandTop}
@@ -951,6 +1067,8 @@
       ${deliverableBlock}
 
       <div id="next">${routingBlock}</div>
+
+      ${costAnchor}
 
       <div class="actions-row">
         <button type="button" class="btn btn-primary" data-tg-export>Export brief ↓</button>
