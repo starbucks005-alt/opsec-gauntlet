@@ -398,6 +398,17 @@
       <div class="zh-result" data-rt="result"></div>
     </div>
 
+    <!-- Monetization Strategy -->
+    <div class="zh-card" data-rt-tool="monetize">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Monetization strategy</span>
+        <span class="zh-card-eyebrow-note">Pricing model + tiers + revenue mix + launch motion</span>
+      </div>
+      <p class="rt-tool-blurb">Pricing is positioning. The model you choose anchors who the customer thinks you are. Reid reads your brief and returns: a recommended pricing model (subscription / usage / freemium / tiered / hybrid / one-time / per-seat / transactional), 2-3 concrete pricing tiers with anchor ranges, the revenue stream mix (primary + secondary with rough percentage split), the comparable monetization pattern this fits (what worked, what failed, where your variant sits), 2-3 pricing psychology levers to apply, and a launch pricing motion with the specific signal that means it is time to raise.</p>
+      <button type="button" class="zh-generate" data-rt="generate">Build the monetization strategy &rarr;</button>
+      <div class="zh-result" data-rt="result"></div>
+    </div>
+
     <!-- The Marketing Code -->
     <header class="zh-section-head">
       <h2>The Marketing Code.</h2>
@@ -853,11 +864,168 @@
     background:rgba(0,0,0,0.35); border-left:2px solid var(--gold-light);
   }
 
+  /* ── Monetization (.rm-*) - Reid pricing strategy output ────────────── */
+  .rm-pm{
+    padding:0.7rem 0.9rem;
+    background:rgba(184,146,42,0.06); border-left:3px solid var(--gold-light);
+  }
+  .rm-pm-chip{
+    display:inline-block;
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--ink);
+    background:var(--gold-light); border:1px solid var(--gold-light);
+    padding:0.3rem 0.7rem;
+    margin-bottom:0.55rem;
+  }
+  .rm-pm p{
+    font-family:'Cormorant Garamond',serif; font-size:0.95rem; line-height:1.5;
+    color:var(--text); margin:0;
+  }
+  .rm-tier-list{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:0.55rem;
+  }
+  .rm-tier{
+    padding:0.7rem 0.85rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+    border-left:2px solid var(--gold);
+  }
+  .rm-tier-head{
+    display:flex; gap:0.55rem; justify-content:space-between; align-items:baseline;
+    margin-bottom:0.4rem; flex-wrap:wrap;
+  }
+  .rm-tier h4{
+    font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700;
+    color:var(--cream); margin:0; line-height:1.25;
+  }
+  .rm-tier-price{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.1em;
+    color:var(--gold-light);
+    padding:0.2rem 0.5rem; border:1px solid rgba(212,170,74,0.4);
+    background:rgba(212,170,74,0.08);
+  }
+  .rm-tier-buyer{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.88rem; line-height:1.4; color:var(--text-dim);
+    margin:0 0 0.4rem;
+  }
+  .rm-tier-includes{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.45;
+    color:var(--text); margin:0;
+  }
+  .rm-stream-list{
+    display:flex; flex-direction:column; gap:0.5rem;
+  }
+  .rm-stream{
+    padding:0.6rem 0.85rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid var(--gold);
+  }
+  .rm-stream:first-child{ border-left-color:var(--gold-light); background:rgba(212,170,74,0.06); }
+  .rm-stream-head{
+    display:flex; gap:0.55rem; justify-content:space-between; align-items:baseline;
+    margin-bottom:0.3rem; flex-wrap:wrap;
+  }
+  .rm-stream-type{
+    font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+    color:var(--cream);
+  }
+  .rm-stream-share{
+    font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em;
+    color:var(--gold-light);
+    padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .rm-stream p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+  /* Reuse .ct-pattern style for monetization pattern (Carol's pattern card) */
+  .rm-pattern{ background:rgba(184,146,42,0.04); border-left:3px solid var(--gold); }
+  .ct-pattern-name{
+    font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700;
+    color:var(--cream); margin:0 0 0.5rem; line-height:1.25;
+  }
+  .ct-pattern-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;
+    margin-bottom:0.5rem;
+  }
+  .ct-pattern-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:0.25rem;
+  }
+  .ct-pattern p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+  .ct-pattern-position{
+    font-style:italic; color:var(--cream);
+    padding-top:0.45rem;
+    border-top:1px dashed rgba(184,146,42,0.25);
+  }
+  .ct-pattern-position strong{ font-style:normal; color:var(--gold-light); }
+  /* Pricing psychology lever chips */
+  .rm-lever-list{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:0.5rem;
+  }
+  .rm-lever{
+    padding:0.55rem 0.75rem;
+    background:rgba(155,212,163,0.04); border-left:2px solid #9bd4a3;
+  }
+  .rm-lever-name{
+    display:inline-block;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:#9bd4a3;
+    padding:0.2rem 0.5rem; border:1px solid rgba(155,212,163,0.4);
+    margin-bottom:0.4rem;
+  }
+  .rm-lever p{
+    font-family:'Cormorant Garamond',serif; font-size:0.92rem; line-height:1.4;
+    color:var(--text); margin:0;
+  }
+  /* Launch strategy block */
+  .rm-launch{
+    padding:0.75rem 1rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+    border-left:3px solid var(--gold-light);
+  }
+  .rm-launch-row{
+    display:flex; gap:0.4rem; align-items:baseline; flex-wrap:wrap;
+    margin-bottom:0.4rem;
+    font-family:'Cormorant Garamond',serif; font-size:0.95rem; line-height:1.4;
+    color:var(--cream);
+  }
+  .rm-launch-row .wt-mini-label{ margin-right:0; }
+  .rm-launch-row span:last-child{ flex:1; min-width:0; }
+  .rm-launch-why{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.9rem; line-height:1.4; color:var(--text-dim);
+    margin:0.45rem 0 0; padding-top:0.4rem;
+    border-top:1px dashed rgba(184,146,42,0.25);
+  }
+  /* Reuse mini-label from Wren's hub for inline labels (defined inline here
+     because Reid's stylesheet does not import Wren's; small duplication is
+     cheaper than the import). */
+  .wt-mini-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  /* Reuse .ct-kill style for one-thing-to-avoid */
+  .ct-kill{
+    padding:0.75rem 1rem;
+    background:rgba(192,57,43,0.05); border-left:3px solid var(--gauntlet-consequence);
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.5;
+    color:var(--cream); font-style:italic;
+  }
+
   @media (max-width:880px){
     .zh-rules,.zh-traps,.zh-platforms{ grid-template-columns:1fr; }
     .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
     .zh-card-eyebrow-note{ font-size:0.5rem; }
     .rt-palette{ grid-template-columns:1fr; }
+    .rm-tier-list,.rm-lever-list{ grid-template-columns:1fr; }
+    .ct-pattern-grid{ grid-template-columns:1fr; }
+    .rm-tier-head,.rm-stream-head{ flex-direction:column; align-items:flex-start; gap:0.25rem; }
   }
 </style>
 

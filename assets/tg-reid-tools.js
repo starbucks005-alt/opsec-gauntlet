@@ -53,6 +53,13 @@
       render:       renderPitch,
       formatForBrief: formatPitchForBrief,
     },
+    monetize: {
+      endpoint:     '/.netlify/functions/tg-reid-monetize',
+      brieflabel:   'Monetization Strategy',
+      bodyForFetch: () => ({}),
+      render:       renderMonetize,
+      formatForBrief: formatMonetizeForBrief,
+    },
   };
 
   // ── sessionStorage helpers ────────────────────────────────────────────
@@ -221,6 +228,151 @@
     lines.push(data.email_body || '');
     if (data.rationale) { lines.push(''); lines.push(`NOTE: ${data.rationale}`); }
     return { plainText: lines.join('\n'), title: data.subject_line || '' };
+  }
+
+  // ── Monetization renderer (Reid pricing strategy) ─────────────────────
+  function renderMonetize(data) {
+    const pm        = data.pricing_model || {};
+    const tiers     = Array.isArray(data.pricing_tiers) ? data.pricing_tiers : [];
+    const streams   = data.revenue_streams || {};
+    const pattern   = data.monetization_pattern || null;
+    const levers    = Array.isArray(data.pricing_psychology) ? data.pricing_psychology : [];
+    const launch    = data.launch_strategy || null;
+    const avoid     = String(data.one_thing_to_avoid || '');
+    const rationale = String(data.rationale || '');
+
+    const tiersHtml = tiers.map(t => ''
+      + '<article class="rm-tier">'
+      +   '<div class="rm-tier-head">'
+      +     '<h4>' + escapeHtml(t.name || '') + '</h4>'
+      +     '<span class="rm-tier-price">' + escapeHtml(t.price_anchor || '') + '</span>'
+      +   '</div>'
+      +   '<p class="rm-tier-buyer"><span class="wt-mini-label">For:</span> ' + escapeHtml(t.target_buyer || '') + '</p>'
+      +   '<p class="rm-tier-includes">' + escapeHtml(t.what_it_includes || '') + '</p>'
+      + '</article>'
+    ).join('');
+
+    function streamCell(s) {
+      if (!s) return '';
+      return ''
+        + '<div class="rm-stream">'
+        +   '<div class="rm-stream-head">'
+        +     '<span class="rm-stream-type">' + escapeHtml(s.type || '') + '</span>'
+        +     '<span class="rm-stream-share">' + (parseInt(s.estimated_share, 10) || 0) + '%</span>'
+        +   '</div>'
+        +   '<p>' + escapeHtml(s.rationale || '') + '</p>'
+        + '</div>';
+    }
+    const primaryHtml   = streamCell(streams.primary);
+    const secondaryHtml = Array.isArray(streams.secondary) ? streams.secondary.map(streamCell).join('') : '';
+
+    const patternHtml = pattern ? ''
+      + '<article class="ct-pattern rm-pattern">'
+      +   '<h4 class="ct-pattern-name">' + escapeHtml(pattern.pattern_name || '') + '</h4>'
+      +   '<div class="ct-pattern-grid">'
+      +     '<div><div class="ct-pattern-label">What worked</div><p>' + escapeHtml(pattern.what_worked || '') + '</p></div>'
+      +     '<div><div class="ct-pattern-label">What failed</div><p>' + escapeHtml(pattern.what_failed || '') + '</p></div>'
+      +   '</div>'
+      +   '<p class="ct-pattern-position"><strong>Your position:</strong> ' + escapeHtml(pattern.your_position || '') + '</p>'
+      + '</article>' : '';
+
+    const leversHtml = levers.map(l => ''
+      + '<div class="rm-lever">'
+      +   '<span class="rm-lever-name">' + escapeHtml((l.lever || '').replace(/_/g, ' ')) + '</span>'
+      +   '<p>' + escapeHtml(l.how_to_apply || '') + '</p>'
+      + '</div>'
+    ).join('');
+
+    const launchHtml = launch ? ''
+      + '<div class="rm-launch">'
+      +   '<div class="rm-launch-row"><span class="wt-mini-label">Start at:</span> <span>' + escapeHtml(launch.start_at || '') + '</span></div>'
+      +   '<div class="rm-launch-row"><span class="wt-mini-label">When to raise:</span> <span>' + escapeHtml(launch.when_to_raise || '') + '</span></div>'
+      +   (launch.why ? '<p class="rm-launch-why">' + escapeHtml(launch.why) + '</p>' : '')
+      + '</div>' : '';
+
+    return ''
+      + (pm.type ? '<div class="rt-out-block">'
+        + '<div class="rt-out-label">Pricing model</div>'
+        + '<div class="rm-pm">'
+        +   '<span class="rm-pm-chip">' + escapeHtml((pm.type || '').replace(/_/g, ' ')) + '</span>'
+        +   '<p>' + escapeHtml(pm.why || '') + '</p>'
+        + '</div></div>' : '')
+      + (tiersHtml ? '<div class="rt-out-block"><div class="rt-out-label">Pricing tiers</div>'
+        + '<div class="rm-tier-list">' + tiersHtml + '</div></div>' : '')
+      + (primaryHtml ? '<div class="rt-out-block"><div class="rt-out-label">Revenue stream mix</div>'
+        + '<div class="rm-stream-list">' + primaryHtml + secondaryHtml + '</div></div>' : '')
+      + (patternHtml ? '<div class="rt-out-block"><div class="rt-out-label">Monetization pattern</div>' + patternHtml + '</div>' : '')
+      + (leversHtml ? '<div class="rt-out-block"><div class="rt-out-label">Pricing psychology levers</div>'
+        + '<div class="rm-lever-list">' + leversHtml + '</div></div>' : '')
+      + (launchHtml ? '<div class="rt-out-block"><div class="rt-out-label">Launch pricing strategy</div>' + launchHtml + '</div>' : '')
+      + (avoid ? '<div class="rt-out-block"><div class="rt-out-label">One thing to avoid</div>'
+        + '<div class="ct-kill">' + escapeHtml(avoid) + '</div></div>' : '')
+      + (rationale ? '<p class="zh-result-rationale">' + escapeHtml(rationale) + '</p>' : '');
+  }
+
+  function formatMonetizeForBrief(data) {
+    const lines = [];
+    const pm = data.pricing_model || {};
+    if (pm.type) {
+      lines.push(`PRICING MODEL: ${(pm.type || '').replace(/_/g, ' ').toUpperCase()}`);
+      if (pm.why) lines.push(`  ${pm.why}`);
+      lines.push('');
+    }
+    if (Array.isArray(data.pricing_tiers) && data.pricing_tiers.length) {
+      lines.push('PRICING TIERS');
+      data.pricing_tiers.forEach(t => {
+        lines.push(`  - ${t.name}: ${t.price_anchor}`);
+        lines.push(`      For: ${t.target_buyer}`);
+        lines.push(`      ${t.what_it_includes}`);
+      });
+      lines.push('');
+    }
+    const streams = data.revenue_streams || {};
+    if (streams.primary) {
+      lines.push('REVENUE STREAM MIX');
+      lines.push(`  - PRIMARY (${streams.primary.estimated_share || 0}%): ${streams.primary.type}`);
+      if (streams.primary.rationale) lines.push(`      ${streams.primary.rationale}`);
+      (streams.secondary || []).forEach(s => {
+        lines.push(`  - secondary (${s.estimated_share || 0}%): ${s.type}`);
+        if (s.rationale) lines.push(`      ${s.rationale}`);
+      });
+      lines.push('');
+    }
+    if (data.monetization_pattern) {
+      const mp = data.monetization_pattern;
+      lines.push('MONETIZATION PATTERN');
+      lines.push(`  ${mp.pattern_name}`);
+      lines.push(`  what worked:  ${mp.what_worked}`);
+      lines.push(`  what failed:  ${mp.what_failed}`);
+      lines.push(`  your position: ${mp.your_position}`);
+      lines.push('');
+    }
+    if (Array.isArray(data.pricing_psychology) && data.pricing_psychology.length) {
+      lines.push('PRICING PSYCHOLOGY LEVERS');
+      data.pricing_psychology.forEach(l => lines.push(`  - ${(l.lever || '').replace(/_/g, ' ')}: ${l.how_to_apply}`));
+      lines.push('');
+    }
+    if (data.launch_strategy) {
+      const ls = data.launch_strategy;
+      lines.push('LAUNCH STRATEGY');
+      lines.push(`  Start at:      ${ls.start_at}`);
+      lines.push(`  When to raise: ${ls.when_to_raise}`);
+      if (ls.why) lines.push(`  Why:           ${ls.why}`);
+      lines.push('');
+    }
+    if (data.one_thing_to_avoid) {
+      lines.push('ONE THING TO AVOID');
+      lines.push(`  ${data.one_thing_to_avoid}`);
+      lines.push('');
+    }
+    if (data.rationale) {
+      lines.push('NOTE');
+      lines.push(`  ${data.rationale}`);
+    }
+    const title = (data.pricing_model && data.pricing_model.type)
+      ? (data.pricing_model.type || '').replace(/_/g, ' ')
+      : '';
+    return { plainText: lines.join('\n'), title };
   }
 
   // ── Generate (shared) ─────────────────────────────────────────────────

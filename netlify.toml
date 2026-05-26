@@ -162,6 +162,10 @@
     timeout = 26
     included_files = ["config/**"]
 
+  [functions.tg-reid-monetize]
+    timeout = 26
+    included_files = ["config/**"]
+
   [functions.tg-arjun-manufacturing]
     timeout = 26
     included_files = ["config/**"]
