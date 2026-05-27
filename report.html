@@ -435,6 +435,12 @@
     background:none;border:none;color:var(--text);
   }
   .btn-primary:hover,.btn-outline:hover{color:var(--gold);background:none;}
+  .btn:disabled,
+  .btn[aria-disabled="true"]{
+    color:var(--text-dim);cursor:not-allowed;opacity:0.55;
+  }
+  .btn:disabled:hover,
+  .btn[aria-disabled="true"]:hover{color:var(--text-dim);}
 
   /* Loading / error */
   .state-card{
@@ -1429,12 +1435,14 @@
       ${costAnchor}
 
       <div class="actions-row">
-        <button type="button" class="btn btn-primary" data-tg-export>Export brief ↓</button>
-        <button type="button" class="btn btn-primary" data-tg-print>Export PDF ↓</button>
         ${data.sample_id
-          ? `<a class="btn btn-outline" href="/samples.html">Pick another sample →</a>
-             <a class="btn btn-outline" href="/intake.html">Try your own idea →</a>`
-          : `<a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel →</a>`}
+          ? `<button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk the Gauntlet yourself to produce your own report.">Print PDF</button>
+             <button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk the Gauntlet yourself to produce your own report.">Print DOCX</button>
+             <a class="btn btn-outline" href="/samples.html">Browse other samples</a>
+             <a class="btn btn-outline" href="/intake.html">Submit your own idea</a>`
+          : `<button type="button" class="btn btn-primary" data-tg-print>Print PDF</button>
+             <button type="button" class="btn btn-primary" data-tg-export>Print DOCX</button>
+             <a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel</a>`}
         <a class="btn btn-outline" href="/">Home</a>
       </div>
 
