@@ -20,21 +20,22 @@
      adjusted for legibility on a light background. */
   :root,
   :root[data-theme="dark"]{
-    --bg:#f7f4ec;
-    --ink:#1a1816;
-    --ink-soft:#ede9de;
-    --cream:#1a1816;
+    --bg:#ffffff;
+    --ink:#1a1a1a;
+    --ink-soft:#f4f4f2;
+    --cream:#1a1a1a;
     --gold:#8a6e1d;
-    --gold-light:#b8922a;
-    --rule:rgba(26,24,22,0.18);
-    --text:#1a1816;
-    --text-dim:#6a6055;
+    --gold-light:#a68220;
+    --rule:rgba(0,0,0,0.14);
+    --rule-soft:rgba(0,0,0,0.08);
+    --text:#1a1a1a;
+    --text-dim:#5a5550;
     --crimson:#5a1a1a;
-    --crimson-bright:#b03020;
-    --gauntlet-consequence:#b03020;
-    --card:rgba(26,24,22,0.04);
-    --card-soft:rgba(26,24,22,0.03);
-    --card-strong:rgba(26,24,22,0.055);
+    --crimson-bright:#a82a1f;
+    --gauntlet-consequence:#a82a1f;
+    --card:rgba(0,0,0,0.025);
+    --card-soft:rgba(0,0,0,0.015);
+    --card-strong:rgba(0,0,0,0.04);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -64,7 +65,98 @@
   }
   .tg-topbar-back:hover{color:#b8922a;}
 
-  main{max-width:920px;margin:0 auto;padding:3.5rem 2rem 5rem;}
+  main{max-width:780px;margin:0 auto;padding:3.5rem 2rem 5rem;background:#fff;}
+
+  /* ── DOCUMENT MODE: flat, flowing typography. No card backgrounds.
+     Hierarchy comes from rules, whitespace, and type size. Reads as a
+     Word-document deliverable, not a website panel. ────────────────── */
+  .doc-section{
+    margin:3.2rem 0 0;
+    padding-top:2.4rem;
+    border-top:1px solid var(--rule);
+  }
+  .doc-section:first-of-type{ border-top:none; padding-top:0; }
+  .doc-section-head{ margin-bottom:1.6rem; }
+  .doc-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem;
+  }
+  .doc-h2{
+    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
+    color:var(--text); line-height:1.2; letter-spacing:-0.005em;
+    margin-bottom:0.4rem;
+  }
+  .doc-h2-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1.05rem; line-height:1.5;
+  }
+
+  /* Prose: the body text of any document section. Renders <pre>-style
+     preserved whitespace so multi-paragraph EP report content (with
+     embedded newlines) flows naturally without manual <br> tags. */
+  .doc-prose{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.05rem; line-height:1.75;
+    color:var(--text);
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    margin:0;
+  }
+
+  /* EP article: one per EP report (or per Jules edit group). No card
+     background. Separated from siblings by whitespace and a thin top
+     rule. The header is a single inline row, not a stacked box. */
+  .doc-ep{
+    margin-top:2.4rem;
+    padding-top:2rem;
+    border-top:1px solid var(--rule-soft);
+  }
+  .doc-ep:first-of-type{ margin-top:1.6rem; padding-top:0; border-top:none; }
+  .doc-ep-head{
+    display:flex; flex-wrap:wrap; align-items:baseline;
+    gap:0.6rem 1.2rem; margin-bottom:0.9rem;
+  }
+  .doc-ep-name{
+    font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700;
+    color:var(--text); line-height:1.2; letter-spacing:-0.005em;
+    display:flex; align-items:baseline; gap:0.8rem; flex-wrap:wrap;
+  }
+  .doc-ep-role{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold); font-weight:400;
+  }
+  .doc-ep-type{
+    margin-left:auto;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--text-dim);
+    padding:0.3rem 0.6rem; border:1px solid var(--rule);
+  }
+  .doc-ep-headline{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.15rem; line-height:1.45; color:var(--gold-light);
+    margin-bottom:1rem;
+  }
+
+  /* Jules edit blocks live inside a doc-ep article when she has any. */
+  .doc-edit{ margin-bottom:1.6rem; }
+  .doc-edit:last-child{ margin-bottom:0; }
+  .doc-edit-meta{
+    display:flex; align-items:baseline; gap:0.7rem;
+    margin-bottom:0.4rem;
+  }
+  .doc-edit-op{
+    font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold); font-weight:500;
+  }
+  .doc-edit-label{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem;
+  }
+  .doc-edit-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem; line-height:1.5;
+    margin-bottom:0.6rem;
+  }
 
   /* Step indicator */
   .step-bar{
@@ -79,7 +171,7 @@
   /* Cost anchor - sample-only, hidden under white-label */
   .cost-anchor{
     margin:3rem 0; padding:1.8rem 2rem;
-    border:1px solid var(--rule); background:rgba(26,24,22,0.05);
+    border:1px solid var(--rule); background:transparent;
     position:relative;
   }
   .cost-anchor::before{
@@ -138,16 +230,22 @@
     .cost-list li{ flex-direction:column; gap:0.2rem; }
   }
 
-  /* Brand block - top of the report and footer */
+  /* Brand block - top of the report and footer.
+     Clean horizontal header on a white document. No card background -
+     just a bottom rule under the top block and a top rule above the
+     footer credit. */
   .brand-block{
-    border:1px solid var(--rule);background:rgba(26,24,22,0.04);
-    padding:1rem 1.4rem;display:flex;align-items:center;gap:1rem;
-    margin-bottom:2rem;
+    background:transparent;border:none;
+    border-bottom:1px solid var(--rule);
+    padding:0.8rem 0 1.2rem;
+    display:flex;align-items:center;gap:1rem;
+    margin-bottom:2.4rem;
   }
   .brand-block-top{margin-top:0;}
   .brand-block-footer{
-    margin:3rem 0 2rem;border-color:rgba(184,146,42,0.18);
-    background:rgba(26,24,22,0.03);
+    margin:4rem 0 0;
+    border:none;border-top:1px solid var(--rule);
+    padding:1.2rem 0 0;
   }
   .brand-mark{
     flex:0 0 auto;width:42px;height:42px;border-radius:50%;
@@ -211,7 +309,7 @@
   /* Composite */
   .composite{
     margin:2.5rem 0;
-    border:1px solid var(--rule);background:rgba(26,24,22,0.05);
+    border:1px solid var(--rule);background:transparent;
     padding:1.8rem 2rem;
     display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;
     position:relative;overflow:hidden;
@@ -261,9 +359,10 @@
   .finding{
     display:grid;grid-template-columns:88px 1fr auto;gap:1.1rem;
     align-items:start;
-    border:1px solid var(--rule);background:rgba(26,24,22,0.045);
-    padding:1.1rem 1.2rem;
+    border-top:1px solid var(--rule-soft);background:transparent;
+    padding:1.3rem 0;
   }
+  .finding:first-child{ border-top:none; padding-top:0.4rem; }
   .finding-portrait{
     width:88px;height:88px;overflow:hidden;
     border:1px solid var(--rule);background:rgba(26,24,22,0.08);
@@ -888,13 +987,13 @@
   function renderBriefSection(brief){
     if (!brief || brief.length < 12) return '';
     return `
-      <div class="brief-block">
-        <div class="brief-block-head">
-          <h3>Your Brief</h3>
-          <span class="brief-block-note">Final state - includes everything you accepted from the EPs</span>
-        </div>
-        <div class="brief-text">${escapeHtml(brief)}</div>
-      </div>
+      <section class="doc-section" id="brief">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">Your Brief</div>
+          <h2 class="doc-h2">The idea, as written.</h2>
+        </header>
+        <div class="doc-prose">${escapeHtml(brief)}</div>
+      </section>
     `;
   }
 
@@ -1001,36 +1100,34 @@
   function renderEpReportsSection(epReports){
     const list = Array.isArray(epReports) ? epReports.filter(r => r && r.ep_id) : [];
     if (!list.length) return '';
-    const cardsHtml = list.map(r => {
+    const articlesHtml = list.map(r => {
       const ep = EP_DISPLAY[r.ep_id] || { name: r.ep_id, role: '' };
       const reportType = r.report_type || 'Report';
-      const headline = r.headline ? `<p class="work-rev-rationale">${escapeHtml(r.headline)}</p>` : '';
-      const content  = r.content ? `<div class="work-rev-content">${escapeHtml(r.content)}</div>` : '';
+      const headline = r.headline
+        ? `<p class="doc-ep-headline">${escapeHtml(r.headline)}</p>` : '';
+      const content  = r.content
+        ? `<div class="doc-prose">${escapeHtml(r.content)}</div>` : '';
       return `
-        <details class="work-ep">
-          <summary>
-            <span class="work-ep-disclose">&rsaquo;</span>
-            <span class="work-ep-name">${escapeHtml(ep.name)}</span>
-            <span class="work-ep-role">${escapeHtml(ep.role)}</span>
-            <span class="work-ep-count">${escapeHtml(reportType)}</span>
-          </summary>
-          <div class="work-ep-body">
-            <article class="work-rev">
-              ${headline}
-              ${content}
-            </article>
-          </div>
-        </details>
+        <article class="doc-ep">
+          <header class="doc-ep-head">
+            <h3 class="doc-ep-name">${escapeHtml(ep.name)}<span class="doc-ep-role">${escapeHtml(ep.role)}</span></h3>
+            <div class="doc-ep-type">${escapeHtml(reportType)}</div>
+          </header>
+          ${headline}
+          ${content}
+        </article>
       `;
     }).join('');
 
     return `
-      <div class="work-block">
-        <div class="deliverable-eyebrow" style="margin-top:1.6rem;">EP Reports</div>
-        <h3 class="deliverable-title" style="font-size:1.4rem;margin-bottom:0.4rem;">${list.length} EP${list.length === 1 ? '' : 's'}. ${list.length} report${list.length === 1 ? '' : 's'}. <em>One per discipline.</em></h3>
-        <p class="deliverable-sub">Each EP looked at your brief through their own lens and produced a report. Click any name to read theirs in full.</p>
-        ${cardsHtml}
-      </div>
+      <section class="doc-section" id="reports">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">EP Reports</div>
+          <h2 class="doc-h2">${list.length} EP${list.length === 1 ? '' : 's'}. ${list.length} report${list.length === 1 ? '' : 's'}. One per discipline.</h2>
+          <p class="doc-h2-sub">Each EP looked at the brief through their own lens and produced a report.</p>
+        </header>
+        ${articlesHtml}
+      </section>
     `;
   }
 
@@ -1039,44 +1136,43 @@
   function renderWorkSection(revisions){
     const groups = groupRevisionsByEp(revisions);
     if (!groups.length) return '';
-    const groupsHtml = groups.map(g => {
+    const totalRevs = groups.reduce((sum, g) => sum + g.revisions.length, 0);
+    const articlesHtml = groups.map(g => {
       const ep = EP_DISPLAY[g.ep_id] || { name: g.ep_id, role: '' };
       const revsHtml = g.revisions.map(r => {
         const op = String(r.operation || '').toLowerCase();
         const opLabel = op === 'replace' ? 'rewrite' : op === 'append' ? 'addition' : op;
         return `
-          <article class="work-rev">
-            <div class="work-rev-head">
-              <span class="work-rev-op">${escapeHtml(opLabel)}</span>
-              <span class="work-rev-label">${escapeHtml(r.section_label || 'section')}</span>
+          <div class="doc-edit">
+            <div class="doc-edit-meta">
+              <span class="doc-edit-op">${escapeHtml(opLabel)}</span>
+              <span class="doc-edit-label">${escapeHtml(r.section_label || 'section')}</span>
             </div>
-            ${r.rationale ? `<p class="work-rev-rationale">${escapeHtml(r.rationale)}</p>` : ''}
-            ${r.after ? `<div class="work-rev-content">${escapeHtml(r.after)}</div>` : ''}
-          </article>
+            ${r.rationale ? `<p class="doc-edit-rationale">${escapeHtml(r.rationale)}</p>` : ''}
+            ${r.after ? `<div class="doc-prose">${escapeHtml(r.after)}</div>` : ''}
+          </div>
         `;
       }).join('');
-      const noun = g.revisions.length === 1 ? 'edit' : 'edits';
       return `
-        <details class="work-ep">
-          <summary>
-            <span class="work-ep-disclose">&rsaquo;</span>
-            <span class="work-ep-name">${escapeHtml(ep.name)}</span>
-            <span class="work-ep-role">${escapeHtml(ep.role)}</span>
-            <span class="work-ep-count">${g.revisions.length} ${noun}</span>
-          </summary>
-          <div class="work-ep-body">${revsHtml}</div>
-        </details>
+        <article class="doc-ep">
+          <header class="doc-ep-head">
+            <h3 class="doc-ep-name">${escapeHtml(ep.name)}<span class="doc-ep-role">${escapeHtml(ep.role)}</span></h3>
+            <div class="doc-ep-type">${g.revisions.length} ${g.revisions.length === 1 ? 'edit' : 'edits'}</div>
+          </header>
+          ${revsHtml}
+        </article>
       `;
     }).join('');
 
-    const totalRevs = groups.reduce((sum, g) => sum + g.revisions.length, 0);
     return `
-      <div class="work-block">
-        <div class="deliverable-eyebrow" style="margin-top:1.6rem;">Copy Edits</div>
-        <h3 class="deliverable-title" style="font-size:1.4rem;margin-bottom:0.4rem;">${totalRevs} ${totalRevs === 1 ? 'edit' : 'edits'} from Jules. <em>Tightened, in your voice.</em></h3>
-        <p class="deliverable-sub">Jules is the only EP who edits the brief itself. The rest report; she rewrites.</p>
-        ${groupsHtml}
-      </div>
+      <section class="doc-section" id="work">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">Copy Edits</div>
+          <h2 class="doc-h2">${totalRevs} ${totalRevs === 1 ? 'edit' : 'edits'} from Jules.</h2>
+          <p class="doc-h2-sub">Jules is the only EP who edits the brief itself. The rest report; she rewrites.</p>
+        </header>
+        ${articlesHtml}
+      </section>
     `;
   }
 
@@ -1234,20 +1330,12 @@
       </div>
     `;
 
-    // Wrap brief + work into a single deliverable section so the visitor
-    // sees them as one block (the artifact) distinct from the panel
-    // findings (the diagnosis) and the routing recommendation (the
-    // forward path).
-    const deliverableBlock = (briefSection || epReportsSection || workSection)
-      ? `<section class="deliverable" id="brief">
-           <div class="deliverable-eyebrow">Your Deliverable</div>
-           <h2 class="deliverable-title">What you walked out with.</h2>
-           <p class="deliverable-sub">Your brief, eight EP reports, and Jules's copy edits. One per discipline, anchored to your idea.</p>
-           ${briefSection}
-           ${epReportsSection ? '<div id="reports"></div>' + epReportsSection : ''}
-           ${workSection ? '<div id="work"></div>' + workSection : ''}
-         </section>`
-      : '';
+    // Brief, EP reports, and Jules's edits each render as standalone
+    // document sections. Each section provides its own id anchor and
+    // its own header so the TOC links land on the section header. No
+    // wrapper card around them - flat document flow.
+    const deliverableBlock = [briefSection, epReportsSection, workSection]
+      .filter(Boolean).join('');
 
     const brand = resolveBrand(data);
     const brandTop    = renderBrandBlock(brand, 'top');
