@@ -1725,13 +1725,22 @@
     const brandFooter = renderBrandBlock(brand, 'footer');
     const costAnchor  = renderCostAnchor(data);
 
+    // Demo mode: when the URL carries ?demo=1, we render the sample
+    // exactly as a paid client would see it - no watermark, no IP
+    // protection, no grayed buttons. The URL is the asset: Terry uses
+    // /report.html?sample=<id>&demo=1 during pitch meetings to print
+    // clean PDFs. The bypass is friction-based, not security - anyone
+    // who guesses the param can also bypass. Acceptable for v1.
+    const isDemo = (new URLSearchParams(window.location.search)).get('demo') === '1';
+
     // Tag the document for sample-mode so the print stylesheet (and the
     // on-screen watermark, now that the deliverable reads as a white
     // document) can render a SAMPLE overlay across every printed page
     // and behind the screen content. A white-label override drops the
     // sample-mode watermark on screen (the white-label tier owns the
-    // surface and doesn't carry the Gauntlet sample story).
-    if (data.sample_id) {
+    // surface and doesn't carry the Gauntlet sample story). Demo mode
+    // skips the tag entirely.
+    if (data.sample_id && !isDemo) {
       document.body.setAttribute('data-tg-mode', 'sample');
       document.body.setAttribute('data-tg-sample-title', String(submissionTitle || ''));
     } else {
@@ -1751,7 +1760,8 @@
     // None of this stops a determined attacker - screenshots and
     // view-source remain available - but it's enough friction to deter
     // someone from lifting a finished sample report as their own work.
-    if (data.sample_id && !window.__tgSampleGuardAttached) {
+    // Demo mode skips the guard - Terry needs Cmd+P to work during demos.
+    if (data.sample_id && !isDemo && !window.__tgSampleGuardAttached) {
       window.__tgSampleGuardAttached = true;
       const block = (e) => { e.preventDefault(); e.stopPropagation(); return false; };
       document.addEventListener('copy', block);
@@ -1813,11 +1823,14 @@
       ${costAnchor}
 
       <div class="actions-row">
-        ${data.sample_id
+        ${data.sample_id && !isDemo
           ? `<button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk the Gauntlet yourself to produce your own report.">Print PDF</button>
              <button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk the Gauntlet yourself to produce your own report.">Print DOCX</button>
              <a class="btn btn-outline" href="/samples.html">Browse other samples</a>
              <a class="btn btn-outline" href="/intake.html">Submit your own idea</a>`
+          : data.sample_id
+          ? `<button type="button" class="btn btn-primary" data-tg-print>Print PDF</button>
+             <a class="btn btn-outline" href="/samples.html">Browse other samples</a>`
           : `<button type="button" class="btn btn-primary" data-tg-print>Print PDF</button>
              <button type="button" class="btn btn-primary" data-tg-export>Print DOCX</button>
              <a class="btn btn-outline" href="/chamber.html?submission=${escapeHtml(evalRow.submission_id)}">Re-run the panel</a>`}
