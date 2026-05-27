@@ -155,7 +155,7 @@
   .btn-deliverable:hover{ background:rgba(155,212,163,0.12); color:#cfe9d4; border-color:#9bd4a3; }
 
   /* Inline name capture revealed when "Try this idea" clicked. Pre-fills with
-     the visitor's name from sessionStorage if they've been here before. */
+     the client's name from sessionStorage if they've been here before. */
   .card-prompt{
     display:none; flex-direction:column; gap:0.55rem;
     margin-top:0.9rem; padding-top:0.9rem;
@@ -300,7 +300,7 @@
   const KEY_BRIEF = 'tg_visitor_brief';
   // When a sample is loaded, we also stamp this so the corridor knows the
   // brief came from a sample and can skip cache invalidation behavior that
-  // assumes the brief is the visitor's own typed text. Currently unused
+  // assumes the brief is the client's own typed text. Currently unused
   // downstream but cheap to set and easy to consume later.
   const KEY_SAMPLE_ID = 'tg_sample_id';
 
@@ -344,7 +344,7 @@
     // Third CTA renders only when a pre-baked deliverable JSON exists for
      // this sample (has_deliverable flag in samples.json). Links straight
      // to the report page in sample mode. Phase 2 of the Sample Library -
-     // visitor sees a finished artifact instantly without running the
+     // client sees a finished artifact instantly without running the
      // live flow.
     const deliverableCta = sample.has_deliverable
       ? '<a class="btn-deliverable" href="/report.html?sample=' + encodeURIComponent(sample.id) + '">See completed deliverable &rarr;</a>'
@@ -399,7 +399,7 @@
     return card;
   }
 
-  // Load the sample brief into sessionStorage and send the visitor to the
+  // Load the sample brief into sessionStorage and send the client to the
   // corridor on the homepage. The corridor's tg-corridor.js reads
   // sessionStorage on load and fires the personalized briefings.
   // We also clear the corridor briefings cache so a new sample triggers a

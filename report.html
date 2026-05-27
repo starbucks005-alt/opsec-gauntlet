@@ -771,7 +771,7 @@
   .print-watermark{ display:none; }
 
   /* ── PRINT STYLESHEET ─────────────────────────────────────────────
-     Triggered when the visitor hits "Export PDF ↓" (which calls
+     Triggered when the client hits "Export PDF ↓" (which calls
      window.print()) or uses native browser print. Strips screen-only
      chrome (topbar, TOC, action buttons), forces detail panels open
      so all EP reports print in full, preserves the brand dark theme
@@ -923,7 +923,7 @@
   /* ── Sample watermark on SCREEN view ────────────────────────────────
      Now that the deliverable reads as a white document, show a faint
      diagonal SAMPLE watermark on screen too (for samples only). The
-     visitor sees immediately that this is a preview, not a paid run.
+     client sees immediately that this is a preview, not a paid run.
      Hidden under any white-label override (the white-label tier
      doesn't carry the Gauntlet sample message). */
   body[data-tg-mode="sample"] main::after{
@@ -943,7 +943,7 @@
   }
 
   /* ── IP PROTECTION ON SAMPLES ────────────────────────────────────────
-     Sample deliverables present Terry's original ideas. Visitors should
+     Sample deliverables present Terry's original ideas. Clients should
      be able to READ them on screen but not extract them as a polished
      downloadable artifact. Combined with the disabled Print buttons,
      these rules raise the cost of idea theft significantly. None of
@@ -1014,8 +1014,8 @@
 
   // Brief + revisions live in sessionStorage (per-tab). DB submission text
   // is intentionally NOT exposed by the evaluation-get function; the brief
-  // belongs to the visitor and we honor that. If sessionStorage is empty
-  // (cross-tab / later-session visitor), the brief and work sections
+  // belongs to the client and we honor that. If sessionStorage is empty
+  // (cross-tab / later-session client), the brief and work sections
   // gracefully omit and the report degrades to the chamber-view findings.
   const KEY_BRIEF     = 'tg_visitor_brief';
   const KEY_REVISIONS = 'tg_ep_revisions';
@@ -1255,9 +1255,9 @@
     }).join('');
 
     return `
-      <section class="doc-section" id="next">
+      <section class="doc-section" id="followups">
         <header class="doc-section-head">
-          <h2 class="doc-h2">V. What else can we do?</h2>
+          <h2 class="doc-h2">VI. What else can we do?</h2>
           <p class="doc-h2-sub">${escapeHtml(intro)}</p>
         </header>
         <div class="fu-grid">${cardHtml}</div>
@@ -1401,7 +1401,7 @@
     return `
       <section class="doc-section" id="value">
         <header class="doc-section-head">
-          <h2 class="doc-h2">VI. Value Assessment</h2>
+          <h2 class="doc-h2">VII. Value Assessment</h2>
           <p class="doc-h2-sub">Freelance and boutique-consultant rates for the line items in this deliverable.</p>
         </header>
         <div class="cost-anchor">
@@ -1649,14 +1649,30 @@
       ? 'Three judges, one dimension'
       : `Three judges, ${dimCount} dimensions`;
 
-    const routingBlock = renderFollowUps(tri, verdict);
+    const routing = buildRoutingRecommendation(tri ? { ...tri, verdict } : null, judgeOutputs);
+    const routingBlock = `
+      <section class="doc-section" id="next">
+        <header class="doc-section-head">
+          <h2 class="doc-h2">V. Recommendation</h2>
+        </header>
+        <div class="routing">
+          <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
+          <p class="routing-body">${escapeHtml(routing.body)}</p>
+          <div class="routing-cta-row">
+            ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)})</a>` : ''}
+            <a class="btn btn-outline" href="/intake.html">Bring another idea</a>
+          </div>
+        </div>
+      </section>
+      ${renderFollowUps(tri, verdict)}
+    `;
 
     const submissionTitle = (subRow.title || '').trim() || 'Submission';
     const completedDate = evalRow.completed_at
       ? new Date(evalRow.completed_at).toLocaleDateString('en-US',
           { year:'numeric', month:'long', day:'numeric' })
       : '';
-    // Visitor name kept for prepared-for credit on live runs; samples
+    // Client name kept for prepared-for credit on live runs; samples
     // skip the prepared-for line since they're not personalized.
     let visitorName = '';
     try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
@@ -1664,7 +1680,7 @@
     // Pull brief + revisions. In sample mode (data.brief / data.revisions
     // present in the payload), the deliverable comes pre-populated from
     // the static JSON. In live mode, fall back to sessionStorage where
-    // the visitor's working brief + revision log live.
+    // the client's working brief + revision log live.
     const sampleBrief     = typeof data.brief === 'string' ? data.brief.trim() : '';
     const sampleRevisions = Array.isArray(data.revisions) ? data.revisions : null;
     const sampleEpReports = Array.isArray(data.ep_reports) ? data.ep_reports : null;
@@ -1683,11 +1699,12 @@
     ];
     let romanIdx = 0;
     const roman = ['I','II','III','IV','V','VI','VII','VIII'];
-    if (briefSection)     tocItems.push({ id: 'brief',   num: roman[romanIdx++] + '.', label: 'Submitted Brief' });
-    if (epReportsSection) tocItems.push({ id: 'reports', num: roman[romanIdx++] + '.', label: 'Executive Producer Reports' });
-    if (workSection)      tocItems.push({ id: 'work',    num: roman[romanIdx++] + '.', label: 'Copy Edits' });
-    tocItems.push({ id: 'panel', num: roman[romanIdx++] + '.', label: 'Panel Findings' });
-    tocItems.push({ id: 'next',  num: roman[romanIdx++] + '.', label: 'Recommendation' });
+    if (briefSection)     tocItems.push({ id: 'brief',     num: roman[romanIdx++] + '.', label: 'Submitted Brief' });
+    if (epReportsSection) tocItems.push({ id: 'reports',   num: roman[romanIdx++] + '.', label: 'Executive Producer Reports' });
+    if (workSection)      tocItems.push({ id: 'work',      num: roman[romanIdx++] + '.', label: 'Copy Edits' });
+    tocItems.push({ id: 'panel',     num: roman[romanIdx++] + '.', label: 'Panel Findings' });
+    tocItems.push({ id: 'next',      num: roman[romanIdx++] + '.', label: 'Recommendation' });
+    tocItems.push({ id: 'followups', num: roman[romanIdx++] + '.', label: 'What else can we do?' });
     if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', num: roman[romanIdx++] + '.', label: 'Value Assessment' });
     const tocBlock = `
       <nav class="toc" aria-label="Table of contents">
