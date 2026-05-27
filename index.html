@@ -1425,19 +1425,81 @@
 
   // Replace each wing's quote with the templated line. Wing identity comes
   // from the IM button's data-character attribute (always present on
-  // every wing).
+  // every wing). These templates render immediately; the live LLM quotes
+  // (below) replace them once the function responds.
+  function applyQuoteToWing(epId, line, options) {
+    const wing = document.querySelector('.corridor-wing [data-character="' + epId + '"]');
+    if (!wing) return;
+    const wingEl  = wing.closest('.corridor-wing');
+    if (!wingEl) return;
+    const quoteEl = wingEl.querySelector('.wing-quote');
+    if (!quoteEl) return;
+    quoteEl.textContent = '"' + line + '"';
+    quoteEl.classList.add('is-postchamber');
+    if (options && options.live) quoteEl.classList.add('is-postchamber-live');
+  }
+
   document.querySelectorAll('.corridor-wing').forEach(wing => {
     const imBtn = wing.querySelector('[data-character]');
     const epId  = imBtn ? imBtn.getAttribute('data-character') : null;
     if (!epId) return;
     const tpl = EP_LINES[epId];
     if (!tpl) return;
-    const quoteEl = wing.querySelector('.wing-quote');
-    if (!quoteEl) return;
-    const filled = cleanLeadingComma(fill(tpl));
-    quoteEl.textContent = '"' + filled + '"';
-    quoteEl.classList.add('is-postchamber');
+    applyQuoteToWing(epId, cleanLeadingComma(fill(tpl)), { live: false });
   });
+
+  // ── V2: live per-EP quotes from the LLM ──────────────────────────────
+  // Templates above render immediately. In parallel, we call the
+  // postchamber-quotes function which reads the actual judge critiques
+  // and writes per-EP follow-up lines. When the response lands we
+  // replace the templated quotes. Cached in sessionStorage per
+  // evaluation so a page refresh does not re-bill Anthropic.
+  (function loadLiveQuotes(){
+    if (!pkg.evaluation_id) return;
+    const cacheKey = 'tg_post_chamber_quotes_' + pkg.evaluation_id;
+    let cached = null;
+    try {
+      const raw = sessionStorage.getItem(cacheKey);
+      if (raw) cached = JSON.parse(raw);
+    } catch(_){}
+    if (cached && cached.quotes && typeof cached.quotes === 'object') {
+      applyLiveQuotes(cached.quotes);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort('timeout'), 28000);
+    fetch('/.netlify/functions/tg-ep-postchamber-quotes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ evaluation_id: pkg.evaluation_id, name: pkg.visitor_name || '' }),
+      signal: controller.signal,
+    })
+      .then(r => {
+        clearTimeout(timer);
+        if (!r.ok) throw new Error('postchamber-quotes ' + r.status);
+        return r.json();
+      })
+      .then(data => {
+        if (!data || !data.quotes) return;
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(data)); } catch(_){}
+        applyLiveQuotes(data.quotes);
+      })
+      .catch(err => {
+        clearTimeout(timer);
+        // Silent failure - the templates already shipped. The client
+        // does not see the upgrade but the corridor still reads.
+        console.warn('[postchamber-quotes]', err && err.message);
+      });
+  })();
+
+  function applyLiveQuotes(quotes) {
+    Object.keys(quotes || {}).forEach(epId => {
+      const line = String(quotes[epId] || '').trim();
+      if (!line) return;
+      applyQuoteToWing(epId, line, { live: true });
+    });
+  }
 })();
 </script>
 

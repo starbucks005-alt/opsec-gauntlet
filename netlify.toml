@@ -133,6 +133,10 @@
   [functions.tg-ep-briefings]
     timeout = 26
 
+  [functions.tg-ep-postchamber-quotes]
+    timeout = 26
+    included_files = ["config/**"]
+
   [functions.tg-file-extract]
     timeout = 26
     external_node_modules = ["pdf-parse", "mammoth"]
