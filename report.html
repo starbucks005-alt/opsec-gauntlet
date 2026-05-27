@@ -499,6 +499,160 @@
     .brief-block-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
     .brief-block-note{ margin-left:0; }
   }
+
+  /* ── Sample watermark: visible only when printing in sample mode ──
+     The element exists in the DOM as part of the report (see
+     renderReport) but is display:none on screen. The @media print
+     block below shows it as a fixed diagonal overlay on every page. */
+  .print-watermark{ display:none; }
+
+  /* ── PRINT STYLESHEET ─────────────────────────────────────────────
+     Triggered when the visitor hits "Export PDF ↓" (which calls
+     window.print()) or uses native browser print. Strips screen-only
+     chrome (topbar, TOC, action buttons), forces detail panels open
+     so all EP reports print in full, preserves the brand dark theme
+     via print-color-adjust, and renders a diagonal SAMPLE watermark
+     when the document carries data-tg-mode="sample".
+  ──────────────────────────────────────────────────────────────────── */
+  @media print {
+    /* Page setup. Letter size; reasonable margins for branded headers
+       and the SAMPLE watermark to sit inside the page box. */
+    @page{
+      size:letter;
+      margin:0.55in 0.5in 0.6in;
+    }
+
+    /* Preserve the dark theme's colors and backgrounds in the printed
+       PDF. Without this, browsers strip backgrounds for ink savings. */
+    *, *::before, *::after{
+      -webkit-print-color-adjust:exact !important;
+      print-color-adjust:exact !important;
+      color-adjust:exact !important;
+    }
+
+    html, body{
+      background:var(--bg) !important;
+      color:var(--text) !important;
+    }
+    body{
+      background-image:none !important;
+    }
+
+    /* Strip screen-only nav chrome. The PDF is the artifact; the
+       navigation is the workshop floor. */
+    .tg-topbar,
+    .toc,
+    .actions-row,
+    .report-eyebrow{
+      display:none !important;
+    }
+
+    /* Tighten main padding for print. */
+    main{
+      max-width:none !important;
+      padding:0 !important;
+    }
+
+    /* Force every <details> open in print so EP reports and copy edits
+       render in full. The screen view collapses them by default. */
+    details[open] > summary,
+    details > summary{
+      display:list-item;
+    }
+    details{
+      page-break-inside:avoid;
+    }
+    details:not([open]) > *:not(summary){
+      display:revert !important;
+    }
+    details > summary{
+      list-style:none;
+      cursor:default;
+    }
+    .work-ep-disclose{ display:none !important; }
+
+    /* Page-break controls. Keep key blocks intact across page breaks. */
+    .composite,
+    .finding,
+    .finding-group,
+    .work-ep,
+    .brief-block,
+    .work-rev,
+    .cost-anchor{
+      page-break-inside:avoid;
+      break-inside:avoid;
+    }
+
+    /* Major sections start on the next clean position (no forced page
+       break - just avoid awkward orphan headings). */
+    .section,
+    .deliverable,
+    #next,
+    .cost-anchor{
+      page-break-before:auto;
+    }
+    .section-title,
+    .deliverable-title,
+    .brand-block,
+    h1, h2, h3{
+      page-break-after:avoid;
+    }
+
+    /* Brand block: shrink for print but keep the colored mark. */
+    .brand-block{
+      padding:0.6rem 0.9rem !important;
+      margin-bottom:1rem !important;
+    }
+    .brand-block-footer{
+      margin:2rem 0 0 !important;
+    }
+
+    /* Headlines: scale down slightly for print, keep weight + color. */
+    .report-title{
+      font-size:2.2rem !important;
+      margin-bottom:0.5rem !important;
+    }
+    .composite{
+      margin:1.4rem 0 !important;
+      padding:1.2rem 1.3rem !important;
+    }
+    .composite-number{
+      font-size:2.4rem !important;
+    }
+
+    /* Finding cards: print compactly but readable. */
+    .finding{
+      padding:0.7rem 0.9rem !important;
+      margin-bottom:0.55rem !important;
+    }
+    .finding-portrait img{ filter:grayscale(0.3); }
+
+    /* Cost anchor lines tighten on print. */
+    .cost-list li{
+      padding:0.35rem 0 !important;
+    }
+
+    /* Hyperlinks: keep the look but flatten interactive styling. */
+    a{ text-decoration:none !important; color:inherit !important; }
+
+    /* ── The watermark itself: shown only on samples in print. ── */
+    body[data-tg-mode="sample"] .print-watermark{
+      display:block !important;
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%) rotate(-32deg);
+      font-family:'Playfair Display', serif;
+      font-weight:700;
+      font-size:7rem;
+      letter-spacing:0.18em;
+      color:rgba(184,146,42,0.16);
+      text-transform:uppercase;
+      white-space:nowrap;
+      pointer-events:none;
+      z-index:9999;
+    }
+  }
 </style>
 <script src="assets/tg-export.js" defer></script>
 <!-- Google tag (gtag.js) -->
@@ -1010,13 +1164,17 @@
     const workSection      = renderWorkSection(sessionRevisions);
 
     // Build the table-of-contents based on which sections will render.
+    // Order matches the on-page order: verdict > deliverable (brief,
+    // reports, edits) > panel > next > value. EP reports lead the
+    // deliverable so the visitor sees the work the EPs produced first;
+    // the panel commentary follows because it critiques that work.
     const tocItems = [
-      { id: 'panel',       label: 'Panel' },
       { id: 'verdict',     label: 'Verdict' },
     ];
     if (briefSection)     tocItems.push({ id: 'brief',     label: 'Brief' });
     if (epReportsSection) tocItems.push({ id: 'reports',   label: 'EP Reports' });
     if (workSection)      tocItems.push({ id: 'work',      label: 'Copy Edits' });
+    tocItems.push({ id: 'panel', label: 'Panel' });
     tocItems.push({ id: 'next', label: 'Next' });
     if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', label: 'Value' });
     const tocBlock = `
@@ -1046,6 +1204,15 @@
     const brandFooter = renderBrandBlock(brand, 'footer');
     const costAnchor  = renderCostAnchor(data);
 
+    // Tag the document for sample-mode so the print stylesheet can
+    // render a SAMPLE watermark across every printed page.
+    if (data.sample_id) {
+      document.body.setAttribute('data-tg-mode', 'sample');
+      document.body.setAttribute('data-tg-sample-title', String(submissionTitle || ''));
+    } else {
+      document.body.removeAttribute('data-tg-mode');
+    }
+
     root.innerHTML = `
       ${brandTop}
 
@@ -1058,13 +1225,13 @@
 
       ${compositeBlock.replace('<div class="composite ', '<div id="verdict" class="composite ')}
 
+      ${deliverableBlock}
+
       <section class="section" id="panel">
         <div class="section-eyebrow">What the panel said</div>
         <h2 class="section-title">${panelTitle}</h2>
         ${findingBlocks}
       </section>
-
-      ${deliverableBlock}
 
       <div id="next">${routingBlock}</div>
 
@@ -1072,6 +1239,7 @@
 
       <div class="actions-row">
         <button type="button" class="btn btn-primary" data-tg-export>Export brief ↓</button>
+        <button type="button" class="btn btn-primary" data-tg-print>Export PDF ↓</button>
         ${data.sample_id
           ? `<a class="btn btn-outline" href="/samples.html">Pick another sample →</a>
              <a class="btn btn-outline" href="/intake.html">Try your own idea →</a>`
@@ -1080,7 +1248,31 @@
       </div>
 
       ${brandFooter}
+
+      <!-- Print-only watermark: hidden on screen, rendered on every
+           printed page when the document is in sample mode. -->
+      <div class="print-watermark" aria-hidden="true">PREVIEW SAMPLE</div>
     `;
+
+    // Wire the Export PDF button. Native browser print → user picks
+    // \"Save as PDF\" in the dialog. Print stylesheet handles layout,
+    // chrome stripping, and (for samples) the diagonal SAMPLE watermark.
+    // Before printing we force every <details> open so EP reports and
+    // Jules's edits print in full, then restore their original states
+    // afterward so the on-screen view is unchanged.
+    const printBtn = root.querySelector('[data-tg-print]');
+    if (printBtn) {
+      printBtn.addEventListener('click', () => {
+        const detailsEls = root.querySelectorAll('details');
+        const priorStates = [];
+        detailsEls.forEach(d => { priorStates.push(d.open); d.open = true; });
+        try { window.print(); } catch(_){}
+        // Restore the on-screen state after the print dialog closes.
+        setTimeout(() => {
+          detailsEls.forEach((d, i) => { d.open = priorStates[i]; });
+        }, 100);
+      });
+    }
   }
 
   function renderError(msg){
