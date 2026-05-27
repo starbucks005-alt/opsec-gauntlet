@@ -82,13 +82,13 @@
     text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem;
   }
   .doc-h2{
-    font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700;
-    color:var(--text); line-height:1.2; letter-spacing:-0.005em;
+    font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700;
+    color:var(--text); line-height:1.25; letter-spacing:-0.005em;
     margin-bottom:0.4rem;
   }
   .doc-h2-sub{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:1.05rem; line-height:1.5;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--text-dim); font-size:1rem; line-height:1.5;
   }
 
   /* Prose: the body text of any document section. Renders <pre>-style
@@ -286,24 +286,42 @@
     .brand-block{padding:0.85rem 1rem;}
   }
 
-  /* Header */
+  /* Report header: formal document title block.
+     Document type label (small mono), subject (bold serif, no italic
+     drama), then a definition-list grid for metadata (Prepared by,
+     Date, etc.). Reads like a real report cover. */
+  .report-header{
+    margin-bottom:3rem;
+    padding-bottom:2rem;
+    border-bottom:1px solid var(--rule);
+  }
   .report-eyebrow{
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
   }
   .report-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.2rem);
-    font-weight:700;color:var(--cream);line-height:1.05;
-    letter-spacing:-0.01em;margin-bottom:0.8rem;
+    font-family:'Playfair Display',serif;font-size:2.2rem;
+    font-weight:700;color:var(--text);line-height:1.15;
+    letter-spacing:-0.01em;margin-bottom:1.5rem;
   }
-  .report-title em{font-style:italic;color:var(--gold-light);}
-  .report-subline{
-    font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;
-    color:var(--gold-light);margin-bottom:0.8rem;
+  .report-meta-grid{
+    display:grid;grid-template-columns:1fr;gap:0.4rem;
+    margin:0;
   }
-  .report-meta{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
+  .report-meta-row{
+    display:grid;grid-template-columns:160px 1fr;gap:1.2rem;
+    align-items:baseline;
+  }
+  .report-meta-row dt{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
     text-transform:uppercase;color:var(--text-dim);
+  }
+  .report-meta-row dd{
+    font-family:'Cormorant Garamond',serif;font-size:1rem;
+    color:var(--text);margin:0;line-height:1.4;
+  }
+  @media (max-width:600px){
+    .report-meta-row{grid-template-columns:1fr;gap:0.15rem;}
   }
 
   /* Composite */
@@ -327,19 +345,23 @@
   .composite-number .of{
     font-size:1.4rem;color:var(--text-dim);font-weight:400;
   }
-  .composite-info{display:flex;flex-direction:column;gap:0.4rem;}
+  .composite-info{display:flex;flex-direction:column;gap:0.35rem;}
   .composite-verdict-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
-    text-transform:uppercase;color:var(--gold);
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);
   }
-  .composite.is-conflict .composite-verdict-label{color:var(--crimson-bright);}
   .composite-verdict{
-    font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
-    color:var(--cream);line-height:1.25;
+    font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;
+    color:var(--text);line-height:1.25;
+  }
+  .composite.is-conflict .composite-verdict{color:var(--crimson-bright);}
+  .composite-detail{
+    font-family:'Cormorant Garamond',serif;
+    color:var(--text);font-size:1rem;line-height:1.5;
   }
   .composite-spread{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    color:var(--text-dim);font-size:1rem;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--text-dim);
   }
 
   /* Section */
@@ -989,8 +1011,8 @@
     return `
       <section class="doc-section" id="brief">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Your Brief</div>
-          <h2 class="doc-h2">The idea, as written.</h2>
+          <div class="doc-eyebrow">Section I</div>
+          <h2 class="doc-h2">Submitted Brief</h2>
         </header>
         <div class="doc-prose">${escapeHtml(brief)}</div>
       </section>
@@ -1027,10 +1049,13 @@
       </li>
     `).join('');
     return `
-      <section class="cost-anchor" id="value">
-        <div class="cost-anchor-eyebrow">What this would cost from professionals</div>
-        <h2 class="cost-anchor-title">The honest <em>math</em>.</h2>
-        <p class="cost-anchor-sub">Real freelance and boutique-consultant rates for the line items in this deliverable.</p>
+      <section class="doc-section" id="value">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">Section VI</div>
+          <h2 class="doc-h2">Value Assessment</h2>
+          <p class="doc-h2-sub">Real freelance and boutique-consultant rates for the line items in this deliverable.</p>
+        </header>
+        <div class="cost-anchor">
         <ul class="cost-list">${linesHtml}</ul>
         <div class="cost-anchor-totals">
           <div class="cost-total">
@@ -1043,8 +1068,9 @@
           </div>
         </div>
         <p class="cost-anchor-note">
-          <strong>And nobody at any price tier writes all eight reports plus the panel triangulation in one integrated artifact.</strong> You'd hire 3-5 specialists who wouldn't talk to each other. The Gauntlet integrates them. That's why this exists - and why the founders who need it most can finally afford it.
+          No equivalent commercial offering bundles all eight reports and the panel triangulation into a single integrated artifact. A buyer assembling this work from independent specialists would engage three to five providers in parallel.
         </p>
+        </div>
       </section>
     `;
   }
@@ -1122,9 +1148,9 @@
     return `
       <section class="doc-section" id="reports">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">EP Reports</div>
-          <h2 class="doc-h2">${list.length} EP${list.length === 1 ? '' : 's'}. ${list.length} report${list.length === 1 ? '' : 's'}. One per discipline.</h2>
-          <p class="doc-h2-sub">Each EP looked at the brief through their own lens and produced a report.</p>
+          <div class="doc-eyebrow">Section II</div>
+          <h2 class="doc-h2">Executive Producer Reports</h2>
+          <p class="doc-h2-sub">${list.length} report${list.length === 1 ? '' : 's'}, one per discipline. Each Executive Producer evaluated the brief through their specific lens.</p>
         </header>
         ${articlesHtml}
       </section>
@@ -1167,9 +1193,9 @@
     return `
       <section class="doc-section" id="work">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Copy Edits</div>
-          <h2 class="doc-h2">${totalRevs} ${totalRevs === 1 ? 'edit' : 'edits'} from Jules.</h2>
-          <p class="doc-h2-sub">Jules is the only EP who edits the brief itself. The rest report; she rewrites.</p>
+          <div class="doc-eyebrow">Section III</div>
+          <h2 class="doc-h2">Copy Edits</h2>
+          <p class="doc-h2-sub">${totalRevs} ${totalRevs === 1 ? 'revision' : 'revisions'} to the brief. Jules is the only Executive Producer who edits the brief itself; the rest produce reports.</p>
         </header>
         ${articlesHtml}
       </section>
@@ -1214,14 +1240,19 @@
                           : dimCount === 1 ? `on ${dimensionLabel(dimensionsPresent[0])}`
                           : `across ${dimCount} dimensions`;
 
+    const verdictLabel = verdict === 'agreement' ? 'Agreement'
+                       : verdict === 'conflict'  ? 'Split panel'
+                       : 'Partial alignment';
+    const verdictDetail = verdict === 'agreement' ? 'The panel converged within tolerance across all dimensions scored.'
+                       : verdict === 'conflict'  ? 'The panel split materially on one or more dimensions.'
+                       : 'The panel aligned on some dimensions and diverged on others.';
     const compositeBlock = tri ? `
       <div class="composite is-${verdict}">
         <div class="composite-number">${composite10}<span class="of">/10</span></div>
         <div class="composite-info">
-          <div class="composite-verdict-label">${escapeHtml(formatVerdictLabel(verdict))} ${escapeHtml(compositeContext)}</div>
-          <div class="composite-verdict">${verdict === 'agreement' ? 'The room reads it the same way.'
-                                       : verdict === 'conflict'  ? 'The room reads it differently.'
-                                       : 'The room is partially aligned.'}</div>
+          <div class="composite-verdict-label">Composite score &middot; ${escapeHtml(compositeContext)}</div>
+          <div class="composite-verdict">${escapeHtml(verdictLabel)}</div>
+          <div class="composite-detail">${escapeHtml(verdictDetail)}</div>
           <div class="composite-spread">${escapeHtml(formatSpreadAll(tri.matrix))}</div>
         </div>
       </div>` : '';
@@ -1268,32 +1299,36 @@
 
     // Section title scales by dimension count.
     const panelTitle = dimCount === 1
-      ? 'Three judges. <em>One dimension.</em>'
-      : `Three judges. <em>${dimCount} dimensions.</em>`;
+      ? 'Three judges, one dimension'
+      : `Three judges, ${dimCount} dimensions`;
 
     const routing = buildRoutingRecommendation(tri ? { ...tri, verdict } : null, judgeOutputs);
     const routingBlock = `
-      <div class="routing">
-        <div class="routing-eyebrow">What to do next</div>
-        <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
-        <p class="routing-body">${escapeHtml(routing.body)}</p>
-        <div class="routing-cta-row">
-          ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)}) →</a>` : ''}
-          <a class="btn btn-outline" href="/intake.html">Bring another idea →</a>
+      <section class="doc-section" id="next">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">Section V</div>
+          <h2 class="doc-h2">Recommendation</h2>
+        </header>
+        <div class="routing">
+          <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
+          <p class="routing-body">${escapeHtml(routing.body)}</p>
+          <div class="routing-cta-row">
+            ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)}) →</a>` : ''}
+            <a class="btn btn-outline" href="/intake.html">Bring another idea →</a>
+          </div>
         </div>
-      </div>
+      </section>
     `;
 
-    const submissionTitle = (subRow.title || '').trim() || 'your submission';
-    const completedAt = evalRow.completed_at ? new Date(evalRow.completed_at).toLocaleString() : '';
-    // Pull the visitor name (saved by the welcome modal) so the report
-    // header addresses them directly. Falls back to a generic header if
-    // they came through without personalizing.
+    const submissionTitle = (subRow.title || '').trim() || 'Submission';
+    const completedDate = evalRow.completed_at
+      ? new Date(evalRow.completed_at).toLocaleDateString('en-US',
+          { year:'numeric', month:'long', day:'numeric' })
+      : '';
+    // Visitor name kept for prepared-for credit on live runs; samples
+    // skip the prepared-for line since they're not personalized.
     let visitorName = '';
     try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
-    const headlineTitle = visitorName
-      ? `${escapeHtml(visitorName)}, your idea has been <em>tested</em>.`
-      : `Your idea has been <em>tested</em>.`;
 
     // Pull brief + revisions. In sample mode (data.brief / data.revisions
     // present in the payload), the deliverable comes pre-populated from
@@ -1364,24 +1399,48 @@
     root.innerHTML = `
       ${brandTop}
 
-      <div class="report-eyebrow">Routing Report</div>
-      <h1 class="report-title">${headlineTitle}</h1>
-      <p class="report-subline">"${escapeHtml(submissionTitle)}"</p>
-      <div class="report-meta">${dimCount === 0 ? 'No dimensions scored' : dimensionsPresent.map(dimensionLabel).join(' &middot; ')} &middot; ${data.sample_id ? 'Sample Deliverable' : ('Evaluation ' + escapeHtml(String(evalRow.id || '').slice(0, 8)))}${completedAt ? ' &middot; ' + escapeHtml(completedAt) : ''}</div>
+      <header class="report-header">
+        <div class="report-eyebrow">Routing Report</div>
+        <h1 class="report-title">${escapeHtml(submissionTitle)}</h1>
+        <dl class="report-meta-grid">
+          <div class="report-meta-row">
+            <dt>Prepared by</dt>
+            <dd>${escapeHtml(brand.brand_name)}</dd>
+          </div>
+          ${data.sample_id
+            ? '<div class="report-meta-row"><dt>Document type</dt><dd>Sample Deliverable</dd></div>'
+            : `<div class="report-meta-row"><dt>Evaluation ID</dt><dd>${escapeHtml(String(evalRow.id || '').slice(0, 8))}</dd></div>`}
+          ${visitorName && !data.sample_id ? `<div class="report-meta-row"><dt>Prepared for</dt><dd>${escapeHtml(visitorName)}</dd></div>` : ''}
+          ${completedDate ? `<div class="report-meta-row"><dt>Date</dt><dd>${escapeHtml(completedDate)}</dd></div>` : ''}
+          <div class="report-meta-row">
+            <dt>Dimensions evaluated</dt>
+            <dd>${dimCount === 0 ? 'None' : dimensionsPresent.map(d => escapeHtml(dimensionLabel(d))).join(', ')}</dd>
+          </div>
+        </dl>
+      </header>
 
       ${tocBlock}
 
-      ${compositeBlock.replace('<div class="composite ', '<div id="verdict" class="composite ')}
+      <section class="doc-section" id="verdict">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">Executive Summary</div>
+          <h2 class="doc-h2">Verdict</h2>
+        </header>
+        ${compositeBlock}
+      </section>
 
       ${deliverableBlock}
 
-      <section class="section" id="panel">
-        <div class="section-eyebrow">What the panel said</div>
-        <h2 class="section-title">${panelTitle}</h2>
+      <section class="doc-section" id="panel">
+        <header class="doc-section-head">
+          <div class="doc-eyebrow">Section IV</div>
+          <h2 class="doc-h2">Panel Findings</h2>
+          <p class="doc-h2-sub">${escapeHtml(panelTitle)}. Each judge scored independently and provided a written critique.</p>
+        </header>
         ${findingBlocks}
       </section>
 
-      <div id="next">${routingBlock}</div>
+      ${routingBlock}
 
       ${costAnchor}
 
