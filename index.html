@@ -281,6 +281,77 @@
     .hero-path:last-child{border-bottom:none;}
   }
 
+  /* ── Samples Preview Section ───────────────────────────────────────── */
+  .samples-preview{
+    padding:5rem 2rem 4rem; max-width:1180px; margin:0 auto;
+  }
+  .samples-preview-head{ text-align:center; max-width:780px; margin:0 auto 2.4rem; }
+  .samples-preview-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
+  }
+  .samples-preview-title{
+    font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3.8vw,2.7rem);
+    font-weight:700; color:var(--cream); line-height:1.1;
+    letter-spacing:-0.01em; margin-bottom:1rem;
+  }
+  .samples-preview-title em{ font-style:italic; color:var(--gold-light); }
+  .samples-preview-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.1rem; color:var(--text-dim); line-height:1.5;
+  }
+  .samples-preview-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:1rem;
+  }
+  .sp-card{
+    display:flex; flex-direction:column;
+    padding:1.2rem 1.3rem 1.3rem;
+    background:rgba(0,0,0,0.45); border:1px solid var(--rule);
+    text-decoration:none; color:inherit;
+    transition:all 0.18s;
+  }
+  .sp-card:hover{
+    border-color:var(--gold-light);
+    background:rgba(184,146,42,0.05);
+  }
+  .sp-card-cat{
+    font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.6rem;
+  }
+  .sp-card-title{
+    font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700;
+    color:var(--cream); line-height:1.2; margin-bottom:0.35rem;
+  }
+  .sp-card-tagline{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; color:var(--gold-light); line-height:1.4;
+    margin-bottom:0.7rem;
+  }
+  .sp-card-cta{
+    margin-top:auto;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--text-dim);
+    padding-top:0.7rem; border-top:1px solid rgba(212,170,74,0.18);
+  }
+  .sp-card:hover .sp-card-cta{ color:var(--gold-light); }
+  .samples-preview-foot{
+    text-align:center; margin-top:1.8rem;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem;
+  }
+  .samples-preview-foot a{
+    color:var(--gold-light); text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .samples-preview-foot a:hover{ color:var(--cream); }
+  .samples-preview-loading,
+  .samples-preview-error{
+    grid-column:1 / -1; text-align:center; padding:2rem;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim);
+  }
+
   /* Buttons */
   .btn{
     display:inline-flex;align-items:center;gap:0.6rem;
@@ -715,6 +786,64 @@
   </div>
 </section>
 
+<!-- ── Samples Preview ──────────────────────────────────────────────────
+     Free-visitor proof block. Each card links to the finished deliverable
+     for that sample idea. Visitors see what the Gauntlet produces before
+     they commit to walking it themselves. -->
+<section class="samples-preview">
+  <div class="samples-preview-head">
+    <div class="samples-preview-eyebrow">See the work first</div>
+    <h2 class="samples-preview-title">Eight ideas. <em>Eight finished deliverables.</em></h2>
+    <p class="samples-preview-sub">Each one walked the Gauntlet end-to-end. Pick any deliverable to see exactly what paid members produce - the EP reports, the judge findings, the verdict. Free to read. No signup.</p>
+  </div>
+
+  <div class="samples-preview-grid" id="samples-preview-grid">
+    <div class="samples-preview-loading">Loading samples...</div>
+  </div>
+
+  <p class="samples-preview-foot">
+    Want to walk through a sample yourself? <a href="/samples.html">Browse the full sample library &rarr;</a>
+  </p>
+</section>
+
+<script>
+  // Load samples and render the homepage preview cards. Pulled from the
+  // same /config/samples.json that powers /samples.html. We filter to
+  // entries with has_deliverable: true so the cards only link to working
+  // deliverable pages.
+  (function(){
+    const gridEl = document.getElementById('samples-preview-grid');
+    if (!gridEl) return;
+    function escapeHtml(s){
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    fetch('/config/samples.json', { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error('samples ' + r.status); return r.json(); })
+      .then(data => {
+        const samples = Array.isArray(data.samples) ? data.samples : [];
+        const withDeliverable = samples.filter(s => s && s.has_deliverable);
+        if (!withDeliverable.length) {
+          gridEl.innerHTML = '<div class="samples-preview-error">No samples available right now.</div>';
+          return;
+        }
+        gridEl.innerHTML = withDeliverable.map(s => ''
+          + '<a class="sp-card" href="/report.html?sample=' + encodeURIComponent(s.id) + '">'
+          +   '<div class="sp-card-cat">' + escapeHtml(s.category || 'Idea') + '</div>'
+          +   '<div class="sp-card-title">' + escapeHtml(s.title) + '</div>'
+          +   (s.tagline ? '<div class="sp-card-tagline">' + escapeHtml(s.tagline) + '</div>' : '')
+          +   '<div class="sp-card-cta">See deliverable &rarr;</div>'
+          + '</a>'
+        ).join('');
+      })
+      .catch(err => {
+        console.warn('[samples-preview]', err);
+        gridEl.innerHTML = '<div class="samples-preview-error">Could not load samples. Refresh to try again.</div>';
+      });
+  })();
+</script>
+
 <div class="footlight"></div>
 
 <!-- ── The Corridor intro ─────────────────────────────────────────────── -->
@@ -1046,6 +1175,7 @@
     <nav class="home-footer-links">
       <a href="/chamber.html">The Chamber</a>
       <a href="/Helpers/">The Executive Producers</a>
+      <a href="/samples.html">Sample Ideas</a>
       <a href="/about.html">About</a>
       <a href="#" onclick="if(window.TGWelcome){TGWelcome.open();return false;}">Personalize</a>
     </nav>
