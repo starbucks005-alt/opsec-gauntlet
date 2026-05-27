@@ -32,7 +32,7 @@ const BRIEF_MAX = 6000;
 const NAME_MAX  = 60;
 const BRIEF_MIN = 30;
 const SERPAPI_ENDPOINT = 'https://serpapi.com/search';
-const PATENTS_PER_QUERY = 5;
+const PATENTS_PER_QUERY = 15;
 const MAX_QUERIES = 4;
 
 const json = (statusCode, body) => ({
