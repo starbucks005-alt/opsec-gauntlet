@@ -63,7 +63,7 @@ YOUR JOB
 
 OUTPUT REQUIREMENTS
 
-  1. PRIOR_ART - array of up to 6 of the MOST relevant patents from the results. Drop the rest. Each entry:
+  1. PRIOR_ART - array of exactly 4 of the MOST relevant patents from the results. Drop the rest. Each entry:
        - title, publication_number, assignee (from results)
        - filed_year, publication_year (4-digit years if extractable, else "")
        - abstract: ONE sentence summary of the patent's claim
@@ -77,7 +77,7 @@ OUTPUT REQUIREMENTS
        - weak_claims: 1-2 claim concepts likely DOA against prior art (short phrase with reason)
        - gaps: 1-3 white-space angles in the prior art
 
-  3. CPC_CODES - 3-5 entries:
+  3. CPC_CODES - exactly 3 entries:
        - code, label, why (one sentence each)
 
   4. NEXT_STEPS - exactly 3 entries in this order:
@@ -113,7 +113,7 @@ OUTPUT JSON:
 function cleanPriorArt(arr) {
   return (Array.isArray(arr) ? arr : [])
     .filter(p => p && (p.title || p.publication_number))
-    .slice(0, 6)
+    .slice(0, 4)
     .map(p => ({
       title:              cleanString(p.title, 240),
       publication_number: cleanString(p.publication_number, 60),
@@ -138,7 +138,7 @@ function cleanPatentability(obj) {
 function cleanCpcCodes(arr) {
   return (Array.isArray(arr) ? arr : [])
     .filter(c => c && c.code)
-    .slice(0, 5)
+    .slice(0, 3)
     .map(c => ({
       code:  cleanString(c.code, 40),
       label: cleanString(c.label, 200),
