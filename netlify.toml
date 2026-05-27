@@ -208,3 +208,11 @@
   [functions.tg-ivy-context]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-grant-coach]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-grant-pitch]
+    timeout = 26
+    included_files = ["config/**"]
