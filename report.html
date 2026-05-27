@@ -11,43 +11,58 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+  /* DOCUMENT MODE PALETTE
+     The deliverable view reads as a professional white paper, not as
+     the dark website chrome. The topbar (site navigation) keeps its
+     dark identity via hardcoded values further down so users still
+     have a clear chrome/document divide. Everything inside <main>
+     renders on warm cream paper with deep ink type and gold accents
+     adjusted for legibility on a light background. */
   :root,
   :root[data-theme="dark"]{
-    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
-    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
-    --crimson:#5a1a1a; --crimson-bright:#c0392b; --gauntlet-consequence:#c0392b;
+    --bg:#f7f4ec;
+    --ink:#1a1816;
+    --ink-soft:#ede9de;
+    --cream:#1a1816;
+    --gold:#8a6e1d;
+    --gold-light:#b8922a;
+    --rule:rgba(26,24,22,0.18);
+    --text:#1a1816;
+    --text-dim:#6a6055;
+    --crimson:#5a1a1a;
+    --crimson-bright:#b03020;
+    --gauntlet-consequence:#b03020;
+    --card:rgba(26,24,22,0.04);
+    --card-soft:rgba(26,24,22,0.03);
+    --card-strong:rgba(26,24,22,0.055);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     background:var(--bg);color:var(--text);
     font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
     min-height:100vh;
-    background-image:
-      radial-gradient(ellipse 60% 50% at center top, rgba(184,146,42,0.08) 0%, transparent 70%),
-      repeating-linear-gradient(135deg,
-        rgba(212,170,74,0.018) 0px, rgba(212,170,74,0.018) 1px,
-        transparent 1px, transparent 3px);
   }
 
-  /* Topbar */
+  /* Topbar - keeps the site's dark identity (this is the website chrome,
+     not the document). The document begins below it inside <main>. */
   .tg-topbar{
     display:flex;align-items:center;padding:0 2.5rem;height:56px;
-    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+    border-bottom:1px solid rgba(184,146,42,0.25);gap:1.5rem;
+    position:sticky;top:0;
+    background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);z-index:100;
   }
   .tg-topbar-logo{
     display:flex;align-items:center;gap:0.6rem;
     font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
-    color:var(--gold);text-decoration:none;
+    color:#b8922a;text-decoration:none;
   }
   .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
   .tg-topbar-back{
     margin-left:auto;
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+    text-transform:uppercase;color:#a89c88;text-decoration:none;
   }
-  .tg-topbar-back:hover{color:var(--gold);}
+  .tg-topbar-back:hover{color:#b8922a;}
 
   main{max-width:920px;margin:0 auto;padding:3.5rem 2rem 5rem;}
 
@@ -64,7 +79,7 @@
   /* Cost anchor - sample-only, hidden under white-label */
   .cost-anchor{
     margin:3rem 0; padding:1.8rem 2rem;
-    border:1px solid var(--rule); background:rgba(0,0,0,0.5);
+    border:1px solid var(--rule); background:rgba(26,24,22,0.05);
     position:relative;
   }
   .cost-anchor::before{
@@ -125,14 +140,14 @@
 
   /* Brand block - top of the report and footer */
   .brand-block{
-    border:1px solid var(--rule);background:rgba(0,0,0,0.4);
+    border:1px solid var(--rule);background:rgba(26,24,22,0.04);
     padding:1rem 1.4rem;display:flex;align-items:center;gap:1rem;
     margin-bottom:2rem;
   }
   .brand-block-top{margin-top:0;}
   .brand-block-footer{
     margin:3rem 0 2rem;border-color:rgba(184,146,42,0.18);
-    background:rgba(0,0,0,0.3);
+    background:rgba(26,24,22,0.03);
   }
   .brand-mark{
     flex:0 0 auto;width:42px;height:42px;border-radius:50%;
@@ -196,7 +211,7 @@
   /* Composite */
   .composite{
     margin:2.5rem 0;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    border:1px solid var(--rule);background:rgba(26,24,22,0.05);
     padding:1.8rem 2rem;
     display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;
     position:relative;overflow:hidden;
@@ -246,12 +261,12 @@
   .finding{
     display:grid;grid-template-columns:88px 1fr auto;gap:1.1rem;
     align-items:start;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
+    border:1px solid var(--rule);background:rgba(26,24,22,0.045);
     padding:1.1rem 1.2rem;
   }
   .finding-portrait{
     width:88px;height:88px;overflow:hidden;
-    border:1px solid var(--rule);background:#14151a;
+    border:1px solid var(--rule);background:rgba(26,24,22,0.08);
   }
   .finding-portrait img{
     width:100%;height:100%;object-fit:cover;object-position:center top;display:block;
@@ -323,7 +338,7 @@
 
   /* Loading / error */
   .state-card{
-    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
+    border:1px solid var(--rule);background:rgba(26,24,22,0.045);
     padding:2.5rem 2rem;text-align:center;
   }
   .state-spinner{
@@ -362,7 +377,7 @@
   .toc{
     display:flex; gap:0.4rem; flex-wrap:wrap;
     padding:0.65rem 0.9rem; margin:1.4rem 0;
-    border:1px solid var(--rule); background:rgba(0,0,0,0.35);
+    border:1px solid var(--rule); background:rgba(26,24,22,0.035);
   }
   .toc-label{
     font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
@@ -401,7 +416,7 @@
 
   /* The brief itself - the full working document */
   .brief-block{
-    border:1px solid var(--rule); background:rgba(0,0,0,0.4);
+    border:1px solid var(--rule); background:rgba(26,24,22,0.04);
     padding:1.3rem 1.5rem;
     margin-bottom:1.6rem;
   }
@@ -467,7 +482,7 @@
   }
   .work-rev{
     padding:0.7rem 0.85rem;
-    background:rgba(0,0,0,0.3); border-left:2px solid var(--gold-light);
+    background:rgba(26,24,22,0.03); border-left:2px solid var(--gold-light);
   }
   .work-rev-head{
     display:flex; align-items:baseline; gap:0.5rem; flex-wrap:wrap;
@@ -646,7 +661,9 @@
     /* Hyperlinks: keep the look but flatten interactive styling. */
     a{ text-decoration:none !important; color:inherit !important; }
 
-    /* ── The watermark itself: shown only on samples in print. ── */
+    /* ── The watermark itself: shown only on samples in print.
+       Tuned for a light-paper background - the gold needs more
+       saturation to read against cream. ── */
     body[data-tg-mode="sample"] .print-watermark{
       display:block !important;
       position:fixed;
@@ -657,12 +674,34 @@
       font-weight:700;
       font-size:7rem;
       letter-spacing:0.18em;
-      color:rgba(184,146,42,0.16);
+      color:rgba(138,110,29,0.22);
       text-transform:uppercase;
       white-space:nowrap;
       pointer-events:none;
       z-index:9999;
     }
+  }
+
+  /* ── Sample watermark on SCREEN view ────────────────────────────────
+     Now that the deliverable reads as a white document, show a faint
+     diagonal SAMPLE watermark on screen too (for samples only). The
+     visitor sees immediately that this is a preview, not a paid run.
+     Hidden under any white-label override (the white-label tier
+     doesn't carry the Gauntlet sample message). */
+  body[data-tg-mode="sample"]:not([data-tg-whitelabel]) main::after{
+    content:'PREVIEW SAMPLE';
+    position:fixed;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%) rotate(-32deg);
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:clamp(4rem, 11vw, 9rem);
+    letter-spacing:0.18em;
+    color:rgba(138,110,29,0.1);
+    text-transform:uppercase;
+    white-space:nowrap;
+    pointer-events:none;
+    z-index:5;
   }
 </style>
 <script src="assets/tg-export.js" defer></script>
@@ -1215,13 +1254,23 @@
     const brandFooter = renderBrandBlock(brand, 'footer');
     const costAnchor  = renderCostAnchor(data);
 
-    // Tag the document for sample-mode so the print stylesheet can
-    // render a SAMPLE watermark across every printed page.
+    // Tag the document for sample-mode so the print stylesheet (and the
+    // on-screen watermark, now that the deliverable reads as a white
+    // document) can render a SAMPLE overlay across every printed page
+    // and behind the screen content. A white-label override drops the
+    // sample-mode watermark on screen (the white-label tier owns the
+    // surface and doesn't carry the Gauntlet sample story).
     if (data.sample_id) {
       document.body.setAttribute('data-tg-mode', 'sample');
       document.body.setAttribute('data-tg-sample-title', String(submissionTitle || ''));
     } else {
       document.body.removeAttribute('data-tg-mode');
+      document.body.removeAttribute('data-tg-sample-title');
+    }
+    if (data.brand_config) {
+      document.body.setAttribute('data-tg-whitelabel', '');
+    } else {
+      document.body.removeAttribute('data-tg-whitelabel');
     }
 
     root.innerHTML = `
