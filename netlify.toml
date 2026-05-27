@@ -231,3 +231,12 @@
 
   [functions.tg-score-original-background]
     included_files = ["config/**"]
+
+  [functions.tg-consult-request]
+    timeout = 10
+
+  [functions.tg-wren-patent-analyze-background]
+    included_files = ["config/**"]
+
+  [functions.tg-wren-patent-status]
+    timeout = 10
