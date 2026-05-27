@@ -12,6 +12,7 @@
 <script src="../assets/tg-ep-zoom.js" defer></script>
 <script src="../assets/tg-export.js" defer></script>
 <script src="../assets/tg-grant-drill.js" defer></script>
+<script src="../assets/tg-grant-tools.js" defer></script>
 <link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -301,6 +302,58 @@
   </section>
 </main>
 
+<!-- ── Grant's Coach Tool: Panel Prep.
+     Reads the brief and recommends 3 of the 9 judges as the best panel
+     for this idea, with likely questions per judge and a walk-in line.
+     POSTs to /.netlify/functions/tg-grant-coach. Output appended to
+     the brief + revision log on success (no accept step - the report
+     IS the deliverable). -->
+<section class="gd-section gt-section" data-gt-tool="coach">
+  <div class="gd-inner">
+    <header class="gd-head">
+      <div class="gd-eyebrow">Panel Prep</div>
+      <h2>Three judges. The ones I'd put you in front of.</h2>
+      <p class="gd-sub">I read your brief and pick the three judges whose pressure will sharpen it the most. I tell you what they'll ask, in their voice, before you ever sit down. You walk in rehearsed.</p>
+    </header>
+
+    <div class="gd-pre" style="text-align:center;">
+      <button type="button" class="gd-start" data-gt="generate">Read my brief, pick my panel &rarr;</button>
+    </div>
+
+    <div class="zh-result" data-gt="result" style="max-width:900px; margin:1.4rem auto 0;"></div>
+  </div>
+</section>
+
+<!-- ── Grant's Pitch Tool: Elevator Speech.
+     Drafts a 30-second elevator speech using Dr. Terry L. Oroszi's
+     four-rule framework. Visitor picks the context (the room they're
+     walking into); Grant tailors the hook to that room. POSTs to
+     /.netlify/functions/tg-grant-pitch. -->
+<section class="gd-section gt-section" data-gt-tool="pitch">
+  <div class="gd-inner">
+    <header class="gd-head">
+      <div class="gd-eyebrow">Elevator Speech</div>
+      <h2>Thirty seconds. Designed to generate <em>interest</em>, not information.</h2>
+      <p class="gd-sub">An elevator speech is a precision tool that opens doors a resume never reaches. Four rules: never start with your name. Lead with a hook. Tailor to the room. Name and a question come last. Pick the room. I'll draft the speech.</p>
+    </header>
+
+    <div class="gd-pre">
+      <div class="gd-pre-label">Pick the room</div>
+      <div class="gd-pills" data-gt="context">
+        <button type="button" class="gd-pill zh-pill is-active" data-value="general">General Professional<span class="gd-pill-beat">stake unclear</span></button>
+        <button type="button" class="gd-pill zh-pill" data-value="investor">Investor / VC<span class="gd-pill-beat">opportunity + scale</span></button>
+        <button type="button" class="gd-pill zh-pill" data-value="press">Press / Journalist<span class="gd-pill-beat">story angle</span></button>
+        <button type="button" class="gd-pill zh-pill" data-value="customer">Customer / End User<span class="gd-pill-beat">pain + recognition</span></button>
+        <button type="button" class="gd-pill zh-pill" data-value="partner">Partner / Channel<span class="gd-pill-beat">asymmetry</span></button>
+        <button type="button" class="gd-pill zh-pill" data-value="academic">Academic / Conference<span class="gd-pill-beat">finding + gap</span></button>
+      </div>
+      <button type="button" class="gd-start" data-gt="generate">Draft my elevator speech &rarr;</button>
+    </div>
+
+    <div class="zh-result" data-gt="result" style="max-width:900px; margin:1.4rem auto 0;"></div>
+  </div>
+</section>
+
 <!-- ── Grant's Drill Panel.
      Structured judge-question rehearsal. Visitor picks one judge, runs
      rounds against them. Same Grant brain as the chat above - the chat
@@ -519,10 +572,184 @@
     margin-right:0.4rem;
   }
 
+  /* ── Grant's Tool Panels: Coach + Pitch ──────────────────────────── */
+  .gt-section .gd-head h2 em{ font-style:italic; color:var(--gold-light); }
+
+  /* Generic tool result panel (loading / ready / error states) */
+  .zh-result{
+    display:none;
+    padding:1.4rem 1.5rem;
+    border:1px solid var(--rule); background:rgba(0,0,0,0.4);
+  }
+  .zh-result.is-loading,
+  .zh-result.is-ready,
+  .zh-result.is-error{ display:block; }
+  .zh-result.is-error{ border-color:rgba(192,57,43,0.5); background:rgba(192,57,43,0.04); }
+  .zh-result-msg{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem;
+  }
+  .zh-result.is-error .zh-result-msg{ color:var(--gauntlet-consequence); }
+
+  .zh-result-meta{
+    display:flex; align-items:center; flex-wrap:wrap; gap:0.6rem;
+    margin-bottom:1rem; padding-bottom:0.7rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .zh-result-platform,
+  .gt-meta-pill{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light);
+    padding:0.25rem 0.55rem; border:1px solid rgba(212,170,74,0.35);
+  }
+  .zh-result-copy{
+    margin-left:auto;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; cursor:pointer;
+    background:transparent; color:var(--text-dim);
+    border:1px solid var(--rule);
+    padding:0.4rem 0.7rem; transition:all 0.15s;
+  }
+  .zh-result-copy:hover{ color:var(--gold-light); border-color:var(--gold-light); }
+  .zh-result-post{
+    font-family:'Cormorant Garamond',serif; font-size:1.05rem; line-height:1.55;
+    color:var(--text); white-space:pre-wrap;
+    padding:1rem 1.1rem; margin:0 0 1rem;
+    background:rgba(184,146,42,0.05); border-left:3px solid var(--gold-light);
+  }
+  .zh-result-rationale,
+  .zh-result-saved{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; color:var(--text-dim); line-height:1.5;
+    margin-top:0.9rem;
+  }
+  .zh-result-saved{ color:var(--gold); }
+
+  /* Coach (panel prep) specific */
+  .gt-walk-in{
+    margin-bottom:1.4rem; padding:1rem 1.2rem;
+    background:rgba(184,146,42,0.07); border-left:3px solid var(--gold);
+  }
+  .gt-walk-in-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem;
+  }
+  .gt-walk-in-text{
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.2rem; color:var(--cream); line-height:1.35;
+  }
+  .gt-judges{
+    display:grid; gap:1rem; margin-bottom:1rem;
+  }
+  .gt-judge{
+    padding:1rem 1.2rem;
+    background:rgba(0,0,0,0.35); border:1px solid var(--rule);
+  }
+  .gt-judge-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:0.7rem; flex-wrap:wrap; margin-bottom:0.6rem;
+    padding-bottom:0.45rem; border-bottom:1px solid var(--rule);
+  }
+  .gt-judge-name{
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:1.1rem; color:var(--cream);
+  }
+  .gt-judge-beat{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .gt-judge-why{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text); font-size:0.98rem; line-height:1.5;
+    margin:0 0 0.7rem;
+  }
+  .gt-q-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.55rem; }
+  .gt-q{
+    padding:0.6rem 0.8rem;
+    background:rgba(184,146,42,0.04); border-left:2px solid rgba(212,170,74,0.4);
+  }
+  .gt-q-line{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem;
+    color:var(--cream); line-height:1.45; margin-bottom:0.25rem;
+  }
+  .gt-q-meta{
+    font-family:'DM Mono',monospace; font-size:0.6rem;
+    color:var(--text-dim); line-height:1.4; font-style:normal;
+  }
+  .gt-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.95rem; line-height:1.5;
+    margin:0.6rem 0 0.4rem; padding-top:0.6rem;
+    border-top:1px dotted rgba(184,146,42,0.2);
+  }
+  .gt-saved{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; color:var(--gold); line-height:1.5;
+    margin-top:0.8rem;
+  }
+
+  /* Pitch (elevator speech) specific */
+  .gt-hook{
+    margin:0 0 1rem; padding:0.9rem 1.1rem;
+    background:rgba(184,146,42,0.06); border:1px solid rgba(212,170,74,0.3);
+  }
+  .gt-hook-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem;
+  }
+  .gt-hook-line{
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:1.05rem; color:var(--cream); line-height:1.4;
+    margin-bottom:0.4rem;
+  }
+  .gt-hook-why{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; color:var(--text-dim); line-height:1.45; margin:0;
+  }
+  .gt-rules{ margin:0 0 1rem; }
+  .gt-rules-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light); margin-bottom:0.5rem;
+  }
+  .gt-rules-list{
+    list-style:none; padding:0; margin:0;
+    display:flex; flex-direction:column; gap:0.45rem;
+  }
+  .gt-rule{
+    padding:0.55rem 0.8rem;
+    background:rgba(0,0,0,0.3); border-left:2px solid rgba(184,146,42,0.35);
+  }
+  .gt-rule-label{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--gold-light); margin-bottom:0.2rem;
+  }
+  .gt-rule-applied{
+    font-family:'Cormorant Garamond',serif; font-size:0.95rem;
+    color:var(--text); line-height:1.4;
+  }
+  .gt-close-q{
+    padding:0.7rem 0.9rem; margin-bottom:0.9rem;
+    background:rgba(155,212,163,0.04); border-left:2px solid rgba(155,212,163,0.4);
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text); font-size:0.98rem; line-height:1.5;
+  }
+  .gt-close-q-label{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:#9bd4a3; font-style:normal;
+    margin-right:0.4rem;
+  }
+  .gt-delivery{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem;
+    color:var(--text); line-height:1.5; margin:0.6rem 0 0;
+    padding:0.6rem 0.9rem;
+    background:rgba(0,0,0,0.25); border-left:2px solid rgba(184,146,42,0.3);
+  }
+
   @media (max-width:680px){
     .gd-pills{ grid-template-columns:1fr; }
     .gd-session-head{ flex-direction:column; align-items:flex-start; gap:0.35rem; }
     .gd-feedback{ flex-direction:column; align-items:flex-start; }
+    .gt-judge-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
   }
 </style>
 
