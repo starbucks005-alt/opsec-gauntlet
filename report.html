@@ -44,28 +44,16 @@
     min-height:100vh;
   }
 
-  /* Topbar - keeps the site's dark identity (this is the website chrome,
-     not the document). The document begins below it inside <main>. */
-  .tg-topbar{
-    display:flex;align-items:center;padding:0 2.5rem;height:56px;
-    border-bottom:1px solid rgba(184,146,42,0.25);gap:1.5rem;
-    position:sticky;top:0;
-    background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);z-index:100;
-  }
-  .tg-topbar-logo{
-    display:flex;align-items:center;gap:0.6rem;
-    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
-    color:#b8922a;text-decoration:none;
-  }
-  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
-  .tg-topbar-back{
-    margin-left:auto;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:#a89c88;text-decoration:none;
-  }
-  .tg-topbar-back:hover{color:#b8922a;}
+  /* The deliverable view is a whitepaper. The site topbar is hidden
+     entirely; the document fills the viewport on a pure white field. */
+  .tg-topbar{display:none !important;}
 
-  main{max-width:780px;margin:0 auto;padding:3.5rem 2rem 5rem;background:#fff;}
+  html, body{background:#ffffff !important;}
+
+  main{
+    max-width:760px;margin:0 auto;padding:4.5rem 2.5rem 4rem;
+    background:#ffffff;
+  }
 
   /* ── DOCUMENT MODE: flat, flowing typography. No card backgrounds.
      Hierarchy comes from rules, whitespace, and type size. Reads as a
@@ -230,98 +218,108 @@
     .cost-list li{ flex-direction:column; gap:0.2rem; }
   }
 
-  /* Brand block - top of the report and footer.
-     Clean horizontal header on a white document. No card background -
-     just a bottom rule under the top block and a top rule above the
-     footer credit. */
-  .brand-block{
-    background:transparent;border:none;
-    border-bottom:1px solid var(--rule);
-    padding:0.8rem 0 1.2rem;
-    display:flex;align-items:center;gap:1rem;
-    margin-bottom:2.4rem;
-  }
-  .brand-block-top{margin-top:0;}
-  .brand-block-footer{
-    margin:4rem 0 0;
-    border:none;border-top:1px solid var(--rule);
-    padding:1.2rem 0 0;
-  }
-  .brand-mark{
-    flex:0 0 auto;width:42px;height:42px;border-radius:50%;
-    background:linear-gradient(135deg,var(--gold) 0%, var(--gold-light) 100%);
-    color:var(--ink);display:flex;align-items:center;justify-content:center;
-    font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;
-    letter-spacing:0;
-    overflow:hidden;
-  }
-  /* When the mark contains an image (logo / emblem), drop the gold
-     gradient so the image itself carries the brand color and stays
-     legible. The image fills the circle via object-fit: cover for
-     emblem-style logos (Favicon.png is already a circular emblem). */
-  .brand-mark:has(img){
-    background:transparent;
-  }
-  .brand-mark img{
-    width:100%;height:100%;object-fit:cover;border-radius:50%;
+  /* Title-page brand mark: small centered org identification at the top
+     of the document. The emblem sits above the publisher name and a
+     subtle tagline. No card, no border, no horizontal layout - it
+     reads as a whitepaper masthead. */
+  .brand-block-top{
+    text-align:center;
+    margin:0 0 3.2rem;
+    padding:0;
+    background:none;border:none;
     display:block;
   }
-  .brand-text{display:flex;flex-direction:column;gap:0.15rem;flex:1;min-width:0;}
-  .brand-name{
-    font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
-    color:var(--cream);letter-spacing:0.04em;
+  .brand-block-top .brand-mark{
+    margin:0 auto 1rem;
+    width:54px;height:54px;
+    background:transparent;
+    display:block;
+    overflow:visible;
   }
-  .brand-tagline{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
-    text-transform:uppercase;color:var(--text-dim);
+  .brand-block-top .brand-mark img{
+    width:100%;height:100%;object-fit:contain;border-radius:0;display:block;
   }
-  .brand-credit{
-    margin-left:auto;font-family:'DM Mono',monospace;font-size:0.55rem;
-    letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);
-    white-space:nowrap;
+  .brand-block-top .brand-text{display:block;}
+  .brand-block-top .brand-name{
+    font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;
+    color:var(--text);letter-spacing:0.08em;text-transform:uppercase;
+    margin-bottom:0.25rem;
   }
-  .brand-block-footer .brand-credit{color:var(--text-dim);}
+  .brand-block-top .brand-tagline{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.92rem;letter-spacing:0;text-transform:none;
+    color:var(--text-dim);
+  }
+  .brand-block-top .brand-credit{display:none;}
+
+  /* Footer credit: small centered line at the very bottom of the
+     document, like the colophon line on a printed report. */
+  .brand-block-footer{
+    text-align:center;
+    margin:4rem 0 0;
+    padding:1.6rem 0 0;
+    background:none;border:none;border-top:1px solid var(--rule);
+    display:block;
+  }
+  .brand-block-footer .brand-mark{display:none;}
+  .brand-block-footer .brand-text{display:inline;}
+  .brand-block-footer .brand-name{
+    font-family:'Playfair Display',serif;font-size:0.8rem;font-weight:700;
+    color:var(--text-dim);letter-spacing:0.18em;text-transform:uppercase;
+    display:inline;
+  }
+  .brand-block-footer .brand-tagline{display:none;}
+  .brand-block-footer .brand-credit{
+    display:block;margin:0.5rem 0 0;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.85rem;color:var(--text-dim);letter-spacing:0;
+    text-transform:none;
+  }
   @media (max-width:640px){
-    .brand-credit{display:none;}
-    .brand-block{padding:0.85rem 1rem;}
+    .brand-block-top{margin-bottom:2.4rem;}
   }
 
-  /* Report header: formal document title block.
-     Document type label (small mono), subject (bold serif, no italic
-     drama), then a definition-list grid for metadata (Prepared by,
-     Date, etc.). Reads like a real report cover. */
+  /* Report cover: document type label (small mono), subject (large
+     serif), then a definition-list grid for metadata. Sits below the
+     centered title-page masthead and above the Table of Contents.
+     No bottom border - the TOC's top border separates cover from
+     contents. */
   .report-header{
-    margin-bottom:3rem;
-    padding-bottom:2rem;
-    border-bottom:1px solid var(--rule);
+    margin-bottom:0;
+    padding-bottom:0;
   }
   .report-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.3em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;
+    text-align:center;
   }
   .report-title{
-    font-family:'Playfair Display',serif;font-size:2.2rem;
+    font-family:'Playfair Display',serif;font-size:2.6rem;
     font-weight:700;color:var(--text);line-height:1.15;
-    letter-spacing:-0.01em;margin-bottom:1.5rem;
+    letter-spacing:-0.01em;margin-bottom:2rem;
+    text-align:center;
   }
   .report-meta-grid{
-    display:grid;grid-template-columns:1fr;gap:0.4rem;
-    margin:0;
+    display:grid;grid-template-columns:1fr;gap:0.5rem;
+    margin:0 auto;
+    max-width:480px;
   }
   .report-meta-row{
-    display:grid;grid-template-columns:160px 1fr;gap:1.2rem;
+    display:grid;grid-template-columns:160px 1fr;gap:1.4rem;
     align-items:baseline;
   }
   .report-meta-row dt{
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;
     text-transform:uppercase;color:var(--text-dim);
+    text-align:right;
   }
   .report-meta-row dd{
     font-family:'Cormorant Garamond',serif;font-size:1rem;
-    color:var(--text);margin:0;line-height:1.4;
+    color:var(--text);margin:0;line-height:1.45;
   }
   @media (max-width:600px){
     .report-meta-row{grid-template-columns:1fr;gap:0.15rem;}
+    .report-meta-row dt{text-align:left;}
   }
 
   /* Composite */
@@ -439,23 +437,28 @@
   }
   .routing-cta-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
 
-  /* Actions */
+  /* Actions: minimal text-link buttons. The deliverable is a document,
+     not a website. Actions sit quietly at the bottom for export and
+     navigation - no gradient pills, no transforms on hover. */
   .actions-row{
-    display:flex;gap:1rem;flex-wrap:wrap;
-    margin-top:3rem;padding-top:1.8rem;border-top:1px solid var(--rule);
+    display:flex;gap:1.6rem;flex-wrap:wrap;
+    margin-top:2.4rem;padding-top:1.4rem;
+    border-top:1px solid var(--rule);
   }
   .btn{
     display:inline-flex;align-items:center;gap:0.5rem;
-    padding:0.85rem 1.5rem;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;font-weight:700;text-decoration:none;
-    cursor:pointer;border:1px solid transparent;
-    transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.2s;
+    padding:0.35rem 0;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+    text-transform:uppercase;font-weight:500;text-decoration:none;
+    cursor:pointer;border:none;background:none;
+    color:var(--text);
+    transition:color 0.15s;
   }
-  .btn-primary{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-  .btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);transform:translateY(-1px);}
-  .btn-outline{background:transparent;border-color:var(--gold);color:var(--gold);}
-  .btn-outline:hover{background:rgba(184,146,42,0.08);color:var(--gold-light);border-color:var(--gold-light);}
+  .btn:hover{color:var(--gold);}
+  .btn-primary,.btn-outline{
+    background:none;border:none;color:var(--text);
+  }
+  .btn-primary:hover,.btn-outline:hover{color:var(--gold);background:none;}
 
   /* Loading / error */
   .state-card{
@@ -495,24 +498,48 @@
   /* ── Deliverable sections (brief + work log) ──────────────────────────
      Sourced from sessionStorage. If absent, the sections do not render
      and the report degrades to the chamber-view it has shipped with. */
+  /* Table of Contents - typeset, not nav chrome.
+     Renders as a vertical list of section links with section labels
+     left, titles right, and a thin dotted leader between them. Reads
+     like the front matter of a printed report. */
   .toc{
-    display:flex; gap:0.4rem; flex-wrap:wrap;
-    padding:0.65rem 0.9rem; margin:1.4rem 0;
-    border:1px solid var(--rule); background:rgba(26,24,22,0.035);
+    display:block;
+    padding:1.8rem 0 2.4rem;
+    margin:0 0 3rem;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    background:transparent;
   }
   .toc-label{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
+    display:block;
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
     text-transform:uppercase; color:var(--gold);
-    align-self:center; margin-right:0.4rem;
+    margin-bottom:1.2rem;
   }
   .toc a{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
-    text-transform:uppercase; color:var(--gold-light);
-    padding:0.3rem 0.55rem; border:1px solid var(--rule);
-    text-decoration:none;
-    transition:all 0.18s;
+    display:flex; align-items:baseline;
+    padding:0.45rem 0;
+    font-family:'Cormorant Garamond',serif; font-size:1rem;
+    color:var(--text); text-decoration:none;
+    border:none;
+    line-height:1.4;
+    transition:color 0.15s;
   }
-  .toc a:hover{ color:var(--ink); background:var(--gold-light); border-color:var(--gold-light); }
+  .toc a + a{ border-top:1px dotted var(--rule); }
+  .toc a:hover{ color:var(--gold); }
+  .toc a::after{
+    content:''; flex:1;
+    border-bottom:1px dotted rgba(0,0,0,0.18);
+    margin:0 0.6rem;
+    transform:translateY(-0.2em);
+  }
+  .toc a .toc-num{
+    flex:0 0 auto;
+    font-family:'DM Mono',monospace; font-size:0.6rem;
+    letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--text-dim);
+    order:2; flex:0 0 auto;
+  }
 
   .deliverable{
     margin:2.5rem 0;
@@ -810,19 +837,19 @@
      Hidden under any white-label override (the white-label tier
      doesn't carry the Gauntlet sample message). */
   body[data-tg-mode="sample"]:not([data-tg-whitelabel]) main::after{
-    content:'PREVIEW SAMPLE';
+    content:'SAMPLE';
     position:fixed;
     top:50%; left:50%;
     transform:translate(-50%,-50%) rotate(-32deg);
     font-family:'Playfair Display', serif;
     font-weight:700;
-    font-size:clamp(4rem, 11vw, 9rem);
-    letter-spacing:0.18em;
-    color:rgba(138,110,29,0.1);
+    font-size:clamp(5rem, 16vw, 12rem);
+    letter-spacing:0.3em;
+    color:rgba(0,0,0,0.04);
     text-transform:uppercase;
     white-space:nowrap;
     pointer-events:none;
-    z-index:5;
+    z-index:0;
   }
 </style>
 <script src="assets/tg-export.js" defer></script>
@@ -837,22 +864,11 @@
 </head>
 <body>
 
-<header class="tg-topbar">
-  <a class="tg-topbar-logo" href="/">
-    <img src="Favicon.png" alt="" aria-hidden="true">
-    THE GAUNTLET
-  </a>
-  <a class="tg-topbar-back" href="/">← Home</a>
-</header>
+<!-- Topbar deliberately omitted on the deliverable view. The page
+     reads as a whitepaper document, not a website. A small return
+     link sits at the bottom of the page for navigation. -->
 
 <main>
-  <div class="step-bar">
-    <div class="step-pip"></div>
-    <div class="step-pip"></div>
-    <div class="step-pip"></div>
-    <span class="step-label">Done</span>
-  </div>
-
   <div id="report-content">
     <div class="state-card" id="state-loading">
       <div class="state-spinner" aria-hidden="true"></div>
@@ -1344,25 +1360,26 @@
     const epReportsSection = renderEpReportsSection(epReportsList);
     const workSection      = renderWorkSection(sessionRevisions);
 
-    // Build the table-of-contents based on which sections will render.
-    // Order matches the on-page order: verdict > deliverable (brief,
-    // reports, edits) > panel > next > value. EP reports lead the
-    // deliverable so the visitor sees the work the EPs produced first;
-    // the panel commentary follows because it critiques that work.
+    // Table of Contents rendered as a typeset front-matter list.
+    // Section order matches on-page order: Executive Summary > I Brief
+    // > II EP Reports > III Copy Edits > IV Panel Findings > V
+    // Recommendation > VI Value Assessment.
     const tocItems = [
-      { id: 'verdict',     label: 'Verdict' },
+      { id: 'verdict', num: 'Executive Summary', label: 'Verdict' },
     ];
-    if (briefSection)     tocItems.push({ id: 'brief',     label: 'Brief' });
-    if (epReportsSection) tocItems.push({ id: 'reports',   label: 'EP Reports' });
-    if (workSection)      tocItems.push({ id: 'work',      label: 'Copy Edits' });
-    tocItems.push({ id: 'panel', label: 'Panel' });
-    tocItems.push({ id: 'next', label: 'Next' });
-    if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', label: 'Value' });
+    let romanIdx = 0;
+    const roman = ['I','II','III','IV','V','VI','VII','VIII'];
+    if (briefSection)     tocItems.push({ id: 'brief',   num: 'Section ' + roman[romanIdx++], label: 'Submitted Brief' });
+    if (epReportsSection) tocItems.push({ id: 'reports', num: 'Section ' + roman[romanIdx++], label: 'Executive Producer Reports' });
+    if (workSection)      tocItems.push({ id: 'work',    num: 'Section ' + roman[romanIdx++], label: 'Copy Edits' });
+    tocItems.push({ id: 'panel', num: 'Section ' + roman[romanIdx++], label: 'Panel Findings' });
+    tocItems.push({ id: 'next',  num: 'Section ' + roman[romanIdx++], label: 'Recommendation' });
+    if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', num: 'Section ' + roman[romanIdx++], label: 'Value Assessment' });
     const tocBlock = `
-      <div class="toc">
-        <span class="toc-label">Jump to</span>
-        ${tocItems.map(t => `<a href="#${escapeHtml(t.id)}">${escapeHtml(t.label)}</a>`).join('')}
-      </div>
+      <nav class="toc" aria-label="Table of contents">
+        <span class="toc-label">Contents</span>
+        ${tocItems.map(t => `<a href="#${escapeHtml(t.id)}"><span class="toc-title">${escapeHtml(t.label)}</span><span class="toc-num">${escapeHtml(t.num)}</span></a>`).join('')}
+      </nav>
     `;
 
     // Brief, EP reports, and Jules's edits each render as standalone
