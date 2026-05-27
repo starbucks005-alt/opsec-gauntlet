@@ -141,6 +141,11 @@ exports.handler = async (event) => {
   const user_id     = String(body.user_id     || '').trim();
   const title       = String(body.title       || '').trim().slice(0, TITLE_CAP);
   const description = String(body.description || '').trim().slice(0, DESCRIPTION_CAP);
+  // original_description is the frozen pre-EP brief from the welcome
+  // modal, used by tg-score-original-background to compute the
+  // before/after delta. Optional - if absent we just skip the before pass.
+  const original_description = body.original_description
+    ? String(body.original_description).trim().slice(0, DESCRIPTION_CAP) : null;
   const goal_audience = body.goal_audience ? String(body.goal_audience).trim().slice(0, AUDIENCE_CAP)    : null;
   const constraints   = body.constraints   ? String(body.constraints).trim().slice(0, CONSTRAINTS_CAP)   : null;
 
@@ -172,6 +177,7 @@ exports.handler = async (event) => {
     title,
     description,
     status: 'submitted',
+    ...(original_description ? { original_description } : {}),
     ...(goal_audience ? { goal_audience } : {}),
     ...(constraints   ? { constraints }   : {}),
     ...(requirementVector ? { self_assessment: { requirement_vector: requirementVector } } : {}),

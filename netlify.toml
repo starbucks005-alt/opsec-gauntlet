@@ -216,3 +216,6 @@
   [functions.tg-grant-pitch]
     timeout = 26
     included_files = ["config/**"]
+
+  [functions.tg-score-original-background]
+    included_files = ["config/**"]

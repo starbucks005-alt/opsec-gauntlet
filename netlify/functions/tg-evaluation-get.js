@@ -99,10 +99,30 @@ exports.handler = async (event) => {
     .limit(1);
   if (triErr) return json(500, { error: 'triangulation lookup failed', detail: triErr.message });
 
+  // 5. PATH 2: pre-EP triangulation + judge outputs, keyed on the
+  //    submission (frozen at intake, scored by the background function).
+  //    Optional - absent for free-sample views (samples carry their
+  //    own triangulation_before inline in the deliverable JSON) and for
+  //    evaluations where the bg function has not finished yet.
+  const { data: triBeforeRows } = await supabase
+    .from('tg_triangulations_before')
+    .select('matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score, created_at')
+    .eq('submission_id', evalRow.submission_id)
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  const { data: outBeforeRows } = await supabase
+    .from('tg_judge_outputs_before')
+    .select('judge_id, stage, dimension_scores, stage_critique, confidence, created_at')
+    .eq('submission_id', evalRow.submission_id)
+    .order('created_at', { ascending: true });
+
   return json(200, {
-    evaluation:    evalRow,
-    submission:    subRow || null,
-    judge_outputs: outRows || [],
-    triangulation: (triRows && triRows[0]) || null,
+    evaluation:           evalRow,
+    submission:           subRow || null,
+    judge_outputs:        outRows || [],
+    triangulation:        (triRows && triRows[0]) || null,
+    triangulation_before: (triBeforeRows && triBeforeRows[0]) || null,
+    judge_outputs_before: outBeforeRows || [],
   });
 };

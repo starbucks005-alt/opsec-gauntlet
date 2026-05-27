@@ -1,62 +1,42 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   tg-evaluate-stage — Generic multi-dimension stage evaluator.
+   tg-score-original-background — Path 2: score the visitor's ORIGINAL
+   (pre-EP) brief on the same 8 dimensions, with the same 3 judges, that
+   the chamber will use on the FINAL brief. The delta is the EP value-proof.
 
-   Replaces the per-dimension function pattern (tg-evaluate-stage-clarity.js).
-   Takes a `dimension` parameter and dispatches to the matching rubric.
-   Adding new dimensions is now ~30 lines of config (in the DIMENSIONS map
-   below) rather than a new function file.
+   FLOW
+   ====
+   1. Chamber's first dimension call (tg-evaluate-stage) creates the
+      evaluation row and FIRES this function fire-and-forget with the
+      submission_id + triad. Background functions return 202 immediately;
+      this function then runs for the next few minutes against Anthropic.
+   2. We fetch the submission to grab original_description (frozen at
+      intake from the visitor's welcome-modal brief).
+   3. For each of 8 dimensions x 3 judges = 24 calls, score the ORIGINAL
+      brief using the same prompt machinery as tg-evaluate-stage.
+   4. Each result inserts into tg_judge_outputs_before (keyed on
+      submission_id).
+   5. At the end we compute the triangulation and insert into
+      tg_triangulations_before.
 
-   POST body : {
-     submission_id: uuid (required)
-     triad:         [string, string, string] (required - 3 judge ids)
-     dimension:     'clarity' | 'viability' | ... (required)
-     visitor_name:  string (optional, max 60 chars)
-     revisions:     array (optional - EP corridor revision log; only used
-                          by Selene's AI-tell lens, same as before)
-   }
-   Response  : same shape as tg-evaluate-stage-clarity but per-dimension:
-   {
-     evaluation_id: uuid,
-     dimension:     <dimension>,
-     findings: [{ judge_id, judge_name, score, finding, confidence, output_id }, ...],
-     triangulation: {
-       matrix:               { <dimension>: { judge_id: score, ... } },   // accumulates across stages
-       agreement_dimensions: [...],
-       conflict_dimensions:  [...],
-       coverage_gaps:        [...],
-       composite_score:      0.00-1.00,                                   // mean across all stored dimensions
-       verdict:              'agreement' | 'conflict' | 'middle'
-     } | null
-   }
+   POST body : { submission_id, triad: [judge_id, judge_id, judge_id] }
+   Response  : 202 immediately (Netlify background convention)
 
-   The triangulation row is UPSERTED per evaluation_id. Each stage call
-   merges its dimension into the existing matrix so the report sees a
-   single triangulation row that grows as more stages complete.
+   IMPORTANT: prompt-building logic (DIMENSIONS, buildSystemPrompt,
+   buildUserPrompt, computeTriangulationMulti, evaluateOneJudge) is a
+   DELIBERATE DUPLICATE of tg-evaluate-stage. Keeping the duplicate is
+   safer than introducing a shared module in the middle of this slice;
+   if DIMENSIONS or the prompts change, both files must update together.
 
-   Env vars  : SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY
+   Env: ANTHROPIC_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
    ───────────────────────────────────────────────────────────────────────────── */
 
-const Anthropic = require('@anthropic-ai/sdk').default;
+const Anthropic    = require('@anthropic-ai/sdk').default;
 const { createClient } = require('@supabase/supabase-js');
 const judgesMaster = require('../../config/judges_master.json');
 
 const MODEL = 'claude-sonnet-4-6';
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const JUDGE_ID_RE = /^[a-z0-9_]+$/;
 
-// AI-tell lens lives with Selene only (Clarity dimension specifically).
-const AI_TELL_JUDGE = 'selene_voss';
-const MAX_REVISIONS_IN_PROMPT = 24;
-const MAX_REV_FIELD_CHARS     = 480;
-
-// ─────────────────────────────────────────────────────────────────────────
-// DIMENSION RUBRIC CONFIG
-//
-// Each dimension defines what's being measured, the 0-10 scoring bands,
-// what counts as a high vs. low score, and (optionally) any dimension-
-// specific judge instructions. Adding a new dimension is just a new
-// entry here - no new function file required.
-// ─────────────────────────────────────────────────────────────────────────
+// ── DIMENSIONS (mirrors tg-evaluate-stage) ──────────────────────────────────
 const DIMENSIONS = {
   clarity: {
     label: 'CLARITY',
@@ -186,27 +166,9 @@ const DIMENSIONS = {
 
 const SUPPORTED_DIMENSIONS = Object.keys(DIMENSIONS);
 
-const json = (statusCode, body) => ({
-  statusCode,
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  },
-  body: JSON.stringify(body),
-});
-
+// ── Helpers ─────────────────────────────────────────────────────────────────
 function findJudge(judgeId){
   return (judgesMaster.judges || []).find(j => j.id === judgeId);
-}
-
-// Selene-only AI-tell lens (Clarity stage). Other dimensions skip this.
-function buildSeleneLensClause(){
-  return `
-
-SECONDARY LENS - AI WRITING TELLS
-You also clock AI-writing fingerprints because 99 percent of what crosses your desk was written by AI. The long dash is the most reliable tell. Stock listy transitions ("Furthermore," "Moreover," "In conclusion"), generic abstract framing, and template-y prose are next. When you see the pattern in this submission's prose, name it once, briefly, in your finding - one phrase, flat affect, no theatrics - and let it pull your CLARITY score down. Templatey prose obscures the idea even when the structure looks tidy; the visitor's actual articulation is buried under the template, so clarity suffers.
-
-If you do not see AI tells, do not mention them. Do not lecture. Do not hedge about being an AI character yourself - you are evaluating the prose on the page, not yourself.`;
 }
 
 function buildSystemPrompt(judge, visitorName, dimension){
@@ -216,11 +178,9 @@ function buildSystemPrompt(judge, visitorName, dimension){
   const addressLine = visitorName
     ? `Address the submitter by name in vocative case at the start of your finding (e.g. "${visitorName}, ..."). Use the name once - do not repeat it.`
     : `Address the submitter directly in second person ("you"). No vocative name was provided.`;
-  // Selene's AI-tell lens fires ONLY on the Clarity stage. On other
-  // dimensions she scores on substance like everyone else.
-  const seleneLens = (dimension === 'clarity' && judge.id === AI_TELL_JUDGE)
-    ? buildSeleneLensClause()
-    : '';
+  // Selene's AI-tell lens is INTENTIONALLY OMITTED here. The before-pass
+  // scores the visitor's pristine original prose; we are not yet looking
+  // for the EP-shaped patterns that lens exists to detect.
   const tonalNotes = (dimCfg.tonal_notes || []).map(n => `  - ${n}`).join('\n');
   return `You are ${judge.name}, ${judge.domain} on The Gauntlet panel.
 
@@ -249,7 +209,7 @@ ${addressLine}
 DIMENSION-SPECIFIC NOTES
 ${tonalNotes}
 
-CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.${seleneLens}
+CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.
 
 Then return YOUR CONFIDENCE in your own scoring on a 0.00 to 1.00 decimal scale.
 
@@ -257,62 +217,22 @@ OUTPUT JSON only, exactly this shape, nothing before or after:
 {"score": <integer 0-10>, "finding": "<2-3 sentences in your voice>", "confidence": <0.00-1.00>}`;
 }
 
-// Revision-log sanitization (Selene/Clarity only consumer)
-function sanitizeRevisions(input){
-  if (!Array.isArray(input)) return [];
-  const clean = [];
-  for (const r of input) {
-    if (!r || typeof r !== 'object') continue;
-    const ep_id     = String(r.ep_id || '').toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 40);
-    const operation = (r.operation === 'append' || r.operation === 'replace') ? r.operation : '';
-    const section   = String(r.section_label || '').replace(/[\x00-\x1f]/g, ' ').trim().slice(0, 80);
-    const before    = String(r.before || '').replace(/[\x00-\x08\x0b-\x1f]/g, ' ').slice(0, MAX_REV_FIELD_CHARS);
-    const after     = String(r.after  || '').replace(/[\x00-\x08\x0b-\x1f]/g, ' ').slice(0, MAX_REV_FIELD_CHARS);
-    if (!ep_id || !operation || !after) continue;
-    clean.push({ ep_id, operation, section_label: section, before, after });
-    if (clean.length >= MAX_REVISIONS_IN_PROMPT) break;
-  }
-  return clean;
-}
-
-function formatRevisionLog(revisions){
-  if (!revisions.length) {
-    return 'REVISION LOG: empty. The visitor accepted no EP rewrites; every paragraph in the brief is their original prose.';
-  }
-  const lines = ['REVISION LOG (sections that were rewritten or extended by an Executive Producer in the corridor; anything not in this list is the visitor\'s original prose):', ''];
-  revisions.forEach((r, i) => {
-    lines.push(`#${i + 1} [${r.ep_id}] [${r.operation}] section: "${r.section_label || 'unlabeled'}"`);
-    if (r.operation === 'replace' && r.before) {
-      lines.push(`  before: ${JSON.stringify(r.before)}`);
-    }
-    lines.push(`  after:  ${JSON.stringify(r.after)}`);
-  });
-  return lines.join('\n');
-}
-
-function buildUserPrompt(subRow, judge, revisions, dimension){
+function buildUserPrompt(subRow, dimension){
   const dimCfg = DIMENSIONS[dimension];
+  // The before-pass uses original_description (frozen at intake) - NOT
+  // the description column which has been mutated by EP work.
   const base = [
     `SUBMISSION TITLE: ${subRow.title}`,
     '',
     `SUBMISSION DESCRIPTION:`,
-    subRow.description,
+    subRow.original_description,
     subRow.goal_audience ? `\nSTATED AUDIENCE: ${subRow.goal_audience}` : '',
     subRow.constraints   ? `\nSTATED CONSTRAINTS: ${subRow.constraints}` : '',
   ].filter(Boolean);
-
-  // Selene + clarity only: include the corridor revision log.
-  if (dimension === 'clarity' && judge && judge.id === AI_TELL_JUDGE) {
-    base.push('', formatRevisionLog(revisions || []));
-  }
-
   base.push('', `Score ${dimCfg.label} now. Return JSON only.`);
   return base.join('\n');
 }
 
-// Triangulation math. Now multi-dimensional: matrix may contain multiple
-// dimensions. agreement/conflict/coverage/composite all span ALL stored
-// dimensions.
 function computeTriangulationMulti(matrix){
   const matrixKeys = Object.keys(matrix || {});
   if (!matrixKeys.length) return null;
@@ -340,16 +260,12 @@ function computeTriangulationMulti(matrix){
   const mean = allScores.reduce((a, b) => a + b, 0) / allScores.length;
   const composite_score = Math.round((mean / 10) * 100) / 100;
 
-  let verdict = 'middle';
-  if (agreement_dimensions.length && !conflict_dimensions.length) verdict = 'agreement';
-  else if (conflict_dimensions.length) verdict = 'conflict';
-
-  return { matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score, verdict };
+  return { matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score };
 }
 
-async function evaluateOneJudge(client, judge, subRow, visitorName, revisions, dimension){
+async function evaluateOneJudge(client, judge, subRow, visitorName, dimension){
   const systemPrompt = buildSystemPrompt(judge, visitorName, dimension);
-  const userPrompt   = buildUserPrompt(subRow, judge, revisions, dimension);
+  const userPrompt   = buildUserPrompt(subRow, dimension);
   let response;
   try {
     response = await client.messages.create({
@@ -359,7 +275,7 @@ async function evaluateOneJudge(client, judge, subRow, visitorName, revisions, d
       messages: [{ role: 'user', content: userPrompt }],
     });
   } catch (err) {
-    console.error(`[evaluate-stage:${dimension}] anthropic error for ${judge.id}`, err && err.message);
+    console.error(`[score-original-bg:${dimension}] anthropic error for ${judge.id}`, err && err.message);
     return { judge, error: 'anthropic_failed' };
   }
   const raw = (response.content || [])
@@ -370,7 +286,7 @@ async function evaluateOneJudge(client, judge, subRow, visitorName, revisions, d
     const match = raw.match(/\{[\s\S]*\}/);
     parsed = JSON.parse(match ? match[0] : raw);
   } catch {
-    console.error(`[evaluate-stage:${dimension}] parse fail for ${judge.id}`, raw && raw.slice(0, 400));
+    console.error(`[score-original-bg:${dimension}] parse fail for ${judge.id}`, raw && raw.slice(0, 400));
     return { judge, error: 'parse_failed' };
   }
   const score      = Math.max(0, Math.min(10, parseInt(parsed.score, 10) || 0));
@@ -380,232 +296,134 @@ async function evaluateOneJudge(client, judge, subRow, visitorName, revisions, d
   return { judge, score, finding, confidence };
 }
 
+// ── Handler (Netlify background function) ───────────────────────────────────
+// Returns 202 immediately; the work runs after the response is sent.
 exports.handler = async (event) => {
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    };
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'method not allowed' };
   }
-  if (event.httpMethod !== 'POST') return json(405, { error: 'method not allowed' });
 
   let body;
-  try { body = JSON.parse(event.body || '{}'); }
-  catch { return json(400, { error: 'invalid json' }); }
+  try { body = JSON.parse(event.body || '{}'); } catch { return { statusCode: 400, body: 'invalid json' }; }
 
   const submission_id = String(body.submission_id || '').trim();
-  const triad         = Array.isArray(body.triad) ? body.triad.slice(0, 3) : [];
-  const dimension     = String(body.dimension || '').trim().toLowerCase();
-  const visitorName   = String(body.visitor_name || '')
-                          .trim().slice(0, 60)
-                          .replace(/[^A-Za-zÀ-ɏ\s'\-]/g, '')
-                          .trim();
-  const revisions     = sanitizeRevisions(body.revisions);
-
-  if (!UUID_RE.test(submission_id))           return json(400, { error: 'invalid submission_id' });
-  if (triad.length !== 3)                     return json(400, { error: 'triad must be 3 judge ids' });
-  if (!triad.every(t => JUDGE_ID_RE.test(t))) return json(400, { error: 'triad ids invalid' });
-  if (new Set(triad).size !== 3)              return json(400, { error: 'triad ids must be distinct' });
-  if (!SUPPORTED_DIMENSIONS.includes(dimension)) {
-    return json(400, { error: `dimension must be one of: ${SUPPORTED_DIMENSIONS.join(', ')}` });
+  const triadRaw      = Array.isArray(body.triad) ? body.triad : [];
+  const visitorName   = String(body.visitor_name || '').trim().slice(0, 60);
+  if (!submission_id || triadRaw.length !== 3) {
+    return { statusCode: 400, body: 'submission_id and triad of 3 required' };
   }
 
-  const judges = triad.map(findJudge);
-  if (judges.some(j => !j)) return json(404, { error: 'one or more judges not found' });
+  const triad = triadRaw
+    .map(id => findJudge(String(id || '')))
+    .filter(Boolean);
+  if (triad.length !== 3) {
+    console.error('[score-original-bg] invalid triad', triadRaw);
+    return { statusCode: 400, body: 'one or more triad judges not recognized' };
+  }
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SERVICE_KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
-  if (!SUPABASE_URL || !SERVICE_KEY) return json(500, { error: 'supabase env missing' });
-  if (!ANTHROPIC_KEY)                return json(500, { error: 'anthropic env missing' });
+  if (!SUPABASE_URL || !SUPABASE_KEY || !ANTHROPIC_KEY) {
+    console.error('[score-original-bg] env missing');
+    return { statusCode: 500, body: 'env missing' };
+  }
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+  const client   = new Anthropic({ apiKey: ANTHROPIC_KEY });
 
-  const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-
-  // 1. Load the submission.
+  // 1. Fetch submission (we need original_description, title, audience,
+  //    constraints).
   const { data: subRow, error: subErr } = await supabase
     .from('tg_submissions')
-    .select('id, user_id, title, description, original_description, goal_audience, constraints')
+    .select('id, title, original_description, description, goal_audience, constraints')
     .eq('id', submission_id)
-    .maybeSingle();
-  if (subErr) return json(500, { error: 'submission lookup failed', detail: subErr.message });
-  if (!subRow) return json(404, { error: 'submission not found' });
+    .single();
 
-  // 2. Find or create the tg_evaluations row. Single row per submission;
-  //    stage advances as more dimensions complete.
-  let evaluationId;
-  let evaluationJustCreated = false;
-  {
-    const { data: existing } = await supabase
-      .from('tg_evaluations')
-      .select('id')
-      .eq('submission_id', submission_id)
-      .limit(1);
-    if (existing && existing.length > 0){
-      evaluationId = existing[0].id;
-    } else {
-      const { data: created, error: createErr } = await supabase
-        .from('tg_evaluations')
+  if (subErr || !subRow) {
+    console.error('[score-original-bg] submission fetch failed', subErr);
+    return { statusCode: 404, body: 'submission not found' };
+  }
+
+  // 2. If original_description is empty or identical to the final
+  //    description, the visitor never touched the brief in the corridor.
+  //    There is no meaningful "before" to score; skip silently.
+  const original = String(subRow.original_description || '').trim();
+  if (!original) {
+    console.log('[score-original-bg] no original_description, skipping');
+    return { statusCode: 202, body: 'no original brief on submission; skipping' };
+  }
+  if (original === String(subRow.description || '').trim()) {
+    console.log('[score-original-bg] original matches final, skipping');
+    return { statusCode: 202, body: 'original matches final; nothing to do' };
+  }
+
+  // 3. Idempotency: if a triangulation_before row already exists for
+  //    this submission, do not re-run. The bg function may get invoked
+  //    multiple times if the chamber retries; we only score once.
+  const { data: existingTri } = await supabase
+    .from('tg_triangulations_before')
+    .select('id')
+    .eq('submission_id', submission_id)
+    .maybeSingle();
+  if (existingTri) {
+    console.log('[score-original-bg] already scored, skipping');
+    return { statusCode: 202, body: 'already scored' };
+  }
+
+  // 4. Loop dimensions x triad. For each dimension, fan out the 3 judge
+  //    calls in parallel; serialize across dimensions to keep load even.
+  const matrix = {};
+  for (const dimension of SUPPORTED_DIMENSIONS) {
+    const results = await Promise.all(
+      triad.map(j => evaluateOneJudge(client, j, subRow, visitorName, dimension))
+    );
+
+    const dimEntry = {};
+    for (const r of results) {
+      if (r.error || typeof r.score !== 'number') {
+        console.error(`[score-original-bg] ${dimension}/${r.judge && r.judge.id} failed: ${r.error || 'unknown'}`);
+        continue;
+      }
+      // Persist the judge output to the _before table.
+      const { error: outErr } = await supabase
+        .from('tg_judge_outputs_before')
         .insert({
           submission_id,
-          user_id: subRow.user_id,
-          triad,
-          stage: dimension,           // stage advances; latest dimension goes here
-          status: 'running',
-        })
-        .select('id')
-        .single();
-      if (createErr) return json(500, { error: 'evaluation row create failed', detail: createErr.message });
-      evaluationId = created.id;
-      evaluationJustCreated = true;
+          judge_id:           r.judge.id,
+          stage:              dimension,
+          dimension_scores:   { [dimension]: r.score },
+          stage_critique:     r.finding,
+          retrieved_evidence: [],
+          confidence:         r.confidence,
+        });
+      if (outErr) console.error(`[score-original-bg:${dimension}] insert fail for ${r.judge.id}`, outErr);
+      dimEntry[r.judge.id] = r.score;
     }
+    matrix[dimension] = dimEntry;
   }
 
-  // 2b. PATH 2: when the evaluation row was just created, fire the
-  //     pre-EP background scoring fire-and-forget. The bg function reads
-  //     subRow.original_description and runs a parallel scoring on it.
-  //     This only triggers on the FIRST stage call (when the evaluation
-  //     is created) so we do not re-fire on subsequent dimension calls.
-  if (evaluationJustCreated && subRow.original_description) {
-    const bgUrl = `${process.env.URL || process.env.DEPLOY_URL || ''}/.netlify/functions/tg-score-original-background`;
-    if (bgUrl.startsWith('http')) {
-      // Fire-and-forget: do not await, do not block the chamber.
-      fetch(bgUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          submission_id,
-          triad: triad,
-          visitor_name: visitorName,
-        }),
-      }).catch(err => {
-        console.warn('[evaluate-stage] before-scoring trigger failed', err && err.message);
-      });
-    } else {
-      console.warn('[evaluate-stage] no site URL in env; skipping before-scoring trigger');
-    }
+  // 5. Compute the triangulation across all dimensions and store.
+  const triangulation = computeTriangulationMulti(matrix);
+  if (!triangulation) {
+    console.error('[score-original-bg] no valid scores produced');
+    return { statusCode: 500, body: 'no valid scores' };
   }
 
-  // 3. Fire all three Anthropic calls IN PARALLEL for this dimension.
-  const client = new Anthropic({ apiKey: ANTHROPIC_KEY });
-  const results = await Promise.all(
-    judges.map(j => evaluateOneJudge(client, j, subRow, visitorName, revisions, dimension))
-  );
-
-  // 4. Write each successful result to tg_judge_outputs. One row per
-  //    (judge, dimension) since the judge scores each dimension separately.
-  const writes = await Promise.all(results.map(async r => {
-    if (r.error) return r;
-    const { data: outRow, error: outErr } = await supabase
-      .from('tg_judge_outputs')
-      .insert({
-        evaluation_id: evaluationId,
-        judge_id: r.judge.id,
-        stage: dimension,
-        dimension_scores: { [dimension]: r.score },
-        stage_critique: r.finding,
-        retrieved_evidence: [],
-        confidence: r.confidence,
-      })
-      .select('id')
-      .single();
-    if (outErr) {
-      console.error(`[evaluate-stage:${dimension}] insert fail for ${r.judge.id}`, outErr);
-      return { ...r, error: 'write_failed' };
-    }
-    return { ...r, output_id: outRow.id };
-  }));
-
-  const findings = writes.map(r => ({
-    judge_id:   r.judge.id,
-    judge_name: r.judge.name,
-    dimension,
-    error:      r.error || null,
-    score:      r.error ? null : r.score,
-    finding:    r.error ? null : r.finding,
-    confidence: r.error ? null : r.confidence,
-    output_id:  r.output_id || null,
-  }));
-
-  // 5. Triangulation. Multi-dimensional: read existing row, merge this
-  //    dimension's matrix, recompute agreement/conflict/coverage/composite
-  //    across ALL stored dimensions, upsert.
-  let triangulation = null;
-  try {
-    // Build matrix entry for this dimension from current findings.
-    const thisDimMatrix = {};
-    findings.filter(f => !f.error && typeof f.score === 'number').forEach(f => {
-      thisDimMatrix[f.judge_id] = f.score;
+  const { error: triErr } = await supabase
+    .from('tg_triangulations_before')
+    .insert({
+      submission_id,
+      matrix:               triangulation.matrix,
+      agreement_dimensions: triangulation.agreement_dimensions,
+      conflict_dimensions:  triangulation.conflict_dimensions,
+      coverage_gaps:        triangulation.coverage_gaps,
+      composite_score:      triangulation.composite_score,
     });
-
-    // Read existing triangulation row (if any) so we can merge.
-    const { data: priorRows } = await supabase
-      .from('tg_triangulations')
-      .select('id, matrix')
-      .eq('evaluation_id', evaluationId)
-      .order('created_at', { ascending: false })
-      .limit(1);
-    const priorRow = (priorRows && priorRows[0]) || null;
-    const priorMatrix = (priorRow && priorRow.matrix && typeof priorRow.matrix === 'object') ? priorRow.matrix : {};
-
-    // Merge: this dimension overwrites the same key in the prior matrix.
-    const mergedMatrix = { ...priorMatrix, [dimension]: thisDimMatrix };
-
-    triangulation = computeTriangulationMulti(mergedMatrix);
-    if (triangulation) {
-      if (priorRow) {
-        const { error: updErr } = await supabase
-          .from('tg_triangulations')
-          .update({
-            matrix:               triangulation.matrix,
-            agreement_dimensions: triangulation.agreement_dimensions,
-            conflict_dimensions:  triangulation.conflict_dimensions,
-            coverage_gaps:        triangulation.coverage_gaps,
-            composite_score:      triangulation.composite_score,
-          })
-          .eq('id', priorRow.id);
-        if (updErr) console.error('[evaluate-stage] triangulation update failed', updErr);
-      } else {
-        const { error: insErr } = await supabase
-          .from('tg_triangulations')
-          .insert({
-            evaluation_id:        evaluationId,
-            matrix:               triangulation.matrix,
-            agreement_dimensions: triangulation.agreement_dimensions,
-            conflict_dimensions:  triangulation.conflict_dimensions,
-            coverage_gaps:        triangulation.coverage_gaps,
-            composite_score:      triangulation.composite_score,
-          });
-        if (insErr) console.error('[evaluate-stage] triangulation insert failed', insErr);
-      }
-    }
-  } catch (err) {
-    console.error('[evaluate-stage] triangulation computation failed', err);
+  if (triErr) {
+    console.error('[score-original-bg] triangulation insert failed', triErr);
+    return { statusCode: 500, body: 'triangulation insert failed' };
   }
 
-  // 6. Update evaluation status. Mark complete only if all 3 judges
-  //    returned for this dimension.
-  const allOk = findings.every(f => !f.error);
-  if (allOk){
-    await supabase
-      .from('tg_evaluations')
-      .update({
-        stage: dimension,
-        status: `${dimension}_done`,
-        completed_at: new Date().toISOString(),
-      })
-      .eq('id', evaluationId);
-  }
-
-  return json(200, {
-    evaluation_id: evaluationId,
-    dimension,
-    findings,
-    triangulation,
-  });
+  console.log(`[score-original-bg] complete for ${submission_id}: composite=${triangulation.composite_score}`);
+  return { statusCode: 202, body: 'scored' };
 };

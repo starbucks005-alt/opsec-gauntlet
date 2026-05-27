@@ -550,9 +550,20 @@
     status.classList.remove('is-error');
     status.textContent = 'Reading your idea and routing the panel...';
 
+    // Path 2: include the FROZEN original brief from the welcome modal
+    // alongside the (potentially EP-edited) current description. The
+    // backend stores both; tg-score-original-background uses the
+    // original to compute the before/after delta against the chamber.
+    let originalBrief = '';
+    try { originalBrief = (sessionStorage.getItem('tg_visitor_brief_orig') || '').trim(); } catch(_){}
+    // Sanity: if the original matches the current brief exactly, there
+    // was no EP work to measure, so skip sending it.
+    if (originalBrief && originalBrief === description) originalBrief = '';
+
     const payload = {
       user_id: getOrCreateAnonId(),
       title, description,
+      ...(originalBrief ? { original_description: originalBrief } : {}),
       ...(audience    ? { goal_audience: audience }    : {}),
       ...(constraints ? { constraints }                 : {}),
     };
