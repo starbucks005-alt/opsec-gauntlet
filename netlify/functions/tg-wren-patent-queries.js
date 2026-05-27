@@ -80,6 +80,9 @@ async function searchPatents(query, apiKey) {
     num:     String(PATENTS_PER_QUERY),
     api_key: apiKey,
   });
+  // DEBUG: confirm key is non-empty and what length the function received.
+  // Logs length only, never the value itself.
+  console.log('[tg-wren-patent-queries] DEBUG key_length=' + (apiKey ? apiKey.length : 0) + ' query=' + query);
   let response;
   try {
     response = await fetch(`${SERPAPI_ENDPOINT}?${params}`, {
@@ -90,6 +93,7 @@ async function searchPatents(query, apiKey) {
     console.error('[tg-wren-patent-queries] serpapi network error', err.message);
     return [];
   }
+  console.log('[tg-wren-patent-queries] DEBUG serpapi_status=' + response.status + ' query=' + query);
   if (!response.ok) {
     const detail = await response.text().catch(() => '');
     console.error('[tg-wren-patent-queries] serpapi non-2xx', response.status, detail.slice(0, 300));
@@ -106,6 +110,7 @@ async function searchPatents(query, apiKey) {
     return [];
   }
   const organic = Array.isArray(payload.organic_results) ? payload.organic_results : [];
+  console.log('[tg-wren-patent-queries] DEBUG organic_results_count=' + organic.length + ' query=' + query);
   return organic.map(r => ({
     title:              String(r.title || '').trim(),
     publication_number: String(r.publication_number || r.patent_id || '').trim(),
