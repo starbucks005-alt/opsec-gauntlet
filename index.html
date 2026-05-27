@@ -159,6 +159,33 @@
   .band-inner.mid{max-width:960px;}
 
   /* ── Hero ────────────────────────────────────────────────────────────────── */
+  /* ── Positioning band: top-of-site brand statement ───────────────────
+     Quiet ribbon between topbar and hero. Carries the line that names
+     the cast, the format, and the substance. No box, no fill - just a
+     bottom rule to seat it visually. */
+  .positioning-band{
+    padding:1.3rem 2rem 1.5rem;
+    border-bottom:1px solid var(--rule);
+    text-align:center;
+  }
+  .positioning-line{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1rem, 1.6vw, 1.2rem);
+    line-height:1.5;
+    color:var(--text);
+    letter-spacing:0;
+    max-width:880px;
+    margin:0 auto;
+  }
+  .positioning-line em{
+    font-style:italic;
+    color:var(--gold-light);
+  }
+  @media (max-width:600px){
+    .positioning-band{ padding:1rem 1.2rem 1.1rem; }
+    .positioning-line{ font-size:0.98rem; }
+  }
+
   /* ── Post-Chamber banner ─────────────────────────────────────────────
      Shown when the client returns from the Chamber. Sits above the hero
      and reframes the page: their score, the report download row, and a
@@ -814,6 +841,17 @@
     <a href="/about.html">About</a>
   </nav>
 </header>
+
+<!-- ── Positioning band ───────────────────────────────────────────────────
+     Top-of-site brand statement. Sits between the topbar and the hero.
+     Tells visitors immediately what The Gauntlet is (the cast, the
+     format, the substance) before they read anything else. Restrained
+     typography so the line carries on voice, not chrome. -->
+<section class="positioning-band">
+  <p class="positioning-line">
+    Nine judges. Nine executive producers. <em>A TV show on top, proprietary IP doing the work.</em>
+  </p>
+</section>
 
 <!-- ── Post-Chamber banner ────────────────────────────────────────────────
      Rendered when the client returns from the Chamber. The chamber stashes
