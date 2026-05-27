@@ -201,6 +201,14 @@
     timeout = 26
     included_files = ["config/**"]
 
+  [functions.tg-wren-patent-queries]
+    timeout = 26
+    included_files = ["config/**"]
+
+  [functions.tg-wren-patent-analyze]
+    timeout = 26
+    included_files = ["config/**"]
+
   [functions.tg-ivy-generate]
     timeout = 26
     included_files = ["config/**"]

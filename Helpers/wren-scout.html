@@ -333,6 +333,17 @@
       <div class="zh-result" data-wt="result"></div>
     </div>
 
+    <!-- Patent Assessment Generator (Premium tier upsell) -->
+    <div class="zh-card" data-wt-tool="patent">
+      <div class="zh-card-head">
+        <span class="zh-card-eyebrow">Patent assessment</span>
+        <span class="zh-card-eyebrow-note">Live prior-art search on Google Patents, then Wren's read</span>
+      </div>
+      <p class="rt-tool-blurb">Wren reads your brief, identifies the 3-4 patent-search queries that would surface the relevant prior art, runs each one live against Google Patents, and produces: a prior-art landscape (5-10 patents with relevance and overlap labels), a patentability assessment (which claims could survive, which are likely DOA, where the white space is), 3-5 suggested CPC classification codes, and three next-step paths to file (provisional self-file via USPTO TEAS Plus, full patent attorney engagement, or USPTO Pro Bono Program). Takes 60-90 seconds. Not legal advice - bring the output to a registered patent attorney before filing.</p>
+      <button type="button" class="zh-generate" data-wt="generate">Run the patent assessment &rarr;</button>
+      <div class="zh-result" data-wt="result"></div>
+    </div>
+
     <!-- The Scout's Code -->
     <header class="zh-section-head">
       <h2>The Scout's Code.</h2>
@@ -805,6 +816,139 @@
     .wt-segment-head,.wt-gap-head{ flex-direction:column; align-items:flex-start; gap:0.25rem; }
     .zh-card-head{ flex-direction:column; align-items:flex-start; gap:0.3rem; }
     .zh-card-eyebrow-note{ font-size:0.5rem; }
+  }
+
+  /* ── Patent Assessment renderer styles ──────────────────────────── */
+  .wt-section-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold);
+    margin: 1.4rem 0 0.6rem;
+  }
+  .wt-tech-summary, .wt-queries, .wt-prior-art, .wt-patentability,
+  .wt-cpc, .wt-next{
+    margin-bottom: 1.4rem;
+  }
+  .wt-tech-summary p{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.02rem; line-height:1.5; color:var(--text);
+  }
+  .wt-queries ul{ list-style:none; padding:0; margin:0; }
+  .wt-queries li{ padding:0.25rem 0; }
+  .wt-queries code{
+    font-family:'DM Mono',monospace; font-size:0.78rem;
+    color:var(--gold-light); background:rgba(184,146,42,0.06);
+    padding:0.3rem 0.55rem;
+  }
+  .wt-prior-art-empty{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); padding:1rem; border:1px dashed var(--rule);
+  }
+  .wt-patent{
+    margin-bottom:0.85rem; padding:0.9rem 1rem;
+    background:rgba(0,0,0,0.3); border:1px solid var(--rule);
+    border-left:3px solid var(--rule);
+  }
+  .wt-patent-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:0.7rem; flex-wrap:wrap; margin-bottom:0.4rem;
+  }
+  .wt-patent-title{
+    font-family:'Playfair Display',serif; font-weight:700;
+    color:var(--cream); font-size:1rem; line-height:1.25; flex:1;
+  }
+  .wt-patent-overlap{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase; padding:0.2rem 0.5rem; border:1px solid var(--rule);
+  }
+  .wt-overlap-direct{ color:var(--gauntlet-consequence); border-color:rgba(192,57,43,0.5); }
+  .wt-overlap-adjacent{ color:var(--gold-light); border-color:rgba(212,170,74,0.5); }
+  .wt-overlap-background,
+  .wt-overlap-expired{ color:#9bd4a3; border-color:rgba(155,212,163,0.5); }
+  .wt-overlap-expired{ color:#9bd4a3; }
+  .wt-patent-meta{
+    display:flex; flex-wrap:wrap; gap:0.7rem; margin-bottom:0.4rem;
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .wt-patent-abstract{
+    font-family:'Cormorant Garamond',serif; font-size:0.95rem;
+    line-height:1.5; color:var(--text); margin-bottom:0.4rem;
+  }
+  .wt-patent-relevance{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; line-height:1.5; color:var(--gold-light);
+    margin-bottom:0.4rem;
+  }
+  .wt-patent-link{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold); text-decoration:none;
+  }
+  .wt-patent-link:hover{ color:var(--gold-light); }
+  .wt-pat-summary{
+    font-family:'Cormorant Garamond',serif; font-size:1rem;
+    line-height:1.55; color:var(--text); margin-bottom:0.9rem;
+    padding:0.8rem 1rem; background:rgba(184,146,42,0.05);
+    border-left:3px solid var(--gold);
+  }
+  .wt-pat-block{ margin-bottom:0.7rem; }
+  .wt-pat-block-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-light); margin-bottom:0.3rem;
+  }
+  .wt-pat-block ul{ list-style:none; padding:0; margin:0; }
+  .wt-pat-block li{
+    padding:0.3rem 0.6rem; margin-bottom:0.3rem;
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem;
+    color:var(--text); border-left:2px solid var(--rule);
+    background:rgba(0,0,0,0.25);
+  }
+  .wt-cpc-row{
+    display:flex; gap:0.9rem; padding:0.55rem 0.8rem; margin-bottom:0.4rem;
+    background:rgba(0,0,0,0.3); border:1px solid var(--rule);
+  }
+  .wt-cpc-code{
+    font-family:'DM Mono',monospace; font-size:0.78rem;
+    color:var(--gold-light); background:rgba(184,146,42,0.08);
+    padding:0.3rem 0.55rem; white-space:nowrap; align-self:flex-start;
+  }
+  .wt-cpc-body{ flex:1; }
+  .wt-cpc-label{
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:0.95rem; color:var(--cream); margin-bottom:0.2rem;
+  }
+  .wt-cpc-why{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; color:var(--text-dim); line-height:1.4;
+  }
+  .wt-next-card{
+    margin-bottom:0.7rem; padding:0.9rem 1rem;
+    background:rgba(0,0,0,0.3); border:1px solid var(--rule);
+    border-left:3px solid var(--rule);
+  }
+  .wt-fit-good{ border-left-color:#9bd4a3; background:rgba(155,212,163,0.04); }
+  .wt-fit-marginal{ border-left-color:var(--gold-light); }
+  .wt-fit-not{ border-left-color:var(--gauntlet-consequence); }
+  .wt-next-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:0.7rem; margin-bottom:0.4rem;
+  }
+  .wt-next-option{
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:1.02rem; color:var(--cream);
+  }
+  .wt-next-fit{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .wt-fit-not .wt-next-fit{ color:var(--gauntlet-consequence); }
+  .wt-fit-good .wt-next-fit{ color:#9bd4a3; }
+  .wt-next-action{
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem;
+    color:var(--text); line-height:1.5; margin-bottom:0.4rem;
+  }
+  .wt-next-cost{
+    font-family:'DM Mono',monospace; font-size:0.68rem; letter-spacing:0.14em;
+    color:var(--gold-light);
   }
 </style>
 

@@ -467,6 +467,61 @@
     color:var(--gold);text-decoration-color:var(--gold);
   }
 
+  /* Follow-up cards: post-Chamber EP menu. Two columns on desktop,
+     stacked on mobile. Triggered cards (surfaced by score) get the
+     gold left rule; standalone cards stay quieter. */
+  .fu-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;
+    margin-top:0.4rem;
+  }
+  .fu-card{
+    padding:1.1rem 1.2rem;
+    border:1px solid var(--rule);background:transparent;
+    display:flex;flex-direction:column;gap:0.4rem;
+  }
+  .fu-card-triggered{
+    border-left:3px solid var(--gold);
+    padding-left:1.05rem;
+  }
+  .fu-card-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:0.6rem;flex-wrap:wrap;
+  }
+  .fu-card-name{
+    font-family:'Playfair Display',serif;font-weight:700;
+    font-size:1.05rem;color:var(--text);line-height:1.2;
+  }
+  .fu-card-role{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.9rem;color:var(--text-dim);
+  }
+  .fu-card-tool{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1rem;color:var(--gold);
+  }
+  .fu-card-trigger{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.85rem;color:var(--gold);
+  }
+  .fu-card-voice{
+    font-family:'Cormorant Garamond',serif;font-size:0.98rem;
+    color:var(--text);line-height:1.55;margin:0.2rem 0 0.5rem;
+  }
+  .fu-card-link{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--text);
+    text-decoration:underline;text-decoration-color:var(--text-dim);
+    text-underline-offset:3px;align-self:flex-start;
+  }
+  .fu-card-link:hover{color:var(--gold);text-decoration-color:var(--gold);}
+  .fu-foot{
+    margin-top:1.6rem;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;color:var(--text-dim);
+  }
+  @media (max-width:760px){
+    .fu-grid{grid-template-columns:1fr;}
+  }
+
   /* Actions: minimal text-link buttons. The deliverable is a document,
      not a website. Actions sit quietly at the bottom for export and
      navigation - no gradient pills, no transforms on hover. */
@@ -1068,10 +1123,151 @@
     `;
   }
 
-  // Routing recommendation. Pure function over the triangulation result +
-  // composite score. This is the slice 1 rubric - one helper per verdict
-  // / score band. The full rubric (multi-dimension, multi-helper paths)
-  // is a downstream slice once more dimensions ship.
+  // ── Follow-up menu: post-Chamber EP offers ───────────────────────────
+  // Each EP has one card with a tool offer and a deep link to their
+  // office. Cards surface two ways:
+  //   1. SCORE-DRIVEN: when a relevant dimension averages < 5, the
+  //      EP's card surfaces with a voice line referencing the weakness.
+  //   2. STANDALONE: certain cards always show (patent, press release,
+  //      content plan, elevator speech) regardless of scores.
+  // Cards are sorted: triggered first, then standalone. Capped at 6.
+  const EP_FOLLOWUPS = [
+    {
+      ep_id: 'ms_ivy', name: 'Ms. Ivy', role: 'The Librarian',
+      tool: 'Research dive', href: '/Helpers/ms-ivy-librarian.html',
+      triggered_dims: ['evidence'], standalone: false,
+      voice_triggered: 'Evidence scored thin. Walk back to me - I will name the academic frameworks, the prior literature, and the research gap your brief should ground itself in.',
+      voice_standalone: 'Want the academic frameworks behind your idea? I name the adjacent thinkers, the prior literature, and the research gap you can claim.',
+    },
+    {
+      ep_id: 'matthew_vance', name: 'Matthew Vance', role: 'The Behaviorist',
+      tool: 'Buyer psychology profile', href: '/Helpers/matthew-behaviorist.html',
+      triggered_dims: ['psych'], standalone: false,
+      voice_triggered: 'The panel flagged the psychology read. Let me profile the actual buyer - what they emotionally need, the trigger moment, the silent objections the brief has not addressed.',
+      voice_standalone: 'Want me to profile your buyer? I tell you what they emotionally need, the trigger moment, and the silent objections under the words.',
+    },
+    {
+      ep_id: 'carol_haynes', name: 'Carol Haynes', role: 'The Screener',
+      tool: 'Pattern screening', href: '/Helpers/carol-screener.html',
+      triggered_dims: ['clarity'], standalone: false,
+      voice_triggered: 'Clarity dropped because the audience is spraying. Walk back to me - I will screen the brief against twenty years of patterns and narrow the audience to the one cohort that will buy first.',
+      voice_standalone: 'Want me to read your brief against the pattern library? I tell you which one your variant sits in, what worked, what killed it, and whether it has legs.',
+    },
+    {
+      ep_id: 'arjun_mehta', name: 'Arjun Mehta', role: 'The Make-It-Real Expert',
+      tool: 'Operations + regulatory plan', href: '/Helpers/arjun-delivery.html',
+      triggered_dims: ['risk', 'compliance'], standalone: false,
+      voice_triggered: 'The panel flagged the operational and regulatory layer. Walk to me - I will map the regulatory route, the manufacturing path, and the operational risks the brief has not named.',
+      voice_standalone: 'Want me to map how you actually build this? I name the manufacturing partners by shape, the regulatory route, the sourcing channels, and the questions to ask each one.',
+    },
+    {
+      ep_id: 'jules', name: 'Jules', role: 'The Rewrite Partner',
+      tool: 'Founder-voice rewrite', href: '/Helpers/jules-rewrite.html',
+      triggered_dims: ['narrative'], standalone: false,
+      voice_triggered: 'The narrative is flat because the brief reads as a feature list. Walk to me - I rewrite the sections that need to sound like you, in your voice, with the story spine restored.',
+      voice_standalone: 'Want your brief to read like you wrote it? I edit the sections that sound like AI back into your voice without changing what they mean.',
+    },
+    {
+      ep_id: 'wren_calloway', name: 'Wren Calloway', role: 'The Scout',
+      tool: 'Patent assessment', href: '/Helpers/wren-scout.html',
+      triggered_dims: [], standalone: true,
+      voice_standalone: 'Want to see if this is patentable? I run live prior-art searches on Google Patents and tell you what is already claimed, what space remains, and which of three filing paths fits you best.',
+    },
+    {
+      ep_id: 'reid_callum', name: 'Reid Callum', role: 'The Marketing Expert',
+      tool: 'Press release / launch positioning', href: '/Helpers/reid-marketing.html',
+      triggered_dims: ['viability'], standalone: true,
+      voice_triggered: 'Viability looks shaky because the revenue path is fuzzy. Walk to me - I will draft your monetization, the press release, the brand direction, and the launch positioning that turns the model into a thing people will pay for.',
+      voice_standalone: 'Ready to take this public? I draft your press release, your launch positioning, your brand direction, and the monetization model behind it.',
+    },
+    {
+      ep_id: 'zara_cole', name: 'Zara Cole', role: 'The Influencer',
+      tool: 'Founder-POV content plan', href: '/Helpers/zara-influencer.html',
+      triggered_dims: ['cultural'], standalone: true,
+      voice_triggered: 'Cultural fit needs sharpening because the brief is reading dated. Walk to me - I will draft founder-POV content in your voice and tell you which platforms actually move this audience in 2026.',
+      voice_standalone: 'Want me to draft your content? Founder-POV posts in your voice, on the platforms that actually move your audience right now.',
+    },
+    {
+      ep_id: 'grant_ellis', name: 'Grant Ellis', role: 'The Coach',
+      tool: 'Elevator speech + chamber prep', href: '/Helpers/grant-coach.html',
+      triggered_dims: [], standalone: true,
+      voice_standalone: 'Heading into a real room? I draft your 30-second elevator speech for the specific audience you are walking into, and I rehearse you against the judges before you sit down.',
+    },
+  ];
+
+  function dimensionAvg(matrix, dim) {
+    const judgeMap = matrix && matrix[dim] ? matrix[dim] : null;
+    if (!judgeMap) return null;
+    const scores = Object.values(judgeMap).filter(s => typeof s === 'number');
+    if (!scores.length) return null;
+    return scores.reduce((a,b) => a+b, 0) / scores.length;
+  }
+
+  function renderFollowUps(triangulation, verdict) {
+    const matrix = (triangulation && triangulation.matrix) ? triangulation.matrix : null;
+
+    // Decide which cards to surface and whether they are triggered.
+    const cards = [];
+    for (const ep of EP_FOLLOWUPS) {
+      let triggered = false;
+      let triggerDim = null;
+      if (matrix && Array.isArray(ep.triggered_dims)) {
+        for (const dim of ep.triggered_dims) {
+          const avg = dimensionAvg(matrix, dim);
+          if (avg != null && avg < 5) { triggered = true; triggerDim = dim; break; }
+        }
+      }
+      if (triggered) {
+        cards.push({ ep, mode: 'triggered', triggerDim, voice: ep.voice_triggered || ep.voice_standalone });
+      } else if (ep.standalone) {
+        cards.push({ ep, mode: 'standalone', triggerDim: null, voice: ep.voice_standalone });
+      }
+    }
+
+    // Cap at 6 for readability; triggered cards come first.
+    const triggered  = cards.filter(c => c.mode === 'triggered');
+    const standalone = cards.filter(c => c.mode === 'standalone');
+    const ordered = triggered.concat(standalone).slice(0, 6);
+
+    // Voice intro line based on verdict.
+    const intro = verdict === 'agreement'
+      ? 'The panel agreed. You walked the Gauntlet and the room reads it the same way. Here is where we can keep going.'
+      : verdict === 'conflict'
+      ? 'The panel split. That is a real signal worth resolving before the brief enters the world. Here is where to take it next.'
+      : 'The panel landed in the middle. The feedback was useful, and there is meaningful work left. Here is where to take it.';
+
+    const cardHtml = ordered.map(c => {
+      const triggerNote = c.mode === 'triggered' && c.triggerDim
+        ? `<div class="fu-card-trigger">Surfaced by your ${escapeHtml(dimensionLabel(c.triggerDim))} score</div>`
+        : '';
+      return `
+        <article class="fu-card fu-card-${c.mode}">
+          <header class="fu-card-head">
+            <div class="fu-card-name">${escapeHtml(c.ep.name)}</div>
+            <div class="fu-card-role">${escapeHtml(c.ep.role)}</div>
+          </header>
+          <div class="fu-card-tool">${escapeHtml(c.ep.tool)}</div>
+          ${triggerNote}
+          <p class="fu-card-voice">${escapeHtml(c.voice)}</p>
+          <a class="fu-card-link" href="${escapeHtml(c.ep.href)}">Walk to ${escapeHtml(c.ep.name.split(' ')[0])} &rarr;</a>
+        </article>
+      `;
+    }).join('');
+
+    return `
+      <section class="doc-section" id="next">
+        <header class="doc-section-head">
+          <h2 class="doc-h2">V. What else can we do?</h2>
+          <p class="doc-h2-sub">${escapeHtml(intro)}</p>
+        </header>
+        <div class="fu-grid">${cardHtml}</div>
+        <p class="fu-foot">Each office is a separate workspace. Bring your brief; it travels with you.</p>
+      </section>
+    `;
+  }
+
+  // Routing recommendation. (Legacy single-helper rubric kept for any
+  // future caller; the report itself now uses renderFollowUps above.)
   function buildRoutingRecommendation(triangulation, findings){
     if (!triangulation){
       return {
@@ -1453,22 +1649,7 @@
       ? 'Three judges, one dimension'
       : `Three judges, ${dimCount} dimensions`;
 
-    const routing = buildRoutingRecommendation(tri ? { ...tri, verdict } : null, judgeOutputs);
-    const routingBlock = `
-      <section class="doc-section" id="next">
-        <header class="doc-section-head">
-          <h2 class="doc-h2">V. Recommendation</h2>
-        </header>
-        <div class="routing">
-          <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
-          <p class="routing-body">${escapeHtml(routing.body)}</p>
-          <div class="routing-cta-row">
-            ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)})</a>` : ''}
-            <a class="btn btn-outline" href="/intake.html">Bring another idea</a>
-          </div>
-        </div>
-      </section>
-    `;
+    const routingBlock = renderFollowUps(tri, verdict);
 
     const submissionTitle = (subRow.title || '').trim() || 'Submission';
     const completedDate = evalRow.completed_at

@@ -29,6 +29,17 @@
       render:         renderScout,
       formatForBrief: formatScoutForBrief,
     },
+    patent: {
+      // Two-phase: queries endpoint runs LLM-driven query extraction
+      // and the SerpAPI patent search; analyze endpoint takes the
+      // results and produces the structured assessment. The client
+      // orchestrates the two calls (see runPatentAssessment below).
+      endpoint:       '__patent_two_phase__',
+      brieflabel:     'Patent Assessment',
+      bodyForFetch:   () => ({}),
+      render:         renderPatent,
+      formatForBrief: formatPatentForBrief,
+    },
   };
 
   function ss(k){ try { return sessionStorage.getItem(k); } catch(_) { return null; } }
@@ -275,26 +286,38 @@
 
     submitBtn.disabled = true;
     const origLabel = submitBtn.textContent;
-    submitBtn.textContent = 'Scouting...';
+    submitBtn.textContent = toolKey === 'patent' ? 'Searching patents...' : 'Scouting...';
     resultEl.className = 'zh-result is-loading';
-    resultEl.innerHTML = '<div class="zh-result-msg">Wren is scouting the landscape. About 25-30 seconds.</div>';
-
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort('timeout'), FETCH_TIMEOUT_MS);
+    resultEl.innerHTML = '<div class="zh-result-msg">' + (
+      toolKey === 'patent'
+        ? 'Phase 1 of 2: Wren is extracting your search queries and running them on Google Patents...'
+        : 'Wren is scouting the landscape. About 25-30 seconds.'
+    ) + '</div>';
 
     try {
-      const resp = await fetch(cfg.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({ brief, name }, cfg.bodyForFetch(form))),
-        signal: controller.signal,
-      });
-      clearTimeout(timer);
-      if (!resp.ok) {
-        const text = await resp.text().catch(() => '');
-        throw new Error(toolKey + ' ' + resp.status + ' ' + text.slice(0, 200));
+      let data;
+
+      if (toolKey === 'patent') {
+        // Two-phase patent assessment. Each phase fits inside Netlify's
+        // 26-second function cap. Client orchestrates the sequence and
+        // updates the status copy between phases.
+        data = await runPatentAssessment(brief, name, resultEl, submitBtn);
+      } else {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort('timeout'), FETCH_TIMEOUT_MS);
+        const resp = await fetch(cfg.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.assign({ brief, name }, cfg.bodyForFetch(form))),
+          signal: controller.signal,
+        });
+        clearTimeout(timer);
+        if (!resp.ok) {
+          const text = await resp.text().catch(() => '');
+          throw new Error(toolKey + ' ' + resp.status + ' ' + text.slice(0, 200));
+        }
+        data = await resp.json();
       }
-      const data = await resp.json();
 
       const formatted = cfg.formatForBrief(data);
       appendToBrief(formatted.plainText, {
@@ -309,9 +332,10 @@
         +   '<span class="zh-result-platform">' + escapeHtml(cfg.brieflabel) + '</span>'
         + '</div>'
         + cfg.render(data)
-        + '<p class="zh-result-saved">Saved to your brief and revision log. The search hooks are the verification step - run each on the database listed, then come back.</p>';
+        + (toolKey === 'patent'
+            ? ''
+            : '<p class="zh-result-saved">Saved to your brief and revision log. The search hooks are the verification step - run each on the database listed, then come back.</p>');
     } catch (err) {
-      clearTimeout(timer);
       const msg = (err && err.message) || String(err);
       const isTimeout = msg.toLowerCase().includes('abort') || msg.toLowerCase().includes('timeout');
       console.warn('[tg-wren-tools:' + toolKey + ']', msg);
@@ -325,6 +349,258 @@
       submitBtn.disabled = false;
       submitBtn.textContent = origLabel;
     }
+  }
+
+  // Two-phase patent assessment. Phase 1: queries + SerpAPI search.
+  // Phase 2: LLM analysis of the prior-art results. Updates the status
+  // message between phases so the visitor sees real progress.
+  async function runPatentAssessment(brief, name, resultEl, submitBtn) {
+    const PHASE_TIMEOUT = 35000;
+
+    // Phase 1: queries + search
+    const ctrl1 = new AbortController();
+    const t1 = setTimeout(() => ctrl1.abort('timeout'), PHASE_TIMEOUT);
+    let phase1;
+    try {
+      const r = await fetch('/.netlify/functions/tg-wren-patent-queries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brief, name }),
+        signal: ctrl1.signal,
+      });
+      clearTimeout(t1);
+      if (!r.ok) {
+        const text = await r.text().catch(() => '');
+        throw new Error('patent-queries ' + r.status + ' ' + text.slice(0, 200));
+      }
+      phase1 = await r.json();
+    } catch (err) {
+      clearTimeout(t1);
+      throw err;
+    }
+
+    const found = Array.isArray(phase1.prior_art) ? phase1.prior_art.length : 0;
+    if (submitBtn) submitBtn.textContent = 'Analyzing...';
+    resultEl.innerHTML = '<div class="zh-result-msg">Phase 2 of 2: ' + found + ' patents pulled. Wren is reading the prior art against your brief...</div>';
+
+    // Phase 2: analysis
+    const ctrl2 = new AbortController();
+    const t2 = setTimeout(() => ctrl2.abort('timeout'), PHASE_TIMEOUT);
+    let phase2;
+    try {
+      const r = await fetch('/.netlify/functions/tg-wren-patent-analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          brief, name,
+          queries:           phase1.queries,
+          technical_summary: phase1.technical_summary,
+          prior_art:         phase1.prior_art,
+        }),
+        signal: ctrl2.signal,
+      });
+      clearTimeout(t2);
+      if (!r.ok) {
+        const text = await r.text().catch(() => '');
+        throw new Error('patent-analyze ' + r.status + ' ' + text.slice(0, 200));
+      }
+      phase2 = await r.json();
+    } catch (err) {
+      clearTimeout(t2);
+      throw err;
+    }
+
+    // Phase 2 returns the canonical shape; phase 1 metadata is already
+    // included by tg-wren-patent-analyze (queries_used, technical_summary).
+    return phase2;
+  }
+
+  // ── Patent assessment renderer + brief-formatter ──────────────────────
+
+  function fitClass(fit) {
+    const f = String(fit || '').toLowerCase();
+    if (f === 'good fit') return 'wt-fit-good';
+    if (f === 'not recommended') return 'wt-fit-not';
+    return 'wt-fit-marginal';
+  }
+
+  function renderPatent(data) {
+    const queries  = Array.isArray(data.queries_used) ? data.queries_used : [];
+    const techSum  = String(data.technical_summary || '');
+    const priorArt = Array.isArray(data.prior_art) ? data.prior_art : [];
+    const pat      = data.patentability && typeof data.patentability === 'object' ? data.patentability : {};
+    const cpc      = Array.isArray(data.cpc_codes) ? data.cpc_codes : [];
+    const nexts    = Array.isArray(data.next_steps) ? data.next_steps : [];
+    const rationale = String(data.rationale || '');
+
+    const techHtml = techSum
+      ? '<div class="wt-tech-summary"><div class="wt-section-label">Technical reading</div><p>' + escapeHtml(techSum) + '</p></div>'
+      : '';
+
+    const queriesHtml = queries.length
+      ? '<div class="wt-queries"><div class="wt-section-label">Queries searched</div><ul>' +
+        queries.map(q => '<li><code>' + escapeHtml(q) + '</code></li>').join('') + '</ul></div>'
+      : '';
+
+    const priorArtHtml = priorArt.length
+      ? '<div class="wt-prior-art"><div class="wt-section-label">Prior-art landscape (' + priorArt.length + ' patents)</div>' +
+        priorArt.map(p => ''
+          + '<article class="wt-patent">'
+          +   '<header class="wt-patent-head">'
+          +     '<div class="wt-patent-title">' + escapeHtml(p.title || 'Untitled') + '</div>'
+          +     '<span class="wt-patent-overlap wt-overlap-' + escapeHtml(String(p.claim_overlap || 'adjacent').replace(/[^a-z]/g, '')) + '">' + escapeHtml(p.claim_overlap || 'adjacent') + '</span>'
+          +   '</header>'
+          +   '<div class="wt-patent-meta">'
+          +     (p.publication_number ? '<span>' + escapeHtml(p.publication_number) + '</span>' : '')
+          +     (p.assignee           ? '<span>' + escapeHtml(p.assignee)           + '</span>' : '')
+          +     (p.publication_year   ? '<span>' + escapeHtml(p.publication_year)   + '</span>' : '')
+          +   '</div>'
+          +   (p.abstract  ? '<p class="wt-patent-abstract">'  + escapeHtml(p.abstract)  + '</p>' : '')
+          +   (p.relevance ? '<p class="wt-patent-relevance">' + escapeHtml(p.relevance) + '</p>' : '')
+          +   (p.link      ? '<a class="wt-patent-link" href="' + escapeHtml(p.link) + '" target="_blank" rel="noopener">View on Google Patents &rarr;</a>' : '')
+          + '</article>'
+        ).join('') +
+        '</div>'
+      : '<div class="wt-prior-art-empty">No relevant prior art surfaced in the search. Either the field is novel or the indexing is thin - treat the empty result as a signal, not a green light.</div>';
+
+    const strongHtml = (Array.isArray(pat.strong_claims) ? pat.strong_claims : [])
+      .map(s => '<li>' + escapeHtml(s) + '</li>').join('');
+    const weakHtml   = (Array.isArray(pat.weak_claims) ? pat.weak_claims : [])
+      .map(s => '<li>' + escapeHtml(s) + '</li>').join('');
+    const gapsHtml   = (Array.isArray(pat.gaps) ? pat.gaps : [])
+      .map(s => '<li>' + escapeHtml(s) + '</li>').join('');
+
+    const patentabilityHtml = ''
+      + '<div class="wt-patentability"><div class="wt-section-label">Patentability assessment</div>'
+      + (pat.summary ? '<p class="wt-pat-summary">' + escapeHtml(pat.summary) + '</p>' : '')
+      + (strongHtml ? '<div class="wt-pat-block"><div class="wt-pat-block-label">Claims likely to survive</div><ul>' + strongHtml + '</ul></div>' : '')
+      + (weakHtml   ? '<div class="wt-pat-block"><div class="wt-pat-block-label">Claims likely DOA against prior art</div><ul>' + weakHtml   + '</ul></div>' : '')
+      + (gapsHtml   ? '<div class="wt-pat-block"><div class="wt-pat-block-label">White space worth planting a flag in</div><ul>' + gapsHtml   + '</ul></div>' : '')
+      + '</div>';
+
+    const cpcHtml = cpc.length
+      ? '<div class="wt-cpc"><div class="wt-section-label">Suggested CPC classifications</div>' +
+        cpc.map(c => ''
+          + '<div class="wt-cpc-row">'
+          +   '<code class="wt-cpc-code">' + escapeHtml(c.code || '') + '</code>'
+          +   '<div class="wt-cpc-body">'
+          +     '<div class="wt-cpc-label">' + escapeHtml(c.label || '') + '</div>'
+          +     '<div class="wt-cpc-why">'   + escapeHtml(c.why   || '') + '</div>'
+          +   '</div>'
+          + '</div>'
+        ).join('') +
+        '</div>'
+      : '';
+
+    const nextHtml = nexts.length
+      ? '<div class="wt-next"><div class="wt-section-label">What to do next</div>' +
+        nexts.map(s => ''
+          + '<article class="wt-next-card ' + fitClass(s.fit) + '">'
+          +   '<header class="wt-next-head">'
+          +     '<div class="wt-next-option">' + escapeHtml(s.option || '') + '</div>'
+          +     '<span class="wt-next-fit">' + escapeHtml(s.fit || '') + '</span>'
+          +   '</header>'
+          +   (s.action        ? '<p class="wt-next-action">'        + escapeHtml(s.action)        + '</p>' : '')
+          +   (s.cost_estimate ? '<div class="wt-next-cost">' + escapeHtml(s.cost_estimate) + '</div>' : '')
+          + '</article>'
+        ).join('') +
+        '</div>'
+      : '';
+
+    return ''
+      + techHtml
+      + queriesHtml
+      + priorArtHtml
+      + patentabilityHtml
+      + cpcHtml
+      + nextHtml
+      + (rationale ? '<p class="zh-result-rationale">' + escapeHtml(rationale) + '</p>' : '')
+      + '<p class="zh-result-saved">Saved to your brief and revision log. Not legal advice - bring this prep work to a real patent attorney before filing.</p>';
+  }
+
+  function formatPatentForBrief(data) {
+    const lines = [];
+    const queries  = Array.isArray(data.queries_used) ? data.queries_used : [];
+    const priorArt = Array.isArray(data.prior_art) ? data.prior_art : [];
+    const pat      = data.patentability && typeof data.patentability === 'object' ? data.patentability : {};
+    const cpc      = Array.isArray(data.cpc_codes) ? data.cpc_codes : [];
+    const nexts    = Array.isArray(data.next_steps) ? data.next_steps : [];
+
+    if (data.technical_summary) {
+      lines.push('TECHNICAL READING:');
+      lines.push(data.technical_summary);
+      lines.push('');
+    }
+
+    if (queries.length) {
+      lines.push('QUERIES SEARCHED:');
+      queries.forEach((q, i) => lines.push('  ' + (i + 1) + '. ' + q));
+      lines.push('');
+    }
+
+    lines.push('PRIOR-ART LANDSCAPE (' + priorArt.length + ' patents):');
+    if (priorArt.length) {
+      priorArt.forEach((p, i) => {
+        lines.push('');
+        lines.push('  ' + (i + 1) + '. ' + (p.title || 'Untitled') + ' [' + (p.claim_overlap || 'adjacent') + ']');
+        const meta = [p.publication_number, p.assignee, p.publication_year].filter(Boolean).join(' | ');
+        if (meta) lines.push('     ' + meta);
+        if (p.abstract)  lines.push('     Abstract: ' + p.abstract);
+        if (p.relevance) lines.push('     Relevance: ' + p.relevance);
+        if (p.link)      lines.push('     ' + p.link);
+      });
+    } else {
+      lines.push('  (No relevant prior art surfaced. Treat as a signal, not a green light.)');
+    }
+    lines.push('');
+
+    lines.push('PATENTABILITY:');
+    if (pat.summary) lines.push('  ' + pat.summary);
+    if (Array.isArray(pat.strong_claims) && pat.strong_claims.length) {
+      lines.push('  Strong claims:');
+      pat.strong_claims.forEach(s => lines.push('    - ' + s));
+    }
+    if (Array.isArray(pat.weak_claims) && pat.weak_claims.length) {
+      lines.push('  Weak claims:');
+      pat.weak_claims.forEach(s => lines.push('    - ' + s));
+    }
+    if (Array.isArray(pat.gaps) && pat.gaps.length) {
+      lines.push('  White space:');
+      pat.gaps.forEach(s => lines.push('    - ' + s));
+    }
+    lines.push('');
+
+    if (cpc.length) {
+      lines.push('SUGGESTED CPC CODES:');
+      cpc.forEach(c => lines.push('  ' + (c.code || '') + ' - ' + (c.label || '') + ' (' + (c.why || '') + ')'));
+      lines.push('');
+    }
+
+    if (nexts.length) {
+      lines.push('NEXT STEPS:');
+      nexts.forEach(s => {
+        lines.push('  ' + (s.option || '') + ' [' + (s.fit || '') + '] - ' + (s.cost_estimate || ''));
+        if (s.action) lines.push('    Action: ' + s.action);
+      });
+      lines.push('');
+    }
+
+    if (data.rationale) {
+      lines.push('RATIONALE: ' + data.rationale);
+    }
+
+    lines.push('');
+    lines.push('NOT LEGAL ADVICE. Bring this prep work to a registered patent attorney before filing.');
+
+    // Title for the brief-append header. Prefer the strongest claim
+    // concept; fall back to a generic label.
+    let title = 'Patent Assessment';
+    if (pat && Array.isArray(pat.strong_claims) && pat.strong_claims.length) {
+      title = String(pat.strong_claims[0]).slice(0, 80);
+    } else if (priorArt.length) {
+      title = 'vs. ' + String(priorArt[0].title || '').slice(0, 60);
+    }
+    return { plainText: lines.join('\n'), title };
   }
 
   function init() {
