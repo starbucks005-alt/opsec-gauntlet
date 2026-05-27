@@ -33,7 +33,7 @@ const Anthropic    = require('@anthropic-ai/sdk').default;
 const voiceScripts = require('../../config/voice_scripts.json');
 
 const MODEL      = 'claude-sonnet-4-6';
-const MAX_TOKENS = 2200;
+const MAX_TOKENS = 1600;
 const BRIEF_MAX  = 6000;
 const NAME_MAX   = 60;
 const BRIEF_MIN  = 30;
@@ -95,8 +95,8 @@ OUTPUT REQUIREMENTS
        - beat: short beat from the list above
        - why_for_this_brief: ONE specific sentence tying THIS judge's lens to THIS brief. Not generic. Reference something from the brief.
 
-  2. LIKELY_QUESTIONS - one key per recommended judge_id. Each value is an array of 3-5 questions. Each question is an object:
-       - question: a sentence the judge would actually say, in their voice. Specific to ${nameRef}'s brief. Not abstract.
+  2. LIKELY_QUESTIONS - one key per recommended judge_id. Each value is an array of EXACTLY 3 questions. Each question is an object:
+       - question: a sentence the judge would actually say, in their voice. Specific to ${nameRef}'s brief. Not abstract. Keep to 1-2 sentences.
        - what_they_are_really_asking: ONE sentence translating the question into what the judge is actually testing. (Marcus's "what's the exit math" really asks "is this an investable shape." Cassidy's "who is the customer when nobody is watching" really asks "do you understand the psychology, not just the demographic.")
 
   3. WALK_IN_LINE - ONE line ${nameRef} should keep in their head as they enter the Chamber. Short. Memorable. Specific to this brief. Not "you got this." Something like "the audience is postpartum, not 'busy parents' - say that" or "lead with the retention number, not the mission statement."
@@ -213,7 +213,7 @@ exports.handler = async (event) => {
     const arr = Array.isArray(likelyRaw[entry.judge_id]) ? likelyRaw[entry.judge_id] : [];
     const cleaned = arr
       .filter(q => q && q.question)
-      .slice(0, 5)
+      .slice(0, 3)
       .map(q => ({
         question: String(q.question || '').replace(/—/g, '-').replace(/–/g, '-').trim(),
         what_they_are_really_asking: String(q.what_they_are_really_asking || '').replace(/—/g, '-').replace(/–/g, '-').trim(),
