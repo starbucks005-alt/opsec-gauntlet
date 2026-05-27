@@ -817,7 +817,7 @@
      visitor sees immediately that this is a preview, not a paid run.
      Hidden under any white-label override (the white-label tier
      doesn't carry the Gauntlet sample message). */
-  body[data-tg-mode="sample"]:not([data-tg-whitelabel]) main::after{
+  body[data-tg-mode="sample"] main::after{
     content:'SAMPLE';
     position:fixed;
     top:50%; left:50%;
@@ -826,11 +826,49 @@
     font-weight:700;
     font-size:clamp(5rem, 16vw, 12rem);
     letter-spacing:0.3em;
-    color:rgba(0,0,0,0.04);
+    color:rgba(0,0,0,0.06);
     text-transform:uppercase;
     white-space:nowrap;
     pointer-events:none;
     z-index:0;
+  }
+
+  /* ── IP PROTECTION ON SAMPLES ────────────────────────────────────────
+     Sample deliverables present Terry's original ideas. Visitors should
+     be able to READ them on screen but not extract them as a polished
+     downloadable artifact. Combined with the disabled Print buttons,
+     these rules raise the cost of idea theft significantly. None of
+     this stops a determined attacker (screenshots, view-source) - it
+     stops casual extraction. */
+
+  /* Block text selection across the sample deliverable. */
+  body[data-tg-mode="sample"] main{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+  }
+
+  /* Block native browser print on samples. The on-screen content gets
+     replaced with a notice page; nothing useful lands on paper or PDF. */
+  @media print {
+    body[data-tg-mode="sample"] main,
+    body[data-tg-mode="sample"] .brand-block,
+    body[data-tg-mode="sample"] .print-watermark{
+      display:none !important;
+    }
+    body[data-tg-mode="sample"]::after{
+      content:'This sample report is not available for printing or download. To produce a printable report on your own idea, visit the-gauntlet.netlify.app.';
+      display:block;
+      padding:3rem 2rem;
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-size:1.2rem;
+      color:#1a1a1a;
+      text-align:center;
+      max-width:560px;
+      margin:4rem auto;
+    }
   }
 </style>
 <script src="assets/tg-export.js" defer></script>
@@ -1386,6 +1424,27 @@
       document.body.setAttribute('data-tg-whitelabel', '');
     } else {
       document.body.removeAttribute('data-tg-whitelabel');
+    }
+
+    // IP protection on sample mode: block copy, right-click, and the
+    // browser's native print shortcut (Cmd/Ctrl+P). Combined with the
+    // disabled Print buttons and the CSS user-select:none and the
+    // @media print blanking, this raises the cost of casual extraction.
+    // None of this stops a determined attacker - screenshots and
+    // view-source remain available - but it's enough friction to deter
+    // someone from lifting a finished sample report as their own work.
+    if (data.sample_id && !window.__tgSampleGuardAttached) {
+      window.__tgSampleGuardAttached = true;
+      const block = (e) => { e.preventDefault(); e.stopPropagation(); return false; };
+      document.addEventListener('copy', block);
+      document.addEventListener('cut', block);
+      document.addEventListener('contextmenu', block);
+      document.addEventListener('keydown', (e) => {
+        const k = (e.key || '').toLowerCase();
+        if ((e.ctrlKey || e.metaKey) && (k === 'p' || k === 's' || k === 'c' || k === 'a')) {
+          e.preventDefault(); e.stopPropagation(); return false;
+        }
+      }, true);
     }
 
     root.innerHTML = `
