@@ -11,7 +11,7 @@
     "id": "sample-smoothie-vending",
     "title": "Smoothie Vending Machines"
   },
-  "brief": "SMOOTHIE VENDING MACHINES\n\nCONCEPT\nA self-serve vending machine that blends a custom fresh smoothie on demand from pre-pureed ingredient pouches. Customer makes a structured sequence of selections - fruit, vegetable, liquid, protein, extras, ice - and the machine blends and dispenses. Sister concept to Healthy Life Smoothies.\n\nPROBLEM\nMost vending machines sell pre-packaged drinks that fail health-conscious customers. Smoothie shops are not always accessible. There is no quick, customizable, fresh smoothie option in transit-heavy or institutional locations where people need a healthy choice on the go.\n\nSOLUTION\nSelf-serve smoothie vending machine with structured ingredient flow. Customer steps through fruit (0-2) -> vegetable (0-1) -> liquid (0-1) -> protein (0-1) -> extras (0-1) -> ice. Pre-pureed sealed pouches drive a blend-and-dispense sequence.\n\nTARGET AUDIENCE\nHospitals, schools / universities, gyms, transit hubs, large office complexes, hotels.\n\nKEY ADVANTAGES\n- Fresh and customizable, not pre-mixed - blended on demand\n- Operates 24/7 with no staff required\n- Sealed ingredient pouches eliminate cross-contamination and reduce waste\n- Customization creates the perceived value of a shop experience at vending-machine throughput\n- Structured flow prevents bad combinations\n\nKEY CHALLENGES\n- Ingredient pouch shelf life and cold-chain logistics\n- Machine cleaning between blends - food safety is the operational risk\n- Initial unit cost vs. ROI per location\n- Power and water requirements\n- Pouch refill operations\n\nREVENUE MODEL\n- Per-transaction smoothie sales (consumer pricing $5-8 per smoothie)\n- B2B placement contracts with hospital networks, gym chains, transit operators\n- Ingredient pouch supply contracts (recurring revenue from the network)\n\nINTEGRATION WITH HEALTHY LIFE SMOOTHIES\nThe vending machine is the hardware deployment of the same recipe library and ingredient kits that power the consumer / cafe platform.\n\nCURRENT STAGE\nConcept document and ingredient flow defined. Next steps: prototype hardware, validate ingredient pouch storage and dispensing reliability, partner with placement-network operators.",
+  "brief": "SMOOTHIE VENDING MACHINES\n\nCONCEPT\nA self-serve vending machine that blends a custom fresh smoothie on demand from pre-pureed ingredient pouches. Customer makes a structured sequence of selections - fruit, vegetable, liquid, protein, extras, ice - and the machine blends and dispenses.\n\nPROBLEM\nMost vending machines sell pre-packaged drinks that fail health-conscious customers. Smoothie shops are not always accessible. There is no quick, customizable, fresh smoothie option in transit-heavy or institutional locations where people need a healthy choice on the go.\n\nSOLUTION\nSelf-serve smoothie vending machine with structured ingredient flow. Customer steps through fruit (0-2) -> vegetable (0-1) -> liquid (0-1) -> protein (0-1) -> extras (0-1) -> ice. Pre-pureed sealed pouches drive a blend-and-dispense sequence.\n\nTARGET AUDIENCE\nHospitals, schools / universities, gyms, transit hubs, large office complexes, hotels.\n\nKEY ADVANTAGES\n- Fresh and customizable, not pre-mixed - blended on demand\n- Operates 24/7 with no staff required\n- Sealed ingredient pouches eliminate cross-contamination and reduce waste\n- Customization creates the perceived value of a shop experience at vending-machine throughput\n- Structured flow prevents bad combinations\n\nKEY CHALLENGES\n- Ingredient pouch shelf life and cold-chain logistics\n- Machine cleaning between blends - food safety is the operational risk\n- Initial unit cost vs. ROI per location\n- Power and water requirements\n- Pouch refill operations\n\nREVENUE MODEL\n- Per-transaction smoothie sales (consumer pricing $5-8 per smoothie)\n- B2B placement contracts with hospital networks, gym chains, transit operators\n- Ingredient pouch supply contracts (recurring revenue from the network)\n\nCURRENT STAGE\nConcept document and ingredient flow defined. Next steps: prototype hardware, validate ingredient pouch storage and dispensing reliability, partner with placement-network operators.",
   "ep_reports": [
     {
       "ep_id": "matthew_vance",
@@ -23,7 +23,7 @@
       "ep_id": "wren_calloway",
       "report_type": "Landscape Scout Report",
       "headline": "Hospital systems are the right beachhead, not malls or offices",
-      "content": "WHERE IT CAN WORK (top 3)\n1. Hospital systems with 24/7 traffic. The night-shift cohort is desperate for healthy options and the corporate-cafeteria contracts often have nutrition mandates. Density: high. First signal: signed pilot agreement with one academic medical center.\n2. University recreation centers and student unions. Density: high, captive audience, predictable peak-traffic patterns.\n3. Gym chains with established post-workout smoothie demand (Equinox, LifeTime, premium independent gyms).\n\nFOCUS RECOMMENDATION\nHospital systems as the beachhead. Captive audience, 24/7 demand, corporate-buyer contracting (not consumer-by-consumer), nutrition mandates that the brand satisfies. The Stanford-flagship narrative writes itself.\n\nOTHER USES (same chassis, different category)\n- Coffee variant (custom coffee + protein + milk + extras)\n- Soup variant for hospital settings\n- Cocktail variant (with the sister Just Add Alcohol brand, age-gated)\n\nThe chassis is the durable asset; the recipe library is the variable.\n\nONE THING WREN WOULD NOT DO\nTry to compete with Jamba Juice in the mall food court. The unit economics don't clear in malls (high rent, low-traffic dwell time) and the audience is wrong (consumers in malls want a treat, not a virtue smoothie). Hospitals + universities + gyms - that's the lane."
+      "content": "WHERE IT CAN WORK (top 3)\n1. Hospital systems with 24/7 traffic. The night-shift cohort is desperate for healthy options and the corporate-cafeteria contracts often have nutrition mandates. Density: high. First signal: signed pilot agreement with one academic medical center.\n2. University recreation centers and student unions. Density: high, captive audience, predictable peak-traffic patterns.\n3. Gym chains with established post-workout smoothie demand (Equinox, LifeTime, premium independent gyms).\n\nFOCUS RECOMMENDATION\nHospital systems as the beachhead. Captive audience, 24/7 demand, corporate-buyer contracting (not consumer-by-consumer), nutrition mandates that the brand satisfies. The Stanford-flagship narrative writes itself.\n\nOTHER USES (same chassis, different category)\n- Coffee variant (custom coffee + protein + milk + extras)\n- Soup variant for hospital settings\n- Cocktail variant (age-gated, separate compliance footprint)\n\nThe chassis is the durable asset; the recipe library is the variable.\n\nONE THING WREN WOULD NOT DO\nTry to compete with Jamba Juice in the mall food court. The unit economics don't clear in malls (high rent, low-traffic dwell time) and the audience is wrong (consumers in malls want a treat, not a virtue smoothie). Hospitals + universities + gyms - that's the lane."
     },
     {
       "ep_id": "carol_haynes",
@@ -59,7 +59,7 @@
       "ep_id": "grant_ellis",
       "report_type": "Coaching: Elevator Speech, Strengths, Presenter Prep",
       "headline": "Lead with Stanford and the 3 AM moment; concede the cleaning-cycle risk upfront",
-      "content": "ELEVATOR SPEECH (30 seconds)\n\"We build smoothie vending machines for hospitals. Customer picks fruit, vegetable, liquid, protein, extras, ice - the machine blends a fresh smoothie in 90 seconds from sealed ingredient pouches. Stanford Health Care is the flagship; we're in conversation with Cleveland Clinic, Mayo, and Johns Hopkins for the next deployments. The hook is the 3 AM moment - visitors, nurses, and residents in a hospital at 3 AM choosing between a candy bar and a granola bar. We're the third option, available 24/7, with food safety as the engineering discipline.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. Hospital-as-beachhead is the under-served lane (Blendid is in malls, Briggo is in offices, hospitals are open)\n2. Real food-as-medicine policy tailwinds at the federal level\n3. Briggo / Costa proved customizable-food vending at the right unit economics\n4. Structured ingredient flow doubles as the allergen-disclosure UX\n5. Sealed pouch system addresses the contamination risk by design\n6. Captive 24/7 hospital traffic creates predictable utilization\n7. B2B placement contracting (not consumer-by-consumer) is the right go-to-market\n8. Stanford flagship gives instant academic-medical-center credibility\n9. Multiple expansion paths (gyms, universities, transit) without re-engineering chassis\n10. Sister product (Healthy Life Smoothies) provides shared recipe and ingredient infrastructure\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Selene Voss: she'll push on whether you're the operator, the hardware company, or both. Concede the question - you are both for v1 (vertically integrated), with a longer-term goal of becoming the hardware-plus-ingredient-supply company while operating partners run the placement network.\n- Raymond Chen: he'll push on unit economics. Have these ready: 30-45 transactions/day breakeven, $6 average ticket, $35-55K capex per machine, 24-month payback at hospital placement.\n- Astrid Lund: she'll go straight to food safety. Concede that food safety is the existential risk. Lead with the engineering controls - sealed pouches, automated CIP cycle, UV sanitization, remote-disable, NSF certification, building to California standards. The transparency on safety is the credibility.\n\nWHEN YOU GET STUCK\nReturn to the 3 AM hospital moment. The judges have all had a family member in a hospital. The moment is universal and emotionally resonant.\n\nDO NOT\n- Promise national rollout with double-digit machines in v1\n- Hide the cleaning-cycle risk\n- Compete with mall-based smoothie vending (different model, different audience)\n- Promise AI personalization at v1\n\nONE LINE TO REMEMBER\n\"Not for malls. For hospitals.\""
+      "content": "ELEVATOR SPEECH (30 seconds)\n\"We build smoothie vending machines for hospitals. Customer picks fruit, vegetable, liquid, protein, extras, ice - the machine blends a fresh smoothie in 90 seconds from sealed ingredient pouches. Stanford Health Care is the flagship; we're in conversation with Cleveland Clinic, Mayo, and Johns Hopkins for the next deployments. The hook is the 3 AM moment - visitors, nurses, and residents in a hospital at 3 AM choosing between a candy bar and a granola bar. We're the third option, available 24/7, with food safety as the engineering discipline.\"\n\nTOP 10 STRENGTHS TO LEAD WITH\n1. Hospital-as-beachhead is the under-served lane (Blendid is in malls, Briggo is in offices, hospitals are open)\n2. Real food-as-medicine policy tailwinds at the federal level\n3. Briggo / Costa proved customizable-food vending at the right unit economics\n4. Structured ingredient flow doubles as the allergen-disclosure UX\n5. Sealed pouch system addresses the contamination risk by design\n6. Captive 24/7 hospital traffic creates predictable utilization\n7. B2B placement contracting (not consumer-by-consumer) is the right go-to-market\n8. Stanford flagship gives instant academic-medical-center credibility\n9. Multiple expansion paths (gyms, universities, transit) without re-engineering chassis\n10. Recipe and ingredient-pouch standardization gives the company a defensible content moat alongside the hardware\n\nPRESENTER PREP - FACING THE JUDGES\n\nWHAT EACH JUDGE WILL PUSH ON\n- Selene Voss: she'll push on whether you're the operator, the hardware company, or both. Concede the question - you are both for v1 (vertically integrated), with a longer-term goal of becoming the hardware-plus-ingredient-supply company while operating partners run the placement network.\n- Raymond Chen: he'll push on unit economics. Have these ready: 30-45 transactions/day breakeven, $6 average ticket, $35-55K capex per machine, 24-month payback at hospital placement.\n- Astrid Lund: she'll go straight to food safety. Concede that food safety is the existential risk. Lead with the engineering controls - sealed pouches, automated CIP cycle, UV sanitization, remote-disable, NSF certification, building to California standards. The transparency on safety is the credibility.\n\nWHEN YOU GET STUCK\nReturn to the 3 AM hospital moment. The judges have all had a family member in a hospital. The moment is universal and emotionally resonant.\n\nDO NOT\n- Promise national rollout with double-digit machines in v1\n- Hide the cleaning-cycle risk\n- Compete with mall-based smoothie vending (different model, different audience)\n- Promise AI personalization at v1\n\nONE LINE TO REMEMBER\n\"Not for malls. For hospitals.\""
     }
   ],
   "revisions": [
@@ -67,8 +67,8 @@
       "ep_id": "jules",
       "operation": "replace",
       "section_label": "Concept paragraph",
-      "before": "A self-serve vending machine that blends a custom fresh smoothie on demand from pre-pureed ingredient pouches. Customer makes a structured sequence of selections - fruit, vegetable, liquid, protein, extras, ice - and the machine blends and dispenses. Sister concept to Healthy Life Smoothies.",
-      "after": "A self-serve smoothie vending machine purpose-built for hospitals and other 24/7 institutional environments. The customer steps through a structured ingredient selection (fruit, vegetable, liquid, protein, extras, ice); the machine blends from sealed pre-pureed pouches and dispenses in under 90 seconds. Sister product to Healthy Life Smoothies, but the unit lives or dies on hospital placement, not on hardware novelty.",
+      "before": "A self-serve vending machine that blends a custom fresh smoothie on demand from pre-pureed ingredient pouches. Customer makes a structured sequence of selections - fruit, vegetable, liquid, protein, extras, ice - and the machine blends and dispenses.",
+      "after": "A self-serve smoothie vending machine purpose-built for hospitals and other 24/7 institutional environments. The customer steps through a structured ingredient selection (fruit, vegetable, liquid, protein, extras, ice); the machine blends from sealed pre-pureed pouches and dispenses in under 90 seconds. The unit lives or dies on hospital placement, not on hardware novelty.",
       "rationale": "Two changes: (1) named the actual buyer (hospitals + institutional) instead of \"transit-heavy or institutional\" general framing. (2) added the operational truth - 'the unit lives or dies on hospital placement.' That single line keeps the team focused on what actually matters for v1 and prevents mall-placement distraction.",
       "accepted_at": 1716738000000
     }
@@ -78,7 +78,7 @@
       "judge_id": "selene_voss",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the structured ingredient flow is genuinely the clearest part of this brief - fruit, veg, liquid, protein, extras, ice. That's a real product idea I can picture. Where the clarity drops is on the business: are you the machine maker, the route operator, or both? The hardware company and the operating company have very different shapes.",
+      "stage_critique": "The structured ingredient flow is genuinely the clearest part of this brief - fruit, veg, liquid, protein, extras, ice. That's a real product idea I can picture. Where the clarity drops is on the business: are you the machine maker, the route operator, or both? The hardware company and the operating company have very different shapes.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -86,7 +86,7 @@
       "judge_id": "raymond_chen",
       "stage": "clarity",
       "dimension_scores": { "clarity": 6 },
-      "stage_critique": "Terry, the brief is clear on the customer experience and unclear on the operating model. Who owns the machines? Who services them? Who pays for the cold-chain logistics? Without that, this could be a hardware sale, a recurring-revenue operating business, or a franchise model. They are three different companies.",
+      "stage_critique": "The brief is clear on the customer experience and unclear on the operating model. Who owns the machines? Who services them? Who pays for the cold-chain logistics? Without that, this could be a hardware sale, a recurring-revenue operating business, or a franchise model. They are three different companies.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -94,7 +94,7 @@
       "judge_id": "astrid_lund",
       "stage": "clarity",
       "dimension_scores": { "clarity": 6 },
-      "stage_critique": "Terry, the safety surface is the part of this brief that needs the most clarity. Vended food has a specific regulatory pathway and the brief mentions it abstractly. I want to see the actual NSF certification plan, the actual cleaning-cycle specification, and the actual recall protocol. Right now those are placeholders.",
+      "stage_critique": "The safety surface is the part of this brief that needs the most clarity. Vended food has a specific regulatory pathway and the brief mentions it abstractly. I want to see the actual NSF certification plan, the actual cleaning-cycle specification, and the actual recall protocol. Right now those are placeholders.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -102,7 +102,7 @@
       "judge_id": "selene_voss",
       "stage": "viability",
       "dimension_scores": { "viability": 6 },
-      "stage_critique": "Terry, this is viable if hospital systems will sign multi-machine contracts. The Stanford-style flagship is the easy part - the second through tenth deployment is where most operators stall. The viability question is whether the team has the procurement chops to close health-system contracts, not whether the machine works.",
+      "stage_critique": "This is viable if hospital systems will sign multi-machine contracts. The Stanford-style flagship is the easy part - the second through tenth deployment is where most operators stall. The viability question is whether the team has the procurement chops to close health-system contracts, not whether the machine works.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -110,7 +110,7 @@
       "judge_id": "raymond_chen",
       "stage": "viability",
       "dimension_scores": { "viability": 5 },
-      "stage_critique": "Terry, the unit economics in the brief are aspirational. $6 average ticket at 30-45 transactions per day is plausible at a hospital but unproven. Briggo achieved 80 cups per day on coffee and that's a daily-habit product; smoothies are not daily-habit for most users. The realistic transaction count is probably 20-30 per day, which puts breakeven at risk.",
+      "stage_critique": "The unit economics in the brief are aspirational. $6 average ticket at 30-45 transactions per day is plausible at a hospital but unproven. Briggo achieved 80 cups per day on coffee and that's a daily-habit product; smoothies are not daily-habit for most users. The realistic transaction count is probably 20-30 per day, which puts breakeven at risk.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -118,7 +118,7 @@
       "judge_id": "astrid_lund",
       "stage": "viability",
       "dimension_scores": { "viability": 5 },
-      "stage_critique": "Terry, viability depends on the cleaning cycle working reliably across thousands of transactions. The viability collapses the day a state inspector finds bacterial growth in a blender chamber. The engineering challenge of automatic cleaning at smoothie-shop hygiene levels is significant - validate that in a lab before raising a dollar of expansion capital.",
+      "stage_critique": "Viability depends on the cleaning cycle working reliably across thousands of transactions. The viability collapses the day a state inspector finds bacterial growth in a blender chamber. The engineering challenge of automatic cleaning at smoothie-shop hygiene levels is significant - validate that in a lab before raising a dollar of expansion capital.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -126,7 +126,7 @@
       "judge_id": "selene_voss",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, the risk section in the brief is thin. The technology risk is the cleaning cycle. The market risk is whether hospital procurement will buy from a venture-backed startup vs. an established vending company. The competitive risk is that Blendid or a Briggo successor pivots into this space. Three risks named explicitly would beat zero risks named.",
+      "stage_critique": "The risk section in the brief is thin. The technology risk is the cleaning cycle. The market risk is whether hospital procurement will buy from a venture-backed startup vs. an established vending company. The competitive risk is that Blendid or a Briggo successor pivots into this space. Three risks named explicitly would beat zero risks named.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -134,7 +134,7 @@
       "judge_id": "raymond_chen",
       "stage": "risk",
       "dimension_scores": { "risk": 4 },
-      "stage_critique": "Terry, the capital risk is severe. $35-55K per machine is real cash and each machine has to be deployed before it generates revenue. The expansion plan implied in the brief (Cleveland Clinic, Mayo, Johns Hopkins) implies dozens of units of capital deployment ahead of validated unit economics. Prove the Stanford machine first.",
+      "stage_critique": "The capital risk is severe. $35-55K per machine is real cash and each machine has to be deployed before it generates revenue. The expansion plan implied in the brief (Cleveland Clinic, Mayo, Johns Hopkins) implies dozens of units of capital deployment ahead of validated unit economics. Prove the Stanford machine first.",
       "confidence": 0.87,
       "retrieved_evidence": []
     },
@@ -142,7 +142,7 @@
       "judge_id": "astrid_lund",
       "stage": "risk",
       "dimension_scores": { "risk": 3 },
-      "stage_critique": "Terry, the food-safety risk is existential and the brief understates it. One contamination incident at the Stanford flagship and the brand is dead. Listeria, salmonella, or norovirus in a hospital deployment is a news story that ends the company. The risk controls have to be operational excellence-level discipline, not box-checking compliance.",
+      "stage_critique": "The food-safety risk is existential and the brief understates it. One contamination incident at the Stanford flagship and the brand is dead. Listeria, salmonella, or norovirus in a hospital deployment is a news story that ends the company. The risk controls have to be operational excellence-level discipline, not box-checking compliance.",
       "confidence": 0.92,
       "retrieved_evidence": []
     },
@@ -150,7 +150,7 @@
       "judge_id": "selene_voss",
       "stage": "narrative",
       "dimension_scores": { "narrative": 7 },
-      "stage_critique": "Terry, the founder POV TikTok about the 3 AM hospital vending machine is the strongest narrative beat in the brief - that's the story the company should be telling everywhere. Lead with the visitor at 3 AM, not with the structured ingredient flow. The mechanic is the product; the moment is the story.",
+      "stage_critique": "The founder POV TikTok about the 3 AM hospital vending machine is the strongest narrative beat in the brief - that's the story the company should be telling everywhere. Lead with the visitor at 3 AM, not with the structured ingredient flow. The mechanic is the product; the moment is the story.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -158,7 +158,7 @@
       "judge_id": "raymond_chen",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the narrative is reasonable but the why-now is missing. Why does this company exist in 2026 and not 2018? The answer is probably post-pandemic hospital staffing pressure + the food-as-medicine policy momentum at the federal level. Name those explicitly.",
+      "stage_critique": "The narrative is reasonable but the why-now is missing. Why does this company exist in 2026 and not 2018? The answer is probably post-pandemic hospital staffing pressure + the food-as-medicine policy momentum at the federal level. Name those explicitly.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -166,7 +166,7 @@
       "judge_id": "astrid_lund",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the narrative spine works for consumers and journalists. The narrative for the hospital procurement officer is different - they need risk-management language, certification credentials, and reference customers. Build two narratives, not one.",
+      "stage_critique": "The narrative spine works for consumers and journalists. The narrative for the hospital procurement officer is different - they need risk-management language, certification credentials, and reference customers. Build two narratives, not one.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -174,7 +174,7 @@
       "judge_id": "selene_voss",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the evidence base is thin. Briggo and Blendid are named as comps but their actual utilization data, their actual reasons for stalling, and their actual unit economics aren't in the brief. Mine the public record - Briggo's Costa acquisition was a public deal with disclosure; Blendid has been covered in trade press.",
+      "stage_critique": "The evidence base is thin. Briggo and Blendid are named as comps but their actual utilization data, their actual reasons for stalling, and their actual unit economics aren't in the brief. Mine the public record - Briggo's Costa acquisition was a public deal with disclosure; Blendid has been covered in trade press.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -182,7 +182,7 @@
       "judge_id": "raymond_chen",
       "stage": "evidence",
       "dimension_scores": { "evidence": 3 },
-      "stage_critique": "Terry, no primary research is cited. The brief should reference at least three pilot conversations with hospital food-service directors. What they buy today, what they pay for it, what they would replace, what their procurement cycle looks like.",
+      "stage_critique": "No primary research is cited. The brief should reference at least three pilot conversations with hospital food-service directors. What they buy today, what they pay for it, what they would replace, what their procurement cycle looks like.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -190,7 +190,7 @@
       "judge_id": "astrid_lund",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the regulatory-evidence layer is missing. Name the NSF certification status, the state vending registrations completed, the FDA food-facility registration. \"We will be compliant\" is not evidence. The actual paper trail is evidence.",
+      "stage_critique": "The regulatory-evidence layer is missing. Name the NSF certification status, the state vending registrations completed, the FDA food-facility registration. \"We will be compliant\" is not evidence. The actual paper trail is evidence.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -198,7 +198,7 @@
       "judge_id": "selene_voss",
       "stage": "cultural",
       "dimension_scores": { "cultural": 8 },
-      "stage_critique": "Terry, the cultural moment is right. Food-as-medicine is having a real federal policy moment. Hospital-system nutrition mandates are real. This concept lands inside that wave.",
+      "stage_critique": "The cultural moment is right. Food-as-medicine is having a real federal policy moment. Hospital-system nutrition mandates are real. This concept lands inside that wave.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -206,7 +206,7 @@
       "judge_id": "raymond_chen",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, cultural timing is favorable. The risk is that automated food service still has a perception problem with some consumer cohorts - \"machine-blended\" feels less premium than \"barista-blended.\" Visible-blade, visible-ingredient transparency on the machine UI matters more than the marketing.",
+      "stage_critique": "Cultural timing is favorable. The risk is that automated food service still has a perception problem with some consumer cohorts - \"machine-blended\" feels less premium than \"barista-blended.\" Visible-blade, visible-ingredient transparency on the machine UI matters more than the marketing.",
       "confidence": 0.78,
       "retrieved_evidence": []
     },
@@ -214,7 +214,7 @@
       "judge_id": "astrid_lund",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the hospital cultural fit is excellent. Hospital food-service directors are under real pressure to improve nutrition and reduce labor cost simultaneously. This concept addresses both. The gym and university fits are reasonable but less differentiated. Lead with hospitals.",
+      "stage_critique": "The hospital cultural fit is excellent. Hospital food-service directors are under real pressure to improve nutrition and reduce labor cost simultaneously. This concept addresses both. The gym and university fits are reasonable but less differentiated. Lead with hospitals.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -222,7 +222,7 @@
       "judge_id": "selene_voss",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the convenience-as-virtue framing is the right read of the consumer. The structured-flow customization is psychologically smart - the customer feels authorship without analysis paralysis. The piece that's missing is the post-purchase reinforcement: the cup label, the receipt, the small visible-on-Instagram moment.",
+      "stage_critique": "The convenience-as-virtue framing is the right read of the consumer. The structured-flow customization is psychologically smart - the customer feels authorship without analysis paralysis. The piece that's missing is the post-purchase reinforcement: the cup label, the receipt, the small visible-on-Instagram moment.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -230,7 +230,7 @@
       "judge_id": "raymond_chen",
       "stage": "psych",
       "dimension_scores": { "psych": 6 },
-      "stage_critique": "Terry, the user psychology is read correctly. The procurement-officer psychology is unmodeled. The hospital food-service director is risk-averse, performance-evaluated on labor cost reduction, and politically exposed to staff complaints. The sale is to that psychology, not to the consumer.",
+      "stage_critique": "The user psychology is read correctly. The procurement-officer psychology is unmodeled. The hospital food-service director is risk-averse, performance-evaluated on labor cost reduction, and politically exposed to staff complaints. The sale is to that psychology, not to the consumer.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -238,7 +238,7 @@
       "judge_id": "astrid_lund",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the consumer psychology is solid. The trust-building psychology for the first 90 days at a hospital deployment is the part to design carefully. The machine should over-communicate cleanliness during the first weeks - LED-lit blender chamber, visible cleaning-cycle indicator, displayed temperature of cold storage. Visible safety is the trust currency.",
+      "stage_critique": "The consumer psychology is solid. The trust-building psychology for the first 90 days at a hospital deployment is the part to design carefully. The machine should over-communicate cleanliness during the first weeks - LED-lit blender chamber, visible cleaning-cycle indicator, displayed temperature of cold storage. Visible safety is the trust currency.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -246,7 +246,7 @@
       "judge_id": "selene_voss",
       "stage": "compliance",
       "dimension_scores": { "compliance": 6 },
-      "stage_critique": "Terry, the compliance surface is meaningful and the brief covers it at the headline level. State vending regulations vary; food allergen disclosure is required; cold-chain temperature monitoring is required. Hospitals add another layer - JCAHO standards on food handling, hospital-specific procurement compliance.",
+      "stage_critique": "The compliance surface is meaningful and the brief covers it at the headline level. State vending regulations vary; food allergen disclosure is required; cold-chain temperature monitoring is required. Hospitals add another layer - JCAHO standards on food handling, hospital-specific procurement compliance.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -254,7 +254,7 @@
       "judge_id": "raymond_chen",
       "stage": "compliance",
       "dimension_scores": { "compliance": 6 },
-      "stage_critique": "Terry, the compliance is achievable but takes 6-12 months to fully credential before the first deployment. Budget the legal and certification work into the pre-launch timeline. NSF certification alone is 4-9 months.",
+      "stage_critique": "The compliance is achievable but takes 6-12 months to fully credential before the first deployment. Budget the legal and certification work into the pre-launch timeline. NSF certification alone is 4-9 months.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -262,7 +262,7 @@
       "judge_id": "astrid_lund",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, the compliance plan in the operations layer is the strongest part of the brief - building to the strictest state (California) and accepting that as the company-wide standard is the right call. The piece to add: a publicly-documented recall protocol. The day there is a contaminated pouch lot, the company needs to be able to remote-disable affected machines within hours.",
+      "stage_critique": "The compliance plan in the operations layer is the strongest part of the brief - building to the strictest state (California) and accepting that as the company-wide standard is the right call. The piece to add: a publicly-documented recall protocol. The day there is a contaminated pouch lot, the company needs to be able to remote-disable affected machines within hours.",
       "confidence": 0.87,
       "retrieved_evidence": []
     }

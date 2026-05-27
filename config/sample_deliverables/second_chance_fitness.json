@@ -87,7 +87,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "clarity",
       "dimension_scores": { "clarity": 8 },
-      "stage_critique": "Terry, the brief is unusually clear on the mechanic and the audience. \"Close your circles\" is the kind of phrase that survives translation across the team. The one place the clarity drops is in defining who specifically fails today - the audience description sprays from busy parents to all-or-nothing thinkers to beginners. Pick one for the first cohort.",
+      "stage_critique": "The brief is unusually clear on the mechanic and the audience. \"Close your circles\" is the kind of phrase that survives translation across the team. The one place the clarity drops is in defining who specifically fails today - the audience description sprays from busy parents to all-or-nothing thinkers to beginners. Pick one for the first cohort.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -95,7 +95,7 @@
       "judge_id": "raymond_chen",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the product clarity is fine. The business clarity is where I want more. Freemium with premium subscription is named but the unit economics are not. What's the conversion rate target? What's the LTV? Without those, \"freemium\" is just a word.",
+      "stage_critique": "The product clarity is fine. The business clarity is where I want more. Freemium with premium subscription is named but the unit economics are not. What's the conversion rate target? What's the LTV? Without those, \"freemium\" is just a word.",
       "confidence": 0.78,
       "retrieved_evidence": []
     },
@@ -103,7 +103,7 @@
       "judge_id": "marcus_holt",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the brief reads cleanly. I know what the thing is, I know who it's for, and I know how it makes money. What I don't know is who the exit is for. App acquirers in this category are Apple, Google, Strava, and a couple of wearable companies. Which one is this for?",
+      "stage_critique": "The brief reads cleanly. I know what the thing is, I know who it's for, and I know how it makes money. What I don't know is who the exit is for. App acquirers in this category are Apple, Google, Strava, and a couple of wearable companies. Which one is this for?",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -111,7 +111,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "viability",
       "dimension_scores": { "viability": 7 },
-      "stage_critique": "Terry, this is viable if you can keep users past day 30. The behavioral mechanic is correct - I would build the same thing. The risk is that wearable platforms add this feature in their next OS update and the standalone app loses its reason to exist. The viability hinges on whether community + content sticks before platform commoditization.",
+      "stage_critique": "This is viable if you can keep users past day 30. The behavioral mechanic is correct - I would build the same thing. The risk is that wearable platforms add this feature in their next OS update and the standalone app loses its reason to exist. The viability hinges on whether community + content sticks before platform commoditization.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -119,7 +119,7 @@
       "judge_id": "raymond_chen",
       "stage": "viability",
       "dimension_scores": { "viability": 6 },
-      "stage_critique": "Terry, the revenue path is plausible but you haven't talked to a customer yet. Freemium fitness apps see 2-5% premium conversion in good cases. At what subscription price? At what acquisition cost? The viability is theoretical until those numbers are on the page.",
+      "stage_critique": "The revenue path is plausible but you haven't talked to a customer yet. Freemium fitness apps see 2-5% premium conversion in good cases. At what subscription price? At what acquisition cost? The viability is theoretical until those numbers are on the page.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -127,7 +127,7 @@
       "judge_id": "marcus_holt",
       "stage": "viability",
       "dimension_scores": { "viability": 6 },
-      "stage_critique": "Terry, viability for an investor read isn't about whether the app can break even - it's about whether the exit math works. Fitness apps acquired in the last five years exit at 2-4x revenue, not the 8-12x SaaS multiple. Adjust the math accordingly.",
+      "stage_critique": "Viability for an investor read isn't about whether the app can break even - it's about whether the exit math works. Fitness apps acquired in the last five years exit at 2-4x revenue, not the 8-12x SaaS multiple. Adjust the math accordingly.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -135,7 +135,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, the brief names the user-adoption risk implicitly (perfectionists who quit) but does not name the platform risk. The biggest risk is Apple shipping the same feature in iOS 19. That risk needs a named mitigation - community moat, branded content, identity ownership - or the answer to it is \"we don't have one.\" Either is fine to say. Silence on it is not.",
+      "stage_critique": "The brief names the user-adoption risk implicitly (perfectionists who quit) but does not name the platform risk. The biggest risk is Apple shipping the same feature in iOS 19. That risk needs a named mitigation - community moat, branded content, identity ownership - or the answer to it is \"we don't have one.\" Either is fine to say. Silence on it is not.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -143,7 +143,7 @@
       "judge_id": "raymond_chen",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, you've named one risk (rigid trackers cause demotivation) but not the operational risks you'll hit. Mobile app review-cycle risk on health claims. Wearable API access changes. Apple ATT impact on user acquisition cost. These are mainstream fitness-app risks every founder in this category runs into.",
+      "stage_critique": "You've named one risk (rigid trackers cause demotivation) but not the operational risks you'll hit. Mobile app review-cycle risk on health claims. Wearable API access changes. Apple ATT impact on user acquisition cost. These are mainstream fitness-app risks every founder in this category runs into.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -151,7 +151,7 @@
       "judge_id": "marcus_holt",
       "stage": "risk",
       "dimension_scores": { "risk": 4 },
-      "stage_critique": "Terry, the risk section is the weakest part of this brief. The product risk is named; the business risk is not. Customer acquisition cost in fitness apps in 2026 averages $35-60 per install for premium tiers. At a $5-10 monthly subscription with 2-5% conversion, the math is brutal unless you have organic distribution.",
+      "stage_critique": "The risk section is the weakest part of this brief. The product risk is named; the business risk is not. Customer acquisition cost in fitness apps in 2026 averages $35-60 per install for premium tiers. At a $5-10 monthly subscription with 2-5% conversion, the math is brutal unless you have organic distribution.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -159,7 +159,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the \"second chance\" framing has a story spine but the founder is not in it yet. Why did YOU build this? Was there a streak you broke that broke you? The brief reads as third-person observation when first-person makes the narrative land.",
+      "stage_critique": "The \"second chance\" framing has a story spine but the founder is not in it yet. Why did YOU build this? Was there a streak you broke that broke you? The brief reads as third-person observation when first-person makes the narrative land.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -167,7 +167,7 @@
       "judge_id": "raymond_chen",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the narrative is serviceable. \"Forgiveness over perfection\" is a clear spine. What's missing is the why-now. Why does this app exist in 2026 and not 2018?",
+      "stage_critique": "The narrative is serviceable. \"Forgiveness over perfection\" is a clear spine. What's missing is the why-now. Why does this app exist in 2026 and not 2018?",
       "confidence": 0.76,
       "retrieved_evidence": []
     },
@@ -175,7 +175,7 @@
       "judge_id": "marcus_holt",
       "stage": "narrative",
       "dimension_scores": { "narrative": 5 },
-      "stage_critique": "Terry, narratives in pitch decks come down to the founder + the wedge + the timing. The brief has the wedge. The founder is invisible. The timing isn't argued. Tighten on all three before any investor reads this.",
+      "stage_critique": "Narratives in pitch decks come down to the founder + the wedge + the timing. The brief has the wedge. The founder is invisible. The timing isn't argued. Tighten on all three before any investor reads this.",
       "confidence": 0.78,
       "retrieved_evidence": []
     },
@@ -183,7 +183,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the brief asserts that strict daily targets are demotivating. That's well-established in habit research but you haven't cited it. \"Fresh start effect\" literature (Dai 2014) and James Clear's never-miss-twice rule both support the mechanic. Name them.",
+      "stage_critique": "The brief asserts that strict daily targets are demotivating. That's well-established in habit research but you haven't cited it. \"Fresh start effect\" literature (Dai 2014) and James Clear's never-miss-twice rule both support the mechanic. Name them.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -191,7 +191,7 @@
       "judge_id": "raymond_chen",
       "stage": "evidence",
       "dimension_scores": { "evidence": 3 },
-      "stage_critique": "Terry, you don't have any. The brief asserts beta retention numbers in the press release but the brief itself doesn't ground them. Talk to ten existing fitness-tracker users who quit. Show me the interview notes.",
+      "stage_critique": "You don't have any. The brief asserts beta retention numbers in the press release but the brief itself doesn't ground them. Talk to ten existing fitness-tracker users who quit. Show me the interview notes.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -199,7 +199,7 @@
       "judge_id": "marcus_holt",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, evidence is what separates a hobby project from a venture-backable company. You need ten user interviews, a 4-week pilot with ten people, retention numbers across the grace-period mechanic vs. a control, and CAC math on a small ad spend. None of that is in the brief.",
+      "stage_critique": "Evidence is what separates a hobby project from a venture-backable company. You need ten user interviews, a 4-week pilot with ten people, retention numbers across the grace-period mechanic vs. a control, and CAC math on a small ad spend. None of that is in the brief.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -207,7 +207,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "cultural",
       "dimension_scores": { "cultural": 8 },
-      "stage_critique": "Terry, the cultural fit is the strongest part of this brief. Mental-health-positive framing in fitness is exactly where the audience attention is in 2026. The \"forgiveness over perfection\" message lands - it's the post-pandemic correction to the 2010s grind-culture fitness app era.",
+      "stage_critique": "The cultural fit is the strongest part of this brief. Mental-health-positive framing in fitness is exactly where the audience attention is in 2026. The \"forgiveness over perfection\" message lands - it's the post-pandemic correction to the 2010s grind-culture fitness app era.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -215,7 +215,7 @@
       "judge_id": "raymond_chen",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the timing is right. The audience is paying attention to mental-health-positive products. The risk to cultural fit is that this is now a CROWDED corner of the market - everyone is anti-grind in 2026. Differentiation against the rest of the gentle-fitness category needs to be sharper.",
+      "stage_critique": "The timing is right. The audience is paying attention to mental-health-positive products. The risk to cultural fit is that this is now a CROWDED corner of the market - everyone is anti-grind in 2026. Differentiation against the rest of the gentle-fitness category needs to be sharper.",
       "confidence": 0.78,
       "retrieved_evidence": []
     },
@@ -223,7 +223,7 @@
       "judge_id": "marcus_holt",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, cultural fit is good. The investor-cultural-fit question is whether VCs still write checks for consumer fitness apps in 2026 - they're spent on the category. You may want to position this as a behavioral-health platform rather than a fitness app for fundraising purposes.",
+      "stage_critique": "Cultural fit is good. The investor-cultural-fit question is whether VCs still write checks for consumer fitness apps in 2026 - they're spent on the category. You may want to position this as a behavioral-health platform rather than a fitness app for fundraising purposes.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -231,7 +231,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "psych",
       "dimension_scores": { "psych": 9 },
-      "stage_critique": "Terry, this is the strongest dimension. The brief is built around correct buyer psychology - identity preservation, autonomy support, loss-aversion reframing. Every choice in the product respects how humans actually behave after a missed workout. I would build this.",
+      "stage_critique": "This is the strongest dimension. The brief is built around correct buyer psychology - identity preservation, autonomy support, loss-aversion reframing. Every choice in the product respects how humans actually behave after a missed workout. I would build this.",
       "confidence": 0.89,
       "retrieved_evidence": []
     },
@@ -239,7 +239,7 @@
       "judge_id": "raymond_chen",
       "stage": "psych",
       "dimension_scores": { "psych": 8 },
-      "stage_critique": "Terry, the user-psychology read is excellent. The buyer-psychology read - what makes the user upgrade to premium - is missing. \"Advanced analytics\" doesn't trigger an identity-driven purchase. Figure out what premium feature reinforces the comeback identity.",
+      "stage_critique": "The user-psychology read is excellent. The buyer-psychology read - what makes the user upgrade to premium - is missing. \"Advanced analytics\" doesn't trigger an identity-driven purchase. Figure out what premium feature reinforces the comeback identity.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -247,7 +247,7 @@
       "judge_id": "marcus_holt",
       "stage": "psych",
       "dimension_scores": { "psych": 8 },
-      "stage_critique": "Terry, the psychology of the user is solid. The psychology of the investor is unmodeled. \"Forgiving fitness app\" reads as a feature, not a category. Reframe the pitch as a behavioral-health platform with fitness as the first vertical - same product, very different valuation.",
+      "stage_critique": "The psychology of the user is solid. The psychology of the investor is unmodeled. \"Forgiving fitness app\" reads as a feature, not a category. Reframe the pitch as a behavioral-health platform with fitness as the first vertical - same product, very different valuation.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -255,7 +255,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, this is a consumer wellness app, not a medical device. Regulatory exposure is minimal as long as you avoid making clinical claims. HIPAA does not apply unless you integrate with a covered entity. Stick to wellness language and you're clean.",
+      "stage_critique": "This is a consumer wellness app, not a medical device. Regulatory exposure is minimal as long as you avoid making clinical claims. HIPAA does not apply unless you integrate with a covered entity. Stick to wellness language and you're clean.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -263,7 +263,7 @@
       "judge_id": "raymond_chen",
       "stage": "compliance",
       "dimension_scores": { "compliance": 8 },
-      "stage_critique": "Terry, compliance is straightforward. App store policies (Apple, Google) are the active layer - read the wellness app guidelines, especially around \"medical claims\" in marketing copy. Apple ATT consent for ad tracking matters more than HIPAA here.",
+      "stage_critique": "Compliance is straightforward. App store policies (Apple, Google) are the active layer - read the wellness app guidelines, especially around \"medical claims\" in marketing copy. Apple ATT consent for ad tracking matters more than HIPAA here.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -271,7 +271,7 @@
       "judge_id": "marcus_holt",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, compliance is not a blocker. If you ever add an AI-coaching feature with personalized advice, the regulatory surface grows. For the v1 brief as written, you're fine. Keep the AI ambitions out of the launch press until you've gotten a compliance opinion.",
+      "stage_critique": "Compliance is not a blocker. If you ever add an AI-coaching feature with personalized advice, the regulatory surface grows. For the v1 brief as written, you're fine. Keep the AI ambitions out of the launch press until you've gotten a compliance opinion.",
       "confidence": 0.78,
       "retrieved_evidence": []
     }

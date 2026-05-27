@@ -78,7 +78,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the brief is clear on the product and the audience. The clarity gap is on the parent-as-buyer story. The marketing in the brief reads like it's for kids; the actual purchase is by a parent. Pick a primary buyer and write the brief to them.",
+      "stage_critique": "The brief is clear on the product and the audience. The clarity gap is on the parent-as-buyer story. The marketing in the brief reads like it's for kids; the actual purchase is by a parent. Pick a primary buyer and write the brief to them.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -86,7 +86,7 @@
       "judge_id": "astrid_lund",
       "stage": "clarity",
       "dimension_scores": { "clarity": 6 },
-      "stage_critique": "Terry, the AI architecture is ambiguous in the brief. \"Curated knowledge base + safe child-oriented search fallback\" describes two very different systems. The clarity work is to name exactly what's curated, what's LLM-generated, and what's filtered. Each has different safety implications.",
+      "stage_critique": "The AI architecture is ambiguous in the brief. \"Curated knowledge base + safe child-oriented search fallback\" describes two very different systems. The clarity work is to name exactly what's curated, what's LLM-generated, and what's filtered. Each has different safety implications.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -94,7 +94,7 @@
       "judge_id": "grace_nakamura",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the educational framing is clear (manners + curiosity) and the age-tier progression is well-articulated. What's missing is the learning-outcome model. What does a child know or do differently after 30 days on the app? The brief should be able to answer that in one sentence.",
+      "stage_critique": "The educational framing is clear (manners + curiosity) and the age-tier progression is well-articulated. What's missing is the learning-outcome model. What does a child know or do differently after 30 days on the app? The brief should be able to answer that in one sentence.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -102,7 +102,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "viability",
       "dimension_scores": { "viability": 7 },
-      "stage_critique": "Terry, the subscription unit economics are plausible. $9.99/month with even 20% trial-to-paid conversion clears the CAC for direct-to-parent acquisition. Khan Academy Kids made the category viable; the question is whether the manners angle differentiates enough to break out.",
+      "stage_critique": "The subscription unit economics are plausible. $9.99/month with even 20% trial-to-paid conversion clears the CAC for direct-to-parent acquisition. Khan Academy Kids made the category viable; the question is whether the manners angle differentiates enough to break out.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -110,7 +110,7 @@
       "judge_id": "astrid_lund",
       "stage": "viability",
       "dimension_scores": { "viability": 5 },
-      "stage_critique": "Terry, the viability sits on the AI-safety question. If one news cycle of \"AI chatbot says inappropriate thing to a child\" hits the brand, the recovery cost is severe - parents do not give second chances on this category. The viability is real only if the curated-only architecture is real.",
+      "stage_critique": "The viability sits on the AI-safety question. If one news cycle of \"AI chatbot says inappropriate thing to a child\" hits the brand, the recovery cost is severe - parents do not give second chances on this category. The viability is real only if the curated-only architecture is real.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -118,7 +118,7 @@
       "judge_id": "grace_nakamura",
       "stage": "viability",
       "dimension_scores": { "viability": 6 },
-      "stage_critique": "Terry, the homeschooling-family viability is real. The general-consumer viability is harder - parents shop heavily on free apps in this category and converting to paid requires very clear differentiation. The manners angle is differentiated; whether it's $9.99-a-month differentiated is the question.",
+      "stage_critique": "The homeschooling-family viability is real. The general-consumer viability is harder - parents shop heavily on free apps in this category and converting to paid requires very clear differentiation. The manners angle is differentiated; whether it's $9.99-a-month differentiated is the question.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -126,7 +126,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, the brand-perception risk is severe. Parents are deeply suspicious of AI in children's products, and one viral parent post about a weird AI response ends the brand. The risk mitigation is architectural (no open LLM for young kids), but the brief doesn't commit to that clearly.",
+      "stage_critique": "The brand-perception risk is severe. Parents are deeply suspicious of AI in children's products, and one viral parent post about a weird AI response ends the brand. The risk mitigation is architectural (no open LLM for young kids), but the brief doesn't commit to that clearly.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -134,7 +134,7 @@
       "judge_id": "astrid_lund",
       "stage": "risk",
       "dimension_scores": { "risk": 4 },
-      "stage_critique": "Terry, the regulatory risk is the most underestimated part of the brief. COPPA enforcement is active and FTC fines for kids' app violations have been substantial. The brief mentions COPPA in passing; it deserves a paragraph. Specifically: how is verifiable parental consent implemented? Credit card? Signed form? Government ID? Each method has trade-offs.",
+      "stage_critique": "The regulatory risk is the most underestimated part of the brief. COPPA enforcement is active and FTC fines for kids' app violations have been substantial. The brief mentions COPPA in passing; it deserves a paragraph. Specifically: how is verifiable parental consent implemented? Credit card? Signed form? Government ID? Each method has trade-offs.",
       "confidence": 0.88,
       "retrieved_evidence": []
     },
@@ -142,7 +142,7 @@
       "judge_id": "grace_nakamura",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, the educational-credibility risk is that the manners angle reads as superficial without backing pedagogy. Cite Vygotsky, Bandura, the Druin Lab research on children and AI - that turns the product from a gimmick into a research-grounded learning tool. The risk is being dismissed by school districts and parents who do research.",
+      "stage_critique": "The educational-credibility risk is that the manners angle reads as superficial without backing pedagogy. Cite Vygotsky, Bandura, the Druin Lab research on children and AI - that turns the product from a gimmick into a research-grounded learning tool. The risk is being dismissed by school districts and parents who do research.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -150,7 +150,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "narrative",
       "dimension_scores": { "narrative": 7 },
-      "stage_critique": "Terry, the \"may I please learn about whales\" moment is the strongest narrative beat available. Lead with that. The parent-screenshotting-their-kid's-polite-question reel is the entire marketing strategy in one video. Build the brand around that moment.",
+      "stage_critique": "The \"may I please learn about whales\" moment is the strongest narrative beat available. Lead with that. The parent-screenshotting-their-kid's-polite-question reel is the entire marketing strategy in one video. Build the brand around that moment.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -158,7 +158,7 @@
       "judge_id": "astrid_lund",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the safety narrative has to be louder than the feature narrative. \"Curated, not chatbot\" is the line that makes parents comfortable. The brief should lead with that line, not bury it in the technical section.",
+      "stage_critique": "The safety narrative has to be louder than the feature narrative. \"Curated, not chatbot\" is the line that makes parents comfortable. The brief should lead with that line, not bury it in the technical section.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -166,7 +166,7 @@
       "judge_id": "grace_nakamura",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the visual identity is strong and the world-building (treehouse, monkey buddy, themed environments) gives the narrative a coherent stage. The narrative weakness is on the educational rigor - the brief reads more entertainment than education. Pick a positioning and stay there.",
+      "stage_critique": "The visual identity is strong and the world-building (treehouse, monkey buddy, themed environments) gives the narrative a coherent stage. The narrative weakness is on the educational rigor - the brief reads more entertainment than education. Pick a positioning and stay there.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -174,7 +174,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the consumer-research evidence is missing. How many parents have you talked to? How many kids have used the prototype? What do they say? Without that, the brief is a concept, not a launch plan.",
+      "stage_critique": "The consumer-research evidence is missing. How many parents have you talked to? How many kids have used the prototype? What do they say? Without that, the brief is a concept, not a launch plan.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -182,7 +182,7 @@
       "judge_id": "astrid_lund",
       "stage": "evidence",
       "dimension_scores": { "evidence": 5 },
-      "stage_critique": "Terry, the safety-evidence layer is what builds trust. Show me the curated content database structure. Show me the educator-review process. Show me the moderation logs. Without those artifacts, claims about safety are unverifiable.",
+      "stage_critique": "The safety-evidence layer is what builds trust. Show me the curated content database structure. Show me the educator-review process. Show me the moderation logs. Without those artifacts, claims about safety are unverifiable.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -190,7 +190,7 @@
       "judge_id": "grace_nakamura",
       "stage": "evidence",
       "dimension_scores": { "evidence": 5 },
-      "stage_critique": "Terry, the educational-evidence layer is where I want more. Reference the Druin Lab work on kids and conversational AI. Show a pilot with 20 families and the resulting manners-use observation log. That makes this an evidence-based product, not just a clever concept.",
+      "stage_critique": "The educational-evidence layer is where I want more. Reference the Druin Lab work on kids and conversational AI. Show a pilot with 20 families and the resulting manners-use observation log. That makes this an evidence-based product, not just a clever concept.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -198,7 +198,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the parent-screen-time-guilt moment is the cultural zeitgeist of 2026 parenting. The product lands inside that wave correctly. The brand has to feel premium and safe; the visual identity in the brief reads that way.",
+      "stage_critique": "The parent-screen-time-guilt moment is the cultural zeitgeist of 2026 parenting. The product lands inside that wave correctly. The brand has to feel premium and safe; the visual identity in the brief reads that way.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -206,7 +206,7 @@
       "judge_id": "astrid_lund",
       "stage": "cultural",
       "dimension_scores": { "cultural": 6 },
-      "stage_critique": "Terry, the cultural moment for AI-with-children is conflicted. Half the parents want their kids prepared for an AI-native world; half are deeply suspicious of AI talking to their kids. The brand has to navigate both. The curated-knowledge-base architecture is the right choice for the conflicted moment.",
+      "stage_critique": "The cultural moment for AI-with-children is conflicted. Half the parents want their kids prepared for an AI-native world; half are deeply suspicious of AI talking to their kids. The brand has to navigate both. The curated-knowledge-base architecture is the right choice for the conflicted moment.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -214,7 +214,7 @@
       "judge_id": "grace_nakamura",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the cultural opening for explicit-manners-teaching products is real - parents post-pandemic are reporting their kids' social skills regressed. A product framed around \"please and thank you\" lands in a clear cultural moment.",
+      "stage_critique": "The cultural opening for explicit-manners-teaching products is real - parents post-pandemic are reporting their kids' social skills regressed. A product framed around \"please and thank you\" lands in a clear cultural moment.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -222,7 +222,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the parent psychology is correctly identified (guilt + relief). The kid psychology is reasonable but the reward system feels generic. The unique mechanic should be the manners-specific titles (Politeness Pro, Kindness Captain) - lean into those, they're the differentiator.",
+      "stage_critique": "The parent psychology is correctly identified (guilt + relief). The kid psychology is reasonable but the reward system feels generic. The unique mechanic should be the manners-specific titles (Politeness Pro, Kindness Captain) - lean into those, they're the differentiator.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -230,7 +230,7 @@
       "judge_id": "astrid_lund",
       "stage": "psych",
       "dimension_scores": { "psych": 6 },
-      "stage_critique": "Terry, the safety-trust psychology with parents is the most important psychological layer. The brand must convey safety at every touchpoint - first screen, sign-up flow, privacy disclosure. The brief doesn't yet have a coherent trust-building UX story.",
+      "stage_critique": "The safety-trust psychology with parents is the most important psychological layer. The brand must convey safety at every touchpoint - first screen, sign-up flow, privacy disclosure. The brief doesn't yet have a coherent trust-building UX story.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -238,7 +238,7 @@
       "judge_id": "grace_nakamura",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the developmental-psychology grounding is good - the age-tier progression respects how 5-, 7-, and 9-year-olds actually differ cognitively. The Bandura social-learning angle is the right framework for the manners mechanic. The psychology is sound when the brief commits to it explicitly.",
+      "stage_critique": "The developmental-psychology grounding is good - the age-tier progression respects how 5-, 7-, and 9-year-olds actually differ cognitively. The Bandura social-learning angle is the right framework for the manners mechanic. The psychology is sound when the brief commits to it explicitly.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -246,7 +246,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "compliance",
       "dimension_scores": { "compliance": 6 },
-      "stage_critique": "Terry, the compliance is the bottleneck that determines whether you launch in month 6 or month 12. Budget accordingly. The marketing-launch date should be set after the COPPA Safe Harbor certification clears, not before.",
+      "stage_critique": "The compliance is the bottleneck that determines whether you launch in month 6 or month 12. Budget accordingly. The marketing-launch date should be set after the COPPA Safe Harbor certification clears, not before.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -254,7 +254,7 @@
       "judge_id": "astrid_lund",
       "stage": "compliance",
       "dimension_scores": { "compliance": 5 },
-      "stage_critique": "Terry, COPPA is the dominant compliance regime and the brief mentions it once. That's not enough. The privacy policy needs to be drafted by a children's privacy specialist (not a general tech lawyer). The verifiable parental consent mechanism needs to be specified. Third-party SDK audits need to be in writing.",
+      "stage_critique": "COPPA is the dominant compliance regime and the brief mentions it once. That's not enough. The privacy policy needs to be drafted by a children's privacy specialist (not a general tech lawyer). The verifiable parental consent mechanism needs to be specified. Third-party SDK audits need to be in writing.",
       "confidence": 0.88,
       "retrieved_evidence": []
     },
@@ -262,7 +262,7 @@
       "judge_id": "grace_nakamura",
       "stage": "compliance",
       "dimension_scores": { "compliance": 6 },
-      "stage_critique": "Terry, the compliance footprint extends to advertising and content review. No behavioral advertising, period. Influencer partnerships need explicit FTC-compliant disclosure given kids' content. Every educator-vetted answer needs a review log for liability. Build the operational discipline now.",
+      "stage_critique": "The compliance footprint extends to advertising and content review. No behavioral advertising, period. Influencer partnerships need explicit FTC-compliant disclosure given kids' content. Every educator-vetted answer needs a review log for liability. Build the operational discipline now.",
       "confidence": 0.84,
       "retrieved_evidence": []
     }

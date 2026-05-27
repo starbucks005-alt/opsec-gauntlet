@@ -78,7 +78,7 @@
       "judge_id": "astrid_lund",
       "stage": "clarity",
       "dimension_scores": { "clarity": 8 },
-      "stage_critique": "Terry, the brief is unusually clear on the science and the buyer groups. The Brown/Diller citation is the kind of grounding that pulls a brief from concept to credible. The clarity gap is in manufacturing - the brief says \"thermometer strip\" without specifying the thermochromic material class or the calibration tolerances.",
+      "stage_critique": "The brief is unusually clear on the science and the buyer groups. The Brown/Diller citation is the kind of grounding that pulls a brief from concept to credible. The clarity gap is in manufacturing - the brief says \"thermometer strip\" without specifying the thermochromic material class or the calibration tolerances.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -86,7 +86,7 @@
       "judge_id": "priya_anand",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the clarity on the buyer groups is strong - parents, food service, institutions. Each is named and the value proposition for each is distinct. The clarity gap is on the manufacturing and supplier qualification timeline. Adding that turns the brief from concept to operational plan.",
+      "stage_critique": "The clarity on the buyer groups is strong - parents, food service, institutions. Each is named and the value proposition for each is distinct. The clarity gap is on the manufacturing and supplier qualification timeline. Adding that turns the brief from concept to operational plan.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -94,7 +94,7 @@
       "judge_id": "raymond_chen",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the product clarity is excellent. The unit-economics clarity is where I push - what's the wholesale premium vs. a standard cup, and what's the buyer's willingness to pay for that premium? Until those numbers are on the page, the business clarity is incomplete.",
+      "stage_critique": "The product clarity is excellent. The unit-economics clarity is where I push - what's the wholesale premium vs. a standard cup, and what's the buyer's willingness to pay for that premium? Until those numbers are on the page, the business clarity is incomplete.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -102,7 +102,7 @@
       "judge_id": "astrid_lund",
       "stage": "viability",
       "dimension_scores": { "viability": 7 },
-      "stage_critique": "Terry, the viability is real. The thermochromic technology is proven (Nuk, Munchkin), the audience is real, and the institutional procurement path makes the launch capital-efficient. The viability hinges on manufacturing partnership terms - get the cup manufacturer in writing before the consumer marketing starts.",
+      "stage_critique": "The viability is real. The thermochromic technology is proven (Nuk, Munchkin), the audience is real, and the institutional procurement path makes the launch capital-efficient. The viability hinges on manufacturing partnership terms - get the cup manufacturer in writing before the consumer marketing starts.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -110,7 +110,7 @@
       "judge_id": "priya_anand",
       "stage": "viability",
       "dimension_scores": { "viability": 7 },
-      "stage_critique": "Terry, the institutional channel viability is strong. Hospital and daycare procurement budgets cover documented safety features and the per-cup premium is small. The retail channel viability is weaker - retail slotting and consumer awareness costs would absorb the capital. Stick with institutional for years 1-3.",
+      "stage_critique": "The institutional channel viability is strong. Hospital and daycare procurement budgets cover documented safety features and the per-cup premium is small. The retail channel viability is weaker - retail slotting and consumer awareness costs would absorb the capital. Stick with institutional for years 1-3.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -118,7 +118,7 @@
       "judge_id": "raymond_chen",
       "stage": "viability",
       "dimension_scores": { "viability": 8 },
-      "stage_critique": "Terry, the unit economics work IF the per-cup premium stays under 3 cents and the institutional pilot anchors the credibility. The hospital pilot is the right go-to-market - one signed pilot LOI changes the conversation with every subsequent buyer. Lock that in before raising.",
+      "stage_critique": "The unit economics work IF the per-cup premium stays under 3 cents and the institutional pilot anchors the credibility. The hospital pilot is the right go-to-market - one signed pilot LOI changes the conversation with every subsequent buyer. Lock that in before raising.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -126,7 +126,7 @@
       "judge_id": "astrid_lund",
       "stage": "risk",
       "dimension_scores": { "risk": 6 },
-      "stage_critique": "Terry, the technical risk is real but bounded. The thermochromic calibration across paper cup wall thermal gradient needs actual engineering, not marketing. The risk that the strip is inaccurate in real-world use (a 130F latte reading green when it shouldn't) is the kind of failure that destroys the brand. Test extensively in real conditions before any pilot.",
+      "stage_critique": "The technical risk is real but bounded. The thermochromic calibration across paper cup wall thermal gradient needs actual engineering, not marketing. The risk that the strip is inaccurate in real-world use (a 130F latte reading green when it shouldn't) is the kind of failure that destroys the brand. Test extensively in real conditions before any pilot.",
       "confidence": 0.87,
       "retrieved_evidence": []
     },
@@ -134,7 +134,7 @@
       "judge_id": "priya_anand",
       "stage": "risk",
       "dimension_scores": { "risk": 6 },
-      "stage_critique": "Terry, the manufacturing risk is the supplier-dependency. One thermochromic-material supplier could hold up the entire production. Qualify multiple suppliers from day one. The brand cannot afford a single point of failure in the cup line.",
+      "stage_critique": "The manufacturing risk is the supplier-dependency. One thermochromic-material supplier could hold up the entire production. Qualify multiple suppliers from day one. The brand cannot afford a single point of failure in the cup line.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -142,7 +142,7 @@
       "judge_id": "raymond_chen",
       "stage": "risk",
       "dimension_scores": { "risk": 7 },
-      "stage_critique": "Terry, the financial risk is the working capital requirement. The cup business runs on minimum order quantities of millions of units - that's $50-200K in inventory per SKU before the first sale. The institutional pilot funds the cash conversion but the working capital is the constraint to size.",
+      "stage_critique": "The financial risk is the working capital requirement. The cup business runs on minimum order quantities of millions of units - that's $50-200K in inventory per SKU before the first sale. The institutional pilot funds the cash conversion but the working capital is the constraint to size.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -150,7 +150,7 @@
       "judge_id": "astrid_lund",
       "stage": "narrative",
       "dimension_scores": { "narrative": 8 },
-      "stage_critique": "Terry, the narrative anchored in Brown/Diller is the strongest narrative in the entire sample library. Real science. Real founders. Real burn-prevention. The story tells itself - it just needs to commit to leading with the research, not with the product features.",
+      "stage_critique": "The narrative anchored in Brown/Diller is the strongest narrative in the entire sample library. Real science. Real founders. Real burn-prevention. The story tells itself - it just needs to commit to leading with the research, not with the product features.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -158,7 +158,7 @@
       "judge_id": "priya_anand",
       "stage": "narrative",
       "dimension_scores": { "narrative": 7 },
-      "stage_critique": "Terry, the institutional-buyer narrative needs its own voice. \"SafeTemp is the first cup that does what it should have always done\" is a tighter line than the current narrative. The food-service operator wants the brand story in liability terms, not parent-fear terms. Build two narratives in parallel.",
+      "stage_critique": "The institutional-buyer narrative needs its own voice. \"SafeTemp is the first cup that does what it should have always done\" is a tighter line than the current narrative. The food-service operator wants the brand story in liability terms, not parent-fear terms. Build two narratives in parallel.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -166,7 +166,7 @@
       "judge_id": "raymond_chen",
       "stage": "narrative",
       "dimension_scores": { "narrative": 7 },
-      "stage_critique": "Terry, the founder narrative is invisible. Why did THIS founder build this? Was there a personal moment? The brand will benefit from a specific founder origin story to anchor the more abstract science narrative.",
+      "stage_critique": "The founder narrative is invisible. Why did THIS founder build this? Was there a personal moment? The brand will benefit from a specific founder origin story to anchor the more abstract science narrative.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -174,7 +174,7 @@
       "judge_id": "astrid_lund",
       "stage": "evidence",
       "dimension_scores": { "evidence": 8 },
-      "stage_critique": "Terry, this is the strongest evidence base of any sample in the library. Brown/Diller 2008 is a real, citable, peer-reviewed paper. The thermochromic adjacent precedent (Nuk, Munchkin) is real product. Engineering tolerances are computable from existing materials science. The brief is anchored in actual evidence.",
+      "stage_critique": "This is the strongest evidence base of any sample in the library. Brown/Diller 2008 is a real, citable, peer-reviewed paper. The thermochromic adjacent precedent (Nuk, Munchkin) is real product. Engineering tolerances are computable from existing materials science. The brief is anchored in actual evidence.",
       "confidence": 0.88,
       "retrieved_evidence": []
     },
@@ -182,7 +182,7 @@
       "judge_id": "priya_anand",
       "stage": "evidence",
       "dimension_scores": { "evidence": 7 },
-      "stage_critique": "Terry, the consumer-evidence layer is missing but easy to add. A 100-parent survey on the post-purchase question (\"would you pay 5 cents extra for the SafeTemp cup at your daily coffee shop?\") would be a meaningful evidence add. Until then the consumer demand is inferred from logic, not measured.",
+      "stage_critique": "The consumer-evidence layer is missing but easy to add. A 100-parent survey on the post-purchase question (\"would you pay 5 cents extra for the SafeTemp cup at your daily coffee shop?\") would be a meaningful evidence add. Until then the consumer demand is inferred from logic, not measured.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -190,7 +190,7 @@
       "judge_id": "raymond_chen",
       "stage": "evidence",
       "dimension_scores": { "evidence": 7 },
-      "stage_critique": "Terry, the institutional-buyer evidence requires one LOI from a hospital system before the next funding round. The Brown/Diller paper is the science; the hospital LOI is the demand evidence. Both belong in the deck.",
+      "stage_critique": "The institutional-buyer evidence requires one LOI from a hospital system before the next funding round. The Brown/Diller paper is the science; the hospital LOI is the demand evidence. Both belong in the deck.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -198,7 +198,7 @@
       "judge_id": "astrid_lund",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the cultural fit is solid. Child safety is a stable, multi-decade cultural priority. Disposable cup waste is the cultural countertrend - SafeTemp needs to address the sustainability question (compostable substrate option, recycled paper, etc.) or it lands wrong with the 2026 environmental consumer.",
+      "stage_critique": "The cultural fit is solid. Child safety is a stable, multi-decade cultural priority. Disposable cup waste is the cultural countertrend - SafeTemp needs to address the sustainability question (compostable substrate option, recycled paper, etc.) or it lands wrong with the 2026 environmental consumer.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -206,7 +206,7 @@
       "judge_id": "priya_anand",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the cultural moment for documented safety in food service is favorable. Post-pandemic, consumers expect operators to demonstrate safety practices visibly. SafeTemp gives the operator a tangible artifact. The cultural read is good.",
+      "stage_critique": "The cultural moment for documented safety in food service is favorable. Post-pandemic, consumers expect operators to demonstrate safety practices visibly. SafeTemp gives the operator a tangible artifact. The cultural read is good.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -214,7 +214,7 @@
       "judge_id": "raymond_chen",
       "stage": "cultural",
       "dimension_scores": { "cultural": 8 },
-      "stage_critique": "Terry, the cultural opening for a science-backed consumer-safety brand is wide. The trust in research-grounded products has rebounded since 2024 and SafeTemp is positioned to ride that trust. Lean into the science in the brand voice consistently.",
+      "stage_critique": "The cultural opening for a science-backed consumer-safety brand is wide. The trust in research-grounded products has rebounded since 2024 and SafeTemp is positioned to ride that trust. Lean into the science in the brand voice consistently.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -222,7 +222,7 @@
       "judge_id": "astrid_lund",
       "stage": "psych",
       "dimension_scores": { "psych": 8 },
-      "stage_critique": "Terry, the safety-fear-reduction psychology is read precisely. The parent buys the moment of confidence and the institutional operator buys the moment of documented diligence. Both psychologies are coherent and the product addresses both with one design.",
+      "stage_critique": "The safety-fear-reduction psychology is read precisely. The parent buys the moment of confidence and the institutional operator buys the moment of documented diligence. Both psychologies are coherent and the product addresses both with one design.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -230,7 +230,7 @@
       "judge_id": "priya_anand",
       "stage": "psych",
       "dimension_scores": { "psych": 8 },
-      "stage_critique": "Terry, the procurement-officer psychology is the underleveraged angle. The hospital procurement officer is risk-averse, performance-evaluated on documented improvements, and politically exposed to incident reports. SafeTemp gives them all three wins simultaneously. Build the procurement-officer collateral specifically.",
+      "stage_critique": "The procurement-officer psychology is the underleveraged angle. The hospital procurement officer is risk-averse, performance-evaluated on documented improvements, and politically exposed to incident reports. SafeTemp gives them all three wins simultaneously. Build the procurement-officer collateral specifically.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -238,7 +238,7 @@
       "judge_id": "raymond_chen",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the buyer psychology is solid. The investor psychology - what makes a coffee-cup safety brand investable - is unmodeled. Position as a defensible IP-backed safety brand with adjacent expansion (baby bottles, soup containers) and the valuation conversation gets easier.",
+      "stage_critique": "The buyer psychology is solid. The investor psychology - what makes a coffee-cup safety brand investable - is unmodeled. Position as a defensible IP-backed safety brand with adjacent expansion (baby bottles, soup containers) and the valuation conversation gets easier.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -246,7 +246,7 @@
       "judge_id": "astrid_lund",
       "stage": "compliance",
       "dimension_scores": { "compliance": 8 },
-      "stage_critique": "Terry, the compliance path is well-trodden. FDA food-contact materials regulation is established. ASTM thermal-accuracy standards are voluntary but adoptable. The thermochromic-strip suppliers already carry the relevant certifications. The compliance work is real but achievable.",
+      "stage_critique": "The compliance path is well-trodden. FDA food-contact materials regulation is established. ASTM thermal-accuracy standards are voluntary but adoptable. The thermochromic-strip suppliers already carry the relevant certifications. The compliance work is real but achievable.",
       "confidence": 0.87,
       "retrieved_evidence": []
     },
@@ -254,7 +254,7 @@
       "judge_id": "priya_anand",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, the compliance posture should include state-by-state environmental rules (California, New York, others on disposable cup composition and recycling). Not a blocker; budget the legal review.",
+      "stage_critique": "The compliance posture should include state-by-state environmental rules (California, New York, others on disposable cup composition and recycling). Not a blocker; budget the legal review.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -262,7 +262,7 @@
       "judge_id": "raymond_chen",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, the IP and patent compliance work is the most underestimated item. A formal freedom-to-operate search before manufacturing investment is essential. Budget $5-15K. The investment is small relative to the cost of an infringement claim post-launch.",
+      "stage_critique": "The IP and patent compliance work is the most underestimated item. A formal freedom-to-operate search before manufacturing investment is essential. Budget $5-15K. The investment is small relative to the cost of an infringement claim post-launch.",
       "confidence": 0.84,
       "retrieved_evidence": []
     }

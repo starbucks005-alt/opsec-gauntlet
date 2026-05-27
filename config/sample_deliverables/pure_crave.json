@@ -87,7 +87,7 @@
       "judge_id": "priya_anand",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the product is clear. The positioning is muddled. You can't be a CPG food and a functional supplement and a weight-management product simultaneously. Each is a different shelf, different label, different regulator. The brief has to pick one.",
+      "stage_critique": "The product is clear. The positioning is muddled. You can't be a CPG food and a functional supplement and a weight-management product simultaneously. Each is a different shelf, different label, different regulator. The brief has to pick one.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -95,7 +95,7 @@
       "judge_id": "astrid_lund",
       "stage": "clarity",
       "dimension_scores": { "clarity": 6 },
-      "stage_critique": "Terry, the brief is internally inconsistent - it claims appetite suppression in the title but then disclaims that the botanicals' efficacy is unproven. Pick one. Either the product makes the claim and defends it scientifically, or it doesn't make the claim. The current both-and reads as either dishonest or unsure.",
+      "stage_critique": "The brief is internally inconsistent - it claims appetite suppression in the title but then disclaims that the botanicals' efficacy is unproven. Pick one. Either the product makes the claim and defends it scientifically, or it doesn't make the claim. The current both-and reads as either dishonest or unsure.",
       "confidence": 0.87,
       "retrieved_evidence": []
     },
@@ -103,7 +103,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the consumer-facing clarity is good. \"Dessert gum in five flavors\" is a clear product. The branding clarity is where I push - the appetite-suppressant framing fights the dessert-pleasure framing. You can't lead with both. Lead with pleasure.",
+      "stage_critique": "The consumer-facing clarity is good. \"Dessert gum in five flavors\" is a clear product. The branding clarity is where I push - the appetite-suppressant framing fights the dessert-pleasure framing. You can't lead with both. Lead with pleasure.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -111,7 +111,7 @@
       "judge_id": "priya_anand",
       "stage": "viability",
       "dimension_scores": { "viability": 6 },
-      "stage_critique": "Terry, the unit economics work if you can hit $14.99 retail and get to Simply Gum's volume. The viability risk is shelf space - premium gum is a slow-moving category and retailers are cautious. Pre-sell DTC for 12 months before approaching national retail.",
+      "stage_critique": "The unit economics work if you can hit $14.99 retail and get to Simply Gum's volume. The viability risk is shelf space - premium gum is a slow-moving category and retailers are cautious. Pre-sell DTC for 12 months before approaching national retail.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -119,7 +119,7 @@
       "judge_id": "astrid_lund",
       "stage": "viability",
       "dimension_scores": { "viability": 5 },
-      "stage_critique": "Terry, viability is contingent on the regulatory framing. If the FDA sends a warning letter on \"suppressant\" claims, the brand recovery cost is severe. The viability is real only if the launch positioning is bulletproof against that scrutiny.",
+      "stage_critique": "Viability is contingent on the regulatory framing. If the FDA sends a warning letter on \"suppressant\" claims, the brand recovery cost is severe. The viability is real only if the launch positioning is bulletproof against that scrutiny.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -127,7 +127,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "viability",
       "dimension_scores": { "viability": 7 },
-      "stage_critique": "Terry, the DTC + premium-retail path is viable. The flavor lineup is the differentiator - if those flavors actually taste like dessert (executional risk), this works. The viability sits on flavor execution as much as on marketing.",
+      "stage_critique": "The DTC + premium-retail path is viable. The flavor lineup is the differentiator - if those flavors actually taste like dessert (executional risk), this works. The viability sits on flavor execution as much as on marketing.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -135,7 +135,7 @@
       "judge_id": "priya_anand",
       "stage": "risk",
       "dimension_scores": { "risk": 3 },
-      "stage_critique": "Terry, the regulatory risk is the entire story. \"Appetite-suppressant\" language in CPG triggers FDA scrutiny instantly. Garcinia cambogia has had a documented FDA warning letter history. The brief acknowledges botanical efficacy is unproven, which on a label is a self-incriminating admission. Reposition or do not launch.",
+      "stage_critique": "The regulatory risk is the entire story. \"Appetite-suppressant\" language in CPG triggers FDA scrutiny instantly. Garcinia cambogia has had a documented FDA warning letter history. The brief acknowledges botanical efficacy is unproven, which on a label is a self-incriminating admission. Reposition or do not launch.",
       "confidence": 0.92,
       "retrieved_evidence": []
     },
@@ -143,7 +143,7 @@
       "judge_id": "astrid_lund",
       "stage": "risk",
       "dimension_scores": { "risk": 3 },
-      "stage_critique": "Terry, the safety risk is xylitol-and-pets. Xylitol is highly toxic to dogs. Premium gum brands with xylitol have faced pet-poisoning lawsuits and PR crises. The label requires clear pet-toxicity disclosure; the packaging should keep dogs in mind in households with pets. The brief doesn't acknowledge this.",
+      "stage_critique": "The safety risk is xylitol-and-pets. Xylitol is highly toxic to dogs. Premium gum brands with xylitol have faced pet-poisoning lawsuits and PR crises. The label requires clear pet-toxicity disclosure; the packaging should keep dogs in mind in households with pets. The brief doesn't acknowledge this.",
       "confidence": 0.88,
       "retrieved_evidence": []
     },
@@ -151,7 +151,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, the consumer-side risk is that GLP-1 medications already reduce the post-dinner dessert urge for the target customer. The product may be solving a problem the medication already solved. Test demand within the GLP-1 community specifically before scaling.",
+      "stage_critique": "The consumer-side risk is that GLP-1 medications already reduce the post-dinner dessert urge for the target customer. The product may be solving a problem the medication already solved. Test demand within the GLP-1 community specifically before scaling.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -159,7 +159,7 @@
       "judge_id": "priya_anand",
       "stage": "narrative",
       "dimension_scores": { "narrative": 5 },
-      "stage_critique": "Terry, the narrative is muddled because the positioning is muddled. Without picking food-vs-supplement, the brand can't tell a single coherent story. Pick the food framing and the narrative becomes \"dessert moment without the dessert\" - clean and ownable.",
+      "stage_critique": "The narrative is muddled because the positioning is muddled. Without picking food-vs-supplement, the brand can't tell a single coherent story. Pick the food framing and the narrative becomes \"dessert moment without the dessert\" - clean and ownable.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -167,7 +167,7 @@
       "judge_id": "astrid_lund",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the natural-ingredient narrative is well-trod ground. \"Naturally-sourced gum base, no artificial sweeteners\" is the Simply Gum playbook. You need a narrative that goes beyond ingredient virtue - the post-dinner moment is it. Lead with the moment, support with the ingredients.",
+      "stage_critique": "The natural-ingredient narrative is well-trod ground. \"Naturally-sourced gum base, no artificial sweeteners\" is the Simply Gum playbook. You need a narrative that goes beyond ingredient virtue - the post-dinner moment is it. Lead with the moment, support with the ingredients.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -175,7 +175,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "narrative",
       "dimension_scores": { "narrative": 8 },
-      "stage_critique": "Terry, when you ground the brand in the post-dinner moment instead of the suppressant claim, the narrative gets strong fast. Five flavors. Eight PM. The space between dinner and the fridge. That's a complete story. The brief just needs to commit to it.",
+      "stage_critique": "When you ground the brand in the post-dinner moment instead of the suppressant claim, the narrative gets strong fast. Five flavors. Eight PM. The space between dinner and the fridge. That's a complete story. The brief just needs to commit to it.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -183,7 +183,7 @@
       "judge_id": "priya_anand",
       "stage": "evidence",
       "dimension_scores": { "evidence": 3 },
-      "stage_critique": "Terry, the brief explicitly says the botanicals' efficacy is unproven. That's an honest line in the brief but a damaging line on a marketing page. The evidence base for the functional positioning is absent. The evidence base for the consumer demand (DTC pre-launch waitlist, focus-group flavor scoring) is also missing.",
+      "stage_critique": "The brief explicitly says the botanicals' efficacy is unproven. That's an honest line in the brief but a damaging line on a marketing page. The evidence base for the functional positioning is absent. The evidence base for the consumer demand (DTC pre-launch waitlist, focus-group flavor scoring) is also missing.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -191,7 +191,7 @@
       "judge_id": "astrid_lund",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the dental-health evidence for xylitol is the one strong evidence anchor in this brief. Use it. Xylitol has decades of peer-reviewed research on cavity prevention. That's a real, defensible claim. The botanical evidence is not. Lean into what's true.",
+      "stage_critique": "The dental-health evidence for xylitol is the one strong evidence anchor in this brief. Use it. Xylitol has decades of peer-reviewed research on cavity prevention. That's a real, defensible claim. The botanical evidence is not. Lean into what's true.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -199,7 +199,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the consumer-evidence layer is the missing piece. Has anyone actually tasted a prototype? Has the Cinnamon Roll flavor been blind-tested against an actual cinnamon roll? Without that, the product is concept-stage. Get to a tasting panel before you get to a brand.",
+      "stage_critique": "The consumer-evidence layer is the missing piece. Has anyone actually tasted a prototype? Has the Cinnamon Roll flavor been blind-tested against an actual cinnamon roll? Without that, the product is concept-stage. Get to a tasting panel before you get to a brand.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -207,7 +207,7 @@
       "judge_id": "priya_anand",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the cultural moment is favorable. Functional CPG is having a sustained run, GLP-1 normalization is creating new consumer behaviors, and the post-pandemic dessert-comfort association is real. The product fits the moment. The positioning has to match it.",
+      "stage_critique": "The cultural moment is favorable. Functional CPG is having a sustained run, GLP-1 normalization is creating new consumer behaviors, and the post-pandemic dessert-comfort association is real. The product fits the moment. The positioning has to match it.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -215,7 +215,7 @@
       "judge_id": "astrid_lund",
       "stage": "cultural",
       "dimension_scores": { "cultural": 8 },
-      "stage_critique": "Terry, the cultural fit is strong. Consumers are increasingly comfortable with the \"ritual not outcome\" framing in food. The dessert-gum moment is a recognizable cultural beat. The xylitol-as-natural-sweetener trend is in the up-cycle.",
+      "stage_critique": "The cultural fit is strong. Consumers are increasingly comfortable with the \"ritual not outcome\" framing in food. The dessert-gum moment is a recognizable cultural beat. The xylitol-as-natural-sweetener trend is in the up-cycle.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -223,7 +223,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "cultural",
       "dimension_scores": { "cultural": 8 },
-      "stage_critique": "Terry, the cultural opening is wide. Premium functional confectionery is one of the better-performing CPG categories in 2026. Pure Crave can land cleanly inside that wave if it doesn't trip on the regulatory positioning.",
+      "stage_critique": "The cultural opening is wide. Premium functional confectionery is one of the better-performing CPG categories in 2026. Pure Crave can land cleanly inside that wave if it doesn't trip on the regulatory positioning.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -231,7 +231,7 @@
       "judge_id": "priya_anand",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the buyer psychology is recognized in the brief but mislabeled. The customer is buying permission, not suppression. The product framing should reflect what the customer actually wants from the purchase - guilt-free dessert ritual - not what the founder thinks the customer needs (appetite control).",
+      "stage_critique": "The buyer psychology is recognized in the brief but mislabeled. The customer is buying permission, not suppression. The product framing should reflect what the customer actually wants from the purchase - guilt-free dessert ritual - not what the founder thinks the customer needs (appetite control).",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -239,7 +239,7 @@
       "judge_id": "astrid_lund",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the consumer psychology is sound when the brief leans into ritual. The trouble is the suppressant claim creates a different psychological frame - control, restriction, self-denial - that fights the ritual-of-pleasure frame. Pick one and the psychology coheres.",
+      "stage_critique": "The consumer psychology is sound when the brief leans into ritual. The trouble is the suppressant claim creates a different psychological frame - control, restriction, self-denial - that fights the ritual-of-pleasure frame. Pick one and the psychology coheres.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -247,7 +247,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "psych",
       "dimension_scores": { "psych": 8 },
-      "stage_critique": "Terry, the moment-of-decision psychology is dead-on. Eight PM, post-dinner, the customer at the freezer door. That's the moment Pure Crave owns. The buyer-psychology read of that moment is the strongest part of the brief.",
+      "stage_critique": "The moment-of-decision psychology is dead-on. Eight PM, post-dinner, the customer at the freezer door. That's the moment Pure Crave owns. The buyer-psychology read of that moment is the strongest part of the brief.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -255,7 +255,7 @@
       "judge_id": "priya_anand",
       "stage": "compliance",
       "dimension_scores": { "compliance": 3 },
-      "stage_critique": "Terry, this is the failure dimension. \"Natural Appetite-Suppressant\" in the product name is the kind of language that triggers FDA enforcement. Garcinia cambogia has an active enforcement history. Until the positioning is repositioned as conventional food with no appetite or weight-management claims, this is a compliance time bomb.",
+      "stage_critique": "This is the failure dimension. \"Natural Appetite-Suppressant\" in the product name is the kind of language that triggers FDA enforcement. Garcinia cambogia has an active enforcement history. Until the positioning is repositioned as conventional food with no appetite or weight-management claims, this is a compliance time bomb.",
       "confidence": 0.93,
       "retrieved_evidence": []
     },
@@ -263,7 +263,7 @@
       "judge_id": "astrid_lund",
       "stage": "compliance",
       "dimension_scores": { "compliance": 4 },
-      "stage_critique": "Terry, the compliance footprint covers food labeling, supplement regulations if you go that route, xylitol pet-toxicity disclosure (state-by-state), allergen disclosure on the gum base. Each of those is achievable, but the brief currently underestimates the surface. Budget legal review at $25-50K minimum before first production run.",
+      "stage_critique": "The compliance footprint covers food labeling, supplement regulations if you go that route, xylitol pet-toxicity disclosure (state-by-state), allergen disclosure on the gum base. Each of those is achievable, but the brief currently underestimates the surface. Budget legal review at $25-50K minimum before first production run.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -271,7 +271,7 @@
       "judge_id": "cassidy_mercer",
       "stage": "compliance",
       "dimension_scores": { "compliance": 5 },
-      "stage_critique": "Terry, the compliance work is doable but the brief treats it as an afterthought. Marketing copy compliance review has to happen before any social post goes live. One TikTok with \"suppresses appetite\" in the caption and the FDA pays attention.",
+      "stage_critique": "The compliance work is doable but the brief treats it as an afterthought. Marketing copy compliance review has to happen before any social post goes live. One TikTok with \"suppresses appetite\" in the caption and the FDA pays attention.",
       "confidence": 0.82,
       "retrieved_evidence": []
     }

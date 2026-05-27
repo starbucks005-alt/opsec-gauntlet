@@ -85,7 +85,7 @@
       "judge_id": "raymond_chen",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the concept is clear and the audience is clear. What's not clear is the financial ask and the path. Day pass $32, monthly $89, annual unspecified - is this a membership business or a transactional business? The two require different capital structures and very different real estate decisions.",
+      "stage_critique": "The concept is clear and the audience is clear. What's not clear is the financial ask and the path. Day pass $32, monthly $89, annual unspecified - is this a membership business or a transactional business? The two require different capital structures and very different real estate decisions.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -93,7 +93,7 @@
       "judge_id": "marcus_holt",
       "stage": "clarity",
       "dimension_scores": { "clarity": 6 },
-      "stage_critique": "Terry, the executive summary reads like a deck. I know what it is - I don't know what stage it's at. Have you signed a lease? Talked to an airport authority? Have $4M committed? The clarity gap is between \"concept\" and \"company.\" The brief should name where on that spectrum we are.",
+      "stage_critique": "The executive summary reads like a deck. I know what it is - I don't know what stage it's at. Have you signed a lease? Talked to an airport authority? Have $4M committed? The clarity gap is between \"concept\" and \"company.\" The brief should name where on that spectrum we are.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -101,7 +101,7 @@
       "judge_id": "devon_sloane",
       "stage": "clarity",
       "dimension_scores": { "clarity": 7 },
-      "stage_critique": "Terry, the wellness narrative is articulate and the audience profile is sharp - the frequent flyer who loses the routine on travel weeks. The category clarity is where I push. Is this a fitness brand that happens to be in airports, or an airport-amenity company that happens to do fitness? The answer determines who the company hires, how it brands, and which exit it walks toward.",
+      "stage_critique": "The wellness narrative is articulate and the audience profile is sharp - the frequent flyer who loses the routine on travel weeks. The category clarity is where I push. Is this a fitness brand that happens to be in airports, or an airport-amenity company that happens to do fitness? The answer determines who the company hires, how it brands, and which exit it walks toward.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -109,7 +109,7 @@
       "judge_id": "raymond_chen",
       "stage": "viability",
       "dimension_scores": { "viability": 5 },
-      "stage_critique": "Terry, viability is the hard question here. Roam Fitness did exactly this and failed. The brief doesn't explain what's different this time. What did Roam get wrong that Sky High Fitness Club will get right? Without a credible answer to that, this is a re-run of a failed experiment.",
+      "stage_critique": "Viability is the hard question here. Roam Fitness did exactly this and failed. The brief doesn't explain what's different this time. What did Roam get wrong that Sky High Fitness Club will get right? Without a credible answer to that, this is a re-run of a failed experiment.",
       "confidence": 0.87,
       "retrieved_evidence": []
     },
@@ -117,7 +117,7 @@
       "judge_id": "marcus_holt",
       "stage": "viability",
       "dimension_scores": { "viability": 5 },
-      "stage_critique": "Terry, the unit economics are the question. $2-4M buildout per location, $32 day passes, ~5,000 sq ft - what's the breakeven on day passes per day? At a $32 average ticket, you need 150-200 transactions per day to clear operating cost before debt service. That's possible at Atlanta. It's not possible at most other airports. The viability lives at hub airports only.",
+      "stage_critique": "The unit economics are the question. $2-4M buildout per location, $32 day passes, ~5,000 sq ft - what's the breakeven on day passes per day? At a $32 average ticket, you need 150-200 transactions per day to clear operating cost before debt service. That's possible at Atlanta. It's not possible at most other airports. The viability lives at hub airports only.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -125,7 +125,7 @@
       "judge_id": "devon_sloane",
       "stage": "viability",
       "dimension_scores": { "viability": 6 },
-      "stage_critique": "Terry, the viability of the wellness narrative depends on whether the operational reality matches the brand promise. A premium wellness brand in a dingy concourse with broken shower drainage is dead on arrival. The Atlanta flagship has to be flawless - every cup of protein smoothie, every locker, every shower head - because the brand is built on premium-experience signaling.",
+      "stage_critique": "The viability of the wellness narrative depends on whether the operational reality matches the brand promise. A premium wellness brand in a dingy concourse with broken shower drainage is dead on arrival. The Atlanta flagship has to be flawless - every cup of protein smoothie, every locker, every shower head - because the brand is built on premium-experience signaling.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -133,7 +133,7 @@
       "judge_id": "raymond_chen",
       "stage": "risk",
       "dimension_scores": { "risk": 4 },
-      "stage_critique": "Terry, the risk section names \"adoption\" and \"location\" but misses the existential risk: airport authority dependency. The lease decision is made by a political body. The lease renewal in year 7 is made by a different political body. The entire business depends on continued cooperation from people the founder cannot influence.",
+      "stage_critique": "The risk section names \"adoption\" and \"location\" but misses the existential risk: airport authority dependency. The lease decision is made by a political body. The lease renewal in year 7 is made by a different political body. The entire business depends on continued cooperation from people the founder cannot influence.",
       "confidence": 0.88,
       "retrieved_evidence": []
     },
@@ -141,7 +141,7 @@
       "judge_id": "marcus_holt",
       "stage": "risk",
       "dimension_scores": { "risk": 4 },
-      "stage_critique": "Terry, the capital risk is severe and the brief does not address it. $2-4M per location buildout is real cash. If the first flagship underperforms, the next round is impossible. The company has to prove unit economics with one location before raising the expansion round.",
+      "stage_critique": "The capital risk is severe and the brief does not address it. $2-4M per location buildout is real cash. If the first flagship underperforms, the next round is impossible. The company has to prove unit economics with one location before raising the expansion round.",
       "confidence": 0.86,
       "retrieved_evidence": []
     },
@@ -149,7 +149,7 @@
       "judge_id": "devon_sloane",
       "stage": "risk",
       "dimension_scores": { "risk": 5 },
-      "stage_critique": "Terry, the brand risk is that the concept gets associated with a single bad airport experience. One viral tweet about a dirty shower, one news story about the membership being a ripoff, and the premium positioning collapses. Premium wellness brands die from one bad story, not from slow demand.",
+      "stage_critique": "The brand risk is that the concept gets associated with a single bad airport experience. One viral tweet about a dirty shower, one news story about the membership being a ripoff, and the premium positioning collapses. Premium wellness brands die from one bad story, not from slow demand.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -157,7 +157,7 @@
       "judge_id": "raymond_chen",
       "stage": "narrative",
       "dimension_scores": { "narrative": 6 },
-      "stage_critique": "Terry, the narrative is clean - \"travel disrupts routines, this restores them.\" What's missing is the founder narrative. Why is this founder the one to build it? Did they fly 200K miles a year? Are they ex-Equinox? The investor read is heavily weighted by who the operator is.",
+      "stage_critique": "The narrative is clean - \"travel disrupts routines, this restores them.\" What's missing is the founder narrative. Why is this founder the one to build it? Did they fly 200K miles a year? Are they ex-Equinox? The investor read is heavily weighted by who the operator is.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -165,7 +165,7 @@
       "judge_id": "marcus_holt",
       "stage": "narrative",
       "dimension_scores": { "narrative": 5 },
-      "stage_critique": "Terry, the narrative is generic wellness language. \"Revolutionizing the travel experience\" and \"making wellness accessible\" are the phrases on every airport-amenity pitch deck since 2015. The narrative needs the specific story that only this founder can tell.",
+      "stage_critique": "The narrative is generic wellness language. \"Revolutionizing the travel experience\" and \"making wellness accessible\" are the phrases on every airport-amenity pitch deck since 2015. The narrative needs the specific story that only this founder can tell.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -173,7 +173,7 @@
       "judge_id": "devon_sloane",
       "stage": "narrative",
       "dimension_scores": { "narrative": 8 },
-      "stage_critique": "Terry, the wellness narrative is actually quite strong - \"land in your next city with the routine intact\" is a phrase that travels. Frequent flyers will recognize themselves in this language. The narrative weakness is on the investor side, not the consumer side. The pitch to a member is clear; the pitch to a VC is not.",
+      "stage_critique": "The wellness narrative is actually quite strong - \"land in your next city with the routine intact\" is a phrase that travels. Frequent flyers will recognize themselves in this language. The narrative weakness is on the investor side, not the consumer side. The pitch to a member is clear; the pitch to a VC is not.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -181,7 +181,7 @@
       "judge_id": "raymond_chen",
       "stage": "evidence",
       "dimension_scores": { "evidence": 4 },
-      "stage_critique": "Terry, the evidence base is anecdotal. \"Frequent flyers spend 60-90 hours a year in airports\" is a real number; turn that into a primary research data set. Survey 200 frequent flyers. Ask them what they would pay, how often they would use it, what would stop them.",
+      "stage_critique": "The evidence base is anecdotal. \"Frequent flyers spend 60-90 hours a year in airports\" is a real number; turn that into a primary research data set. Survey 200 frequent flyers. Ask them what they would pay, how often they would use it, what would stop them.",
       "confidence": 0.85,
       "retrieved_evidence": []
     },
@@ -189,7 +189,7 @@
       "judge_id": "marcus_holt",
       "stage": "evidence",
       "dimension_scores": { "evidence": 3 },
-      "stage_critique": "Terry, the evidence on the unit economics is missing entirely. Roam Fitness operated for 4 years before closing. Their data exists in their public closure announcement and in industry coverage. Mine it. The brief should reference Roam's actual day-pass utilization numbers, their actual member-vs-walkup mix, their actual reason for closure.",
+      "stage_critique": "The evidence on the unit economics is missing entirely. Roam Fitness operated for 4 years before closing. Their data exists in their public closure announcement and in industry coverage. Mine it. The brief should reference Roam's actual day-pass utilization numbers, their actual member-vs-walkup mix, their actual reason for closure.",
       "confidence": 0.87,
       "retrieved_evidence": []
     },
@@ -197,7 +197,7 @@
       "judge_id": "devon_sloane",
       "stage": "evidence",
       "dimension_scores": { "evidence": 5 },
-      "stage_critique": "Terry, the wellness-narrative evidence is reasonable - travel-stress research is well-established. The brand-evidence layer (who is loyal to which premium-wellness brand at airports, what they actually buy) is missing. Equinox, Barry's, SoulCycle members all travel. Are they your members? Survey your own gym's frequent-flyer cohort first.",
+      "stage_critique": "The wellness-narrative evidence is reasonable - travel-stress research is well-established. The brand-evidence layer (who is loyal to which premium-wellness brand at airports, what they actually buy) is missing. Equinox, Barry's, SoulCycle members all travel. Are they your members? Survey your own gym's frequent-flyer cohort first.",
       "confidence": 0.78,
       "retrieved_evidence": []
     },
@@ -205,7 +205,7 @@
       "judge_id": "raymond_chen",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, the cultural moment is right. Wellness tourism is a real category and frequent-flyer wellness is the underserved segment. The pre-pandemic version of this would not have worked; the post-pandemic frequent flyer is significantly more health-conscious. Timing is favorable.",
+      "stage_critique": "The cultural moment is right. Wellness tourism is a real category and frequent-flyer wellness is the underserved segment. The pre-pandemic version of this would not have worked; the post-pandemic frequent flyer is significantly more health-conscious. Timing is favorable.",
       "confidence": 0.79,
       "retrieved_evidence": []
     },
@@ -213,7 +213,7 @@
       "judge_id": "marcus_holt",
       "stage": "cultural",
       "dimension_scores": { "cultural": 7 },
-      "stage_critique": "Terry, cultural fit is fine. The investor cultural-fit question is whether VCs write checks for capital-intensive hospitality concepts in 2026. They mostly don't. This may need to be funded as real estate or hospitality, not as venture - which means different cap-table math, different growth expectations, different exit profile.",
+      "stage_critique": "Cultural fit is fine. The investor cultural-fit question is whether VCs write checks for capital-intensive hospitality concepts in 2026. They mostly don't. This may need to be funded as real estate or hospitality, not as venture - which means different cap-table math, different growth expectations, different exit profile.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -221,7 +221,7 @@
       "judge_id": "devon_sloane",
       "stage": "cultural",
       "dimension_scores": { "cultural": 8 },
-      "stage_critique": "Terry, the cultural read is excellent. Premium wellness has fully entered the executive-travel category - it's no longer a niche. Equinox-tier members expect to maintain their routine on the road. The cultural opening is wide.",
+      "stage_critique": "The cultural read is excellent. Premium wellness has fully entered the executive-travel category - it's no longer a niche. Equinox-tier members expect to maintain their routine on the road. The cultural opening is wide.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -229,7 +229,7 @@
       "judge_id": "raymond_chen",
       "stage": "psych",
       "dimension_scores": { "psych": 7 },
-      "stage_critique": "Terry, the buyer-psychology read of the user is strong - routine continuity is the right driver. The buyer-psychology of the airport authority is unmodeled. The decision to lease space to a fitness operator is made by people whose incentives are not aligned with the operator's. Naming what the airport authority needs (revenue share, terminal differentiation, traveler-satisfaction scores) is what gets the deal signed.",
+      "stage_critique": "The buyer-psychology read of the user is strong - routine continuity is the right driver. The buyer-psychology of the airport authority is unmodeled. The decision to lease space to a fitness operator is made by people whose incentives are not aligned with the operator's. Naming what the airport authority needs (revenue share, terminal differentiation, traveler-satisfaction scores) is what gets the deal signed.",
       "confidence": 0.83,
       "retrieved_evidence": []
     },
@@ -237,7 +237,7 @@
       "judge_id": "marcus_holt",
       "stage": "psych",
       "dimension_scores": { "psych": 6 },
-      "stage_critique": "Terry, the user psychology is reasonable. The investor psychology - what makes this look like a venture investment vs. a private equity / real estate investment - is not addressed. The brief is selling to the wrong capital pool. Premium hospitality concepts at this capital intensity attract growth equity, not Series A venture. Reposition accordingly.",
+      "stage_critique": "The user psychology is reasonable. The investor psychology - what makes this look like a venture investment vs. a private equity / real estate investment - is not addressed. The brief is selling to the wrong capital pool. Premium hospitality concepts at this capital intensity attract growth equity, not Series A venture. Reposition accordingly.",
       "confidence": 0.81,
       "retrieved_evidence": []
     },
@@ -245,7 +245,7 @@
       "judge_id": "devon_sloane",
       "stage": "psych",
       "dimension_scores": { "psych": 8 },
-      "stage_critique": "Terry, the buyer psychology of the frequent flyer is read correctly. The 90-minute layover is the moment of impulse and the brand has to be visible at that moment - airport-app integration, terminal signage, lounge cross-promotion. The psychology of the moment-of-decision is the marketing budget.",
+      "stage_critique": "The buyer psychology of the frequent flyer is read correctly. The 90-minute layover is the moment of impulse and the brand has to be visible at that moment - airport-app integration, terminal signage, lounge cross-promotion. The psychology of the moment-of-decision is the marketing budget.",
       "confidence": 0.84,
       "retrieved_evidence": []
     },
@@ -253,7 +253,7 @@
       "judge_id": "raymond_chen",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, the compliance surface is moderate. ADA accessibility in the locker rooms and equipment areas is non-negotiable. TSA security perimeter rules dictate what can be inside vs. outside airside. Employee certifications (personal trainer credentials, food handling for the smoothie bar) are standard. Nothing exotic, but the buildout has to clear all of these or the doors don't open.",
+      "stage_critique": "The compliance surface is moderate. ADA accessibility in the locker rooms and equipment areas is non-negotiable. TSA security perimeter rules dictate what can be inside vs. outside airside. Employee certifications (personal trainer credentials, food handling for the smoothie bar) are standard. Nothing exotic, but the buildout has to clear all of these or the doors don't open.",
       "confidence": 0.82,
       "retrieved_evidence": []
     },
@@ -261,7 +261,7 @@
       "judge_id": "marcus_holt",
       "stage": "compliance",
       "dimension_scores": { "compliance": 6 },
-      "stage_critique": "Terry, the regulatory layer in airport hospitality is the airport authority's own concession-agreement requirements. Each major airport has its own rules - revenue minimums, hours of operation, employee badging, security clearance for the location's staff. None of this is in the brief.",
+      "stage_critique": "The regulatory layer in airport hospitality is the airport authority's own concession-agreement requirements. Each major airport has its own rules - revenue minimums, hours of operation, employee badging, security clearance for the location's staff. None of this is in the brief.",
       "confidence": 0.80,
       "retrieved_evidence": []
     },
@@ -269,7 +269,7 @@
       "judge_id": "devon_sloane",
       "stage": "compliance",
       "dimension_scores": { "compliance": 7 },
-      "stage_critique": "Terry, the brand-compliance layer matters more than the regulatory one. Premium wellness brands have to police their own member behavior - no half-naked influencer content from the locker room, no member photos posted without consent, no fitness advice from front-desk staff who aren't certified. The internal compliance discipline is what protects the brand at scale.",
+      "stage_critique": "The brand-compliance layer matters more than the regulatory one. Premium wellness brands have to police their own member behavior - no half-naked influencer content from the locker room, no member photos posted without consent, no fitness advice from front-desk staff who aren't certified. The internal compliance discipline is what protects the brand at scale.",
       "confidence": 0.79,
       "retrieved_evidence": []
     }
