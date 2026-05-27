@@ -731,6 +731,80 @@
     text-transform:uppercase;color:var(--gold);line-height:1.5;
   }
 
+  /* After the Panel: structure-only placeholders previewing what fills
+     in once a client walks the chamber. Dashed borders to signal
+     "empty" intentionally - not lazy missing content, but a deliberate
+     placeholder for the work the client gets if they walk it. Hidden
+     entirely in post-Chamber mode (the real data lives on the banner
+     up top). */
+  .after-panel{ padding:5rem 2rem 4rem; }
+  body[data-tg-postchamber] .after-panel{ display:none; }
+  .ap-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
+    text-align:center;
+  }
+  .ap-title{
+    font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem);
+    font-weight:700; color:var(--cream); line-height:1.1;
+    letter-spacing:-0.01em; text-align:center; margin-bottom:1rem;
+  }
+  .ap-title em{ font-style:italic; color:var(--gold-light); }
+  .ap-lede{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1.1rem; line-height:1.55;
+    text-align:center; max-width:720px; margin:0 auto 2.6rem;
+  }
+  .ap-recommendation{
+    max-width:680px; margin:0 auto 2.4rem;
+    border:1px dashed rgba(212,170,74,0.5);
+    border-left:3px solid var(--gold);
+    background:rgba(184,146,42,0.03);
+    padding:1.4rem 1.6rem;
+  }
+  .ap-rec-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.6rem;
+  }
+  .ap-rec-placeholder{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1.1rem; line-height:1.5;
+  }
+  .ap-followups-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--gold-light);
+    text-align:center; margin-bottom:1rem;
+  }
+  .ap-followups{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem;
+    max-width:880px; margin:0 auto;
+  }
+  .ap-fu-card{
+    padding:0.95rem 1rem;
+    border:1px dashed rgba(212,170,74,0.35);
+    background:rgba(0,0,0,0.25);
+  }
+  .ap-fu-name{
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:1rem; color:var(--cream); line-height:1.2;
+    margin-bottom:0.25rem;
+  }
+  .ap-fu-tool{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--gold-light); font-size:0.92rem;
+  }
+  .ap-foot{
+    text-align:center; margin-top:2rem;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem;
+  }
+  @media (max-width:760px){
+    .ap-followups{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:480px){
+    .ap-followups{ grid-template-columns:1fr; }
+  }
+
   /* The Exit: routing report. */
   .corridor-exit{padding:5rem 2rem 5rem;text-align:center;}
   .exit-title{
@@ -1273,6 +1347,43 @@
         </div>
       </a>
     </div>
+  </div>
+</section>
+
+<div class="footlight"></div>
+
+<!-- ── After the Panel: preview of V (Recommendation) + VI (EP follow-ups)
+     Empty-shaped placeholders. The structure of what fills in after the
+     client walks the chamber - the routing card slot, the nine EP
+     follow-up offer slots. Tells the homepage visitor that the panel
+     is not the end; the recommendation and the follow-up offers are.
+     Hidden in post-Chamber mode (the banner at top carries the real
+     data; this preview is for clients who have not walked yet). -->
+<section class="after-panel velvet">
+  <div class="band-inner narrow">
+    <div class="ap-eyebrow">After the panel</div>
+    <h2 class="ap-title">A recommendation. <em>Nine offices that follow up.</em></h2>
+    <p class="ap-lede">Your panel scores. Your routing card lands. And then the EPs come back, each with a specific next move based on what the judges said.</p>
+
+    <div class="ap-recommendation">
+      <div class="ap-rec-eyebrow">Your routing card</div>
+      <div class="ap-rec-placeholder">— fills in after the panel —</div>
+    </div>
+
+    <div class="ap-followups-label">Follow-up offers from the nine</div>
+    <div class="ap-followups">
+      <div class="ap-fu-card"><div class="ap-fu-name">Ms. Ivy</div><div class="ap-fu-tool">Research dive</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Wren Calloway</div><div class="ap-fu-tool">Patent assessment</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Carol Haynes</div><div class="ap-fu-tool">Pattern screen</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Matthew Vance</div><div class="ap-fu-tool">Buyer psychology</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Arjun Mehta</div><div class="ap-fu-tool">Operations + regulatory</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Zara Cole</div><div class="ap-fu-tool">Content plan</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Reid Callum</div><div class="ap-fu-tool">Press + monetization</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Jules</div><div class="ap-fu-tool">Founder-voice rewrite</div></div>
+      <div class="ap-fu-card"><div class="ap-fu-name">Grant Ellis</div><div class="ap-fu-tool">Elevator speech</div></div>
+    </div>
+
+    <p class="ap-foot">Walk the Gauntlet to fill this in.</p>
   </div>
 </section>
 
