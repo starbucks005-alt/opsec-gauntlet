@@ -1709,27 +1709,53 @@
       });
     }
 
-    // Routing report CTA.
+    // Post-Chamber handoff. The client returns to the corridor on the
+    // homepage in post-Chamber mode where the EPs greet them with
+    // templated lines that reference their score, and the report is
+    // available for download. The formal /report.html document remains
+    // accessible from the post-Chamber banner.
     if (lastPayload && lastPayload.evaluation_id){
       await wait(1500);
+      stashPostChamberPayload(lastPayload);
       addChatMessage({
         kind: 'system',
-        body: 'Your routing report is ready. Walk out the other side ▸',
+        body: 'You walked the Gauntlet. Walk back to the corridor - the EPs have seen your panel and want to follow up ▸',
       });
-      showReportCta(lastPayload.evaluation_id);
+      showPostChamberCta(lastPayload.evaluation_id);
     }
   }
 
-  // Inject a one-off "See your routing report" button into the chat stream.
-  // Plain anchor styled to match the system-note register; not a permanent
-  // chat element, just a navigation affordance.
-  function showReportCta(evaluationId){
+  // Snapshot the post-Chamber payload to sessionStorage so the homepage
+  // (and any EP office the client revisits) can render the post-Chamber
+  // state without an extra server roundtrip. The formal report still
+  // fetches from tg-evaluation-get; this is just for the immediate
+  // corridor handoff.
+  function stashPostChamberPayload(payload){
+    if (!payload || !payload.triangulation) return;
+    const tri = payload.triangulation;
+    let visitorName = '';
+    try { visitorName = (sessionStorage.getItem('tg_visitor_name') || '').trim(); } catch(_){}
+    const pkg = {
+      evaluation_id:   payload.evaluation_id,
+      composite_score: tri.composite_score || 0,
+      verdict:         tri.verdict || 'middle',
+      matrix:          tri.matrix || {},
+      visitor_name:    visitorName,
+      at:              Date.now(),
+    };
+    try { sessionStorage.setItem('tg_post_chamber', JSON.stringify(pkg)); } catch(_){}
+  }
+
+  // CTA at the end of the chamber. Sends the client back to the homepage
+  // corridor in post-Chamber mode (the homepage detects sessionStorage
+  // and morphs accordingly).
+  function showPostChamberCta(evaluationId){
     if (!chatStream) return;
     const wrap = document.createElement('div');
     wrap.className = 'tg-chat-msg is-system';
     wrap.innerHTML = `
       <div class="tg-chat-msg-body" style="text-align:center;">
-        <a href="/report.html?evaluation=${encodeURIComponent(evaluationId)}"
+        <a href="/?postchamber=1#corridor-wings"
            style="display:inline-block;background:var(--gold);color:var(--ink);
                   font-family:'DM Mono',monospace;font-size:0.6rem;
                   letter-spacing:0.22em;text-transform:uppercase;font-weight:700;
@@ -1737,8 +1763,17 @@
                   transition:background 0.2s;"
            onmouseover="this.style.background='var(--gold-light)'"
            onmouseout="this.style.background='var(--gold)'">
-          See your routing report →
+          Walk back to the corridor &rarr;
         </a>
+        <div style="margin-top:0.7rem;">
+          <a href="/report.html?evaluation=${encodeURIComponent(evaluationId)}"
+             style="font-family:'DM Mono',monospace;font-size:0.55rem;
+                    letter-spacing:0.2em;text-transform:uppercase;
+                    color:var(--text-dim);text-decoration:underline;
+                    text-underline-offset:3px;">
+            or open the formal report
+          </a>
+        </div>
       </div>
     `;
     chatStream.appendChild(wrap);

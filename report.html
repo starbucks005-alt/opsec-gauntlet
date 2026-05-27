@@ -1899,6 +1899,15 @@
       const judgesData  = await judgesResp.json();
       const judgesById  = Object.fromEntries((judgesData.judges || []).map(j => [j.id, j]));
       renderReport(data, judgesById);
+      // If we arrived with #print in the hash, auto-trigger the
+      // print dialog. Used by the post-Chamber banner's "Download
+      // PDF" button on the homepage - one click, no extra navigation.
+      if (window.location.hash === '#print') {
+        setTimeout(() => {
+          const btn = document.querySelector('[data-tg-print]');
+          if (btn) btn.click();
+        }, 400);
+      }
     } catch (err) {
       console.warn('[tg-report]', err);
       renderError(err.message || 'Something went wrong loading the report.');

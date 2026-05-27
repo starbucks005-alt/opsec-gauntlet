@@ -159,6 +159,72 @@
   .band-inner.mid{max-width:960px;}
 
   /* ── Hero ────────────────────────────────────────────────────────────────── */
+  /* ── Post-Chamber banner ─────────────────────────────────────────────
+     Shown when the client returns from the Chamber. Sits above the hero
+     and reframes the page: their score, the report download row, and a
+     line pointing them down to the corridor where the EPs greet them
+     with templated lines. */
+  .post-chamber{
+    background:linear-gradient(180deg, rgba(184,146,42,0.08) 0%, rgba(184,146,42,0) 100%);
+    border-bottom:1px solid var(--rule);
+    padding:3rem 2rem 2.4rem;
+  }
+  .pc-inner{ max-width:920px; margin:0 auto; text-align:center; }
+  .pc-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
+  }
+  .pc-title{
+    font-family:'Playfair Display',serif; font-size:clamp(2rem,4.4vw,2.8rem);
+    font-weight:700; color:var(--cream); line-height:1.15;
+    letter-spacing:-0.01em; margin-bottom:0.9rem;
+  }
+  .pc-composite{ color:var(--gold-light); }
+  .pc-of{ font-size:0.65em; color:var(--text-dim); font-weight:400; }
+  .pc-sep{ color:var(--text-dim); margin:0 0.4rem; }
+  .pc-verdict{
+    font-style:italic; color:var(--gold-light); font-weight:700;
+    text-transform:capitalize;
+  }
+  .pc-sub{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text); font-size:1.1rem; line-height:1.55;
+    margin-bottom:1.8rem; max-width:640px; margin-left:auto; margin-right:auto;
+  }
+  .pc-actions{
+    display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+    margin-bottom:1.4rem;
+  }
+  .pc-btn{
+    display:inline-flex; align-items:center;
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
+    text-transform:uppercase; font-weight:700; text-decoration:none;
+    padding:0.85rem 1.4rem; border:1px solid var(--gold); cursor:pointer;
+    transition:all 0.18s;
+  }
+  .pc-btn-primary{ background:var(--gold); color:var(--ink); }
+  .pc-btn-primary:hover{ background:var(--gold-light); border-color:var(--gold-light); }
+  .pc-btn-outline{ background:transparent; color:var(--gold); }
+  .pc-btn-outline:hover{ background:rgba(184,146,42,0.08); color:var(--gold-light); border-color:var(--gold-light); }
+  .pc-foot{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1rem;
+  }
+  /* Show the banner only when body carries data-tg-postchamber. */
+  body[data-tg-postchamber] .post-chamber{ display:block; }
+  body[data-tg-postchamber] .post-chamber[hidden]{ display:block; }
+  /* In post-Chamber mode, hide the bottom "Ready when you are" CTA -
+     the client has already walked it. The corridor and EP cards remain. */
+  body[data-tg-postchamber] .close-band{ display:none; }
+  /* Post-Chamber EP line: replaces the EP's stock quote with the
+     templated post-Chamber line, with a gold left rule for visual
+     differentiation. The corridor JS swaps the content; this just
+     styles it. */
+  body[data-tg-postchamber] .wing-quote.is-postchamber{
+    border-left:3px solid var(--gold);
+    padding-left:1rem; color:var(--cream);
+  }
+
   /* Hero IS the audition. Composite on the right, tagline + audio button   */
   /* on the left. The user can hear a real judge speak before any scroll,   */
   /* without reading paragraphs about why we think the panel is good.       */
@@ -749,6 +815,33 @@
   </nav>
 </header>
 
+<!-- ── Post-Chamber banner ────────────────────────────────────────────────
+     Rendered when the client returns from the Chamber. The chamber stashes
+     a tg_post_chamber payload in sessionStorage; the script at the bottom
+     of this page reads it, fills in this banner, and adds
+     data-tg-postchamber to the body so the rest of the page can adapt
+     (corridor EP cards swap to post-Chamber lines; the closing "Ready
+     when you are" CTA hides). Hidden by default; CSS shows when the
+     body attribute is set. -->
+<section class="post-chamber" id="post-chamber" hidden>
+  <div class="pc-inner">
+    <div class="pc-eyebrow">You walked the Gauntlet</div>
+    <h2 class="pc-title">
+      Composite <span class="pc-composite" data-pc="composite">—</span>
+      <span class="pc-of">/10</span>
+      <span class="pc-sep">·</span>
+      <span class="pc-verdict" data-pc="verdict">—</span>
+    </h2>
+    <p class="pc-sub" data-pc="sub">Your report is ready, and the EPs in the corridor have seen your panel.</p>
+    <div class="pc-actions">
+      <a class="pc-btn pc-btn-primary" id="pc-pdf">Download PDF</a>
+      <a class="pc-btn pc-btn-primary" id="pc-docx">Download DOCX</a>
+      <a class="pc-btn pc-btn-outline" id="pc-report" href="#">See the full report &rarr;</a>
+    </div>
+    <p class="pc-foot">Or stop by any EP's office below. They have seen what the judges said.</p>
+  </div>
+</section>
+
 <!-- ── Hero (audition) ──────────────────────────────────────────────────── -->
 <!-- Composite portrait on the right. Tagline + audio button on the left.   -->
 <!-- The hero is the lobby. Three starting lines, one card each. The user   -->
@@ -1203,6 +1296,148 @@
     });
   }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
   wings.forEach(w => observer.observe(w));
+})();
+</script>
+
+<!-- ── Post-Chamber activation ──────────────────────────────────────────
+     Reads the tg_post_chamber payload stashed by chamber.html when the
+     client finished the panel. If present, the body picks up
+     data-tg-postchamber, the banner at top fills in with composite +
+     verdict, the download buttons wire to PDF / DOCX, and each corridor
+     EP's wing-quote swaps to a templated post-Chamber line. -->
+<script>
+(function(){
+  // Read the post-Chamber payload from sessionStorage. Trigger condition:
+  // either the URL carries ?postchamber=1 (set by chamber.html on
+  // redirect) OR the payload exists from a recent chamber run. Either
+  // way the payload itself is the source of truth.
+  let pkg = null;
+  try {
+    const raw = sessionStorage.getItem('tg_post_chamber');
+    if (raw) pkg = JSON.parse(raw);
+  } catch(_){}
+  if (!pkg || !pkg.evaluation_id) return;
+
+  document.body.setAttribute('data-tg-postchamber', '1');
+
+  // ── Fill the banner ─────────────────────────────────────────────────
+  const composite10 = Math.round((pkg.composite_score || 0) * 100) / 10;
+  const verdictLabel = pkg.verdict === 'agreement' ? 'Agreement'
+                     : pkg.verdict === 'conflict'  ? 'Split panel'
+                     : 'Partial alignment';
+  const setText = (sel, txt) => {
+    const el = document.querySelector(sel);
+    if (el) el.textContent = txt;
+  };
+  setText('[data-pc="composite"]', composite10);
+  setText('[data-pc="verdict"]',   verdictLabel);
+
+  const banner = document.getElementById('post-chamber');
+  if (banner) banner.removeAttribute('hidden');
+
+  // Wire downloads + report link.
+  const reportEl = document.getElementById('pc-report');
+  if (reportEl) reportEl.setAttribute('href', '/report.html?evaluation=' + encodeURIComponent(pkg.evaluation_id));
+  const pdfEl  = document.getElementById('pc-pdf');
+  const docxEl = document.getElementById('pc-docx');
+  if (pdfEl) pdfEl.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Native print-to-PDF lives on report.html; bounce there and trigger.
+    window.location.href = '/report.html?evaluation=' + encodeURIComponent(pkg.evaluation_id) + '#print';
+  });
+  if (docxEl) docxEl.setAttribute('data-tg-export', '');  // tg-export.js delegated handler picks this up
+
+  // ── Per-EP post-Chamber lines ───────────────────────────────────────
+  // Each EP gets ONE templated line. Variables: {{name}}, {{composite}},
+  // {{verdict}}, {{weakestDim}}, {{weakestScore}}, {{strongestDim}}.
+  // Lines are calibrated to reference what they specifically can do
+  // next - not generic flattery. Each EP claims a specific follow-up.
+  const EP_LINES = {
+    ms_ivy:        '{{name}}, evidence came in at {{evidenceScore}}. The panel was right to push. Walk back down - I have three frameworks that ground this and one literature gap you can plant a flag in.',
+    wren_calloway: 'Composite {{composite}}. Now the question is whether anyone has already claimed this. Step into my office - I run live prior-art searches on Google Patents and tell you what space remains.',
+    carol_haynes:  '{{name}}, the panel landed at {{composite}}. I read your brief against the pattern library before the chamber - now I want to read the panel feedback against it too. Come find me.',
+    matthew_vance: 'Composite {{composite}}, {{verdict}}. The buyer psychology was {{psychLabel}}. {{psychFollowup}}',
+    arjun_mehta:   'You walked out with {{composite}}. The operational and regulatory questions the panel raised - manufacturing route, supplier shape, compliance regime - that is exactly the work I do. Step in.',
+    zara_cole:     '{{name}}, {{verdict}} at {{composite}}. The content engine that turns this idea into reach lives in my office. Founder POV posts in your voice, the platforms that move your audience right now. Come back.',
+    reid_callum:   'Composite {{composite}}. The panel sized the opportunity - now we monetize it and stage the launch. Press release, brand direction, monetization model. Walk to me.',
+    jules:         '{{name}}, {{composite}} from the panel. Now we make the brief sound like a person wrote it. I rewrite the AI-shaped sections into your voice without changing what they mean. Come down.',
+    grant_ellis:   'You faced the panel. You walked out with {{composite}}. Real-world rooms come next - investors, press, customers. I draft your 30-second speech for the specific room you walk into. Stop in.',
+  };
+
+  function dimAvg(dim){
+    const m = (pkg.matrix && pkg.matrix[dim]) ? pkg.matrix[dim] : null;
+    if (!m) return null;
+    const scores = Object.values(m).filter(s => typeof s === 'number');
+    if (!scores.length) return null;
+    return scores.reduce((a,b) => a+b, 0) / scores.length;
+  }
+  function dimLabel(dim){
+    const map = { clarity:'Clarity', viability:'Viability', risk:'Risk',
+      narrative:'Narrative', evidence:'Evidence', cultural:'Cultural',
+      psych:'Psych', compliance:'Compliance' };
+    return map[dim] || dim;
+  }
+
+  // Find the weakest + strongest dimensions for use in templates.
+  let weakestDim = null, weakestScore = 10;
+  let strongestDim = null, strongestScore = 0;
+  if (pkg.matrix) {
+    for (const dim of Object.keys(pkg.matrix)) {
+      const a = dimAvg(dim);
+      if (a == null) continue;
+      if (a < weakestScore)   { weakestScore = a;   weakestDim = dim; }
+      if (a > strongestScore) { strongestScore = a; strongestDim = dim; }
+    }
+  }
+
+  const psychAvg = dimAvg('psych');
+  const evidenceAvg = dimAvg('evidence');
+
+  const ctx = {
+    name:          (pkg.visitor_name || '').trim(),
+    composite:     composite10.toFixed(1),
+    verdict:       verdictLabel,
+    weakestDim:    weakestDim ? dimLabel(weakestDim) : 'one dimension',
+    weakestScore:  weakestScore < 10 ? weakestScore.toFixed(1) : '?',
+    strongestDim:  strongestDim ? dimLabel(strongestDim) : 'the strongest',
+    strongestScore:strongestScore > 0 ? strongestScore.toFixed(1) : '?',
+    psychScore:    psychAvg != null ? psychAvg.toFixed(1) : '?',
+    psychLabel:    psychAvg == null ? 'unscored'
+                  : psychAvg >= 7 ? 'strong - well over the line'
+                  : psychAvg >= 5 ? 'serviceable but underdeveloped'
+                  : 'thin - the panel saw it',
+    psychFollowup: psychAvg == null ? 'Walk to my office - I profile the actual buyer.'
+                  : psychAvg >= 7 ? 'Walk to my office and let us sharpen the trigger moment so the buyer reads themselves in your copy.'
+                  : 'Walk to my office - I name the emotional driver, the trigger moment, and the silent objections the brief never addressed.',
+    evidenceScore: evidenceAvg != null ? evidenceAvg.toFixed(1) : '?',
+  };
+
+  function fill(tpl){
+    return String(tpl || '').replace(/\{\{(\w+)\}\}/g, (_, key) => {
+      return key in ctx ? String(ctx[key]) : '';
+    }).replace(/\s+([,\.])/g, '$1').trim();
+  }
+  // Strip leading vocative if no name available.
+  function cleanLeadingComma(s){
+    if (ctx.name) return s;
+    return s.replace(/^,\s*/, '').replace(/^(.)/, m => m.toUpperCase());
+  }
+
+  // Replace each wing's quote with the templated line. Wing identity comes
+  // from the IM button's data-character attribute (always present on
+  // every wing).
+  document.querySelectorAll('.corridor-wing').forEach(wing => {
+    const imBtn = wing.querySelector('[data-character]');
+    const epId  = imBtn ? imBtn.getAttribute('data-character') : null;
+    if (!epId) return;
+    const tpl = EP_LINES[epId];
+    if (!tpl) return;
+    const quoteEl = wing.querySelector('.wing-quote');
+    if (!quoteEl) return;
+    const filled = cleanLeadingComma(fill(tpl));
+    quoteEl.textContent = '"' + filled + '"';
+    quoteEl.classList.add('is-postchamber');
+  });
 })();
 </script>
 
