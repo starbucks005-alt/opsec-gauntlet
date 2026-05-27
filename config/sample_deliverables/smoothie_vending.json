@@ -267,6 +267,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "selene_voss": 5, "raymond_chen": 3, "astrid_lund": 3 },
+      "viability":  { "selene_voss": 4, "raymond_chen": 3, "astrid_lund": 3 },
+      "risk":       { "selene_voss": 3, "raymond_chen": 2, "astrid_lund": 1 },
+      "narrative":  { "selene_voss": 4, "raymond_chen": 3, "astrid_lund": 3 },
+      "evidence":   { "selene_voss": 2, "raymond_chen": 2, "astrid_lund": 2 },
+      "cultural":   { "selene_voss": 6, "raymond_chen": 5, "astrid_lund": 5 },
+      "psych":      { "selene_voss": 5, "raymond_chen": 4, "astrid_lund": 4 },
+      "compliance": { "selene_voss": 4, "raymond_chen": 3, "astrid_lund": 4 }
+    },
+    "composite_score": 0.34,
+    "verdict": "middle"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "selene_voss": 7, "raymond_chen": 6, "astrid_lund": 6 },

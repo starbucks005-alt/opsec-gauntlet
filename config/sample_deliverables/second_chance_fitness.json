@@ -276,6 +276,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "cassidy_mercer": 5, "raymond_chen": 4, "marcus_holt": 4 },
+      "viability":  { "cassidy_mercer": 5, "raymond_chen": 4, "marcus_holt": 4 },
+      "risk":       { "cassidy_mercer": 3, "raymond_chen": 3, "marcus_holt": 2 },
+      "narrative":  { "cassidy_mercer": 3, "raymond_chen": 3, "marcus_holt": 2 },
+      "evidence":   { "cassidy_mercer": 2, "raymond_chen": 2, "marcus_holt": 2 },
+      "cultural":   { "cassidy_mercer": 7, "raymond_chen": 6, "marcus_holt": 6 },
+      "psych":      { "cassidy_mercer": 5, "raymond_chen": 4, "marcus_holt": 4 },
+      "compliance": { "cassidy_mercer": 5, "raymond_chen": 6, "marcus_holt": 5 }
+    },
+    "composite_score": 0.42,
+    "verdict": "middle"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "cassidy_mercer": 8, "raymond_chen": 7, "marcus_holt": 7 },

@@ -276,6 +276,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "priya_anand": 4, "astrid_lund": 3, "cassidy_mercer": 5 },
+      "viability":  { "priya_anand": 4, "astrid_lund": 3, "cassidy_mercer": 5 },
+      "risk":       { "priya_anand": 2, "astrid_lund": 2, "cassidy_mercer": 3 },
+      "narrative":  { "priya_anand": 3, "astrid_lund": 4, "cassidy_mercer": 5 },
+      "evidence":   { "priya_anand": 2, "astrid_lund": 2, "cassidy_mercer": 2 },
+      "cultural":   { "priya_anand": 5, "astrid_lund": 6, "cassidy_mercer": 6 },
+      "psych":      { "priya_anand": 5, "astrid_lund": 5, "cassidy_mercer": 6 },
+      "compliance": { "priya_anand": 2, "astrid_lund": 2, "cassidy_mercer": 3 }
+    },
+    "composite_score": 0.35,
+    "verdict": "conflict"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "priya_anand": 7, "astrid_lund": 6, "cassidy_mercer": 7 },

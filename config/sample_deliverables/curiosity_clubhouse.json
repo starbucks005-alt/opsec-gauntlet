@@ -267,6 +267,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "cassidy_mercer": 5, "astrid_lund": 4, "grace_nakamura": 5 },
+      "viability":  { "cassidy_mercer": 5, "astrid_lund": 3, "grace_nakamura": 4 },
+      "risk":       { "cassidy_mercer": 3, "astrid_lund": 2, "grace_nakamura": 3 },
+      "narrative":  { "cassidy_mercer": 5, "astrid_lund": 4, "grace_nakamura": 4 },
+      "evidence":   { "cassidy_mercer": 2, "astrid_lund": 3, "grace_nakamura": 2 },
+      "cultural":   { "cassidy_mercer": 5, "astrid_lund": 4, "grace_nakamura": 5 },
+      "psych":      { "cassidy_mercer": 5, "astrid_lund": 4, "grace_nakamura": 5 },
+      "compliance": { "cassidy_mercer": 3, "astrid_lund": 2, "grace_nakamura": 3 }
+    },
+    "composite_score": 0.37,
+    "verdict": "middle"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "cassidy_mercer": 7, "astrid_lund": 6, "grace_nakamura": 7 },

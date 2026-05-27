@@ -267,6 +267,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "astrid_lund": 5, "priya_anand": 4, "raymond_chen": 4 },
+      "viability":  { "astrid_lund": 5, "priya_anand": 5, "raymond_chen": 6 },
+      "risk":       { "astrid_lund": 4, "priya_anand": 4, "raymond_chen": 5 },
+      "narrative":  { "astrid_lund": 5, "priya_anand": 4, "raymond_chen": 4 },
+      "evidence":   { "astrid_lund": 3, "priya_anand": 3, "raymond_chen": 3 },
+      "cultural":   { "astrid_lund": 6, "priya_anand": 6, "raymond_chen": 7 },
+      "psych":      { "astrid_lund": 5, "priya_anand": 5, "raymond_chen": 4 },
+      "compliance": { "astrid_lund": 5, "priya_anand": 4, "raymond_chen": 4 }
+    },
+    "composite_score": 0.48,
+    "verdict": "middle"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "astrid_lund": 8, "priya_anand": 7, "raymond_chen": 7 },

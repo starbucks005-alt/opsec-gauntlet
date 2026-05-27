@@ -274,6 +274,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "raymond_chen": 4, "marcus_holt": 3, "devon_sloane": 4 },
+      "viability":  { "raymond_chen": 3, "marcus_holt": 2, "devon_sloane": 4 },
+      "risk":       { "raymond_chen": 2, "marcus_holt": 2, "devon_sloane": 3 },
+      "narrative":  { "raymond_chen": 4, "marcus_holt": 3, "devon_sloane": 5 },
+      "evidence":   { "raymond_chen": 2, "marcus_holt": 2, "devon_sloane": 3 },
+      "cultural":   { "raymond_chen": 6, "marcus_holt": 6, "devon_sloane": 7 },
+      "psych":      { "raymond_chen": 5, "marcus_holt": 4, "devon_sloane": 5 },
+      "compliance": { "raymond_chen": 5, "marcus_holt": 4, "devon_sloane": 5 }
+    },
+    "composite_score": 0.39,
+    "verdict": "conflict"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "raymond_chen": 7, "marcus_holt": 6, "devon_sloane": 7 },

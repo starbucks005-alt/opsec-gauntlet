@@ -267,6 +267,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "selene_voss": 3, "devon_sloane": 3, "marcus_holt": 2 },
+      "viability":  { "selene_voss": 4, "devon_sloane": 4, "marcus_holt": 3 },
+      "risk":       { "selene_voss": 3, "devon_sloane": 3, "marcus_holt": 3 },
+      "narrative":  { "selene_voss": 3, "devon_sloane": 4, "marcus_holt": 3 },
+      "evidence":   { "selene_voss": 2, "devon_sloane": 2, "marcus_holt": 2 },
+      "cultural":   { "selene_voss": 6, "devon_sloane": 7, "marcus_holt": 5 },
+      "psych":      { "selene_voss": 4, "devon_sloane": 5, "marcus_holt": 3 },
+      "compliance": { "selene_voss": 5, "devon_sloane": 6, "marcus_holt": 5 }
+    },
+    "composite_score": 0.36,
+    "verdict": "middle"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "selene_voss": 6, "devon_sloane": 6, "marcus_holt": 5 },

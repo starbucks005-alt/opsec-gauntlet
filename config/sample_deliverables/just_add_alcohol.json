@@ -267,6 +267,20 @@
       "retrieved_evidence": []
     }
   ],
+  "triangulation_before": {
+    "matrix": {
+      "clarity":    { "devon_sloane": 4, "marcus_holt": 3, "astrid_lund": 4 },
+      "viability":  { "devon_sloane": 4, "marcus_holt": 3, "astrid_lund": 3 },
+      "risk":       { "devon_sloane": 3, "marcus_holt": 2, "astrid_lund": 3 },
+      "narrative":  { "devon_sloane": 4, "marcus_holt": 3, "astrid_lund": 4 },
+      "evidence":   { "devon_sloane": 2, "marcus_holt": 2, "astrid_lund": 2 },
+      "cultural":   { "devon_sloane": 6, "marcus_holt": 5, "astrid_lund": 4 },
+      "psych":      { "devon_sloane": 5, "marcus_holt": 4, "astrid_lund": 4 },
+      "compliance": { "devon_sloane": 2, "marcus_holt": 3, "astrid_lund": 2 }
+    },
+    "composite_score": 0.34,
+    "verdict": "middle"
+  },
   "triangulation": {
     "matrix": {
       "clarity":    { "devon_sloane": 7, "marcus_holt": 6, "astrid_lund": 7 },
