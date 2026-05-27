@@ -33,8 +33,8 @@ const Anthropic    = require('@anthropic-ai/sdk').default;
 const voiceScripts = require('../../config/voice_scripts.json');
 
 const MODEL      = 'claude-sonnet-4-6';
-const MAX_TOKENS = 1600;
-const BRIEF_MAX  = 6000;
+const MAX_TOKENS = 1200;
+const BRIEF_MAX  = 4500;
 const NAME_MAX   = 60;
 const BRIEF_MIN  = 30;
 
@@ -96,14 +96,14 @@ OUTPUT REQUIREMENTS
        - why_for_this_brief: ONE specific sentence tying THIS judge's lens to THIS brief. Not generic. Reference something from the brief.
 
   2. LIKELY_QUESTIONS - one key per recommended judge_id. Each value is an array of EXACTLY 3 questions. Each question is an object:
-       - question: a sentence the judge would actually say, in their voice. Specific to ${nameRef}'s brief. Not abstract. Keep to 1-2 sentences.
-       - what_they_are_really_asking: ONE sentence translating the question into what the judge is actually testing. (Marcus's "what's the exit math" really asks "is this an investable shape." Cassidy's "who is the customer when nobody is watching" really asks "do you understand the psychology, not just the demographic.")
+       - question: ONE sentence the judge would say, in their voice. Specific to ${nameRef}'s brief.
+       - what_they_are_really_asking: ONE short sentence translating what the judge is actually testing.
 
   3. WALK_IN_LINE - ONE line ${nameRef} should keep in their head as they enter the Chamber. Short. Memorable. Specific to this brief. Not "you got this." Something like "the audience is postpartum, not 'busy parents' - say that" or "lead with the retention number, not the mission statement."
 
-  4. RATIONALE - Two sentences:
-       - First sentence: what about THIS brief drove the panel pick. Name the specific feature of the brief.
-       - Second sentence: which of the three judges ${nameRef} should rehearse against FIRST and why.
+  4. RATIONALE - Two short sentences:
+       - Sentence 1: what about THIS brief drove the panel pick.
+       - Sentence 2: which of the three judges to rehearse against FIRST and why.
 
 DRAFTING RULES
   - You are a coach who watched tape. Concrete. Specific. Names from the brief.
