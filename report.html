@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,64 +19,63 @@
      renders on warm cream paper with deep ink type and gold accents
      adjusted for legibility on a light background. */
   :root,
-  :root[data-theme="dark"]{
+  :root[data-theme="dark"],
+  :root[data-theme="light"]{
     --bg:#ffffff;
-    --ink:#1a1a1a;
-    --ink-soft:#f4f4f2;
-    --cream:#1a1a1a;
+    --ink:#111111;
+    --cream:#111111;
     --gold:#8a6e1d;
-    --gold-light:#a68220;
-    --rule:rgba(0,0,0,0.14);
-    --rule-soft:rgba(0,0,0,0.08);
-    --text:#1a1a1a;
-    --text-dim:#5a5550;
+    --gold-light:#8a6e1d;
+    --rule:rgba(0,0,0,0.18);
+    --rule-soft:rgba(0,0,0,0.1);
+    --text:#111111;
+    --text-dim:#555555;
     --crimson:#5a1a1a;
     --crimson-bright:#a82a1f;
     --gauntlet-consequence:#a82a1f;
-    --card:rgba(0,0,0,0.025);
-    --card-soft:rgba(0,0,0,0.015);
-    --card-strong:rgba(0,0,0,0.04);
+    color-scheme:light;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:var(--bg);color:var(--text);
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+  html,body{
+    background:#ffffff;color:#111111;
     min-height:100vh;
   }
+  body{
+    font-family:'Cormorant Garamond',serif;font-size:1.06rem;line-height:1.75;
+  }
 
-  /* The deliverable view is a whitepaper. The site topbar is hidden
-     entirely; the document fills the viewport on a pure white field. */
+  /* No site chrome on the deliverable page. */
   .tg-topbar{display:none !important;}
 
-  html, body{background:#ffffff !important;}
-
   main{
-    max-width:760px;margin:0 auto;padding:4.5rem 2.5rem 4rem;
+    max-width:760px;margin:0 auto;padding:4rem 2rem 3rem;
     background:#ffffff;
   }
 
-  /* ── DOCUMENT MODE: flat, flowing typography. No card backgrounds.
-     Hierarchy comes from rules, whitespace, and type size. Reads as a
-     Word-document deliverable, not a website panel. ────────────────── */
+  /* ── DOCUMENT MODE: Word-document typography.
+     Section heads combine the section number into the heading itself
+     ("Section I. Submitted Brief"). No uppercase mono eyebrows. No
+     gold accents in body content. ──────────────────────────────────── */
   .doc-section{
-    margin:3.2rem 0 0;
-    padding-top:2.4rem;
-    border-top:1px solid var(--rule);
+    margin:2.8rem 0 0;
+    padding-top:0;
+    border-top:none;
   }
-  .doc-section:first-of-type{ border-top:none; padding-top:0; }
-  .doc-section-head{ margin-bottom:1.6rem; }
+  .doc-section-head{ margin-bottom:1.2rem; }
   .doc-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; letter-spacing:0; text-transform:none;
+    color:var(--text-dim); margin-bottom:0.2rem;
   }
   .doc-h2{
-    font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700;
+    font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;
     color:var(--text); line-height:1.25; letter-spacing:-0.005em;
-    margin-bottom:0.4rem;
+    margin-bottom:0.5rem;
   }
   .doc-h2-sub{
-    font-family:'Cormorant Garamond',serif;
-    color:var(--text-dim); font-size:1rem; line-height:1.5;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.98rem; line-height:1.5;
+    margin-bottom:0.5rem;
   }
 
   /* Prose: the body text of any document section. Renders <pre>-style
@@ -91,59 +90,60 @@
     margin:0;
   }
 
-  /* EP article: one per EP report (or per Jules edit group). No card
-     background. Separated from siblings by whitespace and a thin top
-     rule. The header is a single inline row, not a stacked box. */
+  /* EP article: one per EP report. Subsection heading in serif bold,
+     italic byline below it, then the body prose flows naturally. */
   .doc-ep{
-    margin-top:2.4rem;
-    padding-top:2rem;
-    border-top:1px solid var(--rule-soft);
+    margin-top:2rem;
   }
-  .doc-ep:first-of-type{ margin-top:1.6rem; padding-top:0; border-top:none; }
+  .doc-ep:first-of-type{ margin-top:1.4rem; }
   .doc-ep-head{
-    display:flex; flex-wrap:wrap; align-items:baseline;
-    gap:0.6rem 1.2rem; margin-bottom:0.9rem;
+    margin-bottom:0.5rem;
   }
   .doc-ep-name{
-    font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700;
-    color:var(--text); line-height:1.2; letter-spacing:-0.005em;
-    display:flex; align-items:baseline; gap:0.8rem; flex-wrap:wrap;
+    font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700;
+    color:var(--text); line-height:1.25; letter-spacing:-0.005em;
+    margin-bottom:0.15rem;
+    display:block;
   }
   .doc-ep-role{
-    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.22em;
-    text-transform:uppercase; color:var(--gold); font-weight:400;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; letter-spacing:0; text-transform:none;
+    color:var(--text-dim); font-weight:400;
+    margin-left:0.55rem;
   }
+  .doc-ep-role::before{ content:'\2014  '; color:var(--text-dim); }
   .doc-ep-type{
-    margin-left:auto;
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
-    text-transform:uppercase; color:var(--text-dim);
-    padding:0.3rem 0.6rem; border:1px solid var(--rule);
+    display:block;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; letter-spacing:0; text-transform:none;
+    color:var(--text-dim); margin:0;
+    padding:0;border:none;
   }
   .doc-ep-headline{
     font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:1.15rem; line-height:1.45; color:var(--gold-light);
-    margin-bottom:1rem;
+    font-size:1.05rem; line-height:1.45; color:var(--text);
+    margin-bottom:0.8rem;
   }
 
-  /* Jules edit blocks live inside a doc-ep article when she has any. */
-  .doc-edit{ margin-bottom:1.6rem; }
+  /* Jules edit blocks. */
+  .doc-edit{ margin-bottom:1.4rem; }
   .doc-edit:last-child{ margin-bottom:0; }
   .doc-edit-meta{
-    display:flex; align-items:baseline; gap:0.7rem;
-    margin-bottom:0.4rem;
+    margin-bottom:0.3rem;
   }
   .doc-edit-op{
-    font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.22em;
-    text-transform:uppercase; color:var(--gold); font-weight:500;
-  }
-  .doc-edit-label{
     font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:0.95rem;
+    font-size:0.92rem; color:var(--text-dim); font-weight:400;
+  }
+  .doc-edit-op::after{ content:': '; }
+  .doc-edit-label{
+    font-family:'Cormorant Garamond',serif; font-size:0.95rem;
+    color:var(--text);
   }
   .doc-edit-rationale{
     font-family:'Cormorant Garamond',serif; font-style:italic;
     color:var(--text-dim); font-size:0.95rem; line-height:1.5;
-    margin-bottom:0.6rem;
+    margin-bottom:0.5rem;
   }
 
   /* Step indicator */
@@ -156,61 +156,44 @@
     text-transform:uppercase;color:var(--gold);white-space:nowrap;
   }
 
-  /* Cost anchor - sample-only, hidden under white-label */
+  /* Value Assessment table: serif line items with dotted leaders. No
+     box, no gold rule, no uppercase labels. */
   .cost-anchor{
-    margin:3rem 0; padding:1.8rem 2rem;
-    border:1px solid var(--rule); background:transparent;
-    position:relative;
+    margin:0.6rem 0 0; padding:0;
+    background:none;border:none;position:static;
   }
-  .cost-anchor::before{
-    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
-    background:var(--gold);
-  }
-  .cost-anchor-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
-  }
-  .cost-anchor-title{
-    font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;
-    color:var(--cream); line-height:1.2; margin-bottom:0.4rem;
-  }
-  .cost-anchor-title em{ font-style:italic; color:var(--gold-light); }
-  .cost-anchor-sub{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:1rem; margin-bottom:1.4rem;
-  }
+  .cost-anchor::before{ content:none; }
   .cost-list{ list-style:none; padding:0; margin:0 0 1.4rem; }
   .cost-list li{
     display:flex; justify-content:space-between; gap:1.2rem;
-    padding:0.55rem 0; border-bottom:1px dotted rgba(184,146,42,0.16);
+    padding:0.4rem 0; border-bottom:1px dotted rgba(0,0,0,0.18);
     font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--text);
   }
   .cost-list li:last-child{ border-bottom:none; }
   .cost-list-label{ flex:1; }
   .cost-list-range{
-    font-family:'DM Mono',monospace; font-size:0.78rem;
-    color:var(--gold-light); white-space:nowrap;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--text); white-space:nowrap;
   }
   .cost-anchor-totals{
     display:grid; grid-template-columns:1fr 1fr; gap:1.4rem;
-    padding-top:1.2rem; border-top:1px solid var(--rule);
+    padding-top:1rem; margin-top:0.4rem;
+    border-top:1px solid var(--rule-soft);
   }
-  .cost-total{ display:flex; flex-direction:column; gap:0.2rem; }
+  .cost-total{ display:flex; flex-direction:column; gap:0.15rem; }
   .cost-total-label{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
-    text-transform:uppercase; color:var(--text-dim);
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; color:var(--text-dim);
   }
   .cost-total-value{
-    font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700;
-    color:var(--gold-light);
+    font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700;
+    color:var(--text);
   }
   .cost-anchor-note{
-    margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid var(--rule);
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text); font-size:1rem; line-height:1.55;
-  }
-  .cost-anchor-note strong{
-    font-style:normal; color:var(--cream); font-weight:600;
+    margin-top:1.2rem; padding:0;
+    border:none;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--text); font-size:1rem; line-height:1.65;
   }
   @media (max-width:600px){
     .cost-anchor{ padding:1.4rem 1.2rem; }
@@ -218,138 +201,122 @@
     .cost-list li{ flex-direction:column; gap:0.2rem; }
   }
 
-  /* Title-page brand mark: small centered org identification at the top
-     of the document. The emblem sits above the publisher name and a
-     subtle tagline. No card, no border, no horizontal layout - it
-     reads as a whitepaper masthead. */
+  /* Title-page masthead: emblem + publisher line, left-aligned and
+     restrained. Reads like the header of a corporate whitepaper. */
   .brand-block-top{
-    text-align:center;
-    margin:0 0 3.2rem;
-    padding:0;
-    background:none;border:none;
-    display:block;
+    display:flex;align-items:center;gap:0.85rem;
+    margin:0 0 4rem;
+    padding:0 0 1.2rem;
+    border-bottom:1px solid var(--rule-soft);
+    background:none;border-top:none;border-left:none;border-right:none;
   }
   .brand-block-top .brand-mark{
-    margin:0 auto 1rem;
-    width:54px;height:54px;
-    background:transparent;
-    display:block;
-    overflow:visible;
+    flex:0 0 auto;width:36px;height:36px;
+    background:transparent;border-radius:0;
+    overflow:visible;display:block;
   }
   .brand-block-top .brand-mark img{
     width:100%;height:100%;object-fit:contain;border-radius:0;display:block;
   }
-  .brand-block-top .brand-text{display:block;}
+  .brand-block-top .brand-text{display:flex;flex-direction:column;gap:0;}
   .brand-block-top .brand-name{
-    font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;
-    color:var(--text);letter-spacing:0.08em;text-transform:uppercase;
-    margin-bottom:0.25rem;
+    font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
+    color:var(--text);letter-spacing:0.06em;text-transform:uppercase;
   }
   .brand-block-top .brand-tagline{
     font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:0.92rem;letter-spacing:0;text-transform:none;
+    font-size:0.85rem;letter-spacing:0;text-transform:none;
     color:var(--text-dim);
   }
   .brand-block-top .brand-credit{display:none;}
 
-  /* Footer credit: small centered line at the very bottom of the
-     document, like the colophon line on a printed report. */
+  /* Footer colophon: single small centered line at the bottom. */
   .brand-block-footer{
     text-align:center;
     margin:4rem 0 0;
-    padding:1.6rem 0 0;
-    background:none;border:none;border-top:1px solid var(--rule);
+    padding:1.4rem 0 0;
+    background:none;border:none;border-top:1px solid var(--rule-soft);
     display:block;
   }
-  .brand-block-footer .brand-mark{display:none;}
+  .brand-block-footer .brand-mark,
+  .brand-block-footer .brand-tagline{display:none;}
   .brand-block-footer .brand-text{display:inline;}
   .brand-block-footer .brand-name{
-    font-family:'Playfair Display',serif;font-size:0.8rem;font-weight:700;
-    color:var(--text-dim);letter-spacing:0.18em;text-transform:uppercase;
-    display:inline;
-  }
-  .brand-block-footer .brand-tagline{display:none;}
-  .brand-block-footer .brand-credit{
-    display:block;margin:0.5rem 0 0;
     font-family:'Cormorant Garamond',serif;font-style:italic;
     font-size:0.85rem;color:var(--text-dim);letter-spacing:0;
-    text-transform:none;
+    text-transform:none;font-weight:400;display:inline;
   }
-  @media (max-width:640px){
-    .brand-block-top{margin-bottom:2.4rem;}
+  .brand-block-footer .brand-credit{
+    display:block;margin:0.3rem 0 0;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.8rem;color:var(--text-dim);
   }
 
-  /* Report cover: document type label (small mono), subject (large
-     serif), then a definition-list grid for metadata. Sits below the
-     centered title-page masthead and above the Table of Contents.
-     No bottom border - the TOC's top border separates cover from
-     contents. */
+  /* Report cover: small italic subtitle, large serif title, italic
+     subline of metadata. Left-aligned, like a Word document title
+     page. No center text, no uppercase mono labels. */
   .report-header{
-    margin-bottom:0;
+    margin-bottom:2.4rem;
     padding-bottom:0;
   }
   .report-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.3em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;
-    text-align:center;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.05rem;letter-spacing:0;text-transform:none;
+    color:var(--text-dim);margin-bottom:0.4rem;
+    text-align:left;
   }
   .report-title{
-    font-family:'Playfair Display',serif;font-size:2.6rem;
+    font-family:'Playfair Display',serif;font-size:2.4rem;
     font-weight:700;color:var(--text);line-height:1.15;
-    letter-spacing:-0.01em;margin-bottom:2rem;
-    text-align:center;
+    letter-spacing:-0.01em;margin-bottom:1.6rem;
+    text-align:left;
   }
   .report-meta-grid{
-    display:grid;grid-template-columns:1fr;gap:0.5rem;
-    margin:0 auto;
-    max-width:480px;
+    display:grid;grid-template-columns:1fr;gap:0.35rem;
+    margin:0;
+    max-width:none;
   }
   .report-meta-row{
-    display:grid;grid-template-columns:160px 1fr;gap:1.4rem;
+    display:grid;grid-template-columns:170px 1fr;gap:1rem;
     align-items:baseline;
   }
   .report-meta-row dt{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);
-    text-align:right;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;letter-spacing:0;text-transform:none;
+    color:var(--text-dim);text-align:left;
   }
   .report-meta-row dd{
-    font-family:'Cormorant Garamond',serif;font-size:1rem;
+    font-family:'Cormorant Garamond',serif;font-size:0.98rem;
     color:var(--text);margin:0;line-height:1.45;
   }
   @media (max-width:600px){
-    .report-meta-row{grid-template-columns:1fr;gap:0.15rem;}
-    .report-meta-row dt{text-align:left;}
+    .report-meta-row{grid-template-columns:1fr;gap:0.05rem;margin-bottom:0.3rem;}
   }
 
-  /* Composite */
+  /* Executive summary: composite score rendered as flowing text in
+     the Word-doc style. Big number alongside labeled lines, all
+     left-aligned, no box, no gold rule, no uppercase mono. */
   .composite{
-    margin:2.5rem 0;
-    border:1px solid var(--rule);background:transparent;
-    padding:1.8rem 2rem;
-    display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;
-    position:relative;overflow:hidden;
+    margin:0.6rem 0 1.8rem;
+    display:grid;grid-template-columns:auto 1fr;gap:1.6rem;align-items:center;
+    background:transparent;border:none;padding:0;
   }
-  .composite::before{
-    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-    background:var(--gold);
-  }
-  .composite.is-agreement::before{background:var(--gold-light);}
-  .composite.is-conflict::before{background:var(--crimson-bright);}
+  .composite::before{ content:none; }
   .composite-number{
-    font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;
-    color:var(--cream);line-height:1;letter-spacing:-0.02em;
+    font-family:'Playfair Display',serif;font-size:3.4rem;font-weight:700;
+    color:var(--text);line-height:1;letter-spacing:-0.02em;
   }
   .composite-number .of{
-    font-size:1.4rem;color:var(--text-dim);font-weight:400;
+    font-size:1.2rem;color:var(--text-dim);font-weight:400;
   }
-  .composite-info{display:flex;flex-direction:column;gap:0.35rem;}
+  .composite-info{display:flex;flex-direction:column;gap:0.3rem;}
   .composite-verdict-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.95rem;letter-spacing:0;text-transform:none;
+    color:var(--text-dim);
   }
   .composite-verdict{
-    font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;
+    font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
     color:var(--text);line-height:1.25;
   }
   .composite.is-conflict .composite-verdict{color:var(--crimson-bright);}
@@ -358,8 +325,9 @@
     color:var(--text);font-size:1rem;line-height:1.5;
   }
   .composite-spread{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
-    text-transform:uppercase;color:var(--text-dim);
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.92rem;letter-spacing:0;text-transform:none;
+    color:var(--text-dim);
   }
 
   /* Section */
@@ -417,25 +385,33 @@
   .finding.is-error .finding-text{color:var(--text-dim);font-style:italic;}
   .finding.is-error .finding-score{color:var(--text-dim);}
 
-  /* Routing */
+  /* Recommendation: plain document body. No callout box, no left
+     rule, no eyebrow. Subheading + paragraph + inline next-step
+     links. */
   .routing{
-    margin:2.8rem 0 0;
-    border-left:3px solid var(--crimson-bright);
-    padding:1.4rem 1.6rem;background:rgba(192,57,43,0.06);
-  }
-  .routing-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.26em;
-    text-transform:uppercase;color:var(--crimson-bright);margin-bottom:0.6rem;
+    margin:0.6rem 0 0;
+    padding:0;background:none;border:none;
   }
   .routing-title{
-    font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
-    color:var(--cream);line-height:1.2;margin-bottom:0.7rem;
+    font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;
+    color:var(--text);line-height:1.3;margin-bottom:0.5rem;
   }
   .routing-body{
-    font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.65;
-    color:var(--text);margin-bottom:1.1rem;
+    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.65;
+    color:var(--text);margin-bottom:0.9rem;
   }
-  .routing-cta-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
+  .routing-cta-row{
+    display:flex;gap:1.2rem;flex-wrap:wrap;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:0.98rem;
+  }
+  .routing-cta-row a{
+    color:var(--text);text-decoration:underline;
+    text-decoration-color:var(--text-dim);text-underline-offset:3px;
+  }
+  .routing-cta-row a:hover{
+    color:var(--gold);text-decoration-color:var(--gold);
+  }
 
   /* Actions: minimal text-link buttons. The deliverable is a document,
      not a website. Actions sit quietly at the bottom for export and
@@ -498,47 +474,46 @@
   /* ── Deliverable sections (brief + work log) ──────────────────────────
      Sourced from sessionStorage. If absent, the sections do not render
      and the report degrades to the chamber-view it has shipped with. */
-  /* Table of Contents - typeset, not nav chrome.
-     Renders as a vertical list of section links with section labels
-     left, titles right, and a thin dotted leader between them. Reads
-     like the front matter of a printed report. */
+  /* Table of Contents - Word-document style.
+     "Contents" as italic serif label, then a clean list of section
+     titles. Dotted leaders connect title to section number on the
+     right. No uppercase mono, no boxes. */
   .toc{
     display:block;
-    padding:1.8rem 0 2.4rem;
-    margin:0 0 3rem;
-    border-top:1px solid var(--rule);
-    border-bottom:1px solid var(--rule);
+    padding:1.4rem 0 1.8rem;
+    margin:0 0 2.4rem;
+    border-top:1px solid var(--rule-soft);
+    border-bottom:1px solid var(--rule-soft);
     background:transparent;
   }
   .toc-label{
     display:block;
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
-    text-transform:uppercase; color:var(--gold);
-    margin-bottom:1.2rem;
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:1.1rem; letter-spacing:0; text-transform:none;
+    color:var(--text);
+    margin-bottom:0.8rem;
   }
   .toc a{
     display:flex; align-items:baseline;
-    padding:0.45rem 0;
+    padding:0.32rem 0;
     font-family:'Cormorant Garamond',serif; font-size:1rem;
     color:var(--text); text-decoration:none;
     border:none;
     line-height:1.4;
     transition:color 0.15s;
   }
-  .toc a + a{ border-top:1px dotted var(--rule); }
   .toc a:hover{ color:var(--gold); }
   .toc a::after{
     content:''; flex:1;
-    border-bottom:1px dotted rgba(0,0,0,0.18);
+    border-bottom:1px dotted rgba(0,0,0,0.22);
     margin:0 0.6rem;
-    transform:translateY(-0.2em);
+    transform:translateY(-0.25em);
   }
   .toc a .toc-num{
-    flex:0 0 auto;
-    font-family:'DM Mono',monospace; font-size:0.6rem;
-    letter-spacing:0.18em; text-transform:uppercase;
+    flex:0 0 auto; order:2;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.95rem; letter-spacing:0; text-transform:none;
     color:var(--text-dim);
-    order:2; flex:0 0 auto;
   }
 
   .deliverable{
@@ -1027,8 +1002,7 @@
     return `
       <section class="doc-section" id="brief">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Section I</div>
-          <h2 class="doc-h2">Submitted Brief</h2>
+          <h2 class="doc-h2">I. Submitted Brief</h2>
         </header>
         <div class="doc-prose">${escapeHtml(brief)}</div>
       </section>
@@ -1067,9 +1041,8 @@
     return `
       <section class="doc-section" id="value">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Section VI</div>
-          <h2 class="doc-h2">Value Assessment</h2>
-          <p class="doc-h2-sub">Real freelance and boutique-consultant rates for the line items in this deliverable.</p>
+          <h2 class="doc-h2">VI. Value Assessment</h2>
+          <p class="doc-h2-sub">Freelance and boutique-consultant rates for the line items in this deliverable.</p>
         </header>
         <div class="cost-anchor">
         <ul class="cost-list">${linesHtml}</ul>
@@ -1164,8 +1137,7 @@
     return `
       <section class="doc-section" id="reports">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Section II</div>
-          <h2 class="doc-h2">Executive Producer Reports</h2>
+          <h2 class="doc-h2">II. Executive Producer Reports</h2>
           <p class="doc-h2-sub">${list.length} report${list.length === 1 ? '' : 's'}, one per discipline. Each Executive Producer evaluated the brief through their specific lens.</p>
         </header>
         ${articlesHtml}
@@ -1209,8 +1181,7 @@
     return `
       <section class="doc-section" id="work">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Section III</div>
-          <h2 class="doc-h2">Copy Edits</h2>
+          <h2 class="doc-h2">III. Copy Edits</h2>
           <p class="doc-h2-sub">${totalRevs} ${totalRevs === 1 ? 'revision' : 'revisions'} to the brief. Jules is the only Executive Producer who edits the brief itself; the rest produce reports.</p>
         </header>
         ${articlesHtml}
@@ -1322,15 +1293,14 @@
     const routingBlock = `
       <section class="doc-section" id="next">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Section V</div>
-          <h2 class="doc-h2">Recommendation</h2>
+          <h2 class="doc-h2">V. Recommendation</h2>
         </header>
         <div class="routing">
           <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
           <p class="routing-body">${escapeHtml(routing.body)}</p>
           <div class="routing-cta-row">
-            ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)}) →</a>` : ''}
-            <a class="btn btn-outline" href="/intake.html">Bring another idea →</a>
+            ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)})</a>` : ''}
+            <a class="btn btn-outline" href="/intake.html">Bring another idea</a>
           </div>
         </div>
       </section>
@@ -1360,25 +1330,24 @@
     const epReportsSection = renderEpReportsSection(epReportsList);
     const workSection      = renderWorkSection(sessionRevisions);
 
-    // Table of Contents rendered as a typeset front-matter list.
-    // Section order matches on-page order: Executive Summary > I Brief
-    // > II EP Reports > III Copy Edits > IV Panel Findings > V
-    // Recommendation > VI Value Assessment.
+    // Table of Contents. Section labels match the on-page headings:
+    // "Executive Summary" first, then "I." through "VI." for the
+    // numbered sections that render.
     const tocItems = [
-      { id: 'verdict', num: 'Executive Summary', label: 'Verdict' },
+      { id: 'verdict', num: '', label: 'Executive Summary' },
     ];
     let romanIdx = 0;
     const roman = ['I','II','III','IV','V','VI','VII','VIII'];
-    if (briefSection)     tocItems.push({ id: 'brief',   num: 'Section ' + roman[romanIdx++], label: 'Submitted Brief' });
-    if (epReportsSection) tocItems.push({ id: 'reports', num: 'Section ' + roman[romanIdx++], label: 'Executive Producer Reports' });
-    if (workSection)      tocItems.push({ id: 'work',    num: 'Section ' + roman[romanIdx++], label: 'Copy Edits' });
-    tocItems.push({ id: 'panel', num: 'Section ' + roman[romanIdx++], label: 'Panel Findings' });
-    tocItems.push({ id: 'next',  num: 'Section ' + roman[romanIdx++], label: 'Recommendation' });
-    if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', num: 'Section ' + roman[romanIdx++], label: 'Value Assessment' });
+    if (briefSection)     tocItems.push({ id: 'brief',   num: roman[romanIdx++] + '.', label: 'Submitted Brief' });
+    if (epReportsSection) tocItems.push({ id: 'reports', num: roman[romanIdx++] + '.', label: 'Executive Producer Reports' });
+    if (workSection)      tocItems.push({ id: 'work',    num: roman[romanIdx++] + '.', label: 'Copy Edits' });
+    tocItems.push({ id: 'panel', num: roman[romanIdx++] + '.', label: 'Panel Findings' });
+    tocItems.push({ id: 'next',  num: roman[romanIdx++] + '.', label: 'Recommendation' });
+    if (shouldShowCostAnchor(data)) tocItems.push({ id: 'value', num: roman[romanIdx++] + '.', label: 'Value Assessment' });
     const tocBlock = `
       <nav class="toc" aria-label="Table of contents">
         <span class="toc-label">Contents</span>
-        ${tocItems.map(t => `<a href="#${escapeHtml(t.id)}"><span class="toc-title">${escapeHtml(t.label)}</span><span class="toc-num">${escapeHtml(t.num)}</span></a>`).join('')}
+        ${tocItems.map(t => `<a href="#${escapeHtml(t.id)}"><span class="toc-title">${t.num ? escapeHtml(t.num) + ' ' : ''}${escapeHtml(t.label)}</span></a>`).join('')}
       </nav>
     `;
 
@@ -1440,8 +1409,7 @@
 
       <section class="doc-section" id="verdict">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Executive Summary</div>
-          <h2 class="doc-h2">Verdict</h2>
+          <h2 class="doc-h2">Executive Summary</h2>
         </header>
         ${compositeBlock}
       </section>
@@ -1450,8 +1418,7 @@
 
       <section class="doc-section" id="panel">
         <header class="doc-section-head">
-          <div class="doc-eyebrow">Section IV</div>
-          <h2 class="doc-h2">Panel Findings</h2>
+          <h2 class="doc-h2">IV. Panel Findings</h2>
           <p class="doc-h2-sub">${escapeHtml(panelTitle)}. Each judge scored independently and provided a written critique.</p>
         </header>
         ${findingBlocks}
