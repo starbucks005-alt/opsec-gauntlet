@@ -835,19 +835,35 @@
       <button class="tg-ig-btn" id="tg-ig-close-result">Close</button>
     `;
 
-    // Each "Bring this one" pre-fills intake.html via sessionStorage and
-    // navigates. Intake reads tg_prefill_title + tg_prefill_description
-    // on load and pre-populates the form.
+    // Picking a candidate seeds the SAME brief key the pasted-idea path
+    // uses (tg_visitor_brief), then walks the client down the corridor
+    // where the EPs give personalized feedback on this specific idea.
+    // The corridor's own "Enter the Chamber" CTA carries them to the
+    // judges when they are ready. We also keep the intake prefill keys so
+    // the Chamber intake pre-populates once they get there.
     bodyEl.querySelectorAll('[data-pick-idea]').forEach(btn => {
       btn.addEventListener('click', () => {
         const i = parseInt(btn.getAttribute('data-pick-idea'), 10);
         const chosen = ideas[i];
         if (!chosen) return;
+        const brief = (String(chosen.title || '') + '\n\n' + String(chosen.description || '')).trim();
         try {
+          sessionStorage.setItem('tg_visitor_brief',       brief);
           sessionStorage.setItem('tg_prefill_title',       chosen.title);
           sessionStorage.setItem('tg_prefill_description', chosen.description);
         } catch(_){}
-        window.location.href = '/intake.html';
+        close();
+        // Re-fetch the corridor briefings against the new brief so each EP
+        // wing reacts to this idea, then scroll the client into the corridor.
+        if (window.TGCorridor && typeof window.TGCorridor.refresh === 'function') {
+          window.TGCorridor.refresh();
+        }
+        const corridor = document.getElementById('corridor-wings');
+        if (corridor && typeof corridor.scrollIntoView === 'function') {
+          corridor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.location.href = '/#corridor-wings';
+        }
       });
     });
 
