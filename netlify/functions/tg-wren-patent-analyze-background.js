@@ -30,7 +30,7 @@ const { createClient } = require('@supabase/supabase-js');
 const voiceScripts = require('../../config/voice_scripts.json');
 
 const MODEL = 'claude-sonnet-4-6';
-const MAX_TOKENS = 2500;
+const MAX_TOKENS = 4000;
 const BRIEF_MAX = 6000;
 const NAME_MAX  = 60;
 const BRIEF_MIN = 30;
