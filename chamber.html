@@ -1046,6 +1046,94 @@
     cassidy_mercer: "Cassidy already clocked the pause before you answered."
   };
 
+  // ── Heckle engine ────────────────────────────────────────────────────────
+  // During the conversation phase, audience judges (the six not picked) throw
+  // heckles at the PANEL judge who just spoke - never at the client. Lines are
+  // cast lore drawn from each judge's profile (judges_master.json
+  // inter_judge_dynamics + character_notes). Each line optionally names its
+  // ideal heckler(s); if one is in the audience the line fires in their voice,
+  // otherwise it falls back to a random audience judge. Hard cap of 3 per chat.
+  //
+  // Keyed by TARGET judge id (the panel judge being teased).
+  const HECKLE_LINES = {
+    selene_voss: [
+      { hecklers: ['devon_sloane'], line: "New assistant behind Selene today. I liked the last one. Briefly." },
+      { hecklers: ['devon_sloane'], line: "That is a fresh face carrying Selene's bag. Give it a week." },
+      { hecklers: [], line: "Selene has already counted the long dashes. She just will not say it twice." },
+    ],
+    marcus_holt: [
+      { hecklers: ['devon_sloane'], line: "Marcus brought the whole entourage again. Say hi to the assistants I have named myself." },
+      { hecklers: ['grace_nakamura'], line: "Three assistants, Marcus. I will say nothing further." },
+      { hecklers: [], line: "Stagehands are earning it tonight, peeling Marcus's people off the stage." },
+    ],
+    priya_anand: [
+      { hecklers: [], line: "Notice the room went quiet. That happens when Priya leans in." },
+      { hecklers: ['marcus_holt'], line: "Even I sit up when Priya is the one asking." },
+      { hecklers: [], line: "Whatever Priya just asked, answer it straight. She can tell." },
+    ],
+    raymond_chen: [
+      { hecklers: ['astrid_lund'], line: "That was almost the nineteen-nineties talking, Raymond. Almost." },
+      { hecklers: [], line: "Raymond read your brief twice before sunrise. He is not impressed yet. But he read it." },
+      { hecklers: ['astrid_lund'], line: "Careful, Raymond. I am keeping a tally of the old-school ones." },
+    ],
+    astrid_lund: [
+      { hecklers: ['raymond_chen'], line: "Astrid is enjoying this far too much. She always does." },
+      { hecklers: [], line: "Astrid spotted the legal exposure three answers ago. She is deciding how to phrase it for sport." },
+      { hecklers: [], line: "Best-dressed person in the room and she knows it. Listen anyway." },
+    ],
+    osei_mensah: [
+      { hecklers: [], line: "Osei spoke. Write that down. It does not happen often." },
+      { hecklers: ['astrid_lund'], line: "He speaks. Everyone lean in." },
+    ],
+    grace_nakamura: [
+      { hecklers: ['devon_sloane'], line: "Still chasing that second laugh out of the Admiral. Someday." },
+      { hecklers: [], line: "The Admiral does not do warm. She does correct. Take the correct." },
+    ],
+    devon_sloane: [
+      { hecklers: [], line: "Devon is about to make this feel like a hug. Do not be fooled, the read is real." },
+      { hecklers: ['cassidy_mercer'], line: "Devon notices everything in the room. He just says it out loud." },
+    ],
+    cassidy_mercer: [
+      { hecklers: [], line: "Cassidy already clocked the pause before your answer. She always does." },
+      { hecklers: ['devon_sloane'], line: "Relax, Cassidy is not judging you. She is just reading you. Different thing entirely." },
+    ],
+  };
+
+  let _heckleCount = 0;
+  const HECKLE_CAP = 3;
+  function resetHeckles(){ _heckleCount = 0; }
+
+  function pickHeckle(targetId, audienceIds){
+    const pool = HECKLE_LINES[targetId] || [];
+    if (!pool.length) return null;
+    const withHeckler = pool.filter(h => h.hecklers && h.hecklers.some(id => audienceIds.includes(id)));
+    const generic     = pool.filter(h => !h.hecklers || !h.hecklers.length);
+    let choices = withHeckler.length ? withHeckler : (generic.length ? generic : pool);
+    const pick = choices[Math.floor(Math.random() * choices.length)];
+    let speakerId = null;
+    if (pick.hecklers && pick.hecklers.length){
+      const inAud = pick.hecklers.filter(id => audienceIds.includes(id));
+      if (inAud.length) speakerId = inAud[Math.floor(Math.random() * inAud.length)];
+    }
+    if (!speakerId && audienceIds.length) speakerId = audienceIds[Math.floor(Math.random() * audienceIds.length)];
+    return speakerId ? { speakerId, line: pick.line } : null;
+  }
+
+  // Maybe throw one heckle at the judge who just spoke. Respects the cap.
+  async function maybeHeckle(targetJudge, audienceList, probability){
+    if (_heckleCount >= HECKLE_CAP) return;
+    if (Math.random() > (probability == null ? 0.75 : probability)) return;
+    const audienceIds = audienceList.map(j => j.id);
+    const picked = pickHeckle(targetJudge.id, audienceIds);
+    if (!picked) return;
+    const speaker = audienceList.find(j => j.id === picked.speakerId);
+    if (!speaker) return;
+    await wait(700);
+    addChatMessage({ kind: 'audience', name: speaker.name, role: 'Audience', body: picked.line, judgeId: speaker.id });
+    _heckleCount++;
+    await wait(500);
+  }
+
   // Recommended triad is computed by the cosine-sim engine in tg-recommend.js
   // using a placeholder requirement vector. When Gate D wires the intake
   // form, the vector becomes submission-derived instead of default.
@@ -1479,6 +1567,8 @@
     // judges-taking-seats sequence ships in a later dialogue gate.
     if (!chatStream) return;
     chatStream.innerHTML = '';
+    // Input stays closed until the conversation phase opens it for an answer.
+    if (chatInput) chatInput.disabled = true;
     addChatMessage({ kind:'system', body:'The judges are taking their seats.' });
   }
 
@@ -1500,9 +1590,11 @@
     const firstAudience = audienceList[0];
 
     if (state.submissionId && state.selected.size === 3){
-      // Real Stage 1: three judges, parallel server-side.
+      // Real chamber: conversation phase (judges question the client),
+      // then scoring (unchanged), then the conversation summary is stashed
+      // for the report. runChamber orchestrates all three.
       setTimeout(() => {
-        runEvaluation(chosenList, firstAudience);
+        runChamber(chosenList, audienceList, firstAudience);
       }, startMs);
       return;
     }
@@ -1537,6 +1629,14 @@
 
   // Wait helper for sequencing the stages with breathing room between.
   function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+  // Module-scope visitor name read. (Other functions declare their own
+  // local visitorName; the conversation-phase functions use this helper so
+  // they do not depend on that local scope.)
+  function tgVisitorName(){
+    try { return (sessionStorage.getItem('tg_visitor_name') || '').trim(); }
+    catch(_) { return ''; }
+  }
 
   // Generic single-stage runner. Posts to the generic stage evaluator
   // with a dimension parameter, then staggers the 3 findings into the
@@ -1642,6 +1742,101 @@
     return payload;
   }
 
+  // ── Phase 1: the conversation ────────────────────────────────────────────
+  // Before any scoring, the three panel judges question the client. Fetches
+  // 2-3 questions per judge, presents them round-robin (judge asks -> the
+  // gallery may heckle that judge -> client answers in the input box), and
+  // returns the Q&A transcript. Returns null on failure so the caller can
+  // skip straight to scoring (graceful degradation).
+  async function runConversation(chosenList, audienceList){
+    const triad = chosenList.map(j => j.id);
+
+    let questionsPayload = null;
+    try {
+      showTyping(chosenList[0].name);
+      const resp = await fetch('/.netlify/functions/tg-chamber-questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ submission_id: state.submissionId, triad, visitor_name: tgVisitorName() }),
+      });
+      hideTyping();
+      if (resp.ok) questionsPayload = await resp.json();
+    } catch (err) {
+      hideTyping();
+      console.warn('[chamber-questions] failed', err);
+    }
+    if (!questionsPayload || !Array.isArray(questionsPayload.questions)) return null;
+
+    const byId = new Map(questionsPayload.questions.map(q => [q.judge_id, q]));
+    const askable = chosenList.filter(j => {
+      const e = byId.get(j.id);
+      return e && !e.error && Array.isArray(e.questions) && e.questions.length;
+    });
+    if (!askable.length) return null;
+
+    addChatMessage({ kind:'system', body:'Before the scoring, the panel has questions. Answer each judge in the box below.' });
+    await wait(900);
+
+    const qa = [];
+    for (const judge of askable){
+      const entry = byId.get(judge.id);
+      showTyping(judge.name);
+      await wait(1400);
+      hideTyping();
+      addChatMessage({
+        kind:  'active',
+        name:  judge.name,
+        role:  'On the panel · questions',
+        body:  entry.questions.join('\n\n'),
+        judgeId: judge.id,
+      });
+      // The gallery reacts to the judge who just spoke - never to the client.
+      await maybeHeckle(judge, audienceList);
+      // Gate: wait for the client to answer this judge before the next steps in.
+      const answer = await awaitClientAnswer();
+      qa.push({ judge_id: judge.id, judge_name: judge.name, questions: entry.questions, answer });
+    }
+
+    await wait(900);
+    addChatMessage({ kind:'system', body:'The panel has what it needs. Stepping back to score.' });
+    await wait(1200);
+    return qa;
+  }
+
+  // ── Full chamber sequence ──────────────────────────────────────────────────
+  // Phase 1 conversation, then Phase 2 scoring (unchanged), with the
+  // conversation summary generated and stashed for the report in parallel
+  // with scoring so it is ready by the time the client opens the report.
+  async function runChamber(chosenList, audienceList, firstAudience){
+    resetHeckles();
+
+    let qa = null;
+    try { qa = await runConversation(chosenList, audienceList); }
+    catch (err) { console.warn('[chamber] conversation phase failed', err); qa = null; }
+
+    // Stash the raw Q&A immediately; fetch the prose summary in the
+    // background (it only needs the Q&A, which is now complete). Both land
+    // in sessionStorage where report.html reads them. Does NOT touch scores.
+    if (qa && qa.length){
+      try { sessionStorage.setItem('tg_conversation_qa', JSON.stringify(qa)); } catch(_){}
+      fetch('/.netlify/functions/tg-chamber-summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ submission_id: state.submissionId, visitor_name: tgVisitorName(), qa }),
+      })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (data && data.summary){
+            try { sessionStorage.setItem('tg_conversation_summary', data.summary); } catch(_){}
+          }
+        })
+        .catch(err => console.warn('[chamber-summary] failed', err));
+    }
+
+    // Phase 2: scoring. Unchanged - brief-only, answers do not move scores.
+    await runEvaluation(chosenList, firstAudience);
+  }
+
   // Sequence orchestrator. Runs all 8 dimensions back-to-back, with a
   // transition system message between each. After every stage settles,
   // drops the cross-dimension composite, the audience heckle, and the
@@ -1696,8 +1891,9 @@
       });
     }
 
-    // Audience heckle.
-    if (firstAudience){
+    // Audience heckle (closing beat). Respects the per-chat heckle cap so
+    // the conversation-phase heckles plus this one never exceed it.
+    if (firstAudience && _heckleCount < HECKLE_CAP){
       await wait(1200);
       const targetedHeckle = chosenList[0] && HECKLES_ABOUT_ACTIVE[chosenList[0].id];
       addChatMessage({
@@ -1707,6 +1903,7 @@
         body: targetedHeckle || judgeLine(firstAudience.id, 'audience'),
         judgeId: firstAudience.id,
       });
+      _heckleCount++;
     }
 
     // Post-Chamber handoff. The client returns to the corridor on the
@@ -1819,14 +2016,35 @@
     return `Across ${noun}, the panel is partially aligned. Composite ${composite10}/10.`;
   }
 
+  // The conversation phase parks a resolver here via awaitClientAnswer();
+  // onChatSubmit fulfils it with the client's typed answer. When no answer
+  // is awaited (e.g. during scoring), the input is disabled so nothing fires.
+  let answerResolver = null;
   function onChatSubmit(e){
     e.preventDefault();
     const raw = chatInput.value.trim();
     if (!raw) return;
-    addChatMessage({ kind:'user', name:'You', body:raw });
+    addChatMessage({ kind:'user', name:(tgVisitorName() || 'You'), body:raw });
     chatInput.value = '';
-    // Real judge response wiring lands in a later gate. For now, the user's
-    // message simply enters the stream so the input loop is testable.
+    if (answerResolver){
+      const resolve = answerResolver;
+      answerResolver = null;
+      if (chatInput) chatInput.disabled = true;
+      resolve(raw);
+    }
+  }
+
+  // Returns a Promise that resolves with the client's next typed answer.
+  // Enables and focuses the input; onChatSubmit disables it again on submit.
+  function awaitClientAnswer(){
+    return new Promise(resolve => {
+      answerResolver = resolve;
+      if (chatInput){
+        chatInput.disabled = false;
+        chatInput.placeholder = 'Answer the panel...';
+        chatInput.focus();
+      }
+    });
   }
 
   if (chatForm) chatForm.addEventListener('submit', onChatSubmit);

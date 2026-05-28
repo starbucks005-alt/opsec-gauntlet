@@ -124,6 +124,12 @@
   [functions.tg-evaluate-stage]
     timeout = 26
 
+  [functions.tg-chamber-questions]
+    timeout = 26
+
+  [functions.tg-chamber-summary]
+    timeout = 26
+
   [functions.tg-evaluation-get]
     timeout = 10
 

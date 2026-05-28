@@ -90,6 +90,45 @@
     margin:0;
   }
 
+  /* Panel conversation: the Q&A that preceded scoring. A record of what
+     the judges asked and the client answered. Distinct from the scored
+     findings - it informed the panel's read but carries no scores. */
+  .doc-conversation{ margin-top:0.4rem; margin-bottom:1.8rem; }
+  .doc-conversation-note{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:0.98rem; line-height:1.55;
+    margin-bottom:1.1rem;
+  }
+  .doc-conversation-summary{ margin-bottom:1.4rem; }
+  .doc-conversation-summary p{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.05rem; line-height:1.75; color:var(--text);
+    margin:0 0 0.8rem;
+  }
+  .doc-qa-block{
+    border-left:2px solid var(--rule, rgba(0,0,0,0.14));
+    padding-left:1rem; margin-bottom:1.1rem;
+  }
+  .doc-qa-judge{
+    font-family:'Playfair Display',serif; font-weight:700;
+    font-size:1.02rem; color:var(--text); margin-bottom:0.3rem;
+  }
+  .doc-qa-questions{
+    margin:0 0 0.5rem 0; padding-left:1.1rem;
+    font-family:'Cormorant Garamond',serif; font-size:1rem;
+    line-height:1.55; color:var(--text); font-style:italic;
+  }
+  .doc-qa-questions li{ margin-bottom:0.2rem; }
+  .doc-qa-answer{
+    font-family:'Cormorant Garamond',serif; font-size:1.02rem;
+    line-height:1.65; color:var(--text); margin:0;
+  }
+  .doc-qa-answer-label{
+    font-family:'DM Mono',monospace; font-size:0.58rem;
+    letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--text-dim); margin-right:0.4rem;
+  }
+
   /* EP article: one per EP report. Subsection heading in serif bold,
      italic byline below it, then the body prose flows naturally. */
   .doc-ep{
@@ -1549,6 +1588,51 @@
     `;
   }
 
+  // Panel conversation record. The Q&A the judges ran before scoring.
+  // Sample mode reads data.conversation_summary / data.conversation_qa;
+  // live mode reads sessionStorage (stashed by the chamber). Returns ''
+  // when there is no conversation to show. Carries no scores - it is a
+  // record of the exchange that informed the panel's read.
+  function renderConversation(data){
+    const isSample = !!(data && data.sample_id);
+    let summary = (data && typeof data.conversation_summary === 'string') ? data.conversation_summary.trim() : '';
+    let qa      = (data && Array.isArray(data.conversation_qa)) ? data.conversation_qa : null;
+    // Only fall back to sessionStorage in live mode. Sample reports must not
+    // pick up a conversation left in sessionStorage by an earlier live run.
+    if (!isSample) {
+      if (!summary) { try { summary = (sessionStorage.getItem('tg_conversation_summary') || '').trim(); } catch(_){} }
+      if (!qa)      { try { qa = JSON.parse(sessionStorage.getItem('tg_conversation_qa') || '[]'); } catch(_){ qa = []; } }
+    }
+    if (!summary && (!Array.isArray(qa) || !qa.length)) return '';
+
+    const summaryHtml = summary
+      ? '<div class="doc-conversation-summary">'
+          + summary.split(/\n\n+/).map(p => '<p>' + escapeHtml(p.trim()) + '</p>').join('')
+          + '</div>'
+      : '';
+
+    const qaHtml = (Array.isArray(qa) && qa.length)
+      ? qa.map(item => {
+          const qs = Array.isArray(item.questions)
+            ? item.questions.map(q => '<li>' + escapeHtml(q) + '</li>').join('')
+            : '';
+          const ans = item.answer ? escapeHtml(item.answer) : '(no answer recorded)';
+          return '<div class="doc-qa-block">'
+            + '<div class="doc-qa-judge">' + escapeHtml(item.judge_name || '') + '</div>'
+            + (qs ? '<ul class="doc-qa-questions">' + qs + '</ul>' : '')
+            + '<p class="doc-qa-answer"><span class="doc-qa-answer-label">Answer</span>' + ans + '</p>'
+            + '</div>';
+        }).join('')
+      : '';
+
+    return ''
+      + '<div class="doc-conversation" id="conversation">'
+      +   '<p class="doc-conversation-note">Before scoring, the panel questioned the client. This is a record of that exchange. It informed how the judges read the idea, but the dimension scores below are based on the submitted brief, not on these answers.</p>'
+      +   summaryHtml
+      +   qaHtml
+      + '</div>';
+  }
+
   function renderReport(data, judgesById){
     const evalRow      = data.evaluation;
     const subRow       = data.submission || {};
@@ -1813,8 +1897,9 @@
       <section class="doc-section" id="panel">
         <header class="doc-section-head">
           <h2 class="doc-h2">IV. Panel Findings</h2>
-          <p class="doc-h2-sub">${escapeHtml(panelTitle)}. Each judge scored independently and provided a written critique.</p>
+          <p class="doc-h2-sub">${escapeHtml(panelTitle)}. The panel questioned the client, then each judge scored independently and provided a written critique.</p>
         </header>
+        ${renderConversation(data)}
         ${findingBlocks}
       </section>
 
