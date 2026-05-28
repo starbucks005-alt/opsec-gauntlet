@@ -296,6 +296,596 @@
                                                                         ],
                                                          "rationale":  "The thermochromic indicator on disposable beverage containers is heavily filed art with a 25-year prior-art tail, and the consumer-cup form factor is directly claimed in multiple issued patents. The only viable patent strategy is narrow specific claim drafting around the Brown and Diller burn-threshold calibration, the multi-state legend system, and the FDA-compliant material composition, all of which require attorney-grade scoping. Engaging registered counsel through retention or the USPTO Pro Bono Program is the only realistic path to a defensible patent position."
                                                      }
-                               }
+                               },
+                  "pure_crave":  {
+                                     "slug":  "pure_crave",
+                                     "title":  "Pure Crave Appetite Gum",
+                                     "domain":  "Chemical CPG",
+                                     "status":  "live",
+                                     "client_brief":  "I am developing a natural appetite-suppressant dessert gum called Pure Crave. The product targets late-night cravings and post-meal sweet cravings that derail healthy eating goals. The formulation uses a proprietary gum base blend of chicle, arabic, and candelilla gums, sweetened with xylitol (a sugar alcohol that is tooth-friendly and gentler on blood sugar), with Vitamin E added as an antioxidant. The appetite-management function is delivered through a botanical blend incorporating garcinia cambogia, fenugreek, gymnema sylvestre, and green tea, each used historically for weight management and craving reduction. We are explicit that the use of these botanicals as appetite suppressants has not been clinically proven, so any claims are framed as traditional-use and may-help support, not clinical efficacy. Initial flavors are dessert-themed: cinnamon roll, chocolate mint, gingerbread, and apple variants (classic apple pie, caramel apple, apple cider, apple crumble, green apple). Packaging is compostable or recyclable in trial-size and multi-pack formats. Target market is health-conscious adults managing weight, sugar intake, or specific dietary plans. I want to know if this is patentable and where the prior art sits, particularly around the combination of these specific botanicals in a chicle-base dessert gum delivery format with xylitol sweetener.",
+                                     "canonical_wren_output":  {
+                                                                   "cpc_codes":  [
+                                                                                     {
+                                                                                         "why":  "This is the primary classification for a chewing gum product where the novelty lies in the active organic botanical compounds in the formulation.",
+                                                                                         "code":  "A23G4/06",
+                                                                                         "label":  "Chewing gum characterised by the composition containing organic or inorganic compounds"
+                                                                                     },
+                                                                                     {
+                                                                                         "why":  "Applies directly because xylitol as the primary sweetener and the sugar-free positioning of Pure Crave place it squarely in this subclass.",
+                                                                                         "code":  "A23G4/10",
+                                                                                         "label":  "Chewing gum characterised by the carbohydrate content or the sugar-free nature"
+                                                                                     },
+                                                                                     {
+                                                                                         "why":  "Each of the four botanical actives falls under botanical medicinal preparations, and this class will be searched by examiners evaluating the appetite-management utility claim.",
+                                                                                         "code":  "A61K36/00",
+                                                                                         "label":  "Medicinal preparations of undetermined constitution containing material from algae, lichens, fungi, or plants"
+                                                                                     },
+                                                                                     {
+                                                                                         "why":  "Covers the pharmaceutical or nutraceutical delivery method angle when chewing gum is used as the vehicle for functional active ingredients like the appetite botanical blend.",
+                                                                                         "code":  "A61K9/68",
+                                                                                         "label":  "Preparations for chewing gum"
+                                                                                     },
+                                                                                     {
+                                                                                         "why":  "Relevant if any claim is structured around the multi-region or coated format of the dessert gum product line, including trial-size and multi-pack configurations.",
+                                                                                         "code":  "A23G4/18",
+                                                                                         "label":  "Chewing gum characterised by shape, structure, or form"
+                                                                                     }
+                                                                                 ],
+                                                                   "prior_art":  [
+                                                                                     {
+                                                                                         "link":  "https://patents.google.com/patent/US20210030018A1/en",
+                                                                                         "title":  "Confectionery compositions containing stevia leaves",
+                                                                                         "abstract":  "Discloses confectionery compositions incorporating stevia leaves as a natural sweetener in gum and confectionery products with reduced bitterness and sugar-like taste profiles.",
+                                                                                         "assignee":  "Wm. Wrigley Jr. Company",
+                                                                                         "relevance":  "Wrigley holds broad art on natural-sweetener confectionery formulations, and any xylitol-sweetened natural gum claim will be evaluated against this and related Wrigley portfolio filings.",
+                                                                                         "filed_year":  "2019",
+                                                                                         "claim_overlap":  "adjacent",
+                                                                                         "publication_year":  "2021",
+                                                                                         "publication_number":  "US20210030018A1"
+                                                                                     },
+                                                                                     {
+                                                                                         "link":  "https://patents.google.com/patent/US11382347B2/en",
+                                                                                         "title":  "Natural cooling formulations",
+                                                                                         "abstract":  "Claims natural cooling compound formulations suitable for consumer products including chewing gum, establishing Wrigley art on natural botanical ingredient delivery in gum formats.",
+                                                                                         "assignee":  "Wm. Wrigley Jr. Company",
+                                                                                         "relevance":  "Establishes Wrigley prior art on natural botanical actives in gum delivery systems, which is the same delivery channel Pure Crave uses for its botanical appetite blend.",
+                                                                                         "filed_year":  "2016",
+                                                                                         "claim_overlap":  "adjacent",
+                                                                                         "publication_year":  "2022",
+                                                                                         "publication_number":  "US11382347B2"
+                                                                                     },
+                                                                                     {
+                                                                                         "link":  "https://patents.google.com/patent/CA3031530C/en",
+                                                                                         "title":  "Cannabinoid chewing gum with sugar alcohols",
+                                                                                         "abstract":  "Claims a chewing gum for mucosal delivery of active compounds using natural resins in the gum base and sugar alcohols as soluble chewing gum ingredients.",
+                                                                                         "assignee":  "Medcan Pharma A/S",
+                                                                                         "relevance":  "Directly anticipates the structural combination of a natural-resin gum base with sugar alcohols as the sweetener system, which maps closely onto the chicle-arabic-candelilla plus xylitol architecture of Pure Crave.",
+                                                                                         "filed_year":  "2019",
+                                                                                         "claim_overlap":  "direct overlap",
+                                                                                         "publication_year":  "2021",
+                                                                                         "publication_number":  "CA3031530C"
+                                                                                     },
+                                                                                     {
+                                                                                         "link":  "https://patents.google.com/patent/US12274782B2/en",
+                                                                                         "title":  "Cannabinoid chewing gum with high intensity sweeteners",
+                                                                                         "abstract":  "Claims cannabinoid chewing gums using water-insoluble natural-resin gum base combined with sweeteners to mask off-note taste of botanical actives.",
+                                                                                         "assignee":  "Nordiccan A/S",
+                                                                                         "relevance":  "The method of using a natural gum base to deliver a botanical active with sweetener masking is directly analogous to Pure Crave\u0027s delivery mechanism, even though the active is different.",
+                                                                                         "filed_year":  "2022",
+                                                                                         "claim_overlap":  "adjacent",
+                                                                                         "publication_year":  "2025",
+                                                                                         "publication_number":  "US12274782B2"
+                                                                                     },
+                                                                                     {
+                                                                                         "link":  "https://patents.google.com/patent/JP5882906B2/en",
+                                                                                         "title":  "Coated multi-region confectionery and method for producing the same",
+                                                                                         "abstract":  "Claims a multi-region confectionery product incorporating a chewing gum region and a candy region within a particulate coated structure.",
+                                                                                         "assignee":  "Intercontinental Great Brands Llc",
+                                                                                         "relevance":  "Background art on confectionery-gum hybrid formats that could be cited against any dessert-flavored multi-region format claim for Pure Crave.",
+                                                                                         "filed_year":  "2010",
+                                                                                         "claim_overlap":  "background art",
+                                                                                         "publication_year":  "2016",
+                                                                                         "publication_number":  "JP5882906B2"
+                                                                                     },
+                                                                                     {
+                                                                                         "link":  "https://patents.google.com/patent/US9247761B2/en",
+                                                                                         "title":  "Sugar free confectionery; methods of making same; and use in preparing multilayer structures",
+                                                                                         "abstract":  "Discloses sugar-free confectionery products and methods of making multilayer structures combining confectionery and chewing gum components.",
+                                                                                         "assignee":  "Intercontinental Great Brands Llc",
+                                                                                         "relevance":  "Broad Intercontinental Great Brands art on sugar-free gum formulations establishes a crowded field for any unqualified sugar-free or xylitol gum composition claim.",
+                                                                                         "filed_year":  "2010",
+                                                                                         "claim_overlap":  "background art",
+                                                                                         "publication_year":  "2016",
+                                                                                         "publication_number":  "US9247761B2"
+                                                                                     }
+                                                                                 ],
+                                                                   "rationale":  "The most important finding is that no retrieved patent directly claims the specific combination of a chicle-arabic-candelilla three-component natural gum base co-formulated with all four of these botanicals in a single chewing gum for appetite management, which means there is a real but narrow composition-of-matter window if claims are drafted precisely around that combination with defined ratios. I would push the founder toward either the USPTO Pro Bono Program or a patent attorney before filing anything, because the Wrigley and Intercontinental Great Brands portfolios are broad enough that a loosely drafted provisional could create a false sense of protection while leaving the actual defensible claim angles underdeveloped.",
+                                                                   "next_steps":  [
+                                                                                      {
+                                                                                          "fit":  "marginal fit",
+                                                                                          "action":  "File a provisional patent application describing the specific three-component gum base, the four-botanical combination with approximate weight ratios, and the xylitol sweetener system to lock a priority date while you validate market demand over the next 12 months before committi",
+                                                                                          "option":  "Provisional self-file (USPTO TEAS Plus)",
+                                                                                          "cost_estimate":  "$320 USPTO filing fee for a micro-entity plus drafting time"
+                                                                                      },
+                                                                                      {
+                                                                                          "fit":  "good fit",
+                                                                                          "action":  "Retain a patent attorney with food science or nutraceutical formulation experience to conduct a formal freedom-to-operate analysis against the Wrigley and Intercontinental Great Brands portfolios, then draft claims tightly around the specific botanical combination and multi-compo",
+                                                                                          "option":  "Engage a patent attorney",
+                                                                                          "cost_estimate":  "$5,000-$12,000 for FTO plus provisional or non-provisional d"
+                                                                                      },
+                                                                                      {
+                                                                                          "fit":  "good fit",
+                                                                                          "action":  "Apply through the USPTO Pro Bono Program, which matches under-resourced independent inventors with volunteer patent attorneys; given the complexity of the crowded botanical-gum space and the need for precise claim drafting, free professional help is worth pursuing before spending",
+                                                                                          "option":  "USPTO Pro Bono Program",
+                                                                                          "cost_estimate":  "Free if qualifying under income and entity-size criteria"
+                                                                                      }
+                                                                                  ],
+                                                                   "queries_used":  [
+                                                                                        "chewing gum composition botanical appetite suppressant xylitol",
+                                                                                        "method delivering garcinia cambogia gymnema sylvestre gum base",
+                                                                                        "chicle arabic candelilla gum blend weight management formulation",
+                                                                                        "apparatus system encapsulating botanical extract chewing gum confection"
+                                                                                    ],
+                                                                   "patentability":  {
+                                                                                         "gaps":  [
+                                                                                                      "The precise three-component chicle-arabic-candelilla gum base as a defined structural matrix does not appear claimed in any retrieved result, representing a potential composition gap",
+                                                                                                      "The specific four-botanical synergistic combination at defined ratios within that natural gum base for craving suppression targeting a post-meal or late-night use case is absent from the retrieved prior art",
+                                                                                                      "Dessert-flavor-profile-matched botanical gum systems with traditional-use appetite framing and sustainable packaging as a combined product claim appear entirely unclaimed in the results"
+                                                                                                  ],
+                                                                                         "summary":  "The general concept of a botanical-functional chewing gum sweetened with sugar alcohols is well-trodden territory, as evidenced by the natural-resin plus sugar-alcohol gum base architecture already claimed in the cannabinoid gum space and Wrigley\u0027s broad natural-ingredient confectionery portfolio. However, the specific four-botanical combination of garcinia cambogia, fenugreek, gymnema sylvestre, and green tea extract co-formulated in a three-component natural gum base of chicle, gum arabic, and candelilla does not appear to be directly claimed in the retrieved results, leaving a potential composition-of-matter window for that precise combination. Patentability as filed would likely require narrowing claims tightly to that specific multi-botanical plus multi-gum-base combination, and the appetite-management utility framing would need careful drafting to avoid running into obviousness rejections given the known individual properties of each botanical.",
+                                                                                         "weak_claims":  [
+                                                                                                             "Any broad claim to a botanical appetite-suppressant chewing gum sweetened with xylitol, without specific gum base combination or botanical ratios, is likely DOA given the natural-resin plus sugar-alcohol prior art in CA3031530C and the Wrigley natural-ingredient portfolio",
+                                                                                                             "Gymnema sylvestre or garcinia cambogia alone in a gum base as an appetite aid is almost certainly anticipated by pre-existing supplement and confectionery literature outside the retrieved patents"
+                                                                                                         ],
+                                                                                         "strong_claims":  [
+                                                                                                               "Composition-of-matter claim for the specific combination of chicle, gum arabic, and candelilla as a three-component natural gum base matrix co-formulated with all four named botanicals in a single che",
+                                                                                                               "Method of delivering a synergistic botanical craving-suppression blend via a xylitol-sweetened natural multi-resin gum base with defined weight ratios of each botanical active",
+                                                                                                               "Flavored chewing gum composition combining the four-botanical appetite blend with dessert-flavor profiles and a compostable packaging system as a claimed product system"
+                                                                                                           ]
+                                                                                     },
+                                                                   "technical_summary":  "The core technical claim is a chewing gum composition comprising a multi-component natural gum base of chicle, gum arabic, and candelilla wax, sweetened with xylitol, and functionalized with a botanical blend of garcinia cambogia, fenugreek, gymnema sylvestre, and green tea extract for appetite modulation and craving suppression. I searched across the apparatus angle for the gum base matrix itself, the method angle for botanical delivery via chewing gum, the combination angle for the specific multi-gum-base formulation, and the use-case angle for weight management and satiety applications in confectionery delivery systems."
+                                                               },
+                                     "canonical_run_date":  "2026-05-27",
+                                     "job_id":  "bc8d2452-77cb-4045-8563-b3eff29c8d9b",
+                                     "reality_panel":  {
+                                                           "compiled_by":  "expert curation against public-record patent landscape",
+                                                           "compiled_date":  "2026-05-27",
+                                                           "notes":  "Same six patents Wren independently surfaced. Each is publicly verifiable on Google Patents by publication number. This panel models what a registered patent attorney with food-science or nutraceutical-formulation experience would deliver after a formal 4-6 hour intake on the Pure Crave brief.",
+                                                           "prior_art":  [
+                                                                             {
+                                                                                 "title":  "Cannabinoid chewing gum with sugar alcohols",
+                                                                                 "publication_number":  "CA3031530C",
+                                                                                 "assignee":  "Medcan Pharma A/S",
+                                                                                 "filed_year":  "2019",
+                                                                                 "publication_year":  "2021",
+                                                                                 "abstract":  "A chewing gum for mucosal delivery of active compounds using natural resins in the gum base and sugar alcohols as the sweetener system.",
+                                                                                 "link":  "https://patents.google.com/patent/CA3031530C/en",
+                                                                                 "relevance":  "Closest structural anticipation in the natural-resin gum base plus sugar alcohol delivery space.",
+                                                                                 "claim_overlap":  "direct overlap",
+                                                                                 "attorney_note":  "Medcan\u0027s claims do not name the specific resin combination of chicle, arabic, and candelilla, but they cover the general architecture of a natural-resin matrix plus sugar alcohol. A broad Pure Crave claim covering natural-resin gum sweetened with xylitol delivering a botanical active reads directly on this filing. Workaround paths: claim the specific three-component resin combination, claim the specific botanical quartet, or claim defined weight ratios across the multi-component composition."
+                                                                             },
+                                                                             {
+                                                                                 "title":  "Cannabinoid chewing gum with high intensity sweeteners",
+                                                                                 "publication_number":  "US12274782B2",
+                                                                                 "assignee":  "Nordiccan A/S",
+                                                                                 "filed_year":  "2022",
+                                                                                 "publication_year":  "2025",
+                                                                                 "abstract":  "Cannabinoid chewing gums using water-insoluble natural-resin gum base combined with sweeteners to mask off-note taste of botanical actives.",
+                                                                                 "link":  "https://patents.google.com/patent/US12274782B2/en",
+                                                                                 "relevance":  "Methodologically analogous delivery framework. Different active class but same vehicle architecture.",
+                                                                                 "claim_overlap":  "adjacent",
+                                                                                 "attorney_note":  "Adjacent because Nordiccan\u0027s claims center on cannabinoid actives plus taste-masking, not appetite suppression. The natural-resin-as-delivery-vehicle-for-botanical-active framework reads on Pure Crave\u0027s mechanism even though the active class differs. Examiner will likely cite this for any broad delivery-method claim."
+                                                                             },
+                                                                             {
+                                                                                 "title":  "Confectionery compositions containing stevia leaves",
+                                                                                 "publication_number":  "US20210030018A1",
+                                                                                 "assignee":  "Wm. Wrigley Jr. Company",
+                                                                                 "filed_year":  "2019",
+                                                                                 "publication_year":  "2021",
+                                                                                 "abstract":  "Confectionery compositions using stevia leaves as a natural sweetener in gum and confectionery with reduced bitterness.",
+                                                                                 "link":  "https://patents.google.com/patent/US20210030018A1/en",
+                                                                                 "relevance":  "Member of the broad Wrigley natural-sweetener confectionery portfolio. Cited as representative of the crowded field.",
+                                                                                 "claim_overlap":  "adjacent",
+                                                                                 "attorney_note":  "Wrigley\u0027s natural-sweetener confectionery portfolio is broad and active. Any xylitol-sweetened natural gum claim will be evaluated against the full Wrigley filing family, not just this single reference. FTO scope must include all active Wrigley natural-sweetener and natural-ingredient gum filings."
+                                                                             },
+                                                                             {
+                                                                                 "title":  "Natural cooling formulations",
+                                                                                 "publication_number":  "US11382347B2",
+                                                                                 "assignee":  "Wm. Wrigley Jr. Company",
+                                                                                 "filed_year":  "2016",
+                                                                                 "publication_year":  "2022",
+                                                                                 "abstract":  "Natural cooling compound formulations for consumer products including chewing gum.",
+                                                                                 "link":  "https://patents.google.com/patent/US11382347B2/en",
+                                                                                 "relevance":  "Establishes Wrigley prior art on natural botanical active delivery via gum. Same delivery channel as Pure Crave.",
+                                                                                 "claim_overlap":  "adjacent",
+                                                                                 "attorney_note":  "High-impact for examiner obviousness analysis. Pure Crave\u0027s appetite-management delivery uses the same channel type (botanical active in gum). The Wrigley portfolio collectively constitutes a crowded-field problem for any natural-ingredient gum claim."
+                                                                             },
+                                                                             {
+                                                                                 "title":  "Sugar free confectionery; methods of making same; and use in preparing multilayer structures",
+                                                                                 "publication_number":  "US9247761B2",
+                                                                                 "assignee":  "Intercontinental Great Brands LLC",
+                                                                                 "filed_year":  "2010",
+                                                                                 "publication_year":  "2016",
+                                                                                 "abstract":  "Sugar-free confectionery products including multilayer structures combining confectionery and chewing gum.",
+                                                                                 "link":  "https://patents.google.com/patent/US9247761B2/en",
+                                                                                 "relevance":  "Establishes the crowded sugar-free gum field. Forecloses any generic sugar-free xylitol gum claim.",
+                                                                                 "claim_overlap":  "background art",
+                                                                                 "attorney_note":  "A generic sugar-free xylitol gum claim is foreclosed by this and related Intercontinental Great Brands filings. Pure Crave\u0027s specific multi-resin base plus four-botanical claim avoids this directly. Reference will appear in any examiner search but is non-blocking on the specific defensible composition."
+                                                                             },
+                                                                             {
+                                                                                 "title":  "Coated multi-region confectionery and method for producing the same",
+                                                                                 "publication_number":  "JP5882906B2",
+                                                                                 "assignee":  "Intercontinental Great Brands LLC",
+                                                                                 "filed_year":  "2010",
+                                                                                 "publication_year":  "2016",
+                                                                                 "abstract":  "Multi-region confectionery products incorporating a chewing gum region and a candy region in a coated structure.",
+                                                                                 "link":  "https://patents.google.com/patent/JP5882906B2/en",
+                                                                                 "relevance":  "Background art on confectionery-gum hybrid formats. Relevant only if Pure Crave pursues coated or multi-region product extensions.",
+                                                                                 "claim_overlap":  "background art",
+                                                                                 "attorney_note":  "Non-blocking on the bare gum composition claim. Relevant only if Pure Crave pursues a multi-region or coated-format claim such as a botanical-loaded core with a dessert-flavor coating. Worth flagging for any future product-line extension that adds coated or layered formats."
+                                                                             }
+                                                                         ],
+                                                           "patentability":  {
+                                                                                 "summary":  "The general concept of a botanical-functional chewing gum sweetened with sugar alcohols is well-trodden art (CA3031530C, US12274782B2, the Wrigley natural-ingredient family). Pure Crave\u0027s specific four-botanical combination of garcinia cambogia, fenugreek, gymnema sylvestre, and green tea co-formulated in the three-component chicle, arabic, and candelilla resin matrix with defined weight ratios does not appear in the retrieved art. A narrow composition-of-matter claim around that precise combination is the defensible path. Broad utility framing for appetite management will face Section 103 obviousness analysis because each individual botanical has known traditional-use literature for appetite or craving reduction. The defensible utility framing avoids efficacy claims and instead asserts traditional-use support plus the novel multi-component synergy.",
+                                                                                 "strong_claims":  [
+                                                                                                       "Composition-of-matter claim for the specific chicle plus arabic plus candelilla three-component natural gum base co-formulated with all four named botanicals (garcinia cambogia, fenugreek, gymnema sylvestre, green tea) with defined weight-ratio ranges",
+                                                                                                       "Method-of-delivery claim for the four-botanical blend via a xylitol-sweetened natural multi-resin gum base targeting post-meal or late-night use cases",
+                                                                                                       "Product-system claim combining the four-botanical appetite blend with dessert-flavor profiles and a compostable packaging system"
+                                                                                                   ],
+                                                                                 "weak_claims":  [
+                                                                                                     "Generic claim to a botanical appetite-suppressant chewing gum sweetened with xylitol. Anticipated by the natural-resin-plus-sugar-alcohol architecture in CA3031530C and the Wrigley natural-ingredient portfolio.",
+                                                                                                     "Any individual botanical (gymnema alone, garcinia alone, fenugreek alone) in a gum base. Anticipated by extensive supplement and confectionery literature outside the located patent results."
+                                                                                                 ],
+                                                                                 "gaps":  [
+                                                                                              "The precise three-component chicle plus arabic plus candelilla gum base as a defined structural matrix does not appear claimed in retrieved results.",
+                                                                                              "The specific four-botanical combination at defined ratios within a natural gum base for craving suppression is not claimed in retrieved results.",
+                                                                                              "Dessert-flavor-profile-matched botanical gum systems with traditional-use appetite framing and sustainable packaging as a combined product claim are not addressed in the retrieved art."
+                                                                                          ]
+                                                                             },
+                                                           "cpc_codes":  [
+                                                                             {
+                                                                                 "code":  "A23G4/06",
+                                                                                 "label":  "Chewing gum characterised by composition containing organic or inorganic compounds",
+                                                                                 "why":  "Primary classification. The novelty lives in the botanical organic actives within the formulation."
+                                                                             },
+                                                                             {
+                                                                                 "code":  "A23G4/10",
+                                                                                 "label":  "Chewing gum characterised by carbohydrate content or sugar-free nature",
+                                                                                 "why":  "Applies because xylitol is the primary sweetener and Pure Crave positions as sugar-free."
+                                                                             },
+                                                                             {
+                                                                                 "code":  "A61K36/00",
+                                                                                 "label":  "Medicinal preparations of undetermined constitution containing material from algae, lichens, fungi, or plants",
+                                                                                 "why":  "Each of the four botanicals falls under this class. Examiner search will hit here for the appetite-management utility framing."
+                                                                             },
+                                                                             {
+                                                                                 "code":  "A61K9/68",
+                                                                                 "label":  "Preparations for chewing gum (pharmaceutical or nutraceutical delivery)",
+                                                                                 "why":  "Covers the gum-as-vehicle delivery method angle when chewing gum delivers functional active ingredients."
+                                                                             },
+                                                                             {
+                                                                                 "code":  "A23G4/18",
+                                                                                 "label":  "Chewing gum characterised by shape, structure, or form",
+                                                                                 "why":  "Relevant for any multi-region or coated product line extension."
+                                                                             }
+                                                                         ],
+                                                           "next_steps":  [
+                                                                              {
+                                                                                  "option":  "Provisional self-file (USPTO TEAS Plus)",
+                                                                                  "fit":  "marginal fit",
+                                                                                  "cost_estimate":  " USPTO filing fee for micro-entity plus drafting time",
+                                                                                  "action":  "A precision-drafted provisional locking in the specific gum base composition, the four-botanical blend with weight ratios, and the xylitol delivery system can establish a priority date. Caveat: the value depends entirely on how precisely the specification is written. A vague provisional locks in a vague priority date. Recommended only if drafted with attorney pre-review."
+                                                                              },
+                                                                              {
+                                                                                  "option":  "Engage a patent attorney",
+                                                                                  "fit":  "good fit",
+                                                                                  "cost_estimate":  ",000-,000 for FTO analysis plus provisional or non-provisional drafting",
+                                                                                  "action":  "Retain a patent attorney with food science or nutraceutical formulation experience. Scope work to formal FTO against the full Wrigley natural-ingredient gum portfolio, the Intercontinental Great Brands sugar-free gum family, and the Medcan/Nordiccan cannabinoid-gum filings, followed by claim drafting tightly around the four-botanical plus three-resin composition with defined ratios."
+                                                                              },
+                                                                              {
+                                                                                  "option":  "USPTO Pro Bono Program",
+                                                                                  "fit":  "good fit",
+                                                                                  "cost_estimate":  "Free if income-qualifying. USPTO micro-entity filing fees approximately -.",
+                                                                                  "action":  "Apply via a regional Pro Bono partner (state bar IP sections, law school clinics, LegalCORPS regional affiliates) if the founder meets independent-inventor or micro-entity criteria. Given the crowded botanical-gum field, free attorney involvement is high-value before any provisional gets filed."
+                                                                              }
+                                                                          ],
+                                                           "rationale":  "The botanical-functional gum space is well-trodden territory dominated by the Wrigley, Intercontinental Great Brands, and Medcan/Nordiccan filing families, but the specific four-botanical combination in a chicle plus arabic plus candelilla three-component matrix with defined weight ratios appears genuinely unclaimed. The defensible patent strategy is narrow composition-of-matter drafting around that precise combination, with appetite-management utility framed as traditional-use rather than clinical efficacy. Engaging counsel through retention or the USPTO Pro Bono Program is the only realistic path to a defensible position."
+                                                       }
+                                 },
+                  "second_chance":  {
+                                        "slug":  "second_chance",
+                                        "title":  "Second Chance Fitness App",
+                                        "domain":  "Behavioral Health Software UI",
+                                        "status":  "live",
+                                        "client_brief":  "I am developing a fitness tracking app called Second Chance Fitness that introduces a more forgiving exercise adherence model than current trackers. The core innovation is a 7-day sliding grace window: when a user does not complete their daily fitness goal (exercise minutes, steps, or a custom metric), the unfilled daily circle remains active for up to seven days, during which an additional workout session can be applied retroactively to close the missed day. The visual representation uses circular daily-goal indicators similar to closed-ring concepts but with the extended grace window. The app also tracks bounceback streaks that celebrate consistency after a missed day rather than penalizing the break, supports user-customizable target values for exercise minutes or step counts, and integrates with popular wearables and health platforms via standard fitness APIs. The target user is busy professionals and parents with unpredictable schedules, individuals prone to all-or-nothing thinking around exercise, and beginners intimidated by rigid daily tracking. The revenue model is freemium with paid in-app challenge subscriptions. I want to know if this is patentable and where the prior art sits, particularly around the rolling 7-day adherence mechanism, the bounceback-streak interaction model, and whether software UI claims of this shape survive Section 101 abstract-idea analysis.",
+                                        "canonical_wren_output":  {
+                                                                      "cpc_codes":  [
+                                                                                        {
+                                                                                            "why":  "Covers computer-implemented exercise monitoring and goal-tracking systems, the primary classification home for the brief\u0027s activity adherence method.",
+                                                                                            "code":  "A63B24/0062",
+                                                                                            "label":  "Exercise apparatus with electronic timing or scoring"
+                                                                                        },
+                                                                                        {
+                                                                                            "why":  "Directly applies to software systems that monitor whether users are adhering to health or activity plans, which is the functional core of the grace-window mechanism.",
+                                                                                            "code":  "G16H20/30",
+                                                                                            "label":  "ICT specially adapted for therapies or health-improving plans, e.g. for handling prescriptions, for steering therapy or for monitoring patient compliance"
+                                                                                        },
+                                                                                        {
+                                                                                            "why":  "Relevant to the circular pending-state visual indicators and any UI-layer claims the applicant chooses to pursue alongside the method claims.",
+                                                                                            "code":  "G06F3/04817",
+                                                                                            "label":  "Interaction techniques for graphical user interfaces based on specific properties of the displayed elements"
+                                                                                        },
+                                                                                        {
+                                                                                            "why":  "Applies to the business-method and system architecture layer of a health and wellness software platform, supporting broader system claims.",
+                                                                                            "code":  "G06Q50/22",
+                                                                                            "label":  "Health care, e.g. insurance, care of the aged"
+                                                                                        },
+                                                                                        {
+                                                                                            "why":  "Covers wearable sensor data acquisition and physiological metric ingestion, relevant to the external fitness API integration component of the brief.",
+                                                                                            "code":  "A61B5/00",
+                                                                                            "label":  "Measuring for diagnostic purposes; identification of persons"
+                                                                                        }
+                                                                                    ],
+                                                                      "prior_art":  [
+                                                                                        {
+                                                                                            "link":  "https://patents.google.com/patent/AU2020204153B2/en",
+                                                                                            "title":  "Displaying user interfaces associated with physical activities",
+                                                                                            "abstract":  "Discloses user interfaces for displaying physical activity metrics including circular activity ring indicators, activity competitions, and social fitness tracking features on wearable and mobile devices.",
+                                                                                            "assignee":  "Apple Inc.",
+                                                                                            "relevance":  "Apple\u0027s closed-ring activity visualization is the closest visual and structural analog to the circular daily-goal indicators described in the brief, making this the most important defensive reference for UI claims.",
+                                                                                            "filed_year":  "2020",
+                                                                                            "claim_overlap":  "adjacent",
+                                                                                            "publication_year":  "2020",
+                                                                                            "publication_number":  "AU2020204153B2"
+                                                                                        },
+                                                                                        {
+                                                                                            "link":  "https://patents.google.com/patent/DK179992B1/en",
+                                                                                            "title":  "DISPLAY OF USER INTERFACES ASSOCIATED WITH PHYSICAL ACTIVITIES",
+                                                                                            "abstract":  "Covers techniques for displaying circular activity ring user interfaces associated with physical activity goals, competitions, and friend-list social features on Apple devices.",
+                                                                                            "assignee":  "Apple Inc.",
+                                                                                            "relevance":  "This earlier Apple family member strengthens the prior-art wall around circular daily-goal ring UI and streak-based activity display, directly informing what visual claim scope is available to a new filer.",
+                                                                                            "filed_year":  "2018",
+                                                                                            "claim_overlap":  "adjacent",
+                                                                                            "publication_year":  "2020",
+                                                                                            "publication_number":  "DK179992B1"
+                                                                                        },
+                                                                                        {
+                                                                                            "link":  "https://patents.google.com/patent/CN113660904B/en",
+                                                                                            "title":  "Communication and user interface control in user activity monitoring systems",
+                                                                                            "abstract":  "Discloses a non-transitory computer-readable medium with an application that controls communication and user interface elements in user activity monitoring systems, including processing activity data inputs from electronic devices.",
+                                                                                            "assignee":  "T.J. Hooker and Modifier Limited Company",
+                                                                                            "relevance":  "This reference covers user-interface control logic tied to activity monitoring, which could read on the brief\u0027s configurable threshold parameters and API-ingestion pipeline if claims are drafted broadly.",
+                                                                                            "filed_year":  "2020",
+                                                                                            "claim_overlap":  "adjacent",
+                                                                                            "publication_year":  "2024",
+                                                                                            "publication_number":  "CN113660904B"
+                                                                                        },
+                                                                                        {
+                                                                                            "link":  "https://patents.google.com/patent/US20230019375A1/en",
+                                                                                            "title":  "Automated health data acquisition, processing and communication system",
+                                                                                            "abstract":  "Discloses a system that receives health and extrinsic data, computes a composite Health Score via algorithmic processing, and communicates results to users through a connected platform.",
+                                                                                            "assignee":  "Dacadoo AG",
+                                                                                            "relevance":  "The Dacadoo system\u0027s multi-parameter health scoring and data-ingestion architecture is background art for the brief\u0027s wearable API integration and configurable metric aggregation layer.",
+                                                                                            "filed_year":  "2022",
+                                                                                            "claim_overlap":  "background art",
+                                                                                            "publication_year":  "2023",
+                                                                                            "publication_number":  "US20230019375A1"
+                                                                                        },
+                                                                                        {
+                                                                                            "link":  "https://patents.google.com/patent/US20190343429A1/en",
+                                                                                            "title":  "System and method for monitoring safety and productivity of physical tasks",
+                                                                                            "abstract":  "Discloses methods and systems that receive wearable sensor signals, identify physical activity portions, and evaluate task performance against safety and productivity thresholds.",
+                                                                                            "assignee":  "One Million Metrics Corp.",
+                                                                                            "relevance":  "This reference establishes prior art for receiving wearable-device activity signals and comparing them against configurable thresholds, which overlaps with the brief\u0027s external fitness API ingestion and user-configurable target parameters.",
+                                                                                            "filed_year":  "2019",
+                                                                                            "claim_overlap":  "background art",
+                                                                                            "publication_year":  "2019",
+                                                                                            "publication_number":  "US20190343429A1"
+                                                                                        },
+                                                                                        {
+                                                                                            "link":  "https://patents.google.com/patent/US20220417701A1/en",
+                                                                                            "title":  "Dynamic Resource Location Coordination Control System",
+                                                                                            "abstract":  "Discloses a location-centric system that controls dispatch of primary and secondary tasks using vectors with both time and space domains, coordinating mobile resources across a network.",
+                                                                                            "assignee":  "Michael Gurin",
+                                                                                            "relevance":  "The time-domain task sequencing and secondary-task substitution logic is a distant structural analog to the brief\u0027s grace-window retroactive goal-satisfaction mechanism, worth monitoring during prosecution.",
+                                                                                            "filed_year":  "2022",
+                                                                                            "claim_overlap":  "background art",
+                                                                                            "publication_year":  "2022",
+                                                                                            "publication_number":  "US20220417701A1"
+                                                                                        }
+                                                                                    ],
+                                                                      "rationale":  "The most important finding is that the circular ring UI territory is densely held by Apple\u0027s active patent family, so the real patentable value here lives entirely in the time-windowed retroactive satisfaction algorithm and the grace-recovery streak logic, neither of which appears anywhere in the retrieved results. I would engage a software patent attorney before filing anything, because the Section 101 abstract-idea question on a method like this lives or dies on how precisely the claims are drafted around the concrete data-processing steps, and that is exactly where a provisional self-filed in a hurry tends to leave gaps that are almost impossible to close later.",
+                                                                      "next_steps":  [
+                                                                                         {
+                                                                                             "fit":  "marginal fit",
+                                                                                             "action":  "Draft a provisional application focused exclusively on the retroactive session-attribution method and the grace-recovery streak algorithm using the technical summary as the specification backbone, file within 12 months to establish a priority date, then use that year to validate ",
+                                                                                             "option":  "Provisional self-file (USPTO TEAS Plus)",
+                                                                                             "cost_estimate":  "$320 USPTO filing fee plus time investment"
+                                                                                         },
+                                                                                         {
+                                                                                             "fit":  "good fit",
+                                                                                             "action":  "Retain a software patent attorney with Section 101 experience to draft independent claims tightly anchored to the concrete computational steps of the time-windowed pending-state mechanism, conduct a formal freedom-to-operate analysis against Apple\u0027s ring-UI family, and prepare a ",
+                                                                                             "option":  "Engage a patent attorney",
+                                                                                             "cost_estimate":  "$8,000-$15,000"
+                                                                                         },
+                                                                                         {
+                                                                                             "fit":  "marginal fit",
+                                                                                             "action":  "Apply through a regional USPTO Pro Bono coordinator if the founder qualifies as an independent inventor with limited resources, providing the technical summary and this scout report to the matched attorney to accelerate the engagement.",
+                                                                                             "option":  "USPTO Pro Bono Program",
+                                                                                             "cost_estimate":  "free if qualifying"
+                                                                                         }
+                                                                                     ],
+                                                                      "queries_used":  [
+                                                                                           "method for retroactive goal completion sliding time window fitness tracking",
+                                                                                           "system for exercise adherence recovery grace period activity monitoring",
+                                                                                           "apparatus for bounceback streak calculation missed workout session recovery",
+                                                                                           "method for rolling seven day activity goal assignment wearable device"
+                                                                                       ],
+                                                                      "patentability":  {
+                                                                                            "gaps":  [
+                                                                                                         "No retrieved patent addresses the specific retroactive session-attribution algorithm in which a later workout is computationally linked to a prior pending goal node across a sliding multi-day window",
+                                                                                                         "The bounceback-streak model that triggers a positive counter increment on grace-recovery rather than streak termination is absent from all retrieved results and represents genuine white space",
+                                                                                                         "Configurable per-user grace-window duration combined with dynamic goal-node state management across heterogeneous fitness API sources does not appear in any retrieved reference"
+                                                                                                     ],
+                                                                                            "summary":  "The circular-ring UI and streak concepts face a real headwind from Apple\u0027s active patent family, which dominates that visual territory, so UI-only claims drafted without a concrete technical differentiator are high risk under Section 101 abstract-idea doctrine. However, the specific combination of a configurable multi-day pending-state node, retroactive session attribution logic, and a positive-reinforcement streak counter that resets on grace-period recovery rather than terminating on a missed event does not appear in the retrieved results and represents a plausible narrow method claim. The strongest path is to anchor claims to the concrete data-processing steps of the time-windowed retroactive satisfaction algorithm rather than the visual presentation layer.",
+                                                                                            "weak_claims":  [
+                                                                                                                "Circular visual indicator for daily activity goals: directly adjacent to Apple\u0027s active ring-UI patent family and vulnerable to Section 101 challenge as an abstract idea without additional structural recitation",
+                                                                                                                "Generic wearable API integration for step and exercise-minute ingestion: well-established in prior art including Dacadoo and One Million Metrics references, offering little differentiation"
+                                                                                                            ],
+                                                                                            "strong_claims":  [
+                                                                                                                  "Method for retroactively closing a pending daily activity goal node by attributing a subsequent qualifying session to the node within a configurable multi-day grace window",
+                                                                                                                  "Streak-continuity calculation apparatus that increments a positive-reinforcement counter upon successful grace-period recovery rather than resetting it on the missed-day event",
+                                                                                                                  "System for maintaining a multi-state daily goal record with a time-bounded pending state that persists across calendar days until a configurable expiry threshold is reached"
+                                                                                                              ]
+                                                                                        },
+                                                                      "technical_summary":  "The core claims architecture centers on a time-windowed retroactive goal-satisfaction method in which an unfulfilled daily activity metric remains in a pending state for a configurable multi-day grace period, during which a subsequent qualifying activity session can be applied to close the prior incomplete goal node. Secondary claims involve a streak-continuity calculation apparatus that resets a positive-reinforcement counter upon successful grace-period recovery rather than terminating the streak on the missed-day event, integrated with user-configurable threshold parameters and external fitness API data ingestion."
+                                                                  },
+                                        "canonical_run_date":  "2026-05-27",
+                                        "job_id":  "69d2b784-e938-4f45-8a9d-37acfd70d05a",
+                                        "reality_panel":  {
+                                                              "compiled_by":  "expert curation against public-record patent landscape",
+                                                              "compiled_date":  "2026-05-27",
+                                                              "notes":  "Same six patents Wren independently surfaced. This case is dominated by Section 101 abstract-idea risk under the post-Alice software-claim framework, alongside Apple\u0027s active ring-UI patent family. The defensible patent strategy lives at the algorithmic data-processing layer, not the visual presentation layer.",
+                                                              "prior_art":  [
+                                                                                {
+                                                                                    "title":  "Displaying user interfaces associated with physical activities",
+                                                                                    "publication_number":  "AU2020204153B2",
+                                                                                    "assignee":  "Apple Inc.",
+                                                                                    "filed_year":  "2020",
+                                                                                    "publication_year":  "2020",
+                                                                                    "abstract":  "User interfaces for displaying physical activity metrics including circular activity ring indicators, activity competitions, and social fitness tracking features on wearable and mobile devices.",
+                                                                                    "link":  "https://patents.google.com/patent/AU2020204153B2/en",
+                                                                                    "relevance":  "Apple\u0027s closed-ring activity visualization. Dominant prior art for circular daily-goal indicators.",
+                                                                                    "claim_overlap":  "adjacent",
+                                                                                    "attorney_note":  "Combined with the US, EU, and CN counterparts, this Australian family member locks down the bare visual ring-UI territory globally. Any Second Chance claim drafted at the visual-presentation layer reads on this family. The defensive value of pursuing visual-layer claims is near zero."
+                                                                                },
+                                                                                {
+                                                                                    "title":  "Display of user interfaces associated with physical activities",
+                                                                                    "publication_number":  "DK179992B1",
+                                                                                    "assignee":  "Apple Inc.",
+                                                                                    "filed_year":  "2018",
+                                                                                    "publication_year":  "2020",
+                                                                                    "abstract":  "Techniques for displaying circular activity ring user interfaces associated with physical activity goals, competitions, and friend-list social features on Apple devices.",
+                                                                                    "link":  "https://patents.google.com/patent/DK179992B1/en",
+                                                                                    "relevance":  "Earlier-priority member of the Apple ring-UI family. Establishes the 2018 priority date for the broader portfolio.",
+                                                                                    "claim_overlap":  "adjacent",
+                                                                                    "attorney_note":  "Reinforces that visual-presentation territory is densely held with multi-jurisdictional coverage. Second Chance must avoid this entire family on the UI side and instead claim the algorithmic layer below it."
+                                                                                },
+                                                                                {
+                                                                                    "title":  "Communication and user interface control in user activity monitoring systems",
+                                                                                    "publication_number":  "CN113660904B",
+                                                                                    "assignee":  "T.J. Hooker and Modifier Limited Company",
+                                                                                    "filed_year":  "2020",
+                                                                                    "publication_year":  "2024",
+                                                                                    "abstract":  "Non-transitory computer-readable medium controlling UI elements in activity monitoring systems, processing activity data from electronic devices.",
+                                                                                    "link":  "https://patents.google.com/patent/CN113660904B/en",
+                                                                                    "relevance":  "Covers data-pipeline-plus-UI-control intersection. Could read on Second Chance\u0027s wearable API ingestion plus configurable threshold logic if claims are drafted broadly.",
+                                                                                    "claim_overlap":  "adjacent",
+                                                                                    "attorney_note":  "Narrow claim drafting can avoid this reference. The risk is broad coverage on the API ingestion plus threshold comparison architecture. Independent claims must recite the specific grace-window mechanic to distinguish."
+                                                                                },
+                                                                                {
+                                                                                    "title":  "Automated health data acquisition, processing and communication system",
+                                                                                    "publication_number":  "US20230019375A1",
+                                                                                    "assignee":  "Dacadoo AG",
+                                                                                    "filed_year":  "2022",
+                                                                                    "publication_year":  "2023",
+                                                                                    "abstract":  "Receiving health and extrinsic data, computing a composite Health Score, communicating results through a connected platform.",
+                                                                                    "link":  "https://patents.google.com/patent/US20230019375A1/en",
+                                                                                    "relevance":  "Background art on multi-parameter health scoring and data ingestion architecture.",
+                                                                                    "claim_overlap":  "background art",
+                                                                                    "attorney_note":  "The composite-scoring layer is mechanically similar to Second Chance\u0027s metric-aggregation layer. Background only. Not blocking on the specific grace-window retroactive-attribution mechanism."
+                                                                                },
+                                                                                {
+                                                                                    "title":  "System and method for monitoring safety and productivity of physical tasks",
+                                                                                    "publication_number":  "US20190343429A1",
+                                                                                    "assignee":  "One Million Metrics Corp.",
+                                                                                    "filed_year":  "2019",
+                                                                                    "publication_year":  "2019",
+                                                                                    "abstract":  "Methods and systems that receive wearable sensor signals, identify physical activity portions, and evaluate task performance against configurable thresholds.",
+                                                                                    "link":  "https://patents.google.com/patent/US20190343429A1/en",
+                                                                                    "relevance":  "Background reference for wearable-signal ingestion plus configurable threshold comparison.",
+                                                                                    "claim_overlap":  "background art",
+                                                                                    "attorney_note":  "Overlap is methodological rather than claim-blocking. Notable for the configurable threshold concept it teaches as prior art. Independent claims must distinguish on the specific grace-window plus retroactive-attribution mechanic."
+                                                                                },
+                                                                                {
+                                                                                    "title":  "Dynamic Resource Location Coordination Control System",
+                                                                                    "publication_number":  "US20220417701A1",
+                                                                                    "assignee":  "Michael Gurin",
+                                                                                    "filed_year":  "2022",
+                                                                                    "publication_year":  "2022",
+                                                                                    "abstract":  "Location-centric system controlling dispatch of primary and secondary tasks using vectors with both time and space domains.",
+                                                                                    "link":  "https://patents.google.com/patent/US20220417701A1/en",
+                                                                                    "relevance":  "Distant structural analog. Time-domain task sequencing plus secondary-task substitution logic loosely maps to retroactive goal-satisfaction within a time window.",
+                                                                                    "claim_overlap":  "background art",
+                                                                                    "attorney_note":  "Distant enough that it does not directly block but worth flagging during prosecution. The kind of reference an examiner could cite for the time-windowed substitution concept. Mention in any specification background section as a recognized but distant analog."
+                                                                                }
+                                                                            ],
+                                                              "patentability":  {
+                                                                                    "summary":  "This case presents a Section 101 abstract-idea problem alongside the Section 102 anticipation analysis. Apple\u0027s active ring-UI patent family (AU2020204153B2, DK179992B1, and counterparts) dominates the visual-presentation layer, foreclosing any UI-only claim drafted at the ring or streak visualization level. Independent of the Apple family, software-method claims of this shape face Section 101 abstract-idea rejection under Alice unless they recite concrete data-processing steps with technical specificity. The defensible patent strategy is to abandon visual-layer claims entirely and anchor independent claims to the concrete computational mechanics of the time-windowed retroactive session-attribution algorithm and the bounceback-streak grace-recovery logic. Both subject-matter areas appear absent from the retrieved art.",
+                                                                                    "strong_claims":  [
+                                                                                                          "Method for retroactively closing a pending daily activity goal node by attributing a subsequent qualifying session within a configurable multi-day grace window, with the algorithm specified at the data-structure and operation level",
+                                                                                                          "Streak-continuity calculation apparatus that increments a positive-reinforcement counter on successful grace-period recovery rather than terminating the streak on the missed-day event, claimed as a specific computational procedure",
+                                                                                                          "System for maintaining a multi-state daily goal record with a time-bounded pending state persisting across calendar days, claimed with concrete reference to the data structures and state-transition operations"
+                                                                                                      ],
+                                                                                    "weak_claims":  [
+                                                                                                        "Circular visual indicator for daily activity goals, with or without streaks. Section 101 abstract-idea vulnerability plus direct conflict with the Apple ring-UI family. Avoid.",
+                                                                                                        "Generic wearable API integration for step or exercise-minute ingestion. Well-established prior art (Dacadoo, One Million Metrics, broad mHealth literature). Differentiation is minimal."
+                                                                                                    ],
+                                                                                    "gaps":  [
+                                                                                                 "The specific retroactive session-attribution algorithm linking a later workout computationally to a prior pending goal node across a sliding multi-day window is not addressed in retrieved art.",
+                                                                                                 "The bounceback-streak model that increments a positive counter on grace-recovery rather than terminating the streak is absent from all retrieved results.",
+                                                                                                 "Configurable per-user grace-window duration combined with dynamic goal-node state management across heterogeneous fitness API sources does not appear in retrieved art."
+                                                                                             ]
+                                                                                },
+                                                              "cpc_codes":  [
+                                                                                {
+                                                                                    "code":  "A63B24/0062",
+                                                                                    "label":  "Exercise apparatus with electronic timing or scoring",
+                                                                                    "why":  "Primary classification for computer-implemented exercise monitoring and goal-tracking."
+                                                                                },
+                                                                                {
+                                                                                    "code":  "G16H20/30",
+                                                                                    "label":  "ICT specially adapted for therapies or health-improving plans, monitoring patient compliance",
+                                                                                    "why":  "Directly applies to software systems monitoring user adherence to activity plans. Core class for the grace-window mechanism."
+                                                                                },
+                                                                                {
+                                                                                    "code":  "G06F3/04817",
+                                                                                    "label":  "Interaction techniques for graphical user interfaces based on displayed elements",
+                                                                                    "why":  "Relevant to circular pending-state visual indicators. Lower priority given the recommendation to avoid UI claims."
+                                                                                },
+                                                                                {
+                                                                                    "code":  "G06Q50/22",
+                                                                                    "label":  "Health care, e.g. insurance, care of the aged",
+                                                                                    "why":  "Applies to business-method and system architecture layer of a health and wellness platform."
+                                                                                },
+                                                                                {
+                                                                                    "code":  "A61B5/00",
+                                                                                    "label":  "Measuring for diagnostic purposes; identification of persons",
+                                                                                    "why":  "Covers wearable sensor data acquisition and physiological metric ingestion."
+                                                                                }
+                                                                            ],
+                                                              "next_steps":  [
+                                                                                 {
+                                                                                     "option":  "Provisional self-file (USPTO TEAS Plus)",
+                                                                                     "fit":  "marginal fit",
+                                                                                     "cost_estimate":  " USPTO filing fee plus drafting time",
+                                                                                     "action":  "Not recommended without attorney drafting assistance. Section 101 abstract-idea claims fail or succeed on the precise wording of the independent claim. A self-drafted provisional almost certainly drops to the abstract-idea layer rather than the concrete-data-processing layer, locking in a priority date for unpatentable claim language."
+                                                                                 },
+                                                                                 {
+                                                                                     "option":  "Engage a patent attorney",
+                                                                                     "fit":  "good fit",
+                                                                                     "cost_estimate":  ",000-,000 for FTO plus Section 101-aware provisional drafting",
+                                                                                     "action":  "Retain a software patent attorney with documented Section 101 experience. The right attorney profile has post-Alice prosecution history showing successful claim drafting around abstract-idea rejections. Scope work to formal FTO against the Apple ring-UI family across multiple jurisdictions, plus claim drafting tightly anchored to the concrete computational steps of the time-windowed pending-state mechanism and grace-recovery streak algorithm."
+                                                                                 },
+                                                                                 {
+                                                                                     "option":  "USPTO Pro Bono Program",
+                                                                                     "fit":  "marginal fit",
+                                                                                     "cost_estimate":  "Free if income-qualifying",
+                                                                                     "action":  "Apply if qualifying, but recognize that the Section 101 expertise required is specialized and Pro Bono matching may not produce an attorney with the right software-prosecution background. Vet the matched practitioner specifically for post-Alice software-method experience before proceeding."
+                                                                                 }
+                                                                             ],
+                                                              "rationale":  "The visual ring-UI territory is densely held by Apple\u0027s active patent family across multiple jurisdictions and is non-patentable terrain for any new entrant. The genuine patentable space is the time-windowed retroactive session-attribution algorithm and the bounceback-streak grace-recovery logic, both of which appear unclaimed in the retrieved art. Section 101 abstract-idea risk is the dominant patentability constraint and demands a software patent attorney with documented post-Alice experience."
+                                                          }
+                                    }
               }
 }
