@@ -1,0 +1,301 @@
+{
+    "version":  1,
+    "last_updated":  "2026-05-27",
+    "cases":  {
+                  "safetemp":  {
+                                   "slug":  "safetemp",
+                                   "title":  "SafeTemp Disposable Cups",
+                                   "domain":  "Thermal Kinetics \u0026 Public Safety",
+                                   "status":  "live",
+                                   "client_brief":  "I am developing a disposable hot-beverage cup called SafeTemp™ that has a built-in thermometer strip down the side. The strip is a non-toxic, medical-grade thermochromic indicator that changes color based on the temperature of the liquid inside: green for safe to drink, yellow for caution, red for too hot. The temperature scale on the strip is anchored to the 2008 Brown and Diller study showing the optimal serving range for hot beverages is 125 to 136 degrees Fahrenheit (54 to 60 Celsius), with a preferred value at 136 degrees Fahrenheit (57.8 Celsius). The cup body uses standard food-grade paper materials in small, medium, and large sizes. Primary customers are parents and caregivers buying for their children, where accidental burns are the most acute problem. Secondary customers are coffee shops, cafes, quick-service food chains, schools, daycares, and eldercare facilities that face liability exposure around hot drinks. The product solves the problem that hot beverage temperature cannot be reliably gauged by touch or sight, and current cooling workarounds (testing the drink yourself, blowing on it) are slow or unsanitary. I want to know if this is patentable and where the prior art sits.",
+                                   "canonical_wren_output":  {
+                                                                 "cpc_codes":  [
+                                                                                   {
+                                                                                       "why":  "This is the primary classification for containers incorporating temperature indication, where most of the blocking prior art lives and where SafeTemp claims would be examined.",
+                                                                                       "code":  "B65D81/38",
+                                                                                       "label":  "Containers with thermal insulation or temperature-indicating means"
+                                                                                   },
+                                                                                   {
+                                                                                       "why":  "Covers the thermochromic indicator element itself and its color-change mechanism, relevant to the material composition and calibration claims.",
+                                                                                       "code":  "G01K11/12",
+                                                                                       "label":  "Thermometers using changes in physical or chemical properties of materials, using thermochromic indicators"
+                                                                                   },
+                                                                                   {
+                                                                                       "why":  "Addresses the single-use paper cup substrate construction, relevant when combining the indicator element with the food-grade paper body claim.",
+                                                                                       "code":  "B65D3/22",
+                                                                                       "label":  "Containers made of paper or cardboard, rigid or semi-rigid cups"
+                                                                                   },
+                                                                                   {
+                                                                                       "why":  "Directly captures the burn-prevention use-case framing, useful for differentiating SafeTemp on intended physiological safety application versus generic temperature display.",
+                                                                                       "code":  "A47G19/22",
+                                                                                       "label":  "Drinking vessels or lids with means for preventing scalding or burning"
+                                                                                   },
+                                                                                   {
+                                                                                       "why":  "Relevant if claims are pursued on the specific liquid crystal or leuco-dye indicator composition calibrated to the 54-60 degrees Celsius window.",
+                                                                                       "code":  "C09K9/02",
+                                                                                       "label":  "Liquid crystal compositions for thermochromic applications"
+                                                                                   }
+                                                                               ],
+                                                                 "prior_art":  [
+                                                                                   {
+                                                                                       "link":  "https://patents.google.com/patent/US8118189B2/en",
+                                                                                       "title":  "Temperature-indicating sleeve and related container",
+                                                                                       "abstract":  "A sleeve incorporating a temperature indicator visible from outside that conveys the temperature of container contents to the user.",
+                                                                                       "assignee":  "Cups Unlimited, Llc",
+                                                                                       "relevance":  "This is the closest structural analog: a temperature-indicating sleeve for a beverage container using exterior-visible indicator, directly overlapping the SafeTemp cup-plus-strip form factor.",
+                                                                                       "filed_year":  "2007",
+                                                                                       "claim_overlap":  "direct overlap",
+                                                                                       "publication_year":  "2012",
+                                                                                       "publication_number":  "US8118189B2"
+                                                                                   },
+                                                                                   {
+                                                                                       "link":  "https://patents.google.com/patent/US20030000451A1/en",
+                                                                                       "title":  "Beverage container having thermal indicator",
+                                                                                       "abstract":  "A thermochromic thermal indicator affixed to the inner wall of a beverage container that senses and signals a specified liquid temperature range.",
+                                                                                       "assignee":  "Wilcox Iris Y.",
+                                                                                       "relevance":  "Establishes prior art for thermochromic material affixed to a beverage container wall specifically to indicate a defined liquid temperature range, hitting the core concept of SafeTemp.",
+                                                                                       "filed_year":  "2001",
+                                                                                       "claim_overlap":  "direct overlap",
+                                                                                       "publication_year":  "2003",
+                                                                                       "publication_number":  "US20030000451A1"
+                                                                                   },
+                                                                                   {
+                                                                                       "link":  "https://patents.google.com/patent/US20070121702A1/en",
+                                                                                       "title":  "Temperature-indicating container",
+                                                                                       "abstract":  "A container with a temperature indicator in or on the side wall or bottom, visible from outside, conveying the temperature of its contents.",
+                                                                                       "assignee":  "Laguardia Wendy",
+                                                                                       "relevance":  "Covers the side-wall exterior-visible temperature indicator on a container, directly anticipating the strip-on-the-side geometry of SafeTemp.",
+                                                                                       "filed_year":  "2006",
+                                                                                       "claim_overlap":  "direct overlap",
+                                                                                       "publication_year":  "2007",
+                                                                                       "publication_number":  "US20070121702A1"
+                                                                                   },
+                                                                                   {
+                                                                                       "link":  "https://patents.google.com/patent/WO2007030351A2/en",
+                                                                                       "title":  "Temperature-indicating container",
+                                                                                       "abstract":  "A temperature-indicating container with thermal insulation and a side-wall or bottom temperature indicator visible from outside the container.",
+                                                                                       "assignee":  "Wendy Laguardia",
+                                                                                       "relevance":  "International counterpart to the Laguardia US application, extending the prior art coverage globally and reinforcing that the general side-wall indicator concept is well-claimed.",
+                                                                                       "filed_year":  "2006",
+                                                                                       "claim_overlap":  "direct overlap",
+                                                                                       "publication_year":  "2007",
+                                                                                       "publication_number":  "WO2007030351A2"
+                                                                                   },
+                                                                                   {
+                                                                                       "link":  "https://patents.google.com/patent/US10323989B2/en",
+                                                                                       "title":  "Advanced multi-element consumable-disposable products",
+                                                                                       "abstract":  "Incorporation of multiple interactive elements including temperature-responsive indicators into high-volume disposable consumable products at minimal incremental manufacturing cost.",
+                                                                                       "assignee":  "Segan Industries, Inc.",
+                                                                                       "relevance":  "Covers the integration of color-change interactive indicators into disposable consumables, which maps onto the SafeTemp paper-cup-plus-thermochromic-strip construction and manufacturing approach.",
+                                                                                       "filed_year":  "2017",
+                                                                                       "claim_overlap":  "adjacent",
+                                                                                       "publication_year":  "2019",
+                                                                                       "publication_number":  "US10323989B2"
+                                                                                   },
+                                                                                   {
+                                                                                       "link":  "https://patents.google.com/patent/US10302508B2/en",
+                                                                                       "title":  "Co-topo polymeric compositions, devices and systems for controlling threshold temperature indication",
+                                                                                       "abstract":  "Polymer-based indicator compositions that undergo reversible or irreversible color change at controlled threshold temperatures in response to a thermal stimulus.",
+                                                                                       "assignee":  "Segan Industries, Inc.",
+                                                                                       "relevance":  "Claims the threshold-calibration methodology for polymer color-change indicators, which is the material-science backbone of how SafeTemp\u0027s green-yellow-red calibration would be engineered.",
+                                                                                       "filed_year":  "2018",
+                                                                                       "claim_overlap":  "adjacent",
+                                                                                       "publication_year":  "2019",
+                                                                                       "publication_number":  "US10302508B2"
+                                                                                   }
+                                                                               ],
+                                                                 "rationale":  "The most important finding is that the general concept of a thermochromic indicator on a disposable beverage container wall is not novel and is directly claimed in multiple issued patents, so any viable path forward depends entirely on how narrowly and specifically the calibration methodology and material composition claims can be constructed around the physiological burn-risk anchor. I would move immediately to engage a patent attorney or the Pro Bono Program rather than self-filing a provisional, because with this density of blocking prior art the quality of claim drafting is the whole game and a poorly scoped provisional could create more problems than it solves.",
+                                                                 "next_steps":  [
+                                                                                    {
+                                                                                        "fit":  "marginal fit",
+                                                                                        "action":  "File a provisional application focused exclusively on the narrow defensible claims: the calibration methodology tied to published burn-risk parameters, the three-state color legend system, and the non-toxic food-contact material formulation. Do not file on the broad cup-plus-stri",
+                                                                                        "option":  "Provisional self-file (USPTO TEAS Plus)",
+                                                                                        "cost_estimate":  "$320 USPTO filing fee plus time investment; $500-$1,500 if a"
+                                                                                    },
+                                                                                    {
+                                                                                        "fit":  "good fit",
+                                                                                        "action":  "Retain a patent attorney with consumer goods or materials science experience to conduct a formal freedom-to-operate analysis against US8118189B2, US20030000451A1, and the Laguardia filings, then draft claims that surgically avoid the direct overlap while capturing the calibration",
+                                                                                        "option":  "Engage a patent attorney",
+                                                                                        "cost_estimate":  "$5,000-$12,000 for FTO analysis and non-provisional applicat"
+                                                                                    },
+                                                                                    {
+                                                                                        "fit":  "good fit",
+                                                                                        "action":  "Apply through the USPTO Pro Bono Program via a regional partner organization if the founder qualifies as an independent inventor or micro-entity. Given the complex prior art landscape, having a pro bono registered patent practitioner draft and prosecute the application is high-va",
+                                                                                        "option":  "USPTO Pro Bono Program",
+                                                                                        "cost_estimate":  "Free if qualifying; USPTO micro-entity filing fees approxima"
+                                                                                    }
+                                                                                ],
+                                                                 "queries_used":  [
+                                                                                      "disposable beverage cup thermochromic temperature indicator strip",
+                                                                                      "method for indicating safe drinking temperature hot liquid container",
+                                                                                      "apparatus thermochromic color change beverage cup burn prevention",
+                                                                                      "single use cup integrated temperature sensitive material food grade"
+                                                                                  ],
+                                                                 "patentability":  {
+                                                                                       "gaps":  [
+                                                                                                    "No located prior art explicitly anchors thermochromic calibration thresholds to a named clinical study or published physiological burn-risk dataset, leaving the calibration-methodology claim potentially open",
+                                                                                                    "The combination of a three-state indicator with a printed consumer-readable legend mapping color states to named risk categories on a single-use paper substrate for pediatric caregiving contexts does not appear to be claimed in the located art",
+                                                                                                    "Non-toxic medical-grade leuco-dye formulation specifically validated for FDA food-contact compliance on single-use paper cups in direct-beverage-service environments is not addressed in the located art and could support a composition or material claim"
+                                                                                                ],
+                                                                                       "summary":  "The broad concept of a thermochromic temperature indicator affixed to a disposable beverage container wall is extensively anticipated by prior art dating to at least 2001, and the sleeve-based variant is directly claimed in US8118189B2. As-is, a broad product claim would face serious rejection on anticipation and obviousness grounds. The realistic patentable space lies in narrow, specific claim constructions tied to the physiological burn-risk calibration methodology, the precise multi-state color transition thresholds anchored to the Brown and Diller 54-60 degrees Celsius consumption window, and the combination of medical-grade non-toxic leuco-dye material with single-use food-grade paper substrate in a defined burn-prevention context.",
+                                                                                       "weak_claims":  [
+                                                                                                           "Thermochromic indicator strip affixed to exterior side wall of disposable beverage cup: directly anticipated by US8118189B2 and US20070121702A1 with no meaningful differentiation",
+                                                                                                           "Color-change beverage container indicating hot versus safe liquid temperature: anticipated by US20030000451A1 filed 2001, making novelty argument extremely difficult"
+                                                                                                       ],
+                                                                                       "strong_claims":  [
+                                                                                                             "Calibration method tying discrete thermochromic color state transitions to the 54-60 degrees Celsius physiological burn-risk threshold range derived from documented clinical parameters",
+                                                                                                             "Specific leuco-dye or liquid crystal indicator formulation achieving three defined color states on a food-grade paper substrate meeting FDA food-contact and non-toxicity standards for direct-contact d",
+                                                                                                             "System combining calibrated multi-state thermochromic indicator with printed temperature-state legend on a single-use paper cup exterior, marketed and designed for pediatric and eldercare burn-prevent"
+                                                                                                         ]
+                                                                                   },
+                                                                 "technical_summary":  "The invention is a disposable paper beverage container incorporating a thermochromic liquid crystal or leuco-dye indicator element affixed to the exterior wall, calibrated to display discrete color states corresponding to defined temperature thresholds within the 54-60 degrees Celsius optimal consumption range. The core claim space sits at the intersection of temperature-responsive material composition, threshold calibration methodology tied to physiological burn-risk parameters, and integration with single-use food-grade substrate construction."
+                                                             },
+                                   "canonical_run_date":  "2026-05-27",
+                                   "job_id":  "6315c21b-f215-46c7-bd4e-b8ce0934d5a0",
+                                   "reality_panel":  {
+                                                         "compiled_by":  "expert curation against public-record patent landscape",
+                                                         "compiled_date":  "2026-05-27",
+                                                         "notes":  "Every patent number cited is independently verifiable on Google Patents. Brown and Diller 2008 cited as published academic literature (not blocking patent art). This panel models what a registered patent attorney would deliver after a 4-6 hour formal intake on the SafeTemp brief.",
+                                                         "prior_art":  [
+                                                                           {
+                                                                               "title":  "Temperature-indicating sleeve and related container",
+                                                                               "publication_number":  "US8118189B2",
+                                                                               "assignee":  "Cups Unlimited, LLC",
+                                                                               "filed_year":  "2007",
+                                                                               "publication_year":  "2012",
+                                                                               "abstract":  "An insulating sleeve incorporating a thermochromic indicator visible from the exterior, conveying the temperature of the container contents to the user.",
+                                                                               "link":  "https://patents.google.com/patent/US8118189B2/en",
+                                                                               "relevance":  "The closest structural anticipation in the consumer-cup space. Directly overlaps the SafeTemp cup-plus-strip form factor.",
+                                                                               "claim_overlap":  "direct overlap",
+                                                                               "attorney_note":  "Any broad claim covering \u0027thermochromic indicator visible on a beverage container exterior\u0027 reads directly on this filing and would be rejected on Section 102 anticipation. Workaround paths: claim the cup-and-indicator as a unitary article (not a sleeve), claim the calibration methodology, or claim a specific material composition not disclosed in the 189."
+                                                                           },
+                                                                           {
+                                                                               "title":  "Beverage container having thermal indicator",
+                                                                               "publication_number":  "US20030000451A1",
+                                                                               "assignee":  "Wilcox, Iris Y.",
+                                                                               "filed_year":  "2001",
+                                                                               "publication_year":  "2003",
+                                                                               "abstract":  "A thermochromic thermal indicator affixed to the inner wall of a beverage container, sensing and signaling a specified liquid temperature range.",
+                                                                               "link":  "https://patents.google.com/patent/US20030000451A1/en",
+                                                                               "relevance":  "Oldest blocking reference in the consumer beverage space. Establishes the general concept as 25-year-old prior art.",
+                                                                               "claim_overlap":  "direct overlap",
+                                                                               "attorney_note":  "The 2001 priority date establishes that the general thermochromic-on-beverage-container concept has been public prior art for approximately 25 years. Novelty arguments against this filing on the bare concept are not viable."
+                                                                           },
+                                                                           {
+                                                                               "title":  "Temperature-indicating container",
+                                                                               "publication_number":  "US20070121702A1",
+                                                                               "assignee":  "Laguardia, Wendy",
+                                                                               "filed_year":  "2006",
+                                                                               "publication_year":  "2007",
+                                                                               "abstract":  "A container with a temperature indicator in or on the side wall or bottom, visible from outside the container.",
+                                                                               "link":  "https://patents.google.com/patent/US20070121702A1/en",
+                                                                               "relevance":  "Sibling filing to Cups Unlimited 189. Forecloses both side-wall and bottom indicator geometries on a disposable cup.",
+                                                                               "claim_overlap":  "direct overlap",
+                                                                               "attorney_note":  "The Laguardia claim set reads on both side-wall and bottom indicator positioning, foreclosing the two most common product geometries for a disposable cup. Combined with the 189, this establishes a near-complete blocking set on the SafeTemp form factor as described."
+                                                                           },
+                                                                           {
+                                                                               "title":  "Temperature-indicating container (PCT)",
+                                                                               "publication_number":  "WO2007030351A2",
+                                                                               "assignee":  "Laguardia, Wendy",
+                                                                               "filed_year":  "2006",
+                                                                               "publication_year":  "2007",
+                                                                               "abstract":  "PCT counterpart to the Laguardia US filing, covering a temperature-indicating container with thermal insulation and side-wall or bottom indicator visible externally.",
+                                                                               "link":  "https://patents.google.com/patent/WO2007030351A2/en",
+                                                                               "relevance":  "Extends the Laguardia blocking-art coverage internationally to PCT member states.",
+                                                                               "claim_overlap":  "direct overlap",
+                                                                               "attorney_note":  "Together the Laguardia US plus PCT family is the global gating reference for any side-wall thermochromic indicator on a beverage container. International filing is foreclosed without licensing or design-around."
+                                                                           },
+                                                                           {
+                                                                               "title":  "Advanced multi-element consumable-disposable products",
+                                                                               "publication_number":  "US10323989B2",
+                                                                               "assignee":  "Segan Industries, Inc.",
+                                                                               "filed_year":  "2017",
+                                                                               "publication_year":  "2019",
+                                                                               "abstract":  "Integration of color-change interactive indicators into high-volume disposable consumable products with minimal incremental manufacturing cost.",
+                                                                               "link":  "https://patents.google.com/patent/US10323989B2/en",
+                                                                               "relevance":  "Adjacent on the manufacturing-process and multi-element-integration side, not directly anticipating the bare product.",
+                                                                               "claim_overlap":  "adjacent",
+                                                                               "attorney_note":  "Adjacent rather than directly anticipating because Segan emphasizes manufacturing process and multi-element interactions rather than the bare cup-plus-indicator product. Relevant for any production-scale manufacturing or multi-element claim SafeTemp pursues."
+                                                                           },
+                                                                           {
+                                                                               "title":  "Co-topo polymeric compositions for threshold temperature indication",
+                                                                               "publication_number":  "US10302508B2",
+                                                                               "assignee":  "Segan Industries, Inc.",
+                                                                               "filed_year":  "2018",
+                                                                               "publication_year":  "2019",
+                                                                               "abstract":  "Polymer-based indicator compositions that undergo reversible or irreversible color change at controlled threshold temperatures.",
+                                                                               "link":  "https://patents.google.com/patent/US10302508B2/en",
+                                                                               "relevance":  "Covers the polymer chemistry behind calibrated multi-state thermochromic indicators. Material-side blocking potential for any composition claim.",
+                                                                               "claim_overlap":  "adjacent",
+                                                                               "attorney_note":  "If SafeTemp pursues a material composition claim (one of the three defensible angles), Segan\u0027s polymer patents must be cleared via formal freedom-to-operate analysis. Likely outcomes: license from Segan, or design around their specific co-topo polymer formulations using alternative leuco-dye or liquid-crystal chemistries."
+                                                                           }
+                                                                       ],
+                                                         "patentability":  {
+                                                                               "summary":  "The bare product concept of a disposable cup with a thermochromic temperature indicator is anticipated by multiple US and PCT filings dating back to 2001, with Cups Unlimited and the Laguardia family providing dense direct-overlap blocking art. Any broad product claim would face Section 102 anticipation rejection. The defensible patentable space narrows to three specific angles: a calibration methodology claim tied to the published Brown and Diller 2008 burn-threshold dataset; a multi-state color-transition system paired with a printed consumer-readable legend scoped to a specific burn-prevention end-use; and an FDA-compliant non-toxic leuco-dye or liquid-crystal composition claim, subject to formal FTO clearance against the Segan Industries material patents.",
+                                                                               "strong_claims":  [
+                                                                                                     "Calibration methodology tying discrete thermochromic state transitions to the Brown and Diller 2008 physiological burn-threshold dataset (54-60 Celsius optimal range with 57.8 Celsius preferred-temperature anchor)",
+                                                                                                     "Three-state visual-legend system pairing color transitions with a printed consumer-readable safe/caution/hot label, scoped to pediatric or eldercare burn-prevention end-use",
+                                                                                                     "FDA-compliant non-toxic leuco-dye composition optimized for direct food-contact on a single-use paper substrate, with stability claims across the 54-60 Celsius calibration range"
+                                                                                                 ],
+                                                                               "weak_claims":  [
+                                                                                                   "Generic thermochromic indicator on a disposable beverage cup. Dead against US8118189B2, US20030000451A1, and the Laguardia family. No meaningful differentiation available.",
+                                                                                                   "Color-change beverage container indicating hot versus safe liquid temperature. Anticipated by Wilcox 451 filed 2001."
+                                                                                               ],
+                                                                               "gaps":  [
+                                                                                            "No located prior art anchors calibration thresholds to a named clinical study or published physiological burn-risk dataset. The calibration-methodology claim path appears open.",
+                                                                                            "Combination of three-state indicator plus printed consumer legend plus pediatric end-use framing is not located in the filed art. Could support a method-of-use or system claim.",
+                                                                                            "FDA-compliant non-toxic leuco-dye composition specifically validated for direct food-contact on single-use paper at the 54-60 Celsius range is not addressed in the located art. Could support a composition claim, subject to Segan FTO clearance."
+                                                                                        ]
+                                                                           },
+                                                         "cpc_codes":  [
+                                                                           {
+                                                                               "code":  "B65D81/38",
+                                                                               "label":  "Containers with thermal insulation or temperature-indicating means",
+                                                                               "why":  "Primary classification. Most blocking prior art lives in this class."
+                                                                           },
+                                                                           {
+                                                                               "code":  "G01K11/12",
+                                                                               "label":  "Thermometers using changes in physical or chemical properties of materials, using thermochromic indicators",
+                                                                               "why":  "Covers the indicator element and color-change mechanism. Relevant to calibration and material claims."
+                                                                           },
+                                                                           {
+                                                                               "code":  "B65D3/22",
+                                                                               "label":  "Containers made of paper or cardboard, rigid or semi-rigid cups",
+                                                                               "why":  "Substrate classification. Relevant when combining indicator with food-grade paper body claim."
+                                                                           },
+                                                                           {
+                                                                               "code":  "A47G19/22",
+                                                                               "label":  "Drinking vessels or lids with means for preventing scalding or burning",
+                                                                               "why":  "Burn-prevention use-case framing. Useful for differentiating on intended physiological safety application."
+                                                                           },
+                                                                           {
+                                                                               "code":  "C09K9/02",
+                                                                               "label":  "Liquid crystal compositions for thermochromic applications",
+                                                                               "why":  "Relevant if claims are pursued on the specific liquid crystal or leuco-dye indicator composition."
+                                                                           }
+                                                                       ],
+                                                         "next_steps":  [
+                                                                            {
+                                                                                "option":  "Provisional self-file (USPTO TEAS Plus)",
+                                                                                "fit":  "marginal fit",
+                                                                                "cost_estimate":  " USPTO filing fee plus -,500 for optional attorney pre-review",
+                                                                                "action":  "Do not self-file at this prior-art density. Surgical claim drafting on the three defensible angles requires patent-bar training. A poorly scoped provisional creates priority-date confusion and can foreclose better claim language at the non-provisional conversion stage."
+                                                                            },
+                                                                            {
+                                                                                "option":  "Engage a patent attorney",
+                                                                                "fit":  "good fit",
+                                                                                "cost_estimate":  ",000-,000 for FTO analysis plus non-provisional drafting and filing",
+                                                                                "action":  "Retain a registered patent attorney with consumer-goods, polymer-chemistry, or food-contact-materials experience. Scope to formal FTO against US8118189B2, US20030000451A1, the Laguardia US/PCT family, and Segan material patents, then non-provisional claim drafting on the three defensible angles."
+                                                                            },
+                                                                            {
+                                                                                "option":  "USPTO Pro Bono Program",
+                                                                                "fit":  "good fit",
+                                                                                "cost_estimate":  "Free if income-qualifying. USPTO micro-entity filing fees approximately -.",
+                                                                                "action":  "Apply via a regional Pro Bono partner (state bar IP sections, law school clinics, LegalCORPS regional affiliates) if the founder meets independent-inventor or micro-entity income criteria. Optimal path for qualifying founders given the complex blocking-art density."
+                                                                            }
+                                                                        ],
+                                                         "rationale":  "The thermochromic indicator on disposable beverage containers is heavily filed art with a 25-year prior-art tail, and the consumer-cup form factor is directly claimed in multiple issued patents. The only viable patent strategy is narrow specific claim drafting around the Brown and Diller burn-threshold calibration, the multi-state legend system, and the FDA-compliant material composition, all of which require attorney-grade scoping. Engaging registered counsel through retention or the USPTO Pro Bono Program is the only realistic path to a defensible patent position."
+                                                     }
+                               }
+              }
+}

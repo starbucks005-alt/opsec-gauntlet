@@ -788,6 +788,89 @@
     .ap-paths{ grid-template-columns:1fr; }
   }
 
+  /* Standalone Consult: a la carte EP services.
+     Sits below After the Panel as the second door of the business -
+     full Gauntlet OR direct to a single EP for targeted deliverables.
+     v1 ships Wren only; Reid and Arjun queued as their tools harden. */
+  .standalone-consult{ padding:5rem 2rem 4rem; }
+  .sc-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
+    text-align:center;
+  }
+  .sc-title{
+    font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3.6vw,2.7rem);
+    font-weight:700; color:var(--cream); line-height:1.15;
+    letter-spacing:-0.01em; text-align:center; margin-bottom:1rem;
+  }
+  .sc-title em{ font-style:italic; color:var(--gold-light); }
+  .sc-lede{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    color:var(--text-dim); font-size:1.12rem; line-height:1.55;
+    text-align:center; max-width:680px; margin:0 auto 1.4rem;
+  }
+  .sc-intro{
+    font-family:'Cormorant Garamond',serif;
+    color:var(--text); font-size:1.05rem; line-height:1.7;
+    text-align:center; max-width:780px; margin:0 auto 2.8rem;
+  }
+  .sc-card{
+    max-width:780px; margin:0 auto;
+    padding:2.2rem 2.2rem 2rem;
+    border:1px solid var(--rule);
+    background:rgba(184,146,42,0.04);
+    position:relative;
+  }
+  .sc-card-name{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold);
+    border-bottom:1px solid rgba(212,170,74,0.25);
+    padding-bottom:0.5rem; margin-bottom:0.5rem;
+  }
+  .sc-card-sme{
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:1.05rem; color:var(--cream); margin-bottom:1.2rem;
+  }
+  .sc-card-pitch{
+    font-family:'Cormorant Garamond',serif; font-size:1.05rem;
+    line-height:1.65; color:var(--text); margin-bottom:1.4rem;
+  }
+  .sc-card-deliv-label{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--gold-light); margin-bottom:0.8rem;
+  }
+  .sc-card-deliv{
+    list-style:none; padding:0; margin:0 0 1.4rem;
+    display:flex; flex-direction:column; gap:0.9rem;
+  }
+  .sc-card-deliv li{
+    font-family:'Cormorant Garamond',serif; font-size:1.02rem;
+    line-height:1.55; color:var(--text);
+    padding-left:1rem; border-left:1px solid rgba(212,170,74,0.35);
+  }
+  .sc-card-deliv li b{
+    font-family:'Playfair Display',serif; font-weight:600;
+    color:var(--cream); display:block; margin-bottom:0.15rem;
+    font-size:1.02rem;
+  }
+  .sc-card-anchor{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1rem; line-height:1.6; color:var(--text-dim);
+    padding-top:1.2rem; border-top:1px solid rgba(212,170,74,0.2);
+    margin-bottom:1.4rem;
+  }
+  .sc-card-cta{
+    display:inline-block;
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--ink);
+    background:var(--gold); padding:0.85rem 1.6rem;
+    text-decoration:none; transition:background 0.18s;
+  }
+  .sc-card-cta:hover{ background:var(--gold-light); }
+  @media (max-width:600px){
+    .sc-card{ padding:1.6rem 1.4rem 1.4rem; }
+  }
+
   /* The Exit: routing report. */
   .corridor-exit{padding:5rem 2rem 5rem;text-align:center;}
   .exit-title{
@@ -1361,6 +1444,38 @@
         <a class="ap-path-link" href="#corridor-wings">Walk the corridor &rarr;</a>
       </article>
     </div>
+  </div>
+</section>
+
+<div class="footlight"></div>
+
+<!-- ── Standalone Consult: a la carte EP services ─────────────────────────
+     Second door of the business. Clients who know what they need can
+     skip the panel and book a single EP for targeted deliverables.
+     v1 ships Wren only (live demand: patent help). Other EPs queued. -->
+<section class="standalone-consult velvet">
+  <div class="band-inner narrow">
+    <div class="sc-eyebrow">Standalone Consults</div>
+    <h2 class="sc-title">Skip the panel. Book a <em>Standalone Consult</em>.</h2>
+    <p class="sc-lede">A direct session with a single EP. Real deliverables, no full Gauntlet.</p>
+    <p class="sc-intro">The standard Gauntlet evaluates broad market viability across eight dimensions. If you already know your market but face a specific legal, technical, or messaging hurdle, bypass the judicial panel entirely. Book an isolated consultation with a single Executive Producer for targeted, execution-ready assets.</p>
+
+    <article class="sc-card">
+      <div class="sc-card-name">Wren Calloway</div>
+      <div class="sc-card-sme">SME: Patent Screening &amp; Prior-Art Assessment</div>
+      <p class="sc-card-pitch">A business professor or technical founder does not always need an elevator pitch; sometimes they just need to know if someone else built their product first. Wren skips the marketing narrative and runs clinical prior-art screening against active patent databases.</p>
+
+      <div class="sc-card-deliv-label">What you walk out of the office with</div>
+      <ul class="sc-card-deliv">
+        <li><b>Prior-Art Screening Memo</b>A direct comparison of your product architecture against existing public filings and claims.</li>
+        <li><b>Competitive Validation Matrix</b>An assessment mapping exactly where your technology overlaps with current market intellectual property and where your defensible space remains.</li>
+        <li><b>Filing Pathway Recommendation</b>A strategic brief detailing the three distinct execution paths for your provisional application based on current USPTO landscape density.</li>
+      </ul>
+
+      <p class="sc-card-anchor">Instead of paying a boutique firm $1,500 for an initial patent search, utilize Wren to stress-test your claims and map your regulatory route before involving formal counsel.</p>
+
+      <a class="sc-card-cta" href="/wren.html">Book a Consult &rarr;</a>
+    </article>
   </div>
 </section>
 

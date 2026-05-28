@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standalone Consult: Wren Calloway · The Gauntlet</title>
+<meta name="description" content="Skip the Gauntlet panel. Book a Standalone Consult with Wren Calloway for prior-art screening, patentability assessment, and a filing pathway recommendation.">
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="apple-touch-icon" href="Favicon.png">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root,
+  :root[data-theme="dark"]{
+    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    --crimson:#5a1a1a; --crimson-bright:#c0392b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    min-height:100vh;
+    background-image:
+      radial-gradient(ellipse 60% 50% at center top, rgba(184,146,42,0.10) 0%, transparent 70%),
+      repeating-linear-gradient(135deg,
+        rgba(212,170,74,0.018) 0px, rgba(212,170,74,0.018) 1px,
+        transparent 1px, transparent 3px);
+  }
+
+  /* Topbar */
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2.5rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
+    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
+    color:var(--gold);text-decoration:none;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-back{
+    margin-left:auto;
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  }
+  .tg-topbar-back:hover{color:var(--gold);}
+
+  main{max-width:820px;margin:0 auto;padding:4rem 2rem 5rem;}
+
+  .eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;
+  }
+  h1.page-title{
+    font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.4vw,3.2rem);
+    font-weight:700;color:var(--cream);line-height:1.05;
+    margin-bottom:1rem;letter-spacing:-0.01em;
+  }
+  h1.page-title em{font-style:italic;color:var(--gold-light);}
+  .page-lede{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.2rem;line-height:1.55;color:var(--text-dim);
+    margin-bottom:2.6rem;max-width:680px;
+  }
+
+  /* Pitch block */
+  .pitch{
+    border:1px solid var(--rule);
+    background:rgba(184,146,42,0.04);
+    padding:2rem 2rem 1.6rem;margin-bottom:3rem;
+  }
+  .pitch-name{
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);
+    border-bottom:1px solid rgba(212,170,74,0.25);
+    padding-bottom:0.5rem;margin-bottom:0.5rem;
+  }
+  .pitch-sme{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.1rem;color:var(--cream);margin-bottom:1.4rem;
+  }
+  .pitch p{font-size:1.08rem;line-height:1.7;color:var(--text);margin-bottom:1rem;}
+  .pitch p:last-child{margin-bottom:0;}
+
+  /* Deliverables */
+  .section-label{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--gold-light);margin-bottom:1rem;
+  }
+  .deliv{
+    list-style:none;padding:0;margin:0 0 2.6rem;
+    display:flex;flex-direction:column;gap:1.1rem;
+  }
+  .deliv li{
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+    line-height:1.6;color:var(--text);
+    padding-left:1.1rem;border-left:1px solid rgba(212,170,74,0.4);
+  }
+  .deliv li b{
+    font-family:'Playfair Display',serif;font-weight:600;
+    color:var(--cream);display:block;margin-bottom:0.2rem;font-size:1.08rem;
+  }
+
+  .anchor-block{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.08rem;line-height:1.65;color:var(--text-dim);
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:1.4rem 0;margin-bottom:3rem;text-align:center;
+  }
+
+  /* Validation block: side-by-side proof-of-skill against a benchmark case.
+     Breaks out of the 820px main constraint to fit two columns at desktop;
+     stacks vertically on mobile. The visible header in the markup is the
+     audit story; the columns render identically from the same JSON schema. */
+  .validate-block{
+    /* Full-bleed: escape the constrained main width. */
+    width:100vw;
+    position:relative;
+    left:50%; right:50%;
+    margin-left:-50vw; margin-right:-50vw;
+    margin-top:0; margin-bottom:3.4rem;
+    padding:3.6rem 2rem 3.4rem;
+    background:
+      linear-gradient(180deg, rgba(20,21,26,0.0) 0%, rgba(20,21,26,0.55) 8%, rgba(20,21,26,0.55) 92%, rgba(20,21,26,0.0) 100%),
+      radial-gradient(ellipse 60% 40% at center top, rgba(184,146,42,0.08) 0%, transparent 70%);
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .validate-block-inner{ max-width:1200px; margin:0 auto; }
+  .validate-eyebrow{
+    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
+    text-align:center;
+  }
+  .validate-title{
+    font-family:'Playfair Display',serif; font-size:clamp(1.7rem,3.2vw,2.4rem);
+    font-weight:700; color:var(--cream); line-height:1.15;
+    letter-spacing:-0.005em; text-align:center; margin-bottom:1rem;
+  }
+  .validate-title em{ font-style:italic; color:var(--gold-light); }
+  .validate-lede{
+    font-family:'Cormorant Garamond',serif;
+    color:var(--text); font-size:1.05rem; line-height:1.7;
+    text-align:center; max-width:760px; margin:0 auto 2.6rem;
+  }
+  .validate-tiles{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;
+    margin-bottom:2.6rem;
+  }
+  .validate-tile{
+    text-align:left;
+    padding:1.3rem 1.3rem 1.2rem;
+    border:1px solid var(--rule);
+    background:rgba(184,146,42,0.04);
+    color:inherit; font-family:inherit;
+    cursor:pointer;
+    transition:border-color 0.18s, background 0.18s;
+    display:flex; flex-direction:column; gap:0.5rem;
+  }
+  .validate-tile:hover{ border-color:var(--gold-light); background:rgba(184,146,42,0.08); }
+  .validate-tile.is-coming{ cursor:not-allowed; opacity:0.55; }
+  .validate-tile.is-coming:hover{ border-color:var(--rule); background:rgba(184,146,42,0.04); }
+  .validate-tile.is-active{ border-color:var(--gold-light); background:rgba(184,146,42,0.12); }
+  .validate-tile-status{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--gold);
+    padding-bottom:0.5rem; border-bottom:1px solid rgba(212,170,74,0.25);
+    margin-bottom:0.1rem;
+  }
+  .validate-tile.is-coming .validate-tile-status{ color:var(--text-dim); }
+  .validate-tile-domain{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+  }
+  .validate-tile-title{
+    font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700;
+    color:var(--cream); line-height:1.25;
+  }
+  .validate-tile-summary{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem;
+    line-height:1.5; color:var(--text);
+  }
+  .validate-tile-cta{
+    margin-top:auto; padding-top:0.7rem;
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold-light);
+  }
+
+  /* Reveal: side-by-side comparison. */
+  .validate-reveal{ display:none; }
+  .validate-reveal.is-open{ display:block; }
+  .validate-meta{
+    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--text-dim);
+    text-align:center; margin-bottom:1.6rem;
+  }
+  .validate-meta b{ color:var(--gold-light); font-weight:normal; }
+  .validate-columns{
+    display:grid; grid-template-columns:1fr 1fr; gap:1.4rem;
+    margin-bottom:2.4rem;
+  }
+  .validate-col{
+    border:1px solid var(--rule);
+    background:rgba(10,10,10,0.55);
+    padding:1.6rem 1.5rem;
+  }
+  .validate-col-header{
+    border-bottom:1px solid var(--rule);
+    padding-bottom:0.8rem; margin-bottom:1.4rem;
+  }
+  .validate-col-label{
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:0.25rem;
+  }
+  .validate-col-meta{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.96rem; color:var(--text-dim);
+  }
+  .validate-section-label{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold-light);
+    border-top:1px solid rgba(212,170,74,0.18);
+    padding-top:1rem; margin-top:1.4rem; margin-bottom:0.7rem;
+  }
+  .validate-section-label:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+
+  /* Prior-art entries */
+  .v-pa-entry{ margin-bottom:1.1rem; }
+  .v-pa-entry:last-child{ margin-bottom:0; }
+  .v-pa-head{
+    display:flex; align-items:baseline; gap:0.5rem; flex-wrap:wrap;
+    margin-bottom:0.25rem;
+  }
+  .v-pa-pubnum{
+    font-family:'DM Mono',monospace; font-size:0.72rem;
+    color:var(--gold-light); text-decoration:none;
+  }
+  .v-pa-pubnum:hover{ color:var(--cream); text-decoration:underline; }
+  .v-pa-overlap{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    text-transform:uppercase;
+    padding:0.18rem 0.5rem;
+    border:1px solid currentColor;
+    color:var(--text-dim);
+  }
+  .v-pa-overlap[data-overlap="direct overlap"]{ color:#d97a6c; border-color:rgba(217,122,108,0.45); }
+  .v-pa-overlap[data-overlap="adjacent"]{ color:#d4aa4a; border-color:rgba(212,170,74,0.45); }
+  .v-pa-overlap[data-overlap="background art"]{ color:var(--text-dim); }
+  .v-pa-overlap[data-overlap="expired - free territory"]{ color:#7fae7a; border-color:rgba(127,174,122,0.45); }
+  .v-pa-title{
+    font-family:'Playfair Display',serif; font-weight:600;
+    color:var(--cream); font-size:1.02rem; line-height:1.3;
+    margin-bottom:0.25rem;
+  }
+  .v-pa-dates{
+    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-bottom:0.4rem;
+  }
+  .v-pa-relevance{
+    font-family:'Cormorant Garamond',serif; font-size:0.98rem;
+    line-height:1.55; color:var(--text);
+  }
+  .v-pa-attorney{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:0.92rem; line-height:1.55; color:var(--text-dim);
+    margin-top:0.5rem; padding-left:0.9rem;
+    border-left:1px solid rgba(212,170,74,0.3);
+  }
+
+  /* Patentability bullets, CPC, next steps */
+  .v-patent-summary{
+    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.65;
+    color:var(--text); margin-bottom:0.9rem;
+  }
+  .v-bullets{
+    list-style:none; padding:0; margin:0 0 0.9rem;
+    display:flex; flex-direction:column; gap:0.55rem;
+  }
+  .v-bullets li{
+    font-family:'Cormorant Garamond',serif; font-size:0.97rem;
+    line-height:1.5; color:var(--text);
+    padding-left:0.9rem; border-left:1px solid rgba(212,170,74,0.3);
+  }
+  .v-mini-label{
+    font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--text-dim);
+    margin-bottom:0.35rem; margin-top:0.6rem;
+  }
+  .v-cpc-entry{ margin-bottom:0.7rem; }
+  .v-cpc-code{
+    font-family:'DM Mono',monospace; font-size:0.85rem; color:var(--gold-light);
+  }
+  .v-cpc-label{
+    font-family:'Playfair Display',serif; font-style:italic; font-size:0.95rem;
+    color:var(--cream); margin:0.1rem 0 0.25rem;
+  }
+  .v-cpc-why{ font-size:0.93rem; color:var(--text); line-height:1.5; }
+  .v-step-entry{ margin-bottom:0.95rem; }
+  .v-step-head{ display:flex; align-items:baseline; gap:0.6rem; flex-wrap:wrap; }
+  .v-step-option{
+    font-family:'Playfair Display',serif; font-weight:600;
+    color:var(--cream); font-size:0.98rem;
+  }
+  .v-step-fit{
+    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:0.16rem 0.5rem; border:1px solid currentColor;
+  }
+  .v-step-fit[data-fit="good fit"]{ color:#7fae7a; border-color:rgba(127,174,122,0.4); }
+  .v-step-fit[data-fit="marginal fit"]{ color:var(--text-dim); }
+  .v-step-fit[data-fit="not recommended"]{ color:#d97a6c; border-color:rgba(217,122,108,0.4); }
+  .v-step-cost{
+    font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--text-dim);
+    margin:0.1rem 0 0.35rem;
+  }
+  .v-step-action{ font-size:0.95rem; line-height:1.55; color:var(--text); }
+  .v-rationale{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1rem; line-height:1.65; color:var(--cream);
+    padding:0.9rem 1rem;
+    border:1px solid rgba(212,170,74,0.3);
+    background:rgba(184,146,42,0.05);
+  }
+
+  /* Audit summary band below the columns */
+  .validate-audit{
+    text-align:center;
+    border:1px solid var(--rule);
+    background:rgba(184,146,42,0.05);
+    padding:1.6rem 1.8rem 1.5rem;
+  }
+  .validate-audit p{
+    font-family:'Cormorant Garamond',serif; font-size:1.05rem; line-height:1.6;
+    color:var(--text); max-width:720px; margin:0 auto 1.1rem;
+  }
+  .validate-audit p em{ color:var(--gold-light); font-style:italic; }
+  .validate-audit .btn-jump{
+    display:inline-block;
+    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--ink);
+    background:var(--gold); padding:0.85rem 1.6rem;
+    border:none; cursor:pointer;
+    text-decoration:none;
+  }
+  .validate-audit .btn-jump:hover{ background:var(--gold-light); }
+
+  @media (max-width:900px){
+    .validate-tiles{ grid-template-columns:1fr; }
+    .validate-columns{ grid-template-columns:1fr; }
+  }
+
+  /* Form */
+  .form-eyebrow{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+  }
+  .form-title{
+    font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;
+    color:var(--cream);line-height:1.15;margin-bottom:0.6rem;
+  }
+  .form-title em{font-style:italic;color:var(--gold-light);}
+  .form-sub{
+    color:var(--text-dim);font-size:1.02rem;line-height:1.6;
+    margin-bottom:2rem;
+  }
+
+  form.consult-form{display:flex;flex-direction:column;gap:1.3rem;}
+  .field{display:flex;flex-direction:column;gap:0.4rem;}
+  .field label{
+    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .field input,
+  .field textarea{
+    background:rgba(20,21,26,0.6);
+    border:1px solid var(--rule);
+    padding:0.85rem 1rem;color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+    line-height:1.5;outline:none;transition:border-color 0.18s;
+  }
+  .field input:focus,
+  .field textarea:focus{ border-color:var(--gold-light); }
+  .field textarea{ resize:vertical;min-height:140px; }
+  .field-hint{
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--text-dim);
+  }
+
+  .btn-submit{
+    margin-top:0.6rem;align-self:flex-start;
+    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.26em;
+    text-transform:uppercase;color:var(--ink);
+    background:var(--gold);padding:1rem 1.8rem;
+    border:none;cursor:pointer;transition:background 0.18s;
+  }
+  .btn-submit:hover{ background:var(--gold-light); }
+  .btn-submit:disabled{ opacity:0.5;cursor:not-allowed; }
+
+  .form-status{
+    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--text-dim);margin-top:0.6rem;min-height:1em;
+  }
+  .form-status.is-error{ color:var(--crimson-bright); }
+  .form-status.is-ok{ color:var(--gold-light); }
+
+  /* Success state */
+  .thanks{
+    border:1px solid var(--rule);
+    background:rgba(184,146,42,0.05);
+    padding:2.4rem 2rem;text-align:center;display:none;
+  }
+  .thanks.show{ display:block; }
+  .thanks h2{
+    font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;
+    color:var(--cream);margin-bottom:0.9rem;line-height:1.2;
+  }
+  .thanks h2 em{font-style:italic;color:var(--gold-light);}
+  .thanks p{font-size:1.05rem;line-height:1.65;color:var(--text);margin-bottom:0.8rem;}
+  .thanks p:last-child{margin-bottom:0;}
+
+  .footer-note{
+    margin-top:4rem;padding-top:2rem;border-top:1px solid var(--rule);
+    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--text-dim);text-align:center;
+  }
+  .footer-note a{color:var(--gold-light);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="Favicon.png" alt="">
+    <span>THE GAUNTLET</span>
+  </a>
+  <a class="tg-topbar-back" href="/">&larr; Back</a>
+</header>
+
+<main>
+  <div class="eyebrow">Standalone Consult</div>
+  <h1 class="page-title">Wren Calloway, <em>SME</em>.</h1>
+  <p class="page-lede">Patent Screening &amp; Prior-Art Assessment. Skip the panel. Skip the marketing narrative. Find out if someone else built it first.</p>
+
+  <!-- Pitch block: re-state the Wren positioning for cold buyers who
+       land here directly (not from the homepage). -->
+  <section class="pitch">
+    <div class="pitch-name">Wren Calloway</div>
+    <div class="pitch-sme">SME: Patent Screening &amp; Prior-Art Assessment</div>
+    <p>A business professor or technical founder does not always need an elevator pitch; sometimes they just need to know if someone else built their product first. Wren skips the marketing narrative and runs clinical prior-art screening against active patent databases.</p>
+    <p>The standard Gauntlet evaluates broad market viability across eight dimensions. If you already know your market but face a specific legal hurdle, bypass the judicial panel entirely. Book an isolated consultation with Wren for targeted, execution-ready assets.</p>
+  </section>
+
+  <div class="section-label">What you walk out of the office with</div>
+  <ul class="deliv">
+    <li><b>Prior-Art Screening Memo</b>A direct comparison of your product architecture against existing public filings and claims.</li>
+    <li><b>Competitive Validation Matrix</b>An assessment mapping exactly where your technology overlaps with current market intellectual property and where your defensible space remains.</li>
+    <li><b>Filing Pathway Recommendation</b>A strategic brief detailing the three distinct execution paths for your provisional application based on current USPTO landscape density.</li>
+  </ul>
+
+  <p class="anchor-block">Instead of paying a boutique firm $1,500 for an initial patent search, utilize Wren to stress-test your claims and map your regulatory route before involving formal counsel.</p>
+
+  <!-- ── Validation block: proof-of-skill before procurement ─────────────────
+       Side-by-side comparison of Wren's automated output against a verified
+       reality panel curated from public-record patent filings. The audit story
+       is the headline: same patents, same conclusions, same recommendation.
+       v1 ships SafeTemp only; Pure Crave and Second Chance shown as
+       "Coming soon" until their reality panels are compiled. -->
+  <section class="validate-block">
+    <div class="validate-block-inner">
+      <div class="validate-eyebrow">Verify before you procure</div>
+      <h2 class="validate-title">Run our baseline validation against a historically <em>archived benchmark</em>.</h2>
+      <p class="validate-lede">Pick a benchmark case below. Wren's automated output appears side-by-side with the attorney-grade verified reality panel curated from public-record patent filings. Every patent citation is independently verifiable on Google Patents. This is how we prove the engine works before you commit budget.</p>
+
+      <div class="validate-tiles">
+        <button type="button" class="validate-tile is-live" data-case="safetemp" aria-controls="validate-reveal">
+          <div class="validate-tile-status">Live</div>
+          <div class="validate-tile-domain">Thermal Kinetics &amp; Public Safety</div>
+          <div class="validate-tile-title">SafeTemp Disposable Cups</div>
+          <div class="validate-tile-summary">Disposable hot-beverage cup with built-in thermochromic temperature indicator, aimed at parent-and-child burn-prevention.</div>
+          <div class="validate-tile-cta">Run Verification &rarr;</div>
+        </button>
+        <div class="validate-tile is-coming" aria-disabled="true">
+          <div class="validate-tile-status">Coming soon</div>
+          <div class="validate-tile-domain">Chemical CPG</div>
+          <div class="validate-tile-title">Pure Crave Appetite Gum</div>
+          <div class="validate-tile-summary">Natural-ingredient dessert gum formulated to suppress late-night sweet cravings.</div>
+        </div>
+        <div class="validate-tile is-coming" aria-disabled="true">
+          <div class="validate-tile-status">Coming soon</div>
+          <div class="validate-tile-domain">Behavioral Health Software UI</div>
+          <div class="validate-tile-title">Second Chance Fitness App</div>
+          <div class="validate-tile-summary">Exercise tracker with a 7-day sliding-window adherence model and bounceback streaks.</div>
+        </div>
+      </div>
+
+      <div class="validate-reveal" id="validate-reveal" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- Intake form -->
+  <div id="form-block">
+    <div class="form-eyebrow">Request a Consult</div>
+    <h2 class="form-title">Tell Wren what you are <em>building</em>.</h2>
+    <p class="form-sub">A short intake. We review every request personally and respond within one business day with next steps, scope, and pricing.</p>
+
+    <form class="consult-form" id="consult-form" novalidate>
+      <div class="field">
+        <label for="cf-name">Your name</label>
+        <input id="cf-name" name="name" type="text" maxlength="120" required>
+      </div>
+      <div class="field">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" maxlength="200" required>
+      </div>
+      <div class="field">
+        <label for="cf-org">Organization (optional)</label>
+        <input id="cf-org" name="organization" type="text" maxlength="160">
+      </div>
+      <div class="field">
+        <label for="cf-phone">Phone (optional)</label>
+        <input id="cf-phone" name="phone" type="tel" maxlength="40">
+      </div>
+      <div class="field">
+        <label for="cf-summary">What are you building? One paragraph is fine.</label>
+        <textarea id="cf-summary" name="summary" maxlength="3000" required></textarea>
+        <span class="field-hint">Enough that Wren can tell which technology space to search. Specifics, not generalities.</span>
+      </div>
+      <button class="btn-submit" type="submit" id="cf-submit">Submit Request &rarr;</button>
+      <div class="form-status" id="cf-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <!-- Success state, revealed after submit -->
+  <div class="thanks" id="thanks-block" aria-live="polite">
+    <h2>Request received. <em>We will be in touch.</em></h2>
+    <p>Wren reviews every consult request personally. You will hear back within one business day with scope, pricing, and a proposed start date.</p>
+    <p>If your request is urgent, reply to the confirmation email and flag it.</p>
+  </div>
+
+  <div class="footer-note">
+    <a href="/">Return to The Gauntlet &rarr;</a>
+  </div>
+</main>
+
+<script>
+/* ── Validation block ──────────────────────────────────────────────────────
+   Renders the side-by-side proof-of-skill: Wren's canonical output vs.
+   the attorney-curated reality panel for the selected benchmark case.
+   Data source: /config/wren_benchmark_cases.json (lazy-fetched on first
+   tile click and cached). */
+(function(){
+  var cache       = null;
+  var revealEl    = document.getElementById('validate-reveal');
+  var tileButtons = document.querySelectorAll('.validate-tile.is-live');
+
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function renderPriorArt(entries, isReality){
+    if (!entries || !entries.length) return '<p class="v-pa-relevance">No prior-art entries.</p>';
+    return entries.map(function(p){
+      var attorney = '';
+      if (isReality && p.attorney_note) {
+        attorney = '<div class="v-pa-attorney">' + esc(p.attorney_note) + '</div>';
+      }
+      return ''
+        + '<div class="v-pa-entry">'
+        +   '<div class="v-pa-head">'
+        +     '<a class="v-pa-pubnum" href="' + esc(p.link || '#') + '" target="_blank" rel="noopener">' + esc(p.publication_number) + '</a>'
+        +     '<span class="v-pa-overlap" data-overlap="' + esc(p.claim_overlap) + '">' + esc(p.claim_overlap) + '</span>'
+        +   '</div>'
+        +   '<div class="v-pa-title">' + esc(p.title) + '</div>'
+        +   '<div class="v-pa-dates">' + esc(p.assignee || '') + (p.filed_year ? ' &middot; filed ' + esc(p.filed_year) : '') + (p.publication_year ? ' &middot; pub ' + esc(p.publication_year) : '') + '</div>'
+        +   '<div class="v-pa-relevance">' + esc(p.relevance) + '</div>'
+        +   attorney
+        + '</div>';
+    }).join('');
+  }
+
+  function renderBulletList(arr){
+    if (!arr || !arr.length) return '<p class="v-pa-relevance" style="color:var(--text-dim);">None.</p>';
+    return '<ul class="v-bullets">' + arr.map(function(s){
+      return '<li>' + esc(s) + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  function renderPatentability(p){
+    if (!p) return '';
+    return ''
+      + '<div class="v-patent-summary">' + esc(p.summary || '') + '</div>'
+      + '<div class="v-mini-label">Strong claims</div>'   + renderBulletList(p.strong_claims)
+      + '<div class="v-mini-label">Weak claims</div>'     + renderBulletList(p.weak_claims)
+      + '<div class="v-mini-label">White-space gaps</div>' + renderBulletList(p.gaps);
+  }
+
+  function renderCpc(arr){
+    if (!arr || !arr.length) return '';
+    return arr.map(function(c){
+      return ''
+        + '<div class="v-cpc-entry">'
+        +   '<div class="v-cpc-code">' + esc(c.code) + '</div>'
+        +   '<div class="v-cpc-label">' + esc(c.label) + '</div>'
+        +   '<div class="v-cpc-why">' + esc(c.why) + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function renderNextSteps(arr){
+    if (!arr || !arr.length) return '';
+    return arr.map(function(s){
+      return ''
+        + '<div class="v-step-entry">'
+        +   '<div class="v-step-head">'
+        +     '<span class="v-step-option">' + esc(s.option) + '</span>'
+        +     '<span class="v-step-fit" data-fit="' + esc(s.fit) + '">' + esc(s.fit) + '</span>'
+        +   '</div>'
+        +   '<div class="v-step-cost">' + esc(s.cost_estimate || '') + '</div>'
+        +   '<div class="v-step-action">' + esc(s.action || '') + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function renderColumn(label, meta, data, isReality){
+    if (!data) return '<div class="validate-col"><div class="validate-col-header"><div class="validate-col-label">' + esc(label) + '</div><div class="validate-col-meta">' + esc(meta) + '</div></div><p class="v-pa-relevance" style="color:var(--text-dim);">Not available.</p></div>';
+    return ''
+      + '<div class="validate-col">'
+      +   '<div class="validate-col-header">'
+      +     '<div class="validate-col-label">' + esc(label) + '</div>'
+      +     '<div class="validate-col-meta">' + esc(meta) + '</div>'
+      +   '</div>'
+      +   '<div class="validate-section-label">Prior Art</div>' + renderPriorArt(data.prior_art, isReality)
+      +   '<div class="validate-section-label">Patentability</div>' + renderPatentability(data.patentability)
+      +   '<div class="validate-section-label">CPC Classifications</div>' + renderCpc(data.cpc_codes)
+      +   '<div class="validate-section-label">Next Steps</div>' + renderNextSteps(data.next_steps)
+      +   '<div class="validate-section-label">Rationale</div>'
+      +   '<div class="v-rationale">' + esc(data.rationale || '') + '</div>'
+      + '</div>';
+  }
+
+  function renderReveal(caseObj){
+    if (!caseObj) {
+      revealEl.innerHTML = '<p style="text-align:center;color:var(--text-dim);">Benchmark case not found.</p>';
+      revealEl.classList.add('is-open');
+      return;
+    }
+    var wren    = caseObj.canonical_wren_output;
+    var reality = caseObj.reality_panel;
+    var wrenDate    = caseObj.canonical_run_date || '';
+    var realityDate = (reality && reality.compiled_date) || '';
+
+    var meta = '<div class="validate-meta">'
+      + '<b>Case:</b> ' + esc(caseObj.title || caseObj.slug)
+      + ' &middot; <b>Wren run:</b> ' + esc(wrenDate)
+      + ' &middot; <b>Reality panel curated:</b> ' + esc(realityDate)
+      + '</div>';
+
+    var cols = '<div class="validate-columns">'
+      + renderColumn('Wren\'s Automated Output', '58 seconds. Live prior-art search via Google Patents.', wren, false)
+      + renderColumn('Verified Reality Panel', '4-6 hours typical for a patent attorney intake.', reality, true)
+      + '</div>';
+
+    var audit = '<div class="validate-audit">'
+      + '<p>Both panels point at the same patents. Both reach the same patentability conclusion. Same CPC codes. Same recommended next step. <em>The engine and the expert converge.</em></p>'
+      + '<a class="btn-jump" href="#form-block">Book a Consult &rarr;</a>'
+      + '</div>';
+
+    revealEl.innerHTML = meta + cols + audit;
+    revealEl.classList.add('is-open');
+    revealEl.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  async function loadAndReveal(slug, tileEl){
+    if (!cache) {
+      try {
+        var resp = await fetch('/config/wren_benchmark_cases.json', { cache:'no-cache' });
+        cache = await resp.json();
+      } catch (err) {
+        revealEl.innerHTML = '<p style="text-align:center;color:var(--crimson-bright);">Could not load benchmark data.</p>';
+        revealEl.classList.add('is-open');
+        return;
+      }
+    }
+    // Highlight active tile.
+    document.querySelectorAll('.validate-tile').forEach(function(t){ t.classList.remove('is-active'); });
+    if (tileEl) tileEl.classList.add('is-active');
+    var caseObj = cache.cases && cache.cases[slug];
+    renderReveal(caseObj);
+  }
+
+  tileButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var slug = btn.getAttribute('data-case');
+      loadAndReveal(slug, btn);
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var form    = document.getElementById('consult-form');
+  var submit  = document.getElementById('cf-submit');
+  var status  = document.getElementById('cf-status');
+  var thanks  = document.getElementById('thanks-block');
+  var formBlk = document.getElementById('form-block');
+
+  function setStatus(msg, kind){
+    status.textContent = msg || '';
+    status.className = 'form-status' + (kind ? ' is-' + kind : '');
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    setStatus('');
+
+    var name    = document.getElementById('cf-name').value.trim();
+    var email   = document.getElementById('cf-email').value.trim();
+    var org     = document.getElementById('cf-org').value.trim();
+    var phone   = document.getElementById('cf-phone').value.trim();
+    var summary = document.getElementById('cf-summary').value.trim();
+
+    if (!name)    { setStatus('Name is required.', 'error'); return; }
+    if (!email)   { setStatus('Email is required.', 'error'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus('Email looks invalid.', 'error'); return;
+    }
+    if (!summary || summary.length < 30) {
+      setStatus('Tell Wren at least a sentence or two about what you are building.', 'error'); return;
+    }
+
+    submit.disabled = true;
+    setStatus('Sending...', 'ok');
+
+    try {
+      var resp = await fetch('/.netlify/functions/tg-consult-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ep: 'wren',
+          name: name,
+          email: email,
+          organization: org || null,
+          phone: phone || null,
+          summary: summary,
+        }),
+      });
+      var data = await resp.json().catch(function(){ return {}; });
+      if (!resp.ok) {
+        setStatus(data.error || 'Submission failed. Please try again.', 'error');
+        submit.disabled = false;
+        return;
+      }
+      formBlk.style.display = 'none';
+      thanks.classList.add('show');
+      thanks.scrollIntoView({ behavior:'smooth', block:'start' });
+    } catch (err) {
+      setStatus('Network error. Please try again.', 'error');
+      submit.disabled = false;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
