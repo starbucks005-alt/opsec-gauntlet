@@ -816,7 +816,7 @@
 <main class="tg-main">
 
   <div class="s-label">Step 2 of 3 · Choose Your Panel</div>
-  <h1 class="s-title">Pick <em>three judges</em> to run your idea through The Gauntlet.</h1>
+  <h1 class="s-title">Pick the <em>three judges</em> who will rule on your idea.</h1>
   <p class="s-sub">Each judge brings a domain, a lens, and a worldview. The badge marks our recommendation based on your submission. The final pick is yours.</p>
 
   <!-- Active submission strip: title of the idea the user just submitted   -->
@@ -853,12 +853,12 @@
           </div>
 
           <div class="tg-stage-content">
-            <div class="tg-stage-eyebrow">Your Panel</div>
-            <h2 class="tg-stage-title">The three judges who will <em>run your gauntlet</em>.</h2>
+            <div class="tg-stage-eyebrow">The Chamber</div>
+            <h2 class="tg-stage-title">The three judges who will <em>rule on your idea</em>.</h2>
             <div class="tg-panel" id="tg-panel"></div>
             <div class="tg-stage-actions">
               <button class="btn-outline" id="tg-reset">Start over</button>
-              <button class="btn-gold" id="tg-continue" disabled title="Stage 1 not built yet">Run the Gauntlet</button>
+              <button class="btn-outline" id="tg-leave-chamber">Leave the Chamber, I'm not ready</button>
             </div>
           </div>
         </div>
@@ -1567,8 +1567,6 @@
     // judges-taking-seats sequence ships in a later dialogue gate.
     if (!chatStream) return;
     chatStream.innerHTML = '';
-    // Input stays closed until the conversation phase opens it for an answer.
-    if (chatInput) chatInput.disabled = true;
     addChatMessage({ kind:'system', body:'The judges are taking their seats.' });
   }
 
@@ -2029,18 +2027,17 @@
     if (answerResolver){
       const resolve = answerResolver;
       answerResolver = null;
-      if (chatInput) chatInput.disabled = true;
       resolve(raw);
     }
   }
 
   // Returns a Promise that resolves with the client's next typed answer.
-  // Enables and focuses the input; onChatSubmit disables it again on submit.
+  // The input is always typeable; this just parks the resolver and nudges
+  // focus so the client knows the panel is waiting on them.
   function awaitClientAnswer(){
     return new Promise(resolve => {
       answerResolver = resolve;
       if (chatInput){
-        chatInput.disabled = false;
         chatInput.placeholder = 'Answer the panel...';
         chatInput.focus();
       }
@@ -2087,6 +2084,16 @@
     if (e.key === 'Escape' && modalBackdrop.classList.contains('is-open')) closeModal();
   });
   $('tg-reset').addEventListener('click', resetAll);
+
+  // "Leave the Chamber, I'm not ready" - send the client back to the
+  // corridor to keep prepping with the EPs. The brief stays in
+  // sessionStorage, so the corridor picks up where they left off.
+  {
+    const leaveBtn = $('tg-leave-chamber');
+    if (leaveBtn) leaveBtn.addEventListener('click', () => {
+      window.location.href = '/#corridor-wings';
+    });
+  }
 
   // ── Load judges ─────────────────────────────────────────────────────────
   fetch('/config/judges_master.json', { cache:'no-store' })
