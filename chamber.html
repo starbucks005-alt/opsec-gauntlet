@@ -1598,6 +1598,11 @@
     }
 
     // ── Demo fallback (no submission) ──────────────────────────────────
+    // Plays a single hardcoded judge line + audience heckle so /chamber.html
+    // direct visits still have something to look at. No conversation engine
+    // is parked, so we disable the chat input and surface a clear CTA
+    // pointing to intake.html — otherwise visitors type an answer and the
+    // panel sits silent (the resolver is null in demo mode).
     if (firstActive){
       setTimeout(() => {
         showTyping(firstActive.name);
@@ -1623,6 +1628,22 @@
         });
       }, startMs + 3500);
     }
+    // After the demo lines land, lock the input and explain why nothing
+    // happens if the visitor tries to answer. Without this, typing into
+    // the box and pressing Send produces silence (no answerResolver is
+    // parked in demo mode), which reads as "the judges are broken."
+    setTimeout(() => {
+      addChatMessage({
+        kind: 'system',
+        body: 'This is a preview of the Chamber. To put a real idea in front of the panel, submit it at <a href="/intake.html" style="color:var(--gold); text-decoration:underline;">the intake page</a>.',
+      });
+      if (chatInput){
+        chatInput.disabled = true;
+        chatInput.placeholder = 'Submit an idea at /intake.html to chat with the panel...';
+      }
+      var chatSendBtn = document.getElementById('tg-chat-send');
+      if (chatSendBtn) chatSendBtn.disabled = true;
+    }, startMs + 5500);
   }
 
   // Wait helper for sequencing the stages with breathing room between.

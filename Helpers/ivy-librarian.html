@@ -259,6 +259,12 @@
   <button type="button" class="tg-zoom-open" data-tg-zoom-open style="margin-left:0.6rem;">
     <span class="icon" aria-hidden="true"></span>Take it to Zoom
   </button>
+  <!-- Primary next-step CTA. The whole point of working with Ivy is to
+       walk into the chamber with a real submission. Without this, visitors
+       finish here and go to /chamber.html with no submission, which falls
+       to demo mode (no Q&A engine, dead input). The intake page is the
+       only path that creates a submission ID and forwards to the chamber. -->
+  <a href="/intake.html" style="margin-left:0.9rem; padding:0.45rem 1rem; background:var(--gold,#b8922a); color:#111; font-family:'DM Mono',monospace; font-size:0.78rem; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border-radius:2px;">Submit your idea &rarr;</a>
   <a class="tg-topbar-back" href="/#corridor-wings" style="margin-left:0.9rem;">&larr; Leave</a>
 </header>
 
