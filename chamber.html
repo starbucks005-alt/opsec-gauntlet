@@ -1182,7 +1182,17 @@
   (function readActiveSubmission(){
     try {
       const qs = new URLSearchParams(window.location.search);
-      const id = qs.get('submission') || '';
+      // URL param wins (deep links from intake / report / shared links).
+      // sessionStorage fallback covers visitors who came in through the
+      // Personalize welcome modal — that flow POSTs the intake in the
+      // background and saves the id to sessionStorage but does not
+      // redirect to /chamber.html?submission=..., so without this
+      // fallback the chamber would never see their submission and
+      // would fall to demo mode.
+      let id = qs.get('submission') || '';
+      if (!id) {
+        try { id = sessionStorage.getItem('tg_submission_id') || ''; } catch(_){}
+      }
       if (id) {
         state.submissionId = id;
         // Title cached client-side by intake.html. Falls back to a generic

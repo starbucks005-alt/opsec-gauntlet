@@ -256,6 +256,35 @@
       setTimeout(() => { if (backdrop.parentNode) backdrop.parentNode.removeChild(backdrop); }, 400);
       document.removeEventListener('keydown', onKey);
     }
+    // Anonymous user id, scoped to this browser. Mirrors the helper in
+    // intake.html so the same browser keeps the same id whether the
+    // visitor takes the full intake or the Personalize shortcut.
+    function getOrCreateAnonId(){
+      var LS_KEY = 'tg_anon_user_id';
+      var id = '';
+      try { id = localStorage.getItem(LS_KEY) || ''; } catch(_){}
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)){
+        id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+          : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+              var r = Math.random()*16|0, v = c==='x' ? r : (r&0x3|0x8);
+              return v.toString(16);
+            });
+        try { localStorage.setItem(LS_KEY, id); } catch(_){}
+      }
+      return id;
+    }
+
+    // Title from the brief's first sentence (or first ~9 words). The
+    // Personalize modal does not have a title field; intake-submit
+    // requires one for the recommendation engine. Keeps it under the
+    // backend's max title length.
+    function deriveTitleFromBrief(brief){
+      if (!brief) return 'Personalize brief';
+      var firstSentence = brief.split(/[.!?]/)[0] || brief;
+      var words = firstSentence.trim().split(/\s+/).slice(0, 9).join(' ');
+      return words.slice(0, 120) || 'Personalize brief';
+    }
+
     function personalize(){
       const name  = (nameEl.value  || '').trim().slice(0, NAME_MAX);
       const brief = (briefEl.value || '').trim().slice(0, BRIEF_MAX);
@@ -264,6 +293,44 @@
       ssSet(KEY_NAME,  name);
       ssSet(KEY_BRIEF, brief);
       dismiss();
+      // If the visitor pasted a real brief, POST it to the same intake
+      // endpoint /intake.html uses. Without this, the Chamber later
+      // arrives with no submission ID and falls to demo mode (silent
+      // input, hardcoded judge lines). Fire-and-forget — corridor refresh
+      // and scroll happen immediately so the modal feels responsive; the
+      // POST resolves in the background and writes the submission id to
+      // sessionStorage where chamber.html reads it on load.
+      if (brief && brief.length >= 8) {
+        var title = deriveTitleFromBrief(brief);
+        fetch('/.netlify/functions/tg-intake-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: getOrCreateAnonId(),
+            title: title,
+            description: brief,
+          }),
+        })
+        .then(function(resp){ return resp.json().catch(function(){ return {}; }).then(function(data){
+          if (resp.ok && data && data.id) {
+            try {
+              sessionStorage.setItem('tg_submission_id',    data.id);
+              sessionStorage.setItem('tg_submission_title', title);
+              if (data.requirement_vector){
+                sessionStorage.setItem('tg_submission_vector', JSON.stringify(data.requirement_vector));
+              }
+            } catch(_){}
+            // Once the submission lands, re-trigger the corridor refresh
+            // so the recommendation switches from default to cosine-sim
+            // based on the actual requirement vector.
+            try { if (window.TGCorridor && typeof window.TGCorridor.refresh === 'function') window.TGCorridor.refresh(); }
+            catch(_){}
+          } else {
+            console.warn('[tg-welcome] intake-submit failed', resp.status, data && data.error);
+          }
+        }); })
+        .catch(function(err){ console.warn('[tg-welcome] intake-submit network error', err); });
+      }
       // Two things happen the moment they hit Personalize:
       //   1. Trigger the corridor refetch so "Reading your idea..." shows
       //      on each wing-card immediately.
