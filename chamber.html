@@ -1633,9 +1633,12 @@
     // the box and pressing Send produces silence (no answerResolver is
     // parked in demo mode), which reads as "the judges are broken."
     setTimeout(() => {
+      // addChatMessage escapes HTML, so use plain text + a bare URL the
+       // visitor can click or read aloud. Cleaner than wrestling with the
+       // sanitizer or adding an opt-in raw-HTML flag for one line.
       addChatMessage({
         kind: 'system',
-        body: 'This is a preview of the Chamber. To put a real idea in front of the panel, submit it at <a href="/intake.html" style="color:var(--gold); text-decoration:underline;">the intake page</a>.',
+        body: 'This is a preview of the Chamber. To put a real idea in front of the panel, submit it first at /intake.html.',
       });
       if (chatInput){
         chatInput.disabled = true;
