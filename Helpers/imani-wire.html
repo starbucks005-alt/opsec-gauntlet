@@ -129,6 +129,7 @@
   <button class="tab" data-tab="list">Build the Media List</button>
   <button class="tab" data-tab="oped">Angle an Op-Ed</button>
   <button class="tab" data-tab="time">Set the Timing</button>
+  <button class="tab" data-tab="publish">Publish to ETL Press Hub</button>
 </div>
 
 <div class="panel">
@@ -308,6 +309,47 @@
     <div class="result" id="time-result"></div>
   </section>
 
+  <!-- ───────── PUBLISH TO ETL PRESS HUB ───────── -->
+  <section class="panel-section" id="panel-publish">
+    <h2 class="panel-h">Publish to the <em>ETL Press Hub.</em></h2>
+    <p class="panel-sub">Take the Reid-drafted release and put it on a real public URL with full SEO. Every piece gets a dofollow backlink to your site, JSON-LD article schema, Open Graph tags, and an entry on the press sitemap so Google indexes it within a day. ETL is two months old; the press hub is fresh. Get on it early and the backlinks compound.</p>
+
+    <form id="form-publish">
+      <div class="form-grid">
+        <div class="form-row full">
+          <label for="pub-title">Headline</label>
+          <input type="text" id="pub-title" required minlength="8" maxlength="200" placeholder="The headline as you would put it on a wire">
+        </div>
+        <div class="form-row full">
+          <label for="pub-dek">Dek (subtitle, optional)</label>
+          <input type="text" id="pub-dek" maxlength="300" placeholder="One sentence under the headline">
+        </div>
+        <div class="form-row">
+          <label for="pub-author">Byline / company representative</label>
+          <input type="text" id="pub-author" maxlength="140" placeholder="Jane Doe, CEO">
+        </div>
+        <div class="form-row">
+          <label for="pub-source-label">Source label</label>
+          <input type="text" id="pub-source-label" maxlength="140" placeholder="The company name, as it should read in the byline">
+        </div>
+        <div class="form-row full">
+          <label for="pub-source-url">Source URL (your dofollow backlink target)</label>
+          <input type="url" id="pub-source-url" required placeholder="https://yourcompany.com/">
+        </div>
+        <div class="form-row full">
+          <label for="pub-body">Press release body</label>
+          <textarea id="pub-body" required minlength="200" maxlength="10000" placeholder="Paste Reid's drafted release here. Dateline, lead, quotes, context, boilerplate, contact. Blank lines between paragraphs render as paragraph breaks." style="min-height:280px;"></textarea>
+        </div>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">Publish to /press &rarr;</button>
+        <span class="submit-status" id="publish-status"></span>
+      </div>
+    </form>
+
+    <div class="result" id="publish-result"></div>
+  </section>
+
 </div>
 
 <div class="about">
@@ -458,6 +500,40 @@
         html += '<h4>Pitch email</h4><pre>Subject: ' + escapeHTML(data.pitch_email.subject) + '\n\n' + escapeHTML(data.pitch_email.body) + '</pre>';
       }
       result.innerHTML = html;
+      setStatus(status, 'Done.', '');
+    } catch (err) {
+      setStatus(status, err.message, 'error');
+    } finally { btn.disabled = false; }
+  });
+
+  // ─── Publish to ETL Press Hub ───
+  // Cross-origin POST to emerging-tech-lab.com so the piece lands on the
+  // central press hub with full SEO scaffolding. Returns the public URL.
+  const PRESS_HUB_PUBLISH = 'https://emerging-tech-lab.com/.netlify/functions/press-publish';
+  document.getElementById('form-publish').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('publish-status');
+    const result = document.getElementById('publish-result');
+    const btn = e.target.querySelector('.submit-btn');
+    btn.disabled = true; result.innerHTML = ''; setStatus(status, 'Publishing to the hub…', 'busy');
+    try {
+      const res = await fetch(PRESS_HUB_PUBLISH, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title:        document.getElementById('pub-title').value,
+          dek:          document.getElementById('pub-dek').value,
+          body:         document.getElementById('pub-body').value,
+          source_url:   document.getElementById('pub-source-url').value,
+          source_label: document.getElementById('pub-source-label').value,
+          author:       document.getElementById('pub-author').value,
+          platform:     'gauntlet'
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      result.innerHTML = '<h3>Published.</h3>' +
+        '<p>Live at: <a href="' + escapeHTML(data.url) + '" target="_blank" rel="noopener" style="color:var(--gold);">' + escapeHTML(data.url) + '</a></p>' +
+        '<p>The piece is indexed in the ETL Press sitemap and will be discovered by Google on its next crawl. Share the link with your team and add it to your investor update.</p>';
       setStatus(status, 'Done.', '');
     } catch (err) {
       setStatus(status, err.message, 'error');
