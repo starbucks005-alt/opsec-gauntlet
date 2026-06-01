@@ -23,6 +23,7 @@
   const KEY_BRIEF     = 'tg_visitor_brief';
   const KEY_NAME      = 'tg_visitor_name';
   const KEY_REVISIONS = 'tg_ep_revisions';
+  const KEY_REID_DRAFT = 'tg_reid_draft_v1'; // Imani's publish hand-off; consumed by imani-wire.html
   const FETCH_TIMEOUT_MS = 45000; // larger than Zara - press releases are longer outputs
 
   function ss(k){ try { return sessionStorage.getItem(k); } catch(_) { return null; } }
@@ -139,6 +140,20 @@
       // new content while the visitor reads the release for the first time.
       appendToBrief(release, { headline, announcementLabel, rationale });
 
+      // Stash the draft for Imani's publish tab. Same-origin sessionStorage
+      // hand-off; consumed by imani-wire.html via the "Pull latest Reid release"
+      // button on the publish panel. Wrapped in try/catch so a quota hiccup
+      // never blocks the release from rendering.
+      try {
+        sessionStorage.setItem(KEY_REID_DRAFT, JSON.stringify({
+          headline:           headline,
+          release:            release,
+          rationale:          rationale,
+          announcement_label: announcementLabel,
+          written_at:         new Date().toISOString()
+        }));
+      } catch (_) { /* quota; non-fatal */ }
+
       resultEl.className = 'zh-result is-ready';
       resultEl.innerHTML = ''
         + '<div class="zh-result-meta">'
@@ -149,7 +164,8 @@
         + '<div class="rh-headline">' + escapeHtml(headline) + '</div>'
         + '<pre class="zh-result-post" data-rh="release-text">' + escapeHtml(release) + '</pre>'
         + (rationale ? '<p class="zh-result-rationale">' + escapeHtml(rationale) + '</p>' : '')
-        + '<p class="zh-result-saved">Saved to your brief and revision log. Square-bracket placeholders ([NUMBER], [CUSTOMER], [INVESTOR], etc.) mark facts Reid did not have - fill those in before you wire the release.</p>';
+        + '<p class="zh-result-saved">Saved to your brief and revision log. Square-bracket placeholders ([NUMBER], [CUSTOMER], [INVESTOR], etc.) mark facts Reid did not have - fill those in before you wire the release.</p>'
+        + '<p class="zh-result-saved" style="margin-top:0.6rem;border-top:1px dashed rgba(184,146,42,0.25);padding-top:0.6rem;">Saved for Imani. Open <a href="imani-wire.html#panel-publish" style="color:var(--gold-light);text-decoration:underline;">Imani\'s office</a> and tap <strong>Pull latest Reid release</strong> on the Publish tab to push this straight to the ETL Press Hub.</p>';
 
       const copyHl = resultEl.querySelector('[data-rh="copy-headline"]');
       const copyRl = resultEl.querySelector('[data-rh="copy-release"]');

@@ -314,6 +314,14 @@
     <h2 class="panel-h">Publish to the <em>ETL Press Hub.</em></h2>
     <p class="panel-sub">Take the Reid-drafted release and put it on a real public URL with full SEO. Every piece gets a dofollow backlink to your site, JSON-LD article schema, Open Graph tags, and an entry on the press sitemap so Google indexes it within a day. ETL is two months old; the press hub is fresh. Get on it early and the backlinks compound.</p>
 
+    <div style="margin-bottom:1.1rem;display:flex;flex-wrap:wrap;gap:0.7rem;align-items:center;">
+      <button type="button" class="submit-btn" id="pub-pull-reid"
+              style="background:var(--ink-soft);color:var(--gold);border-color:var(--gold);">
+        Pull latest Reid release &darr;
+      </button>
+      <span class="submit-status" id="pub-pull-status"></span>
+    </div>
+
     <form id="form-publish">
       <div class="form-grid">
         <div class="form-row full">
@@ -335,6 +343,10 @@
         <div class="form-row full">
           <label for="pub-source-url">Source URL (your dofollow backlink target)</label>
           <input type="url" id="pub-source-url" required placeholder="https://yourcompany.com/">
+        </div>
+        <div class="form-row full">
+          <label for="pub-image">Hero image (optional, 4 MB max, JPEG / PNG / WebP)</label>
+          <input type="file" id="pub-image" accept="image/jpeg,image/png,image/webp">
         </div>
         <div class="form-row full">
           <label for="pub-body">Press release body</label>
@@ -509,18 +521,150 @@
   // ─── Publish to ETL Press Hub ───
   // Cross-origin POST to emerging-tech-lab.com so the piece lands on the
   // central press hub with full SEO scaffolding. Returns the public URL.
-  const PRESS_HUB_PUBLISH = 'https://emerging-tech-lab.com/.netlify/functions/press-publish';
+  const PRESS_HUB_BASE    = 'https://emerging-tech-lab.com';
+  const PRESS_HUB_PUBLISH = PRESS_HUB_BASE + '/.netlify/functions/press-publish';
+  const PRESS_HUB_IMAGE   = PRESS_HUB_BASE + '/.netlify/functions/press-upload-image';
+  const REID_DRAFT_KEY    = 'tg_reid_draft_v1';
+  const MAX_IMAGE_BYTES   = 4 * 1024 * 1024; // 4 MB, matches function-side cap
+
+  // Slug generator. Lowercase, non-alphanum to dashes, trimmed, with a
+  // short performance-based hash suffix so two pieces with the same title
+  // do not collide on the same key.
+  function slugify(title) {
+    const base = String(title || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80) || 'piece';
+    const hash = Math.floor(performance.now() * 1000).toString(36).slice(-5);
+    return base + '-' + hash;
+  }
+
+  function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload  = () => resolve(r.result);
+      r.onerror = () => reject(new Error('Could not read the image file.'));
+      r.readAsDataURL(file);
+    });
+  }
+
+  // ─── Reid pipe consumer ───
+  // Reads the draft Reid stashed in sessionStorage on his own Helper page.
+  // Same-origin only; the producer is reid-marketing.html on the Gauntlet
+  // domain. Button stays disabled until a draft is detected; we also listen
+  // for the 'storage' event so a draft produced in a sibling tab enables
+  // the button live.
+  function relativeTimeFromIso(iso) {
+    if (!iso) return '';
+    const t = Date.parse(iso);
+    if (Number.isNaN(t)) return '';
+    const diffSec = Math.round((Date.now() - t) / 1000);
+    if (diffSec < 60)    return diffSec + 's ago';
+    if (diffSec < 3600)  return Math.round(diffSec / 60) + 'm ago';
+    if (diffSec < 86400) return Math.round(diffSec / 3600) + 'h ago';
+    return Math.round(diffSec / 86400) + 'd ago';
+  }
+
+  function readReidDraft() {
+    try {
+      const raw = sessionStorage.getItem(REID_DRAFT_KEY);
+      if (!raw) return null;
+      const p = JSON.parse(raw);
+      if (!p || !p.headline || !p.release) return null;
+      return p;
+    } catch (_) { return null; }
+  }
+
+  const pullBtn    = document.getElementById('pub-pull-reid');
+  const pullStatus = document.getElementById('pub-pull-status');
+
+  function refreshReidPullState() {
+    const draft = readReidDraft();
+    if (draft) {
+      pullBtn.disabled = false;
+      pullStatus.textContent = 'Reid drafted ' + (draft.announcement_label || 'a release') + ' · ' + relativeTimeFromIso(draft.written_at);
+      pullStatus.className = 'submit-status';
+    } else {
+      pullBtn.disabled = true;
+      pullStatus.textContent = 'No Reid draft in this session.';
+      pullStatus.className = 'submit-status';
+    }
+  }
+
+  pullBtn.addEventListener('click', () => {
+    const draft = readReidDraft();
+    if (!draft) {
+      setStatus(document.getElementById('publish-status'),
+        "No Reid draft in this session. Visit Reid's office, generate a release, then come back.",
+        'error');
+      return;
+    }
+    document.getElementById('pub-title').value = draft.headline || '';
+    document.getElementById('pub-body').value  = draft.release  || '';
+    // Rationale is Reid's internal note about WHY the angle was picked;
+    // it reads like an editor's memo, not a dek. Only populate the dek
+    // if it's currently empty AND the rationale is short enough to read
+    // like a subtitle.
+    const dekEl = document.getElementById('pub-dek');
+    if (!dekEl.value && draft.rationale && draft.rationale.length <= 240) {
+      dekEl.value = draft.rationale;
+    }
+    setStatus(document.getElementById('publish-status'),
+      "Loaded Reid's release written " + relativeTimeFromIso(draft.written_at) + '.',
+      '');
+  });
+
+  // Update button state if Reid produces a draft in another tab.
+  window.addEventListener('storage', (e) => {
+    if (e.key === REID_DRAFT_KEY) refreshReidPullState();
+  });
+  refreshReidPullState();
+
   document.getElementById('form-publish').addEventListener('submit', async (e) => {
     e.preventDefault();
     const status = document.getElementById('publish-status');
     const result = document.getElementById('publish-result');
     const btn = e.target.querySelector('.submit-btn');
-    btn.disabled = true; result.innerHTML = ''; setStatus(status, 'Publishing to the hub…', 'busy');
+    btn.disabled = true; result.innerHTML = '';
+
+    const titleVal = document.getElementById('pub-title').value;
+    const imageEl  = document.getElementById('pub-image');
+    const imageFile = imageEl && imageEl.files && imageEl.files[0] ? imageEl.files[0] : null;
+    const slug = slugify(titleVal);
+
     try {
-      const res = await fetch(PRESS_HUB_PUBLISH, {
+      let heroImageUrl = null;
+
+      // Step 1 (optional): upload image. Has to come first because the
+      // image upload endpoint expects the slug to exist OR we accept the
+      // race where we post the piece first; current design posts image
+      // first so the press_pieces JSON has hero_image_url at insert time
+      // (matches the published contract: press-upload-image patches the
+      // press_pieces entry, so order does not matter, but doing image
+      // first means we never have a 404 image flash on the public page).
+      // press-upload-image rejects unknown slugs - so we actually need to
+      // publish first, then upload, then re-publish with the URL. Cleanest
+      // path: publish without image, upload, let the function patch the
+      // piece JSON itself.
+      if (imageFile) {
+        if (imageFile.size > MAX_IMAGE_BYTES) {
+          throw new Error('Image too large. Max 4 MB. Re-export and try again.');
+        }
+        const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+        if (allowed.indexOf(imageFile.type) === -1) {
+          throw new Error('Unsupported image type. Use JPEG, PNG, or WebP.');
+        }
+      }
+
+      // Step A: publish the piece (with the tentative slug so the image
+      // upload that follows can attach to it).
+      setStatus(status, 'Publishing…', 'busy');
+      const pubRes = await fetch(PRESS_HUB_PUBLISH, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title:        document.getElementById('pub-title').value,
+          slug:         slug,
+          title:        titleVal,
           dek:          document.getElementById('pub-dek').value,
           body:         document.getElementById('pub-body').value,
           source_url:   document.getElementById('pub-source-url').value,
@@ -529,12 +673,56 @@
           platform:     'gauntlet'
         })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
-      result.innerHTML = '<h3>Published.</h3>' +
-        '<p>Live at: <a href="' + escapeHTML(data.url) + '" target="_blank" rel="noopener" style="color:var(--gold);">' + escapeHTML(data.url) + '</a></p>' +
-        '<p>The piece is indexed in the ETL Press sitemap and will be discovered by Google on its next crawl. Share the link with your team and add it to your investor update.</p>';
-      setStatus(status, 'Done.', '');
+      const pubData = await pubRes.json();
+      if (!pubRes.ok) throw new Error(pubData.error || ('HTTP ' + pubRes.status));
+
+      // Step B (optional): if the user picked an image, upload it. The
+      // hub function patches press_pieces.hero_image_url AND the
+      // press_index 'order' entry in one call. Best-effort: an image
+      // upload failure must not kill the publish - the piece is already
+      // live and findable.
+      if (imageFile) {
+        setStatus(status, 'Uploading image…', 'busy');
+        try {
+          const dataUrl = await readFileAsDataURL(imageFile);
+          const imgRes = await fetch(PRESS_HUB_IMAGE, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              slug:           slug,
+              content_type:   imageFile.type,
+              image_data_url: dataUrl
+            })
+          });
+          const imgData = await imgRes.json().catch(() => ({}));
+          if (imgRes.ok && imgData.url) {
+            heroImageUrl = imgData.url;
+          } else {
+            setStatus(status, 'Piece published but image upload failed: ' + (imgData.error || ('HTTP ' + imgRes.status)), 'error');
+          }
+        } catch (imgErr) {
+          setStatus(status, 'Piece published but image upload failed: ' + imgErr.message, 'error');
+        }
+      }
+
+      let html = '<h3>Published.</h3>' +
+        '<p>Live at: <a href="' + escapeHTML(pubData.url) + '" target="_blank" rel="noopener" style="color:var(--gold);">' + escapeHTML(pubData.url) + '</a></p>';
+      if (heroImageUrl) {
+        html += '<p><span class="tag">hero image</span> attached.</p>';
+      }
+      html += '<p>The piece is indexed in the ETL Press sitemap and will be discovered by Google on its next crawl. Share the link with your team and add it to your investor update.</p>';
+      result.innerHTML = html;
+      // Only clear the Reid draft on a successful publish (matches the
+      // contract: re-pulls before publish are fine, the draft only goes
+      // away once the piece is on the hub).
+      try { sessionStorage.removeItem(REID_DRAFT_KEY); } catch (_) {}
+      refreshReidPullState();
+      // Reset the image input so a second piece does not accidentally
+      // re-upload the previous file.
+      if (imageEl) imageEl.value = '';
+      // Status: clear any "image upload failed" line if we got here
+      // without setting it during this run.
+      if (status.classList.contains('busy')) setStatus(status, 'Done.', '');
+      else if (!status.classList.contains('error')) setStatus(status, 'Done.', '');
     } catch (err) {
       setStatus(status, err.message, 'error');
     } finally { btn.disabled = false; }
