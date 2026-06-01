@@ -92,6 +92,23 @@
       "voice_id": "tLS2q4NK1lgLMS1gnxPt",
       "page": "Helpers/grant-coach.html",
       "home_platform": "the_gauntlet"
+    },
+    {
+      "id": "imani_brooks",
+      "name": "Imani Brooks",
+      "role": "The Wire",
+      "domain": "Wire service strategy, media list targeting, op-ed angling, embargo timing. Post-drafting distribution counterpart to Reid Callum's release writing.",
+      "voice_id": "",
+      "page": "Helpers/imani-wire.html",
+      "home_platform": "the_gauntlet",
+      "post_chamber": true,
+      "collaborates_with": "reid_callum",
+      "tools": [
+        "wire_service_recommender",
+        "media_list_targeter",
+        "oped_angler",
+        "embargo_advisor"
+      ]
     }
   ]
 }
