@@ -27,10 +27,65 @@
   'use strict';
 
   const IDEA_ENDPOINT  = '/.netlify/functions/tg-idea-generator';
+  const INTAKE_ENDPOINT = '/.netlify/functions/tg-intake-submit';
   const VOICE_ENDPOINT = '/.netlify/functions/tg-voice';
   const VOICE_VERSION  = '2026-05-23-v9';
   const IVY_CHARACTER  = 'ms_ivy';
   const IVY_PORTRAIT   = 'Helpers/Ivy_Profile.jpg';
+  const ANON_KEY       = 'tg_anon_user_id';
+  const UUID_RE        = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  // Reuse intake.html's anon-id pattern so submissions tie to the same
+  // user across both paths.
+  function getOrCreateAnonId(){
+    let id = '';
+    try { id = localStorage.getItem(ANON_KEY) || ''; } catch(_){}
+    if (!UUID_RE.test(id)){
+      id = (window.crypto && crypto.randomUUID && crypto.randomUUID()) ||
+           'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+             const r = (Math.random() * 16) | 0;
+             const v = c === 'x' ? r : (r & 0x3) | 0x8;
+             return v.toString(16);
+           });
+      try { localStorage.setItem(ANON_KEY, id); } catch(_){}
+    }
+    return id;
+  }
+
+  // Silently register the idea as a Gauntlet submission so the Chamber has
+  // a real submission_id to evaluate. Fire-and-forget; the visitor proceeds
+  // into the corridor immediately without seeing this happen.
+  async function autoSubmitIdea(chosen){
+    if (!chosen || !chosen.title || !chosen.description) return;
+    const payload = {
+      user_id:     getOrCreateAnonId(),
+      title:       String(chosen.title).slice(0, 180),
+      description: String(chosen.description).slice(0, 12000),
+    };
+    try {
+      const resp = await fetch(INTAKE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) {
+        console.warn('[tg-idea-generator] auto-submit failed:', resp.status);
+        return;
+      }
+      const data = await resp.json().catch(() => ({}));
+      if (!data || !data.id) return;
+      try {
+        sessionStorage.setItem('tg_submission_id',    data.id);
+        sessionStorage.setItem('tg_submission_title', payload.title);
+        if (data.requirement_vector){
+          sessionStorage.setItem('tg_submission_vector', JSON.stringify(data.requirement_vector));
+        }
+      } catch(_){}
+      console.info('[tg-idea-generator] auto-submitted, submission_id=' + data.id);
+    } catch (err) {
+      console.warn('[tg-idea-generator] auto-submit error:', err && err.message);
+    }
+  }
 
   const Q1 = {
     key: 'world',
@@ -841,6 +896,12 @@
     // The corridor's own "Enter the Chamber" CTA carries them to the
     // judges when they are ready. We also keep the intake prefill keys so
     // the Chamber intake pre-populates once they get there.
+    //
+    // CRITICAL: we ALSO fire a silent intake submission so the idea is
+    // registered with the Gauntlet pipeline (gets a submission_id and a
+    // requirement vector) BEFORE the visitor reaches the Chamber. Without
+    // this, the Chamber has no submission to evaluate and falls to demo
+    // mode, even though the visitor genuinely brought an idea via Ivy.
     bodyEl.querySelectorAll('[data-pick-idea]').forEach(btn => {
       btn.addEventListener('click', () => {
         const i = parseInt(btn.getAttribute('data-pick-idea'), 10);
@@ -852,6 +913,15 @@
           sessionStorage.setItem('tg_prefill_title',       chosen.title);
           sessionStorage.setItem('tg_prefill_description', chosen.description);
         } catch(_){}
+
+        // Fire silent intake submission. We do not await this; the corridor
+        // and EP work proceeds immediately. The submission ID lands in
+        // sessionStorage when the backend responds, so by the time the
+        // visitor reaches /chamber.html (after walking the EPs), the real
+        // submission is ready and the chamber runs evaluation mode instead
+        // of demo mode.
+        autoSubmitIdea(chosen);
+
         close();
         // Re-fetch the corridor briefings against the new brief so each EP
         // wing reacts to this idea, then scroll the client into the corridor.
