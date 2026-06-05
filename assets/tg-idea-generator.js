@@ -148,7 +148,7 @@
     // the backend grounds ideas in demonstrable expertise instead of
     // generic suggestions in the visitor's stated WORLD.
     expertise: { text: '', pdfBase64: null, pdfName: '', pdfSize: 0 },
-    expertiseOpen: false,
+    expertiseOpen: true,
   };
   const PDF_MAX_BYTES = 3_500_000; // hard client-side cap (~3.5MB)
   const EXPERTISE_TEXT_CAP = 2000;
@@ -864,7 +864,6 @@
     const current = state.answers[q.key];
 
     let html = `
-      ${renderExpertisePanel()}
       <div class="tg-ig-eyebrow">Ivy asks</div>
       <h2 class="tg-ig-title">${escapeHtml(q.title)}</h2>
       ${q.sub ? `<p class="tg-ig-sub">${escapeHtml(q.sub)}</p>` : ''}
@@ -898,6 +897,15 @@
       html += `
         <textarea class="tg-ig-textarea" placeholder="${escapeHtml(q.placeholder || '')}">${escapeHtml(current)}</textarea>
       `;
+    }
+
+    // Contextual CV-upload panel: appears INSIDE Q3 only when the user has
+    // chosen "A skill or expertise from my work". That's the moment they
+    // signal expertise is the lever, so it's the right moment to offer the
+    // CV upload (rather than nagging on every question).
+    if (q.key === 'bring' && state.answers.bring === 'A skill or expertise from my work'){
+      state.expertiseOpen = true;
+      html += renderExpertisePanel();
     }
 
     bodyEl.innerHTML = html;
