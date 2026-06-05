@@ -1592,12 +1592,32 @@
     // No submission means the chamber falls back to the original demo
     // line (single active judge + audience heckle) so /chamber.html
     // direct visits still have something to show.
+    // If the visitor has a real submission, run the real chamber even if they
+    // landed here with fewer than 3 selected judges. Pad to 3 from the
+    // recommended triad, then from any remaining judges, so the conversation
+    // phase always has a full panel. Without this pad, the chamber falls to
+    // demo mode and locks the chat input — frustrating for anyone who came
+    // through intake but didn't finish the 3-judge ritual.
+    if (state.submissionId){
+      if (state.selected.size < 3){
+        const recIds = Array.from(state.recommended || []);
+        for (const id of recIds){
+          if (state.selected.size >= 3) break;
+          state.selected.add(id);
+        }
+        for (const j of state.judges){
+          if (state.selected.size >= 3) break;
+          state.selected.add(j.id);
+        }
+      }
+    }
+
     const chosenList   = state.judges.filter(j => state.selected.has(j.id));
     const audienceList = state.judges.filter(j => !state.selected.has(j.id));
     const firstActive   = chosenList[0];
     const firstAudience = audienceList[0];
 
-    if (state.submissionId && state.selected.size === 3){
+    if (state.submissionId && state.selected.size >= 1){
       // Real chamber: conversation phase (judges question the client),
       // then scoring (unchanged), then the conversation summary is stashed
       // for the report. runChamber orchestrates all three.
