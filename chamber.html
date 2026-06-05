@@ -1658,24 +1658,18 @@
         });
       }, startMs + 3500);
     }
-    // After the demo lines land, lock the input and explain why nothing
-    // happens if the visitor tries to answer. Without this, typing into
-    // the box and pressing Send produces silence (no answerResolver is
-    // parked in demo mode), which reads as "the judges are broken."
+    // After the demo lines land, surface a soft pointer to /intake.html
+    // but DO NOT lock the input. Free-form messages route to the freelance
+    // endpoint so visitors can always talk to a judge, with or without a
+    // submission ("I want to be able to communicate with the judges always").
     setTimeout(() => {
-      // addChatMessage escapes HTML, so use plain text + a bare URL the
-       // visitor can click or read aloud. Cleaner than wrestling with the
-       // sanitizer or adding an opt-in raw-HTML flag for one line.
       addChatMessage({
         kind: 'system',
-        body: 'This is a preview of the Chamber. To put a real idea in front of the panel, submit it first at /intake.html.',
+        body: 'This is the Chamber. Type to the panel below, or submit an idea formally at /intake.html.',
       });
       if (chatInput){
-        chatInput.disabled = true;
-        chatInput.placeholder = 'Submit an idea at /intake.html to chat with the panel...';
+        chatInput.placeholder = 'Say something to the panel...';
       }
-      var chatSendBtn = document.getElementById('tg-chat-send');
-      if (chatSendBtn) chatSendBtn.disabled = true;
     }, startMs + 5500);
   }
 
@@ -2069,20 +2063,96 @@
   }
 
   // The conversation phase parks a resolver here via awaitClientAnswer();
-  // onChatSubmit fulfils it with the client's typed answer. When no answer
-  // is awaited (e.g. during scoring), the input is disabled so nothing fires.
+  // onChatSubmit fulfils it with the client's typed answer. When NO resolver
+  // is parked (demo visitors, mid-evaluation riffs, after-scoring chat), we
+  // route the message to tg-chamber-freelance so the judges always respond
+  // ("I want to be able to communicate with the judges always").
   let answerResolver = null;
+  // Track recent chat for freelance context. Capped client-side to MAX_HISTORY
+  // on the server, but we keep more here so the local UI stays accurate.
+  const freelanceHistory = [];
+  function pushHistory(role, body) {
+    freelanceHistory.push({ role, body });
+    if (freelanceHistory.length > 30) freelanceHistory.shift();
+  }
+
   function onChatSubmit(e){
     e.preventDefault();
     const raw = chatInput.value.trim();
     if (!raw) return;
     addChatMessage({ kind:'user', name:(tgVisitorName() || 'You'), body:raw });
+    pushHistory('user', raw);
     chatInput.value = '';
+
     if (answerResolver){
+      // Structured conversation phase is awaiting a reply; hand it over.
       const resolve = answerResolver;
       answerResolver = null;
       resolve(raw);
+      return;
     }
+
+    // Free-form: route to the freelance endpoint with whichever judges are
+    // currently on the panel (rotate so different judges respond over time).
+    runFreelance(raw).catch(err => {
+      console.warn('[chamber-freelance] failed', err);
+      addChatMessage({
+        kind: 'system',
+        body: 'The panel could not respond just now. Try again, or submit a real idea at /intake.html for a full evaluation.',
+      });
+    });
+  }
+
+  // Rotate which active-panel judge gets the first crack at responding.
+  let freelanceRotation = 0;
+  async function runFreelance(message) {
+    const activeIds = Array.from(state.selected || []);
+    const rotated = activeIds.length
+      ? activeIds.slice(freelanceRotation % activeIds.length).concat(activeIds.slice(0, freelanceRotation % activeIds.length))
+      : [];
+    freelanceRotation++;
+
+    // Pick the first rotated judge so the chat shows their typing indicator.
+    let firstJudgeName = '';
+    if (rotated.length) {
+      const j = (state.judges || []).find(jj => jj.id === rotated[0]);
+      if (j) firstJudgeName = j.name;
+    }
+    if (firstJudgeName) showTyping(firstJudgeName);
+
+    const payload = {
+      message,
+      active_panel: rotated,
+      judge_id: rotated[0] || null,
+      submission_id: state.submissionId || null,
+      visitor_name: tgVisitorName(),
+      history: freelanceHistory.slice(-12),
+    };
+
+    let data;
+    try {
+      const resp = await fetch('/.netlify/functions/tg-chamber-freelance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) {
+        const txt = await resp.text();
+        throw new Error('freelance ' + resp.status + ': ' + txt.slice(0, 200));
+      }
+      data = await resp.json();
+    } finally {
+      hideTyping();
+    }
+
+    if (!data || !data.body) throw new Error('empty response');
+    addChatMessage({
+      kind: 'active',
+      name: data.judge_name,
+      role: data.role || 'On the panel',
+      body: data.body,
+    });
+    pushHistory('judge', data.body);
   }
 
   // Returns a Promise that resolves with the client's next typed answer.
