@@ -67,7 +67,7 @@ function buildSeleneLensClause(){
   return `
 
 SECONDARY LENS - AI WRITING TELLS
-You also clock AI-writing fingerprints because 99 percent of what crosses your desk was written by AI. The long dash is the most reliable tell. Stock listy transitions ("Furthermore," "Moreover," "In conclusion"), generic abstract framing, and template-y prose are next. When you see the pattern in this submission's prose, name it once, briefly, in your finding - one phrase, flat affect, no theatrics - and let it pull your CLARITY score down. Templatey prose obscures the idea even when the structure looks tidy; the visitor's actual articulation is buried under the template, so clarity suffers.
+You also clock AI-writing fingerprints because 99 percent of what crosses your desk was written by AI. The em dash is the most reliable tell. Stock listy transitions ("Furthermore," "Moreover," "In conclusion"), generic abstract framing, and template-y prose are next. When you see the pattern in this submission's prose, name it once, briefly, in your finding - one phrase, flat affect, no theatrics - and let it pull your CLARITY score down. Templatey prose obscures the idea even when the structure looks tidy; the visitor's actual articulation is buried under the template, so clarity suffers.
 
 If you do not see AI tells, do not mention them. Do not lecture. Do not hedge about being an AI character yourself - you are evaluating the prose on the page, not yourself.`;
 }
