@@ -143,7 +143,15 @@
     ideas: null,
     keyword_architecture: null,
     ivy_note: '',
+    // Optional expertise context. CV pdf is preferred; text is the
+    // fallback for visitors without a CV handy. When either is present,
+    // the backend grounds ideas in demonstrable expertise instead of
+    // generic suggestions in the visitor's stated WORLD.
+    expertise: { text: '', pdfBase64: null, pdfName: '', pdfSize: 0 },
+    expertiseOpen: false,
   };
+  const PDF_MAX_BYTES = 3_500_000; // hard client-side cap (~3.5MB)
+  const EXPERTISE_TEXT_CAP = 2000;
 
   // ── Styles ───────────────────────────────────────────────────────────────
   function injectStyles(){
@@ -242,6 +250,87 @@
       .tg-ig-mode-chip.is-free{
         background:transparent;color:var(--text-dim,#a89c88);
         border:1px solid rgba(184,146,42,0.3);
+      }
+
+      /* Expertise panel: optional CV/blurb that grounds idea generation
+         in the visitor's demonstrable background. Lives above the
+         question content so visitors see it before they pick answers. */
+      .tg-ig-exp{
+        background:rgba(0,0,0,0.35);border:1px solid rgba(184,146,42,0.25);
+        margin-bottom:1.1rem;
+      }
+      .tg-ig-exp-head{
+        display:flex;align-items:center;gap:0.6rem;padding:0.6rem 0.9rem;
+        cursor:pointer;user-select:none;
+      }
+      .tg-ig-exp-head:hover{background:rgba(184,146,42,0.06);}
+      .tg-ig-exp-head__icon{
+        width:14px;height:14px;color:var(--gold,#b8922a);flex-shrink:0;
+        transition:transform 0.18s;
+      }
+      .tg-ig-exp.is-open .tg-ig-exp-head__icon{transform:rotate(90deg);}
+      .tg-ig-exp-head__label{
+        font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+        text-transform:uppercase;color:var(--gold-light,#d4aa4a);font-weight:600;
+        flex:1;
+      }
+      .tg-ig-exp-head__status{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-size:0.85rem;color:var(--text-dim,#a89c88);
+      }
+      .tg-ig-exp-head__status.is-loaded{color:#5a9e6f;}
+      .tg-ig-exp-body{display:none;padding:0 0.9rem 0.9rem;}
+      .tg-ig-exp.is-open .tg-ig-exp-body{display:block;}
+      .tg-ig-exp-tabs{
+        display:flex;gap:0;margin-bottom:0.6rem;
+        border-bottom:1px solid rgba(184,146,42,0.2);
+      }
+      .tg-ig-exp-tab{
+        background:transparent;border:0;cursor:pointer;
+        padding:0.45rem 0.8rem;
+        font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;
+        text-transform:uppercase;color:var(--text-dim,#a89c88);
+        border-bottom:2px solid transparent;
+      }
+      .tg-ig-exp-tab.is-active{color:#f4ede0;border-bottom-color:var(--gold,#b8922a);}
+      .tg-ig-exp-pane{display:none;}
+      .tg-ig-exp-pane.is-active{display:block;}
+      .tg-ig-exp-drop{
+        border:1px dashed rgba(184,146,42,0.4);background:rgba(0,0,0,0.25);
+        padding:0.9rem 1rem;text-align:center;cursor:pointer;
+        font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.14em;
+        text-transform:uppercase;color:var(--text-dim,#a89c88);
+      }
+      .tg-ig-exp-drop:hover{border-color:var(--gold,#b8922a);color:var(--gold-light,#d4aa4a);}
+      .tg-ig-exp-drop__hint{
+        font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.78rem;
+        color:#7d735f;text-transform:none;letter-spacing:0;margin-top:0.25rem;
+      }
+      .tg-ig-exp-loaded{
+        display:none;align-items:center;gap:0.6rem;
+        padding:0.55rem 0.8rem;background:rgba(40,92,77,0.15);
+        border-left:3px solid #5a9e6f;
+        font-family:'DM Mono',monospace;font-size:0.65rem;color:#f4ede0;
+      }
+      .tg-ig-exp-loaded.is-visible{display:flex;}
+      .tg-ig-exp-loaded__name{flex:1;text-transform:none;letter-spacing:0;}
+      .tg-ig-exp-loaded__remove{
+        background:transparent;border:1px solid rgba(245,237,224,0.25);
+        color:var(--text-dim,#a89c88);font-family:'DM Mono',monospace;
+        font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;
+        padding:0.2rem 0.5rem;cursor:pointer;
+      }
+      .tg-ig-exp-loaded__remove:hover{color:#f4ede0;border-color:var(--gold,#b8922a);}
+      .tg-ig-exp-text{
+        width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(184,146,42,0.25);
+        color:#f4ede0;padding:0.55rem 0.7rem;
+        font-family:'Cormorant Garamond',serif;font-size:0.9rem;line-height:1.5;
+        min-height:90px;resize:vertical;
+      }
+      .tg-ig-exp-text:focus{outline:1px solid var(--gold,#b8922a);outline-offset:-1px;}
+      .tg-ig-exp-priv{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-size:0.78rem;color:#7d735f;margin-top:0.5rem;line-height:1.4;
       }
 
       .tg-ig-progress{
@@ -642,11 +731,140 @@
     progEl.appendChild(label);
   }
 
+  function expertiseStatusLabel(){
+    if (state.expertise.pdfBase64) return 'CV attached';
+    if (state.expertise.text)      return 'Summary added';
+    return 'Optional';
+  }
+
+  function renderExpertisePanel(){
+    const exp = state.expertise;
+    const isOpen = state.expertiseOpen;
+    const statusLabel = expertiseStatusLabel();
+    const statusCls   = (exp.pdfBase64 || exp.text) ? 'is-loaded' : '';
+    const tabPdf    = exp.text && !exp.pdfBase64 ? '' : ' is-active';
+    const tabText   = exp.text && !exp.pdfBase64 ? ' is-active' : '';
+    const paneText  = tabText;
+    const panePdf   = tabPdf;
+    const loadedCls = exp.pdfBase64 ? ' is-visible' : '';
+    const sizeKB = exp.pdfSize ? Math.round(exp.pdfSize / 1024) + ' KB' : '';
+    return `
+      <div class="tg-ig-exp${isOpen ? ' is-open' : ''}" id="tg-ig-exp">
+        <div class="tg-ig-exp-head" id="tg-ig-exp-head">
+          <svg class="tg-ig-exp-head__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+          <span class="tg-ig-exp-head__label">Tell Ivy about your expertise</span>
+          <span class="tg-ig-exp-head__status ${statusCls}">${escapeHtml(statusLabel)}</span>
+        </div>
+        <div class="tg-ig-exp-body">
+          <div class="tg-ig-exp-tabs">
+            <button type="button" class="tg-ig-exp-tab${panePdf}" data-exp-tab="pdf">Upload CV (PDF)</button>
+            <button type="button" class="tg-ig-exp-tab${paneText}" data-exp-tab="text">Or paste a summary</button>
+          </div>
+          <div class="tg-ig-exp-pane${panePdf}" data-exp-pane="pdf">
+            <div class="tg-ig-exp-drop" id="tg-ig-exp-drop">
+              <div>Drop a CV PDF here, or click to upload</div>
+              <div class="tg-ig-exp-drop__hint">Under 3.5 MB. Ivy reads the document directly to match ideas to your actual track record.</div>
+              <input type="file" id="tg-ig-exp-file" accept="application/pdf" style="display:none;">
+            </div>
+            <div class="tg-ig-exp-loaded${loadedCls}" id="tg-ig-exp-loaded">
+              <span class="tg-ig-exp-loaded__name">${escapeHtml(exp.pdfName || '')} ${sizeKB}</span>
+              <button type="button" class="tg-ig-exp-loaded__remove" id="tg-ig-exp-remove">Remove</button>
+            </div>
+          </div>
+          <div class="tg-ig-exp-pane${paneText}" data-exp-pane="text">
+            <textarea class="tg-ig-exp-text" id="tg-ig-exp-text" placeholder="Credential + a few sentences. e.g. PharmD with 10 years in oncology, currently teaching pharmacology to PA students. Published on chemo-induced nausea protocols.">${escapeHtml(exp.text || '')}</textarea>
+          </div>
+          <div class="tg-ig-exp-priv">Your CV or summary is sent to Anthropic's Claude API for analysis. Anthropic does not train on or retain API content. We do not log or store anything. If your CV includes home address or other PII you would rather not share, redact those lines first.</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function bindExpertise(){
+    const head     = bodyEl.querySelector('#tg-ig-exp-head');
+    const root     = bodyEl.querySelector('#tg-ig-exp');
+    const drop     = bodyEl.querySelector('#tg-ig-exp-drop');
+    const file     = bodyEl.querySelector('#tg-ig-exp-file');
+    const loaded   = bodyEl.querySelector('#tg-ig-exp-loaded');
+    const removeBtn= bodyEl.querySelector('#tg-ig-exp-remove');
+    const text     = bodyEl.querySelector('#tg-ig-exp-text');
+    const tabs     = bodyEl.querySelectorAll('.tg-ig-exp-tab');
+    const panes    = bodyEl.querySelectorAll('.tg-ig-exp-pane');
+    if (!head || !root) return;
+
+    head.addEventListener('click', () => {
+      state.expertiseOpen = !state.expertiseOpen;
+      root.classList.toggle('is-open', state.expertiseOpen);
+    });
+
+    tabs.forEach(t => t.addEventListener('click', () => {
+      const which = t.getAttribute('data-exp-tab');
+      tabs.forEach(x => x.classList.toggle('is-active', x === t));
+      panes.forEach(p => p.classList.toggle('is-active', p.getAttribute('data-exp-pane') === which));
+    }));
+
+    function loadPdfFile(f){
+      if (!f || f.type !== 'application/pdf'){
+        alert('Please upload a PDF file.');
+        return;
+      }
+      if (f.size > PDF_MAX_BYTES){
+        alert('CV over 3.5 MB. Compress and try again, or paste a short summary instead.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        const dataUrl = e.target.result;
+        const b64 = String(dataUrl).split(',')[1] || '';
+        state.expertise.pdfBase64 = b64;
+        state.expertise.pdfName   = f.name || 'cv.pdf';
+        state.expertise.pdfSize   = f.size;
+        // PDF beats text when both are present. Clear text to avoid the
+        // backend sending both for the same generation.
+        renderQuestion();
+        state.expertiseOpen = true;
+        const root2 = bodyEl.querySelector('#tg-ig-exp');
+        if (root2) root2.classList.add('is-open');
+      };
+      reader.onerror = () => { alert('Could not read file.'); };
+      reader.readAsDataURL(f);
+    }
+
+    if (drop && file){
+      drop.addEventListener('click', () => file.click());
+      file.addEventListener('change', e => { if (e.target.files && e.target.files[0]) loadPdfFile(e.target.files[0]); });
+      drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.borderColor = 'var(--gold, #b8922a)'; });
+      drop.addEventListener('dragleave', () => { drop.style.borderColor = ''; });
+      drop.addEventListener('drop', e => {
+        e.preventDefault(); drop.style.borderColor = '';
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) loadPdfFile(e.dataTransfer.files[0]);
+      });
+    }
+    if (removeBtn){
+      removeBtn.addEventListener('click', () => {
+        state.expertise.pdfBase64 = null;
+        state.expertise.pdfName   = '';
+        state.expertise.pdfSize   = 0;
+        if (file) file.value = '';
+        renderQuestion();
+        const root2 = bodyEl.querySelector('#tg-ig-exp');
+        if (root2) root2.classList.add('is-open');
+        state.expertiseOpen = true;
+      });
+    }
+    if (text){
+      text.addEventListener('input', e => {
+        state.expertise.text = String(e.target.value || '').slice(0, EXPERTISE_TEXT_CAP);
+      });
+    }
+  }
+
   function renderQuestion(){
     const q = QUESTIONS[state.step];
     const current = state.answers[q.key];
 
     let html = `
+      ${renderExpertisePanel()}
       <div class="tg-ig-eyebrow">Ivy asks</div>
       <h2 class="tg-ig-title">${escapeHtml(q.title)}</h2>
       ${q.sub ? `<p class="tg-ig-sub">${escapeHtml(q.sub)}</p>` : ''}
@@ -683,6 +901,7 @@
     }
 
     bodyEl.innerHTML = html;
+    bindExpertise();
     bindQuestion(q);
     renderNav();
   }
@@ -794,6 +1013,14 @@
       frustration: finalAnswer(Q2),
       bring:       finalAnswer(Q3),
     };
+    // Optional expertise context. PDF beats text when both present; backend
+    // ignores text in that case anyway, but we only send one to keep the
+    // request small.
+    if (state.expertise.pdfBase64){
+      payload.expertise_pdf = { type: 'application/pdf', data: state.expertise.pdfBase64 };
+    } else if (state.expertise.text){
+      payload.expertise_text = state.expertise.text;
+    }
 
     try {
       const resp = await fetch(IDEA_ENDPOINT, {

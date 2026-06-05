@@ -160,8 +160,20 @@ exports.handler = async (event) => {
   const bring       = String(body.bring       || '').trim().slice(0, FIELD_CAP);
   const mode        = (body.mode === 'slr') ? 'slr' : 'basic';
 
+  // Optional expertise context: visitor can upload a CV PDF (preferred) or
+  // paste a short blurb describing their credentials/experience. When
+  // provided, the model grounds ideas in DEMONSTRABLE expertise instead of
+  // generic suggestions in the visitor's stated WORLD.
+  const EXPERTISE_TEXT_CAP = 8000;
+  const EXPERTISE_PDF_BYTES_CAP = 5_000_000; // ~5MB base64
+  const expertise_text = String(body.expertise_text || '').trim().slice(0, EXPERTISE_TEXT_CAP);
+  const expertise_pdf  = (body.expertise_pdf && body.expertise_pdf.data) ? body.expertise_pdf : null;
+
   if (!world || !frustration || !bring) {
     return json(400, { error: 'world, frustration, and bring are all required' });
+  }
+  if (expertise_pdf && (expertise_pdf.data || '').length > EXPERTISE_PDF_BYTES_CAP) {
+    return json(413, { error: 'CV too large; please downscale to under 3MB or paste a summary instead' });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -169,18 +181,41 @@ exports.handler = async (event) => {
     return json(500, { error: 'ANTHROPIC_API_KEY not configured' });
   }
 
-  const userPrompt = [
+  // Build the text portion of the user message. If expertise is provided,
+  // surface it prominently so the model uses it.
+  const textParts = [
     `WORLD: ${world}`,
     `FRUSTRATION: ${frustration}`,
     `WHAT THEY BRING: ${bring}`,
-    '',
-    mode === 'slr'
-      ? 'Run the SLR method. Output the keyword architecture, three gap-grounded ideas, and your note. JSON only.'
-      : 'Produce three distinct idea candidates now, as JSON.',
-  ].join('\n');
+  ];
+  if (expertise_pdf) {
+    textParts.push('', 'EXPERTISE CONTEXT: The visitor has attached their CV/resume above. Read it carefully. Ground every idea in what they are DEMONSTRABLY qualified to pursue based on their credentials, training, publications, clinical/research experience, populations served, and skills. Do NOT propose ideas requiring expertise not evident in the CV. Match ideas to the visitor\'s actual track record, not to keywords from WORLD/FRUSTRATION/BRING alone.');
+  } else if (expertise_text) {
+    textParts.push('', 'EXPERTISE CONTEXT (visitor-provided summary): ' + expertise_text);
+    textParts.push('Ground every idea in this stated expertise. Do NOT propose ideas requiring expertise not described above. Match ideas to the visitor\'s actual track record.');
+  }
+  textParts.push('');
+  textParts.push(mode === 'slr'
+    ? 'Run the SLR method. Output the keyword architecture, three gap-grounded ideas, and your note. JSON only.'
+    : 'Produce three distinct idea candidates now, as JSON.');
+  const userPromptText = textParts.join('\n');
+
+  // Build the user message content. If a PDF was uploaded, attach it as a
+  // document block before the text so the model reads it as primary context.
+  const userContent = [];
+  if (expertise_pdf) {
+    const mediaType = (expertise_pdf.type || 'application/pdf').toLowerCase();
+    userContent.push({
+      type: 'document',
+      source: { type: 'base64', media_type: 'application/pdf', data: expertise_pdf.data },
+    });
+  }
+  userContent.push({ type: 'text', text: userPromptText });
 
   const systemPrompt = mode === 'slr' ? SYSTEM_PROMPT_SLR : SYSTEM_PROMPT_BASIC;
-  const maxTokens    = mode === 'slr' ? 1800 : 1200;
+  // Expertise context can roughly double output length when the model
+  // reasons about credential fit; bump max_tokens modestly when present.
+  const maxTokens = (mode === 'slr' ? 1800 : 1200) + ((expertise_pdf || expertise_text) ? 400 : 0);
 
   const client = new Anthropic({ apiKey });
 
@@ -190,7 +225,7 @@ exports.handler = async (event) => {
       model: MODEL,
       max_tokens: maxTokens,
       system: systemPrompt,
-      messages: [{ role: 'user', content: userPrompt }],
+      messages: [{ role: 'user', content: userContent }],
     });
   } catch (err) {
     console.error('[tg-idea-generator] anthropic error', err);
