@@ -51,22 +51,32 @@
     --gauntlet-consequence:#c8302b;
   }
   :root[data-theme="dark"]{
-    /* Dark mode: navy/black background + white foreground, pop stays red */
-    --bg:#0a0a0a;
-    --band-elevated:#14151a;
+    /* Dark mode: PURE black background + white foreground, red as accent only.
+       No warm undertones, no crimson glows on background, no velvet texture.
+       Red lives in text, buttons, and accent markers ONLY. Never as background. */
+    --bg:#000000;
+    --band-elevated:#0a0a0a;
     --text:#ffffff;
     --text-dim:#b8b8b8;
     --ink:#ffffff;
     --ink-soft:#e0e0e0;
-    --cream:#1a1a1a;
+    --cream:#0a0a0a;
     --gold:#c8302b;
     --gold-light:#e0524a;
     --rule:rgba(255,255,255,0.18);
-    --crimson:#5a1a1a;
-    --crimson-deep:#3a0f0f;
-    --crimson-bright:#c0392b;
-    --crimson-glow:rgba(192,57,43,0.45);
-    --gauntlet-consequence:#c0392b;
+    --crimson:#c8302b;
+    --crimson-deep:#a82a2a;
+    --crimson-bright:#e0524a;
+    --crimson-glow:transparent;
+    --gauntlet-consequence:#c8302b;
+  }
+  /* Kill the velvet diagonal-line texture in dark mode. It overlays low-alpha
+     red on the dark background and the cumulative visual is a brown wash.
+     Background stays pure black. */
+  :root[data-theme="dark"] .velvet,
+  :root[data-theme="dark"] .velvet-elevated {
+    background-image: none !important;
+    background-color: var(--bg) !important;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -110,13 +120,10 @@
   /* divider strip - small but visibly red, not muddy.                       */
   .footlight{
     position:relative;height:42px;width:100%;
-    background:
-      radial-gradient(ellipse 18% 80% at 10% bottom, rgba(192,57,43,0.30) 0%, transparent 70%),
-      radial-gradient(ellipse 18% 80% at 90% bottom, rgba(192,57,43,0.30) 0%, transparent 70%),
-      radial-gradient(ellipse 70% 100% at center bottom,
-        rgba(200,48,43,0.42) 0%,
-        rgba(200,48,43,0.10) 35%,
-        transparent 80%);
+    /* Red radial gradients removed. They were rendering as a brown wash at
+       every section divider. The 2px accent line at the bottom (via ::after)
+       still carries the red signal without the spread. */
+    background:transparent;
     overflow:hidden;
   }
   .footlight::after{
@@ -283,19 +290,10 @@
   /* without reading paragraphs about why we think the panel is good.       */
   .hero{
     padding:4.5rem 2rem 4rem;
-    /* Gold halo at top + clean black base. No crimson wash (was muddying    */
-    /* into brown). A tight crimson accent glow lives bottom-left to punch   */
-    /* the red without spreading it.                                          */
-    background-image:
-      radial-gradient(ellipse 80% 60% at center top, rgba(168,42,42,0.12) 0%, transparent 70%),
-      repeating-linear-gradient(
-        135deg,
-        rgba(200,48,43,0.018) 0px,
-        rgba(200,48,43,0.018) 1px,
-        transparent 1px,
-        transparent 3px
-      ),
-      radial-gradient(circle at 8% 92%, rgba(192,57,43,0.14) 0%, transparent 28%);
+    /* Pure black hero. All red glows and diagonal velvet textures removed.
+       They cumulatively rendered as a brown wash. Red lives in text and
+       accent only, never as background tint. */
+    background-image:none;
     background-color:var(--bg);
   }
   /* Stacked hero: centered text + audio audition on top, composite
