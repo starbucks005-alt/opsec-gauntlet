@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -11,7 +11,7 @@
   :root {
     --ink: #1a1815;
     --paper: #f5f0e6;
-    --gold: #b8922a;
+    --gold: #a82a2a;
     --gold-light: #d4ae47;
     --teal: #2f6e6e;
     --rust: #a85a3a;
@@ -35,7 +35,7 @@
     text-transform:uppercase; color: var(--text-dim); text-decoration:none;
     padding:8px 14px; border:1px solid var(--line);
   }
-  .nav-back:hover { color: var(--gold-light); border-color: rgba(184,146,42,0.4); }
+  .nav-back:hover { color: var(--gold-light); border-color: rgba(168,42,42,0.4); }
   header {
     padding: 28px 40px 8px;
     border-bottom: 1px solid var(--line);
@@ -78,7 +78,7 @@
     font-family:'Inter',sans-serif; font-size:13px;
     outline:none;
   }
-  input:focus, select:focus, textarea:focus { border-color: rgba(184,146,42,0.5); }
+  input:focus, select:focus, textarea:focus { border-color: rgba(168,42,42,0.5); }
   textarea { resize: vertical; line-height: 1.5; min-height: 100px; }
   select { background: var(--ink); }
 
@@ -93,7 +93,7 @@
   .btn-primary:hover { background: var(--gold-light); }
   .btn-primary:disabled, .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
   .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
-  .btn-ghost:hover { border-color: rgba(184,146,42,0.5); }
+  .btn-ghost:hover { border-color: rgba(168,42,42,0.5); }
 
   /* Cast panel — book-level character references */
   .cast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 16px; }
@@ -186,7 +186,7 @@
   .prompt-box {
     margin-top: 10px;
     background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(184,146,42,0.4);
+    border: 1px solid rgba(168,42,42,0.4);
     padding: 10px 12px;
   }
   .prompt-box-label {
@@ -237,12 +237,12 @@
   }
   .gp-char-intro {
     display:grid; grid-template-columns:auto 1fr; gap:1.8rem; align-items:center;
-    border:1px solid rgba(184,146,42,0.4); background:rgba(184,146,42,0.05);
+    border:1px solid rgba(168,42,42,0.4); background:rgba(168,42,42,0.05);
     padding:1.6rem 1.8rem; margin: 0 0 2rem; max-width: 1100px;
   }
   .gp-char-portrait {
     position:relative; width:160px; height:200px; flex-shrink:0; overflow:hidden;
-    border:1px solid rgba(184,146,42,0.4); background: var(--ink);
+    border:1px solid rgba(168,42,42,0.4); background: var(--ink);
     animation: gp-char-float 5s ease-in-out infinite;
   }
   .gp-char-portrait img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }

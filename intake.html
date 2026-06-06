@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Submit Your Idea · The Gauntlet</title>
-<meta name="description" content="Step 1 of 3. Submit your idea for evaluation by the Gauntlet panel. Title and a plain-English description.">
+<title>Submit Your Idea · OPSEC Gauntlet</title>
+<meta name="description" content="Step 1 of 3. Submit your idea for evaluation by OPSEC Gauntlet panel. Title and a plain-English description.">
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="apple-touch-icon" href="Favicon.png">
 <link rel="stylesheet" href="assets/tokens.css">
@@ -14,7 +14,7 @@
   :root,
   :root[data-theme="dark"]{
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
     --crimson:#5a1a1a; --crimson-bright:#c0392b; --gauntlet-consequence:#c0392b;
   }
@@ -24,9 +24,9 @@
     font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
     min-height:100vh;
     background-image:
-      radial-gradient(ellipse 60% 50% at center top, rgba(184,146,42,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at center top, rgba(168,42,42,0.10) 0%, transparent 70%),
       repeating-linear-gradient(135deg,
-        rgba(212,170,74,0.018) 0px, rgba(212,170,74,0.018) 1px,
+        rgba(200,48,43,0.018) 0px, rgba(200,48,43,0.018) 1px,
         transparent 1px, transparent 3px);
   }
 
@@ -57,7 +57,7 @@
     display:flex;gap:0.5rem;align-items:center;
     margin-bottom:1.6rem;
   }
-  .step-pip{flex:1;height:3px;background:rgba(184,146,42,0.18);}
+  .step-pip{flex:1;height:3px;background:rgba(168,42,42,0.18);}
   .step-pip.is-current{background:var(--gold-light);}
   .step-pip.is-done{background:var(--gold);}
   .step-label{
@@ -123,17 +123,17 @@
   .file-drop{
     margin-bottom:0.7rem;
     padding:0.95rem 1.1rem;
-    border:1px dashed rgba(212,170,74,0.35);
-    background:rgba(212,170,74,0.03);
+    border:1px dashed rgba(200,48,43,0.35);
+    background:rgba(200,48,43,0.03);
     transition:border-color 0.18s,background 0.18s;
   }
   .file-drop.is-dragover{
     border-color:var(--gold-light);
-    background:rgba(212,170,74,0.08);
+    background:rgba(200,48,43,0.08);
   }
   .file-drop.is-loading{
     border-color:var(--gold-light);
-    background:rgba(212,170,74,0.06);
+    background:rgba(200,48,43,0.06);
   }
   .file-drop.is-error{
     border-color:var(--gauntlet-consequence,#c0392b);
@@ -244,7 +244,7 @@
 <header class="tg-topbar">
   <a class="tg-topbar-logo" href="/">
     <img src="Favicon.png" alt="" aria-hidden="true">
-    THE GAUNTLET
+    OPSEC Gauntlet
   </a>
   <a class="tg-topbar-back" href="/">← Back to corridor</a>
 </header>

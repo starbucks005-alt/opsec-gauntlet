@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Standalone Consult: Wren Calloway · The Gauntlet</title>
-<meta name="description" content="Skip the Gauntlet panel. Book a Standalone Consult with Wren Calloway for prior-art screening, patentability assessment, and a filing pathway recommendation.">
+<title>Standalone Consult: Wren Calloway · OPSEC Gauntlet</title>
+<meta name="description" content="Skip OPSEC Gauntlet panel. Book a Standalone Consult with Wren Calloway for prior-art screening, patentability assessment, and a filing pathway recommendation.">
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="apple-touch-icon" href="Favicon.png">
 <link rel="stylesheet" href="assets/tokens.css">
@@ -14,7 +14,7 @@
   :root,
   :root[data-theme="dark"]{
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
     --crimson:#5a1a1a; --crimson-bright:#c0392b;
   }
@@ -24,9 +24,9 @@
     font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
     min-height:100vh;
     background-image:
-      radial-gradient(ellipse 60% 50% at center top, rgba(184,146,42,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at center top, rgba(168,42,42,0.10) 0%, transparent 70%),
       repeating-linear-gradient(135deg,
-        rgba(212,170,74,0.018) 0px, rgba(212,170,74,0.018) 1px,
+        rgba(200,48,43,0.018) 0px, rgba(200,48,43,0.018) 1px,
         transparent 1px, transparent 3px);
   }
 
@@ -70,13 +70,13 @@
   /* Pitch block */
   .pitch{
     border:1px solid var(--rule);
-    background:rgba(184,146,42,0.04);
+    background:rgba(168,42,42,0.04);
     padding:2rem 2rem 1.6rem;margin-bottom:3rem;
   }
   .pitch-name{
     font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;
     text-transform:uppercase;color:var(--gold);
-    border-bottom:1px solid rgba(212,170,74,0.25);
+    border-bottom:1px solid rgba(200,48,43,0.25);
     padding-bottom:0.5rem;margin-bottom:0.5rem;
   }
   .pitch-sme{
@@ -98,7 +98,7 @@
   .deliv li{
     font-family:'Cormorant Garamond',serif;font-size:1.05rem;
     line-height:1.6;color:var(--text);
-    padding-left:1.1rem;border-left:1px solid rgba(212,170,74,0.4);
+    padding-left:1.1rem;border-left:1px solid rgba(200,48,43,0.4);
   }
   .deliv li b{
     font-family:'Playfair Display',serif;font-weight:600;
@@ -126,7 +126,7 @@
     padding:3.6rem 2rem 3.4rem;
     background:
       linear-gradient(180deg, rgba(20,21,26,0.0) 0%, rgba(20,21,26,0.55) 8%, rgba(20,21,26,0.55) 92%, rgba(20,21,26,0.0) 100%),
-      radial-gradient(ellipse 60% 40% at center top, rgba(184,146,42,0.08) 0%, transparent 70%);
+      radial-gradient(ellipse 60% 40% at center top, rgba(168,42,42,0.08) 0%, transparent 70%);
     border-top:1px solid var(--rule);
     border-bottom:1px solid var(--rule);
   }
@@ -155,20 +155,20 @@
     text-align:left;
     padding:1.3rem 1.3rem 1.2rem;
     border:1px solid var(--rule);
-    background:rgba(184,146,42,0.04);
+    background:rgba(168,42,42,0.04);
     color:inherit; font-family:inherit;
     cursor:pointer;
     transition:border-color 0.18s, background 0.18s;
     display:flex; flex-direction:column; gap:0.5rem;
   }
-  .validate-tile:hover{ border-color:var(--gold-light); background:rgba(184,146,42,0.08); }
+  .validate-tile:hover{ border-color:var(--gold-light); background:rgba(168,42,42,0.08); }
   .validate-tile.is-coming{ cursor:not-allowed; opacity:0.55; }
-  .validate-tile.is-coming:hover{ border-color:var(--rule); background:rgba(184,146,42,0.04); }
-  .validate-tile.is-active{ border-color:var(--gold-light); background:rgba(184,146,42,0.12); }
+  .validate-tile.is-coming:hover{ border-color:var(--rule); background:rgba(168,42,42,0.04); }
+  .validate-tile.is-active{ border-color:var(--gold-light); background:rgba(168,42,42,0.12); }
   .validate-tile-status{
     font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
     text-transform:uppercase; color:var(--gold);
-    padding-bottom:0.5rem; border-bottom:1px solid rgba(212,170,74,0.25);
+    padding-bottom:0.5rem; border-bottom:1px solid rgba(200,48,43,0.25);
     margin-bottom:0.1rem;
   }
   .validate-tile.is-coming .validate-tile-status{ color:var(--text-dim); }
@@ -223,7 +223,7 @@
   .validate-section-label{
     font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--gold-light);
-    border-top:1px solid rgba(212,170,74,0.18);
+    border-top:1px solid rgba(200,48,43,0.18);
     padding-top:1rem; margin-top:1.4rem; margin-bottom:0.7rem;
   }
   .validate-section-label:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
@@ -248,7 +248,7 @@
     color:var(--text-dim);
   }
   .v-pa-overlap[data-overlap="direct overlap"]{ color:#d97a6c; border-color:rgba(217,122,108,0.45); }
-  .v-pa-overlap[data-overlap="adjacent"]{ color:#d4aa4a; border-color:rgba(212,170,74,0.45); }
+  .v-pa-overlap[data-overlap="adjacent"]{ color:#c8302b; border-color:rgba(200,48,43,0.45); }
   .v-pa-overlap[data-overlap="background art"]{ color:var(--text-dim); }
   .v-pa-overlap[data-overlap="expired - free territory"]{ color:#7fae7a; border-color:rgba(127,174,122,0.45); }
   .v-pa-title{
@@ -269,7 +269,7 @@
     font-family:'Cormorant Garamond',serif; font-style:italic;
     font-size:0.92rem; line-height:1.55; color:var(--text-dim);
     margin-top:0.5rem; padding-left:0.9rem;
-    border-left:1px solid rgba(212,170,74,0.3);
+    border-left:1px solid rgba(200,48,43,0.3);
   }
 
   /* Patentability bullets, CPC, next steps */
@@ -284,7 +284,7 @@
   .v-bullets li{
     font-family:'Cormorant Garamond',serif; font-size:0.97rem;
     line-height:1.5; color:var(--text);
-    padding-left:0.9rem; border-left:1px solid rgba(212,170,74,0.3);
+    padding-left:0.9rem; border-left:1px solid rgba(200,48,43,0.3);
   }
   .v-mini-label{
     font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.2em;
@@ -323,15 +323,15 @@
     font-family:'Cormorant Garamond',serif; font-style:italic;
     font-size:1rem; line-height:1.65; color:var(--cream);
     padding:0.9rem 1rem;
-    border:1px solid rgba(212,170,74,0.3);
-    background:rgba(184,146,42,0.05);
+    border:1px solid rgba(200,48,43,0.3);
+    background:rgba(168,42,42,0.05);
   }
 
   /* Audit summary band below the columns */
   .validate-audit{
     text-align:center;
     border:1px solid var(--rule);
-    background:rgba(184,146,42,0.05);
+    background:rgba(168,42,42,0.05);
     padding:1.6rem 1.8rem 1.5rem;
   }
   .validate-audit p{
@@ -411,7 +411,7 @@
   /* Success state */
   .thanks{
     border:1px solid var(--rule);
-    background:rgba(184,146,42,0.05);
+    background:rgba(168,42,42,0.05);
     padding:2.4rem 2rem;text-align:center;display:none;
   }
   .thanks.show{ display:block; }
@@ -436,7 +436,7 @@
 <header class="tg-topbar">
   <a class="tg-topbar-logo" href="/">
     <img src="Favicon.png" alt="">
-    <span>THE GAUNTLET</span>
+    <span>OPSEC Gauntlet</span>
   </a>
   <a class="tg-topbar-back" href="/">&larr; Back</a>
 </header>
@@ -545,7 +545,7 @@
   </div>
 
   <div class="footer-note">
-    <a href="/">Return to The Gauntlet &rarr;</a>
+    <a href="/">Return to OPSEC Gauntlet &rarr;</a>
   </div>
 </main>
 

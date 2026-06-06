@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <style>
   :root {
     --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
+    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.3);
     --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -48,14 +48,14 @@
     border:2px dashed var(--rule);padding:4rem 2rem;text-align:center;cursor:pointer;
     transition:all 0.2s;display:block;
   }
-  .ws-drop:hover,.ws-drop.dragover{border-color:var(--gold);background:rgba(184,146,42,0.04);}
+  .ws-drop:hover,.ws-drop.dragover{border-color:var(--gold);background:rgba(168,42,42,0.04);}
   .ws-drop-icon{font-size:3rem;color:var(--gold-light);margin-bottom:1rem;line-height:1;}
   .ws-drop-text{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin-bottom:0.4rem;}
   .ws-drop-sub{font-size:0.85rem;color:var(--text-dim);}
 
   /* File card */
   .ws-file-card{
-    border:1px solid var(--gold);background:rgba(184,146,42,0.04);
+    border:1px solid var(--gold);background:rgba(168,42,42,0.04);
     padding:1.5rem 2rem;
     display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.5rem;
     margin-bottom:2rem;
@@ -90,7 +90,7 @@
 
   /* ── Hand-off panel ── */
   .ws-handoff-panel{
-    border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);
+    border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.06);
     padding:1.4rem 1.6rem;margin-bottom:2rem;color:var(--text);line-height:1.55;
   }
   .ws-handoff-header{
@@ -119,16 +119,16 @@
   }
   .ws-handoff-card{
     display:flex;flex-direction:column;align-items:center;text-align:center;
-    padding:0.8rem 0.6rem;border:1px solid rgba(184,146,42,0.35);
+    padding:0.8rem 0.6rem;border:1px solid rgba(168,42,42,0.35);
     text-decoration:none;color:var(--text);transition:border-color 0.15s,background 0.15s,transform 0.15s;
     background:rgba(255,255,255,0.02);
   }
   .ws-handoff-card:hover{
-    border-color:var(--gold);background:rgba(184,146,42,0.08);transform:translateY(-1px);
+    border-color:var(--gold);background:rgba(168,42,42,0.08);transform:translateY(-1px);
   }
   .ws-handoff-card img{
     width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:0.5rem;
-    border:1px solid rgba(184,146,42,0.35);
+    border:1px solid rgba(168,42,42,0.35);
   }
   .ws-handoff-card-name{
     font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--text);
@@ -143,7 +143,7 @@
     font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;
   }
   .ws-handoff-or::before,.ws-handoff-or::after{
-    content:'';flex:1;height:1px;background:rgba(184,146,42,0.25);
+    content:'';flex:1;height:1px;background:rgba(168,42,42,0.25);
   }
   .ws-handoff-or span{padding:0 0.9rem;}
 
@@ -167,7 +167,7 @@
   .ws-chapter-pill:hover{border-color:var(--gold-light);color:var(--gold-light);}
   .ws-chapter-pill.ws-pill-active{
     border-color:var(--gold);color:var(--gold);
-    background:rgba(184,146,42,0.06);
+    background:rgba(168,42,42,0.06);
   }
 
   /* Section textarea */
@@ -190,9 +190,9 @@
     padding:1rem 1rem 0.75rem;text-align:left;cursor:pointer;
     transition:all 0.15s;display:flex;flex-direction:column;gap:0.3rem;
   }
-  .ws-mode-btn:hover{border-color:var(--gold-light);background:rgba(184,146,42,0.04);}
+  .ws-mode-btn:hover{border-color:var(--gold-light);background:rgba(168,42,42,0.04);}
   .ws-mode-btn.ws-mode-active{
-    border-color:var(--gold);background:rgba(184,146,42,0.08);
+    border-color:var(--gold);background:rgba(168,42,42,0.08);
     box-shadow:inset 0 0 0 1px var(--gold);
   }
   .ws-mode-name{
@@ -204,27 +204,27 @@
   /* Grey side panel */
   .ws-grey-panel{
     position:sticky;top:4.5rem;
-    background:rgba(184,146,42,0.04);border:1px solid rgba(184,146,42,0.25);
+    background:rgba(168,42,42,0.04);border:1px solid rgba(168,42,42,0.25);
     padding:2rem 1.5rem;text-align:center;
   }
   .ws-grey-panel.minimized{display:none;}
-  .ws-grey-min-btn{position:absolute;top:0.5rem;right:0.6rem;background:none;border:1px solid rgba(184,146,42,0.4);width:24px;height:24px;color:var(--text-dim);cursor:pointer;font-family:'DM Mono',monospace;font-size:0.85rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+  .ws-grey-min-btn{position:absolute;top:0.5rem;right:0.6rem;background:none;border:1px solid rgba(168,42,42,0.4);width:24px;height:24px;color:var(--text-dim);cursor:pointer;font-family:'DM Mono',monospace;font-size:0.85rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
   .ws-grey-min-btn:hover{color:var(--gold);border-color:var(--gold);}
 
   /* Floating minimized badge — quill */
-  .ws-grey-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:72px;height:72px;border:1px solid rgba(184,146,42,0.4);background:var(--ink,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.45);cursor:pointer;padding:0.5rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s ease, box-shadow 0.2s ease;animation:greyFloat 5.8s ease-in-out infinite;}
+  .ws-grey-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:72px;height:72px;border:1px solid rgba(168,42,42,0.4);background:var(--ink,#13100c);box-shadow:0 4px 14px rgba(0,0,0,0.45);cursor:pointer;padding:0.5rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s ease, box-shadow 0.2s ease;animation:greyFloat 5.8s ease-in-out infinite;}
   .ws-grey-mini-badge.visible{display:flex;}
-  .ws-grey-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
-  .ws-grey-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 1px 4px rgba(184,146,42,0.4));}
-  .ws-grey-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--ink,#13100c);border:1px solid rgba(184,146,42,0.4);padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+  .ws-grey-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(168,42,42,0.45);}
+  .ws-grey-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 1px 4px rgba(168,42,42,0.4));}
+  .ws-grey-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--ink,#13100c);border:1px solid rgba(168,42,42,0.4);padding:0.4rem 0.7rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
   .ws-grey-mini-badge:hover .ws-grey-mini-tooltip{opacity:1;}
   .ws-grey-avatar{
     position:relative;
     width:120px;height:155px;
-    border:1px solid rgba(184,146,42,0.4);
+    border:1px solid rgba(168,42,42,0.4);
     overflow:hidden;
     margin:0 auto 1rem;
-    background:rgba(184,146,42,0.05);
+    background:rgba(168,42,42,0.05);
     animation:greyFloat 5.8s ease-in-out infinite;
   }
   .ws-grey-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
@@ -372,7 +372,7 @@
     <div class="s-label">Mid-Draft Workshop</div>
     <div class="s-title">Grey. <em>Your Writing Partner.</em></div>
     <p class="s-sub">Upload your partial manuscript. Grey reads the whole thing, then helps you develop any chapter — enriching prose, adding dialogue, writing forward, or diagnosing what isn't working yet.</p>
-    <div style="border:1px solid rgba(184,146,42,0.4);background:rgba(184,146,42,0.06);padding:0.9rem 1.4rem;margin-bottom:1.5rem;font-size:0.92rem;line-height:1.55;color:var(--text);"><strong style="color:var(--gold-light,var(--accent));font-family:var(--font-display);">One upload, every tool.</strong> Once you upload here, your manuscript is loaded into the browser for this session and every Post-Draft tool reads from it. Open Jules, Bea, Margo, or the Professor and they will already see your chapters. You will not need to upload again.</div>
+    <div style="border:1px solid rgba(168,42,42,0.4);background:rgba(168,42,42,0.06);padding:0.9rem 1.4rem;margin-bottom:1.5rem;font-size:0.92rem;line-height:1.55;color:var(--text);"><strong style="color:var(--gold-light,var(--accent));font-family:var(--font-display);">One upload, every tool.</strong> Once you upload here, your manuscript is loaded into the browser for this session and every Post-Draft tool reads from it. Open Jules, Bea, Margo, or the Professor and they will already see your chapters. You will not need to upload again.</div>
     <div class="s-cost">3 credits per operation</div>
 
     <!-- Step 1: Upload -->
@@ -380,13 +380,13 @@
       <div class="s-label" style="margin-bottom:0.8rem;">Step 1 — Upload Your Manuscript</div>
 
       <!-- Loaded manuscript banner -->
-      <div id="ws-ms-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;">
+      <div id="ws-ms-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;">
         <span style="font-size:1.4rem;">📄</span>
         <div style="flex:1;min-width:0;">
           <div id="ws-ms-name" style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);"></div>
           <div id="ws-ms-meta" style="font-size:0.8rem;color:var(--text-dim);margin-top:0.2rem;"></div>
         </div>
-        <button onclick="wsUseMsFile()" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.15);color:var(--gold);padding:0.4rem 0.9rem;cursor:pointer;">Use This Manuscript →</button>
+        <button onclick="wsUseMsFile()" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.15);color:var(--gold);padding:0.4rem 0.9rem;cursor:pointer;">Use This Manuscript →</button>
         <button onclick="document.getElementById('ws-ms-banner').style.display='none'" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.15);background:none;color:var(--text-dim);padding:0.4rem 0.9rem;cursor:pointer;">Replace this manuscript</button>
       </div>
       <div style="font-size:0.85rem;color:var(--text-dim);margin-bottom:1.2rem;line-height:1.55;">
@@ -411,7 +411,7 @@
           </div>
           <button class="ws-file-remove" onclick="wsResetUpload()">Remove</button>
         </div>
-        <div id="ws-trunc-warn" style="display:none;margin-top:1.2rem;padding:1rem 1.2rem;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.07);font-size:0.9rem;line-height:1.6;color:var(--text);"></div>
+        <div id="ws-trunc-warn" style="display:none;margin-top:1.2rem;padding:1rem 1.2rem;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.07);font-size:0.9rem;line-height:1.6;color:var(--text);"></div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
           <button class="btn-gold" id="ws-analyze-btn" onclick="wsAnalyze()" disabled>Next →</button>
           <span id="ws-parse-status" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);"></span>
@@ -422,7 +422,7 @@
     <!-- Step 2: Select section + mode -->
     <div class="step" id="step-work">
       <!-- Sample banner — shown to anonymous visitors viewing the static demo -->
-      <div id="ws-sample-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.07);padding:1rem 1.5rem;margin-bottom:1.5rem;">
+      <div id="ws-sample-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.07);padding:1rem 1.5rem;margin-bottom:1.5rem;">
         <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:0.25rem 0.55rem;">Sample</span>
         <div style="flex:1;min-width:240px;font-size:0.92rem;color:var(--text);line-height:1.55;">You're viewing a sample of Grey's work on a sample manuscript. Pick any mode below to see what it does. <strong style="color:var(--gold);">Sign in to use Grey on your own manuscript.</strong></div>
         <button onclick="wsOpenAuth()" class="btn-gold" style="padding:0.6rem 1.2rem;font-size:0.85rem;">Sign in →</button>
@@ -537,7 +537,7 @@
         <div class="s-label">Workshop Result</div>
         <div class="ws-result-mode" id="ws-result-mode-label"></div>
       </div>
-      <div id="ws-result-sample-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.07);padding:0.85rem 1.2rem;margin-bottom:1.2rem;font-size:0.88rem;color:var(--text);line-height:1.55;">
+      <div id="ws-result-sample-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.07);padding:0.85rem 1.2rem;margin-bottom:1.2rem;font-size:0.88rem;color:var(--text);line-height:1.55;">
         <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:0.2rem 0.5rem;flex-shrink:0;">Sample</span>
         <span style="flex:1;min-width:200px;">This is what Grey did to the sample manuscript. Click <strong>Try Other Modes →</strong> below to compare, or sign in to run Grey on your own.</span>
       </div>

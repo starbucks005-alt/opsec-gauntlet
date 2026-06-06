@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -124,7 +124,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(184,146,42,0.06) 0%, transparent 70%);
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(168,42,42,0.06) 0%, transparent 70%);
   }
 
   .hero-est {
@@ -278,8 +278,8 @@
 
   /* Email/owner badge */
   .nav-email-badge {
-    background: rgba(184,146,42,0.15);
-    border: 1px solid rgba(184,146,42,0.4);
+    background: rgba(168,42,42,0.15);
+    border: 1px solid rgba(168,42,42,0.4);
     color: var(--gold-light);
   }
   .nav-email-badge .nav-badge-owner {
@@ -295,20 +295,20 @@
 
   /* Credits badge */
   .nav-credits-badge {
-    background: rgba(184,146,42,0.12);
-    border: 1px solid rgba(184,146,42,0.35);
+    background: rgba(168,42,42,0.12);
+    border: 1px solid rgba(168,42,42,0.35);
     color: var(--gold-light);
     cursor: default;
   }
 
   /* Gift Center button */
   .nav-gift-btn {
-    background: rgba(184,146,42,0.15);
-    border: 1px solid rgba(184,146,42,0.4);
+    background: rgba(168,42,42,0.15);
+    border: 1px solid rgba(168,42,42,0.4);
     color: var(--gold-light);
     font-weight: 600;
   }
-  .nav-gift-btn:hover { background: rgba(184,146,42,0.28); }
+  .nav-gift-btn:hover { background: rgba(168,42,42,0.28); }
 
   /* Sign Out button */
   .nav-signout-btn {
@@ -316,7 +316,7 @@
     border: 1px solid rgba(244,237,224,0.12);
     color: rgba(244,237,224,0.45);
   }
-  .nav-signout-btn:hover { border-color: rgba(184,146,42,0.4); color: var(--gold-light); }
+  .nav-signout-btn:hover { border-color: rgba(168,42,42,0.4); color: var(--gold-light); }
 
   /* ── Light mode page contrast boosts ─────────────────────────────────────── */
   [data-theme="light"] body { color: #2a1f0e; }
@@ -347,21 +347,21 @@
 
   /* Nav always has a dark background — pin these to light-on-dark regardless of mode */
   [data-theme="light"] .nav-links a { color: rgba(244,237,224,0.85); }
-  [data-theme="light"] .nav-links a:hover { color: #d4aa4a; }
+  [data-theme="light"] .nav-links a:hover { color: #c8302b; }
   [data-theme="light"] .nav-email-badge,
   [data-theme="light"] .nav-credits-badge,
   [data-theme="light"] .nav-gift-btn,
-  [data-theme="light"] .nav-signin-btn { color: #d4aa4a; }
+  [data-theme="light"] .nav-signin-btn { color: #c8302b; }
   [data-theme="light"] .nav-signout-btn { color: rgba(244,237,224,0.6); border-color: rgba(244,237,224,0.2); }
-  [data-theme="light"] .nav-signout-btn:hover { color: #d4aa4a; border-color: rgba(212,170,74,0.5); }
+  [data-theme="light"] .nav-signout-btn:hover { color: #c8302b; border-color: rgba(200,48,43,0.5); }
 
   /* Sign In link */
   .nav-signin-btn {
-    background: rgba(184,146,42,0.15);
-    border: 1px solid rgba(184,146,42,0.4);
+    background: rgba(168,42,42,0.15);
+    border: 1px solid rgba(168,42,42,0.4);
     color: var(--gold-light);
   }
-  .nav-signin-btn:hover { background: rgba(184,146,42,0.28); }
+  .nav-signin-btn:hover { background: rgba(168,42,42,0.28); }
 
   /* ══ GIFT CENTER MODAL ══ */
   .gift-overlay {
@@ -371,7 +371,7 @@
   }
   .gift-overlay.open { display: flex; }
   .gift-panel {
-    background: #13120e; border: 1px solid rgba(184,146,42,0.2);
+    background: #13120e; border: 1px solid rgba(168,42,42,0.2);
     width: 100%; max-width: 860px; max-height: 90vh; overflow-y: auto; position: relative;
   }
   .gift-panel-header {
@@ -395,7 +395,7 @@
     padding: 24px 20px; display: flex; flex-direction: column; gap: 10px;
     transition: border-color 0.2s, background 0.2s;
   }
-  .gift-card:hover { border-color: rgba(184,146,42,0.35); background: rgba(184,146,42,0.04); }
+  .gift-card:hover { border-color: rgba(168,42,42,0.35); background: rgba(168,42,42,0.04); }
   .gift-card-icon { font-size: 26px; line-height: 1; margin-bottom: 4px; }
   .gift-card-title { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--cream); }
   .gift-card-desc { font-size: 12px; color: rgba(244,237,224,0.65); line-height: 1.65; flex: 1; }
@@ -403,16 +403,16 @@
   .gift-card-tag {
     font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em;
     text-transform: uppercase; padding: 3px 8px;
-    border: 1px solid rgba(184,146,42,0.3); color: rgba(184,146,42,0.85);
+    border: 1px solid rgba(168,42,42,0.3); color: rgba(168,42,42,0.85);
   }
   .gift-card-btn {
     margin-top: 8px; padding: 10px 16px;
-    background: rgba(184,146,42,0.15); border: 1px solid rgba(184,146,42,0.4);
+    background: rgba(168,42,42,0.15); border: 1px solid rgba(168,42,42,0.4);
     color: var(--gold-light); font-family: 'DM Mono', monospace;
     font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
     cursor: pointer; transition: background 0.2s; text-align: center;
   }
-  .gift-card-btn:hover { background: rgba(184,146,42,0.28); }
+  .gift-card-btn:hover { background: rgba(168,42,42,0.28); }
   .gift-card-btn.primary { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 700; }
   .gift-card-btn.primary:hover { opacity: 0.9; }
 
@@ -423,7 +423,7 @@
   }
   .gift-flow-overlay.open { display: flex; }
   .gift-flow-panel {
-    background: #13120e; border: 1px solid rgba(184,146,42,0.25);
+    background: #13120e; border: 1px solid rgba(168,42,42,0.25);
     width: 100%; max-width: 480px; padding: 28px 28px 24px; position: relative;
     max-height: calc(100vh - 48px); overflow-y: auto;
   }
@@ -439,7 +439,7 @@
     color: var(--cream); font-family: 'Cormorant Garamond', serif; font-size: 15px;
     outline: none; margin-bottom: 14px;
   }
-  .gift-flow-input:focus { border-color: rgba(184,146,42,0.6); }
+  .gift-flow-input:focus { border-color: rgba(168,42,42,0.6); }
   .gift-flow-input::placeholder { color: rgba(244,237,224,0.25); }
   .gift-radio-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
   .gift-radio-row {
@@ -447,7 +447,7 @@
     border: 1px solid rgba(255,255,255,0.08); cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
   }
-  .gift-radio-row:hover, .gift-radio-row.selected { border-color: rgba(184,146,42,0.45); background: rgba(184,146,42,0.07); }
+  .gift-radio-row:hover, .gift-radio-row.selected { border-color: rgba(168,42,42,0.45); background: rgba(168,42,42,0.07); }
   .gift-radio-row input[type=radio] { accent-color: var(--gold); flex-shrink: 0; }
   .gift-radio-label { flex: 1; font-size: 14px; color: var(--cream); line-height: 1.4; }
   .gift-radio-price { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--gold-light); flex-shrink: 0; }
@@ -487,17 +487,17 @@
     cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0;
     transition: border-color 0.2s, transform 0.15s;
   }
-  .ecard-thumb:hover { border-color: rgba(184,146,42,0.5); transform: scale(1.05); }
+  .ecard-thumb:hover { border-color: rgba(168,42,42,0.5); transform: scale(1.05); }
   .ecard-thumb.active { border-color: var(--gold); transform: scale(1.05); }
   .ecard-thumb-inner {
     width: 100%; height: 100%; display: flex; flex-direction: column;
     align-items: center; justify-content: center; position: relative;
   }
-  .ec-classic      .ecard-thumb-inner { background: radial-gradient(ellipse at 60% 30%, rgba(184,146,42,0.4) 0%, #1a1200 60%, #13100c 100%); }
-  .ec-manuscript   .ecard-thumb-inner { background: radial-gradient(ellipse at 50% 20%, rgba(184,146,42,0.2) 0%, #2a1f0e 50%, #1a1208 100%); }
+  .ec-classic      .ecard-thumb-inner { background: radial-gradient(ellipse at 60% 30%, rgba(168,42,42,0.4) 0%, #1a1200 60%, #13100c 100%); }
+  .ec-manuscript   .ecard-thumb-inner { background: radial-gradient(ellipse at 50% 20%, rgba(168,42,42,0.2) 0%, #2a1f0e 50%, #1a1208 100%); }
   .ec-library      .ecard-thumb-inner { background: linear-gradient(160deg, #1a1208 0%, #13100c 100%); }
   .ec-open-book    .ecard-thumb-inner { background: radial-gradient(ellipse at 40% 60%, #f4ede0 0%, #d4c9b8 60%, #bbb0a0 100%); }
-  .ec-quill        .ecard-thumb-inner { background: radial-gradient(ellipse at 50% 30%, rgba(184,146,42,0.45) 0%, #080a14 60%, #060810 100%); }
+  .ec-quill        .ecard-thumb-inner { background: radial-gradient(ellipse at 50% 30%, rgba(168,42,42,0.45) 0%, #080a14 60%, #060810 100%); }
   .ecard-thumb-logo-img {
     width: 20px; height: 20px; border-radius: 50%;
   }
@@ -537,7 +537,7 @@
   .ecard-preview.ec-open-book .ec-logo-rule { background: rgba(26,18,8,0.3); }
   .ecard-preview.ec-open-book .ec-logo-press { color: #8a6a1a; }
   .ecard-preview-msg-wrap {
-    flex: 1; border: 1.5px solid rgba(184,146,42,0.7);
+    flex: 1; border: 1.5px solid rgba(168,42,42,0.7);
     padding: 10px 12px; position: relative; background: rgba(255,255,255,0.93);
   }
   .ecard-preview-textarea {
@@ -547,20 +547,20 @@
   }
   .ecard-preview-textarea::placeholder { color: #999; }
   .ecard-preview-icon { position: absolute; bottom: 8px; right: 10px; font-size: 20px; opacity: 0.85; pointer-events: none; }
-  .ecard-preview.ec-classic    .ecard-preview-bg { background: radial-gradient(ellipse at 65% 25%, rgba(184,146,42,0.35) 0%, #1a1200 55%, #13100c 100%); }
-  .ecard-preview.ec-manuscript .ecard-preview-bg { background: radial-gradient(ellipse at 50% 20%, rgba(184,146,42,0.18) 0%, #2a1f0e 50%, #1a1208 100%); }
+  .ecard-preview.ec-classic    .ecard-preview-bg { background: radial-gradient(ellipse at 65% 25%, rgba(168,42,42,0.35) 0%, #1a1200 55%, #13100c 100%); }
+  .ecard-preview.ec-manuscript .ecard-preview-bg { background: radial-gradient(ellipse at 50% 20%, rgba(168,42,42,0.18) 0%, #2a1f0e 50%, #1a1208 100%); }
   .ecard-preview.ec-library    .ecard-preview-bg { background: linear-gradient(160deg, #1c1408 0%, #13100c 100%); }
   .ecard-preview.ec-open-book  .ecard-preview-bg { background: radial-gradient(ellipse at 40% 60%, #f4ede0 0%, #d4c9b8 100%); }
   .ecard-preview.ec-open-book  .ecard-preview-logo { color: #1a1208; }
   .ecard-preview.ec-open-book  .ecard-preview-logo span { color: #8a6a1a; }
-  .ecard-preview.ec-quill      .ecard-preview-bg { background: radial-gradient(ellipse at 50% 25%, rgba(184,146,42,0.42) 0%, #080a14 55%, #060810 100%); }
+  .ecard-preview.ec-quill      .ecard-preview-bg { background: radial-gradient(ellipse at 50% 25%, rgba(168,42,42,0.42) 0%, #080a14 55%, #060810 100%); }
   .ecard-preview.ec-classic::before,
   .ecard-preview.ec-manuscript::before,
   .ecard-preview.ec-library::before,
   .ecard-preview.ec-quill::before {
     content: ''; position: absolute; inset: 0;
-    background-image: radial-gradient(circle at 20% 20%, rgba(184,146,42,0.15) 0%, transparent 40%),
-                      radial-gradient(circle at 80% 70%, rgba(184,146,42,0.08) 0%, transparent 35%);
+    background-image: radial-gradient(circle at 20% 20%, rgba(168,42,42,0.15) 0%, transparent 40%),
+                      radial-gradient(circle at 80% 70%, rgba(168,42,42,0.08) 0%, transparent 35%);
     pointer-events: none; z-index: 1;
   }
 
@@ -571,7 +571,7 @@
     font-family: 'DM Mono', monospace; font-size: 0.6rem; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
   }
-  .gift-quick-btn:hover { border-color: rgba(184,146,42,0.4); color: var(--gold-light); }
+  .gift-quick-btn:hover { border-color: rgba(168,42,42,0.4); color: var(--gold-light); }
 
   /* ABOUT */
   #about { background: var(--ink-soft); }
@@ -811,7 +811,7 @@
     margin-top: 3rem;
     border: 1px solid var(--gold);
     padding: 2rem;
-    background: rgba(184,146,42,0.04);
+    background: rgba(168,42,42,0.04);
   }
 
   .slr-callout-label {
@@ -924,7 +924,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(184,146,42,0.1);
+    border-bottom: 1px solid rgba(168,42,42,0.1);
   }
 
   .result-row:last-child { border-bottom: none; }
@@ -1018,10 +1018,10 @@
 
 
   .template-row {
-    border-bottom: 1px solid rgba(184,146,42,0.1);
+    border-bottom: 1px solid rgba(168,42,42,0.1);
     transition: background 0.2s;
   }
-  .template-row:hover { background: rgba(184,146,42,0.06) !important; }
+  .template-row:hover { background: rgba(168,42,42,0.06) !important; }
 
   /* ── FICTION & SCREENPLAY PLANNERS ── */
   #fiction { background: var(--ink); }
@@ -1034,7 +1034,7 @@
   .fp-step-btn.fp-step-active { border-bottom-color:var(--gold); }
   .fp-step-num { font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); }
   .fp-step-label { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--text-dim); transition:color 0.2s; }
-  .fp-step-arrow { font-family:'DM Mono',monospace; color:rgba(184,146,42,0.3); font-size:1.2rem; padding:0 1.2rem 1rem; align-self:flex-end; }
+  .fp-step-arrow { font-family:'DM Mono',monospace; color:rgba(168,42,42,0.3); font-size:1.2rem; padding:0 1.2rem 1rem; align-self:flex-end; }
   .fp-step-panel { display:none; }
   .fp-step-panel.fp-step-active { display:block; }
 
@@ -1042,7 +1042,7 @@
   .fp-fmt-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
   .fp-fmt-card { border:1px solid var(--rule); padding:1.5rem; cursor:pointer; transition:all 0.2s; position:relative; display:flex; flex-direction:column; gap:0.3rem; }
   .fp-fmt-card:hover { border-color:var(--gold); transform:translateY(-2px); }
-  .fp-fmt-card.fp-fmt-selected { border-color:var(--gold); background:rgba(184,146,42,0.06); }
+  .fp-fmt-card.fp-fmt-selected { border-color:var(--gold); background:rgba(168,42,42,0.06); }
   .fp-fmt-badge { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:0.2rem; }
   .fp-fmt-size { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--cream); }
   .fp-fmt-cm { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--text-dim); margin-bottom:0.3rem; }
@@ -1090,7 +1090,7 @@
     position: relative;
   }
   .genre-card:hover { border-color: var(--gold); transform: translateY(-2px); }
-  .genre-card.fp-selected { border-color: var(--gold); background: rgba(184,146,42,0.06); }
+  .genre-card.fp-selected { border-color: var(--gold); background: rgba(168,42,42,0.06); }
   .genre-card.fp-selected::before {
     content: '✓';
     position: absolute;
@@ -1134,15 +1134,15 @@
   .fp-outline-area { display: grid; grid-template-columns: 1fr 220px; gap: 2rem; align-items: start; margin-top: 3rem; }
   .fp-outline-wrap { display: none; }
   .fp-outline-wrap.fp-visible { display: block; }
-  .fp-grey-panel-outer { display: none; position: sticky; top: 2rem; background: rgba(184,146,42,0.04); border: 1px solid rgba(184,146,42,0.25); border-radius: 4px; padding: 1.5rem 1.25rem; text-align: center; }
+  .fp-grey-panel-outer { display: none; position: sticky; top: 2rem; background: rgba(168,42,42,0.04); border: 1px solid rgba(168,42,42,0.25); border-radius: 4px; padding: 1.5rem 1.25rem; text-align: center; }
   .fp-grey-panel-outer.fp-gp-visible { display: block; }
-  .fp-grey-avatar-sm { width: 48px; height: 48px; border-radius: 50%; background: rgba(184,146,42,0.15); border: 1px solid rgba(184,146,42,0.4); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); margin: 0 auto 0.75rem; animation: fpGreyPulse 3s ease-in-out infinite; }
+  .fp-grey-avatar-sm { width: 48px; height: 48px; border-radius: 50%; background: rgba(168,42,42,0.15); border: 1px solid rgba(168,42,42,0.4); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); margin: 0 auto 0.75rem; animation: fpGreyPulse 3s ease-in-out infinite; }
   .fp-grey-panel-outer.fp-gp-idle .fp-grey-avatar-sm { animation: none; }
   .fp-grey-name-sm { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--cream); margin-bottom: 0.15rem; }
   .fp-grey-role-sm { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1rem; }
   .fp-grey-thought-sm { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; font-style: italic; min-height: 3.5em; transition: opacity 0.4s ease; }
   .fp-grey-wc-sm { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; color: var(--gold); margin-top: 0.75rem; min-height: 1em; }
-  @keyframes fpGreyPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(184,146,42,0); } 50% { box-shadow: 0 0 0 6px rgba(184,146,42,0.15); } }
+  @keyframes fpGreyPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(168,42,42,0); } 50% { box-shadow: 0 0 0 6px rgba(168,42,42,0.15); } }
   @media (max-width: 900px) { .fp-outline-area { grid-template-columns: 1fr; } .fp-grey-panel-outer { display: none !important; } }
 
   .fp-outline-header {
@@ -1169,7 +1169,7 @@
     gap: 1.5rem;
     align-items: flex-start;
     padding: 1rem 0;
-    border-bottom: 1px solid rgba(184,146,42,0.1);
+    border-bottom: 1px solid rgba(168,42,42,0.1);
   }
   .fp-chapter-row:last-child { border-bottom: none; }
   .fp-ch-num {
@@ -1235,7 +1235,7 @@
     position: relative;
   }
   .struct-card:hover { border-color: var(--gold); transform: translateY(-2px); }
-  .struct-card.fp-selected { border-color: var(--gold); background: rgba(184,146,42,0.06); }
+  .struct-card.fp-selected { border-color: var(--gold); background: rgba(168,42,42,0.06); }
   .struct-card.fp-selected::before {
     content: '✓';
     position: absolute;
@@ -1258,7 +1258,7 @@
     gap: 1.5rem;
     align-items: flex-start;
     padding: 1rem 0;
-    border-bottom: 1px solid rgba(184,146,42,0.1);
+    border-bottom: 1px solid rgba(168,42,42,0.1);
   }
   .beat-row:last-child { border-bottom: none; }
   .beat-num {
@@ -1283,7 +1283,7 @@
   .fp-format-box {
     border: 1px solid var(--rule);
     padding: 2rem;
-    background: rgba(184,146,42,0.03);
+    background: rgba(168,42,42,0.03);
     margin-bottom: 2.5rem;
   }
   .fp-format-title {
@@ -1572,7 +1572,7 @@
   .phase-desc { font-family:'Cormorant Garamond',serif; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.6; }
   .phase-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
   .phase-card { display: flex; flex-direction: column; padding: 1.3rem 1.4rem; border: 1px solid var(--rule); background: rgba(255,255,255,0.02); text-decoration: none; color: inherit; transition: all 0.15s; min-height: 130px; }
-  .phase-card:hover { border-color: var(--gold-light, var(--accent)); background: rgba(184,146,42,0.04); transform: translateY(-1px); }
+  .phase-card:hover { border-color: var(--gold-light, var(--accent)); background: rgba(168,42,42,0.04); transform: translateY(-1px); }
   .phase-card-name { font-family:'Playfair Display',serif; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; line-height: 1.3; }
   .phase-card-desc { font-family:'Cormorant Garamond',serif; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
   .phase-card-tag { font-family:'DM Mono',monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-top: 0.8rem; align-self: flex-start; }
@@ -1587,7 +1587,7 @@
   .phase-card-featured {
     grid-column: 1 / -1;
     border: 1px dashed var(--gold);
-    background: rgba(184,146,42,0.05);
+    background: rgba(168,42,42,0.05);
     flex-direction: row;
     align-items: center;
     gap: 1.5rem;
@@ -1595,7 +1595,7 @@
     padding: 1.4rem 1.8rem;
   }
   .phase-card-featured:hover {
-    background: rgba(184,146,42,0.10);
+    background: rgba(168,42,42,0.10);
     border-color: var(--gold-light);
     transform: none;
     box-shadow: 0 0 0 1px var(--gold);
@@ -1622,7 +1622,7 @@
   .phase-subgroup .pg-aside { color: var(--text-muted); letter-spacing: 0.05em; text-transform: none; font-size: 0.85rem; margin-left: 0.5rem; }
 
   /* Playground card — distinct visual cue so users know these are for exploration */
-  .phase-card-play { border-color: rgba(184,146,42,0.4); background: rgba(184,146,42,0.03); }
+  .phase-card-play { border-color: rgba(168,42,42,0.4); background: rgba(168,42,42,0.03); }
   .phase-card-play .phase-card-tag::before { content: '◇ '; }
 
   /* Full-row card — larger type so it fills the wide space */
@@ -1646,7 +1646,7 @@
     padding: 1.6rem;
     transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   }
-  .cast-card:hover { transform: translateY(-3px); border-color: var(--gold-light, var(--gold)); background: rgba(184,146,42,0.04); box-shadow: 0 10px 28px rgba(184,146,42,0.12); }
+  .cast-card:hover { transform: translateY(-3px); border-color: var(--gold-light, var(--gold)); background: rgba(168,42,42,0.04); box-shadow: 0 10px 28px rgba(168,42,42,0.12); }
   .cast-portrait { position: relative; width: 160px; height: 200px; overflow: hidden; border: 1px solid var(--rule); background: var(--ink-soft, var(--bg)); flex-shrink: 0; }
   .cast-portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   .cast-portrait .cast-closed { opacity: 0; animation: cast-blink 5.6s steps(1,end) infinite; }
@@ -1674,7 +1674,7 @@
   .cast-grid-phase .cast-ctas { margin-top: 0.8rem; }
 
   [data-theme="light"] .cast-card { background: #fff; border-color: rgba(60,45,10,0.45); box-shadow: 0 2px 10px rgba(0,0,0,0.13), 0 0 0 1px rgba(60,45,10,0.18); }
-  [data-theme="light"] .cast-card:hover { background: #fff; border-color: rgba(184,146,42,0.85); box-shadow: 0 8px 22px rgba(60,45,10,0.18); }
+  [data-theme="light"] .cast-card:hover { background: #fff; border-color: rgba(168,42,42,0.85); box-shadow: 0 8px 22px rgba(60,45,10,0.18); }
   @keyframes cast-blink { 0%, 95%, 100% { opacity: 0; } 97% { opacity: 1; } }
   .cast-body { display: flex; flex-direction: column; }
   .cast-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; color: var(--gold-light, var(--gold)); line-height: 1.15; margin-bottom: 0.15rem; }
@@ -2113,10 +2113,10 @@
           </div>
           <div class="cast-body">
             <div class="cast-name">The Judge.</div>
-            <div class="cast-role">The Gauntlet</div>
+            <div class="cast-role">OPSEC Gauntlet</div>
             <div class="cast-desc">High-fidelity manuscript diagnostic. Banded scoring. Private to the author. The standard before you submit anywhere.</div>
             <div class="cast-ctas">
-              <a class="cast-cta" href="gauntlet.html">Run the Gauntlet →</a>
+              <a class="cast-cta" href="gauntlet.html">Run OPSEC Gauntlet →</a>
             </div>
           </div>
         </div>
@@ -2229,42 +2229,42 @@
       <button class="gift-close" onclick="closeAuthModal()">&#215;</button>
     </div>
     <div style="padding:28px 32px 32px;">
-      <div style="display:flex;border-bottom:1px solid rgba(184,146,42,0.3);margin-bottom:1.8rem;">
-        <button id="gp-tab-si" onclick="gpAuthTab('signin')" style="background:none;border:none;border-bottom:2px solid #b8922a;padding:0.5rem 1.2rem 0.5rem 0;margin-bottom:-1px;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#d4aa4a;cursor:pointer;">Sign In</button>
+      <div style="display:flex;border-bottom:1px solid rgba(168,42,42,0.3);margin-bottom:1.8rem;">
+        <button id="gp-tab-si" onclick="gpAuthTab('signin')" style="background:none;border:none;border-bottom:2px solid #a82a2a;padding:0.5rem 1.2rem 0.5rem 0;margin-bottom:-1px;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8302b;cursor:pointer;">Sign In</button>
         <button id="gp-tab-su" onclick="gpAuthTab('signup')" style="background:none;border:none;border-bottom:2px solid transparent;padding:0.5rem 1.2rem 0.5rem 0;margin-bottom:-1px;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,168,144,0.75);cursor:pointer;">Create Account</button>
       </div>
       <div id="gp-modal-signin">
         <div style="margin-bottom:1rem;">
           <label style="display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,168,144,0.85);margin-bottom:0.4rem;">Email</label>
-          <input id="gp-si-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(184,146,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
+          <input id="gp-si-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(168,42,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
         </div>
         <div style="margin-bottom:1rem;">
           <label style="display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,168,144,0.85);margin-bottom:0.4rem;">Password</label>
-          <input id="gp-si-pass" type="password" placeholder="••••••••" autocomplete="current-password" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(184,146,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
+          <input id="gp-si-pass" type="password" placeholder="••••••••" autocomplete="current-password" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(168,42,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
         </div>
-        <button onclick="gpDoSignIn()" style="width:100%;background:#b8922a;color:#13100c;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;">Sign In →</button>
+        <button onclick="gpDoSignIn()" style="width:100%;background:#a82a2a;color:#13100c;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;">Sign In →</button>
         <div id="gp-si-msg" style="font-family:'DM Mono',monospace;font-size:0.65rem;color:#e74c3c;margin-top:0.75rem;min-height:1.2rem;"></div>
       </div>
       <div id="gp-modal-signup" style="display:none;">
         <div style="margin-bottom:1rem;">
           <label style="display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,168,144,0.85);margin-bottom:0.4rem;">Full Name</label>
-          <input id="gp-su-name" type="text" placeholder="Your name" autocomplete="name" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(184,146,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
+          <input id="gp-su-name" type="text" placeholder="Your name" autocomplete="name" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(168,42,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
         </div>
         <div style="margin-bottom:1rem;">
           <label style="display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,168,144,0.85);margin-bottom:0.4rem;">Email</label>
-          <input id="gp-su-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(184,146,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
+          <input id="gp-su-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(168,42,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
         </div>
         <div style="margin-bottom:1rem;">
           <label style="display:block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,168,144,0.85);margin-bottom:0.4rem;">Password</label>
-          <input id="gp-su-pass" type="password" placeholder="Min 8 characters" autocomplete="new-password" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(184,146,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
+          <input id="gp-su-pass" type="password" placeholder="Min 8 characters" autocomplete="new-password" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(168,42,42,0.4);padding:0.7rem 1rem;color:#e8dece;font-family:'Cormorant Garamond',serif;font-size:1rem;outline:none;">
         </div>
         <div style="margin-bottom:1.2rem;">
           <label style="font-size:0.82rem;color:rgba(184,168,144,0.85);line-height:1.6;display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;">
-            <input type="checkbox" id="gp-su-policy" style="accent-color:#b8922a;margin-top:0.3rem;flex-shrink:0;">
-            <span>I have read and agree to the <a href="terms.html" target="_blank" style="color:#d4aa4a;text-decoration:underline;text-underline-offset:3px;">Greylander Press User Agreement</a>, including the imprint and attribution terms, credit policy, and PAID AI Governance standards.</span>
+            <input type="checkbox" id="gp-su-policy" style="accent-color:#a82a2a;margin-top:0.3rem;flex-shrink:0;">
+            <span>I have read and agree to the <a href="terms.html" target="_blank" style="color:#c8302b;text-decoration:underline;text-underline-offset:3px;">Greylander Press User Agreement</a>, including the imprint and attribution terms, credit policy, and PAID AI Governance standards.</span>
           </label>
         </div>
-        <button onclick="gpDoSignUp()" style="width:100%;background:#b8922a;color:#13100c;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;">Create Account →</button>
+        <button onclick="gpDoSignUp()" style="width:100%;background:#a82a2a;color:#13100c;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:700;">Create Account →</button>
         <div id="gp-su-msg" style="font-family:'DM Mono',monospace;font-size:0.65rem;color:#e74c3c;margin-top:0.75rem;min-height:1.2rem;"></div>
       </div>
     </div>
@@ -2316,7 +2316,7 @@
     </div>
     <div style="padding:0 32px 24px;font-size:11px;color:rgba(244,237,224,0.35);">
       All gifts are processed securely. Authors are notified instantly by email.
-      <a href="publish.html#pricing" style="color:rgba(184,146,42,0.65);text-decoration:none;">See credit pack pricing &#8250;</a>
+      <a href="publish.html#pricing" style="color:rgba(168,42,42,0.65);text-decoration:none;">See credit pack pricing &#8250;</a>
     </div>
   </div>
 </div>

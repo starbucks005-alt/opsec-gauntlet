@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Gauntlet · Where ideas get tested.</title>
-<meta name="description" content="The Gauntlet is a diagnostic critique engine. Nine expert AI judges, eight evaluation dimensions, math-driven scoring. Not a verdict. A map of where your idea goes next.">
+<title>OPSEC Gauntlet · Where ideas get tested.</title>
+<meta name="description" content="OPSEC Gauntlet is a diagnostic critique engine. Nine expert AI judges, eight evaluation dimensions, math-driven scoring. Not a verdict. A map of where your idea goes next.">
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="apple-touch-icon" href="Favicon.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="The Gauntlet · Where ideas get tested.">
+<meta property="og:title" content="OPSEC Gauntlet · Where ideas get tested.">
 <meta property="og:description" content="Diagnostic Critique Engine. Radical Honesty. Uncompromising Rigor.">
-<meta property="og:image" content="https://the-gauntlet.netlify.app/the-gauntlet-logo.png">
-<meta property="og:url" content="https://the-gauntlet.netlify.app/">
+<meta property="og:image" content="https://opsec-gauntlet.netlify.app/the-gauntlet-logo.png">
+<meta property="og:url" content="https://opsec-gauntlet.netlify.app/">
 <link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/tg-im.js" defer></script>
 <script src="assets/tg-voice.js" defer></script>
@@ -23,13 +23,13 @@
 <style>
   /* ── Tokens ──────────────────────────────────────────────────────────────── */
   /* Gold stays the primary. Crimson is the stakes color — used sparingly for */
-  /* tension, risk, and the gauntlet itself. The theatre feeling lives in     */
+  /* tension, risk, and OPSEC Gauntlet itself. The theatre feeling lives in     */
   /* layered backgrounds (velvet grain), footlight gradients, and proscenium  */
   /* curtain edges on full-width sections.                                    */
   :root,
   :root[data-theme="dark"]{
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
+    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
     --band-elevated:#14151a;
     --crimson:#5a1a1a;
@@ -59,8 +59,8 @@
     background-image:
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.018) 0px,
-        rgba(212,170,74,0.018) 1px,
+        rgba(200,48,43,0.018) 0px,
+        rgba(200,48,43,0.018) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -71,8 +71,8 @@
     background-image:
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.022) 0px,
-        rgba(212,170,74,0.022) 1px,
+        rgba(200,48,43,0.022) 0px,
+        rgba(200,48,43,0.022) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -88,8 +88,8 @@
       radial-gradient(ellipse 18% 80% at 10% bottom, rgba(192,57,43,0.30) 0%, transparent 70%),
       radial-gradient(ellipse 18% 80% at 90% bottom, rgba(192,57,43,0.30) 0%, transparent 70%),
       radial-gradient(ellipse 70% 100% at center bottom,
-        rgba(212,170,74,0.42) 0%,
-        rgba(212,170,74,0.10) 35%,
+        rgba(200,48,43,0.42) 0%,
+        rgba(200,48,43,0.10) 35%,
         transparent 80%);
     overflow:hidden;
   }
@@ -101,7 +101,7 @@
       var(--gold-light) 50%,
       var(--gold) 78%,
       rgba(192,57,43,0.5) 100%);
-    box-shadow:0 0 14px rgba(212,170,74,0.65),0 0 24px rgba(212,170,74,0.3);
+    box-shadow:0 0 14px rgba(200,48,43,0.65),0 0 24px rgba(200,48,43,0.3);
   }
 
   /* ── Proscenium curtain edges (for hero / stage-feel sections) ───────────── */
@@ -118,7 +118,7 @@
       rgba(58,15,15,0.55) 25%,
       rgba(58,15,15,0.2) 60%,
       transparent 100%);
-    border-right:1px solid rgba(184,146,42,0.18);
+    border-right:1px solid rgba(168,42,42,0.18);
     box-shadow:inset 12px 0 28px rgba(58,15,15,0.4);
   }
   .proscenium::after{
@@ -128,7 +128,7 @@
       rgba(58,15,15,0.55) 25%,
       rgba(58,15,15,0.2) 60%,
       transparent 100%);
-    border-left:1px solid rgba(184,146,42,0.18);
+    border-left:1px solid rgba(168,42,42,0.18);
     box-shadow:inset -12px 0 28px rgba(58,15,15,0.4);
   }
 
@@ -192,7 +192,7 @@
      line pointing them down to the corridor where the EPs greet them
      with templated lines. */
   .post-chamber{
-    background:linear-gradient(180deg, rgba(184,146,42,0.08) 0%, rgba(184,146,42,0) 100%);
+    background:linear-gradient(180deg, rgba(168,42,42,0.08) 0%, rgba(168,42,42,0) 100%);
     border-bottom:1px solid var(--rule);
     padding:3rem 2rem 2.4rem;
   }
@@ -232,7 +232,7 @@
   .pc-btn-primary{ background:var(--gold); color:var(--ink); }
   .pc-btn-primary:hover{ background:var(--gold-light); border-color:var(--gold-light); }
   .pc-btn-outline{ background:transparent; color:var(--gold); }
-  .pc-btn-outline:hover{ background:rgba(184,146,42,0.08); color:var(--gold-light); border-color:var(--gold-light); }
+  .pc-btn-outline:hover{ background:rgba(168,42,42,0.08); color:var(--gold-light); border-color:var(--gold-light); }
   .pc-foot{
     font-family:'Cormorant Garamond',serif; font-style:italic;
     color:var(--text-dim); font-size:1rem;
@@ -261,11 +261,11 @@
     /* into brown). A tight crimson accent glow lives bottom-left to punch   */
     /* the red without spreading it.                                          */
     background-image:
-      radial-gradient(ellipse 80% 60% at center top, rgba(184,146,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at center top, rgba(168,42,42,0.12) 0%, transparent 70%),
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.018) 0px,
-        rgba(212,170,74,0.018) 1px,
+        rgba(200,48,43,0.018) 0px,
+        rgba(200,48,43,0.018) 1px,
         transparent 1px,
         transparent 3px
       ),
@@ -330,12 +330,12 @@
     display:grid;grid-template-columns:repeat(3,1fr);
     gap:0;
     max-width:1320px;margin:0 auto;text-align:left;
-    border-top:1px solid rgba(212,170,74,0.25);
-    border-bottom:1px solid rgba(212,170,74,0.25);
+    border-top:1px solid rgba(200,48,43,0.25);
+    border-bottom:1px solid rgba(200,48,43,0.25);
   }
   .hero-path{
     padding:2rem 1.6rem 1.6rem;
-    border-right:1px solid rgba(212,170,74,0.25);
+    border-right:1px solid rgba(200,48,43,0.25);
     display:flex;flex-direction:column;gap:1.1rem;
   }
   .hero-path:last-child{border-right:none;}
@@ -346,7 +346,7 @@
   .hero-path-body{
     font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;
     color:var(--text);margin:0;flex:1;
-    border-top:1px solid rgba(212,170,74,0.18);
+    border-top:1px solid rgba(200,48,43,0.18);
     padding-top:1rem;
   }
   .hero-path-btn{
@@ -360,7 +360,7 @@
   .hero-path-outcome{
     font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.98rem;
     color:var(--gold-light);margin:0;
-    border-top:1px solid rgba(212,170,74,0.18);
+    border-top:1px solid rgba(200,48,43,0.18);
     padding-top:1rem;
   }
 
@@ -370,7 +370,7 @@
   }
   @media (max-width:880px){
     .hero-paths{grid-template-columns:1fr;}
-    .hero-path{border-right:none;border-bottom:1px solid rgba(212,170,74,0.25);}
+    .hero-path{border-right:none;border-bottom:1px solid rgba(200,48,43,0.25);}
     .hero-path:last-child{border-bottom:none;}
   }
 
@@ -406,7 +406,7 @@
   }
   .sp-card:hover{
     border-color:var(--gold-light);
-    background:rgba(184,146,42,0.05);
+    background:rgba(168,42,42,0.05);
   }
   .sp-card-cat{
     font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.22em;
@@ -425,7 +425,7 @@
     margin-top:auto;
     font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
     text-transform:uppercase; color:var(--text-dim);
-    padding-top:0.7rem; border-top:1px solid rgba(212,170,74,0.18);
+    padding-top:0.7rem; border-top:1px solid rgba(200,48,43,0.18);
   }
   .sp-card:hover .sp-card-cta{ color:var(--gold-light); }
   .samples-preview-foot{
@@ -468,12 +468,12 @@
     border:1px solid var(--gold);
   }
   .btn-outline:hover{
-    background:rgba(184,146,42,0.08);color:var(--gold-light);
+    background:rgba(168,42,42,0.08);color:var(--gold-light);
     border-color:var(--gold-light);
   }
 
   /* ── The Corridor ──────────────────────────────────────────────────────── */
-  /* The page IS the gauntlet. User scrolls = user walks. The Wings flank   */
+  /* The page IS OPSEC Gauntlet. User scrolls = user walks. The Wings flank   */
   /* them alternating left/right. Chamber waits at the end. Routing report  */
   /* is the exit door.                                                       */
   .corridor-intro{padding:5rem 2rem 3rem;text-align:center;}
@@ -498,7 +498,7 @@
     font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;
     text-transform:uppercase;color:var(--gold-light);
     margin-left:0.4rem;padding:0;
-    border-bottom:1px solid rgba(212,170,74,0.45);
+    border-bottom:1px solid rgba(200,48,43,0.45);
     transition:color 0.18s,border-color 0.18s;
   }
   .corridor-personalize-link:hover{color:var(--cream);border-bottom-color:var(--cream);}
@@ -514,8 +514,8 @@
     background-image:
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.014) 0px,
-        rgba(212,170,74,0.014) 1px,
+        rgba(200,48,43,0.014) 0px,
+        rgba(200,48,43,0.014) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -530,15 +530,15 @@
   .corridor-wings::before{
     left:0;
     background:linear-gradient(90deg,
-      rgba(184,146,42,0.10) 0%,
-      rgba(184,146,42,0.02) 60%,
+      rgba(168,42,42,0.10) 0%,
+      rgba(168,42,42,0.02) 60%,
       transparent 100%);
   }
   .corridor-wings::after{
     right:0;
     background:linear-gradient(270deg,
-      rgba(184,146,42,0.10) 0%,
-      rgba(184,146,42,0.02) 60%,
+      rgba(168,42,42,0.10) 0%,
+      rgba(168,42,42,0.02) 60%,
       transparent 100%);
   }
 
@@ -635,7 +635,7 @@
     transition:border-color 0.2s,color 0.2s,background 0.2s;
   }
   .wing-btn:hover{
-    border-color:var(--gold);color:var(--gold);background:rgba(184,146,42,0.06);
+    border-color:var(--gold);color:var(--gold);background:rgba(168,42,42,0.06);
   }
   .wing-btn.is-loading{opacity:0.7;cursor:wait;}
   .wing-btn.is-playing{
@@ -691,7 +691,7 @@
   }
   .corridor-judge-card:hover{
     border-color:var(--gold);
-    box-shadow:0 0 36px -6px rgba(212,170,74,0.45);
+    box-shadow:0 0 36px -6px rgba(200,48,43,0.45);
     transform:translateY(-4px);
   }
   .corridor-judge-portrait{
@@ -720,7 +720,7 @@
   .corridor-judges-grid .corridor-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
   .corridor-judge-body{
     padding:0.95rem 1.1rem 1.1rem;
-    background:rgba(184,146,42,0.04);
+    background:rgba(168,42,42,0.04);
   }
   .corridor-judge-name{
     font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
@@ -761,7 +761,7 @@
   .ap-path{
     padding:1.8rem 1.8rem 1.6rem;
     border:1px solid var(--rule);
-    background:rgba(184,146,42,0.03);
+    background:rgba(168,42,42,0.03);
     display:flex; flex-direction:column;
   }
   .ap-path-num{
@@ -780,7 +780,7 @@
     font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--gold-light); text-decoration:none;
     align-self:flex-start; padding-top:0.7rem;
-    border-top:1px solid rgba(212,170,74,0.25);
+    border-top:1px solid rgba(200,48,43,0.25);
     transition:color 0.18s;
   }
   .ap-path-link:hover{ color:var(--cream); }
@@ -818,13 +818,13 @@
     max-width:780px; margin:0 auto;
     padding:2.2rem 2.2rem 2rem;
     border:1px solid var(--rule);
-    background:rgba(184,146,42,0.04);
+    background:rgba(168,42,42,0.04);
     position:relative;
   }
   .sc-card-name{
     font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.28em;
     text-transform:uppercase; color:var(--gold);
-    border-bottom:1px solid rgba(212,170,74,0.25);
+    border-bottom:1px solid rgba(200,48,43,0.25);
     padding-bottom:0.5rem; margin-bottom:0.5rem;
   }
   .sc-card-sme{
@@ -846,7 +846,7 @@
   .sc-card-deliv li{
     font-family:'Cormorant Garamond',serif; font-size:1.02rem;
     line-height:1.55; color:var(--text);
-    padding-left:1rem; border-left:1px solid rgba(212,170,74,0.35);
+    padding-left:1rem; border-left:1px solid rgba(200,48,43,0.35);
   }
   .sc-card-deliv li b{
     font-family:'Playfair Display',serif; font-weight:600;
@@ -856,7 +856,7 @@
   .sc-card-anchor{
     font-family:'Cormorant Garamond',serif; font-style:italic;
     font-size:1rem; line-height:1.6; color:var(--text-dim);
-    padding-top:1.2rem; border-top:1px solid rgba(212,170,74,0.2);
+    padding-top:1.2rem; border-top:1px solid rgba(200,48,43,0.2);
     margin-bottom:1.4rem;
   }
   .sc-card-cta{
@@ -907,11 +907,11 @@
     /* opacity, brighter base color (#c0392b vs deep #5a1a1a).               */
     background-image:
       radial-gradient(ellipse 70% 55% at center, rgba(192,57,43,0.22) 0%, transparent 65%),
-      radial-gradient(ellipse 60% 40% at center top, rgba(184,146,42,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at center top, rgba(168,42,42,0.12) 0%, transparent 60%),
       repeating-linear-gradient(
         135deg,
-        rgba(212,170,74,0.020) 0px,
-        rgba(212,170,74,0.020) 1px,
+        rgba(200,48,43,0.020) 0px,
+        rgba(200,48,43,0.020) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -973,23 +973,23 @@
 <header class="tg-topbar">
   <a class="tg-topbar-logo" href="/">
     <img src="Favicon.png" alt="" aria-hidden="true">
-    THE GAUNTLET
+    OPSEC Gauntlet
   </a>
   <nav class="tg-topbar-nav">
     <a href="/chamber.html">The Chamber</a>
-    <a href="/Helpers/">The Executive Producers</a>
+    <a href="/Helpers/">The Operational Specialists</a>
     <a href="/about.html">About</a>
   </nav>
 </header>
 
 <!-- ── Positioning band ───────────────────────────────────────────────────
      Top-of-site brand statement. Sits between the topbar and the hero.
-     Tells visitors immediately what The Gauntlet is (the cast, the
+     Tells visitors immediately what OPSEC Gauntlet is (the cast, the
      format, the substance) before they read anything else. Restrained
      typography so the line carries on voice, not chrome. -->
 <section class="positioning-band">
   <p class="positioning-line">
-    Nine judges. Nine executive producers. <em>A TV show on top, proprietary IP doing the work.</em>
+    Nine judges. Nine Operational Specialists. <em>A TV show on top, proprietary IP doing the work.</em>
   </p>
 </section>
 
@@ -1003,7 +1003,7 @@
      body attribute is set. -->
 <section class="post-chamber" id="post-chamber" hidden>
   <div class="pc-inner">
-    <div class="pc-eyebrow">You walked the Gauntlet</div>
+    <div class="pc-eyebrow">You walked OPSEC Gauntlet</div>
     <h2 class="pc-title">
       Composite <span class="pc-composite" data-pc="composite">—</span>
       <span class="pc-of">/10</span>
@@ -1043,7 +1043,7 @@
       </article>
       <article class="hero-path">
         <div class="hero-path-num">2. Polish Your Pitch</div>
-        <p class="hero-path-body">Already have a rough concept? Meet with our AI Executive Producers backstage to tear it apart, find the flaws, and fix it.</p>
+        <p class="hero-path-body">Already have a rough concept? Meet with our AI Operational Specialists backstage to tear it apart, find the flaws, and fix it.</p>
         <a class="hero-path-btn" href="#corridor-wings">[ Pitch the EPs ]</a>
         <p class="hero-path-outcome">Get a pitch readiness scorecard.</p>
       </article>
@@ -1059,13 +1059,13 @@
 
 <!-- ── Samples Preview ──────────────────────────────────────────────────
      Free-client proof block. Each card links to the finished deliverable
-     for that sample idea. Clients see what the Gauntlet produces before
+     for that sample idea. Clients see what OPSEC Gauntlet produces before
      they commit to walking it themselves. -->
 <section class="samples-preview">
   <div class="samples-preview-head">
     <div class="samples-preview-eyebrow">See the work first</div>
     <h2 class="samples-preview-title">Eight ideas. <em>Eight finished deliverables.</em></h2>
-    <p class="samples-preview-sub">Each one walked the Gauntlet end-to-end. Pick any deliverable to see exactly what paid members produce - the EP reports, the judge findings, the verdict. Free to read. No signup.</p>
+    <p class="samples-preview-sub">Each one walked OPSEC Gauntlet end-to-end. Pick any deliverable to see exactly what paid members produce - the EP reports, the judge findings, the verdict. Free to read. No signup.</p>
   </div>
 
   <div class="samples-preview-grid" id="samples-preview-grid">
@@ -1118,12 +1118,12 @@
 <div class="footlight"></div>
 
 <!-- ── The Corridor intro ─────────────────────────────────────────────── -->
-<!-- Primes the metaphor. The page IS the gauntlet. The user walks down a   -->
+<!-- Primes the metaphor. The page IS OPSEC Gauntlet. The user walks down a   -->
 <!-- corridor, helpers flanking from each side, chamber at the end.         -->
 <section class="corridor-intro velvet">
   <div class="band-inner narrow">
     <div class="corridor-eyebrow">The Corridor</div>
-    <h2 class="corridor-title">Walk the gauntlet. <em>The Executive Producers flank you.</em></h2>
+    <h2 class="corridor-title">Walk OPSEC Gauntlet. <em>The Operational Specialists flank you.</em></h2>
     <p class="corridor-lede">Nine specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
     <p class="corridor-personalize-line">
       Want the specialists to speak to your idea directly?
@@ -1458,7 +1458,7 @@
     <div class="sc-eyebrow">Standalone Consults</div>
     <h2 class="sc-title">Skip the panel. Book a <em>Standalone Consult</em>.</h2>
     <p class="sc-lede">A direct session with a single EP. Real deliverables, no full Gauntlet.</p>
-    <p class="sc-intro">The standard Gauntlet evaluates broad market viability across eight dimensions. If you already know your market but face a specific legal, technical, or messaging hurdle, bypass the judicial panel entirely. Book an isolated consultation with a single Executive Producer for targeted, execution-ready assets.</p>
+    <p class="sc-intro">The standard Gauntlet evaluates broad market viability across eight dimensions. If you already know your market but face a specific legal, technical, or messaging hurdle, bypass the judicial panel entirely. Book an isolated consultation with a single Operational Specialist for targeted, execution-ready assets.</p>
 
     <article class="sc-card">
       <div class="sc-card-name">Wren Calloway</div>
@@ -1483,10 +1483,10 @@
 
 <footer class="home-footer">
   <div class="home-footer-inner">
-    <div class="home-footer-brand">THE GAUNTLET</div>
+    <div class="home-footer-brand">OPSEC Gauntlet</div>
     <nav class="home-footer-links">
       <a href="/chamber.html">The Chamber</a>
-      <a href="/Helpers/">The Executive Producers</a>
+      <a href="/Helpers/">The Operational Specialists</a>
       <a href="/samples.html">Sample Ideas</a>
       <a href="/about.html">About</a>
       <a href="#" onclick="if(window.TGWelcome){TGWelcome.open();return false;}">Personalize</a>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 <style>
 :root {
   --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
-  --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
+  --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.3);
   --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
 }
 [data-theme="light"] {
@@ -82,7 +82,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 }
 .gp-step:not(:last-child)::after{
   content:'›'; position:absolute; right:0; top:50%; transform:translateY(-50%);
-  color:rgba(184,146,42,0.3); font-size:1rem; pointer-events:none;
+  color:rgba(168,42,42,0.3); font-size:1rem; pointer-events:none;
 }
 .gp-step:hover .gp-step-label{color:var(--gold-light);}
 .gp-step.active{border-bottom-color:var(--gold);}
@@ -122,7 +122,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;margin-bottom:0;}
 .adapt-strip{margin:1.2rem 0 2rem;}
 .adapt-card{border:1px solid var(--gold);padding:1.5rem 2rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:1.5rem;}
-.adapt-card:hover,.adapt-card.selected{background:rgba(184,146,42,0.07);}
+.adapt-card:hover,.adapt-card.selected{background:rgba(168,42,42,0.07);}
 [data-theme="light"] .adapt-card:hover,[data-theme="light"] .adapt-card.selected{background:rgba(138,106,26,0.08);}
 .adapt-card-icon{font-size:2rem;flex-shrink:0;}
 .adapt-card-body{display:flex;flex-direction:column;gap:0.25rem;}
@@ -143,7 +143,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 [data-theme="light"] .adapt-source{background:rgba(0,0,0,0.04);color:var(--text);}
 .adapt-status{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-dim);margin-top:0.75rem;min-height:1rem;}
 .type-card{border:1px solid var(--rule);padding:2rem 1.5rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.5rem;}
-.type-card:hover,.type-card.selected{border-color:var(--gold);background:rgba(184,146,42,0.05);}
+.type-card:hover,.type-card.selected{border-color:var(--gold);background:rgba(168,42,42,0.05);}
 .type-icon{font-size:1.8rem;margin-bottom:0.3rem;}
 .type-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--cream);}
 .type-desc{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
@@ -160,7 +160,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 /* ── Screen 1: Planner ── */
 .genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
 .genre-card{border:1px solid var(--rule);padding:1.2rem;cursor:pointer;transition:all 0.2s;}
-.genre-card:hover,.genre-card.selected{border-color:var(--gold);background:rgba(184,146,42,0.05);}
+.genre-card:hover,.genre-card.selected{border-color:var(--gold);background:rgba(168,42,42,0.05);}
 .genre-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);}
 .genre-eg{font-size:0.78rem;color:var(--text-dim);}
 
@@ -177,7 +177,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .slider-val{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);min-width:2rem;}
 
 /* AI expand bar */
-.ai-bar{margin-top:2rem;padding:1.5rem;border:1px solid var(--rule);background:rgba(184,146,42,0.03);}
+.ai-bar{margin-top:2rem;padding:1.5rem;border:1px solid var(--rule);background:rgba(168,42,42,0.03);}
 .ai-bar-title{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
 .ai-status{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--text-dim);margin-top:0.8rem;min-height:1.2rem;}
 
@@ -193,13 +193,13 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .gw-ch-list{max-height:260px;overflow-y:auto;border:1px solid var(--rule);}
 .gw-ch-item{display:flex;align-items:baseline;gap:0.6rem;padding:0.5rem 0.8rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.15s;}
 .gw-ch-item:last-child{border-bottom:none;}
-.gw-ch-item:hover{background:rgba(184,146,42,0.07);}
-.gw-ch-item.active{background:rgba(184,146,42,0.12);border-left:2px solid var(--gold);}
+.gw-ch-item:hover{background:rgba(168,42,42,0.07);}
+.gw-ch-item.active{background:rgba(168,42,42,0.12);border-left:2px solid var(--gold);}
 .gw-ch-num{font-family:'DM Mono',monospace;font-size:0.46rem;color:var(--gold);letter-spacing:0.12em;white-space:nowrap;flex-shrink:0;}
 .gw-ch-title{font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--text-dim);line-height:1.3;}
 .gw-ch-item.active .gw-ch-title{color:var(--text);}
 [data-theme="light"] .gw-ch-item:hover{background:rgba(0,0,0,0.05);}
-[data-theme="light"] .gw-ch-item.active{background:rgba(184,146,42,0.1);}
+[data-theme="light"] .gw-ch-item.active{background:rgba(168,42,42,0.1);}
 .gw-main{display:flex;flex-direction:column;gap:1rem;}
 .gw-output{flex:1;min-height:400px;background:rgba(255,255,255,0.02);border:1px solid var(--rule);padding:1.5rem;font-size:1rem;line-height:1.9;color:var(--text);overflow-y:auto;white-space:pre-wrap;font-family:'Cormorant Garamond',serif;}
 .gw-output.empty{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-style:italic;font-size:0.9rem;}
@@ -245,7 +245,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 /* ── Screen 4: Export & Publish ── */
 .trim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
 .trim-card{border:1px solid var(--rule);padding:1.2rem;cursor:pointer;transition:all 0.2s;}
-.trim-card:hover,.trim-card.selected{border-color:var(--gold);background:rgba(184,146,42,0.05);}
+.trim-card:hover,.trim-card.selected{border-color:var(--gold);background:rgba(168,42,42,0.05);}
 .trim-size{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);}
 .trim-cm{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--text-dim);}
 .trim-use{font-size:0.8rem;color:var(--text-dim);margin-top:0.4rem;}
@@ -272,7 +272,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .draft-section{margin-bottom:3.5rem;}
 .gt-card{
   border:1px solid var(--gold);
-  background:linear-gradient(135deg,rgba(184,146,42,0.08),rgba(184,146,42,0.02));
+  background:linear-gradient(135deg,rgba(168,42,42,0.08),rgba(168,42,42,0.02));
   padding:2.2rem 2.5rem;
   display:grid;
   grid-template-columns:auto 1fr auto;
@@ -354,7 +354,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .coach-module {
   margin-top: 2rem; padding: 1.8rem 2rem;
   border: 1px solid var(--rule);
-  background: rgba(184,146,42,0.03);
+  background: rgba(168,42,42,0.03);
 }
 .coach-module-head { margin-bottom: 1.4rem; }
 .coach-module-num {
@@ -397,7 +397,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .coach-node:hover .coach-node-dot { border-color: var(--gold-light); }
 .coach-node.active .coach-node-dot {
   background: var(--gold); border-color: var(--gold);
-  box-shadow: 0 0 0 5px rgba(184,146,42,0.18);
+  box-shadow: 0 0 0 5px rgba(168,42,42,0.18);
 }
 .coach-node-name {
   font-family: 'Playfair Display',serif; font-size: 0.92rem; font-weight: 700;
@@ -435,7 +435,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
   position: relative;
 }
 .coach-card:hover { border-color: var(--gold-light); }
-.coach-card.open { border-color: var(--gold); background: rgba(184,146,42,0.06); }
+.coach-card.open { border-color: var(--gold); background: rgba(168,42,42,0.06); }
 .coach-card::after {
   content: '+'; position: absolute; top: 1.1rem; right: 1.2rem;
   font-family: 'DM Mono',monospace; font-size: 1rem; color: var(--text-dim);
@@ -562,20 +562,20 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
     <!-- ── Screen 0: Choose & Plan ── -->
     <div class="screen active" id="screen-0">
 
-      <!-- ── Already have a draft? → The Gauntlet ── -->
+      <!-- ── Already have a draft? → OPSEC Gauntlet ── -->
       <div class="draft-section">
         <div class="s-label">Already have a draft?</div>
         <div class="s-title">Run the <em>Gauntlet.</em></div>
-        <div class="s-sub">Get an honest diagnosis. The Gauntlet identifies what works, what does not, and where to focus your revision.</div>
+        <div class="s-sub">Get an honest diagnosis. OPSEC Gauntlet identifies what works, what does not, and where to focus your revision.</div>
         <div class="gt-card">
           <div class="gt-card-rune">⚔</div>
           <div class="gt-card-meta">
             <div class="gt-card-badge">Diagnostic</div>
-            <div class="gt-card-title">The Gauntlet</div>
+            <div class="gt-card-title">OPSEC Gauntlet</div>
             <div class="gt-card-desc">A high-fidelity manuscript audit against the standard of professional publishable fiction. Five Tests. Banded scoring. Specific findings. PDF only.</div>
           </div>
           <div class="gt-card-actions">
-            <a class="gt-card-cta" href="gauntlet.html">Run the Gauntlet →</a>
+            <a class="gt-card-cta" href="gauntlet.html">Run OPSEC Gauntlet →</a>
             <button class="gt-card-how" onclick="gtHowOpen()">How It Works</button>
           </div>
         </div>
@@ -878,7 +878,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
         <div class="s-title" style="font-size:1.6rem;">Prose Enricher</div>
         <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a scene or chapter that feels thin. Grey adds sensory details, atmosphere, and character interiority, without changing your plot beats or extending the story.</p>
         <div class="form-full field-group">
-          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Scene or Chapter<button id="enrich-ms-btn" onclick="appUseMsText('enrich-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Scene or Chapter<button id="enrich-ms-btn" onclick="appUseMsText('enrich-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
           <textarea class="adapt-source" id="enrich-source" placeholder="Paste the passage you want enriched here…" style="min-height:280px;"></textarea>
         </div>
         <div class="field-label" style="margin-bottom:0.6rem;">Enrichment Depth</div>
@@ -905,7 +905,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
         <div class="s-title" style="font-size:1.6rem;">Add Dialogue</div>
         <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a scene that needs conversation. Grey weaves in natural dialogue between the characters, revealing personality, building tension, and fitting the genre, without changing your plot beats.</p>
         <div class="form-full field-group">
-          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Scene<button id="dialog-ms-btn" onclick="appUseMsText('dialog-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Scene<button id="dialog-ms-btn" onclick="appUseMsText('dialog-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
           <textarea class="adapt-source" id="dialog-source" placeholder="Paste the scene here. If you want, note the character names and tone below." style="min-height:240px;"></textarea>
         </div>
         <div class="form-full field-group" style="margin-bottom:1.5rem;">
@@ -936,7 +936,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
         <div class="s-title" style="font-size:1.6rem;">Structural Rebuild</div>
         <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a chapter or act that needs more than polish. Grey returns a structural diagnosis, then a rebuilt scene-by-scene outline.</p>
         <div class="form-full field-group">
-          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Chapter or Act<button id="structural-ms-btn" onclick="appUseMsText('structural-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Chapter or Act<button id="structural-ms-btn" onclick="appUseMsText('structural-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
           <textarea class="adapt-source" id="structural-source" placeholder="Paste the chapter or act here. Up to 8,000 characters." style="min-height:280px;"></textarea>
         </div>
         <div class="form-row">
@@ -1016,7 +1016,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
         <div class="s-title" style="font-size:1.6rem;">Descriptor Library</div>
         <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;">Paste a passage with repetitive vocabulary or generic description. Grey swaps in sharper, more specific alternatives. Plot beats and dialogue are preserved exactly.</p>
         <div class="form-full field-group">
-          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Passage<button id="descriptor-ms-btn" onclick="appUseMsText('descriptor-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">Paste Your Passage<button id="descriptor-ms-btn" onclick="appUseMsText('descriptor-source')" style="display:none;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.12);color:var(--gold);padding:0.25rem 0.7rem;cursor:pointer;">📄 Use Manuscript</button></label>
           <textarea class="adapt-source" id="descriptor-source" placeholder="Paste the passage to sharpen. Up to 8,000 characters." style="min-height:280px;"></textarea>
         </div>
         <div class="form-row">
@@ -1166,7 +1166,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
         <div class="gw-sidebar">
 
           <!-- Import -->
-          <div style="margin-bottom:1.5rem;padding:1rem;border:1px solid var(--rule);background:rgba(184,146,42,0.03);">
+          <div style="margin-bottom:1.5rem;padding:1rem;border:1px solid var(--rule);background:rgba(168,42,42,0.03);">
             <div class="gw-sidebar-label" style="margin-bottom:0.6rem;">Import Your Work</div>
             <p style="font-size:0.78rem;color:var(--text-dim);line-height:1.6;margin-bottom:0.8rem;">Already writing? Upload <strong>one chapter at a time</strong>, not your full manuscript. Grey reads the chapter, learns your voice, and continues from there.</p>
             <input type="file" id="gw-pdf-input" accept=".pdf" style="display:none;" onchange="gwImportPDF(this)">
@@ -1299,7 +1299,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
         </div>
 
         <!-- Option 2: Made with GP -->
-        <div class="pub-card" style="border-color:rgba(184,146,42,0.5);">
+        <div class="pub-card" style="border-color:rgba(168,42,42,0.5);">
           <div class="pub-badge">GP Catalog</div>
           <div class="pub-card-title">Made with GP</div>
           <div class="pub-card-desc">Your title is listed in the Greylander Press catalog as <em>"Made with GP"</em>. No editorial review required. You publish it yourself; we celebrate it. You retain full copyright.</div>
@@ -1311,7 +1311,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
             <input type="checkbox" id="isbn-request-mgp" style="accent-color:var(--gold);">
             <span class="field-label" style="cursor:pointer;">Request an ISBN</span>
           </label>
-          <button class="btn-gold" onclick="submitToGP('made_with_gp')" style="background:var(--ink-soft);border:1px solid rgba(184,146,42,0.5);color:var(--gold);">List in Catalog →</button>
+          <button class="btn-gold" onclick="submitToGP('made_with_gp')" style="background:var(--ink-soft);border:1px solid rgba(168,42,42,0.5);color:var(--gold);">List in Catalog →</button>
         </div>
 
         <!-- Option 3: GP Imprint -->
@@ -1332,7 +1332,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
       </div>
 
       <!-- Rights policy reminder -->
-      <div style="margin-top:1.5rem;padding:1rem 1.2rem;border:1px solid var(--rule);background:rgba(184,146,42,0.02);">
+      <div style="margin-top:1.5rem;padding:1rem 1.2rem;border:1px solid var(--rule);background:rgba(168,42,42,0.02);">
         <span style="font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);">Author Rights</span>
         <span style="font-size:0.82rem;color:var(--text-dim);margin-left:1rem;">You retain full copyright to all work created here. Catalog listing does not transfer any rights. GP Imprint publishing requires a separate signed agreement.</span>
       </div>
@@ -1358,12 +1358,12 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
   <div class="gt-modal-box">
     <button class="gt-modal-x" onclick="gtHowClose()" aria-label="Close">×</button>
     <div class="gt-modal-eyebrow">Diagnostic · How It Works</div>
-    <h3 class="gt-modal-title">How the Gauntlet Reads Your Work</h3>
+    <h3 class="gt-modal-title">How OPSEC Gauntlet Reads Your Work</h3>
     <div class="gt-modal-body">
-      <p>The Gauntlet is a manuscript diagnostic built on Greylander Press's commitment to PAID AI Governance and anti-sycophancy principles. It evaluates your manuscript against the standard of professional publishable fiction in your genre. It does not adjust its standard based on your experience level, your apparent intent, or how much work you have already put in. The same standard applies to a debut novelist and a bestselling author. This is not unkindness. It is the only way the feedback is useful.</p>
+      <p>OPSEC Gauntlet is a manuscript diagnostic built on Greylander Press's commitment to PAID AI Governance and anti-sycophancy principles. It evaluates your manuscript against the standard of professional publishable fiction in your genre. It does not adjust its standard based on your experience level, your apparent intent, or how much work you have already put in. The same standard applies to a debut novelist and a bestselling author. This is not unkindness. It is the only way the feedback is useful.</p>
 
       <div class="gt-modal-section-label">1. The standard is fixed</div>
-      <p>The Gauntlet evaluates against what publishable fiction looks like at the professional level, not against what feels achievable for you specifically. If a chapter has structural problems, it says so. If the prose is working, it says so. The score is not curved.</p>
+      <p>OPSEC Gauntlet evaluates against what publishable fiction looks like at the professional level, not against what feels achievable for you specifically. If a chapter has structural problems, it says so. If the prose is working, it says so. The score is not curved.</p>
 
       <div class="gt-modal-section-label">2. Five Tests of craft</div>
       <p>Every submission is evaluated across five dimensions. Each Test receives a banded score and a Hole Report identifying specific weaknesses with line or paragraph references where possible.</p>
@@ -1374,33 +1374,33 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
       <strong style="color:var(--cream);">Character Agency.</strong> Whether characters drive the story through their choices or are dragged along by plot.</p>
 
       <div class="gt-modal-section-label">3. Stagnation Heuristic</div>
-      <p>The Gauntlet identifies specific patterns that indicate stagnant prose. Long stretches of passive construction in active scenes. Adverb-dependent dialogue tags. Abstract summary where concrete sensory rendering would serve the moment. Repetitive sentence structure. Stative verb chains where dynamic verbs would create movement. When these patterns appear in significant proportion, the Gauntlet flags Stagnant Prose and routes you to the Prose Enricher.</p>
+      <p>OPSEC Gauntlet identifies specific patterns that indicate stagnant prose. Long stretches of passive construction in active scenes. Adverb-dependent dialogue tags. Abstract summary where concrete sensory rendering would serve the moment. Repetitive sentence structure. Stative verb chains where dynamic verbs would create movement. When these patterns appear in significant proportion, OPSEC Gauntlet flags Stagnant Prose and routes you to the Prose Enricher.</p>
 
-      <div class="gt-modal-section-label">4. The Gauntlet does not soften</div>
-      <p>The evaluation engine is built to reject hedging, compensatory praise, and sycophantic framing. You will not see "I think" or "great job, but" or "with some polish, this could be." If the work is strong, the Gauntlet says so directly. If the work has problems, the Gauntlet identifies them without cushioning. This is an architectural decision, not a personality choice. The Gauntlet exists to give you the feedback that helps you fix the manuscript, not the feedback that makes you feel good about handing it in.</p>
+      <div class="gt-modal-section-label">4. OPSEC Gauntlet does not soften</div>
+      <p>The evaluation engine is built to reject hedging, compensatory praise, and sycophantic framing. You will not see "I think" or "great job, but" or "with some polish, this could be." If the work is strong, OPSEC Gauntlet says so directly. If the work has problems, OPSEC Gauntlet identifies them without cushioning. This is an architectural decision, not a personality choice. OPSEC Gauntlet exists to give you the feedback that helps you fix the manuscript, not the feedback that makes you feel good about handing it in.</p>
 
       <div class="gt-modal-section-label">5. Some problems have no tool</div>
-      <p>The Gauntlet recommends GP tools when the diagnosed issue can be addressed by one. When the issue requires your attention as the author, the Gauntlet says so. The Red Ink List identifies three to five problems that no tool will fix. Cuts you need to make. Characters that need rebuilding. Premises with structural issues. The honesty here is the point. A Gauntlet that always recommended a GP tool would be a sales funnel, not a diagnostic.</p>
+      <p>OPSEC Gauntlet recommends GP tools when the diagnosed issue can be addressed by one. When the issue requires your attention as the author, OPSEC Gauntlet says so. The Red Ink List identifies three to five problems that no tool will fix. Cuts you need to make. Characters that need rebuilding. Premises with structural issues. The honesty here is the point. A Gauntlet that always recommended a GP tool would be a sales funnel, not a diagnostic.</p>
 
       <div class="gt-modal-section-label">6. Excerpts are evaluated honestly</div>
-      <p>If you submit a chapter or excerpt, the Gauntlet asks for context before evaluating. The opening of the work, the middle, near the end. What has happened before this. Without context, the Gauntlet will explicitly flag which judgments depend on information not provided rather than producing confident assessments based on missing context.</p>
+      <p>If you submit a chapter or excerpt, OPSEC Gauntlet asks for context before evaluating. The opening of the work, the middle, near the end. What has happened before this. Without context, OPSEC Gauntlet will explicitly flag which judgments depend on information not provided rather than producing confident assessments based on missing context.</p>
 
       <div class="gt-modal-section-label">7. The standard is reproducible</div>
       <p>The same input run twice will produce the same banded scores. Variance in narrative phrasing is acceptable. Variance in band assignment is not. If you disagree with a finding, the underlying logic is consistent enough that you can interrogate the diagnosis rather than wonder whether the tool just had a bad day.</p>
 
       <div class="gt-modal-section-label">Why this approach</div>
-      <p>Greylander Press practices PAID AI Governance. Position the work honestly. Audit what is actually there. Interrogate weaknesses rather than smoothing past them. Demand specifics rather than accepting generic assessment. The Gauntlet is the practical instantiation of these principles applied to fiction. The architecture enforces honesty so that you receive feedback you can actually use to improve the manuscript, rather than feedback designed to make you feel good about it.</p>
+      <p>Greylander Press practices PAID AI Governance. Position the work honestly. Audit what is actually there. Interrogate weaknesses rather than smoothing past them. Demand specifics rather than accepting generic assessment. OPSEC Gauntlet is the practical instantiation of these principles applied to fiction. The architecture enforces honesty so that you receive feedback you can actually use to improve the manuscript, rather than feedback designed to make you feel good about it.</p>
 
-      <div class="gt-modal-section-label">What the Gauntlet is not</div>
-      <p>The Gauntlet is not your beta reader. It is not your writing group. It is not your friend. It does not care whether you keep using it. It cares whether your manuscript is closer to publishable than it was when you uploaded it.</p>
-      <p>The Gauntlet is also not an editor. It does not rewrite your prose, fix your dialogue, or restructure your chapters. It diagnoses. It identifies what works, what does not, and where to focus your revision. The revision itself is yours to do, with the GP tools the Gauntlet recommends or with your own work, depending on what the diagnosis surfaces.</p>
-      <p>The Gauntlet is also not a replacement for human editorial judgment at the line level or the structural level on serious projects. It is a high-fidelity diagnostic and remediation layer that handles the work AI handles well. For the kind of editorial judgment that requires deep domain understanding, market knowledge, or career-shaping advice, you still need a human editor. The Gauntlet's job is to make sure your manuscript is in a state where a human editor's time is well-spent.</p>
+      <div class="gt-modal-section-label">What OPSEC Gauntlet is not</div>
+      <p>OPSEC Gauntlet is not your beta reader. It is not your writing group. It is not your friend. It does not care whether you keep using it. It cares whether your manuscript is closer to publishable than it was when you uploaded it.</p>
+      <p>OPSEC Gauntlet is also not an editor. It does not rewrite your prose, fix your dialogue, or restructure your chapters. It diagnoses. It identifies what works, what does not, and where to focus your revision. The revision itself is yours to do, with the GP tools OPSEC Gauntlet recommends or with your own work, depending on what the diagnosis surfaces.</p>
+      <p>OPSEC Gauntlet is also not a replacement for human editorial judgment at the line level or the structural level on serious projects. It is a high-fidelity diagnostic and remediation layer that handles the work AI handles well. For the kind of editorial judgment that requires deep domain understanding, market knowledge, or career-shaping advice, you still need a human editor. OPSEC Gauntlet's job is to make sure your manuscript is in a state where a human editor's time is well-spent.</p>
 
-      <p class="gt-modal-emphasis">The author remains the writer, the decision-maker, and the one accountable for the work. The Gauntlet provides diagnosis. You provide the revision.</p>
+      <p class="gt-modal-emphasis">The author remains the writer, the decision-maker, and the one accountable for the work. OPSEC Gauntlet provides diagnosis. You provide the revision.</p>
       <p class="gt-modal-attribution">Greylander Press · Dr. Terry Oroszi</p>
     </div>
     <div class="gt-modal-actions">
-      <a class="gt-card-cta" href="gauntlet.html">Run the Gauntlet →</a>
+      <a class="gt-card-cta" href="gauntlet.html">Run OPSEC Gauntlet →</a>
       <button class="gt-card-how" onclick="gtHowClose()">Close</button>
     </div>
   </div>
@@ -1520,7 +1520,7 @@ async function claimPendingGifts(session) {
     const total = d.total_credits_added;
     const giftCount = (d.claimed || []).length;
     const toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99998;background:#0a0a0a;border:1px solid var(--gold,#b8922a);padding:14px 20px;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:opacity 0.4s;font-family:"Inter",sans-serif;';
+    toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99998;background:#0a0a0a;border:1px solid var(--gold,#a82a2a);padding:14px 20px;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:opacity 0.4s;font-family:"Inter",sans-serif;';
     toast.innerHTML =
       '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#e0c87a;margin-bottom:6px;">&#127873; Gift Claimed</div>' +
       '<div style="font-size:13px;color:#f5f3ee;line-height:1.5;">' +
@@ -1587,7 +1587,7 @@ function showGauntletBanner(wrapId, diagnosis) {
 
   const banner = document.createElement('div');
   banner.id = 'gt-handoff-banner';
-  banner.style.cssText = 'border:1px solid var(--gold);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin:1rem 0 1.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start;';
+  banner.style.cssText = 'border:1px solid var(--gold);background:rgba(168,42,42,0.06);padding:1rem 1.5rem;margin:1rem 0 1.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start;';
 
   const rune = document.createElement('span');
   rune.textContent = '⚔';

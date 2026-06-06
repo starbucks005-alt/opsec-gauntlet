@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -22,15 +22,15 @@
   .s-cost{display:inline-block;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border-default);padding:0.3rem 0.85rem;margin-bottom:2.2rem;}
 
   /* Bea introduction card */
-  .bea-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default);background:var(--accent-soft,rgba(184,146,42,0.05));padding:1.8rem 2rem;margin-bottom:2.2rem;}
+  .bea-intro{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid var(--border-default);background:var(--accent-soft,rgba(168,42,42,0.05));padding:1.8rem 2rem;margin-bottom:2.2rem;}
   .bea-intro.minimized{display:none;}
   .bea-min-btn{position:absolute;top:0.6rem;right:0.8rem;background:none;border:1px solid var(--border-default);width:28px;height:28px;color:var(--text-muted);cursor:pointer;font-family:var(--font-mono);font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
   .bea-min-btn:hover{color:var(--accent);border-color:var(--accent);}
 
   /* Floating minimized badge — glasses */
-  .bea-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(184,146,42,0.4);background:var(--bg-primary);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s ease, box-shadow 0.2s ease;animation:bea-float 5.2s ease-in-out infinite;}
+  .bea-mini-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;width:88px;height:60px;border:1px solid rgba(168,42,42,0.4);background:var(--bg-primary);box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;padding:0.4rem 0.6rem;display:none;align-items:center;justify-content:center;transition:transform 0.2s ease, box-shadow 0.2s ease;animation:bea-float 5.2s ease-in-out infinite;}
   .bea-mini-badge.visible{display:flex;}
-  .bea-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(184,146,42,0.45);}
+  .bea-mini-badge:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(168,42,42,0.45);}
   .bea-mini-badge img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
   .bea-mini-tooltip{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-primary);border:1px solid var(--border-default);padding:0.4rem 0.7rem;font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
   .bea-mini-badge:hover .bea-mini-tooltip{opacity:1;}
@@ -53,11 +53,11 @@
   .auth-prompt-title{font-family:var(--font-display);font-size:1.5rem;color:var(--text-primary);margin-bottom:1rem;}
   .auth-prompt-body{color:var(--text-muted);margin-bottom:1.5rem;}
 
-  .ms-banner{display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin-bottom:1.8rem;}
+  .ms-banner{display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.06);padding:1rem 1.5rem;margin-bottom:1.8rem;}
   .ms-banner-name{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);}
   .ms-banner-meta{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;}
-  .ms-banner-btn{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.15);color:var(--accent);padding:0.4rem 0.9rem;cursor:pointer;}
-  .no-ms-note{border:1px solid var(--accent);background:rgba(184,146,42,0.08);padding:1.4rem 1.6rem;margin-bottom:1.6rem;font-size:1rem;color:var(--text-primary);line-height:1.55;}
+  .ms-banner-btn{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.15);color:var(--accent);padding:0.4rem 0.9rem;cursor:pointer;}
+  .no-ms-note{border:1px solid var(--accent);background:rgba(168,42,42,0.08);padding:1.4rem 1.6rem;margin-bottom:1.6rem;font-size:1rem;color:var(--text-primary);line-height:1.55;}
   .no-ms-note strong{color:var(--accent);}
   .no-ms-cta{display:inline-block;margin-top:0.8rem;background:var(--btn-primary-bg);color:var(--btn-primary-text);padding:0.7rem 1.4rem;font-family:var(--font-display);font-weight:700;font-size:0.95rem;text-decoration:none;}
   .no-ms-cta:hover{background:var(--btn-primary-bg-hover);}
@@ -78,7 +78,7 @@
   .pass-card-name{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;}
   .pass-card-desc{font-size:0.85rem;color:var(--text-muted);line-height:1.5;}
 
-  .ms-use-btn{display:none;font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.12);color:var(--accent);padding:0.25rem 0.7rem;cursor:pointer;}
+  .ms-use-btn{display:none;font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.12);color:var(--accent);padding:0.25rem 0.7rem;cursor:pointer;}
   .ms-chapter-grid{display:none;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;}
   .ms-chapter-pill{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.1em;border:1px solid var(--border-default);background:none;color:var(--text-muted);padding:0.4rem 0.8rem;cursor:pointer;}
   .ms-chapter-pill:hover,.ms-chapter-pill.active{border-color:var(--accent);color:var(--accent);}
@@ -117,11 +117,11 @@
   .change-after{color:var(--accent);font-size:0.92rem;}
   .change-reason{grid-column:1/-1;font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.05em;color:var(--text-muted);margin-top:0.5rem;padding-top:0.6rem;border-top:1px solid var(--border-default);}
 
-  .query-row{border-left:3px solid var(--accent);background:var(--accent-soft,rgba(184,146,42,0.05));padding:1rem 1.4rem;margin-bottom:0.8rem;}
+  .query-row{border-left:3px solid var(--accent);background:var(--accent-soft,rgba(168,42,42,0.05));padding:1rem 1.4rem;margin-bottom:0.8rem;}
   .query-passage{font-style:italic;color:var(--text-primary);margin-bottom:0.6rem;line-height:1.5;}
   .query-question{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.05em;color:var(--accent);}
 
-  .notes-block{border:1px solid var(--border-default);background:var(--accent-soft,rgba(184,146,42,0.04));padding:1.4rem 1.8rem;margin-bottom:1.5rem;font-style:italic;color:var(--text-primary);line-height:1.6;}
+  .notes-block{border:1px solid var(--border-default);background:var(--accent-soft,rgba(168,42,42,0.04));padding:1.4rem 1.8rem;margin-bottom:1.5rem;font-style:italic;color:var(--text-primary);line-height:1.6;}
   .notes-attribution{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-top:0.7rem;font-style:normal;}
 
   /* Auth form */
@@ -230,7 +230,7 @@
 
     <!-- Chapter pills (shown after Pick a Chapter) -->
     <div id="bea-chapter-grid" class="ms-chapter-grid"></div>
-    <div id="bea-chapter-guide" style="display:none;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.08);color:var(--text-primary);padding:0.7rem 1rem;margin-bottom:1.2rem;font-size:0.85rem;line-height:1.5;"></div>
+    <div id="bea-chapter-guide" style="display:none;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.08);color:var(--text-primary);padding:0.7rem 1rem;margin-bottom:1.2rem;font-size:0.85rem;line-height:1.5;"></div>
 
     <!-- No-manuscript empty state -->
     <div id="bea-no-ms" class="no-ms-note" style="display:none;">

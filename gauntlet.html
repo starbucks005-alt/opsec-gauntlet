@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Gauntlet — Greylander Press</title>
+<title>OPSEC Gauntlet — Greylander Press</title>
 <script>(function(){try{var t=localStorage.getItem('gp-theme');if(!t&&localStorage.getItem('gp_theme')==='light'){t='light';localStorage.setItem('gp-theme','light');}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/theme.js" defer></script>
@@ -15,10 +15,10 @@
 <style>
   :root {
     --ink:#13100c; --ink-soft:#2a2318; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.3);
+    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.3);
     --text:#e8dece; --text-dim:#9a8e7e; --bg:#0e0b08;
     --band-foundational:#c0392b; --band-developmental:#d4742a;
-    --band-competent:#d4aa4a; --band-professional:#5a8c3a;
+    --band-competent:#c8302b; --band-professional:#5a8c3a;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
@@ -50,7 +50,7 @@
     padding:4rem 2rem;text-align:center;cursor:pointer;
     transition:all 0.2s;display:block;
   }
-  .gt-drop:hover, .gt-drop.dragover{border-color:var(--gold);background:rgba(184,146,42,0.04);}
+  .gt-drop:hover, .gt-drop.dragover{border-color:var(--gold);background:rgba(168,42,42,0.04);}
   .gt-drop-icon{font-size:3rem;color:var(--gold-light);margin-bottom:1rem;line-height:1;}
   .gt-drop-text{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin-bottom:0.4rem;}
   .gt-drop-sub{font-size:0.85rem;color:var(--text-dim);}
@@ -59,7 +59,7 @@
 
   /* File card after upload */
   .gt-file-card{
-    border:1px solid var(--gold);background:rgba(184,146,42,0.04);
+    border:1px solid var(--gold);background:rgba(168,42,42,0.04);
     padding:1.5rem 2rem;
     display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.5rem;
     margin-bottom:2rem;
@@ -84,8 +84,8 @@
     transition:all 0.15s;display:flex;flex-direction:column;gap:0.4rem;
     font-family:'Cormorant Garamond',serif;color:var(--text);
   }
-  .scope-btn:hover{border-color:var(--gold-light);background:rgba(184,146,42,0.04);}
-  .scope-btn.selected{border-color:var(--gold);background:rgba(184,146,42,0.08);box-shadow:inset 0 0 0 1px var(--gold);}
+  .scope-btn:hover{border-color:var(--gold-light);background:rgba(168,42,42,0.04);}
+  .scope-btn.selected{border-color:var(--gold);background:rgba(168,42,42,0.08);box-shadow:inset 0 0 0 1px var(--gold);}
   .scope-btn-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--cream);font-weight:700;}
   .scope-btn.selected .scope-btn-name{color:var(--gold-light);}
   .scope-btn-range{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
@@ -308,15 +308,15 @@
   }
 
   /* Judge character intro panel */
-  .gp-char-intro{display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid rgba(184,146,42,0.4);background:rgba(184,146,42,0.05);padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
-  .gp-char-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid rgba(184,146,42,0.4);background:var(--ink,#13100c);animation:gp-char-float 5.0s ease-in-out infinite;}
+  .gp-char-intro{display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:center;border:1px solid rgba(168,42,42,0.4);background:rgba(168,42,42,0.05);padding:1.8rem 2rem;margin:1.8rem 0 2.2rem;}
+  .gp-char-portrait{position:relative;width:180px;height:230px;flex-shrink:0;overflow:hidden;border:1px solid rgba(168,42,42,0.4);background:var(--ink,#13100c);animation:gp-char-float 5.0s ease-in-out infinite;}
   .gp-char-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
   .gp-char-portrait .gp-char-closed{opacity:0;animation:gp-char-blink 5.6s steps(1,end) infinite;}
   @keyframes gp-char-blink{0%,95%,100%{opacity:0;}97%{opacity:1;}}
   @keyframes gp-char-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-  .gp-char-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold-light,#d4aa4a);margin-bottom:0.4rem;}
+  .gp-char-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold-light,#c8302b);margin-bottom:0.4rem;}
   .gp-char-greeting{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;color:var(--cream,#f4ede0);}
-  .gp-char-greeting em{color:var(--gold-light,#d4aa4a);font-style:italic;}
+  .gp-char-greeting em{color:var(--gold-light,#c8302b);font-style:italic;}
   @media(max-width:760px){
     .gp-char-intro{grid-template-columns:120px 1fr;gap:1.2rem;padding:1.4rem;}
     .gp-char-portrait{width:120px;height:155px;}
@@ -341,7 +341,7 @@
 
   <!-- Auth gate (shown if not signed in) -->
   <div id="auth-required" class="auth-prompt" style="display:none;">
-    <div class="auth-prompt-title">Sign in to run The Gauntlet</div>
+    <div class="auth-prompt-title">Sign in to run OPSEC Gauntlet</div>
     <p class="auth-prompt-body">Credit-gated diagnostic. Sign in or create a free account below.</p>
     <div class="auth-form-tabs">
       <button class="auth-form-tab active" id="gt-tab-si" onclick="gtAuthTab('signin')">Sign In</button>
@@ -407,13 +407,13 @@
       <div class="s-label">Step 1 — Upload</div>
 
       <!-- Loaded manuscript banner -->
-      <div id="gt-ms-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;">
+      <div id="gt-ms-banner" style="display:none;align-items:center;gap:1rem;flex-wrap:wrap;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.06);padding:1rem 1.5rem;margin-bottom:1.5rem;">
         <span style="font-size:1.4rem;">📄</span>
         <div style="flex:1;min-width:0;">
           <div id="gt-ms-name" style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);"></div>
           <div id="gt-ms-meta" style="font-size:0.8rem;color:var(--text-dim);margin-top:0.2rem;"></div>
         </div>
-        <button onclick="gtUseMsFile()" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(184,146,42,0.5);background:rgba(184,146,42,0.15);color:var(--gold);padding:0.4rem 0.9rem;cursor:pointer;">Use This Manuscript →</button>
+        <button onclick="gtUseMsFile()" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(168,42,42,0.5);background:rgba(168,42,42,0.15);color:var(--gold);padding:0.4rem 0.9rem;cursor:pointer;">Use This Manuscript →</button>
         <button onclick="document.getElementById('gt-ms-banner').style.display='none'" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.1);background:none;color:var(--text-dim);padding:0.4rem 0.9rem;cursor:pointer;">✕ Upload different</button>
       </div>
 
@@ -496,7 +496,7 @@
       <hr class="divider">
 
       <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
-        <button class="btn-gold" id="run-btn" onclick="runGauntlet()">Run the Gauntlet →</button>
+        <button class="btn-gold" id="run-btn" onclick="runGauntlet()">Run OPSEC Gauntlet →</button>
         <button class="btn-outline" onclick="resetUpload()">Upload different PDF</button>
         <span id="cost-display" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-left:auto;">Cost: — credits</span>
       </div>
@@ -769,7 +769,7 @@
   const REASSURANCE = [
     'Multi-pass evaluation. The page will update when complete.',
     'Three independent passes for reproducibility. Patience yields better diagnostics.',
-    'Honest critique takes time. The Gauntlet does not rush.',
+    'Honest critique takes time. OPSEC Gauntlet does not rush.',
     'Anti-sycophancy validator on watch. No cushioning. No hedging.',
     'Cross-checking findings across passes. Median band wins.',
     'Held to the standard of professional publishable fiction.',
@@ -912,7 +912,7 @@
     const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
     const fname = run.manuscript_filename || 'Manuscript';
     const ph = el('div', 'print-header');
-    ph.appendChild(el('div', 'print-header-title', 'Greylander Press · The Gauntlet'));
+    ph.appendChild(el('div', 'print-header-title', 'Greylander Press · OPSEC Gauntlet'));
     ph.appendChild(el('div', 'print-header-meta', `${escapeHtml(fname)} · ${date}`));
     body.appendChild(ph);
 

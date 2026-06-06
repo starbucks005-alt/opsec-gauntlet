@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Routing Report · The Gauntlet</title>
+<title>Routing Report · OPSEC Gauntlet</title>
 <meta name="description" content="What the panel said. Where your idea stands. What to do next.">
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="apple-touch-icon" href="Favicon.png">
@@ -597,7 +597,7 @@
   }
   .state-spinner{
     width:48px;height:48px;border-radius:50%;
-    border:2px solid rgba(184,146,42,0.25);border-top-color:var(--gold-light);
+    border:2px solid rgba(168,42,42,0.25);border-top-color:var(--gold-light);
     margin:0 auto 1.2rem;animation:report-spin 0.9s linear infinite;
   }
   @keyframes report-spin{to{transform:rotate(360deg);}}
@@ -613,14 +613,14 @@
   .finding-group-title{
     font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700;
     color:var(--gold-light); margin:0 0 0.85rem; line-height:1.25;
-    padding-bottom:0.4rem; border-bottom:1px dashed rgba(184,146,42,0.25);
+    padding-bottom:0.4rem; border-bottom:1px dashed rgba(168,42,42,0.25);
     display:flex; align-items:baseline; gap:0.6rem;
   }
   .dim-chip{
     font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.14em;
     color:var(--cream);
     padding:0.25rem 0.55rem; border:1px solid var(--rule);
-    background:rgba(184,146,42,0.06);
+    background:rgba(168,42,42,0.06);
   }
 
   /* Update the routing recommendation copy to match multi-stage framing. */
@@ -724,13 +724,13 @@
     cursor:pointer; list-style:none;
     display:flex; align-items:center; gap:0.55rem;
     padding:0.8rem 1rem;
-    background:rgba(184,146,42,0.04); border:1px solid var(--rule);
+    background:rgba(168,42,42,0.04); border:1px solid var(--rule);
     border-left:3px solid var(--gold);
     transition:all 0.18s;
   }
   .work-block summary::-webkit-details-marker{ display:none; }
-  .work-block summary:hover{ background:rgba(184,146,42,0.08); }
-  .work-ep[open] summary{ background:rgba(184,146,42,0.07); border-bottom-color:transparent; }
+  .work-block summary:hover{ background:rgba(168,42,42,0.08); }
+  .work-ep[open] summary{ background:rgba(168,42,42,0.07); border-bottom-color:transparent; }
   .work-ep{ margin-bottom:0.5rem; }
   .work-ep-name{
     font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700;
@@ -786,7 +786,7 @@
     white-space:pre-wrap; word-wrap:break-word;
     max-height:340px; overflow-y:auto;
     padding:0.55rem 0.7rem;
-    background:rgba(184,146,42,0.04); border-left:2px solid var(--rule);
+    background:rgba(168,42,42,0.04); border-left:2px solid var(--rule);
   }
 
   @media (max-width:640px){
@@ -964,7 +964,7 @@
      diagonal SAMPLE watermark on screen too (for samples only). The
      client sees immediately that this is a preview, not a paid run.
      Hidden under any white-label override (the white-label tier
-     doesn't carry the Gauntlet sample message). */
+     doesn't carry OPSEC Gauntlet sample message). */
   body[data-tg-mode="sample"] main::after{
     content:'SAMPLE';
     position:fixed;
@@ -1006,7 +1006,7 @@
       display:none !important;
     }
     body[data-tg-mode="sample"]::after{
-      content:'This sample report is not available for printing or download. To produce a printable report on your own idea, visit the-gauntlet.netlify.app.';
+      content:'This sample report is not available for printing or download. To produce a printable report on your own idea, visit opsec-gauntlet.netlify.app.';
       display:block;
       padding:3rem 2rem;
       font-family:'Cormorant Garamond',serif;
@@ -1270,7 +1270,7 @@
 
     // Voice intro line based on verdict.
     const intro = verdict === 'agreement'
-      ? 'The panel agreed. You walked the Gauntlet and the room reads it the same way. Here is where we can keep going.'
+      ? 'The panel agreed. You walked OPSEC Gauntlet and the room reads it the same way. Here is where we can keep going.'
       : verdict === 'conflict'
       ? 'The panel split. That is a real signal worth resolving before the brief enters the world. Here is where to take it next.'
       : 'The panel landed in the middle. The feedback was useful, and there is meaningful work left. Here is where to take it.';
@@ -1411,7 +1411,7 @@
   // Cost anchor: honest breakdown of what a comparable deliverable would cost
   // from professionals. Shown ONLY on sample deliverables with no white-label
   // override - hidden on live (paid) reports and on any deliverable carrying a
-  // brand_config (white-labeled samples don't sell The Gauntlet).
+  // brand_config (white-labeled samples don't sell OPSEC Gauntlet).
   const COST_LINES = [
     { label: 'Buyer-psychology profile',                                           range: '$300–$1,500' },
     { label: 'Landscape / category audit',                                         range: '$500–$3,000' },
@@ -1464,15 +1464,15 @@
   }
 
   // Brand block: resolves brand_config from (1) deliverable JSON, (2) session
-  // override, (3) default. Default is The Gauntlet; higher-tier users can
+  // override, (3) default. Default is OPSEC Gauntlet; higher-tier users can
   // set sessionStorage.tg_brand_config to white-label their deliverables.
   const DEFAULT_BRAND = {
-    brand_name: 'The Gauntlet',
+    brand_name: 'OPSEC Gauntlet',
     tagline: 'AI-paneled idea evaluation',
     initials: 'TG',
     logo_url: '/Favicon.png',
-    credit: 'Generated by The Gauntlet',
-    footer_credit: 'Powered by The Gauntlet'
+    credit: 'Generated by OPSEC Gauntlet',
+    footer_credit: 'Powered by OPSEC Gauntlet'
   };
   function resolveBrand(data){
     // Priority: deliverable embedded brand > session white-label > default
@@ -1536,8 +1536,8 @@
     return `
       <section class="doc-section" id="reports">
         <header class="doc-section-head">
-          <h2 class="doc-h2">II. Executive Producer Reports</h2>
-          <p class="doc-h2-sub">${list.length} report${list.length === 1 ? '' : 's'}, one per discipline. Each Executive Producer evaluated the brief through their specific lens.</p>
+          <h2 class="doc-h2">II. Operational Specialist Reports</h2>
+          <p class="doc-h2-sub">${list.length} report${list.length === 1 ? '' : 's'}, one per discipline. Each Operational Specialist evaluated the brief through their specific lens.</p>
         </header>
         ${articlesHtml}
       </section>
@@ -1581,7 +1581,7 @@
       <section class="doc-section" id="work">
         <header class="doc-section-head">
           <h2 class="doc-h2">III. Copy Edits</h2>
-          <p class="doc-h2-sub">${totalRevs} ${totalRevs === 1 ? 'revision' : 'revisions'} to the brief. Jules is the only Executive Producer who edits the brief itself; the rest produce reports.</p>
+          <p class="doc-h2-sub">${totalRevs} ${totalRevs === 1 ? 'revision' : 'revisions'} to the brief. Jules is the only Operational Specialist who edits the brief itself; the rest produce reports.</p>
         </header>
         ${articlesHtml}
       </section>
@@ -1784,7 +1784,7 @@
     let romanIdx = 0;
     const roman = ['I','II','III','IV','V','VI','VII','VIII'];
     if (briefSection)     tocItems.push({ id: 'brief',     num: roman[romanIdx++] + '.', label: 'Submitted Brief' });
-    if (epReportsSection) tocItems.push({ id: 'reports',   num: roman[romanIdx++] + '.', label: 'Executive Producer Reports' });
+    if (epReportsSection) tocItems.push({ id: 'reports',   num: roman[romanIdx++] + '.', label: 'Operational Specialist Reports' });
     if (workSection)      tocItems.push({ id: 'work',      num: roman[romanIdx++] + '.', label: 'Copy Edits' });
     tocItems.push({ id: 'panel',     num: roman[romanIdx++] + '.', label: 'Panel Findings' });
     tocItems.push({ id: 'next',      num: roman[romanIdx++] + '.', label: 'Recommendation' });
@@ -1822,7 +1822,7 @@
     // document) can render a SAMPLE overlay across every printed page
     // and behind the screen content. A white-label override drops the
     // sample-mode watermark on screen (the white-label tier owns the
-    // surface and doesn't carry the Gauntlet sample story). Demo mode
+    // surface and doesn't carry OPSEC Gauntlet sample story). Demo mode
     // skips the tag entirely.
     if (data.sample_id && !isDemo) {
       document.body.setAttribute('data-tg-mode', 'sample');
@@ -1909,8 +1909,8 @@
 
       <div class="actions-row">
         ${data.sample_id && !isDemo
-          ? `<button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk the Gauntlet yourself to produce your own report.">Print PDF</button>
-             <button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk the Gauntlet yourself to produce your own report.">Print DOCX</button>
+          ? `<button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk OPSEC Gauntlet yourself to produce your own report.">Print PDF</button>
+             <button type="button" class="btn btn-primary" disabled aria-disabled="true" title="Available with a Gauntlet membership. Walk OPSEC Gauntlet yourself to produce your own report.">Print DOCX</button>
              <a class="btn btn-outline" href="/samples.html">Browse other samples</a>
              <a class="btn btn-outline" href="/intake.html">Submit your own idea</a>`
           : data.sample_id
