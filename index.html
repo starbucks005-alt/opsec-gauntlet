@@ -30,45 +30,49 @@
      identity colors. Main color (--text) and pop color (--gold) define this
      platform; same chassis can be reused on other platforms with different
      main + pop values. */
+  /* Federal classical palette: navy + parchment + burgundy + brass + taupe.
+     Token names kept (--gold, --gold-light, --text-dim) so existing CSS that
+     references them picks up the new values via cascade. Semantic mapping:
+       --text  = primary text (navy in light, parchment in dark)
+       --bg    = base background (parchment in light, navy in dark)
+       --gold  = burgundy (primary accent, replaces what was federal red)
+       --gold-light = brass (metallic highlight, headings, eyebrows)
+       --text-dim   = taupe (secondary/muted text, soft separators)
+       --rule       = taupe at low alpha (warm divider, not cold grey) */
   :root,
   :root[data-theme="light"]{
-    /* Background + foreground (light mode default) */
-    --bg:#ffffff;
-    --band-elevated:#fafafa;
-    --text:#14233a;      /* navy = main identity color */
-    --text-dim:#5a6478;
-    --ink:#14233a;
-    --ink-soft:#1f3559;
-    --cream:#fafafa;
-    /* Pop color: federal red */
-    --gold:#a82a2a;
-    --gold-light:#c8302b;
-    --rule:rgba(20,35,58,0.18);
-    --crimson:#7d2020;
+    --bg:#f4ede0;            /* parchment */
+    --band-elevated:#fbf6e8; /* slightly elevated parchment for cards */
+    --text:#1a2942;          /* navy */
+    --text-dim:#8c7a64;      /* taupe */
+    --ink:#1a2942;
+    --ink-soft:#2a3a5a;
+    --cream:#fbf6e8;
+    --gold:#7d2828;          /* burgundy (primary accent) */
+    --gold-light:#a88842;    /* brass (metallic highlight) */
+    --rule:rgba(140,122,100,0.30);
+    --crimson:#7d2828;
     --crimson-deep:#5a1818;
-    --crimson-bright:#c8302b;
-    --crimson-glow:rgba(200,48,43,0.35);
-    --gauntlet-consequence:#c8302b;
+    --crimson-bright:#a88842;
+    --crimson-glow:rgba(168,136,66,0.30);
+    --gauntlet-consequence:#7d2828;
   }
   :root[data-theme="dark"]{
-    /* Dark mode: PURE black background + white foreground, red as accent only.
-       No warm undertones, no crimson glows on background, no velvet texture.
-       Red lives in text, buttons, and accent markers ONLY. Never as background. */
-    --bg:#000000;
-    --band-elevated:#0a0a0a;
-    --text:#ffffff;
-    --text-dim:#b8b8b8;
-    --ink:#ffffff;
-    --ink-soft:#e0e0e0;
-    --cream:#0a0a0a;
-    --gold:#c8302b;
-    --gold-light:#e0524a;
-    --rule:rgba(255,255,255,0.18);
-    --crimson:#c8302b;
-    --crimson-deep:#a82a2a;
-    --crimson-bright:#e0524a;
+    --bg:#1a2942;            /* navy (not black) */
+    --band-elevated:#243250; /* slightly elevated navy for cards */
+    --text:#f4ede0;          /* parchment */
+    --text-dim:#a89a82;      /* lighter taupe for legibility on navy */
+    --ink:#f4ede0;
+    --ink-soft:#ddd1ba;
+    --cream:#243250;
+    --gold:#a44850;          /* burgundy, slightly lifted for navy contrast */
+    --gold-light:#c4a35a;    /* brass, slightly lifted for navy contrast */
+    --rule:rgba(196,163,90,0.30);
+    --crimson:#a44850;
+    --crimson-deep:#7d2828;
+    --crimson-bright:#c4a35a;
     --crimson-glow:transparent;
-    --gauntlet-consequence:#c8302b;
+    --gauntlet-consequence:#a44850;
   }
   /* Kill the velvet diagonal-line texture in dark mode. It overlays low-alpha
      red on the dark background and the cumulative visual is a brown wash.
