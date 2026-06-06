@@ -137,33 +137,11 @@
     box-shadow:0 0 14px rgba(200,48,43,0.65),0 0 24px rgba(200,48,43,0.3);
   }
 
-  /* ── Proscenium curtain edges (for hero / stage-feel sections) ───────────── */
+  /* Proscenium curtain edges removed: they rendered as red glows on the left
+     and right sides of every hero/stage section. Pure theatre metaphor, did
+     not survive the OPSEC repositioning. Keeping the class so existing markup
+     does not break, but the visual effect is gone. */
   .proscenium{position:relative;overflow:hidden;}
-  .proscenium::before,
-  .proscenium::after{
-    content:'';position:absolute;top:0;bottom:0;
-    width:clamp(40px,7vw,120px);pointer-events:none;z-index:3;
-  }
-  .proscenium::before{
-    left:0;
-    background:linear-gradient(90deg,
-      rgba(58,15,15,0.85) 0%,
-      rgba(58,15,15,0.55) 25%,
-      rgba(58,15,15,0.2) 60%,
-      transparent 100%);
-    border-right:1px solid rgba(168,42,42,0.18);
-    box-shadow:inset 12px 0 28px rgba(58,15,15,0.4);
-  }
-  .proscenium::after{
-    right:0;
-    background:linear-gradient(270deg,
-      rgba(58,15,15,0.85) 0%,
-      rgba(58,15,15,0.55) 25%,
-      rgba(58,15,15,0.2) 60%,
-      transparent 100%);
-    border-left:1px solid rgba(168,42,42,0.18);
-    box-shadow:inset -12px 0 28px rgba(58,15,15,0.4);
-  }
 
   /* ── Topbar ──────────────────────────────────────────────────────────────── */
   .tg-topbar{
@@ -314,7 +292,7 @@
   }
   .hero-title{
     font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.4rem);
-    font-weight:700;color:var(--cream);line-height:0.98;letter-spacing:-0.015em;
+    font-weight:700;color:var(--text);line-height:0.98;letter-spacing:-0.015em;
     margin-bottom:1.2rem;
   }
   .hero-title em{font-style:italic;color:var(--gold-light);}
