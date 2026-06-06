@@ -1005,38 +1005,15 @@
     <a href="/chamber.html">The Chamber</a>
     <a href="/Helpers/">The Operational Specialists</a>
     <a href="/about.html">About</a>
-    <button type="button" id="theme-toggle" aria-label="Toggle light/dark mode"
-      style="background:transparent;border:1px solid var(--rule);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;cursor:pointer;">
-      <span id="theme-toggle-label">Dark</span>
-    </button>
   </nav>
 </header>
 <script>
-  // Light/dark theme toggle with localStorage persistence.
-  // Default is light. User preference overrides default and persists per browser.
-  (function(){
-    var stored = null;
-    try { stored = localStorage.getItem('opsec-theme'); } catch(_) {}
-    var theme = stored || 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    document.addEventListener('DOMContentLoaded', function(){
-      var btn = document.getElementById('theme-toggle');
-      var label = document.getElementById('theme-toggle-label');
-      if (!btn || !label) return;
-      function syncLabel(){
-        var t = document.documentElement.getAttribute('data-theme');
-        label.textContent = (t === 'dark') ? 'Light' : 'Dark';
-      }
-      syncLabel();
-      btn.addEventListener('click', function(){
-        var current = document.documentElement.getAttribute('data-theme');
-        var next = (current === 'dark') ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('opsec-theme', next); } catch(_) {}
-        syncLabel();
-      });
-    });
-  })();
+  // Force dark theme. Light mode toggle removed pending a proper light-mode
+  // CSS rebuild. The variable system (--bg, --text, etc.) is still in place
+  // and theme-aware, so when light mode is rebuilt the toggle can come back
+  // with a single button add. For now: dark only, no pink wash, no broken
+  // contrast on light surfaces.
+  document.documentElement.setAttribute('data-theme', 'dark');
 </script>
 
 <!-- ── Positioning band ───────────────────────────────────────────────────
@@ -1106,7 +1083,7 @@
       </article>
       <article class="hero-path">
         <div class="hero-path-num">3. Face the Panel</div>
-        <p class="hero-path-body">Think your strategy is bulletproof? Step straight into the Chamber and face nine brutal AI judges for the ultimate verdict.</p>
+        <p class="hero-path-body">Think your concept is ready and valuable to the intelligence community? Step into the Chamber. 16 Sector Chiefs deliver the verdict.</p>
         <a class="hero-path-btn" href="/intake.html">[ Enter the Chamber ]</a>
         <p class="hero-path-outcome">Get your official viability report.</p>
       </article>
