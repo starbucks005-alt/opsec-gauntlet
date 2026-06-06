@@ -26,20 +26,46 @@
   /* tension, risk, and OPSEC Gauntlet itself. The theatre feeling lives in     */
   /* layered backgrounds (velvet grain), footlight gradients, and proscenium  */
   /* curtain edges on full-width sections.                                    */
+  /* OPSEC Gauntlet design system: white/black background toggle + per-platform
+     identity colors. Main color (--text) and pop color (--gold) define this
+     platform; same chassis can be reused on other platforms with different
+     main + pop values. */
   :root,
+  :root[data-theme="light"]{
+    /* Background + foreground (light mode default) */
+    --bg:#ffffff;
+    --band-elevated:#fafafa;
+    --text:#14233a;      /* navy = main identity color */
+    --text-dim:#5a6478;
+    --ink:#14233a;
+    --ink-soft:#1f3559;
+    --cream:#fafafa;
+    /* Pop color: federal red */
+    --gold:#a82a2a;
+    --gold-light:#c8302b;
+    --rule:rgba(20,35,58,0.18);
+    --crimson:#7d2020;
+    --crimson-deep:#5a1818;
+    --crimson-bright:#c8302b;
+    --crimson-glow:rgba(200,48,43,0.35);
+    --gauntlet-consequence:#c8302b;
+  }
   :root[data-theme="dark"]{
-    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
-    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+    /* Dark mode: navy/black background + white foreground, pop stays red */
+    --bg:#0a0a0a;
     --band-elevated:#14151a;
+    --text:#ffffff;
+    --text-dim:#b8b8b8;
+    --ink:#ffffff;
+    --ink-soft:#e0e0e0;
+    --cream:#1a1a1a;
+    --gold:#c8302b;
+    --gold-light:#e0524a;
+    --rule:rgba(255,255,255,0.18);
     --crimson:#5a1a1a;
     --crimson-deep:#3a0f0f;
     --crimson-bright:#c0392b;
     --crimson-glow:rgba(192,57,43,0.45);
-    /* Semantic alias: gold is for action and progress; consequence is for
-       stakes, conflict, risk flags, ejection states, and anywhere the
-       platform needs to signal real weight. Always points at the brightest
-       crimson so the meaning is visible on dark backgrounds. */
     --gauntlet-consequence:#c0392b;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -136,7 +162,7 @@
   .tg-topbar{
     display:flex;align-items:center;padding:0 2.5rem;height:60px;
     border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+    background:var(--bg);backdrop-filter:blur(10px);z-index:100;
   }
   .tg-topbar-logo{
     display:flex;align-items:center;gap:0.7rem;
@@ -400,7 +426,7 @@
   .sp-card{
     display:flex; flex-direction:column;
     padding:1.2rem 1.3rem 1.3rem;
-    background:rgba(0,0,0,0.45); border:1px solid var(--rule);
+    background:var(--band-elevated); border:1px solid var(--rule);
     text-decoration:none; color:inherit;
     transition:all 0.18s;
   }
@@ -563,7 +589,7 @@
   /* Wing portrait — square, blink-pair, hover lift on the anchor inside. */
   .wing-portrait{
     width:280px;height:280px;overflow:hidden;
-    border:1px solid var(--rule);background:#14151a;
+    border:1px solid var(--rule);background:var(--band-elevated);
     position:relative;
     box-shadow:0 12px 36px -10px rgba(0,0,0,0.7);
   }
@@ -594,7 +620,7 @@
   .corridor-wing:nth-child(8) .blink-closed{animation-delay:4.9s;}
   .wing-crossover{
     position:absolute;top:0.6rem;left:0.6rem;z-index:3;
-    background:rgba(10,10,10,0.85);border:1px solid var(--gold);
+    background:var(--band-elevated);border:1px solid var(--gold);
     color:var(--gold-light);
     font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.16em;
     text-transform:uppercase;padding:0.28rem 0.55rem;
@@ -628,7 +654,7 @@
   .corridor-wing.wing-right .wing-actions{justify-content:flex-end;}
   .wing-btn{
     display:inline-flex;align-items:center;gap:0.4rem;
-    background:rgba(0,0,0,0.5);border:1px solid var(--rule);color:var(--gold-light);
+    background:var(--band-elevated);border:1px solid var(--rule);color:var(--gold-light);
     padding:0.55rem 0.9rem;cursor:pointer;
     font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
     text-transform:uppercase;font-weight:700;
@@ -685,7 +711,7 @@
   }
   .corridor-judge-card{
     display:flex;flex-direction:column;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.55);
+    border:1px solid var(--rule);background:var(--band-elevated);
     text-decoration:none;color:inherit;overflow:hidden;
     transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
   }
@@ -696,7 +722,7 @@
   }
   .corridor-judge-portrait{
     position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
-    background:#14151a;border-bottom:1px solid var(--rule);
+    background:var(--band-elevated);border-bottom:1px solid var(--rule);
   }
   .corridor-judge-portrait img{
     position:absolute;inset:0;width:100%;height:100%;
@@ -931,7 +957,7 @@
   /* ── Footer ──────────────────────────────────────────────────────────────── */
   .home-footer{
     border-top:1px solid var(--rule);padding:3.5rem 2.5rem 4rem;
-    background:rgba(0,0,0,0.55);
+    background:var(--band-elevated);
   }
   .home-footer-inner{
     max-width:1180px;margin:0 auto;
@@ -979,8 +1005,39 @@
     <a href="/chamber.html">The Chamber</a>
     <a href="/Helpers/">The Operational Specialists</a>
     <a href="/about.html">About</a>
+    <button type="button" id="theme-toggle" aria-label="Toggle light/dark mode"
+      style="background:transparent;border:1px solid var(--rule);color:var(--text);font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;cursor:pointer;">
+      <span id="theme-toggle-label">Dark</span>
+    </button>
   </nav>
 </header>
+<script>
+  // Light/dark theme toggle with localStorage persistence.
+  // Default is light. User preference overrides default and persists per browser.
+  (function(){
+    var stored = null;
+    try { stored = localStorage.getItem('opsec-theme'); } catch(_) {}
+    var theme = stored || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.addEventListener('DOMContentLoaded', function(){
+      var btn = document.getElementById('theme-toggle');
+      var label = document.getElementById('theme-toggle-label');
+      if (!btn || !label) return;
+      function syncLabel(){
+        var t = document.documentElement.getAttribute('data-theme');
+        label.textContent = (t === 'dark') ? 'Light' : 'Dark';
+      }
+      syncLabel();
+      btn.addEventListener('click', function(){
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = (current === 'dark') ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('opsec-theme', next); } catch(_) {}
+        syncLabel();
+      });
+    });
+  })();
+</script>
 
 <!-- ── Positioning band ───────────────────────────────────────────────────
      Top-of-site brand statement. Sits between the topbar and the hero.
