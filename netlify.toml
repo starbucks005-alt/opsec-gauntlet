@@ -8,6 +8,12 @@
   [functions.proxy-ai]
     timeout = 26
 
+  [functions.opsec-sector-write]
+    timeout = 15
+
+  [functions.opsec-sector-read]
+    timeout = 15
+
   [functions.catalog-add]
     timeout = 26
 
