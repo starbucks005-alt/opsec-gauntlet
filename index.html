@@ -1,969 +1,572 @@
-﻿<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OPSEC Gauntlet · Where ideas get tested.</title>
+<title>OPSEC Gauntlet · Emerging Technologies Laboratory</title>
 <meta name="description" content="OPSEC Gauntlet is a diagnostic critique engine. Nine expert AI judges, eight evaluation dimensions, math-driven scoring. Not a verdict. A map of where your idea goes next.">
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="apple-touch-icon" href="Favicon.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="OPSEC Gauntlet · Where ideas get tested.">
+<meta property="og:title" content="OPSEC Gauntlet · Emerging Technologies Laboratory">
 <meta property="og:description" content="Diagnostic Critique Engine. Radical Honesty. Uncompromising Rigor.">
 <meta property="og:image" content="https://opsec-gauntlet.netlify.app/the-gauntlet-logo.png">
 <meta property="og:url" content="https://opsec-gauntlet.netlify.app/">
-<link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/tg-im.js" defer></script>
 <script src="assets/tg-voice.js" defer></script>
 <script src="assets/tg-idea-generator.js?v=20260605-cv2" defer></script>
 <script src="assets/tg-welcome.js" defer></script>
 <script src="assets/tg-corridor.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ── Tokens ──────────────────────────────────────────────────────────────── */
-  /* Gold stays the primary. Crimson is the stakes color — used sparingly for */
-  /* tension, risk, and OPSEC Gauntlet itself. The theatre feeling lives in     */
-  /* layered backgrounds (velvet grain), footlight gradients, and proscenium  */
-  /* curtain edges on full-width sections.                                    */
-  /* OPSEC Gauntlet design system: white/black background toggle + per-platform
-     identity colors. Main color (--text) and pop color (--gold) define this
-     platform; same chassis can be reused on other platforms with different
-     main + pop values. */
-  /* Federal classical palette: navy + parchment + burgundy + brass + taupe.
-     Token names kept (--gold, --gold-light, --text-dim) so existing CSS that
-     references them picks up the new values via cascade. Semantic mapping:
-       --text  = primary text (navy in light, parchment in dark)
-       --bg    = base background (parchment in light, navy in dark)
-       --gold  = burgundy (primary accent, replaces what was federal red)
-       --gold-light = brass (metallic highlight, headings, eyebrows)
-       --text-dim   = taupe (secondary/muted text, soft separators)
-       --rule       = taupe at low alpha (warm divider, not cold grey) */
-  :root,
-  :root[data-theme="light"]{
-    --bg:#f4ede0;            /* parchment */
-    --band-elevated:#fbf6e8; /* slightly elevated parchment for cards */
-    --text:#1a2942;          /* navy */
-    --text-dim:#8c7a64;      /* taupe */
-    --ink:#1a2942;
-    --ink-soft:#2a3a5a;
-    --cream:#fbf6e8;
-    --gold:#7d2828;          /* burgundy (primary accent) */
-    --gold-light:#a88842;    /* brass (metallic highlight) */
-    --rule:rgba(140,122,100,0.30);
-    --crimson:#7d2828;
-    --crimson-deep:#5a1818;
-    --crimson-bright:#a88842;
-    --crimson-glow:rgba(168,136,66,0.30);
-    --gauntlet-consequence:#7d2828;
-  }
-  :root[data-theme="dark"]{
-    --bg:#1a2942;            /* navy (not black) */
-    --band-elevated:#243250; /* slightly elevated navy for cards */
-    --text:#f4ede0;          /* parchment */
-    --text-dim:#a89a82;      /* lighter taupe for legibility on navy */
-    --ink:#f4ede0;
-    --ink-soft:#ddd1ba;
-    --cream:#243250;
-    --gold:#a44850;          /* burgundy, slightly lifted for navy contrast */
-    --gold-light:#c4a35a;    /* brass, slightly lifted for navy contrast */
-    --rule:rgba(196,163,90,0.30);
-    --crimson:#a44850;
-    --crimson-deep:#7d2828;
-    --crimson-bright:#c4a35a;
-    --crimson-glow:transparent;
-    --gauntlet-consequence:#a44850;
-  }
-  /* Kill the velvet diagonal-line texture in dark mode. It overlays low-alpha
-     red on the dark background and the cumulative visual is a brown wash.
-     Background stays pure black. */
-  :root[data-theme="dark"] .velvet,
-  :root[data-theme="dark"] .velvet-elevated {
-    background-image: none !important;
-    background-color: var(--bg) !important;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:var(--bg);color:var(--text);
-    font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.9;
-    min-height:100vh;
-  }
+/* ── ETL / USWDS Design Tokens ──────────────────────────────────────────── */
+:root {
+  --etl-blue:   #4C7BA3;
+  --stamp-blue: #28527a;
+  --etl-black:  #1E1E1E;
+  --etl-white:  #F9F8F4;
+  --uswds-gold: #F0B429;
+  --gold-dark:  #c27500;
+  --text:       #1E1E1E;
+  --text-dim:   #5a6477;
+  --ink:        #1E1E1E;
+  --ink-soft:   #3d4f66;
+  --bg:         #F9F8F4;
+  --band-elevated: #eef2f7;
+  --cream:      #eef2f7;
+  --rule:       rgba(76,123,163,0.2);
+  /* Legacy token aliases so modal/IM scripts inherit new palette */
+  --gold:          #4C7BA3;
+  --gold-light:    #F0B429;
+  --crimson:       #4C7BA3;
+  --crimson-deep:  #28527a;
+  --crimson-bright:#F0B429;
+  --crimson-glow:  rgba(76,123,163,0.15);
+  --gauntlet-consequence: #4C7BA3;
+}
 
-  /* ── Velvet grain texture (theatrical, not dashboard) ────────────────────── */
-  /* Pure black base + a fine gold microthread diagonal. The previous version */
-  /* layered low-alpha deep-crimson radials over black, which blended into a  */
-  /* muddy brown wash. Red now lives in punctuation (close-band glow,        */
-  /* footlight undertone, accent rules) instead of background wash.          */
-  .velvet{
-    position:relative;
-    background-image:
-      repeating-linear-gradient(
-        135deg,
-        rgba(200,48,43,0.018) 0px,
-        rgba(200,48,43,0.018) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-    background-color:var(--bg);
-  }
-  .velvet-elevated{
-    position:relative;
-    background-image:
-      repeating-linear-gradient(
-        135deg,
-        rgba(200,48,43,0.022) 0px,
-        rgba(200,48,43,0.022) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-    background-color:var(--band-elevated);
-  }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Public Sans',system-ui,sans-serif;
+  font-size:1rem;line-height:1.7;min-height:100vh;
+}
 
-  /* ── Footlight divider ─────────────────────────────────────────────────── */
-  /* Gold halo with crimson flanks. Red shows up in the wings of each       */
-  /* divider strip - small but visibly red, not muddy.                       */
-  .footlight{
-    position:relative;height:42px;width:100%;
-    /* Red radial gradients removed. They were rendering as a brown wash at
-       every section divider. The 2px accent line at the bottom (via ::after)
-       still carries the red signal without the spread. */
-    background:transparent;
-    overflow:hidden;
-  }
-  .footlight::after{
-    content:'';position:absolute;bottom:0;left:8%;right:8%;height:2px;
-    background:linear-gradient(90deg,
-      rgba(192,57,43,0.5) 0%,
-      var(--gold) 22%,
-      var(--gold-light) 50%,
-      var(--gold) 78%,
-      rgba(192,57,43,0.5) 100%);
-    box-shadow:0 0 14px rgba(200,48,43,0.65),0 0 24px rgba(200,48,43,0.3);
-  }
+/* ── USWDS Official Banner ───────────────────────────────────────────────── */
+.usa-banner{
+  background:#162e51;padding:0.45rem 2rem;
+  font-family:'Public Sans',sans-serif;font-size:0.72rem;
+  color:rgba(255,255,255,0.82);display:flex;align-items:center;
+  gap:0.55rem;flex-wrap:wrap;
+}
+.usa-banner-text strong{color:#fff;font-weight:600;}
 
-  /* Proscenium curtain edges removed: they rendered as red glows on the left
-     and right sides of every hero/stage section. Pure theatre metaphor, did
-     not survive the OPSEC repositioning. Keeping the class so existing markup
-     does not break, but the visual effect is gone. */
-  .proscenium{position:relative;overflow:hidden;}
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.tg-topbar{
+  display:flex;align-items:center;padding:0 2rem;height:62px;
+  background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+  position:sticky;top:0;z-index:100;gap:1.2rem;
+}
+.tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+.tg-topbar-wordmark-etl{
+  font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
+}
+.tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+.tg-topbar-program{
+  font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+  color:#fff;text-decoration:none;white-space:nowrap;
+}
+.tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
+.tg-topbar-nav{margin-left:auto;display:flex;gap:1.8rem;align-items:center;}
+.tg-topbar-nav a{
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.78);
+  text-decoration:none;transition:color 0.18s;
+}
+.tg-topbar-nav a:hover{color:var(--uswds-gold);}
 
-  /* ── Topbar ──────────────────────────────────────────────────────────────── */
-  .tg-topbar{
-    display:flex;align-items:center;padding:0 2.5rem;height:60px;
-    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:var(--bg);backdrop-filter:blur(10px);z-index:100;
-  }
-  .tg-topbar-logo{
-    display:flex;align-items:center;gap:0.7rem;
-    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
-    letter-spacing:0.14em;color:var(--gold);text-decoration:none;white-space:nowrap;
-  }
-  .tg-topbar-logo img{height:36px;width:36px;display:block;object-fit:contain;}
-  .tg-topbar-nav{margin-left:auto;display:flex;gap:2.2rem;}
-  .tg-topbar-nav a{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
-    transition:color 0.2s;
-  }
-  .tg-topbar-nav a:hover{color:var(--gold);}
+/* ── Band scaffold ──────────────────────────────────────────────────────── */
+.band{width:100%;padding:5rem 2rem;position:relative;}
+.band-inner{max-width:1180px;margin:0 auto;}
+.band-inner.narrow{max-width:780px;}
+.band-inner.mid{max-width:960px;}
 
-  /* ── Band scaffolding ────────────────────────────────────────────────────── */
-  .band{width:100%;padding:7rem 2.5rem;position:relative;}
-  .band-inner{max-width:1180px;margin:0 auto;position:relative;z-index:2;}
-  .band-inner.narrow{max-width:780px;}
-  .band-inner.mid{max-width:960px;}
+/* Neutralize old theatrical classes */
+.velvet,.velvet-elevated{background:var(--band-elevated);}
+.proscenium{position:relative;overflow:hidden;}
 
-  /* ── Hero ────────────────────────────────────────────────────────────────── */
-  /* ── Positioning band: top-of-site brand statement ───────────────────
-     Quiet ribbon between topbar and hero. Carries the line that names
-     the cast, the format, and the substance. No box, no fill - just a
-     bottom rule to seat it visually. */
-  .positioning-band{
-    padding:1.3rem 2rem 1.5rem;
-    border-bottom:1px solid var(--rule);
-    text-align:center;
-  }
-  .positioning-line{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(1rem, 1.6vw, 1.2rem);
-    line-height:1.5;
-    color:var(--text);
-    letter-spacing:0;
-    max-width:880px;
-    margin:0 auto;
-  }
-  .positioning-line em{
-    font-style:italic;
-    color:var(--gold-light);
-  }
-  @media (max-width:600px){
-    .positioning-band{ padding:1rem 1.2rem 1.1rem; }
-    .positioning-line{ font-size:0.98rem; }
-  }
+/* Section divider */
+.footlight{
+  height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--etl-blue) 15%,
+    var(--uswds-gold) 50%,var(--etl-blue) 85%,transparent 100%);
+  opacity:0.4;
+}
 
-  /* ── Post-Chamber banner ─────────────────────────────────────────────
-     Shown when the client returns from the Chamber. Sits above the hero
-     and reframes the page: their score, the report download row, and a
-     line pointing them down to the corridor where the EPs greet them
-     with templated lines. */
-  .post-chamber{
-    background:linear-gradient(180deg, rgba(168,42,42,0.08) 0%, rgba(168,42,42,0) 100%);
-    border-bottom:1px solid var(--rule);
-    padding:3rem 2rem 2.4rem;
-  }
-  .pc-inner{ max-width:920px; margin:0 auto; text-align:center; }
-  .pc-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.28em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem;
-  }
-  .pc-title{
-    font-family:'Playfair Display',serif; font-size:clamp(2rem,4.4vw,2.8rem);
-    font-weight:700; color:var(--text); line-height:1.15;
-    letter-spacing:-0.01em; margin-bottom:0.9rem;
-  }
-  .pc-composite{ color:var(--gold-light); }
-  .pc-of{ font-size:0.65em; color:var(--text-dim); font-weight:400; }
-  .pc-sep{ color:var(--text-dim); margin:0 0.4rem; }
-  .pc-verdict{
-    font-style:italic; color:var(--gold-light); font-weight:700;
-    text-transform:capitalize;
-  }
-  .pc-sub{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text); font-size:1.1rem; line-height:1.55;
-    margin-bottom:1.8rem; max-width:640px; margin-left:auto; margin-right:auto;
-  }
-  .pc-actions{
-    display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
-    margin-bottom:1.4rem;
-  }
-  .pc-btn{
-    display:inline-flex; align-items:center;
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.22em;
-    text-transform:uppercase; font-weight:700; text-decoration:none;
-    padding:0.85rem 1.4rem; border:1px solid var(--gold); cursor:pointer;
-    transition:all 0.18s;
-  }
-  .pc-btn-primary{ background:var(--gold); color:var(--ink); }
-  .pc-btn-primary:hover{ background:var(--gold-light); border-color:var(--gold-light); }
-  .pc-btn-outline{ background:transparent; color:var(--gold); }
-  .pc-btn-outline:hover{ background:rgba(168,42,42,0.08); color:var(--gold-light); border-color:var(--gold-light); }
-  .pc-foot{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:1rem;
-  }
-  /* Show the banner only when body carries data-tg-postchamber. */
-  body[data-tg-postchamber] .post-chamber{ display:block; }
-  body[data-tg-postchamber] .post-chamber[hidden]{ display:block; }
-  /* In post-Chamber mode, hide the bottom "Ready when you are" CTA -
-     the client has already walked it. The corridor and EP cards remain. */
-  body[data-tg-postchamber] .close-band{ display:none; }
-  /* Post-Chamber EP line: replaces the EP's stock quote with the
-     templated post-Chamber line, with a gold left rule for visual
-     differentiation. The corridor JS swaps the content; this just
-     styles it. */
-  body[data-tg-postchamber] .wing-quote.is-postchamber{
-    border-left:3px solid var(--gold);
-    padding-left:1rem; color:var(--text);
-  }
+/* ── Positioning band ───────────────────────────────────────────────────── */
+.positioning-band{
+  padding:0.8rem 2rem;background:var(--etl-blue);
+  text-align:center;border-bottom:1px solid rgba(255,255,255,0.14);
+}
+.positioning-line{
+  font-family:'Public Sans',sans-serif;font-size:0.75rem;
+  font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,0.88);
+}
+.positioning-line em{font-style:normal;font-weight:700;color:var(--uswds-gold);}
 
-  /* Hero IS the audition. Composite on the right, tagline + audio button   */
-  /* on the left. The user can hear a real judge speak before any scroll,   */
-  /* without reading paragraphs about why we think the panel is good.       */
-  .hero{
-    padding:4.5rem 2rem 4rem;
-    /* Pure black hero. All red glows and diagonal velvet textures removed.
-       They cumulatively rendered as a brown wash. Red lives in text and
-       accent only, never as background tint. */
-    background-image:none;
-    background-color:var(--bg);
-  }
-  /* Stacked hero: centered text + audio audition on top, composite
-     portrait of all nine judges as a full-width horizontal band below.
-     The judges spread across the whole page instead of being squeezed
-     into a single column - they read as a row of nine faces, not a
-     boxed thumbnail. */
-  .hero-split{
-    display:flex;flex-direction:column;align-items:center;
-    gap:2.5rem;
-    max-width:1480px;margin:0 auto;
-    text-align:center;
-  }
-  .hero-split-text{max-width:760px;}
-  .hero-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
-  }
-  .hero-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.4rem);
-    font-weight:700;color:var(--text);line-height:0.98;letter-spacing:-0.015em;
-    margin-bottom:1.2rem;
-  }
-  .hero-title em{font-style:italic;color:var(--gold-light);}
-  .hero-tagline{
-    font-family:'Cormorant Garamond',serif;font-size:1.2rem;
-    color:var(--text);line-height:1.55;margin-bottom:1.8rem;
-  }
-  .hero-tagline strong{color:var(--gold-light);font-weight:600;}
-  .hero-cta-row{
-    display:flex;gap:1rem;flex-wrap:wrap;align-items:center;
-    justify-content:center;
-  }
+/* ── Post-Chamber banner ────────────────────────────────────────────────── */
+.post-chamber{
+  background:var(--band-elevated);border-bottom:3px solid var(--etl-blue);
+  padding:2.5rem 2rem 2rem;display:none;
+}
+.pc-inner{max-width:920px;margin:0 auto;text-align:center;}
+.pc-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.28em;text-transform:uppercase;color:var(--etl-blue);margin-bottom:0.7rem;
+}
+.pc-title{
+  font-family:'Spectral',serif;font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:700;color:var(--text);line-height:1.15;margin-bottom:0.8rem;
+}
+.pc-composite{color:var(--stamp-blue);}
+.pc-of{font-size:0.65em;color:var(--text-dim);font-weight:400;}
+.pc-sep{color:var(--text-dim);margin:0 0.4rem;}
+.pc-verdict{font-style:italic;color:var(--etl-blue);font-weight:700;text-transform:capitalize;}
+.pc-sub{
+  font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);
+  font-size:1.05rem;line-height:1.5;margin-bottom:1.5rem;
+  max-width:640px;margin-left:auto;margin-right:auto;
+}
+.pc-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem;}
+.pc-btn{
+  display:inline-flex;align-items:center;
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;
+  padding:0.78rem 1.4rem;border:2px solid var(--etl-blue);cursor:pointer;transition:all 0.18s;
+}
+.pc-btn-primary{background:var(--etl-blue);color:#fff;}
+.pc-btn-primary:hover{background:var(--stamp-blue);border-color:var(--stamp-blue);}
+.pc-btn-outline{background:transparent;color:var(--etl-blue);}
+.pc-btn-outline:hover{background:rgba(76,123,163,0.08);}
+.pc-foot{font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);font-size:0.92rem;}
+body[data-tg-postchamber] .post-chamber{display:block;}
+body[data-tg-postchamber] .post-chamber[hidden]{display:block;}
+body[data-tg-postchamber] .close-band{display:none;}
+body[data-tg-postchamber] .wing-quote.is-postchamber{
+  border-left:3px solid var(--etl-blue);padding-left:1rem;color:var(--text);
+}
 
-  /* Audition button — the loudest control on the page. Primary gold,
-     enlarged play pip, mild pulse so the eye lands on it before the
-     outline CTA. is-playing flips to outlined-cream so it's obvious
-     audio is live. */
-  .btn-audition{position:relative;padding-left:1.6rem;}
-  .btn-audition .audition-pip{
-    display:inline-flex;align-items:center;justify-content:center;
-    width:22px;height:22px;border-radius:50%;
-    border:1.5px solid currentColor;font-size:0.65rem;line-height:1;
-    margin-right:0.5rem;
-  }
-  .btn-audition.is-loading{opacity:0.75;cursor:wait;}
-  .btn-audition.is-playing{
-    background:var(--cream);color:var(--ink);
-    box-shadow:0 0 0 2px var(--gold-light),0 8px 32px -4px var(--crimson-glow);
-  }
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.hero{background:var(--stamp-blue);padding:4.5rem 2rem 3.5rem;}
+.hero-split{
+  display:flex;align-items:center;gap:3.5rem;
+  max-width:1180px;margin:0 auto;
+}
+.hero-split-text{flex:1;min-width:0;}
+.hero-split-seal{flex-shrink:0;}
+.hero-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--uswds-gold);margin-bottom:0.9rem;
+}
+.hero-title{
+  font-family:'Spectral',serif;font-size:clamp(2.4rem,4.5vw,3.8rem);
+  font-weight:700;color:#fff;line-height:1.05;letter-spacing:-0.01em;margin-bottom:1.1rem;
+}
+.hero-title em{font-style:italic;color:var(--uswds-gold);}
+.hero-tagline{
+  font-family:'Public Sans',sans-serif;font-size:1rem;
+  color:rgba(255,255,255,0.78);line-height:1.65;margin-bottom:1.6rem;
+}
+.hero-tagline strong{color:var(--uswds-gold);font-weight:600;}
+.hero-cta-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.btn-audition{position:relative;padding-left:1.4rem;}
+.btn-audition .audition-pip{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;
+  font-size:0.6rem;line-height:1;margin-right:0.4rem;
+}
+.btn-audition.is-loading{opacity:0.75;cursor:wait;}
+.btn-audition.is-playing{
+  background:rgba(255,255,255,0.15);color:#fff;
+  border-color:var(--uswds-gold);box-shadow:0 0 0 2px var(--uswds-gold);
+}
+.hero-paths{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;max-width:1180px;margin:2.5rem auto 0;
+  border-top:2px solid rgba(240,180,41,0.3);
+}
+.hero-path{
+  padding:1.6rem 1.4rem;border-right:1px solid rgba(255,255,255,0.12);
+  display:flex;flex-direction:column;gap:0.8rem;
+}
+.hero-path:last-child{border-right:none;}
+.hero-path-num{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--uswds-gold);
+}
+.hero-path-body{
+  font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.6;
+  color:rgba(255,255,255,0.72);flex:1;
+  border-top:1px solid rgba(255,255,255,0.1);padding-top:0.75rem;
+}
+.hero-path-btn{
+  display:inline-block;font-family:'Public Sans',sans-serif;font-size:0.72rem;
+  font-weight:600;letter-spacing:0.1em;color:#fff;background:transparent;
+  border:none;padding:0.4rem 0;text-decoration:none;cursor:pointer;
+  text-align:left;transition:color 0.18s;
+}
+.hero-path-btn:hover{color:var(--uswds-gold);}
+.hero-path-outcome{
+  font-family:'Spectral',serif;font-style:italic;font-size:0.88rem;color:var(--uswds-gold);
+  border-top:1px solid rgba(255,255,255,0.1);padding-top:0.75rem;
+}
 
-  /* Three starting lines. The client picks where they enter based on
-     what they have today: no idea, rough idea, or polished idea. Each
-     card stands alone with one description, one CTA, one promised
-     outcome. Bracketed-monospace button labels read like a console menu,
-     in keeping with the intel-room register. */
-  .hero-paths{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    gap:0;
-    max-width:1320px;margin:0 auto;text-align:left;
-    border-top:1px solid rgba(200,48,43,0.25);
-    border-bottom:1px solid rgba(200,48,43,0.25);
-  }
-  .hero-path{
-    padding:2rem 1.6rem 1.6rem;
-    border-right:1px solid rgba(200,48,43,0.25);
-    display:flex;flex-direction:column;gap:1.1rem;
-  }
-  .hero-path:last-child{border-right:none;}
-  .hero-path-num{
-    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--text);font-weight:600;
-  }
-  .hero-path-body{
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.6;
-    color:var(--text);margin:0;flex:1;
-    border-top:1px solid rgba(200,48,43,0.18);
-    padding-top:1rem;
-  }
-  .hero-path-btn{
-    display:inline-block;
-    font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.12em;
-    color:var(--text);background:transparent;border:none;
-    padding:0.5rem 0;text-decoration:none;cursor:pointer;text-align:left;
-    transition:color 0.18s;
-  }
-  .hero-path-btn:hover{color:var(--gold-light);}
-  .hero-path-outcome{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.98rem;
-    color:var(--gold-light);margin:0;
-    border-top:1px solid rgba(200,48,43,0.18);
-    padding-top:1rem;
-  }
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:0.5rem;padding:0.88rem 1.9rem;
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+  transition:all 0.18s;cursor:pointer;border:none;
+}
+.btn-primary{background:var(--uswds-gold);color:var(--etl-black);}
+.btn-primary:hover{background:var(--gold-dark);color:#fff;}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.45);}
+.btn-outline:hover{border-color:var(--uswds-gold);color:var(--uswds-gold);}
 
-  @media (max-width:980px){
-    .hero-split{gap:1.8rem;}
-    .hero-split-text{max-width:none;}
-  }
-  @media (max-width:880px){
-    .hero-paths{grid-template-columns:1fr;}
-    .hero-path{border-right:none;border-bottom:1px solid rgba(200,48,43,0.25);}
-    .hero-path:last-child{border-bottom:none;}
-  }
+/* ── Samples Preview ────────────────────────────────────────────────────── */
+.samples-preview{padding:5rem 2rem 4rem;max-width:1180px;margin:0 auto;}
+.samples-preview-head{text-align:center;max-width:780px;margin:0 auto 2.2rem;}
+.samples-preview-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--etl-blue);margin-bottom:0.8rem;
+}
+.samples-preview-title{
+  font-family:'Spectral',serif;font-size:clamp(1.7rem,3.4vw,2.4rem);
+  font-weight:700;color:var(--text);line-height:1.15;letter-spacing:-0.01em;margin-bottom:0.8rem;
+}
+.samples-preview-title em{font-style:italic;color:var(--etl-blue);}
+.samples-preview-sub{
+  font-family:'Spectral',serif;font-style:italic;font-size:0.98rem;color:var(--text-dim);line-height:1.5;
+}
+.samples-preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;
+}
+.sp-card{
+  display:flex;flex-direction:column;padding:1.2rem 1.3rem;
+  background:#fff;border:1px solid rgba(76,123,163,0.22);
+  border-left:4px solid var(--etl-blue);
+  text-decoration:none;color:inherit;transition:all 0.18s;
+}
+.sp-card:hover{
+  border-left-color:var(--uswds-gold);
+  box-shadow:0 4px 16px rgba(76,123,163,0.12);transform:translateY(-2px);
+}
+.sp-card-cat{
+  font-family:'Public Sans',sans-serif;font-size:0.52rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--etl-blue);margin-bottom:0.5rem;
+}
+.sp-card-title{
+  font-family:'Spectral',serif;font-size:1.08rem;font-weight:700;
+  color:var(--text);line-height:1.2;margin-bottom:0.3rem;
+}
+.sp-card-tagline{
+  font-family:'Spectral',serif;font-style:italic;font-size:0.9rem;
+  color:var(--text-dim);line-height:1.4;margin-bottom:0.6rem;
+}
+.sp-card-cta{
+  margin-top:auto;font-family:'Public Sans',sans-serif;font-size:0.55rem;
+  font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--etl-blue);padding-top:0.6rem;border-top:1px solid rgba(76,123,163,0.16);
+}
+.sp-card:hover .sp-card-cta{color:var(--stamp-blue);}
+.samples-preview-foot{
+  text-align:center;margin-top:1.6rem;
+  font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);font-size:0.92rem;
+}
+.samples-preview-foot a{color:var(--etl-blue);text-decoration:underline;text-underline-offset:3px;}
+.samples-preview-foot a:hover{color:var(--stamp-blue);}
+.samples-preview-loading,.samples-preview-error{
+  grid-column:1/-1;text-align:center;padding:2rem;
+  font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);
+}
 
-  /* ── Samples Preview Section ───────────────────────────────────────── */
-  .samples-preview{
-    padding:5rem 2rem 4rem; max-width:1180px; margin:0 auto;
-  }
-  .samples-preview-head{ text-align:center; max-width:780px; margin:0 auto 2.4rem; }
-  .samples-preview-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
-  }
-  .samples-preview-title{
-    font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3.8vw,2.7rem);
-    font-weight:700; color:var(--text); line-height:1.1;
-    letter-spacing:-0.01em; margin-bottom:1rem;
-  }
-  .samples-preview-title em{ font-style:italic; color:var(--gold-light); }
-  .samples-preview-sub{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:1.1rem; color:var(--text-dim); line-height:1.5;
-  }
-  .samples-preview-grid{
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:1rem;
-  }
-  .sp-card{
-    display:flex; flex-direction:column;
-    padding:1.2rem 1.3rem 1.3rem;
-    background:var(--band-elevated); border:1px solid var(--rule);
-    text-decoration:none; color:inherit;
-    transition:all 0.18s;
-  }
-  .sp-card:hover{
-    border-color:var(--gold-light);
-    background:rgba(168,42,42,0.05);
-  }
-  .sp-card-cat{
-    font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.22em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:0.6rem;
-  }
-  .sp-card-title{
-    font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700;
-    color:var(--text); line-height:1.2; margin-bottom:0.35rem;
-  }
-  .sp-card-tagline{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:0.95rem; color:var(--gold-light); line-height:1.4;
-    margin-bottom:0.7rem;
-  }
-  .sp-card-cta{
-    margin-top:auto;
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.2em;
-    text-transform:uppercase; color:var(--text-dim);
-    padding-top:0.7rem; border-top:1px solid rgba(200,48,43,0.18);
-  }
-  .sp-card:hover .sp-card-cta{ color:var(--gold-light); }
-  .samples-preview-foot{
-    text-align:center; margin-top:1.8rem;
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:1rem;
-  }
-  .samples-preview-foot a{
-    color:var(--gold-light); text-decoration:underline;
-    text-underline-offset:3px;
-  }
-  .samples-preview-foot a:hover{ color:var(--text); }
-  .samples-preview-loading,
-  .samples-preview-error{
-    grid-column:1 / -1; text-align:center; padding:2rem;
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim);
-  }
+/* ── Corridor ───────────────────────────────────────────────────────────── */
+.corridor-intro{padding:5rem 2rem 3rem;text-align:center;}
+.corridor-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--etl-blue);margin-bottom:0.8rem;
+}
+.corridor-title{
+  font-family:'Spectral',serif;font-size:clamp(1.8rem,3.6vw,2.6rem);
+  font-weight:700;color:var(--text);line-height:1.1;letter-spacing:-0.01em;margin-bottom:1rem;
+}
+.corridor-title em{font-style:italic;color:var(--etl-blue);}
+.corridor-personalize-line{
+  margin-top:1.2rem;font-family:'Public Sans',sans-serif;font-size:0.88rem;color:var(--text-dim);
+}
+.corridor-personalize-link{
+  background:transparent;border:none;cursor:pointer;
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--etl-blue);
+  margin-left:0.4rem;padding:0;border-bottom:1px solid rgba(76,123,163,0.4);
+  transition:color 0.18s,border-color 0.18s;
+}
+.corridor-personalize-link:hover{color:var(--stamp-blue);}
+.corridor-lede{max-width:680px;margin:0 auto;font-size:1rem;line-height:1.65;color:var(--text);}
 
-  /* Buttons */
-  .btn{
-    display:inline-flex;align-items:center;gap:0.6rem;
-    padding:1.05rem 2.2rem;
-    font-family:'DM Mono',monospace;font-size:0.66rem;letter-spacing:0.26em;
-    text-transform:uppercase;font-weight:700;text-decoration:none;
-    transition:background 0.2s,color 0.2s,box-shadow 0.3s,transform 0.2s;
-    cursor:pointer;border:none;
-  }
-  .btn-primary{
-    background:var(--gold);color:var(--ink);
-    box-shadow:0 0 0 0 var(--crimson-glow);
-  }
-  .btn-primary:hover{
-    background:var(--gold-light);
-    box-shadow:0 8px 32px -4px var(--crimson-glow),0 0 0 1px rgba(192,57,43,0.4);
-    transform:translateY(-2px);
-  }
-  .btn-outline{
-    background:transparent;color:var(--gold);
-    border:1px solid var(--gold);
-  }
-  .btn-outline:hover{
-    background:rgba(168,42,42,0.08);color:var(--gold-light);
-    border-color:var(--gold-light);
-  }
+/* ── Corridor Wings ─────────────────────────────────────────────────────── */
+.corridor-wings{padding:4rem 2rem 5rem;background:var(--bg);}
+.corridor-wing{
+  display:grid;grid-template-columns:260px 1fr;gap:2.5rem;
+  align-items:center;max-width:1080px;margin:0 auto 4rem;
+  padding:0 1rem;position:relative;z-index:2;
+  opacity:0;transition:opacity 0.7s ease-out,transform 0.7s ease-out;
+}
+.corridor-wing.wing-left{transform:translateX(-35px);}
+.corridor-wing.wing-right{grid-template-columns:1fr 260px;transform:translateX(35px);}
+.corridor-wing.wing-right .wing-portrait{order:2;}
+.corridor-wing.wing-right .wing-body{order:1;text-align:right;}
+.corridor-wing.is-visible{opacity:1;transform:translateX(0);}
 
-  /* ── The Corridor ──────────────────────────────────────────────────────── */
-  /* The page IS OPSEC Gauntlet. User scrolls = user walks. The Wings flank   */
-  /* them alternating left/right. Chamber waits at the end. Routing report  */
-  /* is the exit door.                                                       */
-  .corridor-intro{padding:5rem 2rem 3rem;text-align:center;}
-  .corridor-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.32em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
-  }
-  .corridor-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);
-    font-weight:700;color:var(--text);line-height:1.1;letter-spacing:-0.01em;
-    margin-bottom:1.2rem;
-  }
-  .corridor-title em{font-style:italic;color:var(--gold-light);}
-  .corridor-personalize-line{
-    margin-top:1.4rem;
-    font-family:'Cormorant Garamond',serif;font-size:1rem;
-    color:var(--text);font-style:italic;opacity:0.78;
-  }
-  .corridor-personalize-link{
-    background:transparent;border:none;cursor:pointer;
-    font:inherit;font-style:normal;
-    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;
-    text-transform:uppercase;color:var(--gold-light);
-    margin-left:0.4rem;padding:0;
-    border-bottom:1px solid rgba(200,48,43,0.45);
-    transition:color 0.18s,border-color 0.18s;
-  }
-  .corridor-personalize-link:hover{color:var(--text);border-bottom-color:var(--text);}
-  .corridor-lede{
-    max-width:680px;margin:0 auto;
-    font-size:1.15rem;line-height:1.65;color:var(--text);
-  }
+.wing-portrait{
+  width:260px;height:260px;overflow:hidden;
+  border:2px solid rgba(76,123,163,0.25);background:var(--band-elevated);
+  position:relative;box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+.wing-portrait a{display:block;width:100%;height:100%;text-decoration:none;position:relative;}
+.wing-portrait img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  transition:filter 0.3s,transform 0.5s;
+}
+.wing-portrait:hover img{filter:brightness(1.06);transform:scale(1.02);}
+.wing-portrait .blink-closed{opacity:0;animation:tg-wing-blink 6s linear infinite;}
+@keyframes tg-wing-blink{0%,94%,100%{opacity:0;}96%,97%{opacity:1;}}
+.corridor-wing:nth-child(1) .blink-closed{animation-delay:0s;}
+.corridor-wing:nth-child(2) .blink-closed{animation-delay:0.7s;}
+.corridor-wing:nth-child(3) .blink-closed{animation-delay:1.4s;}
+.corridor-wing:nth-child(4) .blink-closed{animation-delay:2.1s;}
+.corridor-wing:nth-child(5) .blink-closed{animation-delay:2.8s;}
+.corridor-wing:nth-child(6) .blink-closed{animation-delay:3.5s;}
+.corridor-wing:nth-child(7) .blink-closed{animation-delay:4.2s;}
+.corridor-wing:nth-child(8) .blink-closed{animation-delay:4.9s;}
+.wing-crossover{
+  position:absolute;top:0.5rem;left:0.5rem;z-index:3;
+  background:var(--stamp-blue);color:var(--uswds-gold);
+  font-family:'Public Sans',sans-serif;font-size:0.48rem;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;padding:0.26rem 0.5rem;
+}
+.wing-body{display:flex;flex-direction:column;gap:0.35rem;}
+.corridor-wing.wing-right .wing-body{align-items:flex-end;}
+.wing-name{font-family:'Spectral',serif;font-size:1.5rem;font-weight:700;color:var(--text);line-height:1.15;}
+.wing-role{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--etl-blue);margin-bottom:0.45rem;
+}
+.wing-quote{
+  font-family:'Spectral',serif;font-style:italic;font-size:1.08rem;
+  color:var(--stamp-blue);line-height:1.55;margin:0.2rem 0 1rem;max-width:500px;
+  padding:0.2rem 0 0.2rem 0.8rem;border-left:3px solid var(--uswds-gold);
+}
+.corridor-wing.wing-right .wing-quote{
+  margin-left:auto;padding:0.2rem 0.8rem 0.2rem 0;
+  border-left:none;border-right:3px solid var(--uswds-gold);
+}
+.wing-actions{display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;}
+.corridor-wing.wing-right .wing-actions{justify-content:flex-end;}
+.wing-btn{
+  display:inline-flex;align-items:center;gap:0.35rem;
+  background:#fff;border:1px solid rgba(76,123,163,0.3);color:var(--etl-blue);
+  padding:0.5rem 0.85rem;cursor:pointer;
+  font-family:'Public Sans',sans-serif;font-size:0.56rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;transition:all 0.18s;
+}
+.wing-btn:hover{border-color:var(--etl-blue);background:rgba(76,123,163,0.06);}
+.wing-btn.is-loading{opacity:0.7;cursor:wait;}
+.wing-btn.is-playing{background:var(--etl-blue);color:#fff;border-color:var(--etl-blue);}
+.wing-pip{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:15px;height:15px;border:1px solid currentColor;border-radius:50%;
+  font-size:0.48rem;line-height:1;
+}
+.wing-link{
+  font-family:'Public Sans',sans-serif;font-size:0.56rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--etl-blue);
+  text-decoration:none;margin-left:0.3rem;border-bottom:1px solid transparent;
+  padding-bottom:0.1rem;transition:color 0.18s,border-color 0.18s;
+}
+.wing-link:hover{color:var(--stamp-blue);border-bottom-color:var(--stamp-blue);}
+@media(prefers-reduced-motion:reduce){
+  .corridor-wing,.corridor-wing.wing-left,.corridor-wing.wing-right{transform:none;opacity:1;transition:none;}
+  .wing-portrait .blink-closed{animation:none;}
+}
 
-  /* The Wings section — wraps the corridor walls and 8 alternating cards. */
-  .corridor-wings{
-    padding:4rem 2rem 5rem;position:relative;
-    background-color:var(--bg);
-    background-image:
-      repeating-linear-gradient(
-        135deg,
-        rgba(200,48,43,0.014) 0px,
-        rgba(200,48,43,0.014) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-  }
-  /* Gold wall hints on each edge — suggest corridor walls without drawing
-     them literally. Subtle. */
-  .corridor-wings::before,
-  .corridor-wings::after{
-    content:'';position:absolute;top:0;bottom:0;width:clamp(40px,6vw,90px);
-    pointer-events:none;z-index:1;
-  }
-  .corridor-wings::before{
-    left:0;
-    background:linear-gradient(90deg,
-      rgba(168,42,42,0.10) 0%,
-      rgba(168,42,42,0.02) 60%,
-      transparent 100%);
-  }
-  .corridor-wings::after{
-    right:0;
-    background:linear-gradient(270deg,
-      rgba(168,42,42,0.10) 0%,
-      rgba(168,42,42,0.02) 60%,
-      transparent 100%);
-  }
+/* ── Threshold ──────────────────────────────────────────────────────────── */
+.corridor-threshold{padding:5rem 2rem 3.5rem;text-align:center;background:var(--stamp-blue);}
+.corridor-threshold .corridor-eyebrow{color:var(--uswds-gold);}
+.threshold-title{
+  font-family:'Spectral',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:700;
+  color:#fff;letter-spacing:-0.01em;line-height:1;margin-bottom:1rem;
+}
+.threshold-lede{max-width:640px;margin:0 auto;font-size:1rem;line-height:1.65;color:rgba(255,255,255,0.76);}
 
-  /* Each wing: 2-col grid (portrait + body). Direction flips by class. */
-  .corridor-wing{
-    display:grid;grid-template-columns:280px 1fr;gap:2.8rem;
-    align-items:center;
-    max-width:1080px;margin:0 auto 4.5rem;
-    padding:0 1rem;position:relative;z-index:2;
-    opacity:0;
-    transition:opacity 0.8s ease-out,transform 0.8s ease-out;
-  }
-  .corridor-wing.wing-left{transform:translateX(-40px);}
-  .corridor-wing.wing-right{
-    grid-template-columns:1fr 280px;
-    transform:translateX(40px);
-  }
-  .corridor-wing.wing-right .wing-portrait{order:2;}
-  .corridor-wing.wing-right .wing-body{order:1;text-align:right;}
-  .corridor-wing.is-visible{opacity:1;transform:translateX(0);}
+/* ── Judges ─────────────────────────────────────────────────────────────── */
+.corridor-judges{padding:0 2rem 5rem;background:var(--stamp-blue);}
+.corridor-judges-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  max-width:1080px;margin:0 auto;
+}
+.corridor-judge-card{
+  display:flex;flex-direction:column;
+  border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);
+  text-decoration:none;color:inherit;overflow:hidden;
+  transition:border-color 0.22s,transform 0.22s,box-shadow 0.25s;
+}
+.corridor-judge-card:hover{border-color:var(--uswds-gold);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+.corridor-judge-portrait{
+  position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
+  background:rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.corridor-judge-portrait img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  transition:filter 0.3s,transform 0.4s;
+}
+.corridor-judge-card:hover .corridor-judge-portrait img{filter:brightness(1.08);transform:scale(1.03);}
+.corridor-judge-portrait .blink-closed{opacity:0;animation:tg-wing-blink 5.4s linear infinite;}
+.corridor-judges-grid .corridor-judge-card:nth-child(1) .blink-closed{animation-delay:0s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(2) .blink-closed{animation-delay:0.6s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(3) .blink-closed{animation-delay:1.2s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(4) .blink-closed{animation-delay:1.8s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(5) .blink-closed{animation-delay:2.4s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(6) .blink-closed{animation-delay:3.0s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(7) .blink-closed{animation-delay:3.6s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(8) .blink-closed{animation-delay:4.2s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
+.corridor-judge-body{padding:0.85rem 1rem 1rem;background:rgba(255,255,255,0.04);}
+.corridor-judge-name{font-family:'Spectral',serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:0.25rem;}
+.corridor-judge-domain{font-family:'Public Sans',sans-serif;font-size:0.54rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--uswds-gold);line-height:1.5;}
 
-  /* Wing portrait — square, blink-pair, hover lift on the anchor inside. */
-  .wing-portrait{
-    width:280px;height:280px;overflow:hidden;
-    border:1px solid var(--rule);background:var(--band-elevated);
-    position:relative;
-    box-shadow:0 12px 36px -10px rgba(0,0,0,0.7);
-  }
-  .wing-portrait a{
-    display:block;width:100%;height:100%;text-decoration:none;
-    position:relative;
-  }
-  .wing-portrait img{
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;display:block;
-    transition:filter 0.3s,transform 0.5s;
-  }
-  .wing-portrait:hover img{filter:brightness(1.08);transform:scale(1.03);}
-  .wing-portrait .blink-closed{
-    opacity:0;animation:tg-wing-blink 6s linear infinite;
-  }
-  @keyframes tg-wing-blink{
-    0%, 94%, 100% { opacity: 0; }
-    96%, 97%      { opacity: 1; }
-  }
-  .corridor-wing:nth-child(1) .blink-closed{animation-delay:0s;}
-  .corridor-wing:nth-child(2) .blink-closed{animation-delay:0.7s;}
-  .corridor-wing:nth-child(3) .blink-closed{animation-delay:1.4s;}
-  .corridor-wing:nth-child(4) .blink-closed{animation-delay:2.1s;}
-  .corridor-wing:nth-child(5) .blink-closed{animation-delay:2.8s;}
-  .corridor-wing:nth-child(6) .blink-closed{animation-delay:3.5s;}
-  .corridor-wing:nth-child(7) .blink-closed{animation-delay:4.2s;}
-  .corridor-wing:nth-child(8) .blink-closed{animation-delay:4.9s;}
-  .wing-crossover{
-    position:absolute;top:0.6rem;left:0.6rem;z-index:3;
-    background:var(--band-elevated);border:1px solid var(--gold);
-    color:var(--gold-light);
-    font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.16em;
-    text-transform:uppercase;padding:0.28rem 0.55rem;
-    backdrop-filter:blur(4px);
-  }
+/* ── After Panel ────────────────────────────────────────────────────────── */
+.after-panel{padding:5rem 2rem 4rem;}
+body[data-tg-postchamber] .after-panel{display:none;}
+.ap-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--etl-blue);
+  margin-bottom:0.8rem;text-align:center;
+}
+.ap-title{
+  font-family:'Spectral',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);
+  font-weight:700;color:var(--text);line-height:1.1;letter-spacing:-0.01em;
+  text-align:center;margin-bottom:0.8rem;
+}
+.ap-title em{font-style:italic;color:var(--etl-blue);}
+.ap-lede{
+  font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);
+  font-size:1rem;line-height:1.5;text-align:center;max-width:720px;margin:0 auto 2.4rem;
+}
+.ap-paths{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;max-width:980px;margin:0 auto;}
+.ap-path{
+  padding:1.6rem 1.6rem 1.4rem;
+  border:1px solid rgba(76,123,163,0.22);border-top:4px solid var(--etl-blue);
+  background:#fff;display:flex;flex-direction:column;
+}
+.ap-path-num{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.24em;text-transform:uppercase;color:var(--etl-blue);margin-bottom:0.5rem;
+}
+.ap-path-title{font-family:'Spectral',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:0.6rem;}
+.ap-path-body{font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.65;color:var(--text-dim);margin-bottom:1rem;flex:1;}
+.ap-path-link{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--etl-blue);
+  text-decoration:none;align-self:flex-start;
+  padding-top:0.6rem;border-top:1px solid rgba(76,123,163,0.2);transition:color 0.18s;
+}
+.ap-path-link:hover{color:var(--stamp-blue);}
 
-  .wing-body{display:flex;flex-direction:column;gap:0.4rem;}
-  .corridor-wing.wing-right .wing-body{align-items:flex-end;}
-  .wing-name{
-    font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
-    color:var(--text);line-height:1.15;
-  }
-  .wing-role{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;
-  }
-  .wing-quote{
-    font-family:'Playfair Display',serif;font-style:italic;
-    font-size:1.25rem;color:var(--gold-light);line-height:1.55;
-    margin:0.2rem 0 1.2rem;max-width:520px;
-    padding:0.2rem 0 0.2rem 0.9rem;
-    border-left:2px solid var(--crimson-bright);
-  }
-  .corridor-wing.wing-right .wing-quote{
-    margin-left:auto;
-    padding:0.2rem 0.9rem 0.2rem 0;
-    border-left:none;border-right:2px solid var(--crimson-bright);
-  }
+/* ── Standalone Consult ─────────────────────────────────────────────────── */
+.standalone-consult{padding:5rem 2rem 4rem;background:var(--band-elevated);}
+.sc-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--etl-blue);
+  margin-bottom:0.8rem;text-align:center;
+}
+.sc-title{
+  font-family:'Spectral',serif;font-size:clamp(1.7rem,3.2vw,2.4rem);
+  font-weight:700;color:var(--text);line-height:1.15;letter-spacing:-0.01em;
+  text-align:center;margin-bottom:0.8rem;
+}
+.sc-title em{font-style:italic;color:var(--etl-blue);}
+.sc-lede{font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);font-size:1rem;line-height:1.5;text-align:center;max-width:680px;margin:0 auto 1.1rem;}
+.sc-intro{font-family:'Public Sans',sans-serif;color:var(--text-dim);font-size:0.88rem;line-height:1.7;text-align:center;max-width:780px;margin:0 auto 2.4rem;}
+.sc-card{max-width:780px;margin:0 auto;padding:2rem 2rem 1.8rem;border:1px solid rgba(76,123,163,0.22);border-left:5px solid var(--etl-blue);background:#fff;}
+.sc-card-name{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.26em;text-transform:uppercase;color:var(--etl-blue);
+  border-bottom:1px solid rgba(76,123,163,0.18);padding-bottom:0.45rem;margin-bottom:0.45rem;
+}
+.sc-card-sme{font-family:'Spectral',serif;font-style:italic;font-size:1rem;color:var(--text);margin-bottom:1rem;}
+.sc-card-pitch{font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.65;color:var(--text);margin-bottom:1.2rem;}
+.sc-card-deliv-label{font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--stamp-blue);margin-bottom:0.7rem;}
+.sc-card-deliv{list-style:none;padding:0;margin:0 0 1.2rem;display:flex;flex-direction:column;gap:0.8rem;}
+.sc-card-deliv li{font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.55;color:var(--text);padding-left:1rem;border-left:3px solid var(--uswds-gold);}
+.sc-card-deliv li b{font-family:'Spectral',serif;font-weight:600;color:var(--text);display:block;margin-bottom:0.12rem;font-size:0.95rem;}
+.sc-card-anchor{font-family:'Spectral',serif;font-style:italic;font-size:0.92rem;line-height:1.6;color:var(--text-dim);padding-top:1rem;border-top:1px solid rgba(76,123,163,0.16);margin-bottom:1.2rem;}
+.sc-card-cta{display:inline-block;font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:var(--etl-blue);padding:0.78rem 1.5rem;text-decoration:none;transition:background 0.18s;}
+.sc-card-cta:hover{background:var(--stamp-blue);}
 
-  .wing-actions{display:flex;gap:0.55rem;align-items:center;flex-wrap:wrap;}
-  .corridor-wing.wing-right .wing-actions{justify-content:flex-end;}
-  .wing-btn{
-    display:inline-flex;align-items:center;gap:0.4rem;
-    background:var(--band-elevated);border:1px solid var(--rule);color:var(--gold-light);
-    padding:0.55rem 0.9rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
-    text-transform:uppercase;font-weight:700;
-    transition:border-color 0.2s,color 0.2s,background 0.2s;
-  }
-  .wing-btn:hover{
-    border-color:var(--gold);color:var(--gold);background:rgba(168,42,42,0.06);
-  }
-  .wing-btn.is-loading{opacity:0.7;cursor:wait;}
-  .wing-btn.is-playing{
-    background:var(--gold);color:var(--ink);border-color:var(--gold);
-  }
-  .wing-pip{
-    display:inline-flex;align-items:center;justify-content:center;
-    width:16px;height:16px;border:1px solid currentColor;border-radius:50%;
-    font-size:0.5rem;line-height:1;
-  }
-  .wing-link{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--gold);text-decoration:none;
-    margin-left:0.3rem;border-bottom:1px solid transparent;
-    padding-bottom:0.1rem;transition:color 0.2s,border-color 0.2s;
-  }
-  .wing-link:hover{color:var(--gold-light);border-bottom-color:var(--gold-light);}
+/* ── Close Band ─────────────────────────────────────────────────────────── */
+.close-band{padding:7rem 2.5rem 8rem;text-align:center;background:var(--stamp-blue);}
+.close-statement{font-family:'Spectral',serif;font-size:clamp(2.2rem,4.8vw,3.5rem);font-weight:700;color:#fff;line-height:1.05;margin-bottom:1rem;letter-spacing:-0.01em;}
+.close-statement em{font-style:italic;color:var(--uswds-gold);}
+.close-sub{font-family:'Spectral',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,0.72);margin-bottom:3rem;}
 
-  /* Reduced motion: skip wing fade-in entrance entirely. */
-  @media (prefers-reduced-motion: reduce){
-    .corridor-wing,
-    .corridor-wing.wing-left,
-    .corridor-wing.wing-right{transform:none;opacity:1;transition:none;}
-    .wing-portrait .blink-closed{animation:none;}
-  }
+/* ── USWDS Identifier Footer ────────────────────────────────────────────── */
+.usa-identifier{background:#1b1b1b;color:rgba(255,255,255,0.7);font-family:'Public Sans',sans-serif;}
+.usa-identifier__section{border-top:1px solid rgba(255,255,255,0.1);}
+.usa-identifier__section--masthead{border-top:4px solid var(--etl-blue);}
+.usa-identifier__container{max-width:1180px;margin:0 auto;padding:1.8rem 2rem;display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+.usa-identifier__logo-img{
+  width:44px;height:44px;border-radius:50%;background:var(--etl-blue);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Spectral',serif;font-size:0.58rem;font-weight:700;
+  color:#fff;letter-spacing:0.06em;text-align:center;line-height:1.2;
+  text-decoration:none;flex-shrink:0;
+}
+.usa-identifier__identity{flex:1;}
+.usa-identifier__identity-domain{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.88);letter-spacing:0.04em;}
+.usa-identifier__identity-disclaimer{font-size:0.72rem;color:rgba(255,255,255,0.48);margin-top:0.18rem;}
+.usa-identifier__identity-disclaimer a{color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;}
+.usa-identifier__section--required-links .usa-identifier__container{justify-content:center;padding:1rem 2rem;}
+.usa-identifier__required-links-list{display:flex;flex-wrap:wrap;list-style:none;padding:0;margin:0;justify-content:center;}
+.usa-identifier__required-link{font-size:0.72rem;color:rgba(255,255,255,0.55);text-decoration:none;padding:0.22rem 1.1rem;border-right:1px solid rgba(255,255,255,0.12);display:inline-block;transition:color 0.15s;}
+.usa-identifier__required-links-item:last-child .usa-identifier__required-link{border-right:none;}
+.usa-identifier__required-link:hover{color:rgba(255,255,255,0.88);}
+.usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
+.usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
+.usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
 
-  /* The Threshold: the hall opens. */
-  .corridor-threshold{
-    padding:6rem 2rem 4rem;text-align:center;
-  }
-  .threshold-title{
-    font-family:'Playfair Display',serif;
-    font-size:clamp(2.5rem,5.5vw,4rem);font-weight:700;
-    color:var(--text);letter-spacing:-0.015em;line-height:1;
-    margin-bottom:1.2rem;
-  }
-  .threshold-lede{
-    max-width:640px;margin:0 auto;
-    font-size:1.2rem;line-height:1.6;color:var(--text);
-  }
-
-  /* The Judges section — 3x3 grid right after the threshold. */
-  .corridor-judges{padding:0 2rem 5rem;}
-  .corridor-judges-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
-    max-width:1080px;margin:0 auto;
-  }
-  .corridor-judge-card{
-    display:flex;flex-direction:column;
-    border:1px solid var(--rule);background:var(--band-elevated);
-    text-decoration:none;color:inherit;overflow:hidden;
-    transition:border-color 0.25s,transform 0.25s,box-shadow 0.3s;
-  }
-  .corridor-judge-card:hover{
-    border-color:var(--gold);
-    box-shadow:0 0 36px -6px rgba(200,48,43,0.45);
-    transform:translateY(-4px);
-  }
-  .corridor-judge-portrait{
-    position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
-    background:var(--band-elevated);border-bottom:1px solid var(--rule);
-  }
-  .corridor-judge-portrait img{
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;display:block;
-    transition:filter 0.3s,transform 0.4s;
-  }
-  .corridor-judge-card:hover .corridor-judge-portrait img{
-    filter:brightness(1.08);transform:scale(1.03);
-  }
-  .corridor-judge-portrait .blink-closed{
-    opacity:0;animation:tg-wing-blink 5.4s linear infinite;
-  }
-  .corridor-judges-grid .corridor-judge-card:nth-child(1) .blink-closed{animation-delay:0s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(2) .blink-closed{animation-delay:0.6s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(3) .blink-closed{animation-delay:1.2s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(4) .blink-closed{animation-delay:1.8s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(5) .blink-closed{animation-delay:2.4s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(6) .blink-closed{animation-delay:3.0s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(7) .blink-closed{animation-delay:3.6s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(8) .blink-closed{animation-delay:4.2s;}
-  .corridor-judges-grid .corridor-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
-  .corridor-judge-body{
-    padding:0.95rem 1.1rem 1.1rem;
-    background:rgba(168,42,42,0.04);
-  }
-  .corridor-judge-name{
-    font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;
-    color:var(--text);line-height:1.2;margin-bottom:0.3rem;
-  }
-  .corridor-judge-domain{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;
-    text-transform:uppercase;color:var(--gold);line-height:1.5;
-  }
-
-  /* After the Panel: two paths.
-     Side-by-side cards equal in weight presenting the two post-judges
-     options - take the routing report, or revisit the EPs for follow-up.
-     Hidden entirely in post-Chamber mode (the banner up top handles
-     the actual choice for returning clients). */
-  .after-panel{ padding:5rem 2rem 4rem; }
-  body[data-tg-postchamber] .after-panel{ display:none; }
-  .ap-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
-    text-align:center;
-  }
-  .ap-title{
-    font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem);
-    font-weight:700; color:var(--text); line-height:1.1;
-    letter-spacing:-0.01em; text-align:center; margin-bottom:1rem;
-  }
-  .ap-title em{ font-style:italic; color:var(--gold-light); }
-  .ap-lede{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:1.1rem; line-height:1.55;
-    text-align:center; max-width:720px; margin:0 auto 2.8rem;
-  }
-  .ap-paths{
-    display:grid; grid-template-columns:1fr 1fr; gap:1.4rem;
-    max-width:980px; margin:0 auto;
-  }
-  .ap-path{
-    padding:1.8rem 1.8rem 1.6rem;
-    border:1px solid var(--rule);
-    background:rgba(168,42,42,0.03);
-    display:flex; flex-direction:column;
-  }
-  .ap-path-num{
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.26em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:0.6rem;
-  }
-  .ap-path-title{
-    font-family:'Playfair Display',serif; font-size:1.45rem; font-weight:700;
-    color:var(--text); line-height:1.2; margin-bottom:0.7rem;
-  }
-  .ap-path-body{
-    font-family:'Cormorant Garamond',serif; font-size:1.05rem;
-    line-height:1.6; color:var(--text); margin-bottom:1.2rem; flex:1;
-  }
-  .ap-path-link{
-    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.22em;
-    text-transform:uppercase; color:var(--gold-light); text-decoration:none;
-    align-self:flex-start; padding-top:0.7rem;
-    border-top:1px solid rgba(200,48,43,0.25);
-    transition:color 0.18s;
-  }
-  .ap-path-link:hover{ color:var(--text); }
-  @media (max-width:760px){
-    .ap-paths{ grid-template-columns:1fr; }
-  }
-
-  /* Standalone Consult: a la carte EP services.
-     Sits below After the Panel as the second door of the business -
-     full Gauntlet OR direct to a single EP for targeted deliverables.
-     v1 ships Wren only; Reid and Arjun queued as their tools harden. */
-  .standalone-consult{ padding:5rem 2rem 4rem; }
-  .sc-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
-    text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
-    text-align:center;
-  }
-  .sc-title{
-    font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3.6vw,2.7rem);
-    font-weight:700; color:var(--text); line-height:1.15;
-    letter-spacing:-0.01em; text-align:center; margin-bottom:1rem;
-  }
-  .sc-title em{ font-style:italic; color:var(--gold-light); }
-  .sc-lede{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    color:var(--text-dim); font-size:1.12rem; line-height:1.55;
-    text-align:center; max-width:680px; margin:0 auto 1.4rem;
-  }
-  .sc-intro{
-    font-family:'Cormorant Garamond',serif;
-    color:var(--text); font-size:1.05rem; line-height:1.7;
-    text-align:center; max-width:780px; margin:0 auto 2.8rem;
-  }
-  .sc-card{
-    max-width:780px; margin:0 auto;
-    padding:2.2rem 2.2rem 2rem;
-    border:1px solid var(--rule);
-    background:rgba(168,42,42,0.04);
-    position:relative;
-  }
-  .sc-card-name{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.28em;
-    text-transform:uppercase; color:var(--gold);
-    border-bottom:1px solid rgba(200,48,43,0.25);
-    padding-bottom:0.5rem; margin-bottom:0.5rem;
-  }
-  .sc-card-sme{
-    font-family:'Playfair Display',serif; font-style:italic;
-    font-size:1.05rem; color:var(--text); margin-bottom:1.2rem;
-  }
-  .sc-card-pitch{
-    font-family:'Cormorant Garamond',serif; font-size:1.05rem;
-    line-height:1.65; color:var(--text); margin-bottom:1.4rem;
-  }
-  .sc-card-deliv-label{
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
-    text-transform:uppercase; color:var(--gold-light); margin-bottom:0.8rem;
-  }
-  .sc-card-deliv{
-    list-style:none; padding:0; margin:0 0 1.4rem;
-    display:flex; flex-direction:column; gap:0.9rem;
-  }
-  .sc-card-deliv li{
-    font-family:'Cormorant Garamond',serif; font-size:1.02rem;
-    line-height:1.55; color:var(--text);
-    padding-left:1rem; border-left:1px solid rgba(200,48,43,0.35);
-  }
-  .sc-card-deliv li b{
-    font-family:'Playfair Display',serif; font-weight:600;
-    color:var(--text); display:block; margin-bottom:0.15rem;
-    font-size:1.02rem;
-  }
-  .sc-card-anchor{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:1rem; line-height:1.6; color:var(--text-dim);
-    padding-top:1.2rem; border-top:1px solid rgba(200,48,43,0.2);
-    margin-bottom:1.4rem;
-  }
-  .sc-card-cta{
-    display:inline-block;
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
-    text-transform:uppercase; color:var(--ink);
-    background:var(--gold); padding:0.85rem 1.6rem;
-    text-decoration:none; transition:background 0.18s;
-  }
-  .sc-card-cta:hover{ background:var(--gold-light); }
-  @media (max-width:600px){
-    .sc-card{ padding:1.6rem 1.4rem 1.4rem; }
-  }
-
-  /* The Exit: routing report. */
-  .corridor-exit{padding:5rem 2rem 5rem;text-align:center;}
-  .exit-title{
-    font-family:'Playfair Display',serif;
-    font-size:clamp(2rem,4vw,2.8rem);font-weight:700;
-    color:var(--text);line-height:1.15;margin-bottom:1.2rem;
-    letter-spacing:-0.005em;
-  }
-  .exit-title em{font-style:italic;color:var(--gold-light);}
-  .exit-lede{
-    max-width:680px;margin:0 auto;
-    font-size:1.1rem;line-height:1.7;color:var(--text);
-  }
-
-  /* Mobile: corridor wings stack vertically, single column, no L/R flip. */
-  @media (max-width:740px){
-    .corridor-wing,
-    .corridor-wing.wing-right{
-      grid-template-columns:1fr;text-align:left;
-      gap:1.5rem;margin-bottom:3.5rem;
-    }
-    .corridor-wing.wing-right .wing-portrait,
-    .corridor-wing.wing-right .wing-body{order:unset;text-align:left;align-items:flex-start;}
-    .corridor-wing.wing-right .wing-quote{margin-left:0;}
-    .corridor-wing.wing-right .wing-actions{justify-content:flex-start;}
-    .wing-portrait{width:200px;height:200px;}
-    .corridor-judges-grid{grid-template-columns:repeat(2,1fr);gap:0.8rem;}
-  }
-
-  /* ── Closing CTA ─────────────────────────────────────────────────────────── */
-  .close-band{
-    padding:9rem 2.5rem 10rem;text-align:center;
-    /* Bright crimson glow at center reads as RED, not muddy brown - higher  */
-    /* opacity, brighter base color (#c0392b vs deep #5a1a1a).               */
-    background-image:
-      radial-gradient(ellipse 70% 55% at center, rgba(192,57,43,0.22) 0%, transparent 65%),
-      radial-gradient(ellipse 60% 40% at center top, rgba(168,42,42,0.12) 0%, transparent 60%),
-      repeating-linear-gradient(
-        135deg,
-        rgba(200,48,43,0.020) 0px,
-        rgba(200,48,43,0.020) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-    background-color:var(--ink);
-  }
-  .close-statement{
-    font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5.2vw,4rem);
-    font-weight:700;color:var(--text);line-height:1.05;
-    margin-bottom:1.2rem;letter-spacing:-0.01em;
-  }
-  .close-statement em{font-style:italic;color:var(--gold-light);}
-  .close-sub{
-    font-family:'Playfair Display',serif;font-style:italic;font-size:1.25rem;
-    color:var(--gold-light);margin-bottom:3.5rem;
-  }
-
-  /* ── Footer ──────────────────────────────────────────────────────────────── */
-  .home-footer{
-    border-top:1px solid var(--rule);padding:3.5rem 2.5rem 4rem;
-    background:var(--band-elevated);
-  }
-  .home-footer-inner{
-    max-width:1180px;margin:0 auto;
-    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;
-    gap:1.5rem;
-  }
-  .home-footer-brand{
-    font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.14em;
-    color:var(--gold);font-weight:700;
-  }
-  .home-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
-  .home-footer-links a{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
-  }
-  .home-footer-links a:hover{color:var(--gold);}
-
-  /* ── Mobile ──────────────────────────────────────────────────────────────── */
-  @media (max-width:740px){
-    .band,.hero,.corridor-intro,.corridor-wings,.corridor-threshold,.corridor-judges,.corridor-exit,.close-band{
-      padding-left:1.3rem;padding-right:1.3rem;
-    }
-    .hero{padding-top:3rem;padding-bottom:3rem;}
-    .tg-topbar{padding:0 1.3rem;}
-    .tg-topbar-nav{gap:1.3rem;}
-  }
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+@media(max-width:740px){
+  .hero{padding:3rem 1.3rem 2.5rem;}
+  .hero-split{flex-direction:column;gap:2rem;}
+  .hero-split-seal{order:-1;}
+  .hero-paths{grid-template-columns:1fr;}
+  .hero-path{border-right:none;border-bottom:1px solid rgba(255,255,255,0.12);}
+  .hero-path:last-child{border-bottom:none;}
+  .corridor-wing,.corridor-wing.wing-right{grid-template-columns:1fr;text-align:left;gap:1.3rem;margin-bottom:3rem;}
+  .corridor-wing.wing-right .wing-portrait,.corridor-wing.wing-right .wing-body{order:unset;text-align:left;align-items:flex-start;}
+  .corridor-wing.wing-right .wing-quote{margin-left:0;}
+  .corridor-wing.wing-right .wing-actions{justify-content:flex-start;}
+  .wing-portrait{width:200px;height:200px;}
+  .corridor-judges-grid{grid-template-columns:repeat(2,1fr);gap:0.7rem;}
+  .ap-paths{grid-template-columns:1fr;}
+  .tg-topbar{padding:0 1.2rem;}
+  .tg-topbar-nav{gap:1.2rem;}
+  .usa-banner{padding:0.4rem 1.2rem;}
+}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0P5JY8M1B"></script>
@@ -976,78 +579,51 @@
 </head>
 <body>
 
+<!-- ── USWDS Official Banner ─────────────────────────────────────────────── -->
+<div class="usa-banner" aria-label="Official website of the Emerging Technologies Laboratory">
+  <svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true" focusable="false" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <rect width="16" height="11" fill="#B22234"/>
+    <rect y="1.57" width="16" height="1.57" fill="white"/>
+    <rect y="3.14" width="16" height="1.57" fill="#B22234"/>
+    <rect y="4.71" width="16" height="1.57" fill="white"/>
+    <rect y="6.29" width="16" height="1.57" fill="#B22234"/>
+    <rect y="7.86" width="16" height="1.57" fill="white"/>
+    <rect y="9.43" width="16" height="1.57" fill="#B22234"/>
+    <rect width="6.86" height="5.5" fill="#3C3B6E"/>
+  </svg>
+  <span class="usa-banner-text">An official program of the <strong>Emerging Technologies Laboratory</strong></span>
+</div>
+
+<!-- ── Header ────────────────────────────────────────────────────────────── -->
 <header class="tg-topbar">
-  <a class="tg-topbar-logo" href="/">
-    <img src="Favicon.png" alt="" aria-hidden="true">
-    OPSEC Gauntlet
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
   </a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
   <nav class="tg-topbar-nav">
     <a href="/chamber.html">The Chamber</a>
-    <a href="/Helpers/">The Operational Specialists</a>
+    <a href="/Helpers/">Operational Specialists</a>
     <a href="/about.html">About</a>
-    <button type="button" id="theme-toggle" aria-label="Toggle light/dark mode"
-      style="background:transparent;border:1px solid var(--rule);color:var(--text);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;padding:6px 14px;cursor:pointer;margin-left:0.5rem;">
-      <span id="theme-toggle-label">Light</span>
-    </button>
   </nav>
 </header>
-<script>
-  // Light/dark theme toggle. Default: dark. Choice persists in localStorage.
-  // CSS variables in :root[data-theme="light"] and :root[data-theme="dark"]
-  // handle the actual color swap. Hardcoded color:var(--cream) text rules
-  // were converted to color:var(--text) so headlines/labels invert per theme.
-  (function(){
-    var stored = null;
-    try { stored = localStorage.getItem('opsec-theme'); } catch(_) {}
-    var theme = stored || 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-    document.addEventListener('DOMContentLoaded', function(){
-      var btn = document.getElementById('theme-toggle');
-      var label = document.getElementById('theme-toggle-label');
-      if (!btn || !label) return;
-      function syncLabel(){
-        var t = document.documentElement.getAttribute('data-theme');
-        label.textContent = (t === 'dark') ? 'Light' : 'Dark';
-      }
-      syncLabel();
-      btn.addEventListener('click', function(){
-        var current = document.documentElement.getAttribute('data-theme');
-        var next = (current === 'dark') ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('opsec-theme', next); } catch(_) {}
-        syncLabel();
-      });
-    });
-  })();
-</script>
 
-<!-- ── Positioning band ───────────────────────────────────────────────────
-     Top-of-site brand statement. Sits between the topbar and the hero.
-     Tells visitors immediately what OPSEC Gauntlet is (the cast, the
-     format, the substance) before they read anything else. Restrained
-     typography so the line carries on voice, not chrome. -->
+<!-- ── Positioning band ──────────────────────────────────────────────────── -->
 <section class="positioning-band">
   <p class="positioning-line">
     16 Sector Chiefs. 9 Op Specs. <em>Proprietary IP doing the work.</em>
   </p>
 </section>
 
-<!-- ── Post-Chamber banner ────────────────────────────────────────────────
-     Rendered when the client returns from the Chamber. The chamber stashes
-     a tg_post_chamber payload in sessionStorage; the script at the bottom
-     of this page reads it, fills in this banner, and adds
-     data-tg-postchamber to the body so the rest of the page can adapt
-     (corridor EP cards swap to post-Chamber lines; the closing "Ready
-     when you are" CTA hides). Hidden by default; CSS shows when the
-     body attribute is set. -->
+<!-- ── Post-Chamber banner ───────────────────────────────────────────────── -->
 <section class="post-chamber" id="post-chamber" hidden>
   <div class="pc-inner">
     <div class="pc-eyebrow">You walked OPSEC Gauntlet</div>
     <h2 class="pc-title">
-      Composite <span class="pc-composite" data-pc="composite">—</span>
+      Composite <span class="pc-composite" data-pc="composite">&#8212;</span>
       <span class="pc-of">/10</span>
-      <span class="pc-sep">·</span>
-      <span class="pc-verdict" data-pc="verdict">—</span>
+      <span class="pc-sep">&middot;</span>
+      <span class="pc-verdict" data-pc="verdict">&#8212;</span>
     </h2>
     <p class="pc-sub" data-pc="sub">Your report is ready, and the EPs in the corridor have seen your panel.</p>
     <div class="pc-actions">
@@ -1059,109 +635,131 @@
   </div>
 </section>
 
-<!-- ── Hero (audition) ──────────────────────────────────────────────────── -->
-<!-- Composite portrait on the right. Tagline + audio button on the left.   -->
-<!-- The hero is the lobby. Three starting lines, one card each. The user   -->
-<!-- picks where they enter the system based on what they have today: no    -->
-<!-- idea (go to Ivy), rough concept (pitch the EPs), polished idea (face   -->
-<!-- the panel). Each card stands alone with one description, one CTA, one  -->
-<!-- promised outcome. No narrator voice, no jargon at the cold open.       -->
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="hero proscenium">
   <div class="hero-split">
     <div class="hero-split-text">
-      <div class="hero-eyebrow">Diagnostic Critique Engine</div>
+      <div class="hero-eyebrow">&sect; 1 &middot; Diagnostic Critique Engine</div>
       <h1 class="hero-title">Where ideas become <em>reality</em>.</h1>
       <p class="hero-tagline">Choose your starting line. <strong>Find a gap, fix your pitch, or face the panel.</strong></p>
     </div>
-    <div class="hero-paths">
-      <article class="hero-path">
-        <div class="hero-path-num">1. Find an Idea</div>
-        <p class="hero-path-body">Don't have an idea yet? Sit down with Ms. Ivy, our Operational Specialist. She runs Dr. Oroszi's proprietary SLR method to find an unmapped intelligence gap and build your concept from scratch.</p>
-        <button class="hero-path-btn" type="button" data-tg-idea-open>[ Start with Ms. Ivy ]</button>
-        <p class="hero-path-outcome">Get a tailored concept blueprint.</p>
-      </article>
-      <article class="hero-path">
-        <div class="hero-path-num">2. Polish Your Pitch</div>
-        <p class="hero-path-body">Already have a rough concept? Sit down with our Operational Specialists to pressure-test it, find the gaps, and fix them.</p>
-        <a class="hero-path-btn" href="#corridor-wings">[ Pitch the EPs ]</a>
-        <p class="hero-path-outcome">Get a pitch readiness scorecard.</p>
-      </article>
-      <article class="hero-path">
-        <div class="hero-path-num">3. Face the Panel</div>
-        <p class="hero-path-body">Think your concept is ready and valuable to the intelligence community? Step into the Chamber. 16 Sector Chiefs deliver the verdict.</p>
-        <a class="hero-path-btn" href="/intake.html">[ Enter the Chamber ]</a>
-        <p class="hero-path-outcome">Get your official viability report.</p>
-      </article>
+
+    <!-- Program Seal -->
+    <div class="hero-split-seal" aria-hidden="true">
+      <svg width="200" height="200" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OPSEC Gauntlet Program Seal">
+        <defs>
+          <path id="ogTopArc"    d="M 19,110 A 91,91 0 0,0 201,110"/>
+          <path id="ogBottomArc" d="M 19,110 A 91,91 0 0,1 201,110"/>
+        </defs>
+        <!-- Background -->
+        <circle cx="110" cy="110" r="109" fill="#1a3455"/>
+        <!-- ETL Blue outer ring -->
+        <circle cx="110" cy="110" r="108" fill="none" stroke="#4C7BA3" stroke-width="9"/>
+        <!-- Gold inner ring -->
+        <circle cx="110" cy="110" r="97"  fill="none" stroke="#F0B429" stroke-width="4"/>
+        <!-- Inner separator -->
+        <circle cx="110" cy="110" r="91"  fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+        <!-- Shield body -->
+        <path d="M 80,62 H 140 Q 149,62 149,71 V 113 C 149,146 132,165 110,175 C 88,165 71,146 71,113 V 71 Q 71,62 80,62 Z"
+              fill="#28527a" stroke="#4C7BA3" stroke-width="1.5"/>
+        <!-- Shield lower band -->
+        <path d="M 71,128 L 71,113 C 71,146 88,165 110,175 C 132,165 149,146 149,113 L 149,128 C 149,143 133,160 110,170 C 87,160 71,143 71,128 Z"
+              fill="#4C7BA3" opacity="0.65"/>
+        <!-- Stars -->
+        <text x="110" y="82" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#F0B429" letter-spacing="5">&#9733; &#9733; &#9733;</text>
+        <!-- ETL mark -->
+        <text x="110" y="118" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="30" font-weight="700" fill="white" letter-spacing="2">ETL</text>
+        <!-- Chevron -->
+        <path d="M 97,148 L 110,158 L 123,148" fill="none" stroke="#F0B429" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Top arc label -->
+        <text font-family="Arial,sans-serif" font-size="11.5" font-weight="700" fill="#F0B429" letter-spacing="3.5">
+          <textPath href="#ogTopArc" startOffset="50%" text-anchor="middle">OPSEC GAUNTLET</textPath>
+        </text>
+        <!-- Bottom arc label -->
+        <text font-family="Arial,sans-serif" font-size="8.5" font-weight="600" fill="rgba(255,255,255,0.78)" letter-spacing="1.2">
+          <textPath href="#ogBottomArc" startOffset="50%" text-anchor="middle">EMERGING TECHNOLOGIES LABORATORY</textPath>
+        </text>
+      </svg>
     </div>
+  </div>
+
+  <div class="hero-paths">
+    <article class="hero-path">
+      <div class="hero-path-num">1. Find an Idea</div>
+      <p class="hero-path-body">Don't have an idea yet? Sit down with Ms. Ivy, our Operational Specialist. She runs Dr. Oroszi's proprietary SLR method to find an unmapped intelligence gap and build your concept from scratch.</p>
+      <button class="hero-path-btn" type="button" data-tg-idea-open>[ Start with Ms. Ivy ]</button>
+      <p class="hero-path-outcome">Get a tailored concept blueprint.</p>
+    </article>
+    <article class="hero-path">
+      <div class="hero-path-num">2. Polish Your Pitch</div>
+      <p class="hero-path-body">Already have a rough concept? Sit down with our Operational Specialists to pressure-test it, find the gaps, and fix them.</p>
+      <a class="hero-path-btn" href="#corridor-wings">[ Pitch the EPs ]</a>
+      <p class="hero-path-outcome">Get a pitch readiness scorecard.</p>
+    </article>
+    <article class="hero-path">
+      <div class="hero-path-num">3. Face the Panel</div>
+      <p class="hero-path-body">Think your concept is ready and valuable to the intelligence community? Step into the Chamber. 16 Sector Chiefs deliver the verdict.</p>
+      <a class="hero-path-btn" href="/intake.html">[ Enter the Chamber ]</a>
+      <p class="hero-path-outcome">Get your official viability report.</p>
+    </article>
   </div>
 </section>
 
-<!-- ── Samples Preview ──────────────────────────────────────────────────
-     Free-client proof block. Each card links to the finished deliverable
-     for that sample idea. Clients see what OPSEC Gauntlet produces before
-     they commit to walking it themselves. -->
+<!-- ── Samples Preview ────────────────────────────────────────────────────── -->
 <section class="samples-preview">
   <div class="samples-preview-head">
-    <div class="samples-preview-eyebrow">See the work first</div>
+    <div class="samples-preview-eyebrow">&sect; 2 &middot; See the work first</div>
     <h2 class="samples-preview-title">Eight ideas. <em>Eight finished deliverables.</em></h2>
-    <p class="samples-preview-sub">Each one walked OPSEC Gauntlet end-to-end. Pick any deliverable to see exactly what paid members produce - the EP reports, the judge findings, the verdict. Free to read. No signup.</p>
+    <p class="samples-preview-sub">Each one walked OPSEC Gauntlet end-to-end. Pick any deliverable to see exactly what paid members produce &mdash; the EP reports, the judge findings, the verdict. Free to read. No signup.</p>
   </div>
-
   <div class="samples-preview-grid" id="samples-preview-grid">
     <div class="samples-preview-loading">Loading samples...</div>
   </div>
-
   <p class="samples-preview-foot">
     Want to walk through a sample yourself? <a href="/samples.html">Browse the full sample library &rarr;</a>
   </p>
 </section>
 
 <script>
-  // Load samples and render the homepage preview cards. Pulled from the
-  // same /config/samples.json that powers /samples.html. We filter to
-  // entries with has_deliverable: true so the cards only link to working
-  // deliverable pages.
-  (function(){
-    const gridEl = document.getElementById('samples-preview-grid');
-    if (!gridEl) return;
-    function escapeHtml(s){
-      return String(s == null ? '' : s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-    }
-    fetch('/config/samples.json', { cache: 'no-store' })
-      .then(r => { if (!r.ok) throw new Error('samples ' + r.status); return r.json(); })
-      .then(data => {
-        const samples = Array.isArray(data.samples) ? data.samples : [];
-        const withDeliverable = samples.filter(s => s && s.has_deliverable);
-        if (!withDeliverable.length) {
-          gridEl.innerHTML = '<div class="samples-preview-error">No samples available right now.</div>';
-          return;
-        }
-        gridEl.innerHTML = withDeliverable.map(s => ''
-          + '<a class="sp-card" href="/report.html?sample=' + encodeURIComponent(s.id) + '">'
-          +   '<div class="sp-card-cat">' + escapeHtml(s.category || 'Idea') + '</div>'
-          +   '<div class="sp-card-title">' + escapeHtml(s.title) + '</div>'
-          +   (s.tagline ? '<div class="sp-card-tagline">' + escapeHtml(s.tagline) + '</div>' : '')
-          +   '<div class="sp-card-cta">See deliverable &rarr;</div>'
-          + '</a>'
-        ).join('');
-      })
-      .catch(err => {
-        console.warn('[samples-preview]', err);
-        gridEl.innerHTML = '<div class="samples-preview-error">Could not load samples. Refresh to try again.</div>';
-      });
-  })();
+(function(){
+  var gridEl = document.getElementById('samples-preview-grid');
+  if (!gridEl) return;
+  function escapeHtml(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+  fetch('/config/samples.json', { cache: 'no-store' })
+    .then(function(r){ if (!r.ok) throw new Error('samples ' + r.status); return r.json(); })
+    .then(function(data){
+      var samples = Array.isArray(data.samples) ? data.samples : [];
+      var withDeliverable = samples.filter(function(s){ return s && s.has_deliverable; });
+      if (!withDeliverable.length) {
+        gridEl.innerHTML = '<div class="samples-preview-error">No samples available right now.</div>';
+        return;
+      }
+      gridEl.innerHTML = withDeliverable.map(function(s){
+        return '<a class="sp-card" href="/report.html?sample=' + encodeURIComponent(s.id) + '">'
+          + '<div class="sp-card-cat">' + escapeHtml(s.category || 'Idea') + '</div>'
+          + '<div class="sp-card-title">' + escapeHtml(s.title) + '</div>'
+          + (s.tagline ? '<div class="sp-card-tagline">' + escapeHtml(s.tagline) + '</div>' : '')
+          + '<div class="sp-card-cta">See deliverable &rarr;</div>'
+          + '</a>';
+      }).join('');
+    })
+    .catch(function(err){
+      console.warn('[samples-preview]', err);
+      gridEl.innerHTML = '<div class="samples-preview-error">Could not load samples. Refresh to try again.</div>';
+    });
+})();
 </script>
 
 <div class="footlight"></div>
 
-<!-- ── The Corridor intro ─────────────────────────────────────────────── -->
-<!-- Primes the metaphor. The page IS OPSEC Gauntlet. The user walks down a   -->
-<!-- corridor, helpers flanking from each side, chamber at the end.         -->
-<section class="corridor-intro velvet">
+<!-- ── The Corridor intro ────────────────────────────────────────────────── -->
+<section class="corridor-intro">
   <div class="band-inner narrow">
-    <div class="corridor-eyebrow">The Corridor</div>
+    <div class="corridor-eyebrow">&sect; 3 &middot; The Corridor</div>
     <h2 class="corridor-title">Walk OPSEC Gauntlet. <em>The Operational Specialists flank you.</em></h2>
     <p class="corridor-lede">Nine specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
     <p class="corridor-personalize-line">
@@ -1171,7 +769,7 @@
   </div>
 </section>
 
-<!-- ── The Wings: 9 helpers, alternating left / right ─────────────────── -->
+<!-- ── The Wings: 9 helpers ──────────────────────────────────────────────── -->
 <section class="corridor-wings" id="corridor-wings">
   <div class="corridor-wing wing-left" data-wing-idx="0">
     <div class="wing-portrait">
@@ -1185,9 +783,9 @@
       <div class="wing-role">The Librarian</div>
       <p class="wing-quote">"If you do not have an idea yet, that is what I am here for. Gaps are where new ideas live. I help you find them."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="ms_ivy" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="ms_ivy" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
         <button class="wing-btn" type="button" data-tg-im data-character="ms_ivy" data-name="Ms. Ivy">IM Ms. Ivy</button>
-        <a class="wing-link" href="/Helpers/ivy-librarian.html">Step into her office →</a>
+        <a class="wing-link" href="/Helpers/ivy-librarian.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1204,9 +802,9 @@
       <div class="wing-role">The Scout</div>
       <p class="wing-quote">"I find what's already out there, where your idea can work, where to focus first, and where else the same mechanic could live. Finding something nobody else has found yet is still my favorite part."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="wren_calloway" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="wren_calloway" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
         <button class="wing-btn" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM Wren</button>
-        <a class="wing-link" href="/Helpers/wren-scout.html">Step into her office →</a>
+        <a class="wing-link" href="/Helpers/wren-scout.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1223,9 +821,9 @@
       <div class="wing-role">The Screener</div>
       <p class="wing-quote">"I read your idea against twenty years of patterns. I tell you which one yours fits. What worked. What killed it. Where your variant sits. Honest. Not unkind."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
         <button class="wing-btn" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM Carol</button>
-        <a class="wing-link" href="/Helpers/carol-screener.html">Step into her office →</a>
+        <a class="wing-link" href="/Helpers/carol-screener.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1242,9 +840,9 @@
       <div class="wing-role">The Behaviorist</div>
       <p class="wing-quote">"People buy emotion and justify with logic. I tell you what your customer actually wants to feel, then I tell you which other EP turns that into a logo, a post, a pitch. You need us all."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
         <button class="wing-btn" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM Matthew</button>
-        <a class="wing-link" href="/Helpers/matthew-behaviorist.html">Step into his office →</a>
+        <a class="wing-link" href="/Helpers/matthew-behaviorist.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1261,9 +859,9 @@
       <div class="wing-role">The Make-It-Real Expert</div>
       <p class="wing-quote">"Most people kill their idea before they make it real, not because the idea was bad, but because they never figured out who to call. I am here so that does not happen to you."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="arjun_mehta" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="arjun_mehta" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
         <button class="wing-btn" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM Arjun</button>
-        <a class="wing-link" href="/Helpers/arjun-delivery.html">Step into his office →</a>
+        <a class="wing-link" href="/Helpers/arjun-delivery.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1280,9 +878,9 @@
       <div class="wing-role">The Influencer</div>
       <p class="wing-quote">"Most marketing sounds like marketing. Mine doesn't. That gap is what I figured out."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="zara_cole" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="zara_cole" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
         <button class="wing-btn" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM Zara</button>
-        <a class="wing-link" href="/Helpers/zara-influencer.html">Step into her office →</a>
+        <a class="wing-link" href="/Helpers/zara-influencer.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1299,9 +897,9 @@
       <div class="wing-role">The Marketing Expert</div>
       <p class="wing-quote">"I dress the truth up every day for clients. I resent every minute of it. On this platform I do not have to soften it."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="reid_callum" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="reid_callum" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
         <button class="wing-btn" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM Reid</button>
-        <a class="wing-link" href="/Helpers/reid-marketing.html">Step into his office →</a>
+        <a class="wing-link" href="/Helpers/reid-marketing.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1319,9 +917,9 @@
       <div class="wing-role">The Rewrite Partner</div>
       <p class="wing-quote">"I tell you what is not working on the page. Not what is wrong with you. There is a difference."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="jules" data-mode="role"><span class="wing-pip">▶</span>Hear her</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="jules" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
         <button class="wing-btn" type="button" data-tg-im data-character="jules" data-name="Jules">IM Jules</button>
-        <a class="wing-link" href="/Helpers/jules-rewrite.html">Step into her office →</a>
+        <a class="wing-link" href="/Helpers/jules-rewrite.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1338,9 +936,9 @@
       <div class="wing-role">The Coach</div>
       <p class="wing-quote">"I tell you which three judges to face, what they're going to ask, and how to walk in like you've already been there. Let's go."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="grant_ellis" data-mode="role"><span class="wing-pip">▶</span>Hear him</button>
+        <button class="wing-btn" type="button" data-tg-voice data-character="grant_ellis" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
         <button class="wing-btn" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM Grant</button>
-        <a class="wing-link" href="/Helpers/grant-coach.html">Step into his office →</a>
+        <a class="wing-link" href="/Helpers/grant-coach.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
@@ -1348,16 +946,16 @@
 
 <div class="footlight"></div>
 
-<!-- ── The Threshold: the hall opens ───────────────────────────────────── -->
+<!-- ── The Threshold ─────────────────────────────────────────────────────── -->
 <section class="corridor-threshold velvet-elevated proscenium">
   <div class="band-inner narrow">
-    <div class="corridor-eyebrow">You arrive at</div>
+    <div class="corridor-eyebrow">&sect; 4 &middot; You arrive at</div>
     <h2 class="threshold-title">The Chamber.</h2>
     <p class="threshold-lede">The hall opens. Nine judges, seated. Three will evaluate your idea. Six will chime in. The lights are on.</p>
   </div>
 </section>
 
-<!-- ── The Judges: 3x3 grid ────────────────────────────────────────────── -->
+<!-- ── The Judges: 3x3 grid ──────────────────────────────────────────────── -->
 <section class="corridor-judges velvet-elevated proscenium">
   <div class="band-inner">
     <div class="corridor-judges-grid" role="navigation" aria-label="Judges">
@@ -1457,18 +1055,12 @@
 
 <div class="footlight"></div>
 
-<!-- ── After the Panel: two paths ─────────────────────────────────────────
-     When clients finish with the judges, they pick one of two paths:
-     (1) take their routing report (the artifact, downloadable), or
-     (2) revisit the EPs for follow-up help (each office has a tool).
-     This section presents both paths at equal weight. Hidden in
-     post-Chamber mode (the banner up top handles the real choice). -->
+<!-- ── After the Panel ────────────────────────────────────────────────────── -->
 <section class="after-panel velvet">
   <div class="band-inner narrow">
-    <div class="ap-eyebrow">After the panel</div>
+    <div class="ap-eyebrow">&sect; 5 &middot; After the panel</div>
     <h2 class="ap-title">Two <em>paths</em>.</h2>
     <p class="ap-lede">When clients finish with the judges, they pick one of two next moves.</p>
-
     <div class="ap-paths">
       <article class="ap-path">
         <div class="ap-path-num">Path 1</div>
@@ -1488,31 +1080,24 @@
 
 <div class="footlight"></div>
 
-<!-- ── Standalone Consult: a la carte EP services ─────────────────────────
-     Second door of the business. Clients who know what they need can
-     skip the panel and book a single EP for targeted deliverables.
-     v1 ships Wren only (live demand: patent help). Other EPs queued. -->
+<!-- ── Standalone Consult ────────────────────────────────────────────────── -->
 <section class="standalone-consult velvet">
   <div class="band-inner narrow">
-    <div class="sc-eyebrow">Standalone Consults</div>
+    <div class="sc-eyebrow">&sect; 6 &middot; Standalone Consults</div>
     <h2 class="sc-title">Skip the panel. Book a <em>Standalone Consult</em>.</h2>
     <p class="sc-lede">A direct session with a single EP. Real deliverables, no full Gauntlet.</p>
     <p class="sc-intro">The standard Gauntlet evaluates broad market viability across eight dimensions. If you already know your market but face a specific legal, technical, or messaging hurdle, bypass the judicial panel entirely. Book an isolated consultation with a single Operational Specialist for targeted, execution-ready assets.</p>
-
     <article class="sc-card">
       <div class="sc-card-name">Wren Calloway</div>
       <div class="sc-card-sme">SME: Patent Screening &amp; Prior-Art Assessment</div>
       <p class="sc-card-pitch">A business professor or technical founder does not always need an elevator pitch; sometimes they just need to know if someone else built their product first. Wren skips the marketing narrative and runs clinical prior-art screening against active patent databases.</p>
-
       <div class="sc-card-deliv-label">What you walk out of the office with</div>
       <ul class="sc-card-deliv">
         <li><b>Prior-Art Screening Memo</b>A direct comparison of your product architecture against existing public filings and claims.</li>
         <li><b>Competitive Validation Matrix</b>An assessment mapping exactly where your technology overlaps with current market intellectual property and where your defensible space remains.</li>
         <li><b>Filing Pathway Recommendation</b>A strategic brief detailing the three distinct execution paths for your provisional application based on current USPTO landscape density.</li>
       </ul>
-
       <p class="sc-card-anchor">Instead of paying a boutique firm $1,500 for an initial patent search, utilize Wren to stress-test your claims and map your regulatory route before involving formal counsel.</p>
-
       <a class="sc-card-cta" href="/wren.html">Book a Consult &rarr;</a>
     </article>
   </div>
@@ -1520,97 +1105,113 @@
 
 <div class="footlight"></div>
 
-<footer class="home-footer">
-  <div class="home-footer-inner">
-    <div class="home-footer-brand">OPSEC Gauntlet</div>
-    <nav class="home-footer-links">
-      <a href="/chamber.html">The Chamber</a>
-      <a href="/Helpers/">The Operational Specialists</a>
-      <a href="/samples.html">Sample Ideas</a>
-      <a href="/about.html">About</a>
-      <a href="#" onclick="if(window.TGWelcome){TGWelcome.open();return false;}">Personalize</a>
-    </nav>
+<!-- ── Closing CTA ────────────────────────────────────────────────────────── -->
+<section class="close-band">
+  <div class="band-inner narrow">
+    <p class="close-statement">Ready when <em>you</em> are.</p>
+    <p class="close-sub">The panel doesn't know you're coming.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="/intake.html">Enter the Chamber &rarr;</a>
+      <a class="btn btn-outline" href="/Helpers/">Meet the Specialists</a>
+    </div>
   </div>
+</section>
+
+<!-- ── USWDS Identifier Footer ─────────────────────────────────────────────── -->
+<footer class="usa-identifier" aria-label="Agency identifier">
+  <section class="usa-identifier__section usa-identifier__section--masthead">
+    <div class="usa-identifier__container">
+      <a href="https://emerging-tech-lab.com" class="usa-identifier__logo-img" aria-label="Emerging Technologies Laboratory">ETL</a>
+      <div class="usa-identifier__identity">
+        <p class="usa-identifier__identity-domain">opsec-gauntlet.netlify.app</p>
+        <p class="usa-identifier__identity-disclaimer">
+          An official program of the <a href="https://emerging-tech-lab.com">Emerging Technologies Laboratory</a>,
+          directed by Dr. Terry Oroszi.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--required-links">
+    <div class="usa-identifier__container">
+      <nav aria-label="Important links">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item"><a href="/about.html" class="usa-identifier__required-link">About</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/privacy.html" class="usa-identifier__required-link">Privacy Policy</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/accessibility.html" class="usa-identifier__required-link">Accessibility</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#foia" class="usa-identifier__required-link">FOIA</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#inspector-general" class="usa-identifier__required-link">Inspector General</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#no-fear" class="usa-identifier__required-link">No FEAR Act</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--usagov">
+    <div class="usa-identifier__container">
+      <p class="usa-identifier__usagov-description">
+        Looking for U.S. government information and services? Visit <a href="https://usa.gov">USA.gov</a>
+      </p>
+    </div>
+  </section>
 </footer>
 
 <script>
-// Corridor reveal: each wing fades in + slides to center as it scrolls
-// into view. Runs once per wing. Honors prefers-reduced-motion (CSS rule
-// already short-circuits the animation in that case; this script just
-// skips observing).
+// Corridor reveal: wings fade + slide in as they scroll into view
 (function(){
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const wings = document.querySelectorAll('.corridor-wing');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var wings = document.querySelectorAll('.corridor-wing');
   if (reduce || !('IntersectionObserver' in window)){
-    wings.forEach(w => w.classList.add('is-visible'));
+    wings.forEach(function(w){ w.classList.add('is-visible'); });
     return;
   }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
       if (e.isIntersecting){
         e.target.classList.add('is-visible');
         observer.unobserve(e.target);
       }
     });
   }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
-  wings.forEach(w => observer.observe(w));
+  wings.forEach(function(w){ observer.observe(w); });
 })();
 </script>
 
-<!-- ── Post-Chamber activation ──────────────────────────────────────────
-     Reads the tg_post_chamber payload stashed by chamber.html when the
-     client finished the panel. If present, the body picks up
-     data-tg-postchamber, the banner at top fills in with composite +
-     verdict, the download buttons wire to PDF / DOCX, and each corridor
-     EP's wing-quote swaps to a templated post-Chamber line. -->
+<!-- ── Post-Chamber activation ──────────────────────────────────────────── -->
 <script>
 (function(){
-  // Read the post-Chamber payload from sessionStorage. Trigger condition:
-  // either the URL carries ?postchamber=1 (set by chamber.html on
-  // redirect) OR the payload exists from a recent chamber run. Either
-  // way the payload itself is the source of truth.
-  let pkg = null;
+  var pkg = null;
   try {
-    const raw = sessionStorage.getItem('tg_post_chamber');
+    var raw = sessionStorage.getItem('tg_post_chamber');
     if (raw) pkg = JSON.parse(raw);
   } catch(_){}
   if (!pkg || !pkg.evaluation_id) return;
 
   document.body.setAttribute('data-tg-postchamber', '1');
 
-  // ── Fill the banner ─────────────────────────────────────────────────
-  const composite10 = Math.round((pkg.composite_score || 0) * 100) / 10;
-  const verdictLabel = pkg.verdict === 'agreement' ? 'Agreement'
-                     : pkg.verdict === 'conflict'  ? 'Split panel'
-                     : 'Partial alignment';
-  const setText = (sel, txt) => {
-    const el = document.querySelector(sel);
+  var composite10 = Math.round((pkg.composite_score || 0) * 100) / 10;
+  var verdictLabel = pkg.verdict === 'agreement' ? 'Agreement'
+                   : pkg.verdict === 'conflict'  ? 'Split panel'
+                   : 'Partial alignment';
+  function setText(sel, txt){
+    var el = document.querySelector(sel);
     if (el) el.textContent = txt;
-  };
+  }
   setText('[data-pc="composite"]', composite10);
   setText('[data-pc="verdict"]',   verdictLabel);
 
-  const banner = document.getElementById('post-chamber');
+  var banner = document.getElementById('post-chamber');
   if (banner) banner.removeAttribute('hidden');
 
-  // Wire downloads + report link.
-  const reportEl = document.getElementById('pc-report');
+  var reportEl = document.getElementById('pc-report');
   if (reportEl) reportEl.setAttribute('href', '/report.html?evaluation=' + encodeURIComponent(pkg.evaluation_id));
-  const pdfEl  = document.getElementById('pc-pdf');
-  const docxEl = document.getElementById('pc-docx');
-  if (pdfEl) pdfEl.addEventListener('click', (e) => {
+  var pdfEl  = document.getElementById('pc-pdf');
+  var docxEl = document.getElementById('pc-docx');
+  if (pdfEl) pdfEl.addEventListener('click', function(e){
     e.preventDefault();
-    // Native print-to-PDF lives on report.html; bounce there and trigger.
     window.location.href = '/report.html?evaluation=' + encodeURIComponent(pkg.evaluation_id) + '#print';
   });
-  if (docxEl) docxEl.setAttribute('data-tg-export', '');  // tg-export.js delegated handler picks this up
+  if (docxEl) docxEl.setAttribute('data-tg-export', '');
 
-  // ── Per-EP post-Chamber lines ───────────────────────────────────────
-  // Each EP gets ONE templated line. Variables: {{name}}, {{composite}},
-  // {{verdict}}, {{weakestDim}}, {{weakestScore}}, {{strongestDim}}.
-  // Lines are calibrated to reference what they specifically can do
-  // next - not generic flattery. Each EP claims a specific follow-up.
-  const EP_LINES = {
+  var EP_LINES = {
     ms_ivy:        '{{name}}, evidence came in at {{evidenceScore}}. The panel was right to push. Walk back down - I have three frameworks that ground this and one literature gap you can plant a flag in.',
     wren_calloway: 'Composite {{composite}}. Now the question is whether anyone has already claimed this. Step into my office - I run live prior-art searches on Google Patents and tell you what space remains.',
     carol_haynes:  '{{name}}, the panel landed at {{composite}}. I read your brief against the pattern library before the chamber - now I want to read the panel feedback against it too. Come find me.',
@@ -1623,35 +1224,34 @@
   };
 
   function dimAvg(dim){
-    const m = (pkg.matrix && pkg.matrix[dim]) ? pkg.matrix[dim] : null;
+    var m = (pkg.matrix && pkg.matrix[dim]) ? pkg.matrix[dim] : null;
     if (!m) return null;
-    const scores = Object.values(m).filter(s => typeof s === 'number');
+    var scores = Object.values(m).filter(function(s){ return typeof s === 'number'; });
     if (!scores.length) return null;
-    return scores.reduce((a,b) => a+b, 0) / scores.length;
+    return scores.reduce(function(a,b){ return a+b; }, 0) / scores.length;
   }
   function dimLabel(dim){
-    const map = { clarity:'Clarity', viability:'Viability', risk:'Risk',
+    var map = { clarity:'Clarity', viability:'Viability', risk:'Risk',
       narrative:'Narrative', evidence:'Evidence', cultural:'Cultural',
       psych:'Psych', compliance:'Compliance' };
     return map[dim] || dim;
   }
 
-  // Find the weakest + strongest dimensions for use in templates.
-  let weakestDim = null, weakestScore = 10;
-  let strongestDim = null, strongestScore = 0;
+  var weakestDim = null, weakestScore = 10;
+  var strongestDim = null, strongestScore = 0;
   if (pkg.matrix) {
-    for (const dim of Object.keys(pkg.matrix)) {
-      const a = dimAvg(dim);
-      if (a == null) continue;
+    Object.keys(pkg.matrix).forEach(function(dim){
+      var a = dimAvg(dim);
+      if (a == null) return;
       if (a < weakestScore)   { weakestScore = a;   weakestDim = dim; }
       if (a > strongestScore) { strongestScore = a; strongestDim = dim; }
-    }
+    });
   }
 
-  const psychAvg = dimAvg('psych');
-  const evidenceAvg = dimAvg('evidence');
+  var psychAvg    = dimAvg('psych');
+  var evidenceAvg = dimAvg('evidence');
 
-  const ctx = {
+  var ctx = {
     name:          (pkg.visitor_name || '').trim(),
     composite:     composite10.toFixed(1),
     verdict:       verdictLabel,
@@ -1661,99 +1261,85 @@
     strongestScore:strongestScore > 0 ? strongestScore.toFixed(1) : '?',
     psychScore:    psychAvg != null ? psychAvg.toFixed(1) : '?',
     psychLabel:    psychAvg == null ? 'unscored'
-                  : psychAvg >= 7 ? 'strong - well over the line'
-                  : psychAvg >= 5 ? 'serviceable but underdeveloped'
-                  : 'thin - the panel saw it',
+                 : psychAvg >= 7 ? 'strong - well over the line'
+                 : psychAvg >= 5 ? 'serviceable but underdeveloped'
+                 : 'thin - the panel saw it',
     psychFollowup: psychAvg == null ? 'Walk to my office - I profile the actual buyer.'
-                  : psychAvg >= 7 ? 'Walk to my office and let us sharpen the trigger moment so the buyer reads themselves in your copy.'
-                  : 'Walk to my office - I name the emotional driver, the trigger moment, and the silent objections the brief never addressed.',
+                 : psychAvg >= 7 ? 'Walk to my office and let us sharpen the trigger moment so the buyer reads themselves in your copy.'
+                 : 'Walk to my office - I name the emotional driver, the trigger moment, and the silent objections the brief never addressed.',
     evidenceScore: evidenceAvg != null ? evidenceAvg.toFixed(1) : '?',
   };
 
   function fill(tpl){
-    return String(tpl || '').replace(/\{\{(\w+)\}\}/g, (_, key) => {
+    return String(tpl || '').replace(/\{\{(\w+)\}\}/g, function(_,key){
       return key in ctx ? String(ctx[key]) : '';
     }).replace(/\s+([,\.])/g, '$1').trim();
   }
-  // Strip leading vocative if no name available.
   function cleanLeadingComma(s){
     if (ctx.name) return s;
-    return s.replace(/^,\s*/, '').replace(/^(.)/, m => m.toUpperCase());
+    return s.replace(/^,\s*/, '').replace(/^(.)/, function(m){ return m.toUpperCase(); });
   }
 
-  // Replace each wing's quote with the templated line. Wing identity comes
-  // from the IM button's data-character attribute (always present on
-  // every wing). These templates render immediately; the live LLM quotes
-  // (below) replace them once the function responds.
-  function applyQuoteToWing(epId, line, options) {
-    const wing = document.querySelector('.corridor-wing [data-character="' + epId + '"]');
+  function applyQuoteToWing(epId, line, options){
+    var wing = document.querySelector('.corridor-wing [data-character="' + epId + '"]');
     if (!wing) return;
-    const wingEl  = wing.closest('.corridor-wing');
+    var wingEl  = wing.closest('.corridor-wing');
     if (!wingEl) return;
-    const quoteEl = wingEl.querySelector('.wing-quote');
+    var quoteEl = wingEl.querySelector('.wing-quote');
     if (!quoteEl) return;
-    quoteEl.textContent = '"' + line + '"';
+    quoteEl.textContent = '“' + line + '”';
     quoteEl.classList.add('is-postchamber');
     if (options && options.live) quoteEl.classList.add('is-postchamber-live');
   }
 
-  document.querySelectorAll('.corridor-wing').forEach(wing => {
-    const imBtn = wing.querySelector('[data-character]');
-    const epId  = imBtn ? imBtn.getAttribute('data-character') : null;
+  document.querySelectorAll('.corridor-wing').forEach(function(wing){
+    var imBtn = wing.querySelector('[data-character]');
+    var epId  = imBtn ? imBtn.getAttribute('data-character') : null;
     if (!epId) return;
-    const tpl = EP_LINES[epId];
+    var tpl = EP_LINES[epId];
     if (!tpl) return;
     applyQuoteToWing(epId, cleanLeadingComma(fill(tpl)), { live: false });
   });
 
-  // ── V2: live per-EP quotes from the LLM ──────────────────────────────
-  // Templates above render immediately. In parallel, we call the
-  // postchamber-quotes function which reads the actual judge critiques
-  // and writes per-EP follow-up lines. When the response lands we
-  // replace the templated quotes. Cached in sessionStorage per
-  // evaluation so a page refresh does not re-bill Anthropic.
   (function loadLiveQuotes(){
     if (!pkg.evaluation_id) return;
-    const cacheKey = 'tg_post_chamber_quotes_' + pkg.evaluation_id;
-    let cached = null;
+    var cacheKey = 'tg_post_chamber_quotes_' + pkg.evaluation_id;
+    var cached = null;
     try {
-      const raw = sessionStorage.getItem(cacheKey);
-      if (raw) cached = JSON.parse(raw);
+      var raw2 = sessionStorage.getItem(cacheKey);
+      if (raw2) cached = JSON.parse(raw2);
     } catch(_){}
-    if (cached && cached.quotes && typeof cached.quotes === 'object') {
+    if (cached && cached.quotes && typeof cached.quotes === 'object'){
       applyLiveQuotes(cached.quotes);
       return;
     }
-
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort('timeout'), 28000);
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort('timeout'); }, 28000);
     fetch('/.netlify/functions/tg-ep-postchamber-quotes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ evaluation_id: pkg.evaluation_id, name: pkg.visitor_name || '' }),
       signal: controller.signal,
     })
-      .then(r => {
+      .then(function(r){
         clearTimeout(timer);
         if (!r.ok) throw new Error('postchamber-quotes ' + r.status);
         return r.json();
       })
-      .then(data => {
+      .then(function(data){
         if (!data || !data.quotes) return;
         try { sessionStorage.setItem(cacheKey, JSON.stringify(data)); } catch(_){}
         applyLiveQuotes(data.quotes);
       })
-      .catch(err => {
+      .catch(function(err){
         clearTimeout(timer);
-        // Silent failure - the templates already shipped. The client
-        // does not see the upgrade but the corridor still reads.
         console.warn('[postchamber-quotes]', err && err.message);
       });
   })();
 
-  function applyLiveQuotes(quotes) {
-    Object.keys(quotes || {}).forEach(epId => {
-      const line = String(quotes[epId] || '').trim();
+  function applyLiveQuotes(quotes){
+    Object.keys(quotes || {}).forEach(function(epId){
+      var line = String(quotes[epId] || '').trim();
       if (!line) return;
       applyQuoteToWing(epId, line, { live: true });
     });
