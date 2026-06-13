@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OPSEC Gauntlet · Emerging Technologies Laboratory</title>
-<meta name="description" content="OPSEC Gauntlet is a diagnostic critique engine. Nine expert AI judges, eight evaluation dimensions, math-driven scoring. Not a verdict. A map of where your idea goes next.">
+<meta name="description" content="OPSEC Gauntlet is a structured operational review engine. Sixteen critical infrastructure judges, eight evaluation dimensions, math-driven scoring. Not a verdict. A map of where your idea goes next.">
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="apple-touch-icon" href="Favicon.png">
 <meta property="og:type" content="website">
@@ -461,8 +461,8 @@ body[data-tg-postchamber] .wing-quote.is-postchamber{
 /* ── Judges ─────────────────────────────────────────────────────────────── */
 .corridor-judges{padding:0 2rem 5rem;background:var(--stamp-blue);}
 .corridor-judges-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
-  max-width:1080px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  max-width:1280px;margin:0 auto;
 }
 .corridor-judge-card{
   display:flex;flex-direction:column;
@@ -490,6 +490,23 @@ body[data-tg-postchamber] .wing-quote.is-postchamber{
 .corridor-judges-grid .corridor-judge-card:nth-child(7) .blink-closed{animation-delay:3.6s;}
 .corridor-judges-grid .corridor-judge-card:nth-child(8) .blink-closed{animation-delay:4.2s;}
 .corridor-judges-grid .corridor-judge-card:nth-child(9) .blink-closed{animation-delay:4.8s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(10) .blink-closed{animation-delay:0.3s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(11) .blink-closed{animation-delay:0.9s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(12) .blink-closed{animation-delay:1.5s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(13) .blink-closed{animation-delay:2.1s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(14) .blink-closed{animation-delay:2.7s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(15) .blink-closed{animation-delay:3.3s;}
+.corridor-judges-grid .corridor-judge-card:nth-child(16) .blink-closed{animation-delay:3.9s;}
+.corridor-judge-initials-fill{
+  width:100%;height:100%;background:rgba(40,82,122,0.7);
+  display:flex;align-items:center;justify-content:center;
+  transition:filter 0.3s;
+}
+.corridor-judge-card:hover .corridor-judge-initials-fill{filter:brightness(1.18);}
+.corridor-judge-initials-fill span{
+  font-family:'Spectral',serif;font-style:italic;
+  font-size:1.8rem;font-weight:600;color:#fff;letter-spacing:0.02em;
+}
 .corridor-judge-body{padding:0.85rem 1rem 1rem;background:rgba(255,255,255,0.04);}
 .corridor-judge-name{font-family:'Spectral',serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:0.25rem;}
 .corridor-judge-domain{font-family:'Public Sans',sans-serif;font-size:0.54rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--uswds-gold);line-height:1.5;}
@@ -593,6 +610,11 @@ body[data-tg-postchamber] .after-panel{display:none;}
 .usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
 .usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
 .usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
+
+/* ── Medium ─────────────────────────────────────────────────────────────── */
+@media(max-width:980px){
+  .corridor-judges-grid{grid-template-columns:repeat(3,1fr);gap:0.8rem;}
+}
 
 /* ── Mobile ─────────────────────────────────────────────────────────────── */
 @media(max-width:740px){
@@ -983,102 +1005,124 @@ body[data-tg-postchamber] .after-panel{display:none;}
   <div class="band-inner narrow">
     <div class="corridor-eyebrow">&sect; 4 &middot; You arrive at</div>
     <h2 class="threshold-title">The Chamber.</h2>
-    <p class="threshold-lede">The hall opens. Nine judges, seated. Three will evaluate your idea. Six will chime in. The lights are on.</p>
+    <p class="threshold-lede">The hall opens. Sixteen judges, seated. Each one owns a sector of critical infrastructure. Three will evaluate your idea. The others weigh in. The lights are on.</p>
   </div>
 </section>
 
-<!-- ── The Judges: 3x3 grid ──────────────────────────────────────────────── -->
+<!-- ── The Judges: 4x4 grid ──────────────────────────────────────────────── -->
 <section class="corridor-judges velvet-elevated proscenium">
   <div class="band-inner">
     <div class="corridor-judges-grid" role="navigation" aria-label="Judges">
-      <a class="corridor-judge-card" href="/chamber.html?judge=selene_voss">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Selene_eyes_open.jpg" alt="Selene Voss">
-          <img class="blink-closed" src="Judges/Selene_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=helena_ward">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>HW</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Selene Voss</div>
-          <div class="corridor-judge-domain">AI &amp; Emerging Tech</div>
+          <div class="corridor-judge-name">Dr. Helena Ward</div>
+          <div class="corridor-judge-domain">Chemical</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=marcus_holt">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Marcus_eyes_open.jpg" alt="Marcus Holt">
-          <img class="blink-closed" src="Judges/Marcus_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=rafael_dominguez">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>RD</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Marcus Holt</div>
-          <div class="corridor-judge-domain">Crypto, PE &amp; Alt Finance</div>
+          <div class="corridor-judge-name">Col. Rafael Dominguez (Ret.)</div>
+          <div class="corridor-judge-domain">Defense Industrial Base</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=priya_anand">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Priya_eyes_open.jpg" alt="Dr. Priya Anand">
-          <img class="blink-closed" src="Judges/Priya_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=liyun_zhao">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>LZ</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Dr. Priya Anand</div>
-          <div class="corridor-judge-domain">Health &amp; Life Sciences</div>
+          <div class="corridor-judge-name">Dr. Liyun Zhao</div>
+          <div class="corridor-judge-domain">Communications</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=raymond_chen">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Raymond_eyes_open.jpg" alt="Raymond Chen">
-          <img class="blink-closed" src="Judges/Raymond_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=miles_harrington">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>MH</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Raymond Chen</div>
-          <div class="corridor-judge-domain">Business &amp; Operations</div>
+          <div class="corridor-judge-name">Miles Harrington</div>
+          <div class="corridor-judge-domain">Financial Services</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=astrid_lund">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Astrid_eyes_open.jpg" alt="Astrid Lund">
-          <img class="blink-closed" src="Judges/Astrid_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=amina_farouk">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>AF</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Astrid Lund</div>
-          <div class="corridor-judge-domain">Law &amp; Intellectual Property</div>
+          <div class="corridor-judge-name">Dr. Amina Farouk</div>
+          <div class="corridor-judge-domain">Healthcare &amp; Public Health</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=osei_mensah">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Osei_eyes_open.jpg" alt="Dr. Osei Mensah">
-          <img class="blink-closed" src="Judges/Osei_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=jonas_mccrae">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>JM</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Dr. Osei Mensah</div>
-          <div class="corridor-judge-domain">Science &amp; Research</div>
+          <div class="corridor-judge-name">Jonas McCrae</div>
+          <div class="corridor-judge-domain">Emergency Services</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=grace_nakamura">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Grace_eyes_open.jpg" alt="Admiral Grace Nakamura">
-          <img class="blink-closed" src="Judges/Grace_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=priyanka_nanduri">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>PN</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Admiral Grace Nakamura (Ret.)</div>
-          <div class="corridor-judge-domain">Gov, Policy &amp; National Security</div>
+          <div class="corridor-judge-name">Dr. Priyanka Nanduri</div>
+          <div class="corridor-judge-domain">Energy</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=devon_sloane">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Devon_eyes_open.jpg" alt="Devon Sloane">
-          <img class="blink-closed" src="Judges/Devon_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=elias_kade">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>EK</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Devon Sloane</div>
-          <div class="corridor-judge-domain">Media &amp; Entertainment</div>
+          <div class="corridor-judge-name">Elias Kade</div>
+          <div class="corridor-judge-domain">Water &amp; Wastewater</div>
         </div>
       </a>
-      <a class="corridor-judge-card" href="/chamber.html?judge=cassidy_mercer">
-        <div class="corridor-judge-portrait">
-          <img class="blink-open" src="Judges/Cassidy_eyes_open.jpg" alt="Dr. Cassidy Mercer">
-          <img class="blink-closed" src="Judges/Cassidy_eyes_closed.jpg" alt="" aria-hidden="true">
-        </div>
+      <a class="corridor-judge-card" href="/chamber.html?judge=mirela_stanescu">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>MS</span></div></div>
         <div class="corridor-judge-body">
-          <div class="corridor-judge-name">Dr. Cassidy Mercer</div>
-          <div class="corridor-judge-domain">Behavioral Science &amp; Psych</div>
+          <div class="corridor-judge-name">Dr. Mirela Stanescu</div>
+          <div class="corridor-judge-domain">Transportation Systems</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=gunnar_thorsen">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>GT</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Gunnar Thorsen</div>
+          <div class="corridor-judge-domain">Critical Manufacturing</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=selah_okonjo">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>SO</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Dr. Selah Okonjo</div>
+          <div class="corridor-judge-domain">Food &amp; Agriculture</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=victor_hale">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>VH</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Victor Hale</div>
+          <div class="corridor-judge-domain">Government Facilities</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=yara_bensaid">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>YB</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Dr. Yara Ben-Sa&#xEF;d</div>
+          <div class="corridor-judge-domain">Nuclear</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=owen_kessler">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>OK</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Owen Kessler</div>
+          <div class="corridor-judge-domain">Information Technology</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=marisol_quintero">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>MQ</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Dr. Marisol Quintero</div>
+          <div class="corridor-judge-domain">Dams</div>
+        </div>
+      </a>
+      <a class="corridor-judge-card" href="/chamber.html?judge=soren_veldt">
+        <div class="corridor-judge-portrait"><div class="corridor-judge-initials-fill"><span>SV</span></div></div>
+        <div class="corridor-judge-body">
+          <div class="corridor-judge-name">Soren Veldt</div>
+          <div class="corridor-judge-domain">Commercial Facilities</div>
         </div>
       </a>
     </div>
