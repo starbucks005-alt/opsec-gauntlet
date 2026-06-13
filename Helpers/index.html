@@ -110,7 +110,7 @@
     0%, 94%, 100% { opacity: 0; }
     96%, 97%      { opacity: 1; }
   }
-  /* Stagger blinks across the 8 cards so they don't pop in unison. */
+  /* Stagger blinks across the 9 cards so they don't pop in unison. */
   .r-grid .r-card:nth-child(1) .r-card-photo-blink .blink-closed{animation-delay:0s;}
   .r-grid .r-card:nth-child(2) .r-card-photo-blink .blink-closed{animation-delay:0.7s;}
   .r-grid .r-card:nth-child(3) .r-card-photo-blink .blink-closed{animation-delay:1.4s;}
@@ -119,6 +119,7 @@
   .r-grid .r-card:nth-child(6) .r-card-photo-blink .blink-closed{animation-delay:3.5s;}
   .r-grid .r-card:nth-child(7) .r-card-photo-blink .blink-closed{animation-delay:4.2s;}
   .r-grid .r-card:nth-child(8) .r-card-photo-blink .blink-closed{animation-delay:4.9s;}
+  .r-grid .r-card:nth-child(9) .r-card-photo-blink .blink-closed{animation-delay:5.6s;}
 
   /* Cross-over badge (Jules) */
   .r-card-crossover{
@@ -239,10 +240,31 @@
   <section class="r-intro">
     <div class="r-eyebrow">The Prep Track</div>
     <h1 class="r-title">The <em>Executive Producers</em>.</h1>
-    <p class="r-sub">Eight specialists who help you sharpen the idea, strengthen the evidence, clean the language, and build the pitch. <strong>Optional.</strong> They are not here to tell you it is good. They are here to make it better.</p>
+    <p class="r-sub">Nine specialists who help you sharpen the concept, map the gaps, strengthen the evidence, and build the pitch. <strong>Start with Ms. Ivy.</strong> She runs the SLR Method on your concept before anything else opens.</p>
   </section>
 
   <div class="r-grid">
+
+    <article class="r-card">
+      <a class="r-card-photo r-card-photo-blink" href="ivy-concept-integrity.html" aria-label="Visit Ms. Ivy's office">
+        <div class="r-card-crossover" style="border-color:rgba(40,82,122,0.8);color:#6ea8d4;">First Stop</div>
+        <img class="blink-open" src="ivy_eyes-open.png" alt="Ms. Ivy">
+        <img class="blink-closed" src="ivy_eyes-closed.png" alt="" aria-hidden="true">
+      </a>
+      <div class="r-card-body">
+        <div class="r-card-name">Ms. Ivy</div>
+        <div class="r-card-role">Office of Concept Integrity</div>
+        <p class="r-card-bio">Before your concept reaches the sector chiefs, it passes through here. I run the SLR Method on it. <em>Eight passes. One gap map. A concept that can withstand real review.</em></p>
+        <div class="r-card-voice">
+          <button type="button" data-tg-voice data-character="ms_ivy" data-mode="bio"><span class="pip">▶</span> Her Story</button>
+          <button type="button" data-tg-voice data-character="ms_ivy" data-mode="role"><span class="pip">▶</span> Her Role</button>
+        </div>
+        <div class="r-card-actions">
+          <button type="button" class="r-card-im" data-tg-im data-character="ms_ivy" data-name="Ms. Ivy">IM Ms. Ivy</button>
+          <a class="r-card-visit" href="ivy-concept-integrity.html">Visit Ms. Ivy →</a>
+        </div>
+      </div>
+    </article>
 
     <article class="r-card">
       <a class="r-card-photo r-card-photo-blink" href="wren-scout.html" aria-label="Visit Wren Calloway's page">
