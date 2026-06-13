@@ -112,7 +112,52 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
   transition:color 0.2s,border-color 0.2s;
 }
 .sg-skip:hover{color:var(--blue);border-color:var(--blue);}
-@media(max-width:600px){.sg-headline{font-size:1.9rem;}.sg-gate{padding:3rem 1.5rem 4rem;}}
+.sg-form{
+  width:100%;max-width:540px;
+  border:1px solid var(--rule);background:#fff;
+  padding:1.4rem 1.4rem 1.6rem;margin-bottom:1.8rem;
+  text-align:left;
+}
+.sg-form-title{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.24em;text-transform:uppercase;color:var(--blue);
+  margin-bottom:1.2rem;
+}
+.sg-field{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:1rem;}
+.sg-field:last-child{margin-bottom:0;}
+.sg-label{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.sg-label-req{
+  font-size:0.5rem;font-weight:700;letter-spacing:0.16em;
+  color:#fff;background:var(--blue);padding:0.15rem 0.45rem;
+}
+.sg-label-opt{
+  font-size:0.5rem;font-weight:700;letter-spacing:0.16em;
+  color:var(--ink-soft);background:var(--blue-pale);padding:0.15rem 0.45rem;
+  border:1px solid var(--rule);
+}
+.sg-label-why{
+  font-family:'Public Sans',sans-serif;font-size:0.78rem;
+  color:var(--text-dim);font-weight:400;letter-spacing:0;
+  text-transform:none;font-style:italic;
+}
+.sg-input{
+  font-family:'Public Sans',sans-serif;font-size:0.98rem;
+  color:var(--ink);background:#fff;
+  border:1px solid var(--rule);padding:0.55rem 0.8rem;
+  outline:none;width:100%;transition:border-color 0.18s;
+}
+.sg-input:focus{border-color:var(--blue);}
+.sg-input::placeholder{color:var(--text-dim);font-style:italic;}
+.sg-field-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+@media(max-width:600px){
+  .sg-headline{font-size:1.9rem;}
+  .sg-gate{padding:3rem 1.5rem 4rem;}
+  .sg-field-row{grid-template-columns:1fr;}
+}
 .sp-section{border-top:1px solid var(--rule);padding:3.5rem 2rem 4.5rem;}
 .sp-section:nth-child(even){background:var(--blue-pale);}
 .sp-inner{max-width:1080px;margin:0 auto;}
@@ -165,6 +210,57 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
     <span class="sg-privacy-icon">&#128274;</span>
     <p class="sg-privacy-text"><strong>We do not keep this.</strong> The name you provide is used only within your session to run the search. It is not stored, logged, or retained after you close this tab. This session is for your eyes only.</p>
   </div>
+  <form class="sg-form" id="sg-form" onsubmit="return false;">
+    <div class="sg-form-title">What Soren needs to run the search</div>
+
+    <div class="sg-field">
+      <label class="sg-label" for="sg-name">
+        Full Name <span class="sg-label-req">Required</span>
+        <span class="sg-label-why">— the search anchor</span>
+      </label>
+      <input class="sg-input" id="sg-name" type="text" placeholder="e.g. Jordan A. Reyes" autocomplete="off">
+    </div>
+
+    <div class="sg-field-row">
+      <div class="sg-field">
+        <label class="sg-label" for="sg-city">
+          City <span class="sg-label-req">Required</span>
+        </label>
+        <input class="sg-input" id="sg-city" type="text" placeholder="e.g. Columbus" autocomplete="off">
+      </div>
+      <div class="sg-field">
+        <label class="sg-label" for="sg-state">
+          State <span class="sg-label-req">Required</span>
+        </label>
+        <input class="sg-input" id="sg-state" type="text" placeholder="e.g. OH" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="sg-field">
+      <label class="sg-label" for="sg-dob">
+        Date of Birth <span class="sg-label-opt">Optional</span>
+        <span class="sg-label-why">— disambiguates common names in public records</span>
+      </label>
+      <input class="sg-input" id="sg-dob" type="text" placeholder="e.g. 1981" autocomplete="off">
+    </div>
+
+    <div class="sg-field">
+      <label class="sg-label" for="sg-affiliation">
+        Professional Affiliation <span class="sg-label-opt">Optional</span>
+        <span class="sg-label-why">— employer, university, or organization</span>
+      </label>
+      <input class="sg-input" id="sg-affiliation" type="text" placeholder="e.g. Wright State University" autocomplete="off">
+    </div>
+
+    <div class="sg-field">
+      <label class="sg-label" for="sg-ventures">
+        Prior Venture Names <span class="sg-label-opt">Optional</span>
+        <span class="sg-label-why">— companies, brands, or orgs they have been associated with</span>
+      </label>
+      <input class="sg-input" id="sg-ventures" type="text" placeholder="e.g. Apex Labs, NovaBridge LLC" autocomplete="off">
+    </div>
+  </form>
+
   <div class="sg-actions">
     <button class="sg-enter" id="sg-enter-btn" type="button">Yes &mdash; run it</button>
     <a class="sg-skip" href="../Helpers/index.html">Skip this step &rarr; Return to The Corridor</a>
@@ -248,10 +344,39 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
 <div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
 <script>
 document.getElementById('sg-enter-btn').addEventListener('click', function() {
+  var name        = document.getElementById('sg-name').value.trim();
+  var city        = document.getElementById('sg-city').value.trim();
+  var state       = document.getElementById('sg-state').value.trim();
+  var dob         = document.getElementById('sg-dob').value.trim();
+  var affiliation = document.getElementById('sg-affiliation').value.trim();
+  var ventures    = document.getElementById('sg-ventures').value.trim();
+
+  if (!name || !city || !state) {
+    var missing = [];
+    if (!name)  missing.push('Full Name');
+    if (!city)  missing.push('City');
+    if (!state) missing.push('State');
+    alert('Soren needs the following to run the search: ' + missing.join(', ') + '.');
+    return;
+  }
+
+  var brief = [];
+  brief.push('Subject: ' + name);
+  brief.push('Location: ' + city + ', ' + state);
+  if (dob)         brief.push('DOB / Year: ' + dob);
+  if (affiliation) brief.push('Affiliation: ' + affiliation);
+  if (ventures)    brief.push('Prior Ventures: ' + ventures);
+
+  var briefPanel = document.querySelector('[data-tg-office="brief"]');
+  if (briefPanel) {
+    briefPanel.textContent = brief.join('\n');
+    briefPanel.removeAttribute('data-empty');
+  }
+
   document.getElementById('sg-gate').style.display = 'none';
   var office = document.getElementById('sg-office');
   office.style.display = 'grid';
-  office.scrollIntoView({behavior: 'smooth', block: 'start'});
+  window.scrollTo({top: 0, behavior: 'smooth'});
 });
 </script>
 </body>
