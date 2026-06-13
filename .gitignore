@@ -32,6 +32,12 @@ Thumbs.db
 
 # Office lock files (appear while a .docx/.xlsx is open)
 ~$*
+~*.tmp
+
+# Unpacked docx working directories (used by the docx skill, never deployed)
+*_unpacked/
+*_unpacked*/
+docx_unpacked_*/
 
 # Internal drafts — earlier asset iterations kept off the deploy
 _drafts/
