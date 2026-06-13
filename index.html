@@ -388,6 +388,16 @@ body[data-tg-postchamber] .wing-quote.is-postchamber{
 .corridor-wing:nth-child(6) .blink-closed{animation-delay:3.5s;}
 .corridor-wing:nth-child(7) .blink-closed{animation-delay:4.2s;}
 .corridor-wing:nth-child(8) .blink-closed{animation-delay:4.9s;}
+.wing-initials-fill{
+  width:100%;height:100%;background:#28527a;
+  display:flex;align-items:center;justify-content:center;
+  transition:filter 0.3s;
+}
+.wing-portrait:hover .wing-initials-fill{filter:brightness(1.12);}
+.wing-initials-fill span{
+  font-family:'Spectral',serif;font-style:italic;
+  font-size:2.2rem;font-weight:600;color:#fff;letter-spacing:0.02em;
+}
 .wing-crossover{
   position:absolute;top:0.5rem;left:0.5rem;z-index:3;
   background:var(--stamp-blue);color:var(--uswds-gold);
@@ -786,7 +796,7 @@ body[data-tg-postchamber] .after-panel{display:none;}
   <div class="band-inner narrow">
     <div class="corridor-eyebrow">&sect; 3 &middot; The Corridor</div>
     <h2 class="corridor-title">Walk OPSEC Gauntlet. <em>The Operational Specialists flank you.</em></h2>
-    <p class="corridor-lede">Nine specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
+    <p class="corridor-lede">Eleven specialists, one at every door along the hall, prepping you as you pass. Stop at any of them. Keep walking. The Chamber is at the end.</p>
     <p class="corridor-personalize-line">
       Want the specialists to speak to your idea directly?
       <button type="button" class="corridor-personalize-link" onclick="if(window.TGWelcome)TGWelcome.open()">Personalize this for me &rarr;</button>
@@ -817,153 +827,150 @@ body[data-tg-postchamber] .after-panel{display:none;}
 
   <div class="corridor-wing wing-right" data-wing-idx="1">
     <div class="wing-portrait">
-      <a href="/Helpers/wren-scout.html" aria-label="Wren Calloway profile">
-        <img class="blink-open" src="Helpers/Wren_eyes_open.jpg" alt="Wren Calloway">
-        <img class="blink-closed" src="Helpers/Wren_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>SaR</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Wren Calloway</div>
-      <div class="wing-role">The Scout</div>
-      <p class="wing-quote">"I find what's already out there, where your idea can work, where to focus first, and where else the same mechanic could live. Finding something nobody else has found yet is still my favorite part."</p>
+      <div class="wing-name">Dr. Sahini Rao</div>
+      <div class="wing-role">Dual Use Systems</div>
+      <p class="wing-quote">"Every concept in this corridor has dual use potential. My job is to map it before the sector chiefs use it against you."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="wren_calloway" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="wren_calloway" data-name="Wren">IM Wren</button>
-        <a class="wing-link" href="/Helpers/wren-scout.html">Step into her office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="sahini_rao_opsec" data-name="Dr. Rao">IM Dr. Rao</button>
+        <a class="wing-link" href="/Helpers/dr-rao-dual-use.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-left" data-wing-idx="2">
     <div class="wing-portrait">
-      <a href="/Helpers/carol-screener.html" aria-label="Carol Haynes profile">
-        <img class="blink-open" src="Helpers/Carol_eyes_open.jpg" alt="Carol Haynes">
-        <img class="blink-closed" src="Helpers/Carol_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>IK</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Carol Haynes</div>
-      <div class="wing-role">The Screener</div>
-      <p class="wing-quote">"I read your idea against twenty years of patterns. I tell you which one yours fits. What worked. What killed it. Where your variant sits. Honest. Not unkind."</p>
+      <div class="wing-name">Iris S. King</div>
+      <div class="wing-role">Frontline Communications</div>
+      <p class="wing-quote">"Before you face a single sector chief, your public-facing story needs to hold. I find the gaps between what you say and what the search results show."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="carol_haynes" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="carol_haynes" data-name="Carol">IM Carol</button>
-        <a class="wing-link" href="/Helpers/carol-screener.html">Step into her office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="iris_king_opsec" data-name="Iris">IM Iris</button>
+        <a class="wing-link" href="/SPECIALISTS/iris-comms.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-right" data-wing-idx="3">
     <div class="wing-portrait">
-      <a href="/Helpers/matthew-behaviorist.html" aria-label="Matthew Vance profile">
-        <img class="blink-open" src="Helpers/Matthew_eyes_open.jpg" alt="Matthew Vance">
-        <img class="blink-closed" src="Helpers/Matthew_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>AJ</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Matthew Vance</div>
-      <div class="wing-role">The Behaviorist</div>
-      <p class="wing-quote">"People buy emotion and justify with logic. I tell you what your customer actually wants to feel, then I tell you which other EP turns that into a logo, a post, a pitch. You need us all."</p>
+      <div class="wing-name">Alicia James</div>
+      <div class="wing-role">Structure and Compliance</div>
+      <p class="wing-quote">"If you have not decided how this thing is structured, the sector chiefs will. I give you that conversation before it gets decided for you."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="matthew_vance" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="matthew_vance" data-name="Matthew">IM Matthew</button>
-        <a class="wing-link" href="/Helpers/matthew-behaviorist.html">Step into his office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="alicia_james_opsec" data-name="Alicia">IM Alicia</button>
+        <a class="wing-link" href="/SPECIALISTS/alicia-structure.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-left" data-wing-idx="4">
     <div class="wing-portrait">
-      <a href="/Helpers/arjun-delivery.html" aria-label="Arjun Mehta profile">
-        <img class="blink-open" src="Helpers/Arjun_eyes_open.jpg" alt="Arjun Mehta">
-        <img class="blink-closed" src="Helpers/Arjun_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>KP</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Arjun Mehta</div>
-      <div class="wing-role">The Make-It-Real Expert</div>
-      <p class="wing-quote">"Most people kill their idea before they make it real, not because the idea was bad, but because they never figured out who to call. I am here so that does not happen to you."</p>
+      <div class="wing-name">Kimberly Pass</div>
+      <div class="wing-role">Legal Surface Review</div>
+      <p class="wing-quote">"Your concept touches legal surfaces you have not named yet. I map them. I do not interpret the law — I make sure you walk in knowing where the edges are."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="arjun_mehta" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="arjun_mehta" data-name="Arjun">IM Arjun</button>
-        <a class="wing-link" href="/Helpers/arjun-delivery.html">Step into his office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="kimberly_pass_opsec" data-name="Kimberly">IM Kimberly</button>
+        <a class="wing-link" href="/SPECIALISTS/kimberly-legal.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-right" data-wing-idx="5">
     <div class="wing-portrait">
-      <a href="/Helpers/zara-influencer.html" aria-label="Zara Cole profile">
-        <img class="blink-open" src="Helpers/Zara_eyes_open.jpg" alt="Zara Cole">
-        <img class="blink-closed" src="Helpers/Zara_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>SM</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Zara Cole</div>
-      <div class="wing-role">The Influencer</div>
-      <p class="wing-quote">"Most marketing sounds like marketing. Mine doesn't. That gap is what I figured out."</p>
+      <div class="wing-name">Sasha Moreno</div>
+      <div class="wing-role">Human Factors</div>
+      <p class="wing-quote">"The insider risk in most early-stage ideas is the founder. I tell you exactly what a sector chief trained in human factors is going to notice first."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="zara_cole" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="zara_cole" data-name="Zara">IM Zara</button>
-        <a class="wing-link" href="/Helpers/zara-influencer.html">Step into her office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="sasha_moreno_opsec" data-name="Sasha">IM Sasha</button>
+        <a class="wing-link" href="/SPECIALISTS/sasha-human.html">Step into her office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-left" data-wing-idx="6">
     <div class="wing-portrait">
-      <a href="/Helpers/reid-marketing.html" aria-label="Reid Callum profile">
-        <img class="blink-open" src="Helpers/Reid_eyes_open.jpg" alt="Reid Callum">
-        <img class="blink-closed" src="Helpers/Reid_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>LV</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Reid Callum</div>
-      <div class="wing-role">The Marketing Expert</div>
-      <p class="wing-quote">"I dress the truth up every day for clients. I resent every minute of it. On this platform I do not have to soften it."</p>
+      <div class="wing-name">Leo Vance</div>
+      <div class="wing-role">Financial Exposure</div>
+      <p class="wing-quote">"Every number you said out loud in that pitch — I find the gap between that number and what the records actually show. That is the financial exposure scan."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="reid_callum" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="reid_callum" data-name="Reid">IM Reid</button>
-        <a class="wing-link" href="/Helpers/reid-marketing.html">Step into his office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="leo_vance_opsec" data-name="Leo">IM Leo</button>
+        <a class="wing-link" href="/SPECIALISTS/leo-financial.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-right" data-wing-idx="7">
     <div class="wing-portrait">
-      <a href="/Helpers/jules-rewrite.html" aria-label="Jules profile">
-        <div class="wing-crossover">From Greylander Press</div>
-        <img class="blink-open" src="Helpers/Jules_eyes_open.jpg" alt="Jules">
-        <img class="blink-closed" src="Helpers/Jules_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>RT</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Jules</div>
-      <div class="wing-role">The Rewrite Partner</div>
-      <p class="wing-quote">"I tell you what is not working on the page. Not what is wrong with you. There is a difference."</p>
+      <div class="wing-name">Rowan Tate</div>
+      <div class="wing-role">Risk Discipline</div>
+      <p class="wing-quote">"Risk discipline is not about being cautious. It is about knowing which risks are yours to take and which ones belong to a different office in this corridor."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="jules" data-mode="role"><span class="wing-pip">&#9658;</span>Hear her</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="jules" data-name="Jules">IM Jules</button>
-        <a class="wing-link" href="/Helpers/jules-rewrite.html">Step into her office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="rowan_tate_opsec" data-name="Rowan">IM Rowan</button>
+        <a class="wing-link" href="/SPECIALISTS/rowan-risk.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
 
   <div class="corridor-wing wing-left" data-wing-idx="8">
     <div class="wing-portrait">
-      <a href="/Helpers/grant-coach.html" aria-label="Grant Ellis profile">
-        <img class="blink-open" src="Helpers/Grant_eyes_open.jpg" alt="Grant Ellis">
-        <img class="blink-closed" src="Helpers/Grant_eyes_closed.jpg" alt="" aria-hidden="true">
-      </a>
+      <div class="wing-initials-fill"><span>JR</span></div>
     </div>
     <div class="wing-body">
-      <div class="wing-name">Grant Ellis</div>
-      <div class="wing-role">The Coach</div>
-      <p class="wing-quote">"I tell you which three judges to face, what they're going to ask, and how to walk in like you've already been there. Let's go."</p>
+      <div class="wing-name">Jax Rivera</div>
+      <div class="wing-role">Information Exposure</div>
+      <p class="wing-quote">"Your digital footprint is already out there. I map what is discoverable before the sector chiefs run their own search — because they will."</p>
       <div class="wing-actions">
-        <button class="wing-btn" type="button" data-tg-voice data-character="grant_ellis" data-mode="role"><span class="wing-pip">&#9658;</span>Hear him</button>
-        <button class="wing-btn" type="button" data-tg-im data-character="grant_ellis" data-name="Grant">IM Grant</button>
-        <a class="wing-link" href="/Helpers/grant-coach.html">Step into his office &rarr;</a>
+        <button class="wing-btn" type="button" data-tg-im data-character="jax_rivera_opsec" data-name="Jax">IM Jax</button>
+        <a class="wing-link" href="/SPECIALISTS/jax-discovery.html">Step into his office &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-right" data-wing-idx="9">
+    <div class="wing-portrait">
+      <div class="wing-initials-fill"><span>YM</span></div>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Yuki Mendel</div>
+      <div class="wing-role">Visual Surface</div>
+      <p class="wing-quote">"Visual signals communicate before you say a word. I read the surface your concept presents to the room — and tell you what the room reads back."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-im data-character="yuki_mendel_opsec" data-name="Yuki">IM Yuki</button>
+        <a class="wing-link" href="/SPECIALISTS/yuki-visual.html">Step into her office &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="corridor-wing wing-left" data-wing-idx="10">
+    <div class="wing-portrait">
+      <div class="wing-initials-fill"><span>DrM</span></div>
+    </div>
+    <div class="wing-body">
+      <div class="wing-name">Dr. Ali Malik</div>
+      <div class="wing-role">Threat Attribution</div>
+      <p class="wing-quote">"Give me a name and a few minutes. I find what a motivated analyst with a search engine could find about the person walking into that chamber. You see the picture first."</p>
+      <div class="wing-actions">
+        <button class="wing-btn" type="button" data-tg-im data-character="ali_malik_opsec" data-name="Ali">IM Ali</button>
+        <a class="wing-link" href="/SPECIALISTS/ali-osint.html">Step into his office &rarr;</a>
       </div>
     </div>
   </div>
