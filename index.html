@@ -116,6 +116,42 @@ body{
   color:rgba(255,255,255,0.88);
 }
 .positioning-line em{font-style:normal;font-weight:700;color:var(--uswds-gold);}
+.positioning-line--sub{
+  font-weight:400;letter-spacing:0.1em;font-size:0.65rem;
+  color:rgba(255,255,255,0.5);margin-top:0.22rem;
+}
+
+/* ── OPSEC Mission Statement ─────────────────────────────────────────────── */
+.opsec-mission{
+  background:var(--band-elevated);
+  border-bottom:2px solid var(--etl-blue);
+  padding:3rem 2rem;
+}
+.opsec-mission-inner{max-width:860px;margin:0 auto;}
+.opsec-mission-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--stamp-blue);
+  margin-bottom:1.2rem;padding-bottom:0.6rem;
+  border-bottom:1px solid rgba(40,82,122,0.2);
+}
+.opsec-mission-lead{
+  font-family:'Spectral',serif;font-size:clamp(1.25rem,2.2vw,1.6rem);
+  font-weight:700;color:var(--stamp-blue);line-height:1.25;margin-bottom:1.2rem;
+}
+.opsec-mission-body{
+  font-family:'Public Sans',sans-serif;font-size:0.95rem;line-height:1.85;
+  color:var(--ink-soft);
+}
+.opsec-mission-body p{margin-bottom:0.9rem;}
+.opsec-mission-body p:last-child{margin-bottom:0;}
+.opsec-mission-body strong{color:var(--stamp-blue);font-weight:600;}
+.opsec-mission-verdict{
+  margin-top:1.5rem;padding:1rem 1.4rem;
+  background:var(--stamp-blue);
+  font-family:'Spectral',serif;font-style:italic;
+  font-size:1.05rem;color:#fff;line-height:1.5;
+  letter-spacing:0.01em;
+}
 
 /* ── Post-Chamber banner ────────────────────────────────────────────────── */
 .post-chamber{
@@ -613,6 +649,23 @@ body[data-tg-postchamber] .after-panel{display:none;}
   <p class="positioning-line">
     16 Sector Chiefs. 9 Op Specs. <em>Proprietary IP doing the work.</em>
   </p>
+  <p class="positioning-line positioning-line--sub">
+    Submissions stored in Microsoft Azure Secure Cloud Storage
+  </p>
+</section>
+
+<!-- ── OPSEC Mission Statement ───────────────────────────────────────────── -->
+<section class="opsec-mission">
+  <div class="opsec-mission-inner">
+    <div class="opsec-mission-eyebrow">§ Notice &middot; This is not the Gauntlet you may know</div>
+    <p class="opsec-mission-lead">Do you have an idea you want in front of the intelligence community? The US government?</p>
+    <div class="opsec-mission-body">
+      <p>Put it through the test.</p>
+      <p>OPSEC Gauntlet runs your concept against sixteen Sector Chiefs&nbsp;&mdash; subject-matter experts aligned to the CISA Critical Infrastructure Sectors. Energy. Transportation. Nuclear. Healthcare. Defense Industrial Base. If your idea can hold up under that scrutiny, it&rsquo;s ready for the room that matters.</p>
+      <p>And with your permission, it gets there. Your submission is stored in <strong>Microsoft Azure Secure Cloud Storage</strong>&nbsp;&mdash; identified or de-identified, your choice. The ideas that survive the panel go into the hands of the people who can make them happen.</p>
+    </div>
+    <div class="opsec-mission-verdict">This is not a pitch competition. This is a clearance process for ideas.</div>
+  </div>
 </section>
 
 <!-- ── Post-Chamber banner ───────────────────────────────────────────────── -->
