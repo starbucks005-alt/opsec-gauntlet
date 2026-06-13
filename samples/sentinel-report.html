@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel — OPSEC Gauntlet Evaluation Report</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/Favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#28527a; --blue-light:#3a7aad; --blue-pale:#edf3f8;
+    --gold:#d4940a; --gold-bg:#fff8e6;
+    --ink:#1a1a1a; --ink-mid:#444; --ink-soft:#6b6b6b;
+    --rule:#d0d8e0; --bg:#fff;
+    --red:#b91c1c; --green:#166534;
+    --verdict-bg:#f0f8f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Public Sans',sans-serif;font-size:0.97rem;line-height:1.65;}
+
+  /* Classification banners */
+  .cls-banner{
+    background:#000;color:#fff;text-align:center;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+    letter-spacing:0.26em;text-transform:uppercase;padding:5px 1rem;
+    position:sticky;top:0;z-index:100;
+  }
+  .cls-footer{background:#000;color:#fff;text-align:center;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+    letter-spacing:0.26em;text-transform:uppercase;padding:5px 1rem;
+    margin-top:0;
+  }
+
+  /* Back nav */
+  .back-bar{
+    background:var(--blue-pale);border-bottom:1px solid var(--rule);
+    padding:0.55rem 2rem;display:flex;align-items:center;gap:1.5rem;
+  }
+  .back-link{
+    font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--blue);text-decoration:none;
+  }
+  .back-link:hover{text-decoration:underline;}
+  .back-bar-title{font-size:0.72rem;color:var(--ink-soft);letter-spacing:0.08em;}
+
+  /* Report header */
+  .report-head{
+    background:var(--blue);color:#fff;
+    padding:2.2rem 2.5rem 2rem;
+  }
+  .report-head-eyebrow{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;
+    color:rgba(255,255,255,0.65);margin-bottom:0.7rem;
+  }
+  .report-head-title{
+    font-family:'Spectral',serif;font-size:2.4rem;font-weight:700;
+    line-height:1.1;margin-bottom:0.3rem;
+  }
+  .report-head-tagline{
+    font-style:italic;font-size:1.05rem;color:rgba(255,255,255,0.8);
+    margin-bottom:1.4rem;
+  }
+  .report-meta{
+    display:flex;flex-wrap:wrap;gap:1.6rem;
+  }
+  .report-meta-item{display:flex;flex-direction:column;gap:0.15rem;}
+  .report-meta-label{font-size:0.58rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+  .report-meta-value{font-size:0.82rem;font-weight:600;color:#fff;}
+
+  /* Verdict badge in header */
+  .verdict-badge{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);
+    padding:0.35rem 0.9rem;font-size:0.72rem;font-weight:700;
+    letter-spacing:0.18em;text-transform:uppercase;color:#fff;
+    margin-top:1.2rem;
+  }
+  .verdict-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;}
+
+  /* Main content */
+  .report-body{max-width:860px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+
+  /* Section headers */
+  .section{margin-bottom:2.8rem;}
+  .section-head{
+    display:flex;align-items:baseline;gap:0.8rem;
+    border-bottom:2px solid var(--blue);padding-bottom:0.5rem;margin-bottom:1.3rem;
+  }
+  .section-num{
+    font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+    color:var(--blue);flex:0 0 auto;
+  }
+  .section-title{
+    font-family:'Spectral',serif;font-size:1.25rem;font-weight:600;
+    color:var(--ink);
+  }
+
+  /* Concept overview */
+  .concept-box{
+    background:var(--blue-pale);border-left:4px solid var(--blue);
+    padding:1.2rem 1.4rem;margin-bottom:1.3rem;
+  }
+  .concept-box p{line-height:1.7;color:var(--ink-mid);}
+
+  /* Gap map */
+  .gap-statement{
+    background:var(--gold-bg);border:1px solid rgba(212,148,10,0.3);
+    padding:1rem 1.3rem;margin-bottom:1.4rem;
+  }
+  .gap-statement-label{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:0.45rem;
+  }
+  .gap-statement p{font-size:0.95rem;color:var(--ink-mid);line-height:1.65;}
+
+  .gap-list{list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1.4rem;}
+  .gap-item{
+    display:grid;grid-template-columns:2rem 1fr;gap:0.6rem;align-items:baseline;
+    padding:0.75rem 0.9rem;background:#fafafa;border:1px solid var(--rule);
+  }
+  .gap-num{
+    font-family:'Spectral',serif;font-size:1rem;font-weight:700;
+    color:var(--blue);text-align:center;
+  }
+  .gap-text{font-size:0.93rem;line-height:1.62;color:var(--ink-mid);}
+  .gap-tag{
+    display:inline-block;font-size:0.55rem;font-weight:700;letter-spacing:0.16em;
+    text-transform:uppercase;padding:0.15rem 0.45rem;margin-right:0.4rem;
+    background:rgba(185,28,28,0.08);color:var(--red);border:1px solid rgba(185,28,28,0.2);
+  }
+  .gap-tag.warn{background:rgba(212,148,10,0.08);color:var(--gold);border-color:rgba(212,148,10,0.25);}
+
+  .scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.4rem;}
+  .scope-box{border:1px solid var(--rule);padding:1rem 1.2rem;}
+  .scope-box-label{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+    margin-bottom:0.6rem;
+  }
+  .scope-box.in .scope-box-label{color:var(--green);}
+  .scope-box.out .scope-box-label{color:var(--red);}
+  .scope-box ul{list-style:none;display:flex;flex-direction:column;gap:0.35rem;}
+  .scope-box li{font-size:0.9rem;color:var(--ink-mid);line-height:1.5;padding-left:1rem;position:relative;}
+  .scope-box.in li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;}
+  .scope-box.out li::before{content:"✗";position:absolute;left:0;color:var(--red);font-weight:700;}
+
+  .assumptions-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+  .assumption-item{
+    display:flex;gap:0.7rem;align-items:flex-start;
+    font-size:0.93rem;color:var(--ink-mid);line-height:1.6;
+    padding:0.6rem 0.9rem;border:1px solid rgba(212,148,10,0.25);background:var(--gold-bg);
+  }
+  .assumption-flag{color:var(--gold);font-weight:700;flex:0 0 auto;margin-top:0.05rem;}
+
+  /* Score matrix */
+  .score-table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+  .score-table thead th{
+    background:var(--blue);color:#fff;
+    font-size:0.62rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+    padding:0.65rem 0.85rem;text-align:left;
+  }
+  .score-table tbody tr{border-bottom:1px solid var(--rule);}
+  .score-table tbody tr:hover{background:var(--blue-pale);}
+  .score-table td{padding:0.7rem 0.85rem;vertical-align:top;}
+  .score-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;}
+  .score-cell{display:flex;align-items:center;gap:0.5rem;}
+  .score-pip{
+    font-family:'Spectral',serif;font-size:1.05rem;font-weight:700;
+    min-width:2.2rem;
+    color:var(--blue);
+  }
+  .score-bar{height:6px;background:#e0e8f0;border-radius:3px;flex:1;max-width:80px;}
+  .score-bar-fill{height:100%;border-radius:3px;background:var(--blue);}
+  .score-note{font-size:0.87rem;color:var(--ink-mid);line-height:1.55;}
+
+  .composite-row{
+    background:var(--blue-pale);border:2px solid var(--blue);
+    padding:0.9rem 1rem;display:flex;align-items:center;gap:1.5rem;
+    margin-top:1rem;flex-wrap:wrap;
+  }
+  .composite-label{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);
+  }
+  .composite-score{
+    font-family:'Spectral',serif;font-size:2rem;font-weight:700;color:var(--blue);
+  }
+  .composite-interp{font-size:0.9rem;color:var(--ink-mid);flex:1;}
+
+  /* Judge findings */
+  .judge-card{
+    border:1px solid var(--rule);margin-bottom:1.2rem;
+    overflow:hidden;
+  }
+  .judge-card-head{
+    background:var(--blue-pale);border-bottom:1px solid var(--rule);
+    padding:0.8rem 1.2rem;display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  }
+  .judge-name{
+    font-family:'Spectral',serif;font-size:1.05rem;font-weight:700;color:var(--blue);
+  }
+  .judge-role{font-size:0.78rem;color:var(--ink-soft);}
+  .judge-finding-body{padding:1rem 1.2rem 1.1rem;font-size:0.93rem;color:var(--ink-mid);line-height:1.7;}
+  .judge-finding-body strong{color:var(--ink);font-weight:600;}
+
+  /* Verdict */
+  .verdict-block{
+    background:var(--verdict-bg);border:2px solid #16a34a;
+    padding:1.5rem 1.6rem;margin-bottom:1.4rem;
+  }
+  .verdict-label{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;
+    color:#166534;margin-bottom:0.5rem;
+  }
+  .verdict-decision{
+    font-family:'Spectral',serif;font-size:1.6rem;font-weight:700;
+    color:#166534;margin-bottom:0.7rem;line-height:1.2;
+  }
+  .verdict-rationale{font-size:0.95rem;color:var(--ink-mid);line-height:1.7;}
+
+  .conditions-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.4rem;}
+  .condition-item{
+    display:grid;grid-template-columns:1.6rem 1fr;gap:0.5rem;align-items:baseline;
+    padding:0.65rem 0.9rem;background:#fafafa;border:1px solid var(--rule);
+    border-left:3px solid var(--blue);
+  }
+  .condition-num{font-weight:700;color:var(--blue);font-size:0.85rem;}
+  .condition-text{font-size:0.9rem;color:var(--ink-mid);line-height:1.6;}
+
+  .routing-block{
+    border:1px solid var(--rule);padding:1.1rem 1.3rem;
+    display:flex;flex-direction:column;gap:0.35rem;
+  }
+  .routing-label{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:0.3rem;
+  }
+  .routing-item{
+    font-size:0.9rem;color:var(--ink-mid);line-height:1.6;
+    padding-left:1.1rem;position:relative;
+  }
+  .routing-item::before{content:"→";position:absolute;left:0;color:var(--blue);font-weight:700;}
+
+  @media (max-width:640px){
+    .report-head{padding:1.5rem 1.3rem 1.3rem;}
+    .report-head-title{font-size:1.8rem;}
+    .report-body{padding:1.8rem 1.2rem 3rem;}
+    .scope-grid{grid-template-columns:1fr;}
+    .score-bar{max-width:50px;}
+  }
+
+  @media print{
+    .cls-banner,.back-bar{position:static;}
+    .judge-card,.verdict-block,.condition-item,.gap-item{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cls-banner">Unclassified &nbsp;//&nbsp; For Official Use Only &nbsp;//&nbsp; OPSEC Gauntlet Sample Evaluation</div>
+
+<div class="back-bar">
+  <a class="back-link" href="/samples.html">← Back to sample ideas</a>
+  <span class="back-bar-title">Sample Deliverable &middot; Sentinel &middot; OPSEC Gauntlet Evaluation Report</span>
+</div>
+
+<header class="report-head">
+  <div class="report-head-eyebrow">OPSEC Gauntlet &nbsp;&middot;&nbsp; Evaluation Report &nbsp;&middot;&nbsp; Sample Artifact</div>
+  <div class="report-head-title">Sentinel</div>
+  <div class="report-head-tagline">Field-deployable synthetic opioid detection for mass-casualty triage</div>
+  <div class="report-meta">
+    <div class="report-meta-item">
+      <span class="report-meta-label">Case ID</span>
+      <span class="report-meta-value">OG-2026-0019-CBRN</span>
+    </div>
+    <div class="report-meta-item">
+      <span class="report-meta-label">Sector</span>
+      <span class="report-meta-value">CBRN / WMD &middot; Healthcare &amp; Public Health</span>
+    </div>
+    <div class="report-meta-item">
+      <span class="report-meta-label">Evaluation Date</span>
+      <span class="report-meta-value">June 13, 2026</span>
+    </div>
+    <div class="report-meta-item">
+      <span class="report-meta-label">Corridor Status</span>
+      <span class="report-meta-value">8 EP Reports &middot; 4 Chamber Findings</span>
+    </div>
+  </div>
+  <div class="verdict-badge">Conditional Advance — 3 Resolution Conditions</div>
+</header>
+
+<div class="report-body">
+
+  <!-- § 1. Concept Summary -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">§ 1</span>
+      <span class="section-title">Concept Overview</span>
+    </div>
+    <div class="concept-box">
+      <p>Sentinel is a ruggedized, field-portable detection system enabling first responders, HAZMAT teams, and law enforcement to positively identify synthetic opioids — including fentanyl analogs, carfentanil, and emerging nitazene compounds — at the scene of a suspected mass-casualty event within 90 seconds of sample collection. Detection results transmit in real time to an incident command dashboard that tracks exposure zones and pre-positions antidote supplies.</p>
+    </div>
+    <p style="color:var(--ink-soft);font-size:0.88rem;font-style:italic;">Technology basis: surface-enhanced Raman spectroscopy (SERS) combined with a cloud-connected incident management layer. Proposed next step: SBIR/STTR Phase I with NIJ or BARDA to fund SERS cartridge validation study.</p>
+  </div>
+
+  <!-- § 2. Ms. Ivy — Gap Analysis -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">§ 2</span>
+      <span class="section-title">Office of Concept Integrity — SLR Method Gap Analysis</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--ink-soft);margin-bottom:1.1rem;">Ms. Ivy ran Sentinel through 8 structured analytical passes before the concept entered the specialist corridor. What follows is her deliverable: the refined operational statement, the gap map, scope boundaries, and the assumptions requiring validation.</p>
+
+    <div class="gap-statement">
+      <div class="gap-statement-label">Refined Operational Statement</div>
+      <p>Sentinel is a field-deployable SERS-based synthetic opioid identification platform that delivers compound-confirmed detection to first responders within 90 seconds, transmits compound identity and GPS coordinates to incident command, and generates naloxone pre-positioning recommendations before the first patient transport arrives.</p>
+    </div>
+
+    <div class="gap-statement-label" style="font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:0.7rem;">Gap Map — 6 Structural Gaps Identified</div>
+    <ul class="gap-list">
+      <li class="gap-item">
+        <span class="gap-num">1</span>
+        <div class="gap-text"><span class="gap-tag">Fatal if unresolved</span>Reference library governance gap. The concept claims a DEA forensic data-sharing MOU but names no mechanism for maintaining library currency against novel analogs not yet in DEA holdings. The library becomes stale between DEA update cycles. Fentanyl's chemistry moves faster than any static reference library. A continuous ML-update architecture is absent from the concept entirely.</div>
+      </li>
+      <li class="gap-item">
+        <span class="gap-num">2</span>
+        <div class="gap-text"><span class="gap-tag warn">Major gap</span>Undefined naloxone supply chain integration. The concept states the dashboard "transmits pre-positioning recommendations to regional pharmacy caches" but specifies no integration architecture with distributors. No distributor partnership, API, or inventory data source is named. Pre-positioning recommendations with no inventory visibility are advisory at best, dangerous if acted on under the wrong conditions.</div>
+      </li>
+      <li class="gap-item">
+        <span class="gap-num">3</span>
+        <div class="gap-text"><span class="gap-tag warn">Major gap</span>Training burden underestimated. The 4-hour certification claim is asserted, not validated. SERS interpretation requires operator decision-making above the patrol level. No validation study or pilot data is cited. This assumption determines the target user — and therefore the price point, procurement pathway, and regulatory category — for the entire product.</div>
+      </li>
+      <li class="gap-item">
+        <span class="gap-num">4</span>
+        <div class="gap-text"><span class="gap-tag warn">Major gap</span>Chain-of-custody jurisdictional gap. Evidence admissibility of field SERS data is flagged as a risk, but the proposed solution path — state-by-state legal review — is sequential and will take 3 to 5 years. No interim protocol for deployments before that review is complete is specified. The product cannot be withheld from first responders for 5 years while the legal review runs.</div>
+      </li>
+      <li class="gap-item">
+        <span class="gap-num">5</span>
+        <div class="gap-text"><span class="gap-tag warn">Major gap</span>Multi-agency authority gap. Target users are named but the decision-making chain for antidote pre-positioning is undefined. Who holds authority to act on a dashboard recommendation in a multi-agency incident — EMS incident command, the hospital medical director, or a law enforcement commander? This is not a coordination preference; it is a liability determination.</div>
+      </li>
+      <li class="gap-item">
+        <span class="gap-num">6</span>
+        <div class="gap-text">FDA device regulatory pathway absent. Sentinel transmits detection results that directly inform clinical dosing decisions. That positions it as a diagnostic device under 21 CFR Part 809 or Part 880. The concept does not address 510(k) clearance, De Novo classification, or the humanitarian device exemption pathway. This is a commercialization-blocking gap.</div>
+      </li>
+    </ul>
+
+    <div class="scope-grid">
+      <div class="scope-box in">
+        <div class="scope-box-label">In Scope</div>
+        <ul>
+          <li>Synthetic opioid compound identification at point of contact</li>
+          <li>Real-time incident command integration layer</li>
+          <li>Chain-of-custody cryptographic logging for law enforcement</li>
+          <li>HAZMAT, LEO, EMS, FBI WMD, and military CWMD users</li>
+          <li>SBIR/STTR funding pathway through NIJ or BARDA</li>
+        </ul>
+      </div>
+      <div class="scope-box out">
+        <div class="scope-box-label">Explicitly Not In Scope</div>
+        <ul>
+          <li>General CBRN detection (non-opioid agents)</li>
+          <li>Naloxone distribution or supply chain ownership</li>
+          <li>Prosecution case management beyond chain-of-custody logging</li>
+          <li>Full toxicology screen replacing laboratory analysis</li>
+          <li>Clinical treatment decision authority</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gap-statement-label" style="font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:0.7rem;">Assumptions Requiring Validation Before OPSEC Review</div>
+    <ul class="assumptions-list">
+      <li class="assumption-item"><span class="assumption-flag">!</span>DEA will provide forensic library data on novel analogs not yet publicly identified — a political and legal assumption, not a technical one.</li>
+      <li class="assumption-item"><span class="assumption-flag">!</span>SERS specificity is sufficient to distinguish nitazene variants at field conditions: dust, humidity, ambient lighting, and sample contamination from fentanyl adulterants.</li>
+      <li class="assumption-item"><span class="assumption-flag">!</span>Naloxone distributors will provide real-time inventory API access to a third-party platform without a commercial contract or regulatory precedent for doing so.</li>
+      <li class="assumption-item"><span class="assumption-flag">!</span>4-hour certification is sufficient for patrol-level deployment without laboratory backup — unvalidated, and likely incorrect based on comparable field instrument deployments.</li>
+    </ul>
+  </div>
+
+  <!-- § 3. Dimension Score Matrix -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">§ 3</span>
+      <span class="section-title">OPSEC Corridor — 8-Dimension Score Matrix</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--ink-soft);margin-bottom:1.1rem;">Each EP reviewed the Sentinel concept brief against their domain. Scores are 1–10. Notes reflect the primary EP finding for each dimension.</p>
+    <table class="score-table">
+      <thead>
+        <tr>
+          <th>Specialist Office</th>
+          <th>Score</th>
+          <th>Primary Finding</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Frontline Communications &amp; Public Face</td>
+          <td><div class="score-cell"><span class="score-pip">6.0</span><div class="score-bar"><div class="score-bar-fill" style="width:60%;"></div></div></div></td>
+          <td class="score-note">Product name "Sentinel" is operationally appropriate. Open-channel radio risk: first responders communicating compound identity in unencrypted channels reveals toxicological intelligence to adversaries monitoring incident frequencies. An encrypted incident radio protocol is required and absent.</td>
+        </tr>
+        <tr>
+          <td>Structure &amp; Compliance Architecture</td>
+          <td><div class="score-cell"><span class="score-pip">5.0</span><div class="score-bar"><div class="score-bar-fill" style="width:50%;"></div></div></div></td>
+          <td class="score-note">SBIR/STTR path is identified. ATO pathway for use in BES Cyber System environments — where incident command dashboards may interface with utility or facility SCADA — is unaddressed. HIPAA applicability to patient-adjacent compound data transmitted through the dashboard is unresolved.</td>
+        </tr>
+        <tr>
+          <td>Legal Surface &amp; Liability Boundary</td>
+          <td><div class="score-cell"><span class="score-pip">4.0</span><div class="score-bar"><div class="score-bar-fill" style="width:40%;background:#b91c1c;"></div></div></div></td>
+          <td class="score-note">Lowest-scored dimension. State-by-state evidence admissibility is flagged but unresolved. Product liability for a false negative — compound not identified, wrong naloxone dose, patient death — is not addressed. FDA device classification (21 CFR Part 809 or 880) is absent entirely. This is the blocking condition.</td>
+        </tr>
+        <tr>
+          <td>Human Factors &amp; Insider Risk</td>
+          <td><div class="score-cell"><span class="score-pip">7.0</span><div class="score-bar"><div class="score-bar-fill" style="width:70%;"></div></div></div></td>
+          <td class="score-note">Chain-of-custody cryptographic signing for the detection record is correctly designed. One insider risk vector identified: write access to the DEA reference library at the federal end. A compromised library update poisons all field devices simultaneously. Library update authentication architecture is unspecified.</td>
+        </tr>
+        <tr>
+          <td>Financial Exposure &amp; Monetization Risk</td>
+          <td><div class="score-cell"><span class="score-pip">6.0</span><div class="score-bar"><div class="score-bar-fill" style="width:60%;"></div></div></div></td>
+          <td class="score-note">Competitive pricing context provided ($30K–$80K for Bruker/908 Devices) but Sentinel's own target unit price is unstated. Government procurement pathway — DHS SAFETY Act designation, GSA schedule eligibility, sole-source justification under CBRN urgency — is not addressed. SBIR funding is identified; reimbursement pathway for state and local government procurement is not.</td>
+        </tr>
+        <tr>
+          <td>Risk Discipline &amp; Operational Guardrails</td>
+          <td><div class="score-cell"><span class="score-pip">5.0</span><div class="score-bar"><div class="score-bar-fill" style="width:50%;"></div></div></div></td>
+          <td class="score-note">Four key risks are correctly identified. Each mitigation is placeholder-level. "Legal review required state by state" is not a guardrail — it is a delay tactic. No interim deployment protocol exists for the period before the legal review is complete. No go/no-go criteria for pre-commercial deployment are defined.</td>
+        </tr>
+        <tr>
+          <td>Information Exposure &amp; Discoverability</td>
+          <td><div class="score-cell"><span class="score-pip">8.0</span><div class="score-bar"><div class="score-bar-fill" style="width:80%;"></div></div></div></td>
+          <td class="score-note">Highest-scored dimension. The core OPSEC question — what does the incident command dashboard reveal to an adversary monitoring network traffic? — is the right question. Compound identity plus GPS coordinates in real-time exposes operational response patterns. Encryption standards for the dashboard transmission link are unspecified; TLS minimum requirement should be stated explicitly.</td>
+        </tr>
+        <tr>
+          <td>Visual Surface &amp; Brand Security</td>
+          <td><div class="score-cell"><span class="score-pip">7.0</span><div class="score-bar"><div class="score-bar-fill" style="width:70%;"></div></div></div></td>
+          <td class="score-note">Device physical form factor is not described, which creates an OPSEC ambiguity: a device resembling consumer electronics in a first responder's hands signals capability to an observing adversary differently than law enforcement-marked equipment. Physical markings and chain-of-custody packaging for evidence handling are unaddressed.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="composite-row">
+      <div>
+        <div class="composite-label">Composite OPSEC Score</div>
+        <div class="composite-score">6.0 / 10</div>
+      </div>
+      <div class="composite-interp">Operationally grounded concept with identifiable, non-disqualifying gaps. Legal Surface (&sect;3 above) is the blocking condition; all other gaps are resolvable pre-deployment. Score sufficient for conditional advancement to the Chamber.</div>
+    </div>
+  </div>
+
+  <!-- § 4. Sector Chief Panel -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">§ 4</span>
+      <span class="section-title">Sector Chief Panel — Chamber Findings</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--ink-soft);margin-bottom:1.1rem;">Four sector chiefs reviewed Sentinel in the Chamber. Sector chiefs bring domain evidence, not just assessment — findings reference their beats.</p>
+
+    <div class="judge-card">
+      <div class="judge-card-head">
+        <span class="judge-name">Helena Ward</span>
+        <span class="judge-role">Sector Chief &mdash; CBRN &amp; Chemical Sector &middot; WMD Threat Assessment</span>
+      </div>
+      <div class="judge-finding-body">
+        <p>The SERS-based identification approach is technically validated at laboratory scale — that's settled science. What's not settled is field-condition performance, and that gap is real, not trivial. SERS degrades with sample contamination, humidity, and ambient particulates. The 90-second detection claim needs a field-condition assumption set attached to it: what temperature, what contamination level, what sample matrix? Without that, it's a lab spec being presented as an operational spec.<br><br>From a CBRN doctrine standpoint, the <strong>incident command integration layer is the strongest element of this concept</strong> and the one most likely to survive field validation. The sensor hardware will commoditize. The data layer — compound identity, GPS, antidote pre-positioning tied to pharmacy inventory — is where the defensible product lives.<br><br>Ms. Ivy's gap on novel analog evasion is the one I'd elevate. Fentanyl's chemistry moves faster than any forensic library, and the NIH/DEA data-sharing agreement path is slower than the drug supply chain. A machine learning update architecture that incorporates DEA forensic findings and academic pharmacological research simultaneously is not a nice-to-have. It is the survival mechanism for this product's primary function.</p>
+      </div>
+    </div>
+
+    <div class="judge-card">
+      <div class="judge-card-head">
+        <span class="judge-name">Amina Farouk</span>
+        <span class="judge-role">Sector Chief &mdash; Healthcare &amp; Public Health &middot; Mass Casualty Systems</span>
+      </div>
+      <div class="judge-finding-body">
+        <p>The naloxone pre-positioning module is the most clinically significant element of this concept — and the most underspecified. Transmitting "recommend X mg naloxone at facility Y" requires three things that are not in this concept: a live connection to hospital pharmacy inventory systems, a medical protocol specifying who holds authority to activate the pre-positioning order, and a liability framework for what happens when the recommendation is wrong.<br><br>In a mass casualty incident with carfentanil exposure, a misidentified compound and the wrong naloxone guidance kills people. The clinical integration architecture for this module needs a full redesign pass before this moves. The concept treats it as a dashboard feature. Clinically, it's a medical device with dosing implications.<br><br>The rest of the concept — detection, logging, incident command visualization — is sound. The target market for the SERS device itself is defensible. <strong>The dashboard's clinical layer is where I'd park my major concern.</strong> Fix that architecture and this concept gets a different score from me in the next round.</p>
+      </div>
+    </div>
+
+    <div class="judge-card">
+      <div class="judge-card-head">
+        <span class="judge-name">Jonas McCrae</span>
+        <span class="judge-role">Sector Chief &mdash; Emergency Services &amp; First Responder Operations</span>
+      </div>
+      <div class="judge-finding-body">
+        <p>From a first responder standpoint, the 4-hour certification claim is generous by a factor of two to four. Any device going to patrol-level deployment in mass-casualty conditions needs less training than NARCAN — not more. Patrol officers in fentanyl-saturated jurisdictions are already operating under protocol fatigue. A device that adds cognitive load at the point of exposure contact is a device that does not get used.<br><br>Here is the distinction the concept needs to make and currently does not: <strong>HAZMAT team tool versus patrol officer tool</strong>. These are not the same product. HAZMAT teams can absorb 4-hour certification and an $80K device. Patrol officers cannot. The SERS platform as described is a HAZMAT and WMD coordinator tool. That is a legitimate market — but it changes the price point, the procurement pathway, the FDA classification, and the competitive positioning entirely.<br><br>Targeting HAZMAT teams, FBI WMD Coordinators, and military CWMD units rather than patrol is a more defensible early market. Patrol deployment is a Phase 3 problem after field validation. The concept should say so explicitly rather than claiming patrol-level deployment in Phase 1.</p>
+      </div>
+    </div>
+
+    <div class="judge-card">
+      <div class="judge-card-head">
+        <span class="judge-name">Maxwell Chen</span>
+        <span class="judge-role">Sector Chief &mdash; Emerging Technology &amp; AI Systems</span>
+      </div>
+      <div class="judge-finding-body">
+        <p>The cloud-connected incident management layer is the right strategic bet. I want to see the dashboard's threat model because it's doing a lot of work: compound identity, GPS coordinates, and naloxone pre-positioning recommendations — all transmitted in real time across a multi-agency incident. That's a high-value target for an adversary who wants to understand law enforcement response patterns, pre-position countermeasures, or inject false data to degrade the response.<br><br>The <strong>chain-of-custody cryptographic signing is the correct architecture</strong>. Apply that same discipline to the dashboard transmission: end-to-end encryption, authenticated device identities for each Sentinel unit, and a replay-attack prevention layer on the GPS coordinate stream. None of this is novel engineering; it's standard secure-comms practice that the concept does not specify.<br><br>On the ML library update architecture: this is solvable and it's where I would spend Phase 1 SBIR funding alongside the SERS cartridge validation. A federated learning approach that incorporates DEA forensic findings without centralizing sensitive compound data in a commercial cloud could address both the library currency problem and the classification-gap problem simultaneously. That's worth proposing to NIJ explicitly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- § 5. Verdict and Routing -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">§ 5</span>
+      <span class="section-title">Panel Verdict &amp; Routing</span>
+    </div>
+
+    <div class="verdict-block">
+      <div class="verdict-label">Panel Verdict</div>
+      <div class="verdict-decision">Conditional Advance</div>
+      <div class="verdict-rationale">The OPSEC Gauntlet panel finds Sentinel operationally grounded with identifiable gaps that do not disqualify the concept. The panel finds that the incident command integration layer and chain-of-custody architecture are the concept's strongest structural elements and represent genuine defensible IP. The legal surface, the naloxone clinical integration architecture, and the target user definition are non-trivial resolution conditions — not editorial notes. Advancement to USPTO routing and SBIR application is appropriate under the condition that these three items are addressed before commercial deployment.</div>
+    </div>
+
+    <div class="gap-statement-label" style="font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:0.7rem;">Mandatory Resolution Conditions</div>
+    <ul class="conditions-list">
+      <li class="condition-item">
+        <span class="condition-num">1</span>
+        <span class="condition-text"><strong>Legal surface resolution required before commercial deployment.</strong> FDA device regulatory pathway (21 CFR Part 809 or 880 — 510(k) or De Novo), state-by-state evidence admissibility framework, and product liability scope must be documented. An interim deployment protocol for SBIR/pilot use before full legal review is complete must be specified.</span>
+      </li>
+      <li class="condition-item">
+        <span class="condition-num">2</span>
+        <span class="condition-text"><strong>Naloxone pre-positioning module requires clinical architecture redesign.</strong> Specific distributor integration partners, a medical authority decision tree for acting on dashboard recommendations, and a product liability framework for recommendation error must be specified before the module is included in any commercial proposal.</span>
+      </li>
+      <li class="condition-item">
+        <span class="condition-num">3</span>
+        <span class="condition-text"><strong>Target user definition must be clarified and locked.</strong> HAZMAT-team/WMD-coordinator deployment versus patrol-officer deployment determines product architecture, price point, certification burden, and regulatory category. The concept must make this choice explicitly and build all downstream specifications from that decision.</span>
+      </li>
+    </ul>
+
+    <div class="routing-block">
+      <div class="routing-label">Recommended Routing</div>
+      <div class="routing-item">SBIR/STTR Phase I &mdash; NIJ Criminal Justice Technology Program (opioid detection, field instrument validation)</div>
+      <div class="routing-item">SBIR/STTR Phase I &mdash; BARDA CBRN Broad Agency Announcement (mass casualty detection technology)</div>
+      <div class="routing-item">DHS S&amp;T Broad Agency Announcement &mdash; First Responder Technology track</div>
+      <div class="routing-item">DoD CWMD Office &mdash; WMD-enabling technology, military CBRN application</div>
+      <div class="routing-item">USPTO &mdash; Provisional patent application recommended for SERS cartridge architecture + incident command data layer prior to NIJ submission</div>
+    </div>
+  </div>
+
+</div><!-- /.report-body -->
+
+<div class="cls-footer">Unclassified &nbsp;//&nbsp; For Official Use Only &nbsp;//&nbsp; OPSEC Gauntlet Sample Evaluation &nbsp;//&nbsp; Not for distribution</div>
+
+</body>
+</html>

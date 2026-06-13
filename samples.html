@@ -22,7 +22,7 @@
   :root,
   :root[data-theme="dark"]{
     --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
+    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
     --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
     --gauntlet-consequence:#c0392b;
   }
@@ -100,7 +100,7 @@
   }
   .card:hover{
     border-color:var(--gold-light);
-    box-shadow:0 0 0 1px rgba(200,48,43,0.4), 0 0 32px -2px rgba(200,48,43,0.4);
+    box-shadow:0 0 0 1px rgba(184,146,42,0.4), 0 0 32px -2px rgba(184,146,42,0.4);
     transform:translateY(-3px);
   }
   .card-cat{
@@ -347,7 +347,7 @@
      // client sees a finished artifact instantly without running the
      // live flow.
     const deliverableCta = sample.has_deliverable
-      ? '<a class="btn-deliverable" href="/report.html?sample=' + encodeURIComponent(sample.id) + '">See completed deliverable &rarr;</a>'
+      ? '<a class="btn-deliverable" href="' + escapeHtml(sample.deliverable_url || '/report.html?sample=' + encodeURIComponent(sample.id)) + '">See completed report &rarr;</a>'
       : '';
 
     card.innerHTML = ''
