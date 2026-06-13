@@ -1,49 +1,59 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Executive Producers · The Gauntlet</title>
-<meta name="description" content="Eight specialists who help you sharpen your idea before you face the panel. Optional. They are not here to tell you it is good. They are here to make it better.">
+<title>Op Specialists · OPSEC Gauntlet</title>
+<meta name="description" content="Ten operational specialists who map dual use risk, sharpen your concept, and build your pitch before you face the panel.">
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/tg-im.js" defer></script>
 <script src="../assets/tg-voice.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root,
-  :root[data-theme="dark"]{
-    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#b8922a; --gold-light:#d4aa4a; --rule:rgba(184,146,42,0.30);
-    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
+  :root{
+    --blue:#28527a; --blue-light:#3a7aad; --blue-pale:#edf3f8;
+    --gold:#d4940a; --gold-light:#e0a820;
+    --ink:#1a1a1a; --ink-mid:#3a3a3a; --ink-soft:#6b6b6b;
+    --rule:#d0d8e0; --bg:#ffffff;
+    --cream:#1a1a1a;
+    --text:#1a1a1a; --text-dim:#6b6b6b;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     background:var(--bg);color:var(--text);
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    font-family:'Public Sans',sans-serif;font-size:1.05rem;line-height:1.7;
     min-height:100vh;
+  }
+
+  /* Classification banner */
+  .class-banner{
+    background:#000;color:#fff;text-align:center;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;
+    letter-spacing:0.22em;text-transform:uppercase;
+    padding:0.3rem 1rem;
   }
 
   /* Topbar */
   .tg-topbar{
     display:flex;align-items:center;padding:0 2.5rem;height:56px;
     border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+    background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);z-index:100;
   }
   .tg-topbar-logo{
     display:flex;align-items:center;gap:0.6rem;
-    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
-    color:var(--gold);text-decoration:none;white-space:nowrap;
+    font-family:'Public Sans',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.16em;
+    color:var(--blue);text-decoration:none;white-space:nowrap;text-transform:uppercase;
   }
   .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
   .tg-topbar-nav{margin-left:auto;display:flex;gap:2rem;}
   .tg-topbar-nav a{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--ink-soft);text-decoration:none;
   }
-  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--gold);}
+  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--blue);}
 
   /* Main */
   main{max-width:1180px;margin:0 auto;padding:4rem 2.5rem 6rem;}
@@ -51,19 +61,19 @@
   /* Page intro */
   .r-intro{text-align:center;margin-bottom:4rem;max-width:780px;margin-left:auto;margin-right:auto;}
   .r-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--blue);margin-bottom:0.9rem;
   }
   .r-title{
-    font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;
-    color:var(--cream);line-height:1.1;margin-bottom:1rem;
+    font-family:'Spectral',serif;font-size:2.8rem;font-weight:600;
+    color:var(--ink);line-height:1.1;margin-bottom:1rem;
   }
-  .r-title em{font-style:italic;color:var(--gold-light);}
+  .r-title em{font-style:italic;color:var(--gold);}
   .r-sub{
     font-size:1.1rem;line-height:1.65;color:var(--text-dim);max-width:640px;
     margin:0 auto;
   }
-  .r-sub strong{color:var(--gold-light);font-weight:normal;font-style:italic;}
+  .r-sub strong{color:var(--blue);font-weight:600;font-style:normal;}
 
   /* Card grid */
   .r-grid{
@@ -76,32 +86,26 @@
   /* Card */
   .r-card{
     display:flex;flex-direction:column;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    border:1px solid var(--rule);background:#fff;
     overflow:hidden;
     transition:border-color 0.25s,box-shadow 0.3s,transform 0.3s;
   }
   .r-card:hover{
-    border-color:var(--gold-light);
-    box-shadow:0 0 0 1px rgba(212,170,74,0.4),0 0 32px -2px rgba(212,170,74,0.4);
+    border-color:var(--blue-light);
+    box-shadow:0 0 0 1px rgba(40,82,122,0.2),0 0 24px -2px rgba(40,82,122,0.15);
     transform:translateY(-3px);
   }
   .r-card-photo{
     position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;
-    background:#14151a;border-bottom:1px solid var(--rule);
-    /* The photo is the click target that opens the helper's profile page,
-       mirroring how the judges grid opens a modal on portrait click. */
+    background:var(--blue-pale);border-bottom:1px solid var(--rule);
     display:block;text-decoration:none;color:inherit;cursor:pointer;
   }
   .r-card-photo img{
     position:absolute;inset:0;width:100%;height:100%;
     object-fit:cover;display:block;transition:filter 0.3s;
   }
-  .r-card:hover .r-card-photo img{filter:brightness(1.08);}
+  .r-card:hover .r-card-photo img{filter:brightness(1.05);}
 
-  /* Blinking-eyes pair on every roster card. Uses a smooth fade between the
-     open and closed frames (no steps()) so the swap reads as a natural blink
-     instead of a binary snap. Closed-eye frame fades in over ~120ms, holds
-     briefly, then fades out — same pattern the Chamber judges grid uses. */
   .r-card-photo-blink .blink-closed{
     opacity:0;
     animation:tg-roster-blink 5.4s linear infinite;
@@ -110,7 +114,6 @@
     0%, 94%, 100% { opacity: 0; }
     96%, 97%      { opacity: 1; }
   }
-  /* Stagger blinks across the 9 cards so they don't pop in unison. */
   .r-grid .r-card:nth-child(1) .r-card-photo-blink .blink-closed{animation-delay:0s;}
   .r-grid .r-card:nth-child(2) .r-card-photo-blink .blink-closed{animation-delay:0.6s;}
   .r-grid .r-card:nth-child(3) .r-card-photo-blink .blink-closed{animation-delay:1.2s;}
@@ -125,50 +128,50 @@
   /* Photo placeholder for agents without portrait images */
   .r-card-photo-fill{
     width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-    background:#1a2635;
+    background:var(--blue);
   }
   .r-card-initials{
-    font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;
-    color:rgba(110,168,212,0.45);letter-spacing:0.08em;
+    font-family:'Spectral',serif;font-size:2.8rem;font-weight:600;
+    color:rgba(255,255,255,0.45);letter-spacing:0.08em;
   }
 
-  /* Cross-over badge (Jules, Ms. Ivy First Stop, Dr. Rao Second Stop) */
+  /* Cross-over / stop badge */
   .r-card-crossover{
     position:absolute;top:0.7rem;left:0.7rem;z-index:2;
-    background:rgba(10,10,10,0.85);border:1px solid var(--gold);
-    color:var(--gold-light);
-    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;
+    background:rgba(255,255,255,0.92);border:1px solid var(--rule);
+    color:var(--blue);
+    font-family:'Public Sans',sans-serif;font-size:0.5rem;font-weight:700;letter-spacing:0.18em;
     text-transform:uppercase;padding:0.3rem 0.6rem;
     backdrop-filter:blur(4px);
   }
 
   .r-card-body{padding:1.4rem 1.4rem 1.5rem;display:flex;flex-direction:column;flex:1;}
   .r-card-name{
-    font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
-    color:var(--cream);line-height:1.15;margin-bottom:0.35rem;
+    font-family:'Spectral',serif;font-size:1.4rem;font-weight:600;
+    color:var(--ink);line-height:1.15;margin-bottom:0.35rem;
   }
   .r-card-role{
-    font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+    font-family:'Public Sans',sans-serif;font-size:0.56rem;font-weight:700;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--blue);margin-bottom:1rem;
   }
   .r-card-bio{
-    font-size:1rem;line-height:1.6;color:var(--text);
+    font-size:1rem;line-height:1.6;color:var(--text-dim);
     margin-bottom:1.4rem;flex:1;
   }
-  .r-card-bio em{color:var(--cream);font-style:italic;}
+  .r-card-bio em{color:var(--ink);font-style:italic;}
 
   /* Voice button row */
   .r-card-voice{display:flex;gap:0.5rem;margin-bottom:1.1rem;}
   .r-card-voice button{
     flex:1;display:inline-flex;align-items:center;justify-content:center;gap:0.45rem;
-    background:rgba(0,0,0,0.5);border:1px solid var(--rule);
-    color:var(--gold-light);
+    background:var(--blue-pale);border:1px solid var(--rule);
+    color:var(--blue-light);
     padding:0.55rem 0.6rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif;font-size:0.52rem;font-weight:600;letter-spacing:0.18em;
     text-transform:uppercase;
     transition:border-color 0.2s,color 0.2s;
   }
-  .r-card-voice button:hover:not([disabled]){border-color:var(--gold);color:var(--gold);}
+  .r-card-voice button:hover:not([disabled]){border-color:var(--blue);color:var(--blue);}
   .r-card-voice button[disabled]{opacity:0.45;cursor:not-allowed;}
   .r-card-voice .pip{
     width:14px;height:14px;border:1px solid currentColor;border-radius:50%;
@@ -176,45 +179,47 @@
     font-size:0.5rem;line-height:1;
   }
 
-  /* Card actions — IM + Visit pair per The Dose pattern */
+  /* Card actions */
   .r-card-actions{
     display:flex;align-items:center;gap:1rem;justify-content:space-between;
     margin-top:auto;
   }
   .r-card-im{
     flex:0 0 auto;
-    background:var(--gold);color:var(--ink);border:none;
+    background:var(--blue);color:#fff;border:none;
     padding:0.75rem 1.1rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
-    text-transform:uppercase;font-weight:700;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;
+    text-transform:uppercase;
     transition:background 0.2s,transform 0.2s;
   }
-  .r-card-im:hover{background:var(--gold-light);}
+  .r-card-im:hover{background:var(--blue-light);}
   .r-card-visit{
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;
-    text-transform:uppercase;color:var(--gold);text-decoration:none;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:600;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--blue);text-decoration:none;
     border-bottom:1px solid transparent;padding-bottom:0.15rem;
     transition:color 0.2s,border-color 0.2s;
   }
-  .r-card-visit:hover{color:var(--gold-light);border-bottom-color:var(--gold-light);}
+  .r-card-visit:hover{color:var(--blue-light);border-bottom-color:var(--blue-light);}
+
   /* Footer */
   .r-footer{
     border-top:1px solid var(--rule);margin-top:5rem;padding:3rem 2.5rem 4rem;
-    background:rgba(0,0,0,0.4);
+    background:#f5f8fc;
   }
   .r-footer-inner{
     max-width:1180px;margin:0 auto;
     display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;
   }
   .r-footer-brand{
-    font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.1em;color:var(--gold);
+    font-family:'Public Sans',sans-serif;font-size:0.75rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);
   }
   .r-footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
   .r-footer-links a{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:500;letter-spacing:0.22em;
     text-transform:uppercase;color:var(--text-dim);text-decoration:none;
   }
-  .r-footer-links a:hover{color:var(--gold);}
+  .r-footer-links a:hover{color:var(--blue);}
 
   @media (max-width:740px){
     .tg-topbar{padding:0 1.3rem;}
@@ -234,31 +239,34 @@
 </head>
 <body>
 
+<div class="class-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+
 <header class="tg-topbar">
   <a class="tg-topbar-logo" href="/">
     <img src="../Favicon.png" alt="" aria-hidden="true">
-    THE GAUNTLET
+    OPSEC Gauntlet
   </a>
   <nav class="tg-topbar-nav">
     <a href="/chamber.html">The Chamber</a>
-    <a href="index.html" class="is-active">The Executive Producers</a>
-    <a href="../about.html">About</a>
+    <a href="/judges.html">The Judges</a>
+    <a href="index.html" class="is-active">Op Specialists</a>
+    <a href="/about.html">About</a>
   </nav>
 </header>
 
 <main>
 
   <section class="r-intro">
-    <div class="r-eyebrow">The Prep Track</div>
-    <h1 class="r-title">The <em>Executive Producers</em>.</h1>
-    <p class="r-sub">Ten specialists who help you sharpen the concept, map the gaps, strengthen the evidence, and build the pitch. <strong>Start with Ms. Ivy.</strong> She runs the SLR Method on your concept. Then Dr. Rao issues the GO / NO-GO before anything else opens.</p>
+    <div class="r-eyebrow">&sect; The Corridor</div>
+    <h1 class="r-title">The <em>Operational Specialists</em>.</h1>
+    <p class="r-sub">Ten specialists who map the dual use risk, sharpen the concept, and build your pitch. <strong>Start with Ms. Ivy.</strong> She runs the SLR Method on your concept. Then Dr. Rao issues the GO / NO-GO before anything else opens.</p>
   </section>
 
   <div class="r-grid">
 
     <article class="r-card">
       <a class="r-card-photo r-card-photo-blink" href="ivy-concept-integrity.html" aria-label="Visit Ms. Ivy's office">
-        <div class="r-card-crossover" style="border-color:rgba(40,82,122,0.8);color:#6ea8d4;">First Stop</div>
+        <div class="r-card-crossover">First Stop</div>
         <img class="blink-open" src="ivy_eyes-open.png" alt="Ms. Ivy">
         <img class="blink-closed" src="ivy_eyes-closed.png" alt="" aria-hidden="true">
       </a>
@@ -279,7 +287,7 @@
 
     <article class="r-card">
       <a class="r-card-photo" href="dr-rao-dual-use.html" aria-label="Visit Dr. Rao's office">
-        <div class="r-card-crossover" style="border-color:rgba(40,82,122,0.8);color:#6ea8d4;">Second Stop</div>
+        <div class="r-card-crossover">Second Stop</div>
         <div class="r-card-photo-fill">
           <span class="r-card-initials">SR</span>
         </div>
@@ -448,7 +456,7 @@
       <div class="r-card-body">
         <div class="r-card-name">Grant Ellis</div>
         <div class="r-card-role">The Coach</div>
-        <p class="r-card-bio">Fifteen years in pitch coaching. The last person you see before The Gauntlet. <em>I will get you ready to speak your idea out loud in sixty seconds to someone who will not wait for you to find your words.</em></p>
+        <p class="r-card-bio">Fifteen years in pitch coaching. The last person you see before the Chamber. <em>I will get you ready to speak your idea out loud in sixty seconds to someone who will not wait for you to find your words.</em></p>
         <div class="r-card-voice">
           <button type="button" data-tg-voice data-character="grant_ellis" data-mode="bio"><span class="pip">▶</span> Their Story</button>
           <button type="button" data-tg-voice data-character="grant_ellis" data-mode="role"><span class="pip">▶</span> Their Role</button>
@@ -466,14 +474,17 @@
 
 <footer class="r-footer">
   <div class="r-footer-inner">
-    <div class="r-footer-brand">THE GAUNTLET</div>
+    <div class="r-footer-brand">OPSEC GAUNTLET</div>
     <nav class="r-footer-links">
       <a href="/chamber.html">The Chamber</a>
-      <a href="index.html">The Executive Producers</a>
-      <a href="../about.html">About</a>
+      <a href="/judges.html">The Judges</a>
+      <a href="index.html">Op Specialists</a>
+      <a href="/about.html">About</a>
     </nav>
   </div>
 </footer>
+
+<div class="class-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
 
 </body>
 </html>
