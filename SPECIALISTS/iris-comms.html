@@ -30,7 +30,7 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
 .tg-topbar-back:hover{color:var(--blue);}
 
 .h-strip{max-width:1320px;margin:0 auto;padding:1.4rem 2rem 0.9rem;display:flex;align-items:center;gap:1.2rem;border-bottom:1px solid var(--rule);}
-.h-strip-photo{width:64px;height:64px;flex-shrink:0;border:1px solid var(--rule);background:var(--blue-pale);display:flex;align-items:center;justify-content:center;}
+.h-strip-photo{width:64px;height:64px;flex-shrink:0;border:1px solid var(--rule);background:var(--blue-pale);overflow:hidden;}.h-strip-photo img{width:100%;height:100%;object-fit:cover;display:block;}
 .h-strip-initials{font-family:'Spectral',serif;font-size:1.4rem;font-weight:700;color:var(--blue);font-style:italic;}
 .h-strip-meta{display:flex;flex-direction:column;gap:0.2rem;flex:1;}
 .h-strip-name{font-family:'Spectral',serif;font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1.1;}
@@ -102,9 +102,7 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
 </header>
 
 <div class="h-strip">
-  <div class="h-strip-photo">
-    <span class="h-strip-initials">IK</span>
-  </div>
+  <div class="h-strip-photo"><img src="Iris_profile.png" alt="Iris S. King"></div>
   <div class="h-strip-meta">
     <div class="h-strip-name">Iris S. <em>King</em></div>
     <div class="h-strip-role">Office of Frontline Communications &middot; Intake and First Contact Control</div>
