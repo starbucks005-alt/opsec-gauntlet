@@ -729,8 +729,8 @@ body[data-tg-postchamber] .after-panel{display:none;}
 <section class="samples-preview">
   <div class="samples-preview-head">
     <div class="samples-preview-eyebrow">&sect; 2 &middot; See the work first</div>
-    <h2 class="samples-preview-title">Eight ideas. <em>Eight finished deliverables.</em></h2>
-    <p class="samples-preview-sub">Each one walked OPSEC Gauntlet end-to-end. Pick any deliverable to see exactly what paid members produce &mdash; the EP reports, the judge findings, the verdict. Free to read. No signup.</p>
+    <h2 class="samples-preview-title">Eight ideas. <em>Eight sectors. Try any of them live.</em></h2>
+    <p class="samples-preview-sub">Each one is a real homeland security concept drawn from subject-matter expertise across the CISA Critical Infrastructure Sectors. Load one, walk the corridor, go to the Chamber. No signup required.</p>
   </div>
   <div class="samples-preview-grid" id="samples-preview-grid">
     <div class="samples-preview-loading">Loading samples...</div>
@@ -753,17 +753,21 @@ body[data-tg-postchamber] .after-panel{display:none;}
     .then(function(r){ if (!r.ok) throw new Error('samples ' + r.status); return r.json(); })
     .then(function(data){
       var samples = Array.isArray(data.samples) ? data.samples : [];
-      var withDeliverable = samples.filter(function(s){ return s && s.has_deliverable; });
-      if (!withDeliverable.length) {
+      var visible = samples.filter(function(s){ return s && s.id; });
+      if (!visible.length) {
         gridEl.innerHTML = '<div class="samples-preview-error">No samples available right now.</div>';
         return;
       }
-      gridEl.innerHTML = withDeliverable.map(function(s){
-        return '<a class="sp-card" href="/report.html?sample=' + encodeURIComponent(s.id) + '">'
+      gridEl.innerHTML = visible.map(function(s){
+        var href = s.has_deliverable
+          ? '/report.html?sample=' + encodeURIComponent(s.id)
+          : '/samples.html';
+        var cta  = s.has_deliverable ? 'See deliverable &rarr;' : 'Try this idea &rarr;';
+        return '<a class="sp-card" href="' + href + '">'
           + '<div class="sp-card-cat">' + escapeHtml(s.category || 'Idea') + '</div>'
           + '<div class="sp-card-title">' + escapeHtml(s.title) + '</div>'
           + (s.tagline ? '<div class="sp-card-tagline">' + escapeHtml(s.tagline) + '</div>' : '')
-          + '<div class="sp-card-cta">See deliverable &rarr;</div>'
+          + '<div class="sp-card-cta">' + cta + '</div>'
           + '</a>';
       }).join('');
     })
