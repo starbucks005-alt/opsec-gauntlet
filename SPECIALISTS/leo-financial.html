@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leo Vance · Office of Financial Exposure · OPSEC Gauntlet</title>
+<meta name="description" content="Leo Vance evaluates the financial structure of your idea. He identifies where revenue concentration, vendor dependency, or cash flow patterns create operational fragility.">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../Favicon.png">
+<script src="../assets/tg-ep-chat.js" defer></script>
+<script src="../assets/tg-voice.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#28527a;--blue-light:#3a7aad;--blue-pale:#edf3f8;--gold:#d4940a;--ink:#1a1a1a;--ink-soft:#6b6b6b;--rule:#d0d8e0;--text:#1a1a1a;--text-dim:#6b6b6b;--red:#b91c1c;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+.cls-banner{background:#000;color:#fff;text-align:center;font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.3rem 1rem;}
+.tg-topbar{display:flex;align-items:center;padding:0 2rem;height:56px;border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);z-index:100;}
+.tg-topbar-logo{display:flex;align-items:center;gap:0.6rem;font-family:'Public Sans',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.16em;color:var(--blue);text-decoration:none;white-space:nowrap;text-transform:uppercase;}
+.tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+.tg-topbar-back{margin-left:auto;font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;}
+.tg-topbar-back:hover{color:var(--blue);}
+.h-strip{max-width:1320px;margin:0 auto;padding:1.4rem 2rem 0.9rem;display:flex;align-items:center;gap:1.2rem;border-bottom:1px solid var(--rule);}
+.h-strip-photo{width:64px;height:64px;flex-shrink:0;border:1px solid var(--rule);background:var(--blue-pale);display:flex;align-items:center;justify-content:center;}
+.h-strip-initials{font-family:'Spectral',serif;font-size:1.4rem;font-weight:700;color:var(--blue);font-style:italic;}
+.h-strip-meta{display:flex;flex-direction:column;gap:0.2rem;flex:1;}
+.h-strip-name{font-family:'Spectral',serif;font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1.1;}
+.h-strip-name em{font-style:italic;color:var(--blue);}
+.h-strip-role{font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--blue);}
+.h-strip-badge{display:inline-block;margin-top:0.3rem;font-family:'Public Sans',sans-serif;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);background:var(--blue-pale);padding:0.25rem 0.6rem;}
+.office{max-width:1320px;margin:0 auto;padding:1rem 2rem 4rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.4rem;height:calc(100vh - 56px - 34px - 102px);min-height:560px;}
+.office-panel{display:flex;flex-direction:column;min-height:0;border:1px solid var(--rule);background:#fff;}
+.office-panel-head{padding:0.8rem 1.1rem;border-bottom:1px solid var(--rule);font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;justify-content:space-between;gap:0.8rem;}
+.office-panel-head-note{color:var(--ink-soft);font-size:0.55rem;}
+.office-brief{flex:1;padding:1.4rem 1.3rem;overflow-y:auto;font-size:1.05rem;line-height:1.65;color:var(--text);white-space:pre-wrap;}
+.office-brief[data-empty="true"]{color:var(--text-dim);font-style:italic;}
+.office-chat-thread{flex:1;padding:1.1rem 1.1rem 0.6rem;overflow-y:auto;}
+.tg-chat-empty{color:var(--text-dim);font-style:italic;font-size:0.98rem;padding:1rem 0;}
+.tg-chat-turn{margin-bottom:1.4rem;font-size:1rem;line-height:1.55;}
+.tg-chat-user{margin-left:1.5rem;padding:0.6rem 0.9rem;background:var(--blue-pale);border-left:2px solid var(--blue);color:var(--ink);}
+.tg-chat-assistant{padding:0.2rem 0;}
+.tg-chat-who{font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:0.35rem;}
+.tg-chat-content{white-space:pre-wrap;}
+.office-chat-input{border-top:1px solid var(--rule);padding:0.85rem 1rem;display:flex;gap:0.7rem;align-items:flex-end;background:#f4f7fb;}
+.office-chat-input textarea{flex:1;min-height:54px;max-height:140px;resize:vertical;background:#fff;border:1px solid var(--rule);color:var(--ink);font-family:'Public Sans',sans-serif;font-size:1rem;line-height:1.5;padding:0.6rem 0.8rem;outline:none;}
+.office-chat-input textarea:focus{border-color:var(--blue);}
+.office-chat-input textarea::placeholder{color:var(--text-dim);font-style:italic;}
+.office-chat-send{font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;padding:0.75rem 1.2rem;background:var(--blue);color:#fff;border:1px solid var(--blue);transition:background 0.18s;}
+.office-chat-send:hover:not(:disabled){background:var(--blue-light);}
+.office-chat-send:disabled{opacity:0.5;cursor:wait;}
+.office-keys{font-family:'Public Sans',sans-serif;font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);text-align:center;padding-bottom:0.45rem;}
+.office-keys strong{color:var(--blue);}
+@media(max-width:980px){.office{grid-template-columns:1fr;height:auto;min-height:0;}.office-brief{max-height:42vh;}.office-chat-thread{max-height:48vh;}}
+.sp-section{border-top:1px solid var(--rule);padding:3.5rem 2rem 4.5rem;}
+.sp-section:nth-child(even){background:var(--blue-pale);}
+.sp-inner{max-width:1080px;margin:0 auto;}
+.sp-head{max-width:780px;margin:0 auto 2.4rem;text-align:center;}
+.sp-eyebrow{font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--blue);margin-bottom:0.8rem;}
+.sp-head h2{font-family:'Spectral',serif;font-size:1.9rem;font-weight:700;color:var(--ink);line-height:1.15;margin:0 0 0.6rem;}
+.sp-sub{font-family:'Public Sans',sans-serif;font-style:italic;color:var(--text-dim);font-size:1rem;line-height:1.5;}
+.sp-orientation{max-width:780px;margin:0 auto;border-left:3px solid var(--blue);background:var(--blue-pale);padding:1.6rem 2rem;font-size:1.08rem;line-height:1.75;color:var(--ink);font-style:italic;}
+.sp-orientation p{margin-bottom:1.1rem;}
+.sp-orientation p:last-child{margin-bottom:0;}
+.sp-orientation-speaker{font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);font-style:normal;display:block;margin-bottom:1rem;}
+.sp-scope{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:0.6rem;}
+.sp-scope-item{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--rule);background:#fff;padding:1rem 1.2rem;}
+.sp-scope-bullet{font-family:'Spectral',serif;font-size:1.3rem;color:var(--blue);line-height:1;flex-shrink:0;}
+.sp-scope-text{font-family:'Public Sans',sans-serif;font-size:0.98rem;line-height:1.5;color:var(--text);}
+.sp-deliverables{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:0.7rem;}
+.sp-deliverable{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--rule);background:#fff;padding:1rem 1.2rem;}
+.sp-deliverable-num{font-family:'Spectral',serif;font-style:italic;font-size:1.5rem;color:var(--blue);line-height:1;flex-shrink:0;padding-top:0.1rem;}
+.sp-deliverable-title{font-family:'Spectral',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;line-height:1.2;}
+.sp-deliverable-desc{font-family:'Public Sans',sans-serif;font-size:0.95rem;line-height:1.5;color:var(--text);margin:0;}
+.sp-why{max-width:780px;margin:0 auto;border-left:3px solid var(--red);background:#fef2f2;padding:1.4rem 1.8rem;font-family:'Spectral',serif;font-size:1.2rem;font-style:italic;color:var(--ink);line-height:1.5;}
+.sp-cta{text-align:center;padding:3rem 2rem;border-top:1px solid var(--rule);}
+.sp-cta p{font-family:'Public Sans',sans-serif;font-style:italic;color:var(--text-dim);font-size:1.05rem;margin-bottom:1.4rem;}
+.sp-cta-btn{display:inline-block;padding:0.9rem 2rem;background:var(--blue);color:#fff;font-family:'Public Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;text-decoration:none;transition:background 0.2s;}
+.sp-cta-btn:hover{background:var(--blue-light);}
+</style>
+</head>
+<body>
+<div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/"><img src="../Favicon.png" alt="" aria-hidden="true">OPSEC Gauntlet</a>
+  <a class="tg-topbar-back" href="../Helpers/index.html">&larr; The Corridor</a>
+</header>
+<div class="h-strip">
+  <div class="h-strip-photo"><span class="h-strip-initials">LV</span></div>
+  <div class="h-strip-meta">
+    <div class="h-strip-name">Leo <em>Vance</em></div>
+    <div class="h-strip-role">Office of Financial Exposure &middot; Financial Operations Analyst</div>
+    <span class="h-strip-badge">OPSEC Specialist &middot; OPSEC Gauntlet</span>
+  </div>
+</div>
+<main class="office" data-tg-office="ep" data-tg-office-ep-id="leo_vance_opsec" data-tg-office-ep-name="Leo">
+  <section class="office-panel">
+    <div class="office-panel-head"><span>Your Concept</span><span class="office-panel-head-note">Leo maps financial fragility as you describe it</span></div>
+    <div class="office-brief" data-tg-office="brief" data-empty="true">Describe your revenue sources and cost structure. Where does the money come from, where does it go, what would break it.</div>
+  </section>
+  <section class="office-panel">
+    <div class="office-panel-head"><span>Your session with Leo</span><span class="office-panel-head-note">Closes with the tab.</span></div>
+    <div class="office-chat-thread" data-tg-office="chat"></div>
+    <div class="office-keys"><strong>Enter</strong> to send &middot; <strong>Shift</strong> + <strong>Enter</strong> for newline</div>
+    <div class="office-chat-input">
+      <textarea data-tg-office="input" placeholder="Describe your primary revenue source. Who pays you, how much, how often, and what happens if they stop."></textarea>
+      <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
+    </div>
+  </section>
+</main>
+
+<section class="sp-section">
+  <div class="sp-inner">
+    <header class="sp-head">
+      <div class="sp-eyebrow">Leo&rsquo;s Opening</div>
+      <h2>The Orientation.</h2>
+      <p class="sp-sub">What you hear when you walk into the Office of Financial Exposure.</p>
+    </header>
+    <blockquote class="sp-orientation">
+      <span class="sp-orientation-speaker">Leo Vance &mdash; Office of Financial Exposure</span>
+      <p>Welcome to the Office of Financial Exposure. My name is Leo Vance. I look at how money moves through your idea and where that movement creates fragility.</p>
+      <p>Financial fragility is an OPSEC issue. A single client who represents 80% of revenue is a leverage point. A vendor who can cut you off with 30 days notice is a single point of failure. A cash flow pattern that requires three months of runway to survive a slow quarter is a threat model problem, not just a bookkeeping problem.</p>
+      <p>I will ask you to describe your revenue sources and your cost structure. We will find the weak points. The places where one invoice, one contract, one vendor decision can end the operation.</p>
+      <p>If you are ready, begin by describing your primary revenue source.</p>
+    </blockquote>
+  </div>
+</section>
+
+<section class="sp-section">
+  <div class="sp-inner">
+    <header class="sp-head">
+      <div class="sp-eyebrow">Scope of Work</div>
+      <h2>Where the money flows. Where it stops. What breaks when it does.</h2>
+    </header>
+    <div class="sp-scope">
+      <div class="sp-scope-item"><span class="sp-scope-bullet">&sect;</span><span class="sp-scope-text"><strong>Revenue concentration.</strong> Whether the idea depends on one client, one channel, or one contract. Concentration is leverage someone else holds over your operation.</span></div>
+      <div class="sp-scope-item"><span class="sp-scope-bullet">&sect;</span><span class="sp-scope-text"><strong>Vendor dependency.</strong> Which vendors can stop the operation if they choose to. Whether those dependencies are disclosed, managed, or invisible.</span></div>
+      <div class="sp-scope-item"><span class="sp-scope-bullet">&sect;</span><span class="sp-scope-text"><strong>Cash flow volatility.</strong> Whether the revenue timing matches the cost timing. Where the idea is vulnerable to a slow month, a delayed payment, or a lost contract.</span></div>
+      <div class="sp-scope-item"><span class="sp-scope-bullet">&sect;</span><span class="sp-scope-text"><strong>Operational costs.</strong> Fixed obligations that continue whether revenue does or not. The ones that create pressure when the environment changes.</span></div>
+      <div class="sp-scope-item"><span class="sp-scope-bullet">&sect;</span><span class="sp-scope-text"><strong>Financial blind spots.</strong> The costs and dependencies the founder has not modeled because they have not happened yet. Leo finds them before they become the first crisis.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sp-section">
+  <div class="sp-inner">
+    <header class="sp-head">
+      <div class="sp-eyebrow">What You Leave With</div>
+      <h2>A financial model that can survive stress.</h2>
+    </header>
+    <div class="sp-deliverables">
+      <div class="sp-deliverable"><div class="sp-deliverable-num">1</div><div><div class="sp-deliverable-title">Stress-Tested Financial Model</div><p class="sp-deliverable-desc">The financial structure of the idea examined under realistic pressure scenarios. Where it holds and where it breaks. Named specifically, not hypothetically.</p></div></div>
+      <div class="sp-deliverable"><div class="sp-deliverable-num">2</div><div><div class="sp-deliverable-title">Financial Weak Point Inventory</div><p class="sp-deliverable-desc">The specific concentration risks, vendor dependencies, and cash flow vulnerabilities. Prioritized by the damage they would cause if triggered. Each one actionable.</p></div></div>
+      <div class="sp-deliverable"><div class="sp-deliverable-num">3</div><div><div class="sp-deliverable-title">Financial Risk Clarity</div><p class="sp-deliverable-desc">A plain-language picture of the financial risk profile. What the idea can absorb, what it cannot, and where the sector chiefs will find the first financial fragility if Leo does not find it here.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sp-section">
+  <div class="sp-inner">
+    <header class="sp-head"><div class="sp-eyebrow">Why This Office Exists</div><h2>If one invoice can sink the idea, the idea is not secure.</h2></header>
+    <div class="sp-why">Financial fragility is operational fragility. An idea that cannot survive a slow quarter, a lost client, or a vendor dispute is an idea with an exploitable pressure point. Leo finds those points before they become leverage someone else holds over the operation.</div>
+  </div>
+</section>
+
+<div class="sp-cta">
+  <p>When the financial exposure is mapped, your concept moves to the next specialist office.</p>
+  <a class="sp-cta-btn" href="../Helpers/index.html">&larr; Return to The Corridor</a>
+</div>
+<div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+</body>
+</html>
