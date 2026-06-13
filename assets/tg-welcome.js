@@ -74,14 +74,14 @@
       .tg-welcome-modal{
         position:relative;
         width:100%;max-width:580px;max-height:92vh;overflow-y:auto;
-        background:var(--bg, #0a0807);
-        border:1px solid rgba(212,170,74,0.35);
+        background:#0f1923;
+        border:1px solid rgba(100,140,190,0.3);
         box-shadow:
-          0 0 0 1px rgba(212,170,74,0.08),
+          0 0 0 1px rgba(100,140,190,0.08),
           0 24px 60px -12px rgba(0,0,0,0.7),
-          0 0 80px -20px rgba(212,170,74,0.18);
+          0 0 80px -20px rgba(100,140,190,0.15);
         padding:2.2rem 2rem 1.8rem;
-        color:var(--text, #e6dccd);
+        color:#d0d9e8;
         transform:translateY(12px);
         transition:transform 0.4s ease;
       }
@@ -107,7 +107,7 @@
       }
       .tg-welcome-sub{
         font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.5;
-        color:var(--text, #e6dccd);margin:0 0 1.6rem;
+        color:#d0d9e8;margin:0 0 1.6rem;
       }
 
       .tg-welcome-label{
@@ -143,7 +143,7 @@
       }
       .tg-welcome-why p{
         font-family:'Cormorant Garamond',serif;font-size:0.98rem;line-height:1.55;
-        color:var(--text, #e6dccd);margin:0 0 0.6rem;
+        color:#d0d9e8;margin:0 0 0.6rem;
       }
       .tg-welcome-why p:last-child{margin-bottom:0;}
 
