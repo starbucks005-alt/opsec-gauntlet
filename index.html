@@ -791,18 +791,36 @@ body[data-tg-postchamber] .after-panel{display:none;}
         gridEl.innerHTML = '<div class="samples-preview-error">No samples available right now.</div>';
         return;
       }
+      var sampleMap = {};
+      visible.forEach(function(s){ sampleMap[s.id] = s; });
       gridEl.innerHTML = visible.map(function(s){
         var href = s.has_deliverable
           ? (s.deliverable_url || '/report.html?sample=' + encodeURIComponent(s.id))
-          : '/samples.html';
+          : '/#corridor-wings';
         var cta  = s.has_deliverable ? 'See deliverable &rarr;' : 'Try this idea &rarr;';
-        return '<a class="sp-card" href="' + href + '">'
+        var dataId = !s.has_deliverable ? ' data-sample-id="' + escapeHtml(s.id) + '"' : '';
+        return '<a class="sp-card" href="' + href + '"' + dataId + '>'
           + '<div class="sp-card-cat">' + escapeHtml(s.category || 'Idea') + '</div>'
           + '<div class="sp-card-title">' + escapeHtml(s.title) + '</div>'
           + (s.tagline ? '<div class="sp-card-tagline">' + escapeHtml(s.tagline) + '</div>' : '')
           + '<div class="sp-card-cta">' + cta + '</div>'
           + '</a>';
       }).join('');
+      gridEl.addEventListener('click', function(e){
+        var card = e.target.closest('[data-sample-id]');
+        if (!card) return;
+        var s = sampleMap[card.dataset.sampleId];
+        if (!s || !s.brief_text) return;
+        e.preventDefault();
+        try{
+          sessionStorage.setItem('tg_visitor_brief', s.brief_text);
+          sessionStorage.setItem('tg_sample_id', s.id);
+          sessionStorage.removeItem('tg_corridor_briefings_cache_v2');
+          sessionStorage.removeItem('tg_corridor_briefings_sig_v2');
+          sessionStorage.removeItem('tg_ep_revisions');
+        }catch(_){}
+        window.location.href = '/#corridor-wings';
+      });
     })
     .catch(function(err){
       console.warn('[samples-preview]', err);

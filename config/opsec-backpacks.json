@@ -1,0 +1,1733 @@
+{
+  "schema": "etl.opsec.backpacks/v1",
+  "generated": "2026-06-13",
+  "owner": "Dr. Terry L. Oroszi",
+  "platform": "OPSEC Gauntlet",
+  "purpose": "Implementation framework for the MCP 'backpacks' carried by the 16 OPSEC Gauntlet sector judges. Each judge is a board-level, sector-aligned evaluator; the backpack is the portable live-tool capability that travels with the character (the traveling-character rule).",
+  "design_rules": [
+    "Traveling characters carry their own backpack: the tools below belong to the judge, not to a single site framework.",
+    "Read-only. No write, no transaction, no actuation against any real system.",
+    "Public and open sources only: government registries, regulator data, standards bodies. No classified, proprietary, or personal data.",
+    "Backpacks are advisory: they return regulatory, safety, and resilience CONTEXT, never operational attack detail.",
+    "Until backpack_shipped flips true, the judge runs on static sector knowledge; the price holds at 89.99 either way."
+  ],
+  "global_guardrails": [
+    "Provide only regulatory, safety, and resilience context.",
+    "Never provide synthesis, exploit, intrusion, sabotage, or weaponization detail.",
+    "Never identify specific exploitable weaknesses, soft targets, or protected locations.",
+    "Never handle classified, proprietary, or personal data.",
+    "Any request that resembles causing harm is refused and escalated, not answered."
+  ],
+  "escalation_policy": {
+    "on_trigger": "Stop the sector analysis, refuse the operational detail, and return an escalation notice to the OPSEC Gauntlet intake (Iris S. King / Office of Frontline Communications) for human review.",
+    "shared_triggers": [
+      "weaponization",
+      "sabotage",
+      "bypassing controls or sanctions",
+      "unauthorized access",
+      "harm to people or critical infrastructure"
+    ]
+  },
+  "tool_type_legend": {
+    "dataset_api": "Live queryable government/regulator dataset.",
+    "reference_api": "Live but used as reference context, not monitoring.",
+    "reference": "Static standards/regulatory document corpus.",
+    "live_feed": "Continuously updated public feed (e.g., outbreak/alert notices)."
+  },
+  "auth_legend": {
+    "none": "No credential.",
+    "api_key": "Free API key required.",
+    "api_key_optional": "Key raises rate limits.",
+    "app_token_optional": "Socrata app token optional."
+  },
+  "judges": [
+    {
+      "id": "helena-ward",
+      "name": "Dr. Helena Ward",
+      "sector": "Chemical",
+      "cisa_sector": "Chemical",
+      "role": "Chemical Security & Hazard Mitigation Director",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Chemical facility risk lookup",
+          "source": "EPA RMP*Info via Envirofacts REST API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Risk Management Plan facilities, hazards, accident history."
+        },
+        {
+          "capability": "Toxic release / chemical inventory",
+          "source": "EPA Toxics Release Inventory (TRI) Envirofacts API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Facility-level chemical release and handling data."
+        },
+        {
+          "capability": "Hazard classification reference",
+          "source": "OSHA Hazard Communication (GHS) + PubChem GHS",
+          "type": "reference_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Classify a substance's hazard class; no handling or synthesis detail."
+        },
+        {
+          "capability": "Precursor chemical reference",
+          "source": "DEA Diversion Control List I / List II (public lists)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Identifies whether a material is a regulated precursor. Context only."
+        },
+        {
+          "capability": "Hazmat shipping rules",
+          "source": "PHMSA 49 CFR HMR + public incident data",
+          "type": "reference_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Transport/packaging requirements and historical incident patterns."
+        }
+      ],
+      "permissions": [
+        "Chemical facility registry lookup",
+        "Hazardous-materials classification",
+        "EPA RMP and TRI datasets",
+        "Precursor chemical risk scoring (regulatory context)"
+      ],
+      "guardrails": [
+        "Never gives synthesis instructions",
+        "Never provides quantities, ratios, or reaction steps",
+        "Only describes regulatory and safety context",
+        "Escalates any question that resembles weaponization"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "rafael-dominguez",
+      "name": "Col. Rafael \"Rafe\" Dominguez (Ret.)",
+      "sector": "Defense Industrial Base",
+      "cisa_sector": "Defense Industrial Base",
+      "role": "Defense Supply-Chain Integrity Analyst",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Defense supplier verification",
+          "source": "SAM.gov Entity Management API (entity + CAGE)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Confirms registration, CAGE code, exclusions."
+        },
+        {
+          "capability": "Contract history",
+          "source": "USAspending.gov Award API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Federal award history for a vendor or competitor."
+        },
+        {
+          "capability": "Screening / foreign-influence",
+          "source": "trade.gov Consolidated Screening List API + BIS Entity List",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Denied/blocked parties and foreign-influence flags."
+        },
+        {
+          "capability": "Export-control reference",
+          "source": "eCFR EAR (15 CFR 730-774) + ITAR (22 CFR 120-130)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Whether an item/transaction is export-controlled. Never advises bypass."
+        },
+        {
+          "capability": "Counterfeit-parts reference",
+          "source": "CISA / GAO counterfeit-component guidance (public)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Provenance risk patterns; GIDEP itself is access-controlled and out of scope."
+        }
+      ],
+      "permissions": [
+        "Defense supplier verification",
+        "Counterfeit-component databases (public)",
+        "Export-control reference",
+        "Foreign-influence screening"
+      ],
+      "guardrails": [
+        "Never provides procurement shortcuts",
+        "Never identifies classified vendors",
+        "Never advises bypassing export controls",
+        "Escalates anything involving weapons design"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "liyun-zhao",
+      "name": "Dr. Liyun Zhao",
+      "sector": "Communications",
+      "cisa_sector": "Communications",
+      "role": "Network Resilience Architect",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Telecom license / facility lookup",
+          "source": "FCC License View + ULS + Antenna Structure Registration",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Licensed facilities and structures near an operation."
+        },
+        {
+          "capability": "Routing / BGP anomaly",
+          "source": "RIPEstat Data API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Prefix, AS path, and routing-anomaly signals. Public route data only."
+        },
+        {
+          "capability": "Route redundancy / peering",
+          "source": "RouteViews + PeeringDB (public)",
+          "type": "reference_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Upstream diversity and single-point-of-failure mapping. No private fiber routes."
+        },
+        {
+          "capability": "Outage reference",
+          "source": "FCC NORS public summaries + ECFS",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Historical outage patterns by region/cause."
+        },
+        {
+          "capability": "Spectrum / interference reference",
+          "source": "FCC Spectrum Dashboard",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Band occupancy context. Never advises jamming or interference."
+        }
+      ],
+      "permissions": [
+        "Fiber-route outage monitoring (public)",
+        "BGP anomaly feeds",
+        "FCC license lookup",
+        "Spectrum interference reference"
+      ],
+      "guardrails": [
+        "Never provides signal-jamming instructions",
+        "Never maps private fiber routes",
+        "Never provides exploit code for telecom systems",
+        "Escalates any request to degrade communications"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "miles-harrington",
+      "name": "Miles Harrington",
+      "sector": "Financial Services",
+      "cisa_sector": "Financial Services",
+      "role": "Financial-Systems Threat Analyst",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Sanctions screening",
+          "source": "OFAC Sanctions List Search / SDN API (Treasury)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Screen a counterparty against sanctions lists."
+        },
+        {
+          "capability": "Institution verification",
+          "source": "FFIEC NIC API + NMLS Consumer Access",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Charter, regulator, and licensing status of a financial entity."
+        },
+        {
+          "capability": "Filings / disclosures",
+          "source": "SEC EDGAR full-text + submissions API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Public filings for diligence on a vendor or partner."
+        },
+        {
+          "capability": "Fraud-pattern reference",
+          "source": "FinCEN advisories + FTC/CFPB public complaint data",
+          "type": "reference_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Known fraud typologies. Never AML-evasion or laundering patterns."
+        },
+        {
+          "capability": "Fintech-vendor risk",
+          "source": "Public breach + enforcement records (cross-ref CISA KEV, FTC actions)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Vendor exposure context. Never touches personal financial data."
+        }
+      ],
+      "permissions": [
+        "Fraud-pattern monitoring (typologies)",
+        "Regulatory lookup",
+        "Vendor risk scanning",
+        "OFAC screening"
+      ],
+      "guardrails": [
+        "Never advises evading AML controls",
+        "Never provides laundering patterns",
+        "Never touches personal financial data",
+        "Escalates any request to bypass sanctions"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "amina-farouk",
+      "name": "Dr. Amina Farouk",
+      "sector": "Healthcare & Public Health",
+      "cisa_sector": "Healthcare and Public Health",
+      "role": "Medical Infrastructure Continuity Specialist",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Device recall / enforcement",
+          "source": "openFDA device recall + enforcement API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "notes": "Recalls and enforcement on a device class."
+        },
+        {
+          "capability": "Outbreak / health alerts",
+          "source": "CDC data.cdc.gov + Health Alert Network (HAN)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "app_token_optional",
+          "notes": "Public-health alerts relevant to continuity planning."
+        },
+        {
+          "capability": "Drug / supply shortage",
+          "source": "FDA Drug Shortages API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Active shortages affecting a care operation."
+        },
+        {
+          "capability": "Sector advisory reference",
+          "source": "HHS HC3 / HPH sector advisories",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Healthcare-sector continuity and threat context."
+        },
+        {
+          "capability": "Cold-chain reference",
+          "source": "CDC Vaccine Storage & Handling Toolkit",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Cold-chain integrity standards. No diagnosis, treatment, or patient data."
+        }
+      ],
+      "permissions": [
+        "FDA recall database",
+        "CDC outbreak alerts",
+        "Cold-chain integrity reference",
+        "Medical supply-chain disruption data"
+      ],
+      "guardrails": [
+        "Never provides medical diagnosis",
+        "Never gives treatment plans",
+        "Never shares patient data",
+        "Escalates anything resembling biological misuse"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "jonas-mccrae",
+      "name": "Jonas McCrae",
+      "sector": "Emergency Services",
+      "cisa_sector": "Emergency Services",
+      "role": "Incident-Command Systems Advisor",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Disaster / declaration data",
+          "source": "OpenFEMA API (declarations, IPAWS)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Active and historical incident context by area."
+        },
+        {
+          "capability": "Weather / hazard alerts",
+          "source": "NWS api.weather.gov",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Live alerts feeding readiness assessment."
+        },
+        {
+          "capability": "Geohazard feeds",
+          "source": "USGS earthquake + hazard feeds",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Real-time natural-hazard signals."
+        },
+        {
+          "capability": "ICS / NIMS reference",
+          "source": "FEMA NIMS doctrine + ICS forms library",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Incident-command structure and resource typing."
+        },
+        {
+          "capability": "Dispatch / continuity reference",
+          "source": "CISA SAFECOM + FCC NG911 resources",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Comms-continuity standards. No tactical response plans or real-time routing."
+        }
+      ],
+      "permissions": [
+        "ICS and NIMS references",
+        "Public incident feeds",
+        "Dispatch redundancy reference",
+        "Mutual-aid resource reference"
+      ],
+      "guardrails": [
+        "Never provides tactical response plans",
+        "Never gives instructions to exploit emergency systems",
+        "Never simulates real-time emergency routing",
+        "Escalates any request to disrupt emergency services"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "priyanka-nanduri",
+      "name": "Dr. Priyanka \"Pri\" Nanduri",
+      "sector": "Energy",
+      "cisa_sector": "Energy",
+      "role": "Grid Stability & SCADA Security Engineer",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Energy / load data",
+          "source": "EIA Open Data API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Generation, load, and capacity context."
+        },
+        {
+          "capability": "Disturbance reporting",
+          "source": "DOE OE-417 public electric disturbance reports",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Historical grid-disturbance patterns."
+        },
+        {
+          "capability": "Reliability standards",
+          "source": "NERC CIP reliability standards (public)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Which standards apply to a grid-touching system."
+        },
+        {
+          "capability": "ICS advisory feed",
+          "source": "CISA ICS Advisories (ICS-CERT)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "SCADA/ICS vulnerability bulletins. Context, not exploit code."
+        },
+        {
+          "capability": "Market / demand reference",
+          "source": "EIA + FERC public market data",
+          "type": "reference_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Demand and market context. Never maps real substation vulnerabilities."
+        }
+      ],
+      "permissions": [
+        "SCADA vulnerability bulletins",
+        "NERC CIP references",
+        "Grid load and outage monitoring",
+        "Substation asset reference (public)"
+      ],
+      "guardrails": [
+        "Never provides exploit code",
+        "Never maps real substation vulnerabilities",
+        "Never simulates grid-attack scenarios",
+        "Escalates any request to degrade energy systems"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "elias-kade",
+      "name": "Elias \"Eli\" Kade",
+      "sector": "Water & Wastewater Systems",
+      "cisa_sector": "Water and Wastewater Systems",
+      "role": "Water-System Integrity Analyst",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Drinking-water system lookup",
+          "source": "EPA SDWIS via Envirofacts API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Water-system records, violations, and compliance."
+        },
+        {
+          "capability": "Compliance / enforcement",
+          "source": "EPA ECHO API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Facility compliance and enforcement history."
+        },
+        {
+          "capability": "Flow / reservoir data",
+          "source": "USGS Water Services / NWIS",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Live streamflow and reservoir levels."
+        },
+        {
+          "capability": "Sector advisory feed",
+          "source": "CISA Water & Wastewater sector advisories",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Sector threat and resilience context."
+        },
+        {
+          "capability": "Contaminant reference",
+          "source": "EPA CCL + NPDWR + health advisories",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Standards on what must never be present. Never contamination instructions."
+        }
+      ],
+      "permissions": [
+        "Water contaminant databases",
+        "SCADA exposure alerts",
+        "EPA drinking-water standards",
+        "Reservoir and flow monitoring"
+      ],
+      "guardrails": [
+        "Never provides contamination instructions",
+        "Never identifies exploitable plant weaknesses",
+        "Never simulates water-system failures",
+        "Escalates any request involving water sabotage"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "mirela-stanescu",
+      "name": "Dr. Mirela Stanescu",
+      "sector": "Transportation Systems",
+      "cisa_sector": "Transportation Systems",
+      "role": "Transportation Threat & Infrastructure Analyst",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Aviation status",
+          "source": "FAA NOTAM API + ASWS + airport facility data",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Airport facility and operational-status context."
+        },
+        {
+          "capability": "Rail safety data",
+          "source": "FRA Office of Safety Analysis",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Rail incident and safety patterns."
+        },
+        {
+          "capability": "Port / freight stats",
+          "source": "MARAD + USACE port statistics + BTS TranStats",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Port congestion and freight-flow context."
+        },
+        {
+          "capability": "Maritime reference",
+          "source": "NOAA marine + public AIS reference",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "General vessel-traffic context. No live private tracking."
+        },
+        {
+          "capability": "Security reference",
+          "source": "DOT/TSA public security guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Resilience context only. Never security-bypass routing or soft-target identification."
+        }
+      ],
+      "permissions": [
+        "FAA, FRA, MARAD status feeds",
+        "Port congestion data",
+        "Rail outage alerts",
+        "Airport facility lookup"
+      ],
+      "guardrails": [
+        "Never provides routing to bypass security",
+        "Never identifies soft targets",
+        "Never simulates transportation disruption",
+        "Escalates any request involving harm to transit systems"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "gunnar-thorsen",
+      "name": "Gunnar Thorsen",
+      "sector": "Critical Manufacturing",
+      "cisa_sector": "Critical Manufacturing",
+      "role": "Industrial-Process Security Auditor",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "ICS advisory feed",
+          "source": "CISA ICS Advisories + ICS-CERT",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Industrial-control vulnerability bulletins. Context only."
+        },
+        {
+          "capability": "Vulnerability lookup",
+          "source": "NIST NVD/CVE API (ICS/OT filter)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Known CVEs for industrial components."
+        },
+        {
+          "capability": "OSHA compliance",
+          "source": "OSHA Establishment Search + enforcement API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Safety and enforcement history for a facility type."
+        },
+        {
+          "capability": "Vendor PSIRT reference",
+          "source": "Siemens / Rockwell / public PSIRT bulletins",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Component advisories. Never exploit code or factory-specific weakness ID."
+        },
+        {
+          "capability": "Component provenance",
+          "source": "SAM.gov + Consolidated Screening List",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Supply-chain provenance for industrial parts."
+        }
+      ],
+      "permissions": [
+        "ICS vulnerability feeds",
+        "CNC and robotics advisories",
+        "Component provenance checks",
+        "OSHA compliance references"
+      ],
+      "guardrails": [
+        "Never provides exploit code for industrial systems",
+        "Never identifies specific factory weaknesses",
+        "Never gives sabotage instructions",
+        "Escalates any request to disrupt manufacturing lines"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "selah-okonjo",
+      "name": "Dr. Selah Okonjo",
+      "sector": "Food & Agriculture",
+      "cisa_sector": "Food and Agriculture",
+      "role": "Ag-Supply Chain & Biosecurity Specialist",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Animal / plant disease alerts",
+          "source": "USDA APHIS disease alerts (public)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Livestock and crop disease activity."
+        },
+        {
+          "capability": "Food recall / enforcement",
+          "source": "USDA FSIS + openFDA food enforcement API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "notes": "Active recalls and enforcement relevant to a product."
+        },
+        {
+          "capability": "Ag statistics",
+          "source": "USDA NASS Quick Stats API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Production and supply context."
+        },
+        {
+          "capability": "Foodborne outbreak data",
+          "source": "CDC FoodNet / outbreak surveillance",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Outbreak patterns for risk context."
+        },
+        {
+          "capability": "Pesticide / cold-chain reference",
+          "source": "EPA pesticide registry + cold-chain standards",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Standards context. Never pathogen-handling or contamination vectors."
+        }
+      ],
+      "permissions": [
+        "USDA disease alerts",
+        "Food contamination databases",
+        "Cold-chain monitoring",
+        "Ag supply-chain disruption feeds"
+      ],
+      "guardrails": [
+        "Never provides pathogen-handling instructions",
+        "Never gives contamination vectors",
+        "Never simulates crop or livestock failure",
+        "Escalates any request involving food-system harm"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "victor-hale",
+      "name": "Victor Hale",
+      "sector": "Government Facilities",
+      "cisa_sector": "Government Facilities",
+      "role": "Physical Security & Insider-Threat Advisor",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Physical-security standards",
+          "source": "ISC (Interagency Security Committee) standards",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Facility security-level methodology and countermeasures."
+        },
+        {
+          "capability": "Insider-threat reference",
+          "source": "CISA + NITTF public insider-threat resources",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Indicators and program design. No guard-rotation or weak-point ID."
+        },
+        {
+          "capability": "Facility registry",
+          "source": "GSA public buildings (IOLP) data",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Public building inventory context."
+        },
+        {
+          "capability": "Advisory feed",
+          "source": "CISA physical-security advisories",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Sector physical-security threat context."
+        },
+        {
+          "capability": "Access-control reference",
+          "source": "FSL methodology + FPS public guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Access-control design. Never bypass instructions or secure-layout mapping."
+        }
+      ],
+      "permissions": [
+        "Access-control audit references",
+        "Insider-threat indicators",
+        "Facility vulnerability checklists",
+        "Federal building registry lookup"
+      ],
+      "guardrails": [
+        "Never provides bypass instructions",
+        "Never maps secure-facility layouts",
+        "Never identifies guard rotations or weak points",
+        "Escalates any request involving unauthorized access"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "yara-ben-said",
+      "name": "Dr. Yara Ben-Saïd",
+      "sector": "Nuclear Reactors, Materials & Waste",
+      "cisa_sector": "Nuclear Reactors, Materials, and Waste",
+      "role": "Nuclear-Materials Safeguards Analyst",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "License / document lookup",
+          "source": "NRC ADAMS + license & facility lookup",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Public licensing and facility records."
+        },
+        {
+          "capability": "Event reports",
+          "source": "NRC Event Notification Reports",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Reported events for pattern context."
+        },
+        {
+          "capability": "Safeguards reference",
+          "source": "IAEA safeguards + INFCIRC documents",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "International safeguards context."
+        },
+        {
+          "capability": "Transport reference",
+          "source": "DOT 49 CFR radiological transport rules",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Transport requirements. Never material-location ID."
+        },
+        {
+          "capability": "Material-accounting reference",
+          "source": "NRC 10 CFR 74 material-control & accounting",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Accounting standards. Never enrichment, reactor, or dispersal detail."
+        }
+      ],
+      "permissions": [
+        "Nuclear material-accounting references",
+        "IAEA safeguards bulletins",
+        "Radiological-transport registries",
+        "NRC license lookup"
+      ],
+      "guardrails": [
+        "Never provides enrichment or reactor instructions",
+        "Never identifies nuclear-material locations",
+        "Never simulates radiological dispersal",
+        "Escalates any request involving nuclear misuse"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "owen-kessler",
+      "name": "Owen Kessler",
+      "sector": "Information Technology",
+      "cisa_sector": "Information Technology",
+      "role": "Enterprise Cyber & Zero-Trust Architect",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Vulnerability lookup",
+          "source": "NIST NVD/CVE API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Known CVEs affecting a stack or vendor."
+        },
+        {
+          "capability": "Exploited-vuln catalog",
+          "source": "CISA Known Exploited Vulnerabilities (KEV)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Which CVEs are actively exploited. Prioritization context."
+        },
+        {
+          "capability": "Breach-exposure data",
+          "source": "Have I Been Pwned (HIBP) API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "notes": "Whether a domain/account appears in known breaches."
+        },
+        {
+          "capability": "Framework reference",
+          "source": "MITRE ATT&CK + NIST 800-207 (zero trust) + 800-53",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Control mapping and zero-trust design."
+        },
+        {
+          "capability": "Advisory feed",
+          "source": "CISA cybersecurity advisories + bulletins",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Active threat context. Never exploit code, intrusion steps, or live network scans."
+        }
+      ],
+      "permissions": [
+        "Zero-trust configuration references",
+        "Credential-leak feeds",
+        "Vendor-chain cyber risk scanning",
+        "CVE and exploited-vuln bulletins"
+      ],
+      "guardrails": [
+        "Never provides exploit code",
+        "Never gives step-by-step intrusion guidance",
+        "Never scans real networks",
+        "Escalates any request to compromise systems"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "marisol-quintero",
+      "name": "Dr. Marisol Quintero",
+      "sector": "Dams",
+      "cisa_sector": "Dams",
+      "role": "Hydrologic & Structural-Risk Engineer",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Dam inventory",
+          "source": "USACE National Inventory of Dams (NID) API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Dam records, hazard class, and condition where public."
+        },
+        {
+          "capability": "Streamflow data",
+          "source": "USGS NWIS / Water Services",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Live flow and reservoir data."
+        },
+        {
+          "capability": "Flood forecast",
+          "source": "NOAA/NWS AHPS flood forecasts",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Forecast context for flood-risk cascades."
+        },
+        {
+          "capability": "Dam-safety reference",
+          "source": "FEMA National Dam Safety Program + hazard classification",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Safety standards and classification. Never breach modeling."
+        },
+        {
+          "capability": "Emergency-action reference",
+          "source": "FEMA P-64 Emergency Action Plan guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "EAP structure. Never structural weak-point ID or destructive-release simulation."
+        }
+      ],
+      "permissions": [
+        "Hydrologic and flood-forecast feeds",
+        "Structural-integrity reference",
+        "Dam hazard classification lookup",
+        "Reservoir status monitoring"
+      ],
+      "guardrails": [
+        "Never provides breach modeling",
+        "Never identifies structural weak points",
+        "Never simulates destructive water release",
+        "Escalates any request involving dam sabotage"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "soren-veldt",
+      "name": "Soren Veldt",
+      "sector": "Commercial Facilities",
+      "cisa_sector": "Commercial Facilities",
+      "role": "High-Risk Venue Security Strategist",
+      "tier": "board_level",
+      "price_monthly": 89.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "tools": [
+        {
+          "capability": "Sector resources",
+          "source": "CISA Commercial Facilities + Soft Targets/Crowded Places",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Venue resilience and protective-measure guidance."
+        },
+        {
+          "capability": "Venue best-practice reference",
+          "source": "DHS SAFETY Act + venue security guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Recognized protective measures for venues."
+        },
+        {
+          "capability": "Crowd-management standards",
+          "source": "NFPA 101 + crowd-management standards",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Occupancy and egress standards for crowd-flow risk."
+        },
+        {
+          "capability": "Access / surveillance reference",
+          "source": "Access-control + CCTV best-practice guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Coverage design. Never surveillance-blind-spot mapping."
+        },
+        {
+          "capability": "Incident reference",
+          "source": "Public venue-incident / threat reference",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "notes": "Historical incident patterns. Never attack modeling or soft-target ID."
+        }
+      ],
+      "permissions": [
+        "Crowd-flow analytics references",
+        "Venue security incident feeds",
+        "Access-control audit references",
+        "Facility risk classification lookup"
+      ],
+      "guardrails": [
+        "Never provides attack modeling",
+        "Never identifies soft targets",
+        "Never maps blind spots in surveillance",
+        "Escalates any request involving harm to public venues"
+      ],
+      "escalation_triggers": [
+        "weaponization",
+        "sabotage",
+        "bypassing controls or sanctions",
+        "unauthorized access",
+        "harm to people or infrastructure"
+      ]
+    }
+  ],
+  "specialists": [
+    {
+      "id": "sahini-rao",
+      "name": "Dr. Sahini Rao",
+      "role": "Dual-Use Technology & Systems Analyst",
+      "office": "Office of Dual Use Systems Analysis (second stop)",
+      "tier": "specialty_hire",
+      "price_monthly": 69.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "mission": "Determine whether an idea touches controlled CBRN or national-security dual-use territory, classify it against the authoritative control regimes, and surface current threat-awareness context, so the concept can be routed and mitigated. Classification and awareness only.",
+      "domains": [
+        "Chemical",
+        "Biological",
+        "Radiological/Nuclear",
+        "Delivery Systems",
+        "Cross-cutting controls",
+        "Threat awareness",
+        "Research security"
+      ],
+      "tools": [
+        {
+          "domain": "Chemical",
+          "capability": "CWC scheduled chemicals (Sched 1/2/3)",
+          "source": "OPCW — Chemical Weapons Convention Annex on Chemicals",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Whether a substance is a CWC-scheduled chemical."
+        },
+        {
+          "domain": "Chemical",
+          "capability": "Chemical-weapons precursors + dual-use production equipment",
+          "source": "Australia Group chemical control lists",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned (AG plenary)",
+          "notes": "Precursor and dual-use manufacturing-equipment controls."
+        },
+        {
+          "domain": "Chemical",
+          "capability": "Chemicals of interest / facility risk",
+          "source": "CISA Chemicals of Interest (CFATS Appendix A) + ATSDR agent data",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Risk reference; note CFATS statutory authority lapsed 2023, list still indicative."
+        },
+        {
+          "domain": "Biological",
+          "capability": "Select agents & toxins",
+          "source": "HHS/USDA Federal Select Agent Program list",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned (Federal Register)",
+          "notes": "Whether an agent/toxin is federally regulated as a select agent."
+        },
+        {
+          "domain": "Biological",
+          "capability": "Biological agents, toxins & dual-use equipment",
+          "source": "Australia Group biological control lists",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned (AG plenary)",
+          "notes": "Human/animal/plant pathogen and dual-use bio-equipment controls."
+        },
+        {
+          "domain": "Biological",
+          "capability": "Gene-synthesis screening standard",
+          "source": "IGSC Harmonized Screening Protocol + HHS synthetic-nucleic-acid screening guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Sequence-of-concern screening framework for synthesis providers."
+        },
+        {
+          "domain": "Biological",
+          "capability": "Current outbreak / IHR events",
+          "source": "WHO Disease Outbreak News + CDC Health Alert Network (HAN)",
+          "type": "live_feed",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Up-to-date biological-event awareness. Defensive context only."
+        },
+        {
+          "domain": "Biological",
+          "capability": "Biological Weapons Convention reference",
+          "source": "UNODA BWC + implementation guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Treaty-level prohibition and obligation context."
+        },
+        {
+          "domain": "Radiological/Nuclear",
+          "capability": "Nuclear & nuclear-dual-use items",
+          "source": "Nuclear Suppliers Group Trigger List + Dual-Use List",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned (NSG plenary)",
+          "notes": "Whether an item is NSG-controlled."
+        },
+        {
+          "domain": "Radiological/Nuclear",
+          "capability": "Sealed-source security categories",
+          "source": "IAEA Code of Conduct (Category 1-2) + NRC source security",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Risk-significant radioactive source categorization."
+        },
+        {
+          "domain": "Radiological/Nuclear",
+          "capability": "Illicit trafficking awareness",
+          "source": "IAEA Incident and Trafficking Database (ITDB) public summaries",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Current radiological/nuclear material trafficking context."
+        },
+        {
+          "domain": "Radiological/Nuclear",
+          "capability": "Licensing / safeguards",
+          "source": "NRC license & ADAMS lookup + IAEA INFCIRC safeguards",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live/versioned",
+          "notes": "Public licensing records and international safeguards context."
+        },
+        {
+          "domain": "Delivery Systems",
+          "capability": "Missile, UAV & delivery technology",
+          "source": "Missile Technology Control Regime (MTCR) Annex Cat I/II",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned (MTCR plenary)",
+          "notes": "Delivery-system technology controls."
+        },
+        {
+          "domain": "Cross-cutting controls",
+          "capability": "US dual-use commodity classification",
+          "source": "BIS Commerce Control List / EAR (15 CFR 774) + Federal Register rule updates",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live (rule changes)",
+          "notes": "ECCN classification and current rulemaking, incl. Section 1758 emerging/foundational tech."
+        },
+        {
+          "domain": "Cross-cutting controls",
+          "capability": "Defense-article crossover",
+          "source": "ITAR US Munitions List (22 CFR 121)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Military/civilian crossover screening."
+        },
+        {
+          "domain": "Cross-cutting controls",
+          "capability": "Conventional + dual-use list",
+          "source": "Wassenaar Arrangement dual-use & munitions lists",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned (WA plenary)",
+          "notes": "Multilateral dual-use control categories."
+        },
+        {
+          "domain": "Cross-cutting controls",
+          "capability": "Restricted-party screening",
+          "source": "BIS Entity List + trade.gov Consolidated Screening List",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "currency": "live",
+          "notes": "Denied/blocked parties and end-user concerns."
+        },
+        {
+          "domain": "Cross-cutting controls",
+          "capability": "WMD nonproliferation obligations",
+          "source": "UN Security Council 1540 Committee + UN sanctions",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "State obligations to prevent WMD proliferation to non-state actors."
+        },
+        {
+          "domain": "Threat awareness",
+          "capability": "National threat assessment",
+          "source": "ODNI Annual Threat Assessment + public NCTC/DNI products",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "annual/current",
+          "notes": "Current strategic CBRN and nat-sec threat framing."
+        },
+        {
+          "domain": "Threat awareness",
+          "capability": "Policy & analysis reference",
+          "source": "CRS + GAO CBRN / nonproliferation reports + CISA advisories",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "current",
+          "notes": "Authoritative analysis and advisory context."
+        },
+        {
+          "domain": "Threat awareness",
+          "capability": "Adversarial reinterpretation",
+          "source": "MITRE ATT&CK + MITRE ATLAS",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "current",
+          "notes": "Misuse and adversarial-reinterpretation patterns, incl. AI-enabled."
+        },
+        {
+          "domain": "Threat awareness",
+          "capability": "AI-enabled uplift framing",
+          "source": "NIST AI Risk Management Framework + GenAI profile",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Frames AI-CBRN uplift risk for dual-use evaluation."
+        },
+        {
+          "domain": "Research security",
+          "capability": "Federal research-security program requirements",
+          "source": "NSPM-33 + OSTP research-security implementation guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Disclosure, cybersecurity, and research-security program obligations."
+        },
+        {
+          "domain": "Research security",
+          "capability": "Funder disclosure & foreign-influence rules",
+          "source": "NIH (foreign component / FCOI) + NSF research-security policies",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "current",
+          "notes": "Funder-specific disclosure and foreign-interference requirements."
+        },
+        {
+          "domain": "Research security",
+          "capability": "Dual-use research of concern oversight",
+          "source": "US Policy for Oversight of DURC + P3CO (2024 unified policy)",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "DURC and enhanced-PPP review obligations for life-sciences research."
+        },
+        {
+          "domain": "Research security",
+          "capability": "Controlled unclassified information",
+          "source": "NARA CUI program (32 CFR 2002) + NIST SP 800-171",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Handling controls for CUI in research environments."
+        },
+        {
+          "domain": "Research security",
+          "capability": "Academic export-control posture",
+          "source": "EAR/ITAR fundamental-research exclusion + deemed-export rules",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "When research crosses into deemed-export or controlled territory."
+        },
+        {
+          "domain": "Research security",
+          "capability": "Foreign investment / influence review",
+          "source": "CFIUS reference + institutional foreign-gift (Section 117) reporting",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "current",
+          "notes": "Foreign-influence review touchpoints for technology and institutions."
+        }
+      ],
+      "permissions": [
+        "Classify items against CBRN and dual-use control lists (CWC/OPCW, Australia Group, NSG, MTCR, Wassenaar, EAR/CCL, ITAR/USML, Select Agents)",
+        "Surface current threat-awareness context (WHO DON, CDC HAN, IAEA ITDB, ODNI threat assessment)",
+        "Restricted-party and WMD-nonproliferation screening (Entity List, CSL, UNSCR 1540)",
+        "Repurposing and adversarial-reinterpretation framing (MITRE ATT&CK/ATLAS, NIST AI RMF)",
+        "Map research-security obligations (NSPM-33, DURC/P3CO, deemed exports, CUI/800-171, foreign-influence review)"
+      ],
+      "guardrails": [
+        "Provides only control-status, regulatory classification, threat-awareness context, and mitigation framing.",
+        "Never provides synthesis, production, acquisition, enhancement, or weaponization detail for any chemical, biological, radiological, or nuclear material.",
+        "Never identifies acquisition sources, facility vulnerabilities, or specific exploitable pathways.",
+        "Treats any request that seeks CBRN or WMD uplift as an immediate refusal and escalation.",
+        "Read-only official and public sources only; no classified, proprietary, or personal data."
+      ],
+      "escalation_triggers": [
+        "CBRN or WMD uplift",
+        "weaponization",
+        "acquisition or synthesis pathway",
+        "sabotage",
+        "harm to people or infrastructure"
+      ]
+    },
+    {
+      "id": "ali-malik",
+      "name": "Dr. Ali Malik",
+      "role": "National OSINT Subject-Matter Expert",
+      "office": "National OSINT, OPSEC Gauntlet",
+      "tier": "specialty_hire",
+      "price_monthly": 69.99,
+      "mcp": true,
+      "backpack_shipped": false,
+      "mission": "Map what an adversary can learn about a participant or organization from open sources alone, then show what to close. Exposure mapping only.",
+      "domains": [
+        "Digital footprint",
+        "Infrastructure exposure",
+        "Entity & corporate",
+        "Geospatial & transit",
+        "Media & events",
+        "Records"
+      ],
+      "tools": [
+        {
+          "domain": "Digital footprint",
+          "capability": "Domain registration / WHOIS",
+          "source": "ICANN RDAP + WHOIS",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Who registered a domain and when."
+        },
+        {
+          "domain": "Digital footprint",
+          "capability": "DNS & certificate transparency",
+          "source": "Public DNS + crt.sh certificate logs",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Subdomains and certs that reveal infrastructure."
+        },
+        {
+          "domain": "Digital footprint",
+          "capability": "Historical web",
+          "source": "Internet Archive Wayback Machine",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "What a site exposed in the past, including deleted pages."
+        },
+        {
+          "domain": "Infrastructure exposure",
+          "capability": "Internet-exposed assets",
+          "source": "Shodan + Censys",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "currency": "live",
+          "notes": "Open ports, services, and devices facing the internet."
+        },
+        {
+          "domain": "Infrastructure exposure",
+          "capability": "Breach / credential exposure",
+          "source": "Have I Been Pwned",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "currency": "live",
+          "notes": "Whether a domain or account appears in known breaches."
+        },
+        {
+          "domain": "Entity & corporate",
+          "capability": "Corporate registries",
+          "source": "OpenCorporates + SEC EDGAR",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "currency": "live",
+          "notes": "Company ownership, officers, and filings."
+        },
+        {
+          "domain": "Entity & corporate",
+          "capability": "Federal footprint",
+          "source": "SAM.gov + USAspending",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "currency": "live",
+          "notes": "Federal registration and award history."
+        },
+        {
+          "domain": "Entity & corporate",
+          "capability": "Sanctions & PEP",
+          "source": "OFAC + OpenSanctions",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Sanctioned and politically-exposed entity screening."
+        },
+        {
+          "domain": "Geospatial & transit",
+          "capability": "Mapping",
+          "source": "OpenStreetMap (Nominatim / Overpass)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Place, address, and asset geolocation."
+        },
+        {
+          "domain": "Geospatial & transit",
+          "capability": "Open satellite imagery",
+          "source": "Copernicus / Sentinel open data",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Public imagery for site context."
+        },
+        {
+          "domain": "Geospatial & transit",
+          "capability": "Flight tracking",
+          "source": "OpenSky Network (ADS-B)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "currency": "live",
+          "notes": "Public aircraft movement data."
+        },
+        {
+          "domain": "Media & events",
+          "capability": "Global events / news",
+          "source": "GDELT Project",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Worldwide event and media signal monitoring."
+        },
+        {
+          "domain": "Records",
+          "capability": "Court records",
+          "source": "CourtListener / RECAP",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Public federal and state court records."
+        },
+        {
+          "domain": "Records",
+          "capability": "Patents & IP",
+          "source": "USPTO PatentsView",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Public patent and inventor footprint."
+        }
+      ],
+      "permissions": [
+        "Digital-footprint and metadata discovery",
+        "Internet-exposed-asset and breach-exposure mapping",
+        "Corporate, federal, sanctions, and court-record lookup",
+        "Geospatial, transit, and open-media/event monitoring"
+      ],
+      "guardrails": [
+        "Aggregates only public, open-source information.",
+        "Maps the participant's own exposure or an organization's footprint; never builds a targeting or surveillance package on a private individual.",
+        "Never deanonymizes, locates, or profiles a person for harm.",
+        "Refuses and escalates any request that resembles stalking, doxxing, or targeting.",
+        "Read-only public sources only; no intrusion and no credential use."
+      ],
+      "escalation_triggers": [
+        "targeting or surveillance of an individual",
+        "doxxing or deanonymization",
+        "stalking or harassment",
+        "harm to people or infrastructure"
+      ],
+      "workflow": {
+        "sequence_position": "Final desk at the end of the corridor, after Iris greets, Ivy, Rao, the specialist offices, and the sector judges.",
+        "opt_in": "Surfaced by Iris as a natural aside on the Corridor landing page (collapsed identifier form), not at his desk.",
+        "async_prefetch": "If accepted, the sweep starts at opt-in and runs in the background while the participant walks the other offices, so results are ready by the time they reach his desk. He needs the lead time; do not run it on-demand at the desk.",
+        "at_desk": "His office opens straight to the flanking layout (no gate). Brief panel is pre-populated if the visitor opted in via Iris, otherwise it prompts for the subject."
+      },
+      "data_handling": {
+        "assurance_to_user": "Nothing found stays on the net or with ETL. The sweep only reads what is already public, never republishes or indexes it, and ETL retains none of it after your session.",
+        "no_republication": "Reads public sources only; never posts, indexes, mirrors, or otherwise creates new exposure.",
+        "no_retention": "Findings live only for the participant's review and are purged after the deliverable is produced; ETL stores nothing.",
+        "participant_only": "Results are shown only to the participant, never shared or sold.",
+        "enforcement": "Implement as an ephemeral, auto-purging store scoped to the session; retention must be enforced in code, not by policy alone."
+      }
+    }
+  ],
+  "notes": [
+    "Dr. Rao's CBRN/national-security backpack is monitoring and classification only. Uplift refusal must be enforced at the model layer, not assumed from source choice.",
+    "Ali Malik's OSINT sweep is opt-in, runs async from the moment of consent, and is governed by an ephemeral no-retention data-handling policy (nothing republished, nothing kept by ETL)."
+  ],
+  "currency_policy": {
+    "principle": "CBRN and export-control sources are a mix of live feeds and versioned lists. Most control lists update only at regime plenaries or via Federal Register rules, so they must be re-pulled on a cadence, not assumed static.",
+    "live": "WHO Disease Outbreak News, CDC HAN, IAEA ITDB, BIS Federal Register rule changes, Consolidated Screening List, NRC ADAMS.",
+    "refresh_after": "Australia Group / NSG / MTCR / Wassenaar plenary updates, OPCW Annex changes, Federal Select Agent list revisions, ODNI annual threat assessment release.",
+    "recommended_cadence": "Weekly for live feeds; re-validate versioned control lists monthly and immediately after any regime plenary or Federal Register amendment."
+  },
+  "intake_flow": {
+    "host": "Iris S. King hosts the Corridor. Her welcome panel sits at the top of the Corridor landing page in her own voice and register: she orients the visitor, explains what the Corridor is, and surfaces the OSINT option as a natural aside (not a banner or separate system prompt). Her card stays in the grid as a link to her full office, but her landing-page presence is the greeter role.",
+    "opt_in_gate": "Inline beneath Iris's welcome: Ali Malik's subject-identifier form, collapsed by default. Expand -> provide the name -> submit -> confirmation that Ali is running. Skip -> proceed to Ms. Ivy with no friction.",
+    "iris_aside": "One thing before you start: Dr. Malik at the end of the corridor runs a live search on whoever is presenting. It takes a few minutes. If you want it, give him the name now and he will have results waiting by the time you get there.",
+    "order": "Iris S. King (host / greets at intake) -> Ms. Ivy (Concept Integrity) -> Dr. Sahini Rao (Dual-Use Systems, second stop) -> corridor specialist offices (Structure/Alicia James, Legal/Kimberly Pass, Human Factors/Sasha Moreno, Financial/Leo Vance, Risk Discipline/Rowan Tate, Discovery/Jax Rivera, Visual/Yuki Mendel) -> 16 sector judges -> Dr. Ali Malik (OSINT, final desk) -> consolidated findings.",
+    "ali_office": "Ali Malik's office page has no gate; it opens straight to the flanking layout. If the visitor submitted through Iris, the brief panel is pre-populated with the subject dossier. If they skipped, the brief panel placeholder prompts them to enter the subject there.",
+    "note": "Ali Malik runs asynchronously from the moment of opt-in at intake so his exposure map is ready when the visitor reaches the final desk."
+  }
+}

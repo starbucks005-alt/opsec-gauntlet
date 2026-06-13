@@ -423,6 +423,104 @@
     .office{padding:1rem 1rem 2rem;}
     .d-section{padding:2.5rem 1.2rem;}
   }
+
+  /* ── CCW Analysis Panel ─────────────────────────────────────────────────── */
+  .ccw-panel{border-bottom:2px solid var(--blue);background:#f5f8fc;}
+  .ccw-inner{max-width:1320px;margin:0 auto;padding:2rem 2rem 2.5rem;}
+  .ccw-eyebrow{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--blue);margin-bottom:0.45rem;
+  }
+  .ccw-inner>div>h2{
+    font-family:'Spectral',serif;font-size:1.6rem;font-weight:700;
+    color:var(--ink);margin-bottom:0.3rem;line-height:1.1;
+  }
+  .ccw-intro{font-size:0.92rem;color:var(--ink-soft);margin-bottom:1.4rem;max-width:640px;}
+  .ccw-label{
+    display:block;font-size:0.65rem;font-weight:700;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--ink-mid);margin-bottom:0.45rem;
+  }
+  .ccw-textarea{
+    width:100%;min-height:120px;max-height:280px;resize:vertical;
+    padding:0.85rem 1rem;
+    font-family:'Public Sans',sans-serif;font-size:0.95rem;line-height:1.6;
+    border:1px solid var(--rule);border-left:3px solid var(--blue);
+    background:#fff;color:var(--ink);outline:none;
+  }
+  .ccw-textarea:focus{border-color:var(--blue-light);}
+  .ccw-actions{display:flex;align-items:center;gap:1.2rem;margin-top:0.75rem;flex-wrap:wrap;}
+  .ccw-run-btn{
+    padding:0.8rem 1.8rem;
+    background:var(--blue);color:#fff;border:none;cursor:pointer;
+    font-family:'Public Sans',sans-serif;font-size:0.68rem;
+    font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+    transition:background 0.18s;
+  }
+  .ccw-run-btn:hover{background:var(--blue-light);}
+  .ccw-run-btn:disabled{opacity:0.55;cursor:wait;}
+  .ccw-status{font-size:0.82rem;color:var(--ink-soft);font-style:italic;}
+
+  /* Results card */
+  .ccw-results{margin-top:1.8rem;border:1px solid var(--rule);background:#fff;}
+  .ccw-determination{
+    padding:1.2rem 1.4rem;border-left:4px solid;
+    display:flex;align-items:flex-start;gap:1.2rem;
+  }
+  .ccw-determination.proceed{border-color:#16a34a;background:var(--proceed-bg);}
+  .ccw-determination.nogo{border-color:var(--red);background:var(--nogo-bg);}
+  .ccw-stamp{
+    font-family:'Spectral',serif;font-size:1.55rem;font-weight:700;
+    letter-spacing:0.04em;line-height:1;flex-shrink:0;
+  }
+  .ccw-determination.proceed .ccw-stamp{color:var(--green);}
+  .ccw-determination.nogo .ccw-stamp{color:var(--red);}
+  .ccw-rationale{font-size:0.95rem;line-height:1.6;color:var(--ink-mid);padding-top:0.1rem;}
+
+  .ccw-results-body{
+    padding:1.2rem 1.4rem;
+    display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;
+    border-top:1px solid var(--rule);
+  }
+  @media(max-width:700px){.ccw-results-body{grid-template-columns:1fr;}}
+  .ccw-field{display:flex;flex-direction:column;gap:0.3rem;}
+  .ccw-field.full{grid-column:1/-1;}
+  .ccw-field-label{
+    font-size:0.6rem;font-weight:700;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--blue);
+  }
+  .ccw-field-value{font-size:0.9rem;line-height:1.6;color:var(--ink-mid);}
+  .ccw-field-value ul{list-style:none;display:flex;flex-direction:column;gap:0.25rem;margin:0;padding:0;}
+  .ccw-field-value li{padding-left:1rem;position:relative;}
+  .ccw-field-value li::before{content:"→";position:absolute;left:0;color:var(--blue);font-weight:700;}
+
+  /* Classification grid */
+  .ccw-class-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;
+  }
+  @media(max-width:700px){.ccw-class-grid{grid-template-columns:1fr 1fr;}}
+  .ccw-class-domain{border:1px solid var(--rule);padding:0.6rem 0.75rem;}
+  .ccw-class-domain-name{
+    font-size:0.58rem;font-weight:700;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--blue);margin-bottom:0.2rem;
+  }
+  .ccw-class-domain-status{font-size:0.85rem;color:var(--ink);}
+  .ccw-class-domain-detail{font-size:0.78rem;color:var(--ink-soft);line-height:1.4;margin-top:0.15rem;}
+  .ccw-class-domain.clear .ccw-class-domain-status{color:var(--ink-soft);font-style:italic;}
+
+  /* Embeddedness badge */
+  .ccw-embed-badge{
+    display:inline-block;padding:0.2rem 0.65rem;
+    font-size:0.6rem;font-weight:700;letter-spacing:0.14em;
+    text-transform:uppercase;border:1px solid;
+  }
+  .ccw-embed-badge.embedded{border-color:var(--red);color:var(--red);background:var(--nogo-bg);}
+  .ccw-embed-badge.manageable{border-color:#b45309;color:#7a3800;background:#fff8e6;}
+  .ccw-embed-badge.low{border-color:#16a34a;color:var(--green);background:var(--proceed-bg);}
+
+  .ccw-live-note{
+    padding:0.55rem 1.4rem;border-top:1px solid var(--rule);
+    background:#f5f8fc;font-size:0.72rem;color:var(--ink-soft);
+  }
 </style>
 </head>
 <body>
