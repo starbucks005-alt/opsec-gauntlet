@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet the Judges · OPSEC Gauntlet</title>
+<meta name="description" content="The OPSEC Gauntlet is evaluated by 16 subject-matter experts representing every CISA Critical Infrastructure Sector. They do not flatter. They do not soften. They tell you whether your idea survives contact with the real world.">
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="apple-touch-icon" href="Favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Meet the Judges · OPSEC Gauntlet">
+<meta property="og:description" content="16 Sector Chiefs. 16 CISA Critical Infrastructure Sectors. The panel that tells you the truth.">
+<meta property="og:url" content="https://opsec-gauntlet.netlify.app/judges.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── ETL / USWDS Design Tokens ──────────────────────────────────────────── */
+:root {
+  --etl-blue:   #4C7BA3;
+  --stamp-blue: #28527a;
+  --etl-black:  #1E1E1E;
+  --etl-white:  #F9F8F4;
+  --uswds-gold: #F0B429;
+  --gold-dark:  #c27500;
+  --text:       #1E1E1E;
+  --text-dim:   #5a6477;
+  --ink:        #1E1E1E;
+  --ink-soft:   #3d4f66;
+  --bg:         #F9F8F4;
+  --band-elevated: #eef2f7;
+  --cream:      #eef2f7;
+  --rule:       rgba(76,123,163,0.2);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Public Sans',system-ui,sans-serif;
+  font-size:1rem;line-height:1.7;min-height:100vh;
+}
+
+/* ── USWDS Official Banner ───────────────────────────────────────────────── */
+.usa-banner{
+  background:#162e51;padding:0.45rem 2rem;
+  font-family:'Public Sans',sans-serif;font-size:0.72rem;
+  color:rgba(255,255,255,0.82);display:flex;align-items:center;
+  gap:0.55rem;flex-wrap:wrap;
+}
+.usa-banner-text strong{color:#fff;font-weight:600;}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.tg-topbar{
+  display:flex;align-items:center;padding:0 2rem;height:62px;
+  background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+  position:sticky;top:0;z-index:100;gap:1.2rem;
+}
+.tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+.tg-topbar-wordmark-etl{
+  font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
+}
+.tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+.tg-topbar-program{
+  font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+  color:#fff;text-decoration:none;white-space:nowrap;
+}
+.tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
+.tg-topbar-nav{margin-left:auto;display:flex;gap:1.8rem;align-items:center;}
+.tg-topbar-nav a{
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.78);
+  text-decoration:none;transition:color 0.18s;
+}
+.tg-topbar-nav a:hover,.tg-topbar-nav a.active{color:var(--uswds-gold);}
+
+/* ── Positioning band ───────────────────────────────────────────────────── */
+.positioning-band{
+  padding:0.8rem 2rem;background:var(--etl-blue);
+  text-align:center;border-bottom:1px solid rgba(255,255,255,0.14);
+}
+.positioning-line{
+  font-family:'Public Sans',sans-serif;font-size:0.75rem;
+  font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,0.88);
+}
+.positioning-line em{font-style:normal;font-weight:700;color:var(--uswds-gold);}
+.positioning-line--sub{
+  font-weight:400;letter-spacing:0.1em;font-size:0.65rem;
+  color:rgba(255,255,255,0.5);margin-top:0.22rem;
+}
+
+/* ── Band scaffold ──────────────────────────────────────────────────────── */
+.band{width:100%;padding:5rem 2rem;position:relative;}
+.band-inner{max-width:1180px;margin:0 auto;}
+.band-inner.narrow{max-width:780px;}
+.band-inner.mid{max-width:960px;}
+.band-elevated{background:var(--band-elevated);}
+.footlight{
+  height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--etl-blue) 15%,
+    var(--uswds-gold) 50%,var(--etl-blue) 85%,transparent 100%);
+  opacity:0.4;
+}
+
+/* ── Hero intro ─────────────────────────────────────────────────────────── */
+.judges-hero{
+  background:var(--stamp-blue);padding:4rem 2rem 3.5rem;
+}
+.judges-hero-inner{max-width:860px;margin:0 auto;}
+.judges-hero-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.38em;text-transform:uppercase;color:var(--uswds-gold);
+  margin-bottom:1rem;
+}
+.judges-hero-title{
+  font-family:'Spectral',serif;font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:700;color:#fff;line-height:1.1;margin-bottom:1.2rem;
+}
+.judges-hero-title em{font-style:italic;color:var(--uswds-gold);}
+.judges-hero-body{
+  font-family:'Public Sans',sans-serif;font-size:1rem;line-height:1.85;
+  color:rgba(255,255,255,0.78);max-width:680px;
+}
+.judges-hero-body p{margin-bottom:0.9rem;}
+.judges-hero-body p:last-child{margin-bottom:0;}
+.judges-hero-verdict{
+  margin-top:1.8rem;padding:1rem 1.4rem;
+  border-left:3px solid var(--uswds-gold);
+  font-family:'Spectral',serif;font-style:italic;
+  font-size:1.05rem;color:rgba(255,255,255,0.9);line-height:1.5;
+}
+
+/* ── Sector overview strip ──────────────────────────────────────────────── */
+.sector-strip{
+  background:var(--band-elevated);border-bottom:2px solid var(--etl-blue);
+  padding:1.8rem 2rem;
+}
+.sector-strip-inner{
+  max-width:1180px;margin:0 auto;
+  display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
+}
+.sector-strip-label{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--stamp-blue);
+  flex-shrink:0;
+}
+.sector-pills{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.sector-pill{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding:0.18rem 0.7rem;border-radius:2px;
+  background:var(--stamp-blue);color:#fff;white-space:nowrap;
+}
+
+/* ── Judges grid ────────────────────────────────────────────────────────── */
+.judges-section{padding:4rem 2rem;}
+.judges-section-inner{max-width:1180px;margin:0 auto;}
+.judges-section-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--stamp-blue);
+  margin-bottom:0.6rem;padding-bottom:0.6rem;
+  border-bottom:1px solid rgba(40,82,122,0.2);margin-bottom:2.5rem;
+}
+.judges-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.8rem;
+}
+
+/* ── Judge card ─────────────────────────────────────────────────────────── */
+.judge-card{
+  background:#fff;
+  border:1px solid rgba(40,82,122,0.14);
+  border-top:3px solid var(--etl-blue);
+  padding:0;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.judge-card-top{
+  display:flex;gap:1rem;padding:1.4rem 1.4rem 0;align-items:flex-start;
+}
+.judge-avatar{
+  width:68px;height:68px;flex-shrink:0;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Spectral',serif;font-size:1.3rem;font-weight:700;
+  color:#fff;letter-spacing:0.02em;
+}
+.judge-header{flex:1;min-width:0;}
+.judge-sector{
+  font-family:'Public Sans',sans-serif;font-size:0.57rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--etl-blue);margin-bottom:0.25rem;
+}
+.judge-name{
+  font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+  color:var(--stamp-blue);line-height:1.2;margin-bottom:0.15rem;
+}
+.judge-title{
+  font-family:'Public Sans',sans-serif;font-size:0.72rem;
+  color:var(--text-dim);line-height:1.4;
+}
+.judge-tagline{
+  margin:0.9rem 1.4rem 0;padding:0.65rem 0.9rem;
+  background:var(--band-elevated);
+  font-family:'Spectral',serif;font-style:italic;
+  font-size:0.88rem;color:var(--stamp-blue);line-height:1.45;
+  border-left:2px solid var(--etl-blue);
+}
+.judge-bio{
+  padding:1rem 1.4rem;
+  font-family:'Public Sans',sans-serif;font-size:0.87rem;
+  color:var(--ink-soft);line-height:1.7;flex:1;
+}
+.judge-backpack{
+  padding:0 1.4rem 0.8rem;
+}
+.judge-backpack-label{
+  font-family:'Public Sans',sans-serif;font-size:0.57rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);
+  margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem;
+}
+.judge-backpack-label::before{
+  content:'';width:14px;height:2px;background:var(--etl-blue);flex-shrink:0;
+}
+.judge-tools{
+  display:flex;flex-direction:column;gap:0.2rem;
+}
+.judge-tool{
+  font-family:'Public Sans',sans-serif;font-size:0.72rem;
+  color:var(--ink-soft);line-height:1.4;padding-left:0.85rem;position:relative;
+}
+.judge-tool::before{
+  content:'›';position:absolute;left:0;
+  color:var(--etl-blue);font-weight:700;
+}
+.judge-usecases{
+  margin:0.7rem 1.4rem 0;padding:0.8rem 0.9rem;
+  background:rgba(40,82,122,0.05);
+  border-top:1px solid rgba(40,82,122,0.1);
+}
+.judge-usecases-label{
+  font-family:'Public Sans',sans-serif;font-size:0.57rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);
+  margin-bottom:0.3rem;
+}
+.judge-usecases-list{
+  font-family:'Public Sans',sans-serif;font-size:0.75rem;
+  color:var(--ink-soft);line-height:1.6;
+}
+.judge-card-footer{
+  padding:1rem 1.4rem;
+  border-top:1px solid rgba(40,82,122,0.1);
+  background:rgba(40,82,122,0.03);
+  font-family:'Public Sans',sans-serif;font-size:0.65rem;
+  color:var(--text-dim);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;
+}
+.judge-card-footer-status{
+  display:flex;align-items:center;gap:0.4rem;
+}
+.judge-status-dot{
+  width:7px;height:7px;border-radius:50%;background:#3a8f4f;
+}
+.judge-img-prompt{
+  font-size:0.6rem;color:var(--text-dim);opacity:0.6;
+  font-style:italic;max-width:200px;text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ── CTA strip ──────────────────────────────────────────────────────────── */
+.judges-cta{
+  background:var(--stamp-blue);padding:4rem 2rem;text-align:center;
+}
+.judges-cta-inner{max-width:640px;margin:0 auto;}
+.judges-cta-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--uswds-gold);
+  margin-bottom:1rem;
+}
+.judges-cta-title{
+  font-family:'Spectral',serif;font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:700;color:#fff;line-height:1.2;margin-bottom:1.2rem;
+}
+.judges-cta-body{
+  font-family:'Public Sans',sans-serif;font-size:0.95rem;
+  color:rgba(255,255,255,0.72);line-height:1.8;margin-bottom:2rem;
+}
+.judges-cta-btn{
+  display:inline-block;padding:0.9rem 2.4rem;
+  background:var(--uswds-gold);color:#000;
+  font-family:'Public Sans',sans-serif;font-size:0.82rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;transition:background 0.18s;
+}
+.judges-cta-btn:hover{background:#f5c842;}
+
+/* ── Panel function footer ──────────────────────────────────────────────── */
+.panel-function{
+  background:var(--band-elevated);padding:2.5rem 2rem;
+  border-top:2px solid var(--etl-blue);
+}
+.panel-function-inner{max-width:860px;margin:0 auto;}
+.panel-function-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:700;
+  letter-spacing:0.28em;text-transform:uppercase;color:var(--stamp-blue);
+  margin-bottom:0.8rem;
+}
+.panel-function-body{
+  font-family:'Public Sans',sans-serif;font-size:0.9rem;
+  color:var(--ink-soft);line-height:1.85;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.tg-footer{
+  background:#162e51;color:rgba(255,255,255,0.55);
+  padding:1.6rem 2rem;font-size:0.72rem;
+  font-family:'Public Sans',sans-serif;text-align:center;
+}
+.tg-footer a{color:rgba(255,255,255,0.55);text-decoration:none;}
+.tg-footer a:hover{color:var(--uswds-gold);}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media(max-width:680px){
+  .judges-grid{grid-template-columns:1fr;}
+  .tg-topbar{padding:0 1.2rem;}
+  .tg-topbar-nav{gap:1rem;}
+  .judges-hero{padding:2.5rem 1.2rem 2rem;}
+  .judges-section{padding:2.5rem 1.2rem;}
+  .judge-img-prompt{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── USWDS Banner ──────────────────────────────────────────────────────── -->
+<div class="usa-banner">
+  <span class="usa-banner-text"><strong>Official ETL Research Product.</strong> Emerging Technologies Laboratory &middot; Sector-Aligned Critical Infrastructure Review</span>
+</div>
+
+<!-- ── Header ────────────────────────────────────────────────────────────── -->
+<header class="tg-topbar">
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
+  </a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
+  <nav class="tg-topbar-nav">
+    <a href="/chamber.html">The Chamber</a>
+    <a href="/judges.html" class="active">The Judges</a>
+    <a href="/Helpers/">Op Specialists</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
+
+<!-- ── Positioning band ──────────────────────────────────────────────────── -->
+<div class="positioning-band">
+  <p class="positioning-line">16 Sector Chiefs &middot; 16 CISA Critical Infrastructure Sectors &middot; <em>Independent Review Panel</em></p>
+  <p class="positioning-line positioning-line--sub">Part-time evaluators. Full-time subject-matter expertise.</p>
+</div>
+
+<!-- ── Hero intro ────────────────────────────────────────────────────────── -->
+<section class="judges-hero">
+  <div class="judges-hero-inner">
+    <div class="judges-hero-eyebrow">&sect; Critical Infrastructure Review Panel</div>
+    <h1 class="judges-hero-title">Meet <em>the Judges</em></h1>
+    <div class="judges-hero-body">
+      <p>When you enter the OPSEC Gauntlet, you are not pitching to influencers or business coaches. You are presenting your idea to a panel of national security specialists who evaluate it the way a real threat analyst would.</p>
+      <p>Each judge represents a critical infrastructure sector. Each one brings a different risk model, a different operational lens, and a different threshold for what counts as a real vulnerability. The panel's assessments reflect real-world considerations used across federal, state, and private-sector security programs.</p>
+      <p>The OPSEC Gauntlet is evaluated by a multidisciplinary panel of subject-matter experts representing the full range of United States critical infrastructure sectors. These judges apply established risk frameworks, operational standards, and sector-specific threat models to assess the resilience, feasibility, and security posture of each submitted concept.</p>
+    </div>
+    <div class="judges-hero-verdict">They do not flatter. They do not soften. They do not guess. They tell you whether your idea survives contact with the real world.</div>
+  </div>
+</section>
+
+<!-- ── Sector overview strip ─────────────────────────────────────────────── -->
+<div class="sector-strip">
+  <div class="sector-strip-inner">
+    <span class="sector-strip-label">16 CISA Sectors:</span>
+    <div class="sector-pills">
+      <span class="sector-pill">Chemical</span>
+      <span class="sector-pill">Defense Industrial Base</span>
+      <span class="sector-pill">Communications</span>
+      <span class="sector-pill">Financial Services</span>
+      <span class="sector-pill">Healthcare &amp; Public Health</span>
+      <span class="sector-pill">Emergency Services</span>
+      <span class="sector-pill">Energy</span>
+      <span class="sector-pill">Water &amp; Wastewater</span>
+      <span class="sector-pill">Transportation</span>
+      <span class="sector-pill">Critical Manufacturing</span>
+      <span class="sector-pill">Food &amp; Agriculture</span>
+      <span class="sector-pill">Government Facilities</span>
+      <span class="sector-pill">Nuclear</span>
+      <span class="sector-pill">Information Technology</span>
+      <span class="sector-pill">Dams</span>
+      <span class="sector-pill">Commercial Facilities</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Judges grid ────────────────────────────────────────────────────────── -->
+<section class="judges-section">
+  <div class="judges-section-inner">
+    <div class="judges-section-eyebrow">&sect; Panel Members &middot; All 16 CISA Sectors Represented</div>
+    <div class="judges-grid">
+
+      <!-- 1. Dr. Helena Ward -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#8a5c0a;">HW</div>
+          <div class="judge-header">
+            <div class="judge-sector">Chemical</div>
+            <div class="judge-name">Dr. Helena Ward</div>
+            <div class="judge-title">Chemical Security &amp; Hazard Mitigation Director</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The chemist who sees the chain reaction before it starts."</div>
+        <div class="judge-bio">PhD in Chemical Engineering; former DHS CFATS inspector. Reads chemical-facility risk like a map. Flags precursor vulnerabilities, insider-threat vectors, and supply-chain choke points. Precise, dry, unflappable. Corrects sloppy terminology without apology.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Live chemical facility registry lookup</div>
+            <div class="judge-tool">Hazardous materials classification database</div>
+            <div class="judge-tool">EPA RMP and TRI dataset search</div>
+            <div class="judge-tool">Chemical precursor risk index</div>
+            <div class="judge-tool">Supply chain vendor provenance check</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Small manufacturer handling solvents &middot; Lab startup storing precursors &middot; Ag-chem distributor with transport risk</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s woman, Black American, lab coat, refinery backdrop</span>
+        </div>
+      </div>
+
+      <!-- 2. Col. Rafael Dominguez -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#4a5e28;">RD</div>
+          <div class="judge-header">
+            <div class="judge-sector">Defense Industrial Base</div>
+            <div class="judge-name">Col. Rafael &ldquo;Rafe&rdquo; Dominguez (Ret.)</div>
+            <div class="judge-title">Defense Supply-Chain Integrity Analyst</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The colonel who checks the bolt before the blueprint."</div>
+        <div class="judge-bio">25 years Army logistics; Pentagon acquisition oversight. Tracks component provenance, counterfeit risk, and foreign-influence exposure. Gruff, loyal, hates shortcuts. Reads your supply chain like a battlefield and names the weak flank.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Defense supplier verification (SAM.gov, CAGE codes)</div>
+            <div class="judge-tool">Counterfeit component database</div>
+            <div class="judge-tool">Export control screening (EAR/ITAR reference)</div>
+            <div class="judge-tool">Foreign ownership and influence risk scan</div>
+            <div class="judge-tool">Defense contract history lookup</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Drone maker sourcing overseas parts &middot; Defense-adjacent robotics startup &middot; Small machine shop with DoD clients</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">50s Latino man, retired military, desert backdrop</span>
+        </div>
+      </div>
+
+      <!-- 3. Dr. Liyun Zhao -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#28527a;">LZ</div>
+          <div class="judge-header">
+            <div class="judge-sector">Communications</div>
+            <div class="judge-name">Dr. Liyun Zhao</div>
+            <div class="judge-title">Network Resilience Architect</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The engineer who hears the outage before it hits the grid."</div>
+        <div class="judge-bio">Former AT&amp;T backbone engineer; PhD in Network Systems. Specializes in fiber-route redundancy, telecom choke points, and adversarial signal interference. Quiet, analytical, amused by chaos. Shows you where a single cut cable takes your whole operation down.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Fiber route and telecom outage monitoring</div>
+            <div class="judge-tool">BGP routing anomaly feed</div>
+            <div class="judge-tool">FCC facility and license lookup</div>
+            <div class="judge-tool">Spectrum interference scan</div>
+            <div class="judge-tool">Network redundancy map generator</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Regional ISP &middot; Emergency-services comms vendor &middot; Data-center operator</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s East Asian woman, telecom hub, fiber spools</span>
+        </div>
+      </div>
+
+      <!-- 4. Miles Harrington -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#1f5f4a;">MH</div>
+          <div class="judge-header">
+            <div class="judge-sector">Financial Services</div>
+            <div class="judge-name">Miles Harrington</div>
+            <div class="judge-title">Financial-Systems Threat Analyst</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The analyst who sees the breach in the balance sheet."</div>
+        <div class="judge-bio">Former OCC examiner; MBA in Risk. Tracks fraud vectors, ACH manipulation risk, and fintech-vendor exposure. Polished, skeptical, numbers-first. Tells you where your financial workflows can be weaponized before you open them to the world.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">ACH and wire fraud pattern monitor</div>
+            <div class="judge-tool">Bank charter and regulatory lookup</div>
+            <div class="judge-tool">Fintech vendor risk database</div>
+            <div class="judge-tool">OFAC sanctions screening</div>
+            <div class="judge-tool">Real-time transaction anomaly scoring</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Credit-union CTO &middot; Fintech startup &middot; Payment-processor vendor</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s white man, suit, skyscraper office, dashboards</span>
+        </div>
+      </div>
+
+      <!-- 5. Dr. Amina Farouk -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#1e6b75;">AF</div>
+          <div class="judge-header">
+            <div class="judge-sector">Healthcare &amp; Public Health</div>
+            <div class="judge-name">Dr. Amina Farouk</div>
+            <div class="judge-title">Medical Infrastructure Continuity Specialist</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The doctor who sees the system behind the patient."</div>
+        <div class="judge-bio">MD/MPH; WHO emergency-response deployments. Evaluates hospital resilience, cold-chain integrity, and medical-device cyber risk. Warm voice, steel underneath. Shows where a single outage becomes a patient-safety event.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">FDA medical device recall database</div>
+            <div class="judge-tool">CDC outbreak and public health alerts</div>
+            <div class="judge-tool">Cold chain temperature integrity monitor</div>
+            <div class="judge-tool">Hospital bed and capacity status feed</div>
+            <div class="judge-tool">Medical supply chain disruption tracker</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Clinic network &middot; Med-device startup &middot; Public-health NGO</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s Middle Eastern woman, medical facility, stethoscope</span>
+        </div>
+      </div>
+
+      <!-- 6. Jonas McCrae -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#7a2a2a;">JM</div>
+          <div class="judge-header">
+            <div class="judge-sector">Emergency Services</div>
+            <div class="judge-name">Jonas McCrae</div>
+            <div class="judge-title">Incident Command Systems Advisor</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The responder who plans for the day everything goes wrong."</div>
+        <div class="judge-bio">Former fire captain; FEMA task-force veteran. ICS/NIMS specialist who evaluates readiness, dispatch vulnerabilities, and interagency gaps. Direct, reassuring, hates bureaucracy. Shows you the failure cascade before the sirens start.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">ICS and NIMS protocol reference</div>
+            <div class="judge-tool">Real-time incident feed (public safety)</div>
+            <div class="judge-tool">Dispatch center redundancy audit</div>
+            <div class="judge-tool">Mutual aid resource availability lookup</div>
+            <div class="judge-tool">Emergency communications system status</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">911 center &middot; Private EMS &middot; Campus security</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">50s white man, fire-service jacket, command board</span>
+        </div>
+      </div>
+
+      <!-- 7. Dr. Priyanka Nanduri -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#b07d0a;">PN</div>
+          <div class="judge-header">
+            <div class="judge-sector">Energy</div>
+            <div class="judge-name">Dr. Priyanka &ldquo;Pri&rdquo; Nanduri</div>
+            <div class="judge-title">Grid Stability &amp; SCADA Security Engineer</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The engineer who hears the hum of a failing grid."</div>
+        <div class="judge-bio">PhD in Electrical Engineering; former NERC auditor. Specializes in SCADA hardening, load-balancing risk, and substation vulnerabilities. Fast thinker, dry humor, hates sloppy diagrams. Tells you where your grid-touching system will break first.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">SCADA vulnerability bulletin feed</div>
+            <div class="judge-tool">NERC CIP compliance reference</div>
+            <div class="judge-tool">Grid load and outage monitoring</div>
+            <div class="judge-tool">Substation asset inventory lookup</div>
+            <div class="judge-tool">Energy market and demand forecast feed</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Solar-farm operator &middot; Microgrid startup &middot; Utility vendor</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">30s South Asian woman, substation backdrop, hard hat</span>
+        </div>
+      </div>
+
+      <!-- 8. Elias Kade -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#1a5f8c;">EK</div>
+          <div class="judge-header">
+            <div class="judge-sector">Water &amp; Wastewater Systems</div>
+            <div class="judge-name">Elias &ldquo;Eli&rdquo; Kade</div>
+            <div class="judge-title">Water-System Integrity Analyst</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The operator who knows what should never be in the water."</div>
+        <div class="judge-bio">Former municipal water-plant superintendent. Tracks contamination vectors, SCADA exposure, and treatment-plant resilience. Calm, methodical, protective of public trust. Shows where a small contamination becomes a citywide crisis.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Water quality contaminant database</div>
+            <div class="judge-tool">SCADA exposure and vulnerability alerts</div>
+            <div class="judge-tool">EPA Safe Drinking Water Act lookup</div>
+            <div class="judge-tool">Treatment plant asset status feed</div>
+            <div class="judge-tool">Hydrologic flow and reservoir level monitor</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Rural water district &middot; Treatment-plant vendor &middot; Ag-irrigation operator</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s white man, water-treatment facility, reflective vest</span>
+        </div>
+      </div>
+
+      <!-- 9. Dr. Mirela Stanescu -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#3d4f66;">MS</div>
+          <div class="judge-header">
+            <div class="judge-sector">Transportation Systems</div>
+            <div class="judge-name">Dr. Mirela Stanescu</div>
+            <div class="judge-title">Transportation Threat &amp; Infrastructure Analyst</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The analyst who sees the choke point in the route map."</div>
+        <div class="judge-bio">Romanian-American; PhD in Transportation Engineering; former TSA analyst. Evaluates rail, port, and aviation vulnerabilities; models cascading delays. Sharp, observant, quietly funny. Shows where your logistics plan collapses under real-world stress.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">FAA, FRA, and MARAD infrastructure status feeds</div>
+            <div class="judge-tool">Port congestion and vessel tracking</div>
+            <div class="judge-tool">Rail network outage and hazard feed</div>
+            <div class="judge-tool">Airport facility and NOTAM lookup</div>
+            <div class="judge-tool">Transportation choke point risk index</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Freight operator &middot; Airport vendor &middot; Supply-chain startup</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s Eastern European woman, rail yard, windblown hair</span>
+        </div>
+      </div>
+
+      <!-- 10. Gunnar Thorsen -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#4a4a4a;">GT</div>
+          <div class="judge-header">
+            <div class="judge-sector">Critical Manufacturing</div>
+            <div class="judge-name">Gunnar Thorsen</div>
+            <div class="judge-title">Industrial-Process Security Auditor</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The auditor who hears the machine before it fails."</div>
+        <div class="judge-bio">Norwegian-American; former Siemens field engineer. Evaluates robotics, CNC, and industrial-automation exposure. Stoic, exacting, surprisingly gentle with interns. Finds the one machine that will take your whole line down.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Industrial control system vulnerability feed</div>
+            <div class="judge-tool">Robotics and CNC firmware advisory lookup</div>
+            <div class="judge-tool">Supply chain component provenance</div>
+            <div class="judge-tool">Factory floor sensor anomaly monitor</div>
+            <div class="judge-tool">OSHA manufacturing compliance reference</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">CNC shop &middot; Robotics startup &middot; Industrial OEM</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s Nordic man, factory floor, sparks, industrial realism</span>
+        </div>
+      </div>
+
+      <!-- 11. Dr. Selah Okonjo -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#3a6b47;">SO</div>
+          <div class="judge-header">
+            <div class="judge-sector">Food &amp; Agriculture</div>
+            <div class="judge-name">Dr. Selah Okonjo</div>
+            <div class="judge-title">Ag Supply Chain &amp; Biosecurity Specialist</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The scientist who sees the pathogen before the harvest."</div>
+        <div class="judge-bio">Nigerian-American; PhD in Plant Pathology; USDA fellowship. Tracks livestock-disease vectors, crop-system vulnerabilities, and cold-chain integrity. Warm, curious, quietly intense. Protects your food system from the threats you cannot see.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">USDA crop and livestock disease alerts</div>
+            <div class="judge-tool">Food contamination and recall database</div>
+            <div class="judge-tool">Cold chain integrity monitor</div>
+            <div class="judge-tool">Ag supply chain disruption feed</div>
+            <div class="judge-tool">Pesticide and pathogen risk lookup</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Food-processing plant &middot; Ag-tech startup &middot; Cold-chain distributor</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">30s Black woman, greenhouse, lab notebook, natural light</span>
+        </div>
+      </div>
+
+      <!-- 12. Victor Hale -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#162e51;">VH</div>
+          <div class="judge-header">
+            <div class="judge-sector">Government Facilities</div>
+            <div class="judge-name">Victor Hale</div>
+            <div class="judge-title">Physical Security &amp; Insider-Threat Advisor</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The protector who sees the badge that shouldn't open the door."</div>
+        <div class="judge-bio">Former federal protective service officer. Evaluates access-control systems, insider-threat indicators, and facility-level vulnerabilities. Reserved, observant, dry humor. Finds the human-factor gap your cameras missed.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Access control system audit tools</div>
+            <div class="judge-tool">Insider threat indicator reference</div>
+            <div class="judge-tool">Facility vulnerability assessment checklist</div>
+            <div class="judge-tool">Federal building registry lookup</div>
+            <div class="judge-tool">Physical security incident feed</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Municipal building &middot; Contractor facility &middot; Secure research site</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s Black man, secure facility hallway, badge reader glowing</span>
+        </div>
+      </div>
+
+      <!-- 13. Dr. Yara Ben-Saïd -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#4a2e6e;">YB</div>
+          <div class="judge-header">
+            <div class="judge-sector">Nuclear Reactors, Materials &amp; Waste</div>
+            <div class="judge-name">Dr. Yara Ben-Sa&iuml;d</div>
+            <div class="judge-title">Nuclear-Materials Safeguards Analyst</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The physicist who sees the missing gram before anyone else does."</div>
+        <div class="judge-bio">Tunisian-French physicist; IAEA fellowship; MIT PhD. Tracks nuclear-material accounting, insider risk, and radiological-transport exposure. Brilliant, blunt, impatient with sloppiness. Ensures your nuclear-adjacent process survives scrutiny.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Nuclear material accounting reference</div>
+            <div class="judge-tool">IAEA safeguards bulletin feed</div>
+            <div class="judge-tool">Radiological transport registry</div>
+            <div class="judge-tool">NRC facility and license lookup</div>
+            <div class="judge-tool">Radiation sensor anomaly monitor</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Radiological-device maker &middot; Nuclear-medicine facility &middot; Research reactor</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">30s North African woman, reactor control room, blue glow</span>
+        </div>
+      </div>
+
+      <!-- 14. Owen Kessler -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#1a4f6e;">OK</div>
+          <div class="judge-header">
+            <div class="judge-sector">Information Technology</div>
+            <div class="judge-name">Owen Kessler</div>
+            <div class="judge-title">Enterprise Cyber &amp; Zero-Trust Architect</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The architect who closes the door you didn't know was open."</div>
+        <div class="judge-bio">Former Microsoft blue-team lead. Specializes in zero-trust, identity compromise, and vendor-chain cyber exposure. Fast, sarcastic, caffeine-powered. Shows you where your IT stack collapses under real adversaries.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Zero trust configuration analyzer</div>
+            <div class="judge-tool">Identity compromise and credential leak feed</div>
+            <div class="judge-tool">Vendor chain cyber risk scanner</div>
+            <div class="judge-tool">CVE and exploit bulletin feed</div>
+            <div class="judge-tool">Network attack surface mapper</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">SaaS startup &middot; MSP &middot; Mid-size enterprise</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">30s white man, cyber-ops room, neon screens, intense</span>
+        </div>
+      </div>
+
+      <!-- 15. Dr. Marisol Quintero -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#3c5975;">MQ</div>
+          <div class="judge-header">
+            <div class="judge-sector">Dams</div>
+            <div class="judge-name">Dr. Marisol Quintero</div>
+            <div class="judge-title">Hydrologic &amp; Structural-Risk Engineer</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The engineer who hears the crack before the breach."</div>
+        <div class="judge-bio">Civil engineer; Bureau of Reclamation; New Mexico upbringing. Models dam-failure scenarios, flood-risk cascades, and structural-integrity threats. Calm, methodical, quietly fierce. Shows where water becomes a weapon against your infrastructure.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Hydrologic model and flood forecast feed</div>
+            <div class="judge-tool">Structural integrity sensor monitor</div>
+            <div class="judge-tool">Dam hazard classification lookup</div>
+            <div class="judge-tool">Water release and reservoir status feed</div>
+            <div class="judge-tool">Emergency action plan reference</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Hydropower operator &middot; Municipal dam authority &middot; Flood-risk startup</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s Latina woman, dam overlook, wind in hair, photorealistic</span>
+        </div>
+      </div>
+
+      <!-- 16. Soren Veldt -->
+      <div class="judge-card">
+        <div class="judge-card-top">
+          <div class="judge-avatar" style="background:#5c3232;">SV</div>
+          <div class="judge-header">
+            <div class="judge-sector">Commercial Facilities</div>
+            <div class="judge-name">Soren Veldt</div>
+            <div class="judge-title">High-Risk Venue Security Strategist</div>
+          </div>
+        </div>
+        <div class="judge-tagline">"The strategist who sees the crowd before the threat."</div>
+        <div class="judge-bio">Danish-American; former major-event security director. Evaluates malls, stadiums, and event-venue vulnerabilities; models crowd-flow risk. Calm, observant, protective. Prevents your venue from becoming a soft target.</div>
+        <div class="judge-backpack">
+          <div class="judge-backpack-label">MCP Backpack</div>
+          <div class="judge-tools">
+            <div class="judge-tool">Crowd flow and density analytics</div>
+            <div class="judge-tool">Venue security incident feed</div>
+            <div class="judge-tool">Access control and CCTV audit tools</div>
+            <div class="judge-tool">Facility risk classification lookup</div>
+            <div class="judge-tool">Large event threat modeling engine</div>
+          </div>
+        </div>
+        <div class="judge-usecases">
+          <div class="judge-usecases-label">Use Cases</div>
+          <div class="judge-usecases-list">Stadium operator &middot; Convention center &middot; Large retail complex</div>
+        </div>
+        <div class="judge-card-footer">
+          <div class="judge-card-footer-status"><span class="judge-status-dot"></span> Active · Part-time Evaluator</div>
+          <span class="judge-img-prompt">40s Nordic man, stadium concourse, security monitors</span>
+        </div>
+      </div>
+
+    </div><!-- /judges-grid -->
+  </div>
+</section>
+
+<!-- ── Panel function statement ──────────────────────────────────────────── -->
+<div class="panel-function">
+  <div class="panel-function-inner">
+    <div class="panel-function-eyebrow">&sect; Panel Function</div>
+    <p class="panel-function-body">The OPSEC Gauntlet judges operate as an independent review body. Their evaluations identify operational gaps, sector-specific risks, and potential failure points. The panel does not provide legal advice, operational directives, or classified assessments. Their role is to provide structured, sector-informed analysis to support decision-making and risk awareness. Completion of the Gauntlet does not imply certification, endorsement, or approval. It indicates that the idea has undergone structured OPSEC review.</p>
+  </div>
+</div>
+
+<!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+<section class="judges-cta">
+  <div class="judges-cta-inner">
+    <div class="judges-cta-eyebrow">&sect; Begin Your Review</div>
+    <h2 class="judges-cta-title">Ready to Put Your Idea in Front of the Panel?</h2>
+    <p class="judges-cta-body">Enter the Gauntlet. Walk the corridor. Present your concept to all 16 Sector Chiefs. Come out the other side knowing exactly where it stands.</p>
+    <a href="/" class="judges-cta-btn">Enter the OPSEC Gauntlet &rarr;</a>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="tg-footer">
+  &copy; 2025&ndash;2026 Emerging Technologies Laboratory &middot;
+  <a href="/terms.html">Terms</a> &middot;
+  <a href="/about.html">About</a> &middot;
+  <a href="https://emerging-tech-lab.com">ETL Home</a>
+</footer>
+
+</body>
+</html>
