@@ -343,29 +343,16 @@
     min-height:340px;
   }
 
-  /* Curtains: two halves that slide outward — slow and theatrical so the
-     viewer can actually watch the reveal happen. */
+  /* Door panels that part from center to reveal the evaluation panel. */
   .tg-curtain{
     position:absolute;top:0;bottom:0;width:50%;
-    background:repeating-linear-gradient(
-      90deg,
-      var(--velvet) 0px,
-      var(--velvet-deep) 12px,
-      var(--velvet) 24px,
-      var(--velvet-deep) 36px
-    );
-    box-shadow:inset 0 0 60px rgba(0,0,0,0.6);
-    z-index:5;transition:transform 3.4s cubic-bezier(0.65,0,0.35,1);
+    background:linear-gradient(180deg,#1e2d3d 0%,#16232f 100%);
+    z-index:5;transition:transform 2.6s cubic-bezier(0.65,0,0.35,1);
   }
-  .tg-curtain-left{left:0;border-right:2px solid #2a0808;}
-  .tg-curtain-right{right:0;border-left:2px solid #2a0808;}
+  .tg-curtain-left{left:0;border-right:2px solid #28527a;}
+  .tg-curtain-right{right:0;border-left:2px solid #28527a;}
   .tg-stage.is-revealing .tg-curtain-left{transform:translateX(-102%);}
   .tg-stage.is-revealing .tg-curtain-right{transform:translateX(102%);}
-
-  .tg-stage-floor{
-    position:absolute;left:0;right:0;bottom:0;height:8px;
-    background:linear-gradient(180deg,var(--gold) 0%,#6a4f15 100%);
-  }
 
   .tg-stage-content{
     opacity:0;transition:opacity 0.7s ease-in;transition-delay:3.5s;
@@ -453,39 +440,6 @@
   }
   .tg-stage.is-revealing .tg-stage-actions{opacity:1;}
 
-  /* ── Movie set: stage hands + PAs ────────────────────────────────────────── */
-  /* Stage hands flank the curtain edges; PAs walk along the audience row.    */
-  /* All positioned absolutely; cutouts on transparent PNG backgrounds.       */
-  .tg-set-prop{
-    position:absolute;pointer-events:none;
-    opacity:0;transition:opacity 1.2s ease-in;transition-delay:4.1s;
-    z-index:3;
-    filter:brightness(0.85) contrast(0.95);
-  }
-  .tg-stage.is-revealing .tg-set-prop{opacity:1;}
-  .tg-set-prop img{
-    display:block;height:100%;width:auto;
-    animation:tg-sh-shift 5.5s ease-in-out infinite;
-  }
-  /* Stage hands sway slightly — weight shift on their feet, never still. */
-  @keyframes tg-sh-shift{
-    0%, 100% { transform:translateY(0)   translateX(0); }
-    25%      { transform:translateY(-2px) translateX(2px); }
-    50%      { transform:translateY(-1px) translateX(4px); }
-    75%      { transform:translateY(-2px) translateX(2px); }
-  }
-  /* Stagger so the two hands don't sway in unison. */
-  .tg-set-sh-left img  { animation-delay: 0s;   }
-  .tg-set-sh-right img { animation-delay: 2.6s; }
-
-  /* Stage hands at the curtain edges */
-  .tg-set-sh-left{ left:-12px;  bottom:8px; height:170px; }
-  .tg-set-sh-right{ right:-12px; bottom:8px; height:160px; transform:scaleX(-1); }
-
-  @media (max-width:740px){
-    .tg-set-sh-left,.tg-set-sh-right{height:110px;}
-  }
-
   /* ── Audience row ────────────────────────────────────────────────────────── */
   /* Six unchosen judges line up under the stage as the audience. */
   .tg-audience{
@@ -570,25 +524,6 @@
     font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--text-dim);
     text-align:center;padding:0 0.5rem 0.85rem;line-height:1.4;
-  }
-
-  /* PAs walking behind the audience row */
-  .tg-set-pa{
-    position:absolute;pointer-events:none;
-    bottom:0;height:140px;width:auto;
-    opacity:0;z-index:1;
-    transition:opacity 1.2s ease-in;transition-delay:5.1s;
-    filter:brightness(0.7) contrast(0.9) saturate(0.7);
-  }
-  .tg-audience.is-revealing .tg-set-pa{opacity:0.85;}
-  .tg-set-pa img{
-    display:block;height:100%;width:auto;
-    /* PAs stand still. Earlier walk loop read as distracting back-and-forth. */
-  }
-  .tg-set-pa-left{ left:1%; }
-  .tg-set-pa-right{ right:1%; }
-  @media (max-width:900px){
-    .tg-set-pa{display:none;}
   }
 
   /* ── Locked-state layout: stage + audience scroll on the left, chat is a ── */
@@ -847,14 +782,6 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
         <div class="tg-stage-frame">
           <div class="tg-curtain tg-curtain-left"></div>
           <div class="tg-curtain tg-curtain-right"></div>
-          <div class="tg-stage-floor"></div>
-
-          <div class="tg-set-prop tg-set-sh-left" aria-hidden="true">
-            <img id="tg-sh-left-img" src="STAGE HANDS/SH1.png" alt="">
-          </div>
-          <div class="tg-set-prop tg-set-sh-right" aria-hidden="true">
-            <img id="tg-sh-right-img" src="STAGE HANDS/SH2.png" alt="">
-          </div>
 
           <div class="tg-stage-content">
             <div class="tg-stage-eyebrow">The Chamber</div>
@@ -869,14 +796,8 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
       </section>
 
       <section class="tg-audience" id="tg-audience" aria-hidden="true">
-        <div class="tg-audience-eyebrow">The Audience</div>
+        <div class="tg-audience-eyebrow">Observing Panel</div>
         <div class="tg-audience-row" id="tg-audience-row"></div>
-        <div class="tg-set-pa tg-set-pa-left" aria-hidden="true">
-          <img id="tg-pa-left-img" src="STAGE HANDS/PA1.png" alt="">
-        </div>
-        <div class="tg-set-pa tg-set-pa-right" aria-hidden="true">
-          <img id="tg-pa-right-img" src="STAGE HANDS/PA2.png" alt="">
-        </div>
       </section>
 
     </div>
