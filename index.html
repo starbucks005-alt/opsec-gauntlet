@@ -793,7 +793,7 @@ body[data-tg-postchamber] .after-panel{display:none;}
       }
       gridEl.innerHTML = visible.map(function(s){
         var href = s.has_deliverable
-          ? '/report.html?sample=' + encodeURIComponent(s.id)
+          ? (s.deliverable_url || '/report.html?sample=' + encodeURIComponent(s.id))
           : '/samples.html';
         var cta  = s.has_deliverable ? 'See deliverable &rarr;' : 'Try this idea &rarr;';
         return '<a class="sp-card" href="' + href + '">'
