@@ -227,6 +227,136 @@
     main{padding:2.5rem 1.3rem 4rem;}
     .r-title{font-size:2rem;}
   }
+
+  /* Iris welcome panel */
+  .iris-welcome{max-width:1180px;margin:0 auto;padding:2.5rem 2.5rem 0;}
+  .iris-card{
+    border:1px solid var(--rule);background:#fff;
+    display:grid;grid-template-columns:auto 1fr;
+  }
+  .iris-photo-col{
+    padding:1.8rem 1.4rem;border-right:1px solid var(--rule);
+    background:var(--blue-pale);
+    display:flex;flex-direction:column;align-items:center;gap:0.7rem;
+    min-width:110px;
+  }
+  .iris-photo{
+    width:60px;height:60px;background:var(--blue);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .iris-initials{
+    font-family:'Spectral',serif;font-size:1.3rem;font-weight:700;
+    color:rgba(255,255,255,0.6);font-style:italic;
+  }
+  .iris-label{
+    font-family:'Public Sans',sans-serif;font-size:0.5rem;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);text-align:center;
+  }
+  .iris-content{padding:1.6rem 1.8rem;display:flex;flex-direction:column;gap:1.1rem;}
+  .iris-namerow{display:flex;align-items:baseline;gap:0.7rem;flex-wrap:wrap;}
+  .iris-name{
+    font-family:'Spectral',serif;font-size:1.3rem;font-weight:700;color:var(--ink);
+  }
+  .iris-name em{font-style:italic;color:var(--blue);}
+  .iris-roletag{
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .iris-speech{
+    font-family:'Public Sans',sans-serif;font-size:0.98rem;
+    line-height:1.7;color:var(--text);
+  }
+  .iris-speech p{margin-bottom:0.75rem;}
+  .iris-speech p:last-child{margin-bottom:0;}
+  .iris-speech strong{color:var(--blue);font-weight:600;}
+  .iris-speech em{font-style:italic;color:var(--ink-soft);}
+  .iris-offer{
+    border-top:1px solid var(--rule);padding-top:1.1rem;
+    display:flex;flex-direction:column;gap:0.8rem;
+  }
+  .iris-offer-prompt{
+    font-family:'Spectral',serif;font-size:0.95rem;font-style:italic;
+    color:var(--ink-soft);
+  }
+  .iris-offer-btns{display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap;}
+  .iris-btn-yes{
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;
+    padding:0.65rem 1.2rem;background:var(--blue);color:#fff;
+    border:1px solid var(--blue);transition:background 0.18s;
+  }
+  .iris-btn-yes:hover{background:var(--blue-light);}
+  .iris-btn-no{
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;
+    letter-spacing:0.16em;text-transform:uppercase;
+    cursor:pointer;background:none;border:none;
+    color:var(--text-dim);padding:0;transition:color 0.18s;
+  }
+  .iris-btn-no:hover{color:var(--ink);}
+  /* Ali inline form */
+  .iris-ali-form{
+    border:1px solid var(--rule);background:var(--blue-pale);
+    padding:1.2rem 1.4rem;display:none;flex-direction:column;gap:0.8rem;
+  }
+  .iris-ali-form.is-open{display:flex;}
+  .iris-form-title{
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:700;
+    letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);
+  }
+  .iris-field{display:flex;flex-direction:column;gap:0.25rem;}
+  .iris-label-row{
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:600;
+    letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);
+    display:flex;align-items:center;gap:0.4rem;
+  }
+  .iris-req{
+    font-size:0.48rem;font-weight:700;letter-spacing:0.14em;
+    color:#fff;background:var(--blue);padding:0.12rem 0.38rem;
+  }
+  .iris-opt{
+    font-size:0.48rem;font-weight:700;letter-spacing:0.14em;
+    color:var(--ink-soft);background:#fff;border:1px solid var(--rule);
+    padding:0.12rem 0.38rem;
+  }
+  .iris-why{
+    font-family:'Public Sans',sans-serif;font-size:0.75rem;
+    color:var(--text-dim);font-weight:400;letter-spacing:0;
+    text-transform:none;font-style:italic;
+  }
+  .iris-input{
+    font-family:'Public Sans',sans-serif;font-size:0.95rem;color:var(--ink);
+    background:#fff;border:1px solid var(--rule);
+    padding:0.5rem 0.75rem;outline:none;width:100%;transition:border-color 0.18s;
+  }
+  .iris-input:focus{border-color:var(--blue);}
+  .iris-input::placeholder{color:var(--text-dim);font-style:italic;}
+  .iris-field-row{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;}
+  .iris-form-submit{
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;
+    padding:0.7rem 1.4rem;background:var(--blue);color:#fff;
+    border:1px solid var(--blue);align-self:flex-start;
+    transition:background 0.18s;
+  }
+  .iris-form-submit:hover{background:var(--blue-light);}
+  /* States */
+  .iris-confirm{
+    display:none;border-left:3px solid var(--blue);
+    background:var(--blue-pale);padding:0.8rem 1.1rem;
+    font-family:'Spectral',serif;font-size:0.95rem;font-style:italic;color:var(--ink);
+  }
+  .iris-confirm.is-shown{display:block;}
+  .iris-skipped{
+    display:none;font-family:'Public Sans',sans-serif;
+    font-size:0.85rem;color:var(--text-dim);font-style:italic;
+  }
+  .iris-skipped.is-shown{display:block;}
+  @media(max-width:740px){
+    .iris-card{grid-template-columns:1fr;}
+    .iris-photo-col{flex-direction:row;min-width:0;border-right:none;border-bottom:1px solid var(--rule);}
+    .iris-field-row{grid-template-columns:1fr;}
+    .iris-welcome{padding:1.5rem 1.3rem 0;}
+  }
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0P5JY8M1B"></script>
@@ -256,11 +386,66 @@
 
 <main>
 
-  <section class="r-intro">
-    <div class="r-eyebrow">&sect; The Corridor</div>
-    <h1 class="r-title">The <em>Operational Specialists</em>.</h1>
-    <p class="r-sub">Ten specialists who map the dual use risk, sharpen the concept, and build your pitch. <strong>Start with Ms. Ivy.</strong> She runs the SLR Method on your concept. Then Dr. Rao issues the GO / NO-GO before anything else opens.</p>
-  </section>
+  <div class="r-eyebrow" style="text-align:center;padding:2rem 2.5rem 0;">&sect; The Corridor</div>
+
+  <div class="iris-welcome">
+    <div class="iris-card">
+      <div class="iris-photo-col">
+        <div class="iris-photo"><span class="iris-initials">IK</span></div>
+        <div class="iris-label">Iris S. King<br>Frontline Comms</div>
+      </div>
+      <div class="iris-content">
+        <div class="iris-namerow">
+          <div class="iris-name">Iris S. <em>King</em></div>
+          <div class="iris-roletag">Office of Frontline Communications &middot; Your host in the Corridor</div>
+        </div>
+        <div class="iris-speech">
+          <p>Welcome to the Corridor. Before you move through, a quick orientation.</p>
+          <p>Start with <strong>Ms. Ivy</strong> — she runs the SLR Method on your concept and maps the gaps. Then <strong>Dr. Rao</strong> issues the dual use GO or NO-GO. After that, the eight specialist offices are yours to work through. Each one maps a different surface of your concept's operational security.</p>
+          <p>By the way — <strong>Dr. Ali Malik</strong> at the far end of the Corridor runs a live open-source intelligence search on whoever is presenting the concept. It takes a few minutes to run. If you want that session, give him the subject information now and he will have results waiting by the time you reach him. <em>Totally optional. No data is stored.</em></p>
+        </div>
+        <div class="iris-offer" id="iris-offer">
+          <p class="iris-offer-prompt">Want to start Ali&rsquo;s search while you work through the Corridor?</p>
+          <div class="iris-offer-btns" id="iris-offer-btns">
+            <button class="iris-btn-yes" id="iris-btn-yes" type="button">Yes &mdash; start Ali&rsquo;s search</button>
+            <button class="iris-btn-no" id="iris-btn-no" type="button">Skip for now</button>
+          </div>
+          <form class="iris-ali-form" id="iris-ali-form" onsubmit="return false;">
+            <div class="iris-form-title">Subject information for Dr. Ali Malik</div>
+            <div class="iris-field">
+              <div class="iris-label-row">Full Name <span class="iris-req">Required</span> <span class="iris-why">— the search anchor</span></div>
+              <input class="iris-input" id="ali-name" type="text" placeholder="e.g. Jordan A. Reyes" autocomplete="off">
+            </div>
+            <div class="iris-field-row">
+              <div class="iris-field">
+                <div class="iris-label-row">City <span class="iris-req">Required</span></div>
+                <input class="iris-input" id="ali-city" type="text" placeholder="e.g. Columbus" autocomplete="off">
+              </div>
+              <div class="iris-field">
+                <div class="iris-label-row">State <span class="iris-req">Required</span></div>
+                <input class="iris-input" id="ali-state" type="text" placeholder="e.g. OH" autocomplete="off">
+              </div>
+            </div>
+            <div class="iris-field">
+              <div class="iris-label-row">Date of Birth / Year <span class="iris-opt">Optional</span> <span class="iris-why">— disambiguates common names in public records</span></div>
+              <input class="iris-input" id="ali-dob" type="text" placeholder="e.g. 1981" autocomplete="off">
+            </div>
+            <div class="iris-field">
+              <div class="iris-label-row">Professional Affiliation <span class="iris-opt">Optional</span> <span class="iris-why">— employer, university, or organization</span></div>
+              <input class="iris-input" id="ali-affiliation" type="text" placeholder="e.g. Wright State University" autocomplete="off">
+            </div>
+            <div class="iris-field">
+              <div class="iris-label-row">Prior Venture Names <span class="iris-opt">Optional</span> <span class="iris-why">— companies or orgs they have been associated with</span></div>
+              <input class="iris-input" id="ali-ventures" type="text" placeholder="e.g. Apex Labs, NovaBridge LLC" autocomplete="off">
+            </div>
+            <button class="iris-form-submit" id="ali-submit" type="button">Send to Ali &rarr;</button>
+          </form>
+          <div class="iris-confirm" id="iris-confirm">Ali is running. His results will be waiting when you reach his office at the end of the Corridor.</div>
+          <div class="iris-skipped" id="iris-skipped">No problem. His office is available at the end if you change your mind.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="r-grid">
 
@@ -513,6 +698,55 @@
 </footer>
 
 <div class="class-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+
+<script>
+(function() {
+  var btnYes    = document.getElementById('iris-btn-yes');
+  var btnNo     = document.getElementById('iris-btn-no');
+  var form      = document.getElementById('iris-ali-form');
+  var btns      = document.getElementById('iris-offer-btns');
+  var confirm   = document.getElementById('iris-confirm');
+  var skipped   = document.getElementById('iris-skipped');
+  var submitBtn = document.getElementById('ali-submit');
+
+  btnYes.addEventListener('click', function() {
+    btns.style.display = 'none';
+    form.classList.add('is-open');
+    form.querySelector('#ali-name').focus();
+  });
+
+  btnNo.addEventListener('click', function() {
+    btns.style.display = 'none';
+    skipped.classList.add('is-shown');
+  });
+
+  submitBtn.addEventListener('click', function() {
+    var name        = document.getElementById('ali-name').value.trim();
+    var city        = document.getElementById('ali-city').value.trim();
+    var state       = document.getElementById('ali-state').value.trim();
+    var dob         = document.getElementById('ali-dob').value.trim();
+    var affiliation = document.getElementById('ali-affiliation').value.trim();
+    var ventures    = document.getElementById('ali-ventures').value.trim();
+
+    if (!name || !city || !state) {
+      var missing = [];
+      if (!name)  missing.push('Full Name');
+      if (!city)  missing.push('City');
+      if (!state) missing.push('State');
+      alert('Ali needs: ' + missing.join(', ') + '.');
+      return;
+    }
+
+    sessionStorage.setItem('ali_subject', JSON.stringify({
+      name: name, city: city, state: state,
+      dob: dob, affiliation: affiliation, ventures: ventures
+    }));
+
+    form.classList.remove('is-open');
+    confirm.classList.add('is-shown');
+  });
+})();
+</script>
 
 </body>
 </html>
