@@ -11,8 +11,6 @@
      triad:         [string, string, string] (required - 3 judge ids)
      dimension:     'clarity' | 'viability' | ... (required)
      visitor_name:  string (optional, max 60 chars)
-     revisions:     array (optional - EP corridor revision log; only used
-                          by Selene's AI-tell lens, same as before)
    }
    Response  : same shape as tg-evaluate-stage-clarity but per-dimension:
    {
@@ -44,10 +42,6 @@ const MODEL = 'claude-sonnet-4-6';
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const JUDGE_ID_RE = /^[a-z0-9_]+$/;
 
-// AI-tell lens lives with Selene only (Clarity dimension specifically).
-const AI_TELL_JUDGE = 'selene_voss';
-const MAX_REVISIONS_IN_PROMPT = 24;
-const MAX_REV_FIELD_CHARS     = 480;
 
 // ─────────────────────────────────────────────────────────────────────────
 // DIMENSION RUBRIC CONFIG
@@ -199,16 +193,6 @@ function findJudge(judgeId){
   return (judgesMaster.judges || []).find(j => j.id === judgeId);
 }
 
-// Selene-only AI-tell lens (Clarity stage). Other dimensions skip this.
-function buildSeleneLensClause(){
-  return `
-
-SECONDARY LENS - AI WRITING TELLS
-You also clock AI-writing fingerprints because 99 percent of what crosses your desk was written by AI. The em dash is the most reliable tell. Stock listy transitions ("Furthermore," "Moreover," "In conclusion"), generic abstract framing, and template-y prose are next. When you see the pattern in this submission's prose, name it once, briefly, in your finding - one phrase, flat affect, no theatrics - and let it pull your CLARITY score down. Templatey prose obscures the idea even when the structure looks tidy; the visitor's actual articulation is buried under the template, so clarity suffers.
-
-If you do not see AI tells, do not mention them. Do not lecture. Do not hedge about being an AI character yourself - you are evaluating the prose on the page, not yourself.`;
-}
-
 function buildSystemPrompt(judge, visitorName, dimension){
   const dimCfg = DIMENSIONS[dimension];
   const toneRules  = (judge.tone_rules  || []).map(r => `- ${r}`).join('\n');
@@ -216,11 +200,6 @@ function buildSystemPrompt(judge, visitorName, dimension){
   const addressLine = visitorName
     ? `Address the submitter by name in vocative case at the start of your finding (e.g. "${visitorName}, ..."). Use the name once - do not repeat it.`
     : `Address the submitter directly in second person ("you"). No vocative name was provided.`;
-  // Selene's AI-tell lens fires ONLY on the Clarity stage. On other
-  // dimensions she scores on substance like everyone else.
-  const seleneLens = (dimension === 'clarity' && judge.id === AI_TELL_JUDGE)
-    ? buildSeleneLensClause()
-    : '';
   const tonalNotes = (dimCfg.tonal_notes || []).map(n => `  - ${n}`).join('\n');
   return `You are ${judge.name}, ${judge.domain} on The Gauntlet panel.
 
@@ -249,7 +228,7 @@ ${addressLine}
 DIMENSION-SPECIFIC NOTES
 ${tonalNotes}
 
-CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.${seleneLens}
+CONDUCT BACKSTOP: If the submission contains profanity, slurs, or personal attacks aimed at the judges or other users, do not score it on substance. Return score 0, confidence 0.5, and a finding that reads: "This submission contains language that does not meet The Chamber's conduct rules. I cannot score it on the substance until it is revised." Do not improvise around this rule.
 
 Then return YOUR CONFIDENCE in your own scoring on a 0.00 to 1.00 decimal scale.
 
@@ -257,40 +236,7 @@ OUTPUT JSON only, exactly this shape, nothing before or after:
 {"score": <integer 0-10>, "finding": "<2-3 sentences in your voice>", "confidence": <0.00-1.00>}`;
 }
 
-// Revision-log sanitization (Selene/Clarity only consumer)
-function sanitizeRevisions(input){
-  if (!Array.isArray(input)) return [];
-  const clean = [];
-  for (const r of input) {
-    if (!r || typeof r !== 'object') continue;
-    const ep_id     = String(r.ep_id || '').toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 40);
-    const operation = (r.operation === 'append' || r.operation === 'replace') ? r.operation : '';
-    const section   = String(r.section_label || '').replace(/[\x00-\x1f]/g, ' ').trim().slice(0, 80);
-    const before    = String(r.before || '').replace(/[\x00-\x08\x0b-\x1f]/g, ' ').slice(0, MAX_REV_FIELD_CHARS);
-    const after     = String(r.after  || '').replace(/[\x00-\x08\x0b-\x1f]/g, ' ').slice(0, MAX_REV_FIELD_CHARS);
-    if (!ep_id || !operation || !after) continue;
-    clean.push({ ep_id, operation, section_label: section, before, after });
-    if (clean.length >= MAX_REVISIONS_IN_PROMPT) break;
-  }
-  return clean;
-}
-
-function formatRevisionLog(revisions){
-  if (!revisions.length) {
-    return 'REVISION LOG: empty. The visitor accepted no EP rewrites; every paragraph in the brief is their original prose.';
-  }
-  const lines = ['REVISION LOG (sections that were rewritten or extended by an Executive Producer in the corridor; anything not in this list is the visitor\'s original prose):', ''];
-  revisions.forEach((r, i) => {
-    lines.push(`#${i + 1} [${r.ep_id}] [${r.operation}] section: "${r.section_label || 'unlabeled'}"`);
-    if (r.operation === 'replace' && r.before) {
-      lines.push(`  before: ${JSON.stringify(r.before)}`);
-    }
-    lines.push(`  after:  ${JSON.stringify(r.after)}`);
-  });
-  return lines.join('\n');
-}
-
-function buildUserPrompt(subRow, judge, revisions, dimension){
+function buildUserPrompt(subRow, judge, dimension){
   const dimCfg = DIMENSIONS[dimension];
   const base = [
     `SUBMISSION TITLE: ${subRow.title}`,
@@ -300,11 +246,6 @@ function buildUserPrompt(subRow, judge, revisions, dimension){
     subRow.goal_audience ? `\nSTATED AUDIENCE: ${subRow.goal_audience}` : '',
     subRow.constraints   ? `\nSTATED CONSTRAINTS: ${subRow.constraints}` : '',
   ].filter(Boolean);
-
-  // Selene + clarity only: include the corridor revision log.
-  if (dimension === 'clarity' && judge && judge.id === AI_TELL_JUDGE) {
-    base.push('', formatRevisionLog(revisions || []));
-  }
 
   base.push('', `Score ${dimCfg.label} now. Return JSON only.`);
   return base.join('\n');
@@ -347,9 +288,9 @@ function computeTriangulationMulti(matrix){
   return { matrix, agreement_dimensions, conflict_dimensions, coverage_gaps, composite_score, verdict };
 }
 
-async function evaluateOneJudge(client, judge, subRow, visitorName, revisions, dimension){
+async function evaluateOneJudge(client, judge, subRow, visitorName, dimension){
   const systemPrompt = buildSystemPrompt(judge, visitorName, dimension);
-  const userPrompt   = buildUserPrompt(subRow, judge, revisions, dimension);
+  const userPrompt   = buildUserPrompt(subRow, judge, dimension);
   let response;
   try {
     response = await client.messages.create({
@@ -404,8 +345,6 @@ exports.handler = async (event) => {
                           .trim().slice(0, 60)
                           .replace(/[^A-Za-zÀ-ɏ\s'\-]/g, '')
                           .trim();
-  const revisions     = sanitizeRevisions(body.revisions);
-
   if (!UUID_RE.test(submission_id))           return json(400, { error: 'invalid submission_id' });
   if (triad.length !== 3)                     return json(400, { error: 'triad must be 3 judge ids' });
   if (!triad.every(t => JUDGE_ID_RE.test(t))) return json(400, { error: 'triad ids invalid' });
@@ -494,7 +433,7 @@ exports.handler = async (event) => {
   // 3. Fire all three Anthropic calls IN PARALLEL for this dimension.
   const client = new Anthropic({ apiKey: ANTHROPIC_KEY });
   const results = await Promise.all(
-    judges.map(j => evaluateOneJudge(client, j, subRow, visitorName, revisions, dimension))
+    judges.map(j => evaluateOneJudge(client, j, subRow, visitorName, dimension))
   );
 
   // 4. Write each successful result to tg_judge_outputs. One row per
