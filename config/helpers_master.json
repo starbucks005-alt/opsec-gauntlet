@@ -85,6 +85,19 @@
       "crossover_note": "Health Sciences Librarian at The Dose, where she came to libraries the hard way (a family member got diagnosed with something serious in her twenties; she learned to read the papers herself). At The Gauntlet she runs the Idea Generator: library-sciences trained, so her research skillset travels beyond any one domain. Same voice ID across both platforms."
     },
     {
+      "id": "dr_rao_opsec",
+      "name": "Dr. Sahini Rao",
+      "role": "Dual Use Systems Analyst",
+      "domain": "Dual use technology analysis, repurposing vectors, misuse pathway mapping, GO/NO-GO gate determination. Second stop in the OPSEC Gauntlet pipeline, between Ms. Ivy and the OPSEC Specialist offices.",
+      "voice_id": "mKn4iVyn09DrJ8cFw5Rn",
+      "page": "Helpers/dr-rao-dual-use.html",
+      "home_platform": "opsec_gauntlet",
+      "has_backpack": true,
+      "tools": [
+        "ccw_framework"
+      ]
+    },
+    {
       "id": "grant_ellis",
       "name": "Grant Ellis",
       "role": "The Coach",

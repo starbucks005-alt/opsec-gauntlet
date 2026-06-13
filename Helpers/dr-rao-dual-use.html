@@ -7,7 +7,11 @@
 <meta name="description" content="Second stop in the OPSEC Gauntlet. Dr. Sahini Rao examines how your concept behaves when the environment changes, maps dual use risk, and issues the GO / NO-GO determination before the OPSEC Specialists open.">
 <link rel="icon" type="image/png" href="../Favicon.png">
 <link rel="apple-touch-icon" href="../Favicon.png">
+<script src="../assets/tg-voice.js" defer></script>
 <script src="../assets/tg-ep-chat.js" defer></script>
+<script src="../assets/tg-ep-zoom.js" defer></script>
+<script src="../assets/tg-export.js" defer></script>
+<link rel="stylesheet" href="../assets/tg-office.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 <!-- Google tag (gtag.js) -->
@@ -378,6 +382,35 @@
   }
   .d-cta-btn:hover{background:var(--blue-light);}
 
+  /* Voice button in header strip */
+  .h-strip-voice{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    border:1px solid var(--rule);background:transparent;
+    color:var(--blue);padding:0.55rem 0.95rem;cursor:pointer;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;
+    font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+    transition:border-color 0.2s,background 0.2s,color 0.2s;
+    flex-shrink:0;
+  }
+  .h-strip-voice:hover{border-color:var(--blue);background:var(--blue-pale);color:var(--blue);}
+  .h-strip-voice .play{
+    width:18px;height:18px;border:1px solid currentColor;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.6rem;line-height:1;
+  }
+
+  /* Export + Zoom buttons (topbar) */
+  .d-topbar-tool{
+    display:inline-flex;align-items:center;gap:0.4rem;
+    padding:0.4rem 0.85rem;
+    border:1px solid var(--rule);background:transparent;
+    color:var(--blue);cursor:pointer;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;
+    font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+    transition:border-color 0.2s,background 0.2s;
+  }
+  .d-topbar-tool:hover{border-color:var(--blue);background:var(--blue-pale);}
+
   /* Classification footer */
   .cls-footer{
     background:#000;color:#fff;text-align:center;
@@ -401,6 +434,8 @@
     <img src="../Favicon.png" alt="" aria-hidden="true">
     OPSEC Gauntlet
   </a>
+  <button class="d-topbar-tool" type="button" data-tg-export>Export Brief &darr;</button>
+  <button class="d-topbar-tool" type="button" data-tg-zoom>&#9654; Take it to Zoom</button>
   <a href="/intake.html" class="d-topbar-submit">Submit your concept &rarr;</a>
   <a class="d-topbar-back" href="index.html">&larr; All Specialists</a>
 </header>
@@ -414,6 +449,10 @@
     <div class="h-strip-role">Office of Dual Use Systems Analysis &middot; Dual Use Technology and Systems Analyst</div>
     <span class="h-strip-badge">Second Stop &middot; OPSEC Gauntlet</span>
   </div>
+  <button class="h-strip-voice" type="button"
+          data-tg-voice data-character="dr_rao_opsec" data-mode="role">
+    <span class="play" aria-hidden="true">&#9654;</span>Hear her
+  </button>
 </div>
 
 <main class="office" data-tg-office="ep" data-tg-office-ep-id="dr_rao_opsec" data-tg-office-ep-name="Dr. Rao">
