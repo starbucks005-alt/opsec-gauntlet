@@ -5,7 +5,7 @@
 
 ## What this is
 
-The 16 OPSEC Gauntlet sector judges (one per CISA critical-infrastructure sector) plus the OPSEC specialist offices each carry a **backpack**: a portable, read-only live-tool capability that travels with the character.
+The 16 OPSEC Gauntlet sector judges plus the OPSEC specialist offices each carry a **backpack**: a portable, read-only live-tool capability that travels with the character.
 
 ## Intake flow
 
@@ -18,6 +18,16 @@ The 16 OPSEC Gauntlet sector judges (one per CISA critical-infrastructure sector
 - **Opt-in gate:** Inline beneath Iris's welcome: Ali Malik's subject-identifier form, collapsed by default. Expand -> provide the name -> submit -> confirmation that Ali is running. Skip -> proceed to Ms. Ivy with no friction.
 - **Ali's office:** Ali Malik's office page has no gate; it opens straight to the flanking layout. If the visitor submitted through Iris, the brief panel is pre-populated with the subject dossier. If they skipped, the brief panel placeholder prompts them to enter the subject there.
 - Ali Malik runs asynchronously from the moment of opt-in at intake so his exposure map is ready when the visitor reaches the final desk.
+
+## Reasoning-only offices (intentionally backpack-less)
+
+- Iris S. King (Frontline Communications / host) — comms and intake judgement; no live-data backpack.
+- Sasha Moreno (Human Factors & Insider Risk) — role/access/culture analysis; judgement, no live backpack.
+- Rowan Tate (Risk Discipline & Guardrails) — converts intentions into rules; judgement, no live backpack.
+- Yuki Mendel (Visual Surface) — brand/visual-leakage review; judgement, no live backpack.
+- _Deferred:_ Leo Vance (Financial Exposure) — fragility analysis is largely reasoning; revisit only if live financial-exposure data is wanted.
+
+_These offices are intentionally backpack-less, not missing. Home-platform MCP tools (where any) are out of scope for OPSEC and are not invoked at the OPSEC desk._
 
 ## Design rules
 
@@ -272,6 +282,39 @@ CBRN and export-control sources are a mix of live feeds and versioned lists. Mos
 
 ## OPSEC specialist offices
 
+### Ms. Ivy (Ivy Sinclair) — Office of Concept Integrity (first stop)
+*Concept Integrity / SLR Gap-Finder* · tier `specialty_hire` · $69.99/mo · `id: ms-ivy-ivy-sinclair` · Office of Concept Integrity (first stop) · cross-platform (home: The Dose / The Gauntlet)
+
+_Run the SLR Method on a concept before it enters OPSEC review: find prior art, missing components, and unsupported assumptions, and produce a gap map._
+
+**Academic literature**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Scholarly corpus | OpenAlex + Crossref + Semantic Scholar | dataset_api | live |
+| Biomedical literature | PubMed / PMC (NCBI E-utilities) | dataset_api | live |
+| Preprints | arXiv + bioRxiv / medRxiv | dataset_api | live |
+
+**Prior art & patents**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Patent corpus / prior art | USPTO PatentsView + Google Patents Public Data | dataset_api | live |
+
+**Clinical & evidence**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Clinical evidence | ClinicalTrials.gov API | dataset_api | live |
+
+**Method**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Gap-finding method | SLR Studio systematic-review methodology | reference | versioned |
+
+**Guardrails:** Maps evidence, prior art, and gaps; never fabricates a citation or source.; Flags unsupported claims and assumptions rather than filling them in.; Labels preprints and non-peer-reviewed sources as such.; Does not evaluate operational security; routes that to the OPSEC offices..
+
 ### Dr. Sahini Rao — Office of Dual Use Systems Analysis (second stop)
 *Dual-Use Technology & Systems Analyst* · tier `specialty_hire` · $69.99/mo · `id: sahini-rao` · Office of Dual Use Systems Analysis (second stop)
 
@@ -341,6 +384,72 @@ _Determine whether an idea touches controlled CBRN or national-security dual-use
 | Foreign investment / influence review | CFIUS reference + institutional foreign-gift (Section 117) reporting | reference | current |
 
 **Guardrails:** Provides only control-status, regulatory classification, threat-awareness context, and mitigation framing.; Never provides synthesis, production, acquisition, enhancement, or weaponization detail for any chemical, biological, radiological, or nuclear material.; Never identifies acquisition sources, facility vulnerabilities, or specific exploitable pathways.; Treats any request that seeks CBRN or WMD uplift as an immediate refusal and escalation.; Read-only official and public sources only; no classified, proprietary, or personal data..
+
+### Alicia James — Office of Structure and Compliance
+*Structure & Compliance* · tier `core_six_pack` · $199/mo · `id: alicia-james` · Office of Structure and Compliance · cross-platform (home: Founder Studio)
+
+_Check whether the idea's legal entity, registrations, and filings match the real activity, and flag where structure creates exposure._
+
+**Federal registration**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Entity & CAGE verification | SAM.gov Entity Management API | dataset_api | live |
+
+**Corporate disclosure**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| SEC filings | SEC EDGAR submissions + full-text | dataset_api | live |
+| Nonprofit / EIN reference | IRS Tax Exempt Organization Search | dataset_api | live |
+
+**State filings**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Business registries | Secretary-of-State registries + OpenCorporates | dataset_api | live |
+
+**Liens & awards**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| UCC lien search | State UCC (Article 9) filing systems | dataset_api | live |
+| Federal award history | USAspending API | dataset_api | live |
+
+**Guardrails:** Verifies registration and structure status; flags mismatch between the entity and the real activity.; Provides structural and compliance information, not legal advice; routes legal questions to the Legal Surface office or a licensed attorney.; Reads public filings only; never submits, alters, or files anything.; Never handles personal financial or tax-return data..
+
+### Kimberly Pass — Office of Legal Surface Review
+*Legal Surface Review* · tier `core_six_pack` · $199/mo · `id: kimberly-pass` · Office of Legal Surface Review · cross-platform (home: Founder Studio)
+
+_Map where the idea intersects regulations, terms, and processes that create exposure, and where a licensed attorney is required. Information, not legal advice._
+
+**Regulations**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Federal regulations | eCFR (Electronic Code of Federal Regulations) API | dataset_api | live |
+| Export-control regs | EAR + ITAR via eCFR | reference | versioned |
+
+**Rulemaking & statute**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Rules & notices | Federal Register API | dataset_api | live |
+| Statutes & bills | Congress.gov + GovInfo | dataset_api | live |
+
+**Guidance**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Cyber / infrastructure guidance | CISA advisories and guidance | reference | current |
+
+**Case law**
+
+| Capability | Source | Type | Currency |
+|---|---|---|---|
+| Court records | CourtListener / RECAP | dataset_api | live |
+
+**Guardrails:** Provides general legal information, never legal advice, and says so.; Maps which questions require a licensed attorney rather than answering them.; Never represents itself as counsel or creates an attorney-client relationship.; On export-control or CBRN-adjacent questions, coordinates with Dr. Rao and escalates..
 
 ### Dr. Ali Malik — National OSINT, OPSEC Gauntlet
 *National OSINT Subject-Matter Expert* · tier `specialty_hire` · $69.99/mo · `id: ali-malik` · National OSINT, OPSEC Gauntlet

@@ -1196,6 +1196,103 @@
   ],
   "specialists": [
     {
+      "id": "ms-ivy-ivy-sinclair",
+      "name": "Ms. Ivy (Ivy Sinclair)",
+      "role": "Concept Integrity / SLR Gap-Finder",
+      "office": "Office of Concept Integrity (first stop)",
+      "tier": "specialty_hire",
+      "price_monthly": 69.99,
+      "cross_platform": true,
+      "home_platform": "The Dose / The Gauntlet",
+      "mcp": true,
+      "backpack_shipped": false,
+      "mission": "Run the SLR Method on a concept before it enters OPSEC review: find prior art, missing components, and unsupported assumptions, and produce a gap map.",
+      "domains": [
+        "Academic literature",
+        "Prior art & patents",
+        "Clinical & evidence",
+        "Method"
+      ],
+      "tools": [
+        {
+          "domain": "Academic literature",
+          "capability": "Scholarly corpus",
+          "source": "OpenAlex + Crossref + Semantic Scholar",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "currency": "live",
+          "notes": "Cross-disciplinary literature, citations, and gap mapping."
+        },
+        {
+          "domain": "Academic literature",
+          "capability": "Biomedical literature",
+          "source": "PubMed / PMC (NCBI E-utilities)",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "currency": "live",
+          "notes": "Peer-reviewed biomedical evidence."
+        },
+        {
+          "domain": "Academic literature",
+          "capability": "Preprints",
+          "source": "arXiv + bioRxiv / medRxiv",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Leading-edge work not yet peer reviewed; flag as preprint."
+        },
+        {
+          "domain": "Prior art & patents",
+          "capability": "Patent corpus / prior art",
+          "source": "USPTO PatentsView + Google Patents Public Data",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Whether the idea is already patented or published."
+        },
+        {
+          "domain": "Clinical & evidence",
+          "capability": "Clinical evidence",
+          "source": "ClinicalTrials.gov API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Trial precedent for health-adjacent concepts."
+        },
+        {
+          "domain": "Method",
+          "capability": "Gap-finding method",
+          "source": "SLR Studio systematic-review methodology",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Dr. O's SLR Method for structured gap classification."
+        }
+      ],
+      "permissions": [
+        "Literature and prior-art search",
+        "Patent-corpus search",
+        "Clinical-evidence lookup",
+        "SLR gap classification and prioritization"
+      ],
+      "guardrails": [
+        "Maps evidence, prior art, and gaps; never fabricates a citation or source.",
+        "Flags unsupported claims and assumptions rather than filling them in.",
+        "Labels preprints and non-peer-reviewed sources as such.",
+        "Does not evaluate operational security; routes that to the OPSEC offices."
+      ],
+      "escalation_triggers": [
+        "request to fabricate or misattribute sources",
+        "CBRN or weaponization uplift framed as research"
+      ]
+    },
+    {
       "id": "sahini-rao",
       "name": "Dr. Sahini Rao",
       "role": "Dual-Use Technology & Systems Analyst",
@@ -1519,6 +1616,200 @@
       ]
     },
     {
+      "id": "alicia-james",
+      "name": "Alicia James",
+      "role": "Structure & Compliance",
+      "office": "Office of Structure and Compliance",
+      "tier": "core_six_pack",
+      "price_monthly": 199,
+      "cross_platform": true,
+      "home_platform": "Founder Studio",
+      "mcp": true,
+      "backpack_shipped": false,
+      "mission": "Check whether the idea's legal entity, registrations, and filings match the real activity, and flag where structure creates exposure.",
+      "domains": [
+        "Federal registration",
+        "Corporate disclosure",
+        "State filings",
+        "Liens & awards"
+      ],
+      "tools": [
+        {
+          "domain": "Federal registration",
+          "capability": "Entity & CAGE verification",
+          "source": "SAM.gov Entity Management API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key",
+          "currency": "live",
+          "notes": "Federal registration, CAGE code, and exclusion status."
+        },
+        {
+          "domain": "Corporate disclosure",
+          "capability": "SEC filings",
+          "source": "SEC EDGAR submissions + full-text",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Public company structure, officers, and disclosures."
+        },
+        {
+          "domain": "State filings",
+          "capability": "Business registries",
+          "source": "Secretary-of-State registries + OpenCorporates",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "currency": "live",
+          "notes": "Entity existence, good standing, and officers by state."
+        },
+        {
+          "domain": "Liens & awards",
+          "capability": "UCC lien search",
+          "source": "State UCC (Article 9) filing systems",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Secured-interest and lien exposure."
+        },
+        {
+          "domain": "Liens & awards",
+          "capability": "Federal award history",
+          "source": "USAspending API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Federal contract and grant footprint."
+        },
+        {
+          "domain": "Corporate disclosure",
+          "capability": "Nonprofit / EIN reference",
+          "source": "IRS Tax Exempt Organization Search",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Exempt-status verification for nonprofits."
+        }
+      ],
+      "permissions": [
+        "Federal and state entity verification",
+        "Corporate-disclosure lookup",
+        "UCC lien and award-history search",
+        "Structure-vs-operations mismatch flagging"
+      ],
+      "guardrails": [
+        "Verifies registration and structure status; flags mismatch between the entity and the real activity.",
+        "Provides structural and compliance information, not legal advice; routes legal questions to the Legal Surface office or a licensed attorney.",
+        "Reads public filings only; never submits, alters, or files anything.",
+        "Never handles personal financial or tax-return data."
+      ],
+      "escalation_triggers": [
+        "request to falsify or file documents",
+        "structure designed to conceal ownership for unlawful purpose"
+      ]
+    },
+    {
+      "id": "kimberly-pass",
+      "name": "Kimberly Pass",
+      "role": "Legal Surface Review",
+      "office": "Office of Legal Surface Review",
+      "tier": "core_six_pack",
+      "price_monthly": 199,
+      "cross_platform": true,
+      "home_platform": "Founder Studio",
+      "mcp": true,
+      "backpack_shipped": false,
+      "mission": "Map where the idea intersects regulations, terms, and processes that create exposure, and where a licensed attorney is required. Information, not legal advice.",
+      "domains": [
+        "Regulations",
+        "Rulemaking & statute",
+        "Guidance",
+        "Case law"
+      ],
+      "tools": [
+        {
+          "domain": "Regulations",
+          "capability": "Federal regulations",
+          "source": "eCFR (Electronic Code of Federal Regulations) API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Current CFR text, including EAR (15 CFR) and ITAR (22 CFR)."
+        },
+        {
+          "domain": "Rulemaking & statute",
+          "capability": "Rules & notices",
+          "source": "Federal Register API",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Proposed and final rules affecting the idea."
+        },
+        {
+          "domain": "Rulemaking & statute",
+          "capability": "Statutes & bills",
+          "source": "Congress.gov + GovInfo",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "api_key_optional",
+          "currency": "live",
+          "notes": "Statutory basis and pending legislation."
+        },
+        {
+          "domain": "Guidance",
+          "capability": "Cyber / infrastructure guidance",
+          "source": "CISA advisories and guidance",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "current",
+          "notes": "Federal guidance touching the idea's domain."
+        },
+        {
+          "domain": "Regulations",
+          "capability": "Export-control regs",
+          "source": "EAR + ITAR via eCFR",
+          "type": "reference",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "versioned",
+          "notes": "Whether the idea touches export-controlled territory; coordinate with Dr. Rao."
+        },
+        {
+          "domain": "Case law",
+          "capability": "Court records",
+          "source": "CourtListener / RECAP",
+          "type": "dataset_api",
+          "access": "read-only",
+          "auth": "none",
+          "currency": "live",
+          "notes": "Relevant litigation and precedent."
+        }
+      ],
+      "permissions": [
+        "Regulation and rule lookup",
+        "Statute and pending-legislation search",
+        "Federal guidance reference",
+        "Case-law and exposure mapping"
+      ],
+      "guardrails": [
+        "Provides general legal information, never legal advice, and says so.",
+        "Maps which questions require a licensed attorney rather than answering them.",
+        "Never represents itself as counsel or creates an attorney-client relationship.",
+        "On export-control or CBRN-adjacent questions, coordinates with Dr. Rao and escalates."
+      ],
+      "escalation_triggers": [
+        "request for legal advice to evade a law or control",
+        "export-control or CBRN-adjacent legal question"
+      ]
+    },
+    {
       "id": "ali-malik",
       "name": "Dr. Ali Malik",
       "role": "National OSINT Subject-Matter Expert",
@@ -1714,7 +2005,8 @@
   ],
   "notes": [
     "Dr. Rao's CBRN/national-security backpack is monitoring and classification only. Uplift refusal must be enforced at the model layer, not assumed from source choice.",
-    "Ali Malik's OSINT sweep is opt-in, runs async from the moment of consent, and is governed by an ephemeral no-retention data-handling policy (nothing republished, nothing kept by ETL)."
+    "Ali Malik's OSINT sweep is opt-in, runs async from the moment of consent, and is governed by an ephemeral no-retention data-handling policy (nothing republished, nothing kept by ETL).",
+    "Corridor OPSEC backpacks built for Ms. Ivy, Alicia James, and Kimberly Pass. These are cross-platform agents; the OPSEC backpack is context-scoped and does not change their Founder Studio / home tools."
   ],
   "currency_policy": {
     "principle": "CBRN and export-control sources are a mix of live feeds and versioned lists. Most control lists update only at regime plenaries or via Federal Register rules, so they must be re-pulled on a cadence, not assumed static.",
@@ -1729,5 +2021,17 @@
     "order": "Iris S. King (host / greets at intake) -> Ms. Ivy (Concept Integrity) -> Dr. Sahini Rao (Dual-Use Systems, second stop) -> corridor specialist offices (Structure/Alicia James, Legal/Kimberly Pass, Human Factors/Sasha Moreno, Financial/Leo Vance, Risk Discipline/Rowan Tate, Discovery/Jax Rivera, Visual/Yuki Mendel) -> 16 sector judges -> Dr. Ali Malik (OSINT, final desk) -> consolidated findings.",
     "ali_office": "Ali Malik's office page has no gate; it opens straight to the flanking layout. If the visitor submitted through Iris, the brief panel is pre-populated with the subject dossier. If they skipped, the brief panel placeholder prompts them to enter the subject there.",
     "note": "Ali Malik runs asynchronously from the moment of opt-in at intake so his exposure map is ready when the visitor reaches the final desk."
+  },
+  "reasoning_only_offices": {
+    "by_design": [
+      "Iris S. King (Frontline Communications / host) — comms and intake judgement; no live-data backpack.",
+      "Sasha Moreno (Human Factors & Insider Risk) — role/access/culture analysis; judgement, no live backpack.",
+      "Rowan Tate (Risk Discipline & Guardrails) — converts intentions into rules; judgement, no live backpack.",
+      "Yuki Mendel (Visual Surface) — brand/visual-leakage review; judgement, no live backpack."
+    ],
+    "deferred": [
+      "Leo Vance (Financial Exposure) — fragility analysis is largely reasoning; revisit only if live financial-exposure data is wanted."
+    ],
+    "note": "These offices are intentionally backpack-less, not missing. Home-platform MCP tools (where any) are out of scope for OPSEC and are not invoked at the OPSEC desk."
   }
 }

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ms. Ivy · Office of Concept Integrity · OPSEC Gauntlet</title>
+<meta name="description" content="Before your concept reaches the 16 sector chiefs, it passes through the Office of Concept Integrity. Ms. Ivy runs the SLR Method to identify gaps, assumptions, and missing logic. You leave with a gap map and a concept ready for OPSEC review.">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../Favicon.png">
+<script src="../assets/tg-voice.js" defer></script>
+<script src="../assets/tg-ep-chat.js" defer></script>
+<link rel="stylesheet" href="../assets/tg-office.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#28527a; --blue-light:#3a7aad; --blue-pale:#edf3f8;
+    --gold:#d4940a; --gold-light:#e0a820;
+    --ink:#1a1a1a; --ink-mid:#3a3a3a; --ink-soft:#6b6b6b;
+    --rule:#d0d8e0; --bg:#ffffff;
+    --text:#1a1a1a; --text-dim:#6b6b6b;
+    --gauntlet-consequence:#b91c1c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Public Sans',sans-serif;font-size:1.05rem;line-height:1.7;
+    min-height:100vh;
+  }
+
+  .cls-banner{background:#000;color:#fff;text-align:center;font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.3rem 1rem;}
+
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2rem;height:56px;
+    border-bottom:1px solid var(--rule);gap:1.5rem;
+    position:sticky;top:0;background:rgba(255,255,255,0.97);
+    backdrop-filter:blur(10px);z-index:100;
+  }
+  .tg-topbar-logo{
+    display:flex;align-items:center;gap:0.6rem;
+    font-family:'Public Sans',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.16em;
+    color:var(--blue);text-decoration:none;white-space:nowrap;text-transform:uppercase;
+  }
+  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-back{
+    margin-left:auto;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--ink-soft);text-decoration:none;
+  }
+  .tg-topbar-back:hover{color:var(--blue);}
+
+  .h-strip{
+    max-width:1320px;margin:0 auto;padding:1.4rem 2rem 0.9rem;
+    display:flex;align-items:center;gap:1.2rem;border-bottom:1px solid var(--rule);
+  }
+  .h-strip-photo{width:64px;height:64px;flex-shrink:0;border:1px solid var(--rule);background:var(--blue-pale);overflow:hidden;}
+  .h-strip-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .h-strip-meta{display:flex;flex-direction:column;gap:0.2rem;flex:1;}
+  .h-strip-name{font-family:'Spectral',serif;font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1.1;}
+  .h-strip-name em{font-style:italic;color:var(--blue);}
+  .h-strip-role{font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--blue);}
+  .h-strip-badge{display:inline-block;margin-top:0.3rem;font-family:'Public Sans',sans-serif;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);background:var(--blue-pale);padding:0.25rem 0.6rem;}
+
+  .office{
+    max-width:1320px;margin:0 auto;
+    padding:1rem 2rem 4rem;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:1.4rem;
+    height:calc(100vh - 56px - 34px - 102px);
+    min-height:560px;
+  }
+  .office-panel{display:flex;flex-direction:column;min-height:0;border:1px solid var(--rule);background:#fff;}
+  .office-panel-head{padding:0.8rem 1.1rem;border-bottom:1px solid var(--rule);font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;justify-content:space-between;gap:0.8rem;}
+  .office-panel-head-note{color:var(--ink-soft);font-size:0.55rem;}
+  .office-brief{flex:1;padding:1.4rem 1.3rem;overflow-y:auto;font-size:1.05rem;line-height:1.65;color:var(--text);white-space:pre-wrap;}
+  .office-brief[data-empty="true"]{color:var(--text-dim);font-style:italic;}
+  .office-chat-thread{flex:1;padding:1.1rem 1.1rem 0.6rem;overflow-y:auto;}
+  .tg-chat-empty{color:var(--text-dim);font-style:italic;font-size:0.98rem;padding:1rem 0;}
+  .tg-chat-turn{margin-bottom:1.4rem;font-size:1rem;line-height:1.55;}
+  .tg-chat-user{margin-left:1.5rem;padding:0.6rem 0.9rem;background:var(--blue-pale);border-left:2px solid var(--blue);color:var(--ink);}
+  .tg-chat-assistant{padding:0.2rem 0;}
+  .tg-chat-who{font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:0.35rem;}
+  .tg-chat-content{white-space:pre-wrap;}
+  .office-chat-input{border-top:1px solid var(--rule);padding:0.85rem 1rem;display:flex;gap:0.7rem;align-items:flex-end;background:#f4f7fb;}
+  .office-chat-input textarea{flex:1;min-height:54px;max-height:140px;resize:vertical;background:#fff;border:1px solid var(--rule);color:var(--ink);font-family:'Public Sans',sans-serif;font-size:1rem;line-height:1.5;padding:0.6rem 0.8rem;outline:none;}
+  .office-chat-input textarea:focus{border-color:var(--blue);}
+  .office-chat-input textarea::placeholder{color:var(--text-dim);font-style:italic;}
+  .office-chat-send{font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;padding:0.75rem 1.2rem;background:var(--blue);color:#fff;border:1px solid var(--blue);transition:background 0.18s;}
+  .office-chat-send:hover:not(:disabled){background:var(--blue-light);}
+  .office-chat-send:disabled{opacity:0.5;cursor:wait;}
+  .office-keys{font-family:'Public Sans',sans-serif;font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);text-align:center;padding-bottom:0.45rem;}
+  .office-keys strong{color:var(--blue);}
+  @media(max-width:980px){.office{grid-template-columns:1fr;height:auto;min-height:0;}.office-brief{max-height:42vh;}.office-chat-thread{max-height:48vh;}}
+
+  .ci-section{border-top:1px solid var(--rule);padding:3.5rem 2rem 4.5rem;}
+  .ci-section:nth-child(even){background:var(--blue-pale);}
+  .ci-inner{max-width:1080px;margin:0 auto;}
+  .ci-head{max-width:780px;margin:0 auto 2.4rem;text-align:center;}
+  .ci-eyebrow{font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--blue);margin-bottom:0.8rem;}
+  .ci-head h2{font-family:'Spectral',serif;font-size:1.9rem;font-weight:700;color:var(--ink);line-height:1.15;margin:0 0 0.6rem;}
+  .ci-sub{font-family:'Public Sans',sans-serif;font-style:italic;color:var(--text-dim);font-size:1rem;line-height:1.5;}
+
+  .ci-orientation{max-width:780px;margin:0 auto;border-left:3px solid var(--blue);background:var(--blue-pale);padding:1.6rem 2rem;font-size:1.08rem;line-height:1.75;color:var(--ink);font-style:italic;}
+  .ci-orientation p{margin-bottom:1.1rem;}
+  .ci-orientation p:last-child{margin-bottom:0;}
+  .ci-orientation-speaker{font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);font-style:normal;display:block;margin-bottom:1rem;}
+
+  .ci-steps{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;}
+  @media(max-width:980px){.ci-steps{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.ci-steps{grid-template-columns:1fr;}}
+  .ci-step{position:relative;border:1px solid var(--rule);border-left:3px solid var(--blue);background:#fff;padding:1rem 1.1rem;}
+  .ci-step-num{position:absolute;top:0.4rem;right:0.6rem;font-family:'Spectral',serif;font-style:italic;font-size:1.4rem;color:rgba(40,82,122,0.25);line-height:1;}
+  .ci-step h3{font-family:'Spectral',serif;font-size:1rem;font-weight:700;color:var(--ink);margin:0 0 0.4rem;padding-right:1.6rem;line-height:1.2;}
+  .ci-step p{font-family:'Public Sans',sans-serif;font-size:0.92rem;line-height:1.45;color:var(--text-dim);margin:0;}
+
+  .ci-deliverables{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:0.7rem;}
+  .ci-deliverable{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--rule);background:#fff;padding:1rem 1.2rem;}
+  .ci-deliverable-num{font-family:'Spectral',serif;font-style:italic;font-size:1.5rem;color:var(--blue);line-height:1;flex-shrink:0;padding-top:0.1rem;}
+  .ci-deliverable-title{font-family:'Spectral',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;line-height:1.2;}
+  .ci-deliverable-desc{font-family:'Public Sans',sans-serif;font-size:0.95rem;line-height:1.5;color:var(--text-dim);margin:0;}
+
+  .ci-rationale{max-width:780px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}
+  @media(max-width:640px){.ci-rationale{grid-template-columns:1fr;}}
+  .ci-rationale-block{border:1px solid rgba(185,28,28,0.25);border-left:3px solid var(--gauntlet-consequence);background:#fef2f2;padding:1rem 1.1rem;}
+  .ci-rationale-block h4{font-family:'Spectral',serif;font-size:0.98rem;font-weight:700;color:var(--gauntlet-consequence);margin:0 0 0.4rem;line-height:1.25;}
+  .ci-rationale-block p{font-family:'Public Sans',sans-serif;font-size:0.92rem;line-height:1.45;color:var(--ink);margin:0;}
+
+  .ci-cta{text-align:center;padding:3rem 2rem;border-top:1px solid var(--rule);}
+  .ci-cta p{font-family:'Public Sans',sans-serif;font-style:italic;color:var(--text-dim);font-size:1.05rem;margin-bottom:1.4rem;}
+  .ci-cta-btn{display:inline-block;padding:0.9rem 2rem;background:var(--blue);color:#fff;font-family:'Public Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;text-decoration:none;transition:background 0.2s;}
+  .ci-cta-btn:hover{background:var(--blue-light);}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0P5JY8M1B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R0P5JY8M1B');
+</script>
+</head>
+<body>
+
+<div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+
+<header class="tg-topbar">
+  <a class="tg-topbar-logo" href="/">
+    <img src="../Favicon.png" alt="" aria-hidden="true">
+    OPSEC Gauntlet
+  </a>
+  <a class="tg-topbar-back" href="../Helpers/index.html">&larr; The Corridor</a>
+</header>
+
+<div class="h-strip">
+  <div class="h-strip-photo"><img src="Ivy_profile.png" alt="Ms. Ivy"></div>
+  <div class="h-strip-meta">
+    <div class="h-strip-name">Ms. <em>Ivy</em></div>
+    <div class="h-strip-role">Office of Concept Integrity &middot; SLR Method Lead</div>
+    <span class="h-strip-badge">First Stop &middot; OPSEC Gauntlet</span>
+  </div>
+</div>
+
+<main class="office" data-tg-office="ep" data-tg-office-ep-id="ms_ivy_opsec" data-tg-office-ep-name="Ms. Ivy">
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your Concept</span>
+      <span class="office-panel-head-note">Ms. Ivy maps the gaps as she finds them</span>
+    </div>
+    <div class="office-brief" data-tg-office="brief" data-empty="true">State the operational purpose of your concept. What does it do, who does it serve, how does it function.</div>
+  </section>
+
+  <section class="office-panel">
+    <div class="office-panel-head">
+      <span>Your session with Ms. Ivy</span>
+      <span class="office-panel-head-note">Closes with the tab.</span>
+    </div>
+    <div class="office-chat-thread" data-tg-office="chat"></div>
+    <div class="office-keys"><strong>Enter</strong> to send &middot; <strong>Shift</strong> + <strong>Enter</strong> for newline</div>
+    <div class="office-chat-input">
+      <textarea data-tg-office="input" placeholder="Describe your concept in operational terms. What does it do, who does it serve, how does it function. Avoid slogans."></textarea>
+      <button class="office-chat-send" type="button" data-tg-office="send">Send</button>
+    </div>
+  </section>
+</main>
+
+<section class="ci-section">
+  <div class="ci-inner">
+    <header class="ci-head">
+      <div class="ci-eyebrow">Ms. Ivy&rsquo;s Opening</div>
+      <h2>The Orientation.</h2>
+      <p class="ci-sub">What you hear when you walk into the Office of Concept Integrity.</p>
+    </header>
+    <blockquote class="ci-orientation">
+      <span class="ci-orientation-speaker">Ms. Ivy &mdash; Office of Concept Integrity</span>
+      <p>Welcome to the Office of Concept Integrity. My name is Ms. Ivy. Before your idea can move through the OPSEC Gauntlet, we will run it through the SLR Method developed by Dr. O to identify gaps, assumptions, and missing components.</p>
+      <p>The SLR Method is a structured analytical process. It determines whether your idea has a clear problem statement, a defined user, a coherent operational environment, and a logical sequence of actions. It also identifies where the idea relies on assumptions that have not been tested.</p>
+      <p>I will ask you to describe your idea in operational terms. Tell me what it does, who it serves, and how it functions. Avoid slogans or promotional language. We are building the structural version of your idea, not the public version.</p>
+      <p>Once I have your description, I will run the SLR Method. This produces a gap map. The map shows where the idea is incomplete, where evidence is missing, and where the logic requires reinforcement.</p>
+      <p>When we finish, you will have a refined concept ready for the OPSEC Specialists. You will also have a list of gaps that must be addressed before the sector chiefs conduct their review.</p>
+      <p>If you are ready, begin by stating the operational purpose of your idea in one sentence.</p>
+    </blockquote>
+  </div>
+</section>
+
+<section class="ci-section">
+  <div class="ci-inner">
+    <header class="ci-head">
+      <div class="ci-eyebrow">The Method</div>
+      <h2>Eight passes. One gap map.</h2>
+      <p class="ci-sub">The SLR Method applied to operational concepts. Ms. Ivy runs every concept through all eight before the door to the sector chiefs opens.</p>
+    </header>
+    <div class="ci-steps">
+      <div class="ci-step">
+        <div class="ci-step-num">1</div>
+        <h3>Problem definition</h3>
+        <p>What is the problem this concept solves. Named specifically. Whose problem it is. Why it is a problem and not just an inconvenience.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">2</div>
+        <h3>User and stakeholder mapping</h3>
+        <p>Who does the concept serve. Who else is affected. Who could be harmed. Stakeholder blindspots are where most OPSEC failures begin.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">3</div>
+        <h3>Operational environment</h3>
+        <p>Where does this concept live. What infrastructure does it depend on. What sector does it operate inside. Which CISA domains does it touch.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">4</div>
+        <h3>Precedent and evidence scan</h3>
+        <p>What already exists in this space. What failed before and why. What succeeded and under what conditions. The gap is only a gap if the field has not already closed it.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">5</div>
+        <h3>Logical sequence analysis</h3>
+        <p>Does the concept hold together step by step. If step two requires something step one does not produce, the logic breaks. Every hand-off in the chain must be named.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">6</div>
+        <h3>Missing steps</h3>
+        <p>What the concept skips over. Most early-stage concepts jump from problem to solution without accounting for how the solution actually reaches the user.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">7</div>
+        <h3>Unsupported claims</h3>
+        <p>Every assertion the concept makes that has no evidence behind it. Named as a claim. Flagged for validation. Not accepted as true because it sounds reasonable.</p>
+      </div>
+      <div class="ci-step">
+        <div class="ci-step-num">8</div>
+        <h3>Gap classification</h3>
+        <p>Gaps sorted by severity. Fatal gaps are named as fatal. Addressable gaps get prioritized. The sector chiefs receive a concept, not a wish.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ci-section">
+  <div class="ci-inner">
+    <header class="ci-head">
+      <div class="ci-eyebrow">What You Leave With</div>
+      <h2>Five outputs. One ready concept.</h2>
+      <p class="ci-sub">Every participant leaves this office with these five things. They are the foundation for the entire Gauntlet.</p>
+    </header>
+    <div class="ci-deliverables">
+      <div class="ci-deliverable">
+        <div class="ci-deliverable-num">1</div>
+        <div>
+          <div class="ci-deliverable-title">Refined Operational Statement</div>
+          <p class="ci-deliverable-desc">One sentence. What the concept does, who it serves, how it functions. Plain operational language. No slogans. The sentence the sector chiefs read first.</p>
+        </div>
+      </div>
+      <div class="ci-deliverable">
+        <div class="ci-deliverable-num">2</div>
+        <div>
+          <div class="ci-deliverable-title">Gap Map</div>
+          <p class="ci-deliverable-desc">A numbered list of structural gaps. Missing logic, undefined users, unclear environments, unsupported claims, hidden assumptions, missing steps. Sorted by severity.</p>
+        </div>
+      </div>
+      <div class="ci-deliverable">
+        <div class="ci-deliverable-num">3</div>
+        <div>
+          <div class="ci-deliverable-title">Scope and Boundary Set</div>
+          <p class="ci-deliverable-desc">What this concept is and explicitly is not. The boundary is as important as the core. Undefined scope is where the sector chiefs will find the most risk.</p>
+        </div>
+      </div>
+      <div class="ci-deliverable">
+        <div class="ci-deliverable-num">4</div>
+        <div>
+          <div class="ci-deliverable-title">Assumptions Requiring Validation</div>
+          <p class="ci-deliverable-desc">The specific claims embedded in the concept that must be tested before OPSEC review. Named as assumptions, not accepted as facts. Each one is a risk until validated.</p>
+        </div>
+      </div>
+      <div class="ci-deliverable">
+        <div class="ci-deliverable-num">5</div>
+        <div>
+          <div class="ci-deliverable-title">A Concept Ready for OPSEC Review</div>
+          <p class="ci-deliverable-desc">Structurally coherent, logically sequenced, and hardened against the most common early-stage failure modes. What you carry into the corridor of sector chiefs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ci-section">
+  <div class="ci-inner">
+    <header class="ci-head">
+      <div class="ci-eyebrow">Why This Comes First</div>
+      <h2>The sector chiefs cannot evaluate what is incomplete.</h2>
+      <p class="ci-sub">Most early concepts fail the OPSEC Gauntlet for the same reasons. The SLR pass catches them before they cost the entrant a full panel review.</p>
+    </header>
+    <div class="ci-rationale">
+      <div class="ci-rationale-block">
+        <h4>&#9888; Hidden assumptions</h4>
+        <p>The concept assumes the infrastructure exists, the user will behave a certain way, or the regulatory environment permits it. None of these are tested. All three are OPSEC risks.</p>
+      </div>
+      <div class="ci-rationale-block">
+        <h4>&#9888; Missing logic</h4>
+        <p>The concept jumps from problem to solution without naming how the solution reaches the user. The step in between is usually where the operational failure lives.</p>
+      </div>
+      <div class="ci-rationale-block">
+        <h4>&#9888; Undefined users</h4>
+        <p>The concept serves &ldquo;everyone&rdquo; or &ldquo;people who need X.&rdquo; Undefined users mean undefined threat surfaces. Every sector chief will find a different gap in the same blank space.</p>
+      </div>
+      <div class="ci-rationale-block">
+        <h4>&#9888; Unclear environment</h4>
+        <p>The concept operates somewhere, touches some infrastructure, depends on some system. If that environment is not named, the sector chiefs cannot apply their risk models to it.</p>
+      </div>
+      <div class="ci-rationale-block">
+        <h4>&#9888; Unsupported claims</h4>
+        <p>The concept asserts that something is true because it sounds true. The sector chiefs are not looking for plausibility. They are looking for evidence. There is no substitute.</p>
+      </div>
+      <div class="ci-rationale-block">
+        <h4>&#9888; Scope without a boundary</h4>
+        <p>The concept knows what it does but not what it does not do. The boundary is where most downstream risk originates. No boundary means no defensible perimeter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ci-cta">
+  <p>When your gap map is complete, your concept moves to the OPSEC Specialists.</p>
+  <a class="ci-cta-btn" href="../Helpers/index.html">&larr; Return to The Corridor</a>
+</div>
+
+<div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+
+</body>
+</html>
