@@ -8,6 +8,12 @@
   [functions.proxy-ai]
     timeout = 26
 
+  [functions.opsec-checkout]
+    timeout = 15
+
+  [functions.opsec-access-verify]
+    timeout = 10
+
   [functions.opsec-sector-write]
     timeout = 15
 
