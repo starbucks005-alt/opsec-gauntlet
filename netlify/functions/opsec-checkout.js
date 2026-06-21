@@ -36,6 +36,9 @@ exports.handler = async function(event) {
   const host  = event.headers['host'] || 'opsec-gauntlet.netlify.app';
   const base  = proto + '://' + host;
 
+  const rawPath = (body.return_path || '/intake.html').replace(/[^a-zA-Z0-9/._-]/g, '');
+  const returnPath = rawPath.startsWith('/') ? rawPath : '/intake.html';
+
   let session;
   try {
     session = await stripe.checkout.sessions.create({
@@ -49,8 +52,8 @@ exports.handler = async function(event) {
         },
         quantity: 1,
       }],
-      success_url: base + '/?subscribed=1&session_id={CHECKOUT_SESSION_ID}',
-      cancel_url:  base + '/',
+      success_url: base + returnPath + '?subscribed=1&session_id={CHECKOUT_SESSION_ID}',
+      cancel_url:  base + returnPath,
     });
   } catch(err) {
     console.error('opsec-checkout stripe error:', err.message);

@@ -1,6 +1,7 @@
 /* opsec-paywall.js — subscription gate for OPSEC Gauntlet.
-   On landing page (/): shows paywall modal if no active subscription.
-   On downstream pages (intake, chamber, report): redirects to / instead.
+   On intake.html: shows paywall modal if no active subscription.
+   On chamber/report: redirects to /intake.html instead.
+   index.html is free (no script tag there).
    Dev bypass: ?dev=etl2026 in URL skips the gate and stores in sessionStorage. */
 
 (function() {
@@ -27,7 +28,7 @@
     try { sessionStorage.setItem(DEV_SS_KEY, DEV_VALUE); } catch(_) {}
   }
 
-  var isLanding = (window.location.pathname === '/' || window.location.pathname === '/index.html');
+  var isIntake = (window.location.pathname === '/intake.html');
 
   function cleanUrl() {
     if (window.location.search) history.replaceState(null, '', window.location.pathname);
@@ -93,7 +94,7 @@
       fetch('/.netlify/functions/opsec-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ return_path: '/intake.html' }),
       })
         .then(function(r) { return r.json(); })
         .then(function(d) {
@@ -151,7 +152,7 @@
         }
       } catch(_) {}
       // Verify failed
-      if (isLanding) { showModal(); } else { window.location.href = '/'; }
+      if (isIntake) { showModal(); } else { window.location.href = '/intake.html'; }
       return;
     }
 
@@ -163,7 +164,7 @@
         try {
           var rv = await fetch('/.netlify/functions/opsec-access-verify?subscription_id=' + encodeURIComponent(stored.sub));
           var dv = await rv.json();
-          if (!dv.ok) { clearStored(); if (isLanding) { showModal(); } else { window.location.href = '/'; } return; }
+          if (!dv.ok) { clearStored(); if (isIntake) { showModal(); } else { window.location.href = '/intake.html'; } return; }
           stored.exp = Date.now() + ACCESS_TTL;
           setStored(stored);
         } catch(_) {} // network error: benefit of doubt
@@ -172,10 +173,10 @@
     }
 
     // No valid token
-    if (isLanding) {
+    if (isIntake) {
       showModal();
     } else {
-      window.location.href = '/';
+      window.location.href = '/intake.html';
     }
   }
 
