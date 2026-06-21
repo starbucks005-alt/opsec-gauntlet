@@ -126,7 +126,7 @@
     });
   }
 
-  (async function init() {
+  async function init() {
     var params = new URLSearchParams(window.location.search);
 
     // Dev bypass
@@ -177,5 +177,11 @@
     } else {
       window.location.href = '/';
     }
-  })();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
