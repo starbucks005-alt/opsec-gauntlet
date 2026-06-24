@@ -2,12 +2,12 @@
    On intake.html: shows paywall modal if no active subscription.
    On chamber/report: redirects to /intake.html instead.
    index.html is free (no script tag there).
-   Dev bypass: ?dev=etl2026 in URL skips the gate and stores in sessionStorage. */
+   Dev bypass: ?dev=opsec2026 in URL skips the gate and stores in localStorage (persists on device). */
 
 (function() {
   var STORAGE_KEY = 'opsec_access';
   var DEV_SS_KEY  = 'opsec_dev';
-  var DEV_VALUE   = 'etl2026';
+  var DEV_VALUE   = 'opsec2026';
   var ACCESS_TTL  = 31 * 24 * 60 * 60 * 1000;   // 31 days
   var RENEW_WIN   =  7 * 24 * 60 * 60 * 1000;   // re-verify if < 7 days left
 
@@ -22,10 +22,10 @@
   }
 
   function isDevMode(params) {
-    return (params.get('dev') === DEV_VALUE) || (sessionStorage.getItem(DEV_SS_KEY) === DEV_VALUE);
+    return (params.get('dev') === DEV_VALUE) || (localStorage.getItem(DEV_SS_KEY) === DEV_VALUE);
   }
   function storeDevMode() {
-    try { sessionStorage.setItem(DEV_SS_KEY, DEV_VALUE); } catch(_) {}
+    try { localStorage.setItem(DEV_SS_KEY, DEV_VALUE); } catch(_) {}
   }
 
   var isIntake = (window.location.pathname === '/intake.html');
