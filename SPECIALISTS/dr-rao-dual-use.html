@@ -81,8 +81,9 @@
   .h-strip-photo{
     width:72px;height:72px;flex-shrink:0;
     border:2px solid var(--blue);background:var(--blue-pale);
-    display:flex;align-items:center;justify-content:center;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
   }
+  .h-strip-photo img{width:100%;height:100%;object-fit:cover;display:block;}
   .h-strip-initials{
     font-family:'Spectral',serif;font-size:1.5rem;font-weight:700;
     color:var(--blue);letter-spacing:0.05em;
@@ -540,7 +541,7 @@
 
 <div class="h-strip">
   <div class="h-strip-photo">
-    <span class="h-strip-initials">SR</span>
+    <img src="Sahini_profile.png" alt="Dr. Sahini Rao">
   </div>
   <div class="h-strip-meta">
     <div class="h-strip-name">Dr. Sahini Rao</div>

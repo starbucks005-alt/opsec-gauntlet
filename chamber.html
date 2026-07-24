@@ -1159,7 +1159,7 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
   }
 
   function imageFirstName(fullName){
-    // Image files use first name only (Selene_eyes_open.jpg, Dr. Priya Anand -> Priya).
+    // Fallback only: derives a first name when a judge id isn't in JUDGE_IMG_BASE.
     // Skip leading titles: Dr., Admiral, Mr., Ms., Mrs., Prof.
     const titles = new Set(['Dr.','Admiral','Mr.','Ms.','Mrs.','Prof.']);
     const parts = String(fullName || '').split(/\s+/);
@@ -1167,6 +1167,22 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
       if (!titles.has(p)) return p;
     }
     return parts[0] || '';
+  }
+
+  // Portrait files live in JUDGES IMAGES/ as <Base>_eyes_open.png and <Base>_profile.png.
+  // No closed-eye variant exists for any judge, so blink layers reuse the open image.
+  // Several bases diverge from the judge's first name (nicknames, short forms), hence
+  // an explicit map instead of deriving the filename from judge.name.
+  const JUDGE_IMG_BASE = {
+    helena_ward: 'Helena', rafe_dominguez: 'Rafe', liyun_zhao: 'Liyun',
+    miles_harrington: 'Miles', amina_farouk: 'Amina', jonas_mccrae: 'Jonas',
+    pri_nanduri: 'Pri3', eli_kade: 'Eli', mirela_stanescu: 'Mirela',
+    gunnar_thorsen: 'Gunner', lynn_whitlow: 'Lynn', victor_hale: 'Victor',
+    yara_bensaid: 'Yara', owen_kessler: 'Owen', marisol_quintero: 'Marisol',
+    soren_veldt: 'Soren',
+  };
+  function judgeImageBase(judge){
+    return JUDGE_IMG_BASE[judge.id] || imageFirstName(judge.name);
   }
 
   function renderGrid(){
@@ -1178,9 +1194,9 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
       if (isRec) sq.classList.add('has-rec');
       sq.dataset.judgeId = judge.id;
 
-      const imgName = imageFirstName(judge.name);
-      const openSrc   = 'Judges/' + imgName + '_eyes_open.jpg';
-      const closedSrc = 'Judges/' + imgName + '_eyes_closed.jpg';
+      const imgName = judgeImageBase(judge);
+      const openSrc   = 'JUDGES%20IMAGES/' + imgName + '_eyes_open.png';
+      const closedSrc = openSrc;
       // Stagger blinks so 9 portraits don't sync — random 0-5s delay per square.
       const blinkDelay = (Math.random() * 5).toFixed(2);
 
@@ -1208,9 +1224,9 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
     if (!j) return;
     state.activeJudgeId = judgeId;
 
-    // Profile hero image. File pattern: Judges/Firstname_Profile.jpg
-    const heroFirst = imageFirstName(j.name);
-    $('m-hero').innerHTML = '<img src="Judges/' + escapeHtml(heroFirst) + '_Profile.jpg" alt="' + escapeHtml(j.name) + '" onerror="this.style.display=\'none\'">';
+    // Profile hero image. File pattern: JUDGES IMAGES/<Base>_profile.png
+    const heroBase = judgeImageBase(j);
+    $('m-hero').innerHTML = '<img src="JUDGES%20IMAGES/' + escapeHtml(heroBase) + '_profile.png" alt="' + escapeHtml(j.name) + '" onerror="this.style.display=\'none\'">';
 
     $('m-eyebrow').textContent = state.recommended.has(judgeId) ? 'Recommended for your submission' : 'Judge profile';
     $('m-name').textContent = j.name;
@@ -1331,9 +1347,9 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
     state.selected.forEach(id => {
       const j = state.judges.find(x => x.id === id);
       if (!j) return;
-      const imgName = imageFirstName(j.name);
-      const openSrc   = 'Judges/' + imgName + '_eyes_open.jpg';
-      const closedSrc = 'Judges/' + imgName + '_eyes_closed.jpg';
+      const imgName = judgeImageBase(j);
+      const openSrc   = 'JUDGES%20IMAGES/' + imgName + '_eyes_open.png';
+      const closedSrc = openSrc;
       const card = document.createElement('div');
       card.className = 'tg-panel-judge';
       card.dataset.judgeId = j.id;
@@ -1357,9 +1373,9 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
     audienceRow.innerHTML = '';
     state.judges.forEach(j => {
       if (state.selected.has(j.id)) return;
-      const imgName = imageFirstName(j.name);
-      const openSrc   = 'Judges/' + imgName + '_eyes_open.jpg';
-      const closedSrc = 'Judges/' + imgName + '_eyes_closed.jpg';
+      const imgName = judgeImageBase(j);
+      const openSrc   = 'JUDGES%20IMAGES/' + imgName + '_eyes_open.png';
+      const closedSrc = openSrc;
       const card = document.createElement('div');
       card.className = 'tg-aud-judge';
       card.dataset.judgeId = j.id;

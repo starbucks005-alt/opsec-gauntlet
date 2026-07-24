@@ -202,8 +202,8 @@ CBRN and export-control sources are a mix of live feeds and versioned lists. Mos
 
 **Guardrails:** Never provides exploit code for industrial systems; Never identifies specific factory weaknesses; Never gives sabotage instructions; Escalates any request to disrupt manufacturing lines.
 
-### Dr. Selah Okonjo — Food & Agriculture
-*Ag-Supply Chain & Biosecurity Specialist* · tier `board_level` · $89.99/mo · `id: selah-okonjo` · CISA sector: Food and Agriculture
+### Dr. Lynn Whitlow — Food & Agriculture
+*Ag-Supply Chain & Biosecurity Specialist* · tier `board_level` · $89.99/mo · `id: lynn-whitlow` · CISA sector: Food and Agriculture
 
 | Capability | Source | Type | Auth |
 |---|---|---|---|

@@ -1088,12 +1088,27 @@
       .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
-  // Image filenames use first name only; titles stripped.
+  // Fallback only: derives a first name when a judge id isn't in JUDGE_IMG_BASE.
   function imageFirstName(fullName){
     const titles = new Set(['Dr.','Admiral','Mr.','Ms.','Mrs.','Prof.']);
     const parts = String(fullName || '').split(/\s+/);
     for (const p of parts){ if (!titles.has(p)) return p; }
     return parts[0] || '';
+  }
+
+  // Portrait files live in JUDGES IMAGES/ as <Base>_eyes_open.png. Several bases
+  // diverge from the judge's first name (nicknames, short forms), hence an
+  // explicit map instead of deriving the filename from judge.name.
+  const JUDGE_IMG_BASE = {
+    helena_ward: 'Helena', rafe_dominguez: 'Rafe', liyun_zhao: 'Liyun',
+    miles_harrington: 'Miles', amina_farouk: 'Amina', jonas_mccrae: 'Jonas',
+    pri_nanduri: 'Pri3', eli_kade: 'Eli', mirela_stanescu: 'Mirela',
+    gunnar_thorsen: 'Gunner', lynn_whitlow: 'Lynn', victor_hale: 'Victor',
+    yara_bensaid: 'Yara', owen_kessler: 'Owen', marisol_quintero: 'Marisol',
+    soren_veldt: 'Soren',
+  };
+  function judgeImageBase(judge){
+    return JUDGE_IMG_BASE[judge.id] || imageFirstName(judge.name);
   }
 
   // Before/After: render the EP value-proof block. Compares the
@@ -1694,14 +1709,14 @@
     // order, so this respects the chamber's stage sequence).
     const findingBlocks = dimensionsPresent.map(dim => {
       const cards = outputsByDimension[dim].map(o => {
-        const j = judgesById[o.judge_id] || { name: o.judge_id, domain: '' };
-        const firstName = imageFirstName(j.name);
+        const j = judgesById[o.judge_id] || { id: o.judge_id, name: o.judge_id, domain: '' };
+        const firstName = judgeImageBase(j);
         const score = (o.dimension_scores && (o.dimension_scores[dim] ?? o.dimension_scores[dimensionLabel(dim)])) ?? null;
         const conf  = Math.round((o.confidence || 0) * 100);
         return `
           <div class="finding ${score == null ? 'is-error' : ''}">
             <div class="finding-portrait">
-              <img src="Judges/${escapeHtml(firstName)}_eyes_open.jpg" alt="${escapeHtml(j.name)}"
+              <img src="JUDGES%20IMAGES/${escapeHtml(firstName)}_eyes_open.png" alt="${escapeHtml(j.name)}"
                    onerror="this.style.display='none'">
             </div>
             <div class="finding-body">
