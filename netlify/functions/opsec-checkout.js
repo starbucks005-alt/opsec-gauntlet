@@ -33,7 +33,7 @@ exports.handler = async function(event) {
   const stripe = new Stripe(key, { apiVersion: '2024-06-20' });
 
   const proto = event.headers['x-forwarded-proto'] || 'https';
-  const host  = event.headers['host'] || 'opsec-gauntlet.netlify.app';
+  const host  = event.headers['host'] || 'opsec-gauntlet.com';
   const base  = proto + '://' + host;
 
   const rawPath = (body.return_path || '/intake.html').replace(/[^a-zA-Z0-9/._-]/g, '');
