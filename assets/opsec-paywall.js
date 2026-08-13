@@ -51,6 +51,8 @@
       '.pw-title{font-family:"Spectral",serif;font-size:1.85rem;color:#F9F8F4;margin-bottom:0.5rem;font-weight:700;}',
       '.pw-lede{font-family:"Public Sans",sans-serif;font-size:0.8rem;color:#a89c88;',
         'line-height:1.65;margin-bottom:1.6rem;}',
+      '.pw-title-sub{font-family:"Public Sans",sans-serif;font-size:0.72rem;letter-spacing:0.22em;',
+        'font-weight:700;color:#c3b8a4;text-transform:uppercase;margin-bottom:0.55rem;}',
       '.pw-price{display:flex;align-items:baseline;justify-content:center;gap:0.25rem;margin-bottom:0.35rem;}',
       '.pw-amount{font-family:"Spectral",serif;font-size:2.6rem;color:#F9F8F4;font-weight:700;line-height:1;}',
       '.pw-period{font-family:"Public Sans",sans-serif;font-size:0.85rem;color:#a89c88;}',
@@ -78,7 +80,8 @@
       +   '<div class="pw-seal"><img src="/IMAGES/opsec2.png" alt="" width="72" height="72"></div>'
       +   '<div class="pw-title">OPSEC Gauntlet</div>'
       +   '<p class="pw-lede">Sixteen critical infrastructure sector chiefs. Eight evaluation dimensions. Math-driven scoring. Radical honesty.</p>'
-      +   '<div class="pw-price"><span class="pw-amount">$19.99</span><span class="pw-period">/ month</span></div>'
+      +   '<div class="pw-title-sub">The OPSEC Pass</div>'
+      +   '<div class="pw-price"><span class="pw-amount">$39</span><span class="pw-period">/ month</span></div>'
       +   '<p class="pw-detail">Cancel anytime. Unlimited runs. Full Chamber access.</p>'
       +   '<button id="opsec-pw-btn">Subscribe to Enter</button>'
       +   '<div id="opsec-pw-err"></div>'

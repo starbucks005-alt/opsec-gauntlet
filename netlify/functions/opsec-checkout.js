@@ -47,8 +47,8 @@ exports.handler = async function(event) {
         price_data: {
           currency: 'usd',
           recurring: { interval: 'month' },
-          product_data: { name: 'OPSEC Gauntlet — Monthly Access' },
-          unit_amount: 1999,
+          product_data: { name: 'The OPSEC Pass' },
+          unit_amount: 3900,
         },
         quantity: 1,
       }],
