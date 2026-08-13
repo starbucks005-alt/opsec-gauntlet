@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing · OPSEC Gauntlet</title>
+<link rel="canonical" href="https://opsec-gauntlet.com/pricing.html">
+<meta name="description" content="What an OPSEC Gauntlet review costs. Six ways in, from a $19 concept-integrity gap screen to the full corridor walk in front of all sixteen sector chiefs.">
+<link rel="icon" type="image/png" href="/Favicon.png">
+<link rel="apple-touch-icon" href="/Favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pricing · OPSEC Gauntlet">
+<meta property="og:description" content="Six ways in. One standard. Sixteen sector chiefs.">
+<meta property="og:image" content="https://opsec-gauntlet.com/Favicon.png">
+<meta property="og:url" content="https://opsec-gauntlet.com/pricing.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── ETL / USWDS Design Tokens (mirrors index.html) ─────────────────────── */
+:root {
+  --etl-blue:   #4C7BA3;
+  --stamp-blue: #28527a;
+  --etl-black:  #1E1E1E;
+  --etl-white:  #F9F8F4;
+  --uswds-gold: #F0B429;
+  --gold-dark:  #c27500;
+  --text:       #1E1E1E;
+  --text-dim:   #5a6477;
+  --ink:        #1E1E1E;
+  --ink-soft:   #3d4f66;
+  --bg:         #F9F8F4;
+  --band-elevated: #eef2f7;
+  --rule:       rgba(76,123,163,0.2);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Public Sans',system-ui,sans-serif;
+  font-size:1rem;line-height:1.7;min-height:100vh;
+}
+
+/* ── USWDS Official Banner ───────────────────────────────────────────────── */
+.usa-banner{
+  background:#162e51;padding:0.45rem 2rem;
+  font-family:'Public Sans',sans-serif;font-size:0.72rem;
+  color:rgba(255,255,255,0.82);display:flex;align-items:center;
+  gap:0.55rem;flex-wrap:wrap;
+}
+.usa-banner-text strong{color:#fff;font-weight:600;}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.tg-topbar{
+  display:flex;align-items:center;padding:0 2rem;height:62px;
+  background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+  position:sticky;top:0;z-index:100;gap:1.2rem;
+}
+.tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+.tg-topbar-wordmark-etl{
+  font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
+}
+.tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+.tg-topbar-program{
+  font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+  color:#fff;text-decoration:none;white-space:nowrap;
+}
+.tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
+.tg-topbar-nav{margin-left:auto;display:flex;gap:1.8rem;align-items:center;}
+.tg-topbar-nav a{
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.78);
+  text-decoration:none;transition:color 0.18s;
+}
+.tg-topbar-nav a:hover,.tg-topbar-nav a.is-active{color:var(--uswds-gold);}
+
+/* ── Positioning band ───────────────────────────────────────────────────── */
+.positioning-band{
+  padding:0.8rem 2rem;background:var(--etl-blue);
+  text-align:center;border-bottom:1px solid rgba(255,255,255,0.14);
+}
+.positioning-line{
+  font-family:'Public Sans',sans-serif;font-size:0.75rem;
+  font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,0.88);
+}
+.positioning-line em{font-style:normal;font-weight:700;color:var(--uswds-gold);}
+
+/* ── Band scaffold ──────────────────────────────────────────────────────── */
+.band{width:100%;padding:5rem 2rem;position:relative;}
+.band-inner{max-width:1180px;margin:0 auto;}
+.band-inner.narrow{max-width:780px;}
+.band-elevated{background:var(--band-elevated);}
+.footlight{
+  height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--etl-blue) 15%,
+    var(--uswds-gold) 50%,var(--etl-blue) 85%,transparent 100%);
+  opacity:0.4;
+}
+
+/* ── Page head ──────────────────────────────────────────────────────────── */
+.p-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.32em;text-transform:uppercase;color:var(--etl-blue);
+  margin-bottom:0.8rem;text-align:center;
+}
+.p-title{
+  font-family:'Spectral',serif;font-size:clamp(1.9rem,4vw,2.8rem);
+  font-weight:700;color:var(--text);line-height:1.12;letter-spacing:-0.01em;
+  text-align:center;margin-bottom:0.9rem;
+}
+.p-title em{font-style:italic;color:var(--etl-blue);}
+.p-lede{
+  font-family:'Spectral',serif;font-style:italic;color:var(--text-dim);
+  font-size:1.05rem;line-height:1.55;text-align:center;
+  max-width:700px;margin:0 auto 1.2rem;
+}
+.p-intro{
+  font-family:'Public Sans',sans-serif;color:var(--text-dim);
+  font-size:0.9rem;line-height:1.75;text-align:center;
+  max-width:800px;margin:0 auto;
+}
+
+/* ── Tier grid ──────────────────────────────────────────────────────────── */
+.tier-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;
+  margin-top:3rem;align-items:stretch;
+}
+.tier{
+  display:flex;flex-direction:column;background:#fff;
+  border:1px solid rgba(76,123,163,0.22);border-top:4px solid var(--etl-blue);
+  padding:2rem 1.7rem 1.8rem;
+  transition:border-color 0.18s,box-shadow 0.18s,transform 0.18s;
+}
+.tier:hover{
+  border-color:rgba(76,123,163,0.5);
+  box-shadow:0 12px 28px -18px rgba(40,82,122,0.55);
+  transform:translateY(-3px);
+}
+.tier.is-featured{
+  border-top-color:var(--uswds-gold);
+  box-shadow:0 14px 34px -18px rgba(40,82,122,0.5);
+}
+.tier-rank{
+  font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:700;
+  letter-spacing:0.26em;text-transform:uppercase;color:var(--etl-blue);
+  border-bottom:1px solid rgba(76,123,163,0.18);
+  padding-bottom:0.45rem;margin-bottom:0.7rem;
+  display:flex;justify-content:space-between;align-items:center;gap:0.5rem;
+}
+.tier-flag{color:var(--gold-dark);letter-spacing:0.18em;}
+.tier-name{
+  font-family:'Spectral',serif;font-size:1.3rem;font-weight:700;
+  color:var(--text);line-height:1.2;margin-bottom:0.5rem;
+}
+.tier-price{
+  font-family:'Spectral',serif;font-size:2.4rem;font-weight:700;
+  color:var(--stamp-blue);line-height:1;letter-spacing:-0.02em;
+}
+.tier.is-featured .tier-price{color:var(--gold-dark);}
+.tier-unit{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:600;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);
+  margin-top:0.35rem;margin-bottom:1.1rem;
+}
+.tier-body{
+  font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.7;
+  color:var(--text);margin-bottom:1.1rem;
+}
+.tier-who{
+  font-family:'Spectral',serif;font-style:italic;font-size:0.9rem;
+  line-height:1.6;color:var(--text-dim);
+  padding-top:0.9rem;border-top:1px solid rgba(76,123,163,0.16);
+  margin-top:auto;margin-bottom:1.2rem;
+}
+.tier-cta{
+  display:inline-block;text-align:center;
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:#fff;background:var(--etl-blue);padding:0.85rem 1.4rem;
+  text-decoration:none;transition:background 0.18s;
+}
+.tier-cta:hover{background:var(--stamp-blue);}
+.tier.is-featured .tier-cta{background:var(--gold-dark);}
+.tier.is-featured .tier-cta:hover{background:var(--stamp-blue);}
+
+/* ── Pass band ──────────────────────────────────────────────────────────── */
+.pass{
+  background:var(--stamp-blue);color:#fff;
+  padding:3.2rem 2.6rem;max-width:1180px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center;
+  border-left:5px solid var(--uswds-gold);
+}
+.pass-eyebrow{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.3em;text-transform:uppercase;color:var(--uswds-gold);
+  margin-bottom:0.7rem;
+}
+.pass-name{
+  font-family:'Spectral',serif;font-size:clamp(1.5rem,3vw,2rem);
+  font-weight:700;line-height:1.15;margin-bottom:0.7rem;
+}
+.pass-body{
+  font-family:'Public Sans',sans-serif;font-size:0.9rem;line-height:1.75;
+  color:rgba(255,255,255,0.78);max-width:640px;
+}
+.pass-right{text-align:center;flex-shrink:0;}
+.pass-price{
+  font-family:'Spectral',serif;font-size:3rem;font-weight:700;
+  color:var(--uswds-gold);line-height:1;letter-spacing:-0.02em;
+}
+.pass-unit{
+  font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.6);margin:0.4rem 0 1.2rem;
+}
+.pass-cta{
+  display:inline-block;
+  font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--etl-black);background:var(--uswds-gold);
+  padding:0.85rem 1.8rem;text-decoration:none;transition:background 0.18s,color 0.18s;
+  white-space:nowrap;
+}
+.pass-cta:hover{background:#fff;color:var(--stamp-blue);}
+
+/* ── Notes ──────────────────────────────────────────────────────────────── */
+.notes{max-width:780px;margin:0 auto;}
+.notes h3{
+  font-family:'Spectral',serif;font-size:1.05rem;font-weight:700;
+  color:var(--stamp-blue);margin-bottom:0.4rem;margin-top:1.8rem;
+}
+.notes h3:first-of-type{margin-top:0;}
+.notes p{
+  font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.75;
+  color:var(--text-dim);
+}
+
+/* ── Close band ─────────────────────────────────────────────────────────── */
+.close-band{padding:6rem 2.5rem 7rem;text-align:center;background:var(--stamp-blue);}
+.close-statement{
+  font-family:'Spectral',serif;font-size:clamp(2rem,4.4vw,3.2rem);font-weight:700;
+  color:#fff;line-height:1.05;margin-bottom:1rem;letter-spacing:-0.01em;
+}
+.close-statement em{font-style:italic;color:var(--uswds-gold);}
+.close-sub{
+  font-family:'Spectral',serif;font-style:italic;font-size:1.05rem;
+  color:rgba(255,255,255,0.72);margin-bottom:2.5rem;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:0.5rem;padding:0.88rem 1.9rem;
+  font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+  transition:all 0.18s;cursor:pointer;border:none;
+}
+.btn-primary{background:var(--uswds-gold);color:var(--etl-black);}
+.btn-primary:hover{background:var(--gold-dark);color:#fff;}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.45);}
+.btn-outline:hover{border-color:var(--uswds-gold);color:var(--uswds-gold);}
+
+/* ── USWDS Identifier Footer ────────────────────────────────────────────── */
+.usa-identifier{background:#1b1b1b;color:rgba(255,255,255,0.7);font-family:'Public Sans',sans-serif;}
+.usa-identifier__section{border-top:1px solid rgba(255,255,255,0.1);}
+.usa-identifier__section--masthead{border-top:4px solid var(--etl-blue);}
+.usa-identifier__container{max-width:1180px;margin:0 auto;padding:1.8rem 2rem;display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+.usa-identifier__logo-img{
+  width:44px;height:44px;border-radius:50%;background:var(--etl-blue);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Spectral',serif;font-size:0.58rem;font-weight:700;
+  color:#fff;letter-spacing:0.06em;text-align:center;line-height:1.2;
+  text-decoration:none;flex-shrink:0;
+}
+.usa-identifier__identity{flex:1;}
+.usa-identifier__identity-domain{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.88);letter-spacing:0.04em;}
+.usa-identifier__identity-disclaimer{font-size:0.72rem;color:rgba(255,255,255,0.48);margin-top:0.18rem;}
+.usa-identifier__identity-disclaimer a{color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;}
+.usa-identifier__section--required-links .usa-identifier__container{justify-content:center;padding:1rem 2rem;}
+.usa-identifier__required-links-list{display:flex;flex-wrap:wrap;list-style:none;padding:0;margin:0;justify-content:center;}
+.usa-identifier__required-link{font-size:0.72rem;color:rgba(255,255,255,0.55);text-decoration:none;padding:0.22rem 1.1rem;border-right:1px solid rgba(255,255,255,0.12);display:inline-block;transition:color 0.15s;}
+.usa-identifier__required-links-item:last-child .usa-identifier__required-link{border-right:none;}
+.usa-identifier__required-link:hover{color:rgba(255,255,255,0.88);}
+.usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
+.usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
+.usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media(max-width:980px){
+  .tier-grid{grid-template-columns:repeat(2,1fr);}
+  .pass{grid-template-columns:1fr;gap:1.8rem;text-align:center;}
+  .pass-body{margin:0 auto;}
+}
+@media(max-width:680px){
+  .band{padding:3.5rem 1.3rem;}
+  .tier-grid{grid-template-columns:1fr;gap:1.1rem;}
+  .tg-topbar{padding:0 1.2rem;}
+  .tg-topbar-nav{gap:1rem;}
+  .usa-banner{padding:0.4rem 1.2rem;}
+  .pass{padding:2.4rem 1.5rem;}
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CZZE080SY7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CZZE080SY7');
+</script>
+</head>
+<body>
+
+<!-- ── USWDS Official Banner ─────────────────────────────────────────────── -->
+<div class="usa-banner" aria-label="Official website of the Emerging Technologies Laboratory">
+  <svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true" focusable="false" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <rect width="16" height="11" fill="#B22234"/>
+    <rect y="1.57" width="16" height="1.57" fill="white"/>
+    <rect y="3.14" width="16" height="1.57" fill="#B22234"/>
+    <rect y="4.71" width="16" height="1.57" fill="white"/>
+    <rect y="6.29" width="16" height="1.57" fill="#B22234"/>
+    <rect y="7.86" width="16" height="1.57" fill="white"/>
+    <rect y="9.43" width="16" height="1.57" fill="#B22234"/>
+    <rect width="6.86" height="5.5" fill="#3C3B6E"/>
+  </svg>
+  <span class="usa-banner-text">An official program of the <strong>Emerging Technologies Laboratory</strong></span>
+</div>
+
+<!-- ── Header ────────────────────────────────────────────────────────────── -->
+<header class="tg-topbar">
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
+  </a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
+  <nav class="tg-topbar-nav">
+    <a href="/chamber.html">The Chamber</a>
+    <a href="/judges.html">The Judges</a>
+    <a href="/SPECIALISTS/">Op Specialists</a>
+    <a href="/pricing.html" class="is-active">Pricing</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
+
+<!-- ── Positioning band ──────────────────────────────────────────────────── -->
+<div class="positioning-band">
+  <p class="positioning-line">16 Sector Chiefs &middot; 16 CISA Critical Infrastructure Sectors &middot; <em>Independent Review Panel</em></p>
+</div>
+
+<!-- ── Page head ─────────────────────────────────────────────────────────── -->
+<section class="band">
+  <div class="band-inner">
+    <div class="p-eyebrow">&sect; Schedule of Fees</div>
+    <h1 class="p-title">Six ways in. <em>One standard.</em></h1>
+    <p class="p-lede">You do not buy a verdict here. You buy the review that produces one.</p>
+    <p class="p-intro">Every tier below runs the same way: subject-matter experts apply a sector-specific risk model to your concept and tell you what they find, in the words they would use if you were not in the room. Some tiers put you in front of one specialist. Some put you in front of sixteen. What none of them do is soften the finding to keep you comfortable. Start where your concept actually is &mdash; you can walk further up the corridor later.</p>
+
+    <div class="tier-grid">
+
+      <!-- 1 · Gap-Finder -->
+      <article class="tier">
+        <div class="tier-rank"><span>&sect; 1 &middot; Entry</span></div>
+        <h2 class="tier-name">The Gap-Finder</h2>
+        <div class="tier-price">$19</div>
+        <div class="tier-unit">One concept &middot; one pass</div>
+        <p class="tier-body">The Office of Concept Integrity is the first stop on the corridor for a reason. Before anyone assesses whether your idea is good, someone has to establish whether it is <em>new</em> &mdash; and whether the claims holding it up are actually supported. You get a structured literature and prior-work gap screen: what already exists, where your claims outrun your evidence, and where the genuine white space sits.</p>
+        <p class="tier-who">For the concept that has never been checked against the record.</p>
+        <a class="tier-cta" href="https://buy.stripe.com/5kQ6oJ3v7fLb9mGgQV2wU0q">Buy &mdash; $19 &rarr;</a>
+      </article>
+
+      <!-- 2 · Corridor Office -->
+      <article class="tier">
+        <div class="tier-rank"><span>&sect; 2 &middot; Targeted</span></div>
+        <h2 class="tier-name">A Corridor Office</h2>
+        <div class="tier-price">$39</div>
+        <div class="tier-unit">One office &middot; one concept</div>
+        <p class="tier-body">The corridor runs past a row of specialist offices, each one holding a different lens: structure, legal exposure, human factors, financial architecture, risk discipline, discoverability, visual presentation, dual-use potential. Pick the door that matches the weakness you already suspect. One office, one focused session, one specialist working your concept from their discipline alone.</p>
+        <p class="tier-who">For the concept with a known soft spot.</p>
+        <a class="tier-cta" href="https://buy.stripe.com/6oU4gB8PrcyZgP86ch2wU0o">Buy &mdash; $39 &rarr;</a>
+      </article>
+
+      <!-- 3 · The Chamber -->
+      <article class="tier">
+        <div class="tier-rank"><span>&sect; 3 &middot; The Panel</span></div>
+        <h2 class="tier-name">The Chamber</h2>
+        <div class="tier-price">$89</div>
+        <div class="tier-unit">One concept &middot; full evaluation</div>
+        <p class="tier-body">The hall opens and the panel is seated. Three sector chiefs are assigned to your concept &mdash; the platform recommends, the final pick is yours &mdash; and the rest of the room weighs in. Eight operational dimensions, math-driven scoring, no grade curve. You leave with a routing report: not a verdict on whether your idea is good, but a map of exactly where it goes next.</p>
+        <p class="tier-who">For the concept you believe is ready.</p>
+        <a class="tier-cta" href="https://buy.stripe.com/cNibJ30iV56x9mGfMR2wU0p">Buy &mdash; $89 &rarr;</a>
+      </article>
+
+      <!-- 4 · The Full Walk -->
+      <article class="tier is-featured">
+        <div class="tier-rank"><span>&sect; 4 &middot; Complete</span><span class="tier-flag">Most Complete</span></div>
+        <h2 class="tier-name">The Full Walk</h2>
+        <div class="tier-price">$199</div>
+        <div class="tier-unit">Corridor &middot; panel &middot; OSINT desk</div>
+        <p class="tier-body">The entire process, front to back. Intake, then Concept Integrity, then the Dual-Use Systems desk, then the corridor specialist offices in sequence, then all sixteen sector chiefs, and finally the OSINT desk &mdash; where someone runs your concept the way an outside analyst would, because eventually one will. It ends in consolidated findings that reconcile every office you passed through.</p>
+        <p class="tier-who">For the concept that has to survive a real room.</p>
+        <a class="tier-cta" href="https://buy.stripe.com/6oU5kFc1D1Ul0Qa4492wU0n">Buy &mdash; $199 &rarr;</a>
+      </article>
+
+      <!-- 5 · Standalone Consult -->
+      <article class="tier">
+        <div class="tier-rank"><span>&sect; 5 &middot; Direct</span></div>
+        <h2 class="tier-name">Standalone Consult</h2>
+        <div class="tier-price">$249</div>
+        <div class="tier-unit">One specialist &middot; direct session</div>
+        <p class="tier-body">Skip the panel entirely. If you already know your market and face one specific legal, technical, or positioning obstacle, a broad eight-dimension evaluation is the wrong instrument. Book a direct session with a single Operational Specialist and get execution-ready deliverables in their discipline &mdash; the kind of work you would otherwise take to a boutique firm at several times the price.</p>
+        <p class="tier-who">For the operator who needs one thing done properly.</p>
+        <a class="tier-cta" href="https://buy.stripe.com/5kQfZj6Hj2Yp6au8kp2wU0m">Buy &mdash; $249 &rarr;</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="footlight"></div>
+
+<!-- ── The Pass ──────────────────────────────────────────────────────────── -->
+<section class="band band-elevated" style="padding-top:4rem;padding-bottom:4rem;">
+  <div class="pass">
+    <div class="pass-left">
+      <div class="pass-eyebrow">&sect; 6 &middot; Standing Access</div>
+      <h2 class="pass-name">The OPSEC Pass</h2>
+      <p class="pass-body">Most concepts do not survive first contact with the panel intact, and they are not supposed to. The Pass is for the people who take the findings, rebuild, and come back &mdash; repeatedly. Standing access to the review process, with your submission history retained so each pass is measured against the last one rather than starting cold. Cancel whenever you decide you are done iterating.</p>
+    </div>
+    <div class="pass-right">
+      <div class="pass-price">$39</div>
+      <div class="pass-unit">Per month</div>
+      <a class="pass-cta" href="https://buy.stripe.com/6oU8wR3v7dD3eH06ch2wU0l">Subscribe &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Notes ─────────────────────────────────────────────────────────────── -->
+<section class="band">
+  <div class="notes">
+    <h3>What you are actually buying.</h3>
+    <p>A structured operational review and the findings it produces. Not an endorsement, not an introduction, not a funding decision, and not legal, financial, or regulatory advice. The sector chiefs apply real risk models and tell you what those models surface. What you do with that is yours.</p>
+
+    <h3>Where to start if you are not sure.</h3>
+    <p>Start at the Gap-Finder. Nineteen dollars is a cheap way to learn that the thing you have been building for eight months already exists &mdash; and a cheaper way to learn it than the alternative. If it clears that screen, the corridor is still there.</p>
+
+    <h3>Payment.</h3>
+    <p>All payments are processed by Stripe. OPSEC Gauntlet never sees or stores your card details.</p>
+  </div>
+</section>
+
+<!-- ── Closing CTA ───────────────────────────────────────────────────────── -->
+<section class="close-band">
+  <div class="band-inner narrow">
+    <p class="close-statement">The panel doesn't know <em>you're coming</em>.</p>
+    <p class="close-sub">It won't go easier on you for that.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="/intake.html">Enter the Chamber &rarr;</a>
+      <a class="btn btn-outline" href="/SPECIALISTS/">Meet the Specialists</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── USWDS Identifier Footer ─────────────────────────────────────────────── -->
+<footer class="usa-identifier" aria-label="Agency identifier">
+  <section class="usa-identifier__section usa-identifier__section--masthead">
+    <div class="usa-identifier__container">
+      <a href="https://emerging-tech-lab.com" class="usa-identifier__logo-img" aria-label="Emerging Technologies Laboratory">ETL</a>
+      <div class="usa-identifier__identity">
+        <p class="usa-identifier__identity-domain">opsec-gauntlet.com</p>
+        <p class="usa-identifier__identity-disclaimer">
+          An official program of the <a href="https://emerging-tech-lab.com">Emerging Technologies Laboratory</a>,
+          Mission Possible Institute, LLC. Directed by Dr. Terry Oroszi.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--required-links">
+    <div class="usa-identifier__container">
+      <nav aria-label="Important links">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item"><a href="/about.html" class="usa-identifier__required-link">About</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/pricing.html" class="usa-identifier__required-link">Pricing</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/privacy.html" class="usa-identifier__required-link">Privacy Policy</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/accessibility.html" class="usa-identifier__required-link">Accessibility</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#foia" class="usa-identifier__required-link">FOIA</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#inspector-general" class="usa-identifier__required-link">Inspector General</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#no-fear" class="usa-identifier__required-link">No FEAR Act</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--usagov">
+    <div class="usa-identifier__container">
+      <p class="usa-identifier__usagov-description">
+        Looking for U.S. government information and services? Visit <a href="https://usa.gov">USA.gov</a>
+      </p>
+    </div>
+  </section>
+</footer>
+
+</body>
+</html>
