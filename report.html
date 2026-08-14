@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,9 @@
 <meta name="description" content="What the panel said. Where your idea stands. What to do next.">
 <link rel="icon" type="image/png" href="/Favicon.png">
 <link rel="apple-touch-icon" href="/Favicon.png">
-<link rel="stylesheet" href="assets/tokens.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* DOCUMENT MODE PALETTE
      The deliverable view reads as a professional white paper, not as
@@ -25,15 +25,17 @@
     --bg:#ffffff;
     --ink:#111111;
     --cream:#111111;
-    --gold:#8a6e1d;
-    --gold-light:#8a6e1d;
+    --etl-blue:#4C7BA3;
+    --stamp-blue:#28527a;
+    --gold:#28527a;
+    --gold-light:#4C7BA3;
     --rule:rgba(0,0,0,0.18);
     --rule-soft:rgba(0,0,0,0.1);
     --text:#111111;
     --text-dim:#555555;
     --crimson:#5a1a1a;
-    --crimson-bright:#a82a1f;
-    --gauntlet-consequence:#a82a1f;
+    --crimson-bright:#b50909;
+    --gauntlet-consequence:#b50909;
     color-scheme:light;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -42,7 +44,7 @@
     min-height:100vh;
   }
   body{
-    font-family:'Cormorant Garamond',serif;font-size:1.06rem;line-height:1.75;
+    font-family:'Spectral',serif;font-size:1.06rem;line-height:1.75;
   }
 
   /* No site chrome on the deliverable page. */
@@ -64,17 +66,17 @@
   }
   .doc-section-head{ margin-bottom:1.2rem; }
   .doc-eyebrow{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.95rem; letter-spacing:0; text-transform:none;
     color:var(--text-dim); margin-bottom:0.2rem;
   }
   .doc-h2{
-    font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.6rem; font-weight:700;
     color:var(--text); line-height:1.25; letter-spacing:-0.005em;
     margin-bottom:0.5rem;
   }
   .doc-h2-sub{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     color:var(--text-dim); font-size:0.98rem; line-height:1.5;
     margin-bottom:0.5rem;
   }
@@ -83,7 +85,7 @@
      preserved whitespace so multi-paragraph EP report content (with
      embedded newlines) flows naturally without manual <br> tags. */
   .doc-prose{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Spectral',serif;
     font-size:1.05rem; line-height:1.75;
     color:var(--text);
     white-space:pre-wrap;
@@ -96,13 +98,13 @@
      findings - it informed the panel's read but carries no scores. */
   .doc-conversation{ margin-top:0.4rem; margin-bottom:1.8rem; }
   .doc-conversation-note{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     color:var(--text-dim); font-size:0.98rem; line-height:1.55;
     margin-bottom:1.1rem;
   }
   .doc-conversation-summary{ margin-bottom:1.4rem; }
   .doc-conversation-summary p{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Spectral',serif;
     font-size:1.05rem; line-height:1.75; color:var(--text);
     margin:0 0 0.8rem;
   }
@@ -111,21 +113,21 @@
     padding-left:1rem; margin-bottom:1.1rem;
   }
   .doc-qa-judge{
-    font-family:'Playfair Display',serif; font-weight:700;
+    font-family:'Spectral',serif; font-weight:700;
     font-size:1.02rem; color:var(--text); margin-bottom:0.3rem;
   }
   .doc-qa-questions{
     margin:0 0 0.5rem 0; padding-left:1.1rem;
-    font-family:'Cormorant Garamond',serif; font-size:1rem;
+    font-family:'Spectral',serif; font-size:1rem;
     line-height:1.55; color:var(--text); font-style:italic;
   }
   .doc-qa-questions li{ margin-bottom:0.2rem; }
   .doc-qa-answer{
-    font-family:'Cormorant Garamond',serif; font-size:1.02rem;
+    font-family:'Spectral',serif; font-size:1.02rem;
     line-height:1.65; color:var(--text); margin:0;
   }
   .doc-qa-answer-label{
-    font-family:'DM Mono',monospace; font-size:0.58rem;
+    font-family:'Public Sans',sans-serif; font-size:0.58rem;
     letter-spacing:0.16em; text-transform:uppercase;
     color:var(--text-dim); margin-right:0.4rem;
   }
@@ -140,13 +142,13 @@
     margin-bottom:0.5rem;
   }
   .doc-ep-name{
-    font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.25rem; font-weight:700;
     color:var(--text); line-height:1.25; letter-spacing:-0.005em;
     margin-bottom:0.15rem;
     display:block;
   }
   .doc-ep-role{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.95rem; letter-spacing:0; text-transform:none;
     color:var(--text-dim); font-weight:400;
     margin-left:0.55rem;
@@ -154,13 +156,13 @@
   .doc-ep-role::before{ content:'\2014  '; color:var(--text-dim); }
   .doc-ep-type{
     display:block;
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.92rem; letter-spacing:0; text-transform:none;
     color:var(--text-dim); margin:0;
     padding:0;border:none;
   }
   .doc-ep-headline{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:1.05rem; line-height:1.45; color:var(--text);
     margin-bottom:0.8rem;
   }
@@ -172,16 +174,16 @@
     margin-bottom:0.3rem;
   }
   .doc-edit-op{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.92rem; color:var(--text-dim); font-weight:400;
   }
   .doc-edit-op::after{ content:': '; }
   .doc-edit-label{
-    font-family:'Cormorant Garamond',serif; font-size:0.95rem;
+    font-family:'Spectral',serif; font-size:0.95rem;
     color:var(--text);
   }
   .doc-edit-rationale{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     color:var(--text-dim); font-size:0.95rem; line-height:1.5;
     margin-bottom:0.5rem;
   }
@@ -192,7 +194,7 @@
   }
   .step-pip{flex:1;height:3px;background:var(--gold);}
   .step-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--gold);white-space:nowrap;
   }
 
@@ -207,12 +209,12 @@
   .cost-list li{
     display:flex; justify-content:space-between; gap:1.2rem;
     padding:0.4rem 0; border-bottom:1px dotted rgba(0,0,0,0.18);
-    font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--text);
+    font-family:'Spectral',serif; font-size:1rem; color:var(--text);
   }
   .cost-list li:last-child{ border-bottom:none; }
   .cost-list-label{ flex:1; }
   .cost-list-range{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Spectral',serif;
     color:var(--text); white-space:nowrap;
   }
   .cost-anchor-totals{
@@ -222,17 +224,17 @@
   }
   .cost-total{ display:flex; flex-direction:column; gap:0.15rem; }
   .cost-total-label{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.92rem; color:var(--text-dim);
   }
   .cost-total-value{
-    font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.3rem; font-weight:700;
     color:var(--text);
   }
   .cost-anchor-note{
     margin-top:1.2rem; padding:0;
     border:none;
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Spectral',serif;
     color:var(--text); font-size:1rem; line-height:1.65;
   }
   @media (max-width:600px){
@@ -260,11 +262,11 @@
   }
   .brand-block-top .brand-text{display:flex;flex-direction:column;gap:0;}
   .brand-block-top .brand-name{
-    font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:0.95rem;font-weight:700;
     color:var(--text);letter-spacing:0.06em;text-transform:uppercase;
   }
   .brand-block-top .brand-tagline{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.85rem;letter-spacing:0;text-transform:none;
     color:var(--text-dim);
   }
@@ -282,13 +284,13 @@
   .brand-block-footer .brand-tagline{display:none;}
   .brand-block-footer .brand-text{display:inline;}
   .brand-block-footer .brand-name{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.85rem;color:var(--text-dim);letter-spacing:0;
     text-transform:none;font-weight:400;display:inline;
   }
   .brand-block-footer .brand-credit{
     display:block;margin:0.3rem 0 0;
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.8rem;color:var(--text-dim);
   }
 
@@ -300,13 +302,13 @@
     padding-bottom:0;
   }
   .report-eyebrow{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:1.05rem;letter-spacing:0;text-transform:none;
     color:var(--text-dim);margin-bottom:0.4rem;
     text-align:left;
   }
   .report-title{
-    font-family:'Playfair Display',serif;font-size:2.4rem;
+    font-family:'Spectral',serif;font-size:2.4rem;
     font-weight:700;color:var(--text);line-height:1.15;
     letter-spacing:-0.01em;margin-bottom:1.6rem;
     text-align:left;
@@ -321,12 +323,12 @@
     align-items:baseline;
   }
   .report-meta-row dt{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.95rem;letter-spacing:0;text-transform:none;
     color:var(--text-dim);text-align:left;
   }
   .report-meta-row dd{
-    font-family:'Cormorant Garamond',serif;font-size:0.98rem;
+    font-family:'Spectral',serif;font-size:0.98rem;
     color:var(--text);margin:0;line-height:1.45;
   }
   @media (max-width:600px){
@@ -343,7 +345,7 @@
   }
   .composite::before{ content:none; }
   .composite-number{
-    font-family:'Playfair Display',serif;font-size:3.4rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:3.4rem;font-weight:700;
     color:var(--text);line-height:1;letter-spacing:-0.02em;
   }
   .composite-number .of{
@@ -351,21 +353,21 @@
   }
   .composite-info{display:flex;flex-direction:column;gap:0.3rem;}
   .composite-verdict-label{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.95rem;letter-spacing:0;text-transform:none;
     color:var(--text-dim);
   }
   .composite-verdict{
-    font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:1.3rem;font-weight:700;
     color:var(--text);line-height:1.25;
   }
   .composite.is-conflict .composite-verdict{color:var(--crimson-bright);}
   .composite-detail{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Spectral',serif;
     color:var(--text);font-size:1rem;line-height:1.5;
   }
   .composite-spread{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.92rem;letter-spacing:0;text-transform:none;
     color:var(--text-dim);
   }
@@ -385,11 +387,11 @@
   }
   .ba-cell{display:flex;flex-direction:column;gap:0.25rem;}
   .ba-label{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.92rem;color:var(--text-dim);
   }
   .ba-score{
-    font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:2rem;font-weight:700;
     color:var(--text);line-height:1;letter-spacing:-0.01em;
   }
   .ba-score .of{
@@ -401,23 +403,23 @@
     padding-top:1rem;border-top:1px solid var(--rule-soft);
   }
   .ba-needle-label{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     color:var(--text);font-size:1rem;margin-bottom:0.5rem;
   }
   .ba-needle-list{list-style:none;padding:0;margin:0;}
   .ba-needle-list li{
     display:flex;align-items:baseline;gap:0.8rem;
     padding:0.3rem 0;
-    font-family:'Cormorant Garamond',serif;font-size:0.98rem;
+    font-family:'Spectral',serif;font-size:0.98rem;
     color:var(--text);
   }
   .ba-dim{flex:1;}
   .ba-dim-delta{
-    font-family:'Playfair Display',serif;font-weight:700;
+    font-family:'Spectral',serif;font-weight:700;
     color:var(--gold);min-width:3rem;text-align:right;
   }
   .ba-dim-range{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     color:var(--text-dim);font-size:0.92rem;
   }
   @media (max-width:600px){
@@ -427,11 +429,11 @@
   /* Section */
   .section{margin:2.8rem 0 0;}
   .section-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.26em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.26em;
     text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
   }
   .section-title{
-    font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:1.55rem;font-weight:700;
     color:var(--cream);line-height:1.2;margin-bottom:1.2rem;
   }
   .section-title em{font-style:italic;color:var(--gold-light);}
@@ -454,26 +456,26 @@
   }
   .finding-body{display:flex;flex-direction:column;gap:0.3rem;}
   .finding-name{
-    font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:1.15rem;font-weight:700;
     color:var(--cream);line-height:1.2;
   }
   .finding-domain{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;
   }
   .finding-text{
-    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.6;
+    font-family:'Spectral',serif;font-size:1.02rem;line-height:1.6;
     color:var(--text);
   }
   .finding-score{
     text-align:right;
-    font-family:'Playfair Display',serif;font-weight:700;
+    font-family:'Spectral',serif;font-weight:700;
     font-size:1.8rem;color:var(--gold-light);line-height:1;
     padding-top:0.2rem;
   }
   .finding-score .of{font-size:0.85rem;color:var(--text-dim);font-weight:400;}
   .finding-confidence{
-    font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.16em;
+    font-family:'Public Sans',sans-serif;font-size:0.5rem;letter-spacing:0.16em;
     text-transform:uppercase;color:var(--text-dim);margin-top:0.3rem;
   }
   .finding.is-error .finding-text{color:var(--text-dim);font-style:italic;}
@@ -487,16 +489,16 @@
     padding:0;background:none;border:none;
   }
   .routing-title{
-    font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:1.2rem;font-weight:700;
     color:var(--text);line-height:1.3;margin-bottom:0.5rem;
   }
   .routing-body{
-    font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.65;
+    font-family:'Spectral',serif;font-size:1.02rem;line-height:1.65;
     color:var(--text);margin-bottom:0.9rem;
   }
   .routing-cta-row{
     display:flex;gap:1.2rem;flex-wrap:wrap;
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.98rem;
   }
   .routing-cta-row a{
@@ -528,34 +530,34 @@
     gap:0.6rem;flex-wrap:wrap;
   }
   .fu-card-name{
-    font-family:'Playfair Display',serif;font-weight:700;
+    font-family:'Spectral',serif;font-weight:700;
     font-size:1.05rem;color:var(--text);line-height:1.2;
   }
   .fu-card-role{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.9rem;color:var(--text-dim);
   }
   .fu-card-tool{
-    font-family:'Playfair Display',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:1rem;color:var(--gold);
   }
   .fu-card-trigger{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.85rem;color:var(--gold);
   }
   .fu-card-voice{
-    font-family:'Cormorant Garamond',serif;font-size:0.98rem;
+    font-family:'Spectral',serif;font-size:0.98rem;
     color:var(--text);line-height:1.55;margin:0.2rem 0 0.5rem;
   }
   .fu-card-link{
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.2em;
     text-transform:uppercase;color:var(--text);
     text-decoration:underline;text-decoration-color:var(--text-dim);
     text-underline-offset:3px;align-self:flex-start;
   }
   .fu-card-link:hover{color:var(--gold);text-decoration-color:var(--gold);}
   .fu-foot{
-    margin-top:1.6rem;font-family:'Cormorant Garamond',serif;font-style:italic;
+    margin-top:1.6rem;font-family:'Spectral',serif;font-style:italic;
     font-size:0.95rem;color:var(--text-dim);
   }
   @media (max-width:760px){
@@ -573,7 +575,7 @@
   .btn{
     display:inline-flex;align-items:center;gap:0.5rem;
     padding:0.35rem 0;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.18em;
     text-transform:uppercase;font-weight:500;text-decoration:none;
     cursor:pointer;border:none;background:none;
     color:var(--text);
@@ -598,12 +600,12 @@
   }
   .state-spinner{
     width:48px;height:48px;border-radius:50%;
-    border:2px solid rgba(168,42,42,0.25);border-top-color:var(--gold-light);
+    border:2px solid rgba(76,123,163,0.25);border-top-color:var(--gold-light);
     margin:0 auto 1.2rem;animation:report-spin 0.9s linear infinite;
   }
   @keyframes report-spin{to{transform:rotate(360deg);}}
   .state-text{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--gold-light);
   }
   .state-error .state-text{color:var(--crimson-bright);}
@@ -612,16 +614,16 @@
   .finding-group{ margin-bottom:1.7rem; }
   .finding-group:last-child{ margin-bottom:0; }
   .finding-group-title{
-    font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.35rem; font-weight:700;
     color:var(--gold-light); margin:0 0 0.85rem; line-height:1.25;
-    padding-bottom:0.4rem; border-bottom:1px dashed rgba(168,42,42,0.25);
+    padding-bottom:0.4rem; border-bottom:1px dashed rgba(76,123,163,0.25);
     display:flex; align-items:baseline; gap:0.6rem;
   }
   .dim-chip{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.14em;
+    font-family:'Public Sans',sans-serif; font-size:0.62rem; letter-spacing:0.14em;
     color:var(--cream);
     padding:0.25rem 0.55rem; border:1px solid var(--rule);
-    background:rgba(168,42,42,0.06);
+    background:rgba(76,123,163,0.06);
   }
 
   /* Update the routing recommendation copy to match multi-stage framing. */
@@ -643,7 +645,7 @@
   }
   .toc-label{
     display:block;
-    font-family:'Playfair Display',serif; font-weight:700;
+    font-family:'Spectral',serif; font-weight:700;
     font-size:1.1rem; letter-spacing:0; text-transform:none;
     color:var(--text);
     margin-bottom:0.8rem;
@@ -651,7 +653,7 @@
   .toc a{
     display:flex; align-items:baseline;
     padding:0.32rem 0;
-    font-family:'Cormorant Garamond',serif; font-size:1rem;
+    font-family:'Spectral',serif; font-size:1rem;
     color:var(--text); text-decoration:none;
     border:none;
     line-height:1.4;
@@ -666,7 +668,7 @@
   }
   .toc a .toc-num{
     flex:0 0 auto; order:2;
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.95rem; letter-spacing:0; text-transform:none;
     color:var(--text-dim);
   }
@@ -677,17 +679,17 @@
     padding:2rem 0;
   }
   .deliverable-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.28em;
+    font-family:'Public Sans',sans-serif; font-size:0.6rem; letter-spacing:0.28em;
     text-transform:uppercase; color:var(--gold);
     margin-bottom:0.7rem;
   }
   .deliverable-title{
-    font-family:'Playfair Display',serif; font-size:2rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:2rem; font-weight:700;
     color:var(--cream); line-height:1.2; margin-bottom:0.5rem;
   }
   .deliverable-title em{ font-style:italic; color:var(--gold-light); }
   .deliverable-sub{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     color:var(--text-dim); font-size:1rem; line-height:1.55;
     margin-bottom:1.6rem;
   }
@@ -704,16 +706,16 @@
     border-bottom:1px solid var(--rule);
   }
   .brief-block-head h3{
-    font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.2rem; font-weight:700;
     color:var(--cream); margin:0;
   }
   .brief-block-note{
-    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif; font-size:0.5rem; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--text-dim);
     margin-left:auto;
   }
   .brief-text{
-    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.65;
+    font-family:'Spectral',serif; font-size:1rem; line-height:1.65;
     color:var(--text);
     white-space:pre-wrap; word-wrap:break-word;
     max-height:560px; overflow-y:auto;
@@ -725,31 +727,31 @@
     cursor:pointer; list-style:none;
     display:flex; align-items:center; gap:0.55rem;
     padding:0.8rem 1rem;
-    background:rgba(168,42,42,0.04); border:1px solid var(--rule);
+    background:rgba(76,123,163,0.04); border:1px solid var(--rule);
     border-left:3px solid var(--gold);
     transition:all 0.18s;
   }
   .work-block summary::-webkit-details-marker{ display:none; }
-  .work-block summary:hover{ background:rgba(168,42,42,0.08); }
-  .work-ep[open] summary{ background:rgba(168,42,42,0.07); border-bottom-color:transparent; }
+  .work-block summary:hover{ background:rgba(76,123,163,0.08); }
+  .work-ep[open] summary{ background:rgba(76,123,163,0.07); border-bottom-color:transparent; }
   .work-ep{ margin-bottom:0.5rem; }
   .work-ep-name{
-    font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.05rem; font-weight:700;
     color:var(--cream); line-height:1.2;
   }
   .work-ep-role{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    font-family:'Public Sans',sans-serif; font-size:0.55rem; letter-spacing:0.16em;
     text-transform:uppercase; color:var(--gold-light);
     margin-left:0.6rem;
   }
   .work-ep-count{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.16em;
+    font-family:'Public Sans',sans-serif; font-size:0.55rem; letter-spacing:0.16em;
     text-transform:uppercase; color:var(--gold);
     margin-left:auto;
     padding:0.2rem 0.5rem; border:1px solid var(--rule);
   }
   .work-ep-disclose{
-    font-family:'DM Mono',monospace; font-size:0.7rem;
+    font-family:'Public Sans',sans-serif; font-size:0.7rem;
     color:var(--gold-light); margin-left:0.5rem;
   }
   .work-ep[open] .work-ep-disclose{ transform:rotate(90deg); display:inline-block; }
@@ -767,27 +769,27 @@
     margin-bottom:0.4rem;
   }
   .work-rev-op{
-    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif; font-size:0.5rem; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--gold);
     padding:0.2rem 0.5rem; border:1px solid var(--rule);
   }
   .work-rev-label{
-    font-family:'Playfair Display',serif; font-size:0.98rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:0.98rem; font-weight:700;
     color:var(--cream); line-height:1.3;
     flex:1; min-width:0;
   }
   .work-rev-rationale{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     color:var(--text-dim); font-size:0.9rem; line-height:1.5;
     margin-bottom:0.5rem;
   }
   .work-rev-content{
-    font-family:'Cormorant Garamond',serif; font-size:0.95rem; line-height:1.55;
+    font-family:'Spectral',serif; font-size:0.95rem; line-height:1.55;
     color:var(--text);
     white-space:pre-wrap; word-wrap:break-word;
     max-height:340px; overflow-y:auto;
     padding:0.55rem 0.7rem;
-    background:rgba(168,42,42,0.04); border-left:2px solid var(--rule);
+    background:rgba(76,123,163,0.04); border-left:2px solid var(--rule);
   }
 
   @media (max-width:640px){
@@ -948,7 +950,7 @@
       top:50%;
       left:50%;
       transform:translate(-50%,-50%) rotate(-32deg);
-      font-family:'Playfair Display', serif;
+      font-family:'Spectral', serif;
       font-weight:700;
       font-size:7rem;
       letter-spacing:0.18em;
@@ -971,7 +973,7 @@
     position:fixed;
     top:50%; left:50%;
     transform:translate(-50%,-50%) rotate(-32deg);
-    font-family:'Playfair Display', serif;
+    font-family:'Spectral', serif;
     font-weight:700;
     font-size:clamp(5rem, 16vw, 12rem);
     letter-spacing:0.3em;
@@ -1010,7 +1012,7 @@
       content:'This sample report is not available for printing or download. To produce a printable report on your own idea, visit opsec-gauntlet.com.';
       display:block;
       padding:3rem 2rem;
-      font-family:'Cormorant Garamond',serif;
+      font-family:'Spectral',serif;
       font-style:italic;
       font-size:1.2rem;
       color:#1a1a1a;

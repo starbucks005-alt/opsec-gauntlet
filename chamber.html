@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,48 +17,66 @@
 <meta name="twitter:title" content="OPSEC Gauntlet · Diagnostic Critique Engine">
 <meta name="twitter:description" content="Nine expert AI judges. Eight dimensions of analysis. Math-based scoring. Your idea gets a path, not a verdict.">
 <meta name="twitter:image" content="https://opsec-gauntlet.com/Favicon.png">
-<!-- Theme is locked to dark on this page; tokens.css base palette applies. -->
 <script src="assets/opsec-paywall.js"></script>
-<link rel="stylesheet" href="assets/tokens.css">
 <script src="assets/tg-recommend.js"></script>
 <script src="assets/tg-voice.js" defer></script>
 <script src="assets/tg-chamber-rules.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root,
-  :root[data-theme="dark"]{
-    --ink:#f5f7fa; --ink-soft:#dde4ee; --cream:#f5f7fa;
-    --gold:#28527a; --gold-light:#5a8fc7; --rule:rgba(40,82,122,0.30);
-    --text:#dde4ee; --text-dim:#7a96b8; --bg:#0d1520;
-    --velvet:#0f1e2e; --velvet-deep:#091524;
-    --gauntlet-consequence:#e05252;
+  /* ── ETL / USWDS Design Tokens (mirrors index.html) ───────────────────── */
+  :root{
+    --etl-blue:#4C7BA3; --stamp-blue:#28527a;
+    --etl-black:#1E1E1E; --etl-white:#F9F8F4;
+    --uswds-gold:#F0B429; --gold-dark:#c27500;
+    --ink:#1E1E1E; --ink-soft:#3d4f66; --cream:#1E1E1E;
+    --gold:#28527a; --gold-light:#4C7BA3; --rule:rgba(76,123,163,0.22);
+    --text:#1E1E1E; --text-dim:#5a6477; --bg:#F9F8F4;
+    --velvet:#eef2f7; --velvet-deep:#e4ebf3;
+    --surface:#ffffff;
+    --gauntlet-consequence:#b50909;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Public Sans',system-ui,sans-serif;font-size:1.05rem;line-height:1.7;min-height:100vh;}
+  body{background:var(--bg);color:var(--text);font-family:'Public Sans',system-ui,sans-serif;font-size:1rem;line-height:1.7;min-height:100vh;}
+
+  /* ── USWDS Official Banner ─────────────────────────────────────────────── */
+  .usa-banner{
+    background:#162e51;padding:0.45rem 2rem;
+    font-family:'Public Sans',sans-serif;font-size:0.72rem;
+    color:rgba(255,255,255,0.82);display:flex;align-items:center;
+    gap:0.55rem;flex-wrap:wrap;
+  }
+  .usa-banner-text strong{color:#fff;font-weight:600;}
 
   /* ── Topbar ──────────────────────────────────────────────────────────────── */
   .tg-topbar{
-    display:flex;align-items:center;padding:0 2.5rem;height:56px;
-    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:var(--bg);z-index:100;
+    display:flex;align-items:center;padding:0 2rem;height:62px;
+    background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+    position:sticky;top:0;z-index:100;gap:1.2rem;
   }
-  .tg-topbar-logo{
-    display:flex;align-items:center;gap:0.6rem;
-    font-family:'Spectral',serif;font-size:1rem;letter-spacing:0.12em;
-    color:var(--gold);text-decoration:none;white-space:nowrap;
+  .tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+  .tg-topbar-wordmark-etl{
+    font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
   }
-  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+  .tg-topbar-program{
+    font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+    color:#fff;text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
   .tg-topbar-back{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;flex:1;
+    margin-left:auto;
+    font-family:'Public Sans',sans-serif;font-size:0.66rem;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:rgba(255,255,255,0.78);text-decoration:none;transition:color 0.18s;
   }
-  .tg-topbar-back:hover{color:var(--gold);}
+  .tg-topbar-back:hover{color:var(--uswds-gold);}
 
   /* ── Main ────────────────────────────────────────────────────────────────── */
   .tg-main{max-width:1100px;margin:0 auto;padding:3rem 2.5rem 5rem;}
 
-  .s-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .s-label{font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
   .s-title{font-family:'Spectral',serif;font-size:2.4rem;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:0.7rem;}
   .s-title em{font-style:italic;color:var(--gold-light);}
   .s-sub{color:var(--text-dim);font-size:1rem;margin-bottom:1.4rem;max-width:720px;line-height:1.65;}
@@ -71,7 +89,7 @@
     border-left:2px solid var(--gold);background:rgba(40,82,122,0.06);
   }
   .tg-submission-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--gold);white-space:nowrap;
   }
   .tg-submission-title{
@@ -82,9 +100,9 @@
   /* ── Selection counter bar ───────────────────────────────────────────────── */
   .tg-counter-bar{
     display:flex;align-items:center;justify-content:space-between;
-    border:1px solid var(--gold);background:rgba(0,0,0,0.6);
+    border:1px solid var(--gold);background:#fff;
     padding:1.3rem 1.9rem;margin-bottom:2.5rem;
-    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif;font-size:0.72rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--gold-light);
     box-shadow:0 0 28px -10px rgba(127,168,201,0.35),
                inset 0 1px 0 rgba(127,168,201,0.15);
@@ -102,7 +120,7 @@
   }
   .hs-square{
     position:relative;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.45);
+    border:1px solid var(--rule);background:#fff;
     cursor:pointer;overflow:hidden;
     display:flex;flex-direction:column;
     transition:border-color 0.25s,background 0.25s,box-shadow 0.3s,
@@ -149,7 +167,7 @@
     transform:scale(1.04);
     box-shadow:inset 0 0 0 2px var(--gold),
                0 0 56px -2px rgba(127,168,201,0.55),
-               0 12px 36px -8px rgba(0,0,0,0.7);
+               0 12px 36px -8px rgba(40,82,122,0.16);
     z-index:2;
   }
   .hs-square.is-spotlight .hs-portrait{filter:brightness(1.08) contrast(1.04);}
@@ -187,8 +205,8 @@
 
   .hs-rec-badge{
     position:absolute;top:0;left:0;right:0;
-    background:var(--gold);color:var(--ink);
-    font-family:'DM Mono',monospace;font-size:0.55rem;
+    background:var(--gold);color:#fff;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;
     letter-spacing:0.22em;text-transform:uppercase;
     padding:0.35rem 0;text-align:center;font-weight:700;
     z-index:4;
@@ -203,14 +221,14 @@
     z-index:3;
   }
   .hs-square.is-selected .hs-check{
-    border-color:var(--gold);background:var(--gold);color:var(--ink);
+    border-color:var(--gold);background:var(--gold);color:#fff;
   }
 
   .hs-info{
     padding:0.9rem 1rem 1rem;display:flex;flex-direction:column;gap:0.25rem;
   }
   .hs-num{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.2em;
     color:var(--text-dim);text-transform:uppercase;
   }
   .hs-name{
@@ -218,7 +236,7 @@
     color:var(--cream);line-height:1.2;
   }
   .hs-domain{
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--text-dim);line-height:1.5;
   }
 
@@ -238,7 +256,7 @@
     background:var(--bg);border:1px solid var(--gold);
     max-width:760px;width:100%;padding:1.6rem 1.9rem 1.6rem;
     position:relative;
-    box-shadow:0 24px 60px -20px rgba(0,0,0,0.85),
+    box-shadow:0 24px 60px -20px rgba(40,82,122,0.20),
                0 0 60px -10px rgba(40,82,122,0.25);
   }
   .tg-modal-close{
@@ -267,19 +285,19 @@
     object-fit:cover;object-position:center top;
   }
   .tg-modal-hero-identity{display:flex;flex-direction:column;gap:0.35rem;}
-  .tg-modal-eyebrow{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);}
+  .tg-modal-eyebrow{font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);}
   .tg-modal-name{font-family:'Spectral',serif;font-size:1.8rem;font-weight:700;color:var(--cream);line-height:1.1;}
   .tg-modal-domain{font-family:'Spectral',serif;font-style:italic;font-size:1rem;color:var(--gold-light);}
   .tg-modal-section{margin-bottom:0.95rem;}
   .tg-modal-section-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem;
   }
   .tg-modal-section-body{font-size:0.95rem;line-height:1.55;color:var(--text);}
   .tg-modal-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
   .tg-modal-tag{
     border:1px solid var(--rule);padding:0.25rem 0.7rem;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.12em;
     text-transform:uppercase;color:var(--text-dim);
   }
   /* Voice playback row inside the modal. Two pill buttons in the same gold +
@@ -289,10 +307,10 @@
   .tg-voice-row{display:flex;gap:0.7rem;margin-top:0.3rem;}
   .tg-voice-btn{
     flex:1;display:inline-flex;align-items:center;justify-content:center;gap:0.55rem;
-    background:rgba(0,0,0,0.5);border:1px solid var(--rule);
+    background:#fff;border:1px solid var(--rule);
     color:var(--gold-light);
     padding:0.75rem 0.9rem;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.2em;
     text-transform:uppercase;font-weight:700;
     transition:border-color 0.2s,color 0.2s,background 0.2s;
   }
@@ -301,7 +319,7 @@
   }
   .tg-voice-btn.is-loading{opacity:0.7;cursor:wait;}
   .tg-voice-btn.is-playing{
-    background:var(--gold);color:var(--ink);border-color:var(--gold);
+    background:var(--gold);color:#fff;border-color:var(--gold);
   }
   .tg-voice-btn .tg-voice-pip{
     width:16px;height:16px;border:1px solid currentColor;border-radius:50%;
@@ -314,12 +332,12 @@
     margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--rule);
   }
   .tg-modal-status{
-    font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;
+    font-family:'Public Sans',sans-serif;font-size:0.65rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--gold-light);
   }
 
   .btn-gold{
-    background:var(--gold);color:var(--ink);border:none;
+    background:var(--gold);color:#fff;border:none;
     padding:0.85rem 2rem;font-family:'Spectral',serif;font-size:0.95rem;
     font-weight:700;letter-spacing:0.04em;cursor:pointer;
   }
@@ -327,7 +345,7 @@
   .btn-gold:disabled{opacity:0.4;cursor:not-allowed;}
   .btn-outline{
     background:none;border:1px solid var(--rule);color:var(--text-dim);
-    padding:0.7rem 1.5rem;font-family:'DM Mono',monospace;font-size:0.6rem;
+    padding:0.7rem 1.5rem;font-family:'Public Sans',sans-serif;font-size:0.6rem;
     letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;
   }
   .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
@@ -362,7 +380,7 @@
   }
   .tg-stage.is-revealing .tg-stage-content{opacity:1;}
   .tg-stage-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.28em;
     text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
   }
   .tg-stage-title{
@@ -377,7 +395,7 @@
     background:linear-gradient(180deg,rgba(40,82,122,0.14) 0%,rgba(40,82,122,0.04) 100%);
     width:220px;overflow:hidden;
     box-shadow:0 0 56px -6px rgba(127,168,201,0.55),
-               0 18px 36px -10px rgba(0,0,0,0.75);
+               0 18px 36px -10px rgba(40,82,122,0.18);
     transform:translateY(30px);opacity:0;
     transition:transform 0.8s ease-out,opacity 0.8s ease-out;
   }
@@ -418,7 +436,7 @@
   .tg-panel-judge.is-speaking{
     box-shadow:0 0 84px -4px rgba(127,168,201,0.85),
                0 0 0 2px var(--gold),
-               0 18px 36px -10px rgba(0,0,0,0.75);
+               0 18px 36px -10px rgba(40,82,122,0.18);
     transform:translateY(0) scale(1.04);
     transition:box-shadow 0.45s ease-out, transform 0.45s ease-out;
   }
@@ -432,7 +450,7 @@
     color:var(--gold-light);margin-bottom:0.3rem;
   }
   .tg-panel-domain{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--text-dim);line-height:1.4;
   }
 
@@ -446,7 +464,7 @@
   /* Six unchosen judges line up under the stage as the audience. */
   .tg-audience{
     position:relative;margin-top:1.5rem;padding:2.5rem 1rem 3rem;
-    border:1px solid var(--rule);background:rgba(0,0,0,0.5);
+    border:1px solid var(--rule);background:#fff;
     display:none;
     opacity:0;transition:opacity 0.9s ease-in;transition-delay:4.5s;
     overflow:hidden;
@@ -456,7 +474,7 @@
 
   .tg-audience-eyebrow{
     text-align:center;
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.32em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.32em;
     text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;
   }
 
@@ -466,7 +484,7 @@
   }
   .tg-aud-judge{
     width:180px;border:1px solid rgba(40,82,122,0.25);
-    background:rgba(0,0,0,0.5);overflow:hidden;
+    background:#fff;overflow:hidden;
     filter:saturate(0.5) brightness(0.78);
     opacity:0.72;
     transform:translateY(12px);
@@ -523,7 +541,7 @@
     line-height:1.2;
   }
   .tg-aud-domain{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.15em;
     text-transform:uppercase;color:var(--text-dim);
     text-align:center;padding:0 0.5rem 0.85rem;line-height:1.4;
   }
@@ -598,8 +616,8 @@
   /* notes in italic gold; the user's own messages in cream. Real dialogue is */
   /* deferred — this scaffold provides the surface for it.                    */
   .tg-chat{
-    display:none;border:1px solid var(--rule);background:rgba(0,0,0,0.55);
-    box-shadow:inset 0 0 40px -10px rgba(0,0,0,0.7);
+    display:none;border:1px solid var(--rule);background:#fff;
+    box-shadow:inset 0 0 40px -10px rgba(40,82,122,0.16);
     overflow:hidden;
     /* Chat panel lands EARLY in the reveal so the system message
        ("The judges are taking their seats.") is on screen before the
@@ -616,14 +634,14 @@
   .tg-chat-header{
     display:flex;align-items:center;justify-content:space-between;
     padding:1rem 1.2rem;border-bottom:1px solid var(--rule);
-    background:rgba(0,0,0,0.4);
+    background:#fff;
   }
   .tg-chat-title{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--gold);font-weight:700;
   }
   .tg-chat-sub{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--text-dim);
   }
 
@@ -639,7 +657,7 @@
   .tg-chat-msg{display:flex;flex-direction:column;gap:0.3rem;}
   .tg-chat-msg-head{
     display:flex;align-items:baseline;gap:0.55rem;
-    font-family:'DM Mono',monospace;font-size:0.58rem;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;
     letter-spacing:0.16em;text-transform:uppercase;
   }
   .tg-chat-msg-name{color:var(--gold-light);font-weight:700;}
@@ -669,7 +687,7 @@
 
   .tg-chat-typing{
     display:none;padding:0.5rem 1.2rem 0.6rem;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.16em;
     text-transform:uppercase;color:var(--gold-light);
   }
   .tg-chat-typing.is-active{display:block;}
@@ -690,20 +708,20 @@
     display:flex;gap:0.6rem;
     padding:0.9rem 1.1rem;
     border-top:1px solid var(--rule);
-    background:rgba(0,0,0,0.4);
+    background:#fff;
   }
   .tg-chat-input{
     flex:1;min-width:0;
-    background:rgba(255,255,255,0.05);border:1px solid var(--rule);
+    background:#fff;border:1px solid var(--rule);
     color:var(--text);padding:0.65rem 0.9rem;
     font-family:'Spectral',serif;font-size:0.95rem;outline:none;
   }
   .tg-chat-input::placeholder{color:var(--text-dim);font-style:italic;}
   .tg-chat-input:focus{border-color:var(--gold);}
   .tg-chat-send{
-    background:var(--gold);color:var(--ink);border:none;
+    background:var(--gold);color:#fff;border:none;
     padding:0 1.1rem;
-    font-family:'DM Mono',monospace;font-size:0.6rem;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;
     letter-spacing:0.2em;text-transform:uppercase;font-weight:700;
     cursor:pointer;
   }
@@ -712,9 +730,9 @@
 
   /* ── Error state ─────────────────────────────────────────────────────────── */
   .tg-err{
-    border:1px solid #c0392b;background:rgba(192,57,43,0.08);
+    border:1px solid #b50909;background:rgba(181,9,9,0.08);
     padding:1.5rem;color:#e74c3c;
-    font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;
+    font-family:'Public Sans',sans-serif;font-size:0.75rem;letter-spacing:0.1em;
   }
 
   /* ── Mobile ──────────────────────────────────────────────────────────────── */
@@ -732,9 +750,35 @@
     .tg-panel-name{font-size:0.95rem;}
   }
 
-/* HOUSE - Stamped Dossier (dark room: Gauntlet keeps its black + red glow; gold becomes stamp-blue tint) */
-h1,h2,h3{font-family:'Spectral',serif;font-weight:300;letter-spacing:0;text-transform:none}
-h1 em,h2 em{font-weight:300;color:#c8302b}
+/* HOUSE - Stamped Dossier (light room, ETL/USWDS palette) */
+h1,h2,h3{font-family:'Spectral',serif;font-weight:700;letter-spacing:-0.01em;text-transform:none}
+h1 em,h2 em{font-style:italic;color:var(--etl-blue)}
+
+/* ── USWDS Identifier Footer ────────────────────────────────────────────── */
+.usa-identifier{background:#1b1b1b;color:rgba(255,255,255,0.7);font-family:'Public Sans',sans-serif;margin-top:4rem;}
+.usa-identifier__section{border-top:1px solid rgba(255,255,255,0.1);}
+.usa-identifier__section--masthead{border-top:4px solid var(--etl-blue);}
+.usa-identifier__container{max-width:1180px;margin:0 auto;padding:1.8rem 2rem;display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+.usa-identifier__logo-img{
+  width:44px;height:44px;border-radius:50%;background:var(--etl-blue);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Spectral',serif;font-size:0.58rem;font-weight:700;
+  color:#fff;letter-spacing:0.06em;text-align:center;line-height:1.2;
+  text-decoration:none;flex-shrink:0;
+}
+.usa-identifier__identity{flex:1;}
+.usa-identifier__identity-domain{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.88);letter-spacing:0.04em;}
+.usa-identifier__identity-disclaimer{font-size:0.72rem;color:rgba(255,255,255,0.48);margin-top:0.18rem;}
+.usa-identifier__identity-disclaimer a{color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;}
+.usa-identifier__section--required-links .usa-identifier__container{justify-content:center;padding:1rem 2rem;}
+.usa-identifier__required-links-list{display:flex;flex-wrap:wrap;list-style:none;padding:0;margin:0;justify-content:center;}
+.usa-identifier__required-link{font-size:0.72rem;color:rgba(255,255,255,0.55);text-decoration:none;padding:0.22rem 1.1rem;border-right:1px solid rgba(255,255,255,0.12);display:inline-block;transition:color 0.15s;}
+.usa-identifier__required-links-item:last-child .usa-identifier__required-link{border-right:none;}
+.usa-identifier__required-link:hover{color:rgba(255,255,255,0.88);}
+.usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
+.usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
+.usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
+@media(max-width:680px){.usa-banner{padding:0.4rem 1.2rem;}.tg-topbar{padding:0 1.2rem;}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CZZE080SY7"></script>
@@ -747,11 +791,29 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
 </head>
 <body>
 
+<!-- ── USWDS Official Banner ─────────────────────────────────────────────── -->
+<div class="usa-banner" aria-label="Official website of the Emerging Technologies Laboratory">
+  <svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true" focusable="false" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <rect width="16" height="11" fill="#B22234"/>
+    <rect y="1.57" width="16" height="1.57" fill="white"/>
+    <rect y="3.14" width="16" height="1.57" fill="#B22234"/>
+    <rect y="4.71" width="16" height="1.57" fill="white"/>
+    <rect y="6.29" width="16" height="1.57" fill="#B22234"/>
+    <rect y="7.86" width="16" height="1.57" fill="white"/>
+    <rect y="9.43" width="16" height="1.57" fill="#B22234"/>
+    <rect width="6.86" height="5.5" fill="#3C3B6E"/>
+  </svg>
+  <span class="usa-banner-text">An official program of the <strong>Emerging Technologies Laboratory</strong></span>
+</div>
+
+<!-- ── Header ────────────────────────────────────────────────────────────── -->
 <header class="tg-topbar">
-  <a class="tg-topbar-logo" href="/">
-    <img src="Favicon.png" alt="" aria-hidden="true">
-    OPSEC Gauntlet
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
   </a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
+  <a class="tg-topbar-back" href="/intake.html">&larr; Back to intake</a>
 </header>
 
 <main class="tg-main">
@@ -1942,8 +2004,8 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
     wrap.innerHTML = `
       <div class="tg-chat-msg-body" style="text-align:center;">
         <a href="/?postchamber=1#corridor-wings"
-           style="display:inline-block;background:var(--gold);color:var(--ink);
-                  font-family:'DM Mono',monospace;font-size:0.6rem;
+           style="display:inline-block;background:var(--gold);color:#fff;
+                  font-family:'Public Sans',sans-serif;font-size:0.6rem;
                   letter-spacing:0.22em;text-transform:uppercase;font-weight:700;
                   padding:0.7rem 1.2rem;text-decoration:none;border:none;
                   transition:background 0.2s;"
@@ -1953,7 +2015,7 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
         </a>
         <div style="margin-top:0.7rem;">
           <a href="/report.html?evaluation=${encodeURIComponent(evaluationId)}"
-             style="font-family:'DM Mono',monospace;font-size:0.55rem;
+             style="font-family:'Public Sans',sans-serif;font-size:0.55rem;
                     letter-spacing:0.2em;text-transform:uppercase;
                     color:var(--text-dim);text-decoration:underline;
                     text-underline-offset:3px;">
@@ -2213,6 +2275,43 @@ h1 em,h2 em{font-weight:300;color:#c8302b}
 
 })();
 </script>
+
+
+<!-- ── USWDS Identifier Footer ─────────────────────────────────────────────── -->
+<footer class="usa-identifier" aria-label="Agency identifier">
+  <section class="usa-identifier__section usa-identifier__section--masthead">
+    <div class="usa-identifier__container">
+      <a href="https://emerging-tech-lab.com" class="usa-identifier__logo-img" aria-label="Emerging Technologies Laboratory">ETL</a>
+      <div class="usa-identifier__identity">
+        <p class="usa-identifier__identity-domain">opsec-gauntlet.com</p>
+        <p class="usa-identifier__identity-disclaimer">
+          An official program of the <a href="https://emerging-tech-lab.com">Emerging Technologies Laboratory</a>,
+          Mission Possible Institute, LLC. Directed by Dr. Terry Oroszi.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--required-links">
+    <div class="usa-identifier__container">
+      <nav aria-label="Important links">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item"><a href="/about.html" class="usa-identifier__required-link">About</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/pricing.html" class="usa-identifier__required-link">Pricing</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/privacy.html" class="usa-identifier__required-link">Privacy Policy</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/accessibility.html" class="usa-identifier__required-link">Accessibility</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#foia" class="usa-identifier__required-link">FOIA</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--usagov">
+    <div class="usa-identifier__container">
+      <p class="usa-identifier__usagov-description">
+        Looking for U.S. government information and services? Visit <a href="https://usa.gov">USA.gov</a>
+      </p>
+    </div>
+  </section>
+</footer>
 
 </body>
 </html>

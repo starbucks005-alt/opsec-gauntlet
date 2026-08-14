@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,47 +9,63 @@
 <link rel="icon" type="image/png" href="/Favicon.png">
 <link rel="apple-touch-icon" href="/Favicon.png">
 <script src="assets/opsec-paywall.js"></script>
-<link rel="stylesheet" href="assets/tokens.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root,
-  :root[data-theme="dark"]{
-    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
-    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
-    --crimson:#5a1a1a; --crimson-bright:#c0392b; --gauntlet-consequence:#c0392b;
+  /* ── ETL / USWDS Design Tokens (mirrors index.html) ───────────────────── */
+  :root{
+    --etl-blue:#4C7BA3; --stamp-blue:#28527a;
+    --etl-black:#1E1E1E; --etl-white:#F9F8F4;
+    --uswds-gold:#F0B429; --gold-dark:#c27500;
+    --text:#1E1E1E; --text-dim:#5a6477;
+    --ink:#1E1E1E; --ink-soft:#3d4f66;
+    --bg:#F9F8F4; --band-elevated:#eef2f7; --cream:#eef2f7;
+    --rule:rgba(76,123,163,0.2);
+    /* Legacy aliases so existing component CSS inherits the new palette */
+    --gold:#4C7BA3; --gold-light:#28527a;
+    --crimson:#4C7BA3; --crimson-bright:#b50909;
+    --gauntlet-consequence:#b50909;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     background:var(--bg);color:var(--text);
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    font-family:'Public Sans',system-ui,sans-serif;font-size:1rem;line-height:1.7;
     min-height:100vh;
-    background-image:
-      radial-gradient(ellipse 60% 50% at center top, rgba(168,42,42,0.10) 0%, transparent 70%),
-      repeating-linear-gradient(135deg,
-        rgba(200,48,43,0.018) 0px, rgba(200,48,43,0.018) 1px,
-        transparent 1px, transparent 3px);
   }
 
-  /* Topbar */
+  /* ── USWDS Official Banner ─────────────────────────────────────────────── */
+  .usa-banner{
+    background:#162e51;padding:0.45rem 2rem;
+    font-family:'Public Sans',sans-serif;font-size:0.72rem;
+    color:rgba(255,255,255,0.82);display:flex;align-items:center;
+    gap:0.55rem;flex-wrap:wrap;
+  }
+  .usa-banner-text strong{color:#fff;font-weight:600;}
+
+  /* ── Header ────────────────────────────────────────────────────────────── */
   .tg-topbar{
-    display:flex;align-items:center;padding:0 2.5rem;height:56px;
-    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+    display:flex;align-items:center;padding:0 2rem;height:62px;
+    background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+    position:sticky;top:0;z-index:100;gap:1.2rem;
   }
-  .tg-topbar-logo{
-    display:flex;align-items:center;gap:0.6rem;
-    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
-    color:var(--gold);text-decoration:none;
+  .tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+  .tg-topbar-wordmark-etl{
+    font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
   }
-  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+  .tg-topbar-program{
+    font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+    color:#fff;text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
   .tg-topbar-back{
     margin-left:auto;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+    font-family:'Public Sans',sans-serif;font-size:0.66rem;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:rgba(255,255,255,0.78);text-decoration:none;transition:color 0.18s;
   }
-  .tg-topbar-back:hover{color:var(--gold);}
+  .tg-topbar-back:hover{color:var(--uswds-gold);}
 
   /* Main */
   main{max-width:780px;margin:0 auto;padding:4rem 2rem 5rem;}
@@ -59,61 +75,67 @@
     display:flex;gap:0.5rem;align-items:center;
     margin-bottom:1.6rem;
   }
-  .step-pip{flex:1;height:3px;background:rgba(168,42,42,0.18);}
-  .step-pip.is-current{background:var(--gold-light);}
-  .step-pip.is-done{background:var(--gold);}
+  .step-pip{flex:1;height:3px;background:rgba(76,123,163,0.22);}
+  .step-pip.is-current{background:var(--uswds-gold);}
+  .step-pip.is-done{background:var(--etl-blue);}
   .step-label{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;
-    text-transform:uppercase;color:var(--text-dim);white-space:nowrap;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:700;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);white-space:nowrap;
   }
 
   .intake-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+    letter-spacing:0.32em;text-transform:uppercase;color:var(--etl-blue);
+    margin-bottom:0.7rem;
   }
   .intake-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.2vw,3rem);
-    font-weight:700;color:var(--cream);line-height:1.05;
+    font-family:'Spectral',serif;font-size:clamp(2rem,4.2vw,2.8rem);
+    font-weight:700;color:var(--text);line-height:1.1;
     margin-bottom:0.9rem;letter-spacing:-0.01em;
   }
-  .intake-title em{font-style:italic;color:var(--gold-light);}
+  .intake-title em{font-style:italic;color:var(--etl-blue);}
   .intake-lede{
-    font-size:1.15rem;line-height:1.65;color:var(--text);
+    font-family:'Spectral',serif;font-style:italic;
+    font-size:1.1rem;line-height:1.6;color:var(--text-dim);
     margin-bottom:2.6rem;
   }
-  .intake-lede em{color:var(--gold-light);font-style:italic;}
+  .intake-lede em{color:var(--etl-blue);font-style:italic;}
 
   /* Form */
   .field{margin-bottom:1.8rem;}
   .field-label{
     display:flex;align-items:baseline;gap:0.6rem;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
-    text-transform:uppercase;color:var(--gold);margin-bottom:0.55rem;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--stamp-blue);
+    margin-bottom:0.55rem;
   }
   .field-label .req{color:var(--crimson-bright);}
-  .field-label .opt{color:var(--text-dim);font-weight:400;}
+  .field-label .opt{color:var(--text-dim);font-weight:600;}
   .field-help{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:0.95rem;color:var(--text-dim);margin-bottom:0.55rem;
   }
   .field input[type="text"],
   .field textarea{
     width:100%;
-    background:rgba(255,255,255,0.04);
-    border:1px solid var(--rule);
+    background:#fff;
+    border:1px solid rgba(76,123,163,0.35);
     color:var(--text);padding:0.85rem 1rem;
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.55;
-    outline:none;
+    font-family:'Public Sans',sans-serif;font-size:0.98rem;line-height:1.6;
+    outline:none;transition:border-color 0.18s,box-shadow 0.18s;
   }
   .field input[type="text"]::placeholder,
-  .field textarea::placeholder{color:#7d735f;font-style:italic;}
+  .field textarea::placeholder{color:#8b95a5;font-style:italic;}
   .field input[type="text"]:focus,
-  .field textarea:focus{border-color:var(--gold);background:rgba(255,255,255,0.06);}
+  .field textarea:focus{
+    border-color:var(--etl-blue);
+    box-shadow:0 0 0 3px rgba(76,123,163,0.18);
+  }
   .field textarea{min-height:180px;resize:vertical;}
   .field-counter{
     text-align:right;
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
-    color:var(--text-dim);margin-top:0.35rem;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:600;
+    letter-spacing:0.16em;color:var(--text-dim);margin-top:0.35rem;
   }
   .field-counter.over{color:var(--crimson-bright);}
 
@@ -125,46 +147,46 @@
   .file-drop{
     margin-bottom:0.7rem;
     padding:0.95rem 1.1rem;
-    border:1px dashed rgba(200,48,43,0.35);
-    background:rgba(200,48,43,0.03);
+    border:1px dashed rgba(76,123,163,0.45);
+    background:rgba(76,123,163,0.05);
     transition:border-color 0.18s,background 0.18s;
   }
   .file-drop.is-dragover{
-    border-color:var(--gold-light);
-    background:rgba(200,48,43,0.08);
+    border-color:var(--etl-blue);
+    background:rgba(76,123,163,0.12);
   }
   .file-drop.is-loading{
-    border-color:var(--gold-light);
-    background:rgba(200,48,43,0.06);
+    border-color:var(--etl-blue);
+    background:rgba(76,123,163,0.09);
   }
   .file-drop.is-error{
-    border-color:var(--gauntlet-consequence,#c0392b);
-    background:rgba(192,57,43,0.06);
+    border-color:var(--gauntlet-consequence,#b50909);
+    background:rgba(181,9,9,0.06);
   }
   .file-drop-prompt{
-    font-family:'Cormorant Garamond',serif;font-size:0.98rem;line-height:1.5;
+    font-family:'Public Sans',sans-serif;font-size:0.88rem;line-height:1.6;
     color:var(--text-dim);
   }
   .file-drop-browse{
     background:transparent;border:none;cursor:pointer;
-    font:inherit;
-    color:var(--gold-light);text-decoration:underline;
+    font:inherit;font-weight:600;
+    color:var(--stamp-blue);text-decoration:underline;
     padding:0;
   }
-  .file-drop-browse:hover{color:var(--cream);}
+  .file-drop-browse:hover{color:var(--gold-dark);}
   .file-drop-state{
     display:flex;align-items:center;justify-content:space-between;gap:0.9rem;
     flex-wrap:wrap;
   }
   .file-drop-name{
     flex:1;min-width:0;
-    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;
-    color:var(--cream);
+    font-family:'Public Sans',sans-serif;font-size:0.78rem;font-weight:600;
+    letter-spacing:0.02em;color:var(--text);
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   }
   .file-drop-status{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.16em;
-    text-transform:uppercase;color:var(--gold-light);
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--stamp-blue);
   }
   .file-drop.is-loading .file-drop-status::after{
     content:' .'; animation:tg-file-dots 1.2s steps(4,end) infinite;
@@ -176,25 +198,26 @@
     75%  { content:' ....'; }
     100% { content:' .'; }
   }
-  .file-drop.is-error .file-drop-status{color:var(--gauntlet-consequence,#c0392b);}
+  .file-drop.is-error .file-drop-status{color:var(--gauntlet-consequence,#b50909);}
   .file-drop-remove{
-    background:transparent;border:1px solid var(--rule);
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--text-dim);
+    background:#fff;border:1px solid rgba(76,123,163,0.35);
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;font-weight:700;
+    letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);
     padding:0.45rem 0.85rem;cursor:pointer;
     transition:border-color 0.18s,color 0.18s;
   }
-  .file-drop-remove:hover{border-color:var(--gauntlet-consequence,#c0392b);color:var(--gauntlet-consequence,#c0392b);}
+  .file-drop-remove:hover{border-color:var(--gauntlet-consequence,#b50909);color:var(--gauntlet-consequence,#b50909);}
 
   details.optional{margin-bottom:1.8rem;}
   details.optional summary{
     cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
-    text-transform:uppercase;color:var(--gold-light);padding:0.7rem 0;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:700;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--stamp-blue);
+    padding:0.7rem 0;
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
     list-style:none;
   }
-  details.optional summary::after{content:' +';color:var(--gold);}
+  details.optional summary::after{content:' +';color:var(--etl-blue);}
   details.optional[open] summary::after{content:' −';}
   details.optional > .field:first-of-type{margin-top:1.3rem;}
 
@@ -205,27 +228,53 @@
     border-top:1px solid var(--rule);
   }
   .submit-status{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
-    text-transform:uppercase;color:var(--text-dim);
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;font-weight:600;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);
   }
   .submit-status.is-error{color:var(--crimson-bright);}
   .btn{
     display:inline-flex;align-items:center;gap:0.5rem;
-    padding:0.95rem 1.8rem;
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+    padding:0.9rem 1.9rem;
+    font-family:'Public Sans',sans-serif;font-size:0.68rem;letter-spacing:0.18em;
     text-transform:uppercase;font-weight:700;text-decoration:none;
-    cursor:pointer;border:1px solid transparent;
-    transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.2s;
+    cursor:pointer;border:2px solid transparent;
+    transition:background 0.18s,border-color 0.18s,color 0.18s,transform 0.18s;
   }
-  .btn-primary{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-  .btn-primary:hover:not(:disabled){background:var(--gold-light);border-color:var(--gold-light);transform:translateY(-1px);}
+  .btn-primary{background:var(--uswds-gold);color:var(--etl-black);border-color:var(--uswds-gold);}
+  .btn-primary:hover:not(:disabled){background:var(--gold-dark);border-color:var(--gold-dark);color:#fff;transform:translateY(-1px);}
   .btn-primary:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
-  .btn-outline{background:transparent;border-color:var(--rule);color:var(--text-dim);}
-  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-outline{background:transparent;border-color:rgba(76,123,163,0.5);color:var(--stamp-blue);}
+  .btn-outline:hover{border-color:var(--etl-blue);color:var(--etl-blue);}
+
+  /* ── USWDS Identifier Footer ───────────────────────────────────────────── */
+  .usa-identifier{background:#1b1b1b;color:rgba(255,255,255,0.7);font-family:'Public Sans',sans-serif;margin-top:4rem;}
+  .usa-identifier__section{border-top:1px solid rgba(255,255,255,0.1);}
+  .usa-identifier__section--masthead{border-top:4px solid var(--etl-blue);}
+  .usa-identifier__container{max-width:1180px;margin:0 auto;padding:1.8rem 2rem;display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+  .usa-identifier__logo-img{
+    width:44px;height:44px;border-radius:50%;background:var(--etl-blue);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Spectral',serif;font-size:0.58rem;font-weight:700;
+    color:#fff;letter-spacing:0.06em;text-align:center;line-height:1.2;
+    text-decoration:none;flex-shrink:0;
+  }
+  .usa-identifier__identity{flex:1;}
+  .usa-identifier__identity-domain{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.88);letter-spacing:0.04em;}
+  .usa-identifier__identity-disclaimer{font-size:0.72rem;color:rgba(255,255,255,0.48);margin-top:0.18rem;}
+  .usa-identifier__identity-disclaimer a{color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;}
+  .usa-identifier__section--required-links .usa-identifier__container{justify-content:center;padding:1rem 2rem;}
+  .usa-identifier__required-links-list{display:flex;flex-wrap:wrap;list-style:none;padding:0;margin:0;justify-content:center;}
+  .usa-identifier__required-link{font-size:0.72rem;color:rgba(255,255,255,0.55);text-decoration:none;padding:0.22rem 1.1rem;border-right:1px solid rgba(255,255,255,0.12);display:inline-block;transition:color 0.15s;}
+  .usa-identifier__required-links-item:last-child .usa-identifier__required-link{border-right:none;}
+  .usa-identifier__required-link:hover{color:rgba(255,255,255,0.88);}
+  .usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
+  .usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
+  .usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
 
   @media (max-width:600px){
     main{padding:2.5rem 1.3rem 4rem;}
-    .tg-topbar{padding:0 1.3rem;}
+    .tg-topbar{padding:0 1.2rem;}
+    .usa-banner{padding:0.4rem 1.2rem;}
     .intake-title{font-size:1.8rem;}
     .submit-row{flex-direction:column;align-items:stretch;}
     .submit-row .btn{justify-content:center;}
@@ -243,12 +292,29 @@
 </head>
 <body>
 
+<!-- ── USWDS Official Banner ─────────────────────────────────────────────── -->
+<div class="usa-banner" aria-label="Official website of the Emerging Technologies Laboratory">
+  <svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true" focusable="false" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <rect width="16" height="11" fill="#B22234"/>
+    <rect y="1.57" width="16" height="1.57" fill="white"/>
+    <rect y="3.14" width="16" height="1.57" fill="#B22234"/>
+    <rect y="4.71" width="16" height="1.57" fill="white"/>
+    <rect y="6.29" width="16" height="1.57" fill="#B22234"/>
+    <rect y="7.86" width="16" height="1.57" fill="white"/>
+    <rect y="9.43" width="16" height="1.57" fill="#B22234"/>
+    <rect width="6.86" height="5.5" fill="#3C3B6E"/>
+  </svg>
+  <span class="usa-banner-text">An official program of the <strong>Emerging Technologies Laboratory</strong></span>
+</div>
+
+<!-- ── Header ────────────────────────────────────────────────────────────── -->
 <header class="tg-topbar">
-  <a class="tg-topbar-logo" href="/">
-    <img src="Favicon.png" alt="" aria-hidden="true">
-    OPSEC Gauntlet
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
   </a>
-  <a class="tg-topbar-back" href="/">← Back to corridor</a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
+  <a class="tg-topbar-back" href="/">&larr; Back to corridor</a>
 </header>
 
 <main>
@@ -601,6 +667,42 @@
   });
 })();
 </script>
+
+<!-- ── USWDS Identifier Footer ─────────────────────────────────────────────── -->
+<footer class="usa-identifier" aria-label="Agency identifier">
+  <section class="usa-identifier__section usa-identifier__section--masthead">
+    <div class="usa-identifier__container">
+      <a href="https://emerging-tech-lab.com" class="usa-identifier__logo-img" aria-label="Emerging Technologies Laboratory">ETL</a>
+      <div class="usa-identifier__identity">
+        <p class="usa-identifier__identity-domain">opsec-gauntlet.com</p>
+        <p class="usa-identifier__identity-disclaimer">
+          An official program of the <a href="https://emerging-tech-lab.com">Emerging Technologies Laboratory</a>,
+          Mission Possible Institute, LLC. Directed by Dr. Terry Oroszi.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--required-links">
+    <div class="usa-identifier__container">
+      <nav aria-label="Important links">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item"><a href="/about.html" class="usa-identifier__required-link">About</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/pricing.html" class="usa-identifier__required-link">Pricing</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/privacy.html" class="usa-identifier__required-link">Privacy Policy</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/accessibility.html" class="usa-identifier__required-link">Accessibility</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#foia" class="usa-identifier__required-link">FOIA</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--usagov">
+    <div class="usa-identifier__container">
+      <p class="usa-identifier__usagov-description">
+        Looking for U.S. government information and services? Visit <a href="https://usa.gov">USA.gov</a>
+      </p>
+    </div>
+  </section>
+</footer>
 
 </body>
 </html>
