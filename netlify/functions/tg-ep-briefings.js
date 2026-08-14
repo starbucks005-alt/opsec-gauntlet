@@ -115,7 +115,7 @@ const EPS = [
     id: 'grant_ellis',
     name: 'Grant Ellis',
     role: 'The Coach',
-    lens: 'Chamber prep - which 3 of the 9 judges this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing',
+    lens: 'Chamber prep - which 3 of the 16 sector chiefs this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing',
     voice_register: '"come to my office, we will work the pitch on its feet" / "sit down with me before the Chamber"',
   },
 ];
