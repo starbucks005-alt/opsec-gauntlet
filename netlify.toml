@@ -19,104 +19,6 @@
 
   [functions.opsec-sector-read]
     timeout = 15
-
-  [functions.catalog-add]
-    timeout = 26
-
-  [functions.admin-catalog]
-    timeout = 26
-
-  [functions.podcast-reviewer]
-    timeout = 26
-    external_node_modules = ["pdf-parse"]
-
-  [functions.workshop]
-    timeout = 26
-    external_node_modules = ["pdf-parse"]
-
-  [functions.workshop-assist-background]
-    timeout = 26
-
-  [functions.site-review-submit]
-    timeout = 26
-
-  [functions.site-review-action]
-    timeout = 10
-
-  [functions.gauntlet-init]
-    timeout = 26
-    external_node_modules = ["pdf-parse"]
-
-  [functions.gauntlet-eval-background]
-    timeout = 26
-
-  [functions.manuscript-extract]
-    timeout = 26
-    external_node_modules = ["pdf-parse"]
-
-  [functions.extract-book-characters]
-    timeout = 26
-    external_node_modules = ["pdf-parse"]
-
-  [functions.generate-character-portrait]
-    timeout = 26
-
-  [functions.lock-character-portrait]
-    timeout = 10
-
-  [functions.story-world-create]
-    timeout = 10
-
-  [functions.story-world-suggest-prompt]
-    timeout = 26
-
-  [functions.story-world-update-page]
-    timeout = 10
-
-  [functions.story-world-generate-image]
-    timeout = 26
-
-  [functions.story-world-upload-image]
-    timeout = 10
-
-  [functions.story-world-restyle-image]
-    timeout = 26
-
-  [functions.story-world-cast-add]
-    timeout = 26
-
-  [functions.story-world-cast-remove]
-    timeout = 10
-
-  [functions.story-world-pdf]
-    timeout = 26
-    external_node_modules = ["pdf-lib", "@pdf-lib/fontkit"]
-    included_files = ["assets/fonts/**"]
-
-  [functions.agent-search]
-    timeout = 26
-
-  [functions.bea]
-    timeout = 26
-
-  [functions.professor]
-    timeout = 26
-
-  [functions.jaque]
-    timeout = 26
-
-  [functions.margo]
-    timeout = 26
-
-  [functions.character-interviewer]
-    external_node_modules = ["pdf-parse"]
-
-  [functions.honest-review-init]
-    external_node_modules = ["pdf-parse"]
-
-  [functions.worldbuilding-map]
-    external_node_modules = ["pdf-parse"]
-
   [functions.tg-voice]
     timeout = 26
     included_files = ["config/**"]
@@ -126,13 +28,6 @@
 
   [functions.tg-intake-submit]
     timeout = 26
-
-  [functions.tg-evaluate-clarity]
-    timeout = 26
-
-  [functions.tg-evaluate-stage-clarity]
-    timeout = 26
-
   [functions.tg-evaluate-stage]
     timeout = 26
 
@@ -166,59 +61,6 @@
   [functions.tg-ep-chat]
     timeout = 26
     included_files = ["config/**"]
-
-  [functions.tg-zara-post]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-reid-press]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-reid-seo]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-reid-brand]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-reid-pitch]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-reid-monetize]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-arjun-manufacturing]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-arjun-sourcing]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-arjun-regulatory]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-arjun-prototype]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-matthew-psych]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-matthew-objections]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-carol-screen]
-    timeout = 26
-    included_files = ["config/**"]
-
   [functions.tg-wren-scout]
     timeout = 26
     included_files = ["config/**"]
@@ -238,15 +80,6 @@
   [functions.tg-ivy-context]
     timeout = 26
     included_files = ["config/**"]
-
-  [functions.tg-grant-coach]
-    timeout = 26
-    included_files = ["config/**"]
-
-  [functions.tg-grant-pitch]
-    timeout = 26
-    included_files = ["config/**"]
-
   [functions.tg-score-original-background]
     included_files = ["config/**"]
 
