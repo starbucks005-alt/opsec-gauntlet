@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,62 +8,75 @@
 <meta name="description" content="Skip OPSEC Gauntlet panel. Book a Standalone Consult with Wren Calloway for prior-art screening, patentability assessment, and a filing pathway recommendation.">
 <link rel="icon" type="image/png" href="/Favicon.png">
 <link rel="apple-touch-icon" href="/Favicon.png">
-<link rel="stylesheet" href="assets/tokens.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root,
-  :root[data-theme="dark"]{
-    --ink:#0a0a0a; --ink-soft:#14151a; --cream:#f4ede0;
-    --gold:#a82a2a; --gold-light:#c8302b; --rule:rgba(168,42,42,0.30);
-    --text:#e8dece; --text-dim:#a89c88; --bg:#0a0a0a;
-    --crimson:#5a1a1a; --crimson-bright:#c0392b;
+  /* ── ETL / USWDS Design Tokens (mirrors index.html) ───────────────────── */
+  :root{
+    --etl-blue:#4C7BA3; --stamp-blue:#28527a;
+    --etl-black:#1E1E1E; --etl-white:#F9F8F4;
+    --uswds-gold:#F0B429; --gold-dark:#c27500;
+    --ink:#1E1E1E; --ink-soft:#3d4f66; --cream:#1E1E1E;
+    --gold:#28527a; --gold-light:#4C7BA3; --rule:rgba(76,123,163,0.22);
+    --text:#1E1E1E; --text-dim:#5a6477; --bg:#F9F8F4;
+    --crimson:#5a1a1a; --crimson-bright:#b50909;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     background:var(--bg);color:var(--text);
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.7;
+    font-family:'Public Sans',system-ui,sans-serif;font-size:1rem;line-height:1.7;
     min-height:100vh;
-    background-image:
-      radial-gradient(ellipse 60% 50% at center top, rgba(168,42,42,0.10) 0%, transparent 70%),
-      repeating-linear-gradient(135deg,
-        rgba(200,48,43,0.018) 0px, rgba(200,48,43,0.018) 1px,
-        transparent 1px, transparent 3px);
   }
+
+  /* ── USWDS Official Banner ─────────────────────────────────────────────── */
+  .usa-banner{
+    background:#162e51;padding:0.45rem 2rem;
+    font-family:'Public Sans',sans-serif;font-size:0.72rem;
+    color:rgba(255,255,255,0.82);display:flex;align-items:center;
+    gap:0.55rem;flex-wrap:wrap;
+  }
+  .usa-banner-text strong{color:#fff;font-weight:600;}
 
   /* Topbar */
   .tg-topbar{
-    display:flex;align-items:center;padding:0 2.5rem;height:56px;
-    border-bottom:1px solid var(--rule);gap:1.5rem;position:sticky;top:0;
-    background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);z-index:100;
+    display:flex;align-items:center;padding:0 2rem;height:62px;
+    background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+    position:sticky;top:0;z-index:100;gap:1.2rem;
   }
-  .tg-topbar-logo{
-    display:flex;align-items:center;gap:0.6rem;
-    font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.12em;
-    color:var(--gold);text-decoration:none;
+  .tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+  .tg-topbar-wordmark-etl{
+    font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
   }
-  .tg-topbar-logo img{height:32px;width:32px;display:block;object-fit:contain;}
+  .tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+  .tg-topbar-program{
+    font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+    color:#fff;text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
   .tg-topbar-back{
     margin-left:auto;
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
-    text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+    font-family:'Public Sans',sans-serif;font-size:0.66rem;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:rgba(255,255,255,0.78);text-decoration:none;transition:color 0.18s;
   }
-  .tg-topbar-back:hover{color:var(--gold);}
+  .tg-topbar-back:hover{color:var(--uswds-gold);}
 
   main{max-width:820px;margin:0 auto;padding:4rem 2rem 5rem;}
 
   .eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.28em;
     text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;
   }
   h1.page-title{
-    font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.4vw,3.2rem);
+    font-family:'Spectral',serif;font-size:clamp(2.2rem,4.4vw,3.2rem);
     font-weight:700;color:var(--cream);line-height:1.05;
     margin-bottom:1rem;letter-spacing:-0.01em;
   }
   h1.page-title em{font-style:italic;color:var(--gold-light);}
   .page-lede{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:1.2rem;line-height:1.55;color:var(--text-dim);
     margin-bottom:2.6rem;max-width:680px;
   }
@@ -71,17 +84,17 @@
   /* Pitch block */
   .pitch{
     border:1px solid var(--rule);
-    background:rgba(168,42,42,0.04);
+    background:rgba(76,123,163,0.04);
     padding:2rem 2rem 1.6rem;margin-bottom:3rem;
   }
   .pitch-name{
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.28em;
     text-transform:uppercase;color:var(--gold);
-    border-bottom:1px solid rgba(200,48,43,0.25);
+    border-bottom:1px solid rgba(76,123,163,0.25);
     padding-bottom:0.5rem;margin-bottom:0.5rem;
   }
   .pitch-sme{
-    font-family:'Playfair Display',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:1.1rem;color:var(--cream);margin-bottom:1.4rem;
   }
   .pitch p{font-size:1.08rem;line-height:1.7;color:var(--text);margin-bottom:1rem;}
@@ -89,7 +102,7 @@
 
   /* Deliverables */
   .section-label{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--gold-light);margin-bottom:1rem;
   }
   .deliv{
@@ -97,17 +110,17 @@
     display:flex;flex-direction:column;gap:1.1rem;
   }
   .deliv li{
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+    font-family:'Spectral',serif;font-size:1.05rem;
     line-height:1.6;color:var(--text);
-    padding-left:1.1rem;border-left:1px solid rgba(200,48,43,0.4);
+    padding-left:1.1rem;border-left:1px solid rgba(76,123,163,0.4);
   }
   .deliv li b{
-    font-family:'Playfair Display',serif;font-weight:600;
+    font-family:'Spectral',serif;font-weight:600;
     color:var(--cream);display:block;margin-bottom:0.2rem;font-size:1.08rem;
   }
 
   .anchor-block{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-family:'Spectral',serif;font-style:italic;
     font-size:1.08rem;line-height:1.65;color:var(--text-dim);
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
     padding:1.4rem 0;margin-bottom:3rem;text-align:center;
@@ -126,25 +139,25 @@
     margin-top:0; margin-bottom:3.4rem;
     padding:3.6rem 2rem 3.4rem;
     background:
-      linear-gradient(180deg, rgba(20,21,26,0.0) 0%, rgba(20,21,26,0.55) 8%, rgba(20,21,26,0.55) 92%, rgba(20,21,26,0.0) 100%),
-      radial-gradient(ellipse 60% 40% at center top, rgba(168,42,42,0.08) 0%, transparent 70%);
+      linear-gradient(180deg, rgba(238,242,247,0.0) 0%, rgba(238,242,247,0.85) 8%, rgba(238,242,247,0.85) 92%, rgba(238,242,247,0.0) 100%),
+      radial-gradient(ellipse 60% 40% at center top, rgba(76,123,163,0.08) 0%, transparent 70%);
     border-top:1px solid var(--rule);
     border-bottom:1px solid var(--rule);
   }
   .validate-block-inner{ max-width:1200px; margin:0 auto; }
   .validate-eyebrow{
-    font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.32em;
+    font-family:'Public Sans',sans-serif; font-size:0.62rem; letter-spacing:0.32em;
     text-transform:uppercase; color:var(--gold); margin-bottom:1rem;
     text-align:center;
   }
   .validate-title{
-    font-family:'Playfair Display',serif; font-size:clamp(1.7rem,3.2vw,2.4rem);
+    font-family:'Spectral',serif; font-size:clamp(1.7rem,3.2vw,2.4rem);
     font-weight:700; color:var(--cream); line-height:1.15;
     letter-spacing:-0.005em; text-align:center; margin-bottom:1rem;
   }
   .validate-title em{ font-style:italic; color:var(--gold-light); }
   .validate-lede{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Spectral',serif;
     color:var(--text); font-size:1.05rem; line-height:1.7;
     text-align:center; max-width:760px; margin:0 auto 2.6rem;
   }
@@ -156,38 +169,38 @@
     text-align:left;
     padding:1.3rem 1.3rem 1.2rem;
     border:1px solid var(--rule);
-    background:rgba(168,42,42,0.04);
+    background:rgba(76,123,163,0.04);
     color:inherit; font-family:inherit;
     cursor:pointer;
     transition:border-color 0.18s, background 0.18s;
     display:flex; flex-direction:column; gap:0.5rem;
   }
-  .validate-tile:hover{ border-color:var(--gold-light); background:rgba(168,42,42,0.08); }
+  .validate-tile:hover{ border-color:var(--gold-light); background:rgba(76,123,163,0.08); }
   .validate-tile.is-coming{ cursor:not-allowed; opacity:0.55; }
-  .validate-tile.is-coming:hover{ border-color:var(--rule); background:rgba(168,42,42,0.04); }
-  .validate-tile.is-active{ border-color:var(--gold-light); background:rgba(168,42,42,0.12); }
+  .validate-tile.is-coming:hover{ border-color:var(--rule); background:rgba(76,123,163,0.04); }
+  .validate-tile.is-active{ border-color:var(--gold-light); background:rgba(76,123,163,0.12); }
   .validate-tile-status{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif; font-size:0.55rem; letter-spacing:0.24em;
     text-transform:uppercase; color:var(--gold);
-    padding-bottom:0.5rem; border-bottom:1px solid rgba(200,48,43,0.25);
+    padding-bottom:0.5rem; border-bottom:1px solid rgba(76,123,163,0.25);
     margin-bottom:0.1rem;
   }
   .validate-tile.is-coming .validate-tile-status{ color:var(--text-dim); }
   .validate-tile-domain{
-    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif; font-size:0.58rem; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--text-dim);
   }
   .validate-tile-title{
-    font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700;
+    font-family:'Spectral',serif; font-size:1.15rem; font-weight:700;
     color:var(--cream); line-height:1.25;
   }
   .validate-tile-summary{
-    font-family:'Cormorant Garamond',serif; font-size:0.98rem;
+    font-family:'Spectral',serif; font-size:0.98rem;
     line-height:1.5; color:var(--text);
   }
   .validate-tile-cta{
     margin-top:auto; padding-top:0.7rem;
-    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.22em;
+    font-family:'Public Sans',sans-serif; font-size:0.58rem; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--gold-light);
   }
 
@@ -195,7 +208,7 @@
   .validate-reveal{ display:none; }
   .validate-reveal.is-open{ display:block; }
   .validate-meta{
-    font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif; font-size:0.58rem; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--text-dim);
     text-align:center; margin-bottom:1.6rem;
   }
@@ -206,7 +219,7 @@
   }
   .validate-col{
     border:1px solid var(--rule);
-    background:rgba(10,10,10,0.55);
+    background:#fff;
     padding:1.6rem 1.5rem;
   }
   .validate-col-header{
@@ -214,17 +227,17 @@
     padding-bottom:0.8rem; margin-bottom:1.4rem;
   }
   .validate-col-label{
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
+    font-family:'Public Sans',sans-serif; font-size:0.6rem; letter-spacing:0.24em;
     text-transform:uppercase; color:var(--gold); margin-bottom:0.25rem;
   }
   .validate-col-meta{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.96rem; color:var(--text-dim);
   }
   .validate-section-label{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.22em;
+    font-family:'Public Sans',sans-serif; font-size:0.55rem; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--gold-light);
-    border-top:1px solid rgba(200,48,43,0.18);
+    border-top:1px solid rgba(76,123,163,0.18);
     padding-top:1rem; margin-top:1.4rem; margin-bottom:0.7rem;
   }
   .validate-section-label:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
@@ -237,45 +250,45 @@
     margin-bottom:0.25rem;
   }
   .v-pa-pubnum{
-    font-family:'DM Mono',monospace; font-size:0.72rem;
+    font-family:'Public Sans',sans-serif; font-size:0.72rem;
     color:var(--gold-light); text-decoration:none;
   }
   .v-pa-pubnum:hover{ color:var(--cream); text-decoration:underline; }
   .v-pa-overlap{
-    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.16em;
+    font-family:'Public Sans',sans-serif; font-size:0.5rem; letter-spacing:0.16em;
     text-transform:uppercase;
     padding:0.18rem 0.5rem;
     border:1px solid currentColor;
     color:var(--text-dim);
   }
-  .v-pa-overlap[data-overlap="direct overlap"]{ color:#d97a6c; border-color:rgba(217,122,108,0.45); }
-  .v-pa-overlap[data-overlap="adjacent"]{ color:#c8302b; border-color:rgba(200,48,43,0.45); }
+  .v-pa-overlap[data-overlap="direct overlap"]{ color:#b50909; border-color:rgba(181,9,9,0.40); }
+  .v-pa-overlap[data-overlap="adjacent"]{ color:#b35c00; border-color:rgba(179,92,0,0.40); }
   .v-pa-overlap[data-overlap="background art"]{ color:var(--text-dim); }
-  .v-pa-overlap[data-overlap="expired - free territory"]{ color:#7fae7a; border-color:rgba(127,174,122,0.45); }
+  .v-pa-overlap[data-overlap="expired - free territory"]{ color:#2e7d32; border-color:rgba(46,125,50,0.40); }
   .v-pa-title{
-    font-family:'Playfair Display',serif; font-weight:600;
+    font-family:'Spectral',serif; font-weight:600;
     color:var(--cream); font-size:1.02rem; line-height:1.3;
     margin-bottom:0.25rem;
   }
   .v-pa-dates{
-    font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.14em;
+    font-family:'Public Sans',sans-serif; font-size:0.55rem; letter-spacing:0.14em;
     text-transform:uppercase; color:var(--text-dim);
     margin-bottom:0.4rem;
   }
   .v-pa-relevance{
-    font-family:'Cormorant Garamond',serif; font-size:0.98rem;
+    font-family:'Spectral',serif; font-size:0.98rem;
     line-height:1.55; color:var(--text);
   }
   .v-pa-attorney{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:0.92rem; line-height:1.55; color:var(--text-dim);
     margin-top:0.5rem; padding-left:0.9rem;
-    border-left:1px solid rgba(200,48,43,0.3);
+    border-left:1px solid rgba(76,123,163,0.3);
   }
 
   /* Patentability bullets, CPC, next steps */
   .v-patent-summary{
-    font-family:'Cormorant Garamond',serif; font-size:1rem; line-height:1.65;
+    font-family:'Spectral',serif; font-size:1rem; line-height:1.65;
     color:var(--text); margin-bottom:0.9rem;
   }
   .v-bullets{
@@ -283,32 +296,32 @@
     display:flex; flex-direction:column; gap:0.55rem;
   }
   .v-bullets li{
-    font-family:'Cormorant Garamond',serif; font-size:0.97rem;
+    font-family:'Spectral',serif; font-size:0.97rem;
     line-height:1.5; color:var(--text);
-    padding-left:0.9rem; border-left:1px solid rgba(200,48,43,0.3);
+    padding-left:0.9rem; border-left:1px solid rgba(76,123,163,0.3);
   }
   .v-mini-label{
-    font-family:'DM Mono',monospace; font-size:0.52rem; letter-spacing:0.2em;
+    font-family:'Public Sans',sans-serif; font-size:0.52rem; letter-spacing:0.2em;
     text-transform:uppercase; color:var(--text-dim);
     margin-bottom:0.35rem; margin-top:0.6rem;
   }
   .v-cpc-entry{ margin-bottom:0.7rem; }
   .v-cpc-code{
-    font-family:'DM Mono',monospace; font-size:0.85rem; color:var(--gold-light);
+    font-family:'Public Sans',sans-serif; font-size:0.85rem; color:var(--gold-light);
   }
   .v-cpc-label{
-    font-family:'Playfair Display',serif; font-style:italic; font-size:0.95rem;
+    font-family:'Spectral',serif; font-style:italic; font-size:0.95rem;
     color:var(--cream); margin:0.1rem 0 0.25rem;
   }
   .v-cpc-why{ font-size:0.93rem; color:var(--text); line-height:1.5; }
   .v-step-entry{ margin-bottom:0.95rem; }
   .v-step-head{ display:flex; align-items:baseline; gap:0.6rem; flex-wrap:wrap; }
   .v-step-option{
-    font-family:'Playfair Display',serif; font-weight:600;
+    font-family:'Spectral',serif; font-weight:600;
     color:var(--cream); font-size:0.98rem;
   }
   .v-step-fit{
-    font-family:'DM Mono',monospace; font-size:0.5rem; letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif; font-size:0.5rem; letter-spacing:0.18em;
     text-transform:uppercase;
     padding:0.16rem 0.5rem; border:1px solid currentColor;
   }
@@ -316,34 +329,34 @@
   .v-step-fit[data-fit="marginal fit"]{ color:var(--text-dim); }
   .v-step-fit[data-fit="not recommended"]{ color:#d97a6c; border-color:rgba(217,122,108,0.4); }
   .v-step-cost{
-    font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--text-dim);
+    font-family:'Public Sans',sans-serif; font-size:0.6rem; color:var(--text-dim);
     margin:0.1rem 0 0.35rem;
   }
   .v-step-action{ font-size:0.95rem; line-height:1.55; color:var(--text); }
   .v-rationale{
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Spectral',serif; font-style:italic;
     font-size:1rem; line-height:1.65; color:var(--cream);
     padding:0.9rem 1rem;
-    border:1px solid rgba(200,48,43,0.3);
-    background:rgba(168,42,42,0.05);
+    border:1px solid rgba(76,123,163,0.3);
+    background:rgba(76,123,163,0.05);
   }
 
   /* Audit summary band below the columns */
   .validate-audit{
     text-align:center;
     border:1px solid var(--rule);
-    background:rgba(168,42,42,0.05);
+    background:rgba(76,123,163,0.05);
     padding:1.6rem 1.8rem 1.5rem;
   }
   .validate-audit p{
-    font-family:'Cormorant Garamond',serif; font-size:1.05rem; line-height:1.6;
+    font-family:'Spectral',serif; font-size:1.05rem; line-height:1.6;
     color:var(--text); max-width:720px; margin:0 auto 1.1rem;
   }
   .validate-audit p em{ color:var(--gold-light); font-style:italic; }
   .validate-audit .btn-jump{
     display:inline-block;
-    font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.24em;
-    text-transform:uppercase; color:var(--ink);
+    font-family:'Public Sans',sans-serif; font-size:0.6rem; letter-spacing:0.24em;
+    text-transform:uppercase; color:#fff;
     background:var(--gold); padding:0.85rem 1.6rem;
     border:none; cursor:pointer;
     text-decoration:none;
@@ -357,11 +370,11 @@
 
   /* Form */
   .form-eyebrow{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.28em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.28em;
     text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;
   }
   .form-title{
-    font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:1.7rem;font-weight:700;
     color:var(--cream);line-height:1.15;margin-bottom:0.6rem;
   }
   .form-title em{font-style:italic;color:var(--gold-light);}
@@ -373,29 +386,29 @@
   form.consult-form{display:flex;flex-direction:column;gap:1.3rem;}
   .field{display:flex;flex-direction:column;gap:0.4rem;}
   .field label{
-    font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;
+    font-family:'Public Sans',sans-serif;font-size:0.58rem;letter-spacing:0.22em;
     text-transform:uppercase;color:var(--gold);
   }
   .field input,
   .field textarea{
-    background:rgba(20,21,26,0.6);
+    background:#fff;
     border:1px solid var(--rule);
     padding:0.85rem 1rem;color:var(--cream);
-    font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+    font-family:'Spectral',serif;font-size:1.05rem;
     line-height:1.5;outline:none;transition:border-color 0.18s;
   }
   .field input:focus,
   .field textarea:focus{ border-color:var(--gold-light); }
   .field textarea{ resize:vertical;min-height:140px; }
   .field-hint{
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.18em;
     text-transform:uppercase;color:var(--text-dim);
   }
 
   .btn-submit{
     margin-top:0.6rem;align-self:flex-start;
-    font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.26em;
-    text-transform:uppercase;color:var(--ink);
+    font-family:'Public Sans',sans-serif;font-size:0.62rem;letter-spacing:0.26em;
+    text-transform:uppercase;color:#fff;
     background:var(--gold);padding:1rem 1.8rem;
     border:none;cursor:pointer;transition:background 0.18s;
   }
@@ -403,7 +416,7 @@
   .btn-submit:disabled{ opacity:0.5;cursor:not-allowed; }
 
   .form-status{
-    font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+    font-family:'Public Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;
     text-transform:uppercase;color:var(--text-dim);margin-top:0.6rem;min-height:1em;
   }
   .form-status.is-error{ color:var(--crimson-bright); }
@@ -412,12 +425,12 @@
   /* Success state */
   .thanks{
     border:1px solid var(--rule);
-    background:rgba(168,42,42,0.05);
+    background:rgba(76,123,163,0.05);
     padding:2.4rem 2rem;text-align:center;display:none;
   }
   .thanks.show{ display:block; }
   .thanks h2{
-    font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;
+    font-family:'Spectral',serif;font-size:1.8rem;font-weight:700;
     color:var(--cream);margin-bottom:0.9rem;line-height:1.2;
   }
   .thanks h2 em{font-style:italic;color:var(--gold-light);}
@@ -426,20 +439,63 @@
 
   .footer-note{
     margin-top:4rem;padding-top:2rem;border-top:1px solid var(--rule);
-    font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;
+    font-family:'Public Sans',sans-serif;font-size:0.55rem;letter-spacing:0.2em;
     text-transform:uppercase;color:var(--text-dim);text-align:center;
   }
   .footer-note a{color:var(--gold-light);text-decoration:none;}
+
+  /* ── USWDS Identifier Footer ────────────────────────────────────────────── */
+  .usa-identifier{background:#1b1b1b;color:rgba(255,255,255,0.7);font-family:'Public Sans',sans-serif;}
+  .usa-identifier__section{border-top:1px solid rgba(255,255,255,0.1);}
+  .usa-identifier__section--masthead{border-top:4px solid var(--etl-blue);}
+  .usa-identifier__container{max-width:1180px;margin:0 auto;padding:1.8rem 2rem;display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+  .usa-identifier__logo-img{
+    width:44px;height:44px;border-radius:50%;background:var(--etl-blue);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Spectral',serif;font-size:0.58rem;font-weight:700;
+    color:#fff;letter-spacing:0.06em;text-align:center;line-height:1.2;
+    text-decoration:none;flex-shrink:0;
+  }
+  .usa-identifier__identity{flex:1;}
+  .usa-identifier__identity-domain{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.88);letter-spacing:0.04em;}
+  .usa-identifier__identity-disclaimer{font-size:0.72rem;color:rgba(255,255,255,0.48);margin-top:0.18rem;}
+  .usa-identifier__identity-disclaimer a{color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;}
+  .usa-identifier__section--required-links .usa-identifier__container{justify-content:center;padding:1rem 2rem;}
+  .usa-identifier__required-links-list{display:flex;flex-wrap:wrap;list-style:none;padding:0;margin:0;justify-content:center;}
+  .usa-identifier__required-link{font-size:0.72rem;color:rgba(255,255,255,0.55);text-decoration:none;padding:0.22rem 1.1rem;border-right:1px solid rgba(255,255,255,0.12);display:inline-block;transition:color 0.15s;}
+  .usa-identifier__required-links-item:last-child .usa-identifier__required-link{border-right:none;}
+  .usa-identifier__required-link:hover{color:rgba(255,255,255,0.88);}
+  .usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
+  .usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
+  .usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
+  @media(max-width:680px){.usa-banner{padding:0.4rem 1.2rem;}.tg-topbar{padding:0 1.2rem;}}
 </style>
 </head>
 <body>
 
+<!-- ── USWDS Official Banner ─────────────────────────────────────────────── -->
+<div class="usa-banner" aria-label="Official website of the Emerging Technologies Laboratory">
+  <svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true" focusable="false" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <rect width="16" height="11" fill="#B22234"/>
+    <rect y="1.57" width="16" height="1.57" fill="white"/>
+    <rect y="3.14" width="16" height="1.57" fill="#B22234"/>
+    <rect y="4.71" width="16" height="1.57" fill="white"/>
+    <rect y="6.29" width="16" height="1.57" fill="#B22234"/>
+    <rect y="7.86" width="16" height="1.57" fill="white"/>
+    <rect y="9.43" width="16" height="1.57" fill="#B22234"/>
+    <rect width="6.86" height="5.5" fill="#3C3B6E"/>
+  </svg>
+  <span class="usa-banner-text">An official program of the <strong>Emerging Technologies Laboratory</strong></span>
+</div>
+
+<!-- ── Header ────────────────────────────────────────────────────────────── -->
 <header class="tg-topbar">
-  <a class="tg-topbar-logo" href="/">
-    <img src="Favicon.png" alt="">
-    <span>OPSEC Gauntlet</span>
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
   </a>
-  <a class="tg-topbar-back" href="/">&larr; Back</a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
+  <a class="tg-topbar-back" href="/pricing.html">&larr; Back to pricing</a>
 </header>
 
 <main>
@@ -771,6 +827,43 @@
   });
 })();
 </script>
+
+
+<!-- ── USWDS Identifier Footer ─────────────────────────────────────────────── -->
+<footer class="usa-identifier" aria-label="Agency identifier">
+  <section class="usa-identifier__section usa-identifier__section--masthead">
+    <div class="usa-identifier__container">
+      <a href="https://emerging-tech-lab.com" class="usa-identifier__logo-img" aria-label="Emerging Technologies Laboratory">ETL</a>
+      <div class="usa-identifier__identity">
+        <p class="usa-identifier__identity-domain">opsec-gauntlet.com</p>
+        <p class="usa-identifier__identity-disclaimer">
+          An official program of the <a href="https://emerging-tech-lab.com">Emerging Technologies Laboratory</a>,
+          Mission Possible Institute, LLC. Directed by Dr. Terry Oroszi.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--required-links">
+    <div class="usa-identifier__container">
+      <nav aria-label="Important links">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item"><a href="/about.html" class="usa-identifier__required-link">About</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/pricing.html" class="usa-identifier__required-link">Pricing</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/privacy.html" class="usa-identifier__required-link">Privacy Policy</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/accessibility.html" class="usa-identifier__required-link">Accessibility</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#foia" class="usa-identifier__required-link">FOIA</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--usagov">
+    <div class="usa-identifier__container">
+      <p class="usa-identifier__usagov-description">
+        Looking for U.S. government information and services? Visit <a href="https://usa.gov">USA.gov</a>
+      </p>
+    </div>
+  </section>
+</footer>
 
 </body>
 </html>
