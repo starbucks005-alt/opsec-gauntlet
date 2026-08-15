@@ -239,7 +239,7 @@
       }
       // Personalized invitation replaces the static "Step into her
       // office" link text. We keep the href (still points at the EP's
-      // helper page) and just swap the label. The UI's existing arrow
+      // office page) and just swap the label. The UI's existing arrow
       // (visible because the link has " →" in the original) needs to
       // be re-added since the model is told not to include punctuation.
       if (invitation && c.linkEl) {

@@ -1,13 +1,13 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    tg-ep-chat.js — client side of an EP's interactive office.
 
-   Loaded by Helpers/jules-rewrite.html (and future Helpers/<ep>.html pages
+   Loaded by the office pages under SPECIALISTS/ (one per Operational Specialist)
    when EE.2+ extends to other EPs). Wires the conversation, proposed
    revisions, accept/reject UI, and the revision log.
 
    The page provides the markup. This script discovers it by data attribute:
 
-     [data-tg-office="ep"]        - EP id (e.g. "jules") on the root
+     [data-tg-office="ep"]        - office id (e.g. "iris_king_opsec") on the root
      [data-tg-office="brief"]     - container where the current brief renders
      [data-tg-office="chat"]      - chat thread container
      [data-tg-office="input"]     - <textarea> for the user's message
@@ -61,7 +61,10 @@
     const root = document.querySelector('[data-tg-office="ep"]');
     if (!root) return;   // not an office page
 
-    const epId   = root.dataset.tgOfficeEpId || 'jules';
+    // No fallback id: an office page must declare its own. Silently
+    // defaulting sent every un-tagged page to one specialist's persona.
+    const epId   = root.dataset.tgOfficeEpId;
+    if (!epId) { console.warn('[tg-ep-chat] no data-tg-office-ep-id on the office root'); return; }
     const briefEl = document.querySelector('[data-tg-office="brief"]');
     const chatEl  = document.querySelector('[data-tg-office="chat"]');
     const inputEl = document.querySelector('[data-tg-office="input"]');
@@ -81,7 +84,7 @@
     const state = {
       epId:          epId,
       // The page provides a display name via data-tg-office-ep-name. Used
-      // as the "who" label on assistant turns ("Jules" / "Ms. Ivy" / etc.).
+      // as the "who" label on assistant turns ("Iris" / "Ms. Ivy" / etc.).
       // Falls back to the ep_id with underscores stripped if not provided.
       epDisplayName: root.dataset.tgOfficeEpName || epId.replace(/_/g, ' '),
       name:          (ss(KEY_NAME) || '').trim(),
@@ -346,7 +349,7 @@
     renderBrief();
     renderChat();
     if (state.conversation.length === 0 && state.brief) {
-      sendMessage('');   // empty user_message triggers Jules's opening
+      sendMessage('');   // empty user_message triggers the specialist's opening
     }
   }
 

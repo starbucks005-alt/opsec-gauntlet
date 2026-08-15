@@ -31,7 +31,7 @@
   const VOICE_ENDPOINT = '/.netlify/functions/tg-voice';
   const VOICE_VERSION  = '2026-05-23-v9';
   const IVY_CHARACTER  = 'ms_ivy';
-  const IVY_PORTRAIT   = 'Helpers/Ivy_Profile.jpg';
+  const IVY_PORTRAIT   = 'SPECIALISTS/Ivy_profile.png';
   const ANON_KEY       = 'tg_anon_user_id';
   const UUID_RE        = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

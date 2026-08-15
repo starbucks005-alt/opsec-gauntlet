@@ -4,7 +4,7 @@
    GET /.netlify/functions/tg-voice?character=<id>&mode=<bio|role>
 
    Looks up the character's ElevenLabs voice_id (from judges_master.json or
-   helpers_master.json) and the corresponding script text (from
+   specialists_master.json) and the corresponding script text (from
    voice_scripts.json), calls ElevenLabs text-to-speech, and streams the
    resulting MP3 back to the browser. Audio is cacheable for a day so
    repeat plays of the same bio/role do not re-hit the API.
@@ -17,7 +17,7 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 const judges = require('../../config/judges_master.json');
-const helpers = require('../../config/helpers_master.json');
+const specialists = require('../../config/specialists_master.json');
 const scripts = require('../../config/voice_scripts.json');
 
 // eleven_multilingual_v2 is the current ElevenLabs default and what voices
@@ -41,7 +41,7 @@ const VOICE_SETTINGS = {
 function findVoiceId(characterId) {
   const j = (judges.judges || []).find(x => x.id === characterId);
   if (j && j.voice_id) return j.voice_id;
-  const h = (helpers.helpers || []).find(x => x.id === characterId);
+  const h = (specialists.specialists || []).find(x => x.id === characterId);
   if (h && h.voice_id) return h.voice_id;
   return null;
 }
@@ -57,7 +57,7 @@ function findScript(characterId, mode) {
 // voice does not pronounce "parenthesis Ret dot".
 function getCharacterDisplayName(characterId) {
   const j = (judges.judges || []).find(x => x.id === characterId);
-  const h = (helpers.helpers || []).find(x => x.id === characterId);
+  const h = (specialists.specialists || []).find(x => x.id === characterId);
   const raw = (j && j.name) || (h && h.name) || '';
   return raw.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
 }

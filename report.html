@@ -1339,14 +1339,14 @@
     `;
   }
 
-  // Routing recommendation. (Legacy single-helper rubric kept for any
+  // Routing recommendation. (Legacy single-specialist rubric kept for any
   // future caller; the report itself now uses renderFollowUps above.)
   function buildRoutingRecommendation(triangulation, findings){
     if (!triangulation){
       return {
         title: 'No verdict yet.',
-        body:  'The panel did not return a triangulation. Try running the evaluation again, or ask the helpers for feedback before resubmitting.',
-        helper: null,
+        body:  'The panel did not return a triangulation. Try running the evaluation again, or ask an Operational Specialist for feedback before resubmitting.',
+        specialist: null,
       };
     }
     const composite10 = Math.round((triangulation.composite_score || 0) * 100) / 10;
@@ -1359,28 +1359,28 @@
       return {
         title:  'Clarity is solid. Move on to the next dimension.',
         body:   'The panel agrees: your idea is clearly expressed. The next dimension (Novelty, Feasibility) is what we evaluate next when those slices ship.',
-        helper: null,
+        specialist: null,
       };
     }
     if (verdict === 'agreement' && composite10 <= 4){
       return {
         title:  'Clear panel agreement. Your idea is not clearly expressed yet.',
         body:   'The chiefs are aligned: the description does not yet make the problem, the solution, and the operating environment explicit. Take it back to Ms. Ivy at the Office of Concept Integrity for a gap map before resubmitting.',
-        helper: { id: 'ms_ivy_opsec', name: 'Ms. Ivy', role: 'Office of Concept Integrity', href: '/SPECIALISTS/ivy-concept-integrity.html' },
+        specialist: { id: 'ms_ivy_opsec', name: 'Ms. Ivy', role: 'Office of Concept Integrity', href: '/SPECIALISTS/ivy-concept-integrity.html' },
       };
     }
     if (verdict === 'conflict'){
       return {
         title:  'The judges disagree on what your idea is.',
         body:   'A wide spread on Clarity usually means an ambiguity in how the concept is framed - different sector chiefs are reading different things. Walk it to Iris King at Frontline Communications; she will show you exactly where the language invites more than one reading.',
-        helper: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
+        specialist: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
       };
     }
     // Middle ground: mixed clarity. Default to Jules for language tightening.
     return {
       title:  'Mixed clarity. Tighten before the next round.',
       body:   'The panel is neither aligned nor split. The concept reads as partially clear. Walk the corridor to Iris King at Frontline Communications to sharpen how it speaks, or to Ms. Ivy at Concept Integrity if the gap is structural, then resubmit.',
-      helper: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
+      specialist: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
     };
   }
 
@@ -1777,7 +1777,7 @@
           <h3 class="routing-title">${escapeHtml(routing.title)}</h3>
           <p class="routing-body">${escapeHtml(routing.body)}</p>
           <div class="routing-cta-row">
-            ${routing.helper ? `<a class="btn btn-primary" href="${escapeHtml(routing.helper.href)}">Visit ${escapeHtml(routing.helper.name)} (${escapeHtml(routing.helper.role)})</a>` : ''}
+            ${routing.specialist ? `<a class="btn btn-primary" href="${escapeHtml(routing.specialist.href)}">Visit ${escapeHtml(routing.specialist.name)} (${escapeHtml(routing.specialist.role)})</a>` : ''}
             <a class="btn btn-outline" href="/intake.html">Bring another idea</a>
           </div>
         </div>

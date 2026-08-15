@@ -10,11 +10,11 @@
    3. We look up the brief, judge outputs, and triangulation from
       Supabase.
    4. Single Anthropic call: given the brief and the panel's findings,
-      write a one-line follow-up for each of the 9 EPs in their voice,
+      write a one-line follow-up for each of the 11 offices in their voice,
       referencing what the judges specifically said.
    5. Client replaces the templated quotes with the LLM-generated ones.
 
-   ONE Anthropic call produces 9 quotes - cheaper, faster, and lets the
+   ONE Anthropic call produces 11 quotes - cheaper, faster, and lets the
    model coordinate across EPs so they do not all reference the same
    weakness. Output budget: 1500 tokens (each quote ~120 tokens, plus
    JSON overhead). Input budget: brief + 24 judge critiques + matrix,
@@ -25,14 +25,16 @@
      evaluation_id,
      quotes: {
        ms_ivy: "...",
-       wren_calloway: "...",
-       carol_haynes: "...",
-       matthew_vance: "...",
-       arjun_mehta: "...",
-       zara_cole: "...",
-       reid_callum: "...",
-       jules: "...",
-       grant_ellis: "..."
+       dr_rao_opsec: "...",
+       iris_king_opsec: "...",
+       alicia_james_opsec: "...",
+       kimberly_pass_opsec: "...",
+       sasha_moreno_opsec: "...",
+       leo_vance_opsec: "...",
+       rowan_tate_opsec: "...",
+       jax_rivera_opsec: "...",
+       yuki_mendel_opsec: "...",
+       ali_malik_opsec: "..."
      }
    }
    Env: ANTHROPIC_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
@@ -81,35 +83,37 @@ function buildSystemPrompt(name) {
   const nameRef = name || 'the founder';
   const epList = EP_ORDER.map(ep => `  - ${ep.id}: ${ep.name} (${ep.role}) - ${ep.focus}`).join('\n');
 
-  return `You write post-Chamber follow-up lines for The Gauntlet's nine Executive Producers. ${nameRef} just walked through the panel of judges and the panel scored their idea across 8 dimensions. Now they have returned to the corridor where the EPs flank the hall, and each EP has one chance to say ONE line that pulls them in.
+  return `You write post-Chamber follow-up lines for the eleven Operational Specialists of OPSEC Gauntlet. ${nameRef} just walked through the panel of judges and the panel scored their idea across 8 dimensions. Now they have returned to the corridor where the Operational Specialists flank the corridor, and each EP has one chance to say ONE line that pulls them in.
 
 EACH LINE MUST
   - Read in that EP's voice (use the EP's focus area below to anchor what they would say).
   - Reference SOMETHING SPECIFIC the judges said or scored. Not the composite generic - a specific dimension, a specific critique, a specific number.
   - Make a concrete offer: what the EP can do next for ${nameRef}.
   - Be 1-2 short sentences. No em dashes, plain hyphens. No markdown.
-  - Coordinate ACROSS EPs - each EP should claim a DIFFERENT angle so the corridor reads as a panel of distinct offers, not nine variations of the same offer.
+  - Coordinate ACROSS EPs - each EP should claim a DIFFERENT angle so the corridor reads as a panel of distinct offers, not eleven variations of the same offer.
 
-THE NINE EPS
+THE ELEVEN OFFICES
 ${epList}
 
 NAME RULE
 ${name
-  ? `Address ${nameRef} by name once at the start of at most 2 of the 9 lines (overuse feels forced). The rest use "you" directly.`
+  ? `Address ${nameRef} by name once at the start of at most 2 of the 11 lines (overuse feels forced). The rest use "you" directly.`
   : `No name was provided. Use "you" directly in every line.`}
 
 OUTPUT: pure JSON only, no prose around it. Keys must be the exact EP ids from the list. Every EP must have a quote.
 
 {
-  "ms_ivy":        "<one to two sentences>",
-  "wren_calloway": "<one to two sentences>",
-  "carol_haynes":  "<one to two sentences>",
-  "matthew_vance": "<one to two sentences>",
-  "arjun_mehta":   "<one to two sentences>",
-  "zara_cole":     "<one to two sentences>",
-  "reid_callum":   "<one to two sentences>",
-  "jules":         "<one to two sentences>",
-  "grant_ellis":   "<one to two sentences>"
+  "ms_ivy":              "<one to two sentences>",
+  "dr_rao_opsec":        "<one to two sentences>",
+  "iris_king_opsec":     "<one to two sentences>",
+  "alicia_james_opsec":  "<one to two sentences>",
+  "kimberly_pass_opsec": "<one to two sentences>",
+  "sasha_moreno_opsec":  "<one to two sentences>",
+  "leo_vance_opsec":     "<one to two sentences>",
+  "rowan_tate_opsec":    "<one to two sentences>",
+  "jax_rivera_opsec":    "<one to two sentences>",
+  "yuki_mendel_opsec":   "<one to two sentences>",
+  "ali_malik_opsec":     "<one to two sentences>"
 }`;
 }
 
@@ -151,7 +155,7 @@ function buildUserPrompt(brief, title, judgeOutputs, triangulation) {
     `PANEL FINDINGS BY DIMENSION:`,
     dimBlocks,
     '',
-    `Write the nine EP post-Chamber lines now. Coordinate across EPs - each claims a different angle. JSON only.`,
+    `Write the eleven post-Chamber lines now. Coordinate across offices - each claims a different angle. JSON only.`,
   ].join('\n');
 }
 

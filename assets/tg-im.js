@@ -1,18 +1,18 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   tg-im.js — IM (direct chat with a helper) modal
+   tg-im.js — IM (direct chat with an Operational Specialist) modal
 
-   Wires any element with data-tg-im to open a chat-with-this-helper modal:
+   Wires any element with data-tg-im to open a chat-with-this-specialist modal:
      <button data-tg-im
              data-character="wren_calloway"
              data-name="Wren">IM Wren</button>
 
    For now the modal is a placeholder — it announces what direct chat with
-   that helper will be and points the user at the voice buttons in the
+   that specialist will be and points the user at the voice buttons in the
    meantime. The actual live chat plugs in during the chat-layer gate
    (post-Gate D) and reuses these data attributes; no markup changes will
    be needed on the buttons themselves.
 
-   Helpers only. Judges evaluate in The Chamber and do not have IM.
+   Operational Specialists only. Sector chiefs evaluate in The Chamber and do not have IM.
    ───────────────────────────────────────────────────────────────────────────── */
 
 (function(){
@@ -133,7 +133,7 @@
       if (btn.hasAttribute('disabled')) btn.removeAttribute('disabled');
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const name = btn.dataset.name || 'this helper';
+        const name = btn.dataset.name || 'this specialist';
         openFor(name);
       });
     });

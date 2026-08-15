@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    tg-ep-zoom.js — "Take it to Zoom" floating call widget.
 
-   Layered ON TOP of the existing text-based office (Helpers/<ep>.html).
+   Layered ON TOP of the existing text-based office (SPECIALISTS/<office>.html).
    The text view stays the working surface. This widget is the call
    presence — voice in (Speak / Web Speech API) and voice out (Voice
    toggle / ElevenLabs TTS via tg-ep-chat-voice).

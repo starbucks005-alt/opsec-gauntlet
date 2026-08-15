@@ -1,6 +1,6 @@
 {
   "schema_version": "slice-1",
-  "description": "Bio (personal intro) and role (job description) scripts for each Operational Specialist. Each script is ~50-150 words to keep ElevenLabs cost and playback length manageable. Read by netlify/functions/tg-voice.js, which pairs the script with the voice_id from helpers_master.json. An office with a role but no bio simply has no bio audio.",
+  "description": "Bio (personal intro) and role (job description) scripts for each Operational Specialist. Each script is ~50-150 words to keep ElevenLabs cost and playback length manageable. Read by netlify/functions/tg-voice.js, which pairs the script with the voice_id from specialists_master.json. An office with a role but no bio simply has no bio audio.",
   "scripts": {
     "ms_ivy": {
       "bio": "I'm Ms. Ivy. I came to libraries the hard way. When I was a kid my mom got sick, and the wall of medical papers between me and understanding her illness felt impossible at first. So I taught myself to work through them. By my twenties I was teaching others to do the same. Then I went to school for library and information sciences and specialized in health. The skillset travels. The questions change, the method doesn't.",

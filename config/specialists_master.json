@@ -1,6 +1,7 @@
 {
   "schema_version": "slice-1",
-  "helpers": [
+  "description": "Operational Specialists of OPSEC Gauntlet. One entry per office in SPECIALISTS/. id matches data-tg-office-ep-id on the office page and data-character on the homepage corridor card. voice_id is the ElevenLabs voice used by tg-voice; an empty string means no voice is assigned and tg-voice will not serve audio for that office.",
+  "specialists": [
     {
       "id": "ms_ivy",
       "name": "Ms. Ivy",
@@ -98,6 +99,5 @@
       "page": "SPECIALISTS/ali-osint.html",
       "voice_id": ""
     }
-  ],
-  "description": "Operational Specialists of OPSEC Gauntlet. One entry per office in SPECIALISTS/. id matches data-tg-office-ep-id on the office page and data-character on the homepage corridor card. voice_id is the ElevenLabs voice used by tg-voice; an empty string means no voice is assigned and tg-voice will not serve audio for that office."
+  ]
 }

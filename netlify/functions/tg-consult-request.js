@@ -20,8 +20,12 @@
 
 const { createClient } = require('@supabase/supabase-js');
 
+// Offices that accept a Standalone Consult request. 'wren' is the patent and
+// prior-art consult sold on /wren.html; the rest are the corridor offices.
 const ALLOWED_EPS = new Set([
-  'wren', 'reid', 'arjun', 'matthew', 'carol', 'ivy', 'grant', 'zara', 'jules',
+  'wren',
+  'ivy', 'rao', 'iris', 'alicia', 'kimberly', 'sasha',
+  'leo', 'rowan', 'jax', 'yuki', 'ali',
 ]);
 
 const NAME_CAP    = 120;

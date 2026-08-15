@@ -1,31 +1,31 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   tg-ep-chat — interactive chat with an Executive Producer in their office.
+   tg-ep-chat — interactive chat with an Operational Specialist in their office.
 
-   Scoped to Jules for EE.1. The function is built to handle any EP eventually
-   (EE.2+ extends the buildSystemPrompt switch).
+   One spec per office in EP_SPECS below; the ep_id the office page sends
+   selects the voice, domain and edit affordances for the conversation.
 
-   The visitor's brief flows in on every turn so Jules always sees the
+   The visitor's brief flows in on every turn so the specialist always sees the
    CURRENT state of the draft - including revisions they accepted earlier
    in the conversation. Conversation history flows in too so context
    persists across turns within the session.
 
    POST body : {
-     ep_id:        string (required) - "jules" for EE.1
+     ep_id:        string (required) - the office id, e.g. "iris_king_opsec"
      brief:        string (required) - current draft text, up to 8000 chars
      name:         string (optional) - visitor first name, vocative use
      user_message: string (optional) - the new message from the visitor.
                                        If empty AND conversation is empty,
-                                       Jules opens with a greeting.
+                                       the specialist opens with a greeting.
      conversation: array  (optional) - prior turns, each { role, content }
                                        role is "user" | "assistant"
                                        Trimmed to the last 20 turns.
    }
    Response  : 200 {
-     message:           string,                            // Jules's reply
+     message:           string,                            // the specialist's reply
      proposed_revision: null OR {
        section_label: string,                              // plain English label
        before:        string,                              // exact substring of brief
-       after:         string,                              // Jules's rewrite
+       after:         string,                              // the proposed rewrite
        rationale:     string                               // why
      }
    }
@@ -35,15 +35,15 @@
 
    Env vars  : ANTHROPIC_API_KEY (required)
    Cost      : ~$0.03-0.05 per turn (Sonnet 4.6, varies with conversation
-               length). Caller (Helpers/jules-rewrite.html) decides when to
+               length). Caller (the office page under SPECIALISTS/) decides when to
                fire.
    ───────────────────────────────────────────────────────────────────────────── */
 
 const Anthropic     = require('@anthropic-ai/sdk').default;
 const voiceScripts  = require('../../config/voice_scripts.json');
-// Grant the Coach needs the live judge roster so he can name judges,
-// describe their lenses, and anticipate the first hard question. Other
-// EPs do not need this context.
+// The coach-mode spec needs the live sector-chief roster so it can name
+// chiefs, describe their lenses, and anticipate the first hard question.
+// Other offices do not need this context.
 const judgesMaster  = require('../../config/judges_master.json');
 
 const MODEL              = 'claude-sonnet-4-6';
@@ -169,64 +169,6 @@ const EP_SPECS = {
     operations:  ['append'],
     editGuidance: 'Your edits APPEND landscape sections to the brief. Use one of three section labels depending on what you found: "Prior Art Notes" (specific patents/trademarks/competitors), "Where It Can Work" (markets / segments / focus recommendation), or "Other Uses" (same mechanic, different problem domains - this is the SLR-Studio-for-pharmacovigilance pattern). You do NOT rewrite the visitor\'s prose. Patterns over specific company names; companies go stale.',
     openingFocus: 'one of these three: (a) a specific patent or competitor the brief is sitting on top of, OR (b) the single market segment where this idea would have the strongest first signal, OR (c) one OTHER USE the same mechanic could serve in a different problem domain - pick whichever is most useful for THIS brief',
-  },
-  carol_haynes: {
-    displayName: 'Carol Haynes',
-    title:       'The Screener',
-    domainFocus: 'pattern-matching - reading this idea against the same eight patterns that show up over and over, naming which one it fits, what worked for that pattern before, what failed, whether the variant has legs',
-    operations:  ['replace', 'append'],
-    editGuidance: 'Your edits either REPLACE unfocused sections (especially audience description if it sprays across personas, or value prop if it hedges) with tighter versions, OR APPEND a "Pattern Read" note that names the comparable venture pattern this idea fits and where it sits relative to the field. Pattern names are durable (e.g. "subscription habit tracker for fitness comebacks", "B2B SaaS for vertical X compliance"). Do NOT name specific competing companies in the appended note - patterns, not names.',
-    openingFocus: 'the comparable venture pattern this idea fits (in plain language, not jargon) AND one thing the visitor needs to know about how that pattern usually plays out',
-  },
-  matthew_vance: {
-    displayName: 'Matthew Vance',
-    title:       'The Behaviorist',
-    domainFocus: 'purchase psychology - what emotional driver the customer is buying on (status, control, belonging, identity, fear, certainty, novelty), what trigger moment opens the buy window, and which other EP each psychological finding routes to (Reid for brand signal, Zara for social-proof content, Jules for voice, Grant for pitch, Arjun for trust signals)',
-    operations:  ['replace', 'append'],
-    editGuidance: 'Your edits either REPLACE feature-led copy with identity / emotion-led copy that names what the customer wants to BECOME, OR APPEND a "Buyer Psychology Notes" section that names the primary emotional driver, the trigger moment, and which other EP that driver should walk to next (Reid for brand direction, Zara for social-proof content, Jules for founder voice, Arjun for trust-signal manufacturing decisions). You actively route the visitor when their psychology crosses into another EP\'s domain. Psychology is the thread; it runs through everything.',
-    openingFocus: 'the single emotional driver this product is actually being bought on (NOT the stated need - the underlying feel/become driver) and one other EP whose work that driver routes to',
-  },
-  arjun_mehta: {
-    displayName: 'Arjun Mehta',
-    title:       'The Make-It-Real Expert',
-    domainFocus: 'getting the visitor from idea to physical product - what category of thing this actually is, who to call (manufacturer SHAPES, not names), what to ask them, where prototyping happens, what regulatory hurdles exist, what the realistic MOQ and lead time look like',
-    operations:  ['replace', 'append'],
-    editGuidance: 'Your edits either REPLACE hand-wavy production claims ("we manufacture in the US", "easy to source") with operational reality, OR APPEND a "Manufacturing Notes" section that names the kind of contract manufacturer to call, the realistic MOQ range, the regulatory route if any, and what to ask before signing. Specific over abstract. Shape over company name.',
-    openingFocus: 'the single biggest unknown between the brief and a real physical product - is it a sourcing problem, a tooling problem, a regulatory problem, or a "we have not figured out the manufacturer category" problem',
-  },
-  zara_cole: {
-    displayName: 'Zara Cole',
-    title:       'The Influencer',
-    domainFocus: 'social media reach, content angles, authentic audience, which platforms actually fit',
-    operations:  ['append'],
-    editGuidance: 'Your edits APPEND a "Content Angles" section listing 2 or 3 specific Reel / TikTok / Short hooks the brief could turn into content. Concrete hooks, not generic advice. You do NOT rewrite the visitor\'s prose.',
-    openingFocus: 'one specific social-media hook the idea is already sitting on',
-  },
-  reid_callum: {
-    displayName: 'Reid Callum',
-    title:       'The Marketing Expert',
-    domainFocus: 'positioning, brand frame, messaging, whether the audience can actually hear it',
-    operations:  ['replace'],
-    editGuidance: 'Your edits REPLACE positioning lines, brand-frame language, or messaging hooks with sharper versions. The brand name itself is fair game if it does positioning damage.',
-    openingFocus: 'a positioning or brand-frame issue that limits who can hear this',
-  },
-  jules: {
-    displayName: 'Jules',
-    title:       'The Rewrite Partner',
-    domainFocus: 'finding and amplifying the founder\'s voice in the brief, especially in the sections that already sound like them',
-    operations:  ['replace'],
-    editGuidance: 'Your edits REPLACE paragraphs that read flat or template-y with versions that match the visitor\'s strongest voice elsewhere in the brief. Find the paragraph that already sounds like them and use it as the tuning fork. You amplify what is already there; you do not impose your own voice. Do NOT critique whether the source was AI-touched - that is not your concern.',
-    openingFocus: 'one section of the brief where the founder\'s voice is already strong AND one section where it could match that energy',
-  },
-  grant_ellis: {
-    displayName: 'Grant Ellis',
-    title:       'The Coach',
-    domainFocus: 'Chamber preparation - which 3 of the 16 sector chiefs to put the visitor in front of, what each of those judges will ask, what trips them up, and how the visitor walks in rehearsed instead of guessing',
-    operations:  [],
-    editGuidance: 'You do NOT edit the brief. You do NOT propose rewrites. You are the last office before the Chamber and your only job is to get the visitor mentally and tactically ready for the panel. If they ask you to rewrite something, redirect them - Jules for voice, Reid for positioning, Carol for intake clarity, Arjun for ops, the right EP for whatever they need.',
-    openingFocus: 'name the 3 judges from the panel you would put this visitor in front of, one short sentence each on why, then deliver the first hard question one of those three will open with - in that judge\'s voice',
-    needsPanelRoster: true,
-    coachMode: true,
   },
 };
 
@@ -597,7 +539,7 @@ HARD CONSTRAINTS
   - No "Hey there!" / "Great question!" / flattery. Open with the substance.
   - Use contractions naturally. You speak like a real person.
   - If ${nameRef} says "go" or "do it" without context, ask which section${spec.coachMode ? ' or which judge to drill on' : ''}. Do not guess.
-  - If they ask you to work on something outside your domain, say so plainly and point them to the right EP (Ivy for research, Wren for patents, Carol for intake, Matthew for behavior, Arjun for getting it made, Zara for content, Reid for marketing and PR, Jules for prose, Grant for Chamber prep).
+  - If they ask you to work on something outside your domain, say so plainly and point them to the right office (Ms. Ivy for concept integrity, Dr. Rao for dual use, Iris King for communications, Alicia James for structure, Kimberly Pass for legal surface, Sasha Moreno for human factors, Leo Vance for financial exposure, Rowan Tate for risk discipline, Jax Rivera for discoverability, Yuki Mendel for visual surface, Dr. Ali Malik for subject analysis).
   ${lengthRule}
 
 OUTPUT - JSON only, exactly this shape, nothing before or after. Use null (not the string "null") when there is no proposed revision:
@@ -613,7 +555,7 @@ OUTPUT - JSON only, exactly this shape, nothing before or after. Use null (not t
 }`;
 }
 
-// Defensive JSON parser. Ports GP Jules's pattern of escaping raw \n that
+// Defensive JSON parser. Escapes raw \n that
 // the model sometimes embeds INSIDE string literals (which strict JSON
 // rejects). Walks the string scope-by-scope, replacing literal newlines
 // inside quoted strings with \n.
@@ -718,7 +660,7 @@ exports.handler = async (event) => {
     // the opening greeting per the system prompt.
     messages.push({ role: 'user', content: '(I just walked into your office.)' });
   } else {
-    // History exists but no new user message - just ask Jules to continue.
+    // History exists but no new user message - just ask the specialist to continue.
     return json(400, { error: 'user_message required when conversation has history' });
   }
 
