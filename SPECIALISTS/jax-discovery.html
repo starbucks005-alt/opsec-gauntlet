@@ -77,12 +77,87 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
 .sp-cta p{font-family:'Public Sans',sans-serif;font-style:italic;color:var(--text-dim);font-size:1.05rem;margin-bottom:1.4rem;}
 .sp-cta-btn{display:inline-block;padding:0.9rem 2rem;background:var(--blue);color:#fff;font-family:'Public Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;text-decoration:none;transition:background 0.2s;}
 .sp-cta-btn:hover{background:var(--blue-light);}
+
+  /* ── ETL / USWDS shell (overrides the pre-rebrand topbar above) ─────────── */
+  :root{
+    --etl-blue:#4C7BA3; --stamp-blue:#28527a;
+    --etl-black:#1E1E1E; --uswds-gold:#F0B429; --gold-dark:#c27500;
+  }
+  .usa-banner{
+    background:#162e51;padding:0.45rem 2rem;
+    font-family:'Public Sans',sans-serif;font-size:0.72rem;
+    color:rgba(255,255,255,0.82);display:flex;align-items:center;
+    gap:0.55rem;flex-wrap:wrap;
+  }
+  .usa-banner-text strong{color:#fff;font-weight:600;}
+  .tg-topbar{
+    display:flex;align-items:center;padding:0 2rem;height:62px;
+    background:var(--stamp-blue);border-bottom:3px solid var(--uswds-gold);
+    position:sticky;top:0;z-index:100;gap:1.2rem;backdrop-filter:none;
+  }
+  .tg-topbar-wordmark{display:flex;align-items:center;gap:0.5rem;text-decoration:none;flex-shrink:0;}
+  .tg-topbar-wordmark-etl{
+    font-family:'Spectral',serif;font-size:0.78rem;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);
+  }
+  .tg-topbar-sep{width:1px;height:26px;background:rgba(255,255,255,0.22);}
+  .tg-topbar-program{
+    font-family:'Spectral',serif;font-size:1.1rem;font-weight:700;
+    color:#fff;text-decoration:none;white-space:nowrap;
+  }
+  .tg-topbar-program em{font-style:italic;color:var(--uswds-gold);}
+  .tg-topbar-nav{margin-left:auto;display:flex;gap:1.8rem;align-items:center;}
+  .tg-topbar-nav a,.tg-topbar-back{
+    font-family:'Public Sans',sans-serif;font-size:0.68rem;font-weight:600;
+    letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.78);
+    text-decoration:none;transition:color 0.18s;
+  }
+  .tg-topbar-back{margin-left:auto;}
+  .tg-topbar-nav a:hover,.tg-topbar-nav a.is-active,.tg-topbar-back:hover{color:var(--uswds-gold);}
+  .usa-identifier{background:#1b1b1b;color:rgba(255,255,255,0.7);font-family:'Public Sans',sans-serif;margin-top:4rem;}
+  .usa-identifier__section{border-top:1px solid rgba(255,255,255,0.1);}
+  .usa-identifier__section--masthead{border-top:4px solid var(--etl-blue);}
+  .usa-identifier__container{max-width:1180px;margin:0 auto;padding:1.8rem 2rem;display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+  .usa-identifier__logo-img{
+    width:44px;height:44px;border-radius:50%;background:var(--etl-blue);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Spectral',serif;font-size:0.58rem;font-weight:700;
+    color:#fff;letter-spacing:0.06em;text-align:center;line-height:1.2;
+    text-decoration:none;flex-shrink:0;
+  }
+  .usa-identifier__identity{flex:1;}
+  .usa-identifier__identity-domain{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.88);letter-spacing:0.04em;}
+  .usa-identifier__identity-disclaimer{font-size:0.72rem;color:rgba(255,255,255,0.48);margin-top:0.18rem;}
+  .usa-identifier__identity-disclaimer a{color:rgba(255,255,255,0.65);text-decoration:underline;text-underline-offset:2px;}
+  .usa-identifier__section--required-links .usa-identifier__container{justify-content:center;padding:1rem 2rem;}
+  .usa-identifier__required-links-list{display:flex;flex-wrap:wrap;list-style:none;padding:0;margin:0;justify-content:center;}
+  .usa-identifier__required-link{font-size:0.72rem;color:rgba(255,255,255,0.55);text-decoration:none;padding:0.22rem 1.1rem;border-right:1px solid rgba(255,255,255,0.12);display:inline-block;transition:color 0.15s;}
+  .usa-identifier__required-links-item:last-child .usa-identifier__required-link{border-right:none;}
+  .usa-identifier__required-link:hover{color:rgba(255,255,255,0.88);}
+  .usa-identifier__section--usagov .usa-identifier__container{justify-content:center;padding:0.85rem 2rem;}
+  .usa-identifier__usagov-description{font-size:0.68rem;color:rgba(255,255,255,0.38);text-align:center;}
+  .usa-identifier__usagov-description a{color:rgba(255,255,255,0.52);text-decoration:underline;text-underline-offset:2px;}
+  @media(max-width:680px){.usa-banner{padding:0.4rem 1.2rem;}.tg-topbar{padding:0 1.2rem;}.tg-topbar-nav{gap:1rem;}}
 </style>
 </head>
 <body>
+<div class="usa-banner" aria-label="Official website of the Emerging Technologies Laboratory">
+  <svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true" focusable="false" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <rect width="16" height="11" fill="#B22234"/><rect y="1.57" width="16" height="1.57" fill="white"/>
+    <rect y="3.14" width="16" height="1.57" fill="#B22234"/><rect y="4.71" width="16" height="1.57" fill="white"/>
+    <rect y="6.29" width="16" height="1.57" fill="#B22234"/><rect y="7.86" width="16" height="1.57" fill="white"/>
+    <rect y="9.43" width="16" height="1.57" fill="#B22234"/><rect width="6.86" height="5.5" fill="#3C3B6E"/>
+  </svg>
+  <span class="usa-banner-text">An official program of the <strong>Emerging Technologies Laboratory</strong></span>
+</div>
+
 <div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
 <header class="tg-topbar">
-  <a class="tg-topbar-logo" href="/"><img src="../Favicon.png" alt="" aria-hidden="true">OPSEC Gauntlet</a>
+  <a class="tg-topbar-wordmark" href="https://emerging-tech-lab.com">
+    <span class="tg-topbar-wordmark-etl">ETL</span>
+  </a>
+  <div class="tg-topbar-sep"></div>
+  <a class="tg-topbar-program" href="/">OPSEC <em>Gauntlet</em></a>
   <a class="tg-topbar-back" href="index.html">&larr; The Corridor</a>
 </header>
 <div class="h-strip">
@@ -168,5 +243,42 @@ body{background:#fff;color:#1a1a1a;font-family:'Public Sans',sans-serif;font-siz
   <a class="sp-cta-btn" href="index.html">&larr; Return to The Corridor</a>
 </div>
 <div class="cls-banner">UNCLASSIFIED // FOR OFFICIAL USE ONLY</div>
+
+<!-- ── USWDS Identifier Footer ─────────────────────────────────────────────── -->
+<footer class="usa-identifier" aria-label="Agency identifier">
+  <section class="usa-identifier__section usa-identifier__section--masthead">
+    <div class="usa-identifier__container">
+      <a href="https://emerging-tech-lab.com" class="usa-identifier__logo-img" aria-label="Emerging Technologies Laboratory">ETL</a>
+      <div class="usa-identifier__identity">
+        <p class="usa-identifier__identity-domain">opsec-gauntlet.com</p>
+        <p class="usa-identifier__identity-disclaimer">
+          An official program of the <a href="https://emerging-tech-lab.com">Emerging Technologies Laboratory</a>,
+          Mission Possible Institute, LLC. Directed by Dr. Terry Oroszi.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--required-links">
+    <div class="usa-identifier__container">
+      <nav aria-label="Important links">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item"><a href="/about.html" class="usa-identifier__required-link">About</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/pricing.html" class="usa-identifier__required-link">Pricing</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/privacy.html" class="usa-identifier__required-link">Privacy Policy</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/accessibility.html" class="usa-identifier__required-link">Accessibility</a></li>
+          <li class="usa-identifier__required-links-item"><a href="/about.html#foia" class="usa-identifier__required-link">FOIA</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  <section class="usa-identifier__section usa-identifier__section--usagov">
+    <div class="usa-identifier__container">
+      <p class="usa-identifier__usagov-description">
+        Looking for U.S. government information and services? Visit <a href="https://usa.gov">USA.gov</a>
+      </p>
+    </div>
+  </section>
+</footer>
+
 </body>
 </html>
