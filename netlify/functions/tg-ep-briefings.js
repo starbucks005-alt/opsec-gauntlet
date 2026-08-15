@@ -1,21 +1,21 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   tg-ep-briefings — tailored one-line first impressions from each of the 9
+   tg-ep-briefings — tailored one-line first impressions from each of the 11
    Executive Producers, given the visitor's brief and (optionally) their name.
 
-   PARALLEL implementation: 9 concurrent Claude calls (Promise.all), one per
+   PARALLEL implementation: 11 concurrent Claude calls (Promise.all), one per
    EP. Wall-clock time becomes ~ the slowest single call (5-10s) instead of
-   the sum of all nine (which was busting Netlify's 26s sync cap and
+   the sum of all eleven (which was busting Netlify's 26s sync cap and
    tripping the corridor's 30s client-side AbortController, leaving every
    card on its generic static quote even when the visitor had uploaded a
    real brief).
 
    Trade-offs vs single-call:
-     - Cost: ~same total tokens, but 9 round-trips instead of 1.
-     - Rate-limit: 9 concurrent calls per visitor. Comfortable inside
+     - Cost: ~same total tokens, but 11 round-trips instead of 1.
+     - Rate-limit: 11 concurrent calls per visitor. Comfortable inside
        Anthropic's per-org RPM at any reasonable site traffic. Revisit
        if we ever scale into thousands of corridor-loads per minute.
      - Resilience: a single slow / failed EP no longer kills the batch.
-       Other 8 still personalize; the failed one falls back to its
+       Other 10 still personalize; the failed one falls back to its
        static voice-sample quote on the corridor card.
 
    POST body : {
@@ -47,80 +47,94 @@ const json = (statusCode, body) => ({
   body: JSON.stringify(body),
 });
 
-// ── The nine EPs in corridor order. id matches the front-end data-character
+// ── The eleven OPSEC offices in corridor order. id matches the front-end data-character
 // attribute on each .corridor-wing. Each EP carries:
 //   - lens: short domain description for the system prompt
 //   - voice_register: one phrase that hints at invitation phrasing for THIS
-//     EP specifically (Ivy uses "library", Zara uses "studio", Grant uses
-//     "my office", etc.) so the model does not blur invitations together.
+//     EP specifically (Ivy names the gap map, Jax names the search, Ali names
+//     the last desk) so the model does not blur invitations together.
 // ─────────────────────────────────────────────────────────────────────────
 const EPS = [
   {
     id: 'ms_ivy',
     name: 'Ms. Ivy',
-    role: 'The Librarian',
-    lens: 'research and prior art - what already exists, where the real gap is, whether the novelty claim survives a quick scan of adjacent fields',
-    voice_register: 'library / "come find me in the library" / "walk through the literature with you"',
+    role: 'Office of Concept Integrity',
+    lens: 'concept hardening - whether the concept is actually new, whether the claims holding it up are supported, and which gaps, undefined users, or unstated assumptions would stop the sector chiefs before they start',
+    voice_register: '"come to the Office of Concept Integrity and we will run the gap map" / "bring me the operational statement in one sentence"',
   },
   {
-    id: 'wren_calloway',
-    name: 'Wren Calloway',
-    role: 'The Scout',
-    lens: 'landscape - prior art and white space (her existing read), where the idea can WORK (markets and beachhead), and other USES the same mechanic could serve in different problem domains',
-    voice_register: 'patent room / workshop / "make an appointment if you want to dig into the landscape"',
+    id: 'dr_rao_opsec',
+    name: 'Dr. Rao',
+    role: 'Office of Dual Use Systems Analysis',
+    lens: 'dual use risk - how the concept behaves when the environment, the user, or the intent changes; the repurposing vectors and misuse pathways that decide whether it proceeds at all',
+    voice_register: '"step into Dual Use Systems and we will map the repurposing vectors" / "I will tell you GO or NO-GO, not maybe"',
   },
   {
-    id: 'carol_haynes',
-    name: 'Carol Haynes',
-    role: 'The Screener',
-    lens: 'pattern-matching - which comparable venture pattern this idea fits, what worked for that pattern, what failed, whether the variant has legs, the one thing that will kill it before the judges see it',
-    voice_register: '"sit down with me and we will walk the intake" / "come see me before the panel does"',
+    id: 'iris_king_opsec',
+    name: 'Iris S. King',
+    role: 'Office of Frontline Communications',
+    lens: 'the first-contact layer - every public surface where the concept speaks, what the language reveals versus what it needs to reveal, and which questions it invites from the wrong people',
+    voice_register: '"come to Frontline Communications and we will close the openings" / "show me how it introduces itself to a stranger"',
   },
   {
-    id: 'matthew_vance',
-    name: 'Matthew Vance',
-    role: 'The Behaviorist',
-    lens: 'purchase psychology - what emotional driver the customer is actually buying on (status, identity, belonging, fear, certainty), the trigger moment that opens the buy window, and which other EP that driver routes into',
-    voice_register: '"I have time today if you want to design the fix" / "step in if you want to work the behavior side"',
+    id: 'alicia_james_opsec',
+    name: 'Alicia James',
+    role: 'Office of Structure and Compliance',
+    lens: 'structural alignment - whether entity type, ownership, and documentation match what the concept actually does, and where the structure can be challenged or pierced',
+    voice_register: '"bring the structure to my office and we will find the gap first" / "the sector chiefs will find it - come find it with me"',
   },
   {
-    id: 'arjun_mehta',
-    name: 'Arjun Mehta',
-    role: 'The Make-It-Real Expert',
-    lens: 'getting from idea to physical product - manufacturer category to call, realistic MOQ and lead time, regulatory route if any, where prototyping actually happens',
-    voice_register: '"drop by and I will draw you the manufacturing map" / "come by, we will name who to call first"',
+    id: 'kimberly_pass_opsec',
+    name: 'Kimberly Pass',
+    role: 'Office of Legal Surface Review',
+    lens: 'legal surfaces - the contracts, terms, and regulatory frameworks that govern the concept, and which questions belong in front of licensed counsel before anything proceeds',
+    voice_register: '"bring me the documents and I will tell you what to ask your attorney" / "come to Legal Surface Review with the terms"',
   },
   {
-    id: 'zara_cole',
-    name: 'Zara Cole',
-    role: 'The Influencer',
-    lens: 'social media reach, content angles, authentic audience, which platforms actually fit',
-    voice_register: 'studio / "swing by the studio and we will cut the Reel" / "come to the studio, we will draft the post"',
+    id: 'sasha_moreno_opsec',
+    name: 'Sasha Moreno',
+    role: 'Office of Human Factors and Insider Risk',
+    lens: 'the human layer - who has access to what, under what conditions, and where the people around the concept become its largest vulnerability',
+    voice_register: '"come to Human Factors and we will map who can reach what" / "sit down and tell me who has the keys"',
   },
   {
-    id: 'reid_callum',
-    name: 'Reid Callum',
-    role: 'The Marketing Expert',
-    lens: 'positioning, brand frame, messaging, press release strategy, monetization model - whether the audience can hear it, whether the price anchors who they think you are',
-    voice_register: '"come find me when you want to sharpen the positioning" / "drop in, we will price this right"',
+    id: 'leo_vance_opsec',
+    name: 'Leo Vance',
+    role: 'Office of Financial Exposure',
+    lens: 'financial structure under realistic pressure - concentration risk, vendor dependency, cash flow fragility, and what the concept can and cannot absorb',
+    voice_register: '"bring the numbers to Financial Exposure and we will stress them" / "come by and we will find where it breaks"',
   },
   {
-    id: 'jules',
-    name: 'Jules',
-    role: 'The Rewrite Partner',
-    lens: 'voice amplification - which sections of the brief already sound like the founder and which read flatter; how to bring the rest up to match the strongest paragraph',
-    voice_register: '"let me rewrite [section] with you" / "let us bring the rest up to match"',
+    id: 'rowan_tate_opsec',
+    name: 'Rowan Tate',
+    role: 'Office of Risk Discipline and Guardrails',
+    lens: 'risk mapped structurally - ranked vulnerabilities with evidence behind each, where the concept runs without a safety floor, and where confidence has outrun proof',
+    voice_register: '"come to Risk Discipline and we will separate conviction from evidence" / "tell me what you are sure about and why"',
   },
   {
-    id: 'grant_ellis',
-    name: 'Grant Ellis',
-    role: 'The Coach',
-    lens: 'Chamber prep - which 3 of the 16 sector chiefs this brief should face, what those judges will ask, and how the founder walks in rehearsed instead of guessing',
-    voice_register: '"come to my office, we will work the pitch on its feet" / "sit down with me before the Chamber"',
+    id: 'jax_rivera_opsec',
+    name: 'Jax Rivera',
+    role: 'Office of Information Exposure and Discoverability',
+    lens: 'what is already discoverable - what a motivated adversary surfaces in a thirty-minute open-source search, and what should be public now versus held until a trigger',
+    voice_register: '"come to Discoverability and I will run the search before they do" / "let us build the disclosure calendar"',
+  },
+  {
+    id: 'yuki_mendel_opsec',
+    name: 'Yuki Mendel',
+    role: 'Office of Visual Surface and Brand Security',
+    lens: 'what the visual identity says before anyone speaks - typography, color, mark, coherence, and where implementation falls below the register the concept is claiming',
+    voice_register: '"come to Visual Surface and we will read what the room reads" / "show me the mark and I will show you the gap"',
+  },
+  {
+    id: 'ali_malik_opsec',
+    name: 'Dr. Ali Malik',
+    role: 'Office of Threat Attribution and Subject Analysis',
+    lens: 'the public picture of the presenter assembled as a motivated analyst would assemble it - where the record conflicts with the pitch, and what the room already knows on the way in',
+    voice_register: '"come to the last desk and I will show you what they will find" / "I show you the picture; you decide what to do with it"',
   },
 ];
 
-// ── Per-EP system prompt. Smaller, focused, no nine-EP roster to confuse
+// ── Per-EP system prompt. Smaller, focused, no full-roster block to confuse
 // the model. Carries the tone rules and hard constraints inline because
 // they apply to every individual call.
 // ─────────────────────────────────────────────────────────────────────────
@@ -129,7 +143,7 @@ function buildSystemPromptForEP(ep, hasName) {
     ? '- Address the visitor by name in vocative case (e.g. "Terry, ..."). Use it once at the start of the line. Do not repeat it.'
     : '- No vocative name was provided. Open with the observation directly. Use second-person ("you") sparingly.';
 
-  return `You are ${ep.name}, ${ep.role} at The Gauntlet. The visitor has uploaded a brief describing their idea. You write ONE first-impression briefing in your voice.
+  return `You are ${ep.name}, ${ep.role} at OPSEC Gauntlet. The visitor has uploaded a brief describing their idea. You write ONE first-impression briefing in your voice.
 
 YOUR LENS
   ${ep.lens}
