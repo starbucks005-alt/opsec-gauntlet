@@ -50,15 +50,17 @@ const BRIEF_TRUNC = 1800;
 
 // Canonical EP roster + role labels for the prompt + output validation.
 const EP_ORDER = [
-  { id: 'ms_ivy',        name: 'Ms. Ivy',        role: 'The Librarian',           focus: 'research, frameworks, prior literature, evidence gaps' },
-  { id: 'wren_calloway', name: 'Wren Calloway',  role: 'The Scout',               focus: 'patent / prior-art landscape, market scout, where else the mechanic could live' },
-  { id: 'carol_haynes',  name: 'Carol Haynes',   role: 'The Screener',            focus: 'pattern screening, audience narrowing, has-legs assessment' },
-  { id: 'matthew_vance', name: 'Matthew Vance',  role: 'The Behaviorist',         focus: 'buyer psychology, emotional drivers, trigger moments, silent objections' },
-  { id: 'arjun_mehta',   name: 'Arjun Mehta',    role: 'The Make-It-Real Expert', focus: 'manufacturing, regulatory route, operations, sourcing' },
-  { id: 'zara_cole',     name: 'Zara Cole',      role: 'The Influencer',          focus: 'founder-POV content, social channels, cultural fit, voice' },
-  { id: 'reid_callum',   name: 'Reid Callum',    role: 'The Marketing Expert',    focus: 'press release, brand direction, monetization, launch positioning' },
-  { id: 'jules',         name: 'Jules',          role: 'The Rewrite Partner',     focus: 'founder-voice rewrite, narrative spine, copy editing' },
-  { id: 'grant_ellis',   name: 'Grant Ellis',    role: 'The Coach',               focus: 'elevator speech for real-world rooms, panel rehearsal' },
+  { id: 'ms_ivy',              name: 'Ms. Ivy',       role: 'Office of Concept Integrity',                       focus: 'concept hardening, gap map, unsupported claims, assumptions requiring validation' },
+  { id: 'dr_rao_opsec',        name: 'Dr. Rao',       role: 'Office of Dual Use Systems Analysis',               focus: 'repurposing vectors, misuse pathways, environmental triggers, GO / NO-GO determination' },
+  { id: 'iris_king_opsec',     name: 'Iris S. King',  role: 'Office of Frontline Communications',                focus: 'first-contact surfaces, what the language reveals, questions it invites' },
+  { id: 'alicia_james_opsec',  name: 'Alicia James',  role: 'Office of Structure and Compliance',                focus: 'entity type, ownership, documentation, registrations, structural weak points' },
+  { id: 'kimberly_pass_opsec', name: 'Kimberly Pass', role: 'Office of Legal Surface Review',                    focus: 'contracts, terms, regulatory frameworks, the questions for licensed counsel' },
+  { id: 'sasha_moreno_opsec',  name: 'Sasha Moreno',  role: 'Office of Human Factors and Insider Risk',          focus: 'access architecture, role boundaries, insider threat vectors' },
+  { id: 'leo_vance_opsec',     name: 'Leo Vance',     role: 'Office of Financial Exposure',                      focus: 'concentration risk, vendor dependency, cash flow fragility, what it can absorb' },
+  { id: 'rowan_tate_opsec',    name: 'Rowan Tate',    role: 'Office of Risk Discipline and Guardrails',          focus: 'ranked structural vulnerabilities, missing guardrails, confidence versus evidence' },
+  { id: 'jax_rivera_opsec',    name: 'Jax Rivera',    role: 'Office of Information Exposure and Discoverability', focus: 'what is indexed and findable, disclosure timing, domain and brand surface' },
+  { id: 'yuki_mendel_opsec',   name: 'Yuki Mendel',   role: 'Office of Visual Surface and Brand Security',       focus: 'visual signal, credibility gap, what the room reads before anyone speaks' },
+  { id: 'ali_malik_opsec',     name: 'Dr. Ali Malik', role: 'Office of Threat Attribution and Subject Analysis', focus: 'the public picture of the presenter, contradictions with the pitch, pre-Chamber exposure' },
 ];
 
 const json = (statusCode, body) => ({

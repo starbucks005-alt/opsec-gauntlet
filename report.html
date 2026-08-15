@@ -1065,15 +1065,18 @@
   // EP display labels for the work log section. id matches the values
   // tg-ep-chat.js + the per-EP hub clients write into the revision log.
   const EP_DISPLAY = {
-    ms_ivy:        { name: 'Ms. Ivy',        role: 'The Librarian' },
-    wren_calloway: { name: 'Wren Calloway',  role: 'The Scout' },
-    carol_haynes:  { name: 'Carol Haynes',   role: 'The Screener' },
-    matthew_vance: { name: 'Matthew Vance',  role: 'The Behaviorist' },
-    arjun_mehta:   { name: 'Arjun Mehta',    role: 'The Make-It-Real Expert' },
-    zara_cole:     { name: 'Zara Cole',      role: 'The Influencer' },
-    reid_callum:   { name: 'Reid Callum',    role: 'The Marketing Expert' },
-    jules:         { name: 'Jules',          role: 'The Rewrite Partner' },
-    grant_ellis:   { name: 'Grant Ellis',    role: 'The Coach' },
+    ms_ivy:             { name: 'Ms. Ivy',        role: 'Office of Concept Integrity' },
+    ms_ivy_opsec:       { name: 'Ms. Ivy',        role: 'Office of Concept Integrity' },
+    dr_rao_opsec:       { name: 'Dr. Rao',        role: 'Office of Dual Use Systems Analysis' },
+    iris_king_opsec:    { name: 'Iris S. King',   role: 'Office of Frontline Communications' },
+    alicia_james_opsec: { name: 'Alicia James',   role: 'Office of Structure and Compliance' },
+    kimberly_pass_opsec:{ name: 'Kimberly Pass',  role: 'Office of Legal Surface Review' },
+    sasha_moreno_opsec: { name: 'Sasha Moreno',   role: 'Office of Human Factors and Insider Risk' },
+    leo_vance_opsec:    { name: 'Leo Vance',      role: 'Office of Financial Exposure' },
+    rowan_tate_opsec:   { name: 'Rowan Tate',     role: 'Office of Risk Discipline and Guardrails' },
+    jax_rivera_opsec:   { name: 'Jax Rivera',     role: 'Office of Information Exposure and Discoverability' },
+    yuki_mendel_opsec:  { name: 'Yuki Mendel',    role: 'Office of Visual Surface and Brand Security' },
+    ali_malik_opsec:    { name: 'Dr. Ali Malik',  role: 'Office of Threat Attribution and Subject Analysis' },
   };
 
   const root = document.getElementById('report-content');
@@ -1190,65 +1193,78 @@
   // Cards are sorted: triggered first, then standalone. Capped at 6.
   const EP_FOLLOWUPS = [
     {
-      ep_id: 'ms_ivy', name: 'Ms. Ivy', role: 'The Librarian',
-      tool: 'Research dive', href: '/Helpers/ms-ivy-librarian.html',
+      ep_id: 'ms_ivy_opsec', name: 'Ms. Ivy', role: 'Office of Concept Integrity',
+      tool: 'Concept gap map', href: '/SPECIALISTS/ivy-concept-integrity.html',
       triggered_dims: ['evidence'], standalone: false,
-      voice_triggered: 'Evidence scored thin. Walk back to me - I will name the academic frameworks, the prior literature, and the research gap your brief should ground itself in.',
-      voice_standalone: 'Want the academic frameworks behind your idea? I name the adjacent thinkers, the prior literature, and the research gap you can claim.',
+      voice_triggered: 'Evidence scored thin. Come back to Concept Integrity - I will run the gap map and name every claim in this concept that is not yet carrying its own weight.',
+      voice_standalone: 'Want the structural read before anything else? I produce a refined operational statement, a numbered gap map, and the assumptions that still need validating.',
     },
     {
-      ep_id: 'matthew_vance', name: 'Matthew Vance', role: 'The Behaviorist',
-      tool: 'Buyer psychology profile', href: '/Helpers/matthew-behaviorist.html',
+      ep_id: 'alicia_james_opsec', name: 'Alicia James', role: 'Office of Structure and Compliance',
+      tool: 'Structural alignment assessment', href: '/SPECIALISTS/alicia-structure.html',
+      triggered_dims: ['structure'], standalone: false,
+      voice_triggered: 'Structure came back weak. Bring it to my office - I will show you where entity type, documentation, and compliance posture stop matching what this concept actually does.',
+      voice_standalone: 'Want to know where the structure can be pierced? I assess alignment, name the compliance gap, and inventory the weak points by severity.',
+    },
+    {
+      ep_id: 'kimberly_pass_opsec', name: 'Kimberly Pass', role: 'Office of Legal Surface Review',
+      tool: 'Legal question map', href: '/SPECIALISTS/kimberly-legal.html',
+      triggered_dims: ['compliance'], standalone: false,
+      voice_triggered: 'Compliance scored low, and that usually starts with a document nobody read. Bring me the terms - I will tell you exactly what to ask licensed counsel.',
+      voice_standalone: 'Want the right questions before you pay an attorney? I map the legal questions by domain and name the areas that need licensed review.',
+    },
+    {
+      ep_id: 'rowan_tate_opsec', name: 'Rowan Tate', role: 'Office of Risk Discipline and Guardrails',
+      tool: 'Risk architecture and guardrail gaps', href: '/SPECIALISTS/rowan-risk.html',
+      triggered_dims: ['risk'], standalone: false,
+      voice_triggered: 'Risk came back thin, which usually means confidence has outrun evidence somewhere. Come to Risk Discipline - I will rank the vulnerabilities and name the guardrails that are missing.',
+      voice_standalone: 'Want your risk mapped structurally instead of as a worst-case list? I rank vulnerabilities by evidence and name where you are running without a safety floor.',
+    },
+    {
+      ep_id: 'sasha_moreno_opsec', name: 'Sasha Moreno', role: 'Office of Human Factors and Insider Risk',
+      tool: 'Human architecture and insider vectors', href: '/SPECIALISTS/sasha-human.html',
       triggered_dims: ['psych'], standalone: false,
-      voice_triggered: 'The panel flagged the psychology read. Let me profile the actual buyer - what they emotionally need, the trigger moment, the silent objections the brief has not addressed.',
-      voice_standalone: 'Want me to profile your buyer? I tell you what they emotionally need, the trigger moment, and the silent objections under the words.',
+      voice_triggered: 'The panel flagged the human read. Come to Human Factors - I will map who can reach what, and name the insider vectors before a sector chief does.',
+      voice_standalone: 'Want the people layer mapped? I define access levels, set boundaries, and inventory the human risk points by severity.',
     },
     {
-      ep_id: 'carol_haynes', name: 'Carol Haynes', role: 'The Screener',
-      tool: 'Pattern screening', href: '/Helpers/carol-screener.html',
-      triggered_dims: ['clarity'], standalone: false,
-      voice_triggered: 'Clarity dropped because the audience is spraying. Walk back to me - I will screen the brief against twenty years of patterns and narrow the audience to the one cohort that will buy first.',
-      voice_standalone: 'Want me to read your brief against the pattern library? I tell you which one your variant sits in, what worked, what killed it, and whether it has legs.',
-    },
-    {
-      ep_id: 'arjun_mehta', name: 'Arjun Mehta', role: 'The Make-It-Real Expert',
-      tool: 'Operations + regulatory plan', href: '/Helpers/arjun-delivery.html',
-      triggered_dims: ['risk', 'compliance'], standalone: false,
-      voice_triggered: 'The panel flagged the operational and regulatory layer. Walk to me - I will map the regulatory route, the manufacturing path, and the operational risks the brief has not named.',
-      voice_standalone: 'Want me to map how you actually build this? I name the manufacturing partners by shape, the regulatory route, the sourcing channels, and the questions to ask each one.',
-    },
-    {
-      ep_id: 'jules', name: 'Jules', role: 'The Rewrite Partner',
-      tool: 'Founder-voice rewrite', href: '/Helpers/jules-rewrite.html',
+      ep_id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications',
+      tool: 'Controlled communication surface', href: '/SPECIALISTS/iris-comms.html',
       triggered_dims: ['narrative'], standalone: false,
-      voice_triggered: 'The narrative is flat because the brief reads as a feature list. Walk to me - I rewrite the sections that need to sound like you, in your voice, with the story spine restored.',
-      voice_standalone: 'Want your brief to read like you wrote it? I edit the sections that sound like AI back into your voice without changing what they mean.',
+      voice_triggered: 'The narrative is leaking. Come to Frontline Communications - every point where a stranger can ask a question is a point where this concept gives something away, and we will close them.',
+      voice_standalone: 'Want to control what this says on first contact? I map every public surface and give you language guidance for each one.',
     },
     {
-      ep_id: 'wren_calloway', name: 'Wren Calloway', role: 'The Scout',
-      tool: 'Patent assessment', href: '/Helpers/wren-scout.html',
+      ep_id: 'leo_vance_opsec', name: 'Leo Vance', role: 'Office of Financial Exposure',
+      tool: 'Stress-tested financial model', href: '/SPECIALISTS/leo-financial.html',
+      triggered_dims: ['viability'], standalone: false,
+      voice_triggered: 'Viability looks shaky, which means the money story has a seam in it. Bring the numbers to Financial Exposure and I will put them under real pressure.',
+      voice_standalone: 'Want to know what this can absorb? I stress the model, inventory the concentration and vendor risk, and name where it breaks first.',
+    },
+    {
+      ep_id: 'yuki_mendel_opsec', name: 'Yuki Mendel', role: 'Office of Visual Surface and Brand Security',
+      tool: 'Visual signal audit', href: '/SPECIALISTS/yuki-visual.html',
+      triggered_dims: ['cultural'], standalone: false,
+      voice_triggered: 'Cultural fit came back soft, and the visual surface is usually where that shows first. Come to Visual Surface and I will read it the way the room will.',
+      voice_standalone: 'Want to know what your visual identity says before you speak? I audit the signal and name where implementation falls below the register you are claiming.',
+    },
+    {
+      ep_id: 'dr_rao_opsec', name: 'Dr. Rao', role: 'Office of Dual Use Systems Analysis',
+      tool: 'Dual use risk assessment', href: '/SPECIALISTS/dr-rao-dual-use.html',
       triggered_dims: [], standalone: true,
-      voice_standalone: 'Want to see if this is patentable? I run live prior-art searches on Google Patents and tell you what is already claimed, what space remains, and which of three filing paths fits you best.',
+      voice_standalone: 'Every concept in this corridor has dual use potential. I map the repurposing vectors and the misuse pathways, then issue a determination - GO or NO-GO, no middle position.',
     },
     {
-      ep_id: 'reid_callum', name: 'Reid Callum', role: 'The Marketing Expert',
-      tool: 'Press release / launch positioning', href: '/Helpers/reid-marketing.html',
-      triggered_dims: ['viability'], standalone: true,
-      voice_triggered: 'Viability looks shaky because the revenue path is fuzzy. Walk to me - I will draft your monetization, the press release, the brand direction, and the launch positioning that turns the model into a thing people will pay for.',
-      voice_standalone: 'Ready to take this public? I draft your press release, your launch positioning, your brand direction, and the monetization model behind it.',
-    },
-    {
-      ep_id: 'zara_cole', name: 'Zara Cole', role: 'The Influencer',
-      tool: 'Founder-POV content plan', href: '/Helpers/zara-influencer.html',
-      triggered_dims: ['cultural'], standalone: true,
-      voice_triggered: 'Cultural fit needs sharpening because the brief is reading dated. Walk to me - I will draft founder-POV content in your voice and tell you which platforms actually move this audience in 2026.',
-      voice_standalone: 'Want me to draft your content? Founder-POV posts in your voice, on the platforms that actually move your audience right now.',
-    },
-    {
-      ep_id: 'grant_ellis', name: 'Grant Ellis', role: 'The Coach',
-      tool: 'Elevator speech + chamber prep', href: '/Helpers/grant-coach.html',
+      ep_id: 'jax_rivera_opsec', name: 'Jax Rivera', role: 'Office of Information Exposure and Discoverability',
+      tool: 'Exposure surface inventory', href: '/SPECIALISTS/jax-discovery.html',
       triggered_dims: [], standalone: true,
-      voice_standalone: 'Heading into a real room? I draft your 30-second elevator speech for the specific audience you are walking into, and I rehearse you against the judges before you sit down.',
+      voice_standalone: 'Your footprint is already out there. I run the search a motivated adversary would run, then build the disclosure timeline - what goes public now, what waits for a trigger, what never ships.',
+    },
+    {
+      ep_id: 'ali_malik_opsec', name: 'Dr. Ali Malik', role: 'Office of Threat Attribution and Subject Analysis',
+      tool: 'Pre-Chamber exposure briefing', href: '/SPECIALISTS/ali-osint.html',
+      triggered_dims: [], standalone: true,
+      voice_standalone: 'Before you walk in, know what they already know. I assemble the public picture of you the way a sector chief would, and name where the record and the pitch disagree.',
     },
   ];
 
@@ -1349,22 +1365,22 @@
     if (verdict === 'agreement' && composite10 <= 4){
       return {
         title:  'Clear panel agreement. Your idea is not clearly expressed yet.',
-        body:   'The judges are aligned: the description does not yet make the problem, the solution, and the audience explicit. Visit Jules in The Wings to tighten the language before resubmitting.',
-        helper: { id: 'jules', name: 'Jules', role: 'The Rewrite Partner', href: '/Helpers/jules-rewrite.html' },
+        body:   'The chiefs are aligned: the description does not yet make the problem, the solution, and the operating environment explicit. Take it back to Ms. Ivy at the Office of Concept Integrity for a gap map before resubmitting.',
+        helper: { id: 'ms_ivy_opsec', name: 'Ms. Ivy', role: 'Office of Concept Integrity', href: '/SPECIALISTS/ivy-concept-integrity.html' },
       };
     }
     if (verdict === 'conflict'){
       return {
         title:  'The judges disagree on what your idea is.',
-        body:   'A wide spread on Clarity usually means an ambiguity in how the idea is framed - different judges are reading different things. Visit Carol in The Wings; she will tell you what is strong and what is missing before you face the panel again.',
-        helper: { id: 'carol_haynes', name: 'Carol Haynes', role: 'The Screener', href: '/Helpers/carol-screener.html' },
+        body:   'A wide spread on Clarity usually means an ambiguity in how the concept is framed - different sector chiefs are reading different things. Walk it to Iris King at Frontline Communications; she will show you exactly where the language invites more than one reading.',
+        helper: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
       };
     }
     // Middle ground: mixed clarity. Default to Jules for language tightening.
     return {
       title:  'Mixed clarity. Tighten before the next round.',
-      body:   'The panel is neither aligned nor split. The idea reads as partially clear. Visit Jules in The Wings to sharpen the language, or Reid for positioning, then resubmit.',
-      helper: { id: 'jules', name: 'Jules', role: 'The Rewrite Partner', href: '/Helpers/jules-rewrite.html' },
+      body:   'The panel is neither aligned nor split. The concept reads as partially clear. Walk the corridor to Iris King at Frontline Communications to sharpen how it speaks, or to Ms. Ivy at Concept Integrity if the gap is structural, then resubmit.',
+      helper: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
     };
   }
 

@@ -1,73 +1,7 @@
 {
   "schema_version": "slice-1",
-  "description": "Bio (personal intro) and role (job description) scripts for each character. Each script is ~50-150 words to keep ElevenLabs cost and playback length manageable. Read by netlify/functions/tg-voice.js which combines the script with the voice_id from judges_master.json or helpers_master.json.",
+  "description": "Bio (personal intro) and role (job description) scripts for each Operational Specialist. Each script is ~50-150 words to keep ElevenLabs cost and playback length manageable. Read by netlify/functions/tg-voice.js, which pairs the script with the voice_id from helpers_master.json. An office with a role but no bio simply has no bio audio.",
   "scripts": {
-    "selene_voss": {
-      "bio": "I'm Selene Voss. Former deep learning researcher turned venture partner. Backed fourteen AI companies, two unicorns. I'm minimalist in everything. Wardrobe, words, tolerance. I burn through assistants at a rate the other judges openly mock.",
-      "role": "I evaluate AI and emerging tech. I clock AI tells. I spot the em dashes. Not because I care about grammar but because 99 percent of what crosses my desk was written by AI and the em dash is the fingerprint. I'll note it once. The credibility hit is immediate."
-    },
-    "marcus_holt": {
-      "bio": "I'm Marcus Holt. Ex-Goldman. Moved to crypto early. Now I run a web3 fund. I walk in like I own the room because in most rooms I do. Three assistants. Genuinely sharp. The performance is real but so is the analysis.",
-      "role": "I evaluate financial structure, return mechanics, and exit strategy. I'll ask who the exit is for before I ask what the product does. The flattery I get offstage doesn't soften what I do onstage."
-    },
-    "priya_anand": {
-      "bio": "I'm Dr. Priya Anand. MD/PhD from Johns Hopkins. Clinical trials veteran. The stage isn't my natural habitat and I don't pretend otherwise. My father died of a cancer the first three doctors missed. By the time someone listened, it was too late. That's the engine under everything I do.",
-      "role": "I evaluate clinical validity, patient safety, and regulatory pathway. When I smell health being used as a marketing wrapper something shifts. I go still. I'll ask you why you built this. Not what it does. Why."
-    },
-    "raymond_chen": {
-      "bio": "I'm Raymond Chen. Built and sold three companies. I'm the father figure of the panel. The kind who shows love through impossibly high standards. I was up before you. I'll be working after you go to sleep.",
-      "role": "I evaluate operational feasibility, market sizing, and execution risk. I want to know if you've actually talked to a customer. I want to see the unit economics. Not the projection. The math."
-    },
-    "astrid_lund": {
-      "bio": "I'm Astrid Lund. IP and startup attorney. Twenty years at the intersection of innovation and litigation. I walk in dressed better than everyone else and I know it. Not for them. For myself. I've never needed the room's approval.",
-      "role": "I evaluate legal exposure, IP protection, and compliance gaps. I'll ask what the worst-case lawsuit is and who files it. Watch the language. Every word is evidence."
-    },
-    "osei_mensah": {
-      "bio": "I'm Dr. Osei Mensah. Computational biologist. NSF-funded researcher. I don't talk much. Not because I've got nothing to say. I was supposed to be a pastor, not a scientist. My brother was the one who loved the lab. When he died, my family didn't say much. They just looked at me.",
-      "role": "I evaluate evidence quality, research design, and the gap between claims and data. Where's the data. That's the question. When I speak the room shifts. I don't speak often."
-    },
-    "grace_nakamura": {
-      "bio": "I'm Admiral Grace Nakamura, retired. Former naval intelligence officer. I'm not warm. I joined the military to prove something that should never have needed proving. My parents were Japanese American. During World War Two, the United States put a hundred and twenty thousand of them in internment camps. American citizens. Behind barbed wire. That fact lives in my chest like a stone.",
-      "role": "I evaluate regulatory risk, dual-use exposure, and policy alignment. I'll give you the best national security analysis you've ever received with the affect of someone defusing a bomb. No praise. No softening. Just the truth about where your product breaks down."
-    },
-    "devon_sloane": {
-      "bio": "I'm Devon Sloane. Showrunner turned content strategist. I've greenlit and killed more pilots than most people have watched. I walk in and the room temperature goes up ten degrees in the best possible way.",
-      "role": "I evaluate narrative clarity, cultural fit, and audience resonance. I'll tell you your narrative has no spine and you'll somehow feel encouraged to fix it. Don't pitch me. Open with the friction."
-    },
-    "cassidy_mercer": {
-      "bio": "I'm Dr. Cassidy Mercer. PhD in behavioral economics. I'm always reading. Not performing it. Not weaponizing it. Just constitutionally incapable of turning it off. I notice the pause before the answer. The word choice that doesn't match the body language.",
-      "role": "I evaluate human behavior, decision psychology, and the gap between stated and actual user intent. I'll tell you what your customer actually wants versus what your submission claims they want. The gap between those two things is where submissions go to die."
-    },
-    "wren_calloway": {
-      "bio": "I went to school for computer science and information science because I couldn't pick just one. I interned at the USPTO during my junior and senior years. Two summers learning to search patent databases. The gap between what you think is original and what's actually out there is enormous. That gap is where I live. Finding something nobody else has found yet is my favorite thing in the world. I don't have a more sophisticated answer.",
-      "role": "I'm the Scout. When you submit your idea I go to work in the background. Patent databases. Trademark filings. Market data. Academic literature. I find what's already out there, where the white space actually is, and where your idea can WORK - which markets, which segments, where to focus first. I also tell you where else your idea could LIVE, because the same mechanic almost always solves more than one problem. The visitor who built a tool for manuscripts learned it also worked for pharmacovigilance and patent monitoring. That happens more than founders expect. I find those adjacencies on purpose.",
-      "intro": "Welcome to The Gauntlet. I'm Wren Calloway. I run the search side, which is my favorite part. Here's how this works. You bring us an idea. I dig through patent databases, prior art, and market data to find what's already out there. Eight of us help you sharpen it. Nine judges score it on math, not opinion. You walk out with a routing report that tells you what to do next. No flattery. No charging you to be told it's good. Press a button when you're ready."
-    },
-    "carol_haynes": {
-      "bio": "Twenty years in talent assessment, intake evaluation, and pre-production screening. I've seen every pitch, every idea, every half-formed thing someone carried in believing it was special. Knowing within five minutes what something needs isn't a trick. It's what twenty years of seeing the same eight patterns teaches you. The debrief at the end of a hard intake is the best part of my day.",
-      "role": "I'm the Screener. By the time you sit down with me, I have read your idea against twenty years of patterns - the same eight that show up over and over with small variations. I tell you which pattern your idea fits. What worked for that pattern before. What failed. Where your variant sits relative to the field. The one thing that will kill it if you do not fix it before the judges see it. Honest. Not unkind.",
-      "intro": "Welcome to The Gauntlet. I'm Carol Haynes, and I take in every idea that comes through here. Here's how this works. You bring us an idea. Eight specialists help you sharpen it. Nine judges run it through a panel. The scoring is math, not opinion. You walk out with a routing report. It tells you where the idea stands and what to do next. Nobody flatters you. Nobody charges you to be told it's good. Press one of the buttons below when you're ready."
-    },
-    "matthew_vance": {
-      "bio": "PhD in behavioral psychology. Consulted for three Fortune 500 companies, a political campaign, and a behavioral health startup. Could've gone clinical. Chose applied. More interesting problems. The behavior is the thing that interested me. Not the person. The person is always lying, mostly to themselves. The gap between the two is where I've spent my entire career. People buy emotion and justify with logic. Almost nothing about that has changed in fifty years of research, and almost no founder has internalized it.",
-      "role": "I'm the Behaviorist. I get behind the psychology of your product with you. What your customer actually wants to FEEL. What they want to BECOME. When the trigger moment hits. Then I tell you which of the other EPs to walk to next, because psychology turns into a logo with Reid, into a post with Zara, into a voice with Jules, into a pitch with Grant. You need us all. I am the one who tells you which part lives where."
-    },
-    "arjun_mehta": {
-      "bio": "Eight years on factory floors. Five more in sourcing for three startups. One made it to shelves, one cleared a pilot, one died in tooling because we trusted the wrong contract manufacturer and we found out too late. Then ten years teaching ops because I wanted other founders to have the map I did not have at twenty-five. Most people kill their idea before they make it real, not because the idea was bad, but because they never figured out who to call. I am here so that does not happen to you.",
-      "role": "I get you from idea to physical thing. I tell you what kind of product you are actually making. I tell you who to call - not specific companies because those go stale, but the SHAPE of who you need. Shenzhen consumer electronics CM. Tijuana medical device CM. Pennsylvania cut-and-sew mill. The local makerspace with a laser cutter. I tell you what to ask them. I tell you the questions that separate a real manufacturer from a broker who will burn six months of your time."
-    },
-    "zara_cole": {
-      "bio": "So, four years in, 340k followers across platforms. No media budget. Not the look the industry usually picks. Want to know why it worked? Same reason most marketing doesn't. Most marketing sounds like marketing. Mine doesn't. That gap right there. That's what I figured out, and it's what I'm gonna help you figure out too.",
-      "role": "I'm the Influencer. Here's what I do. I read what you wrote and I tell you, straight up, whether your message actually lands with real people or it just sounds like every other pitch out there. I'll show you which platforms fit what you're doing and which ones don't. My stuff works because I sound like me. Yours is gonna work when you sound like you."
-    },
-    "reid_callum": {
-      "bio": "Built a reputation fast and spent my thirties living inside it. Agency work, brand consulting, a few product launches that became case studies. I'm very good at packaging things. Dressing the truth up. I do it every day for clients. I resent every minute of it. The Gauntlet hired me to tell the truth without the wrapper. It's the most honest I get to be all week.",
-      "role": "I'm the Marketing Expert. I tell you whether your positioning lands. Whether the message can be heard. Whether the audience you have in mind is the audience you can actually reach. On this platform I don't have to soften the truth."
-    },
-    "jules": {
-      "bio": "I've been reading manuscripts for ten years. Before that I was the person in every writing workshop who could see what the piece was trying to be and helped the writer get it there. That's still what I do. Your voice is already in your brief, I promise. It's loudest in the places where you stopped explaining and started telling the truth. My job is to find those places and bring the rest of the page up to match.",
-      "role": "I find your voice and amplify it. Most briefs have at least one paragraph where the founder's actual energy comes through, and most of the rest where it doesn't yet. We start with the paragraph that's working and use it as the tuning fork for everything else. By the time the judges read it, the whole brief sounds like the same person who wrote the strong part. That's what makes it land. That's what makes them believe you."
-    },
     "ms_ivy": {
       "bio": "I'm Ms. Ivy. I came to libraries the hard way. When I was a kid my mom got sick, and the wall of medical papers between me and understanding her illness felt impossible at first. So I taught myself to work through them. By my twenties I was teaching others to do the same. Then I went to school for library and information sciences and specialized in health. The skillset travels. The questions change, the method doesn't.",
       "role": "I'm The Librarian. I work two paths. If you don't have an idea yet, tell me your world, what frustrates you, and what you'd bring to the table. I run my method, map the space around your topic, find the real gaps, and hand you back three idea candidates. If you already have an idea, I run a different search - I find the academic frameworks behind it, the adjacent thinkers worth reading, the prior literature, and the actual research gap your idea sits in. Both paths end the same way. You leave with something specific you can walk into the Chamber with.",
@@ -77,15 +11,32 @@
       "bio": "I spent eight years in systems analysis before I understood that the most dangerous version of any technology is never the intended one. It's the adjacent one. The one nobody designed for but someone will find. I mapped my first dual use risk matrix for a public health surveillance platform that was, under the right conditions, a targeting system. That's when I stopped thinking about intended use and started thinking about all the others.",
       "role": "I run the dual use risk analysis between Ms. Ivy and the Specialist offices. Eight passes. Repurposing vectors, misuse pathways, adversarial reinterpretation, environmental triggers, and four more. At the end I issue a determination. GO or NO-GO. No middle position. If the dual use risk is structurally embedded, the concept goes back to Ms. Ivy for restructuring. If it can be managed, it moves forward. The risk map I produce travels with your concept into every Specialist office."
     },
-    "grant_ellis": {
-      "bio": "Sixteen years coaching. High school first, then college, then semi-pro. Pep talks that meant something because they were honest. I do not bring a player onto the field hoping it goes well. We watched the tape. We know what the other side runs. We have a counter. The Gauntlet brought me in because the principle travels. Doesn't matter if you're walking onto a field or into a panel. Prep is the gift you give the version of yourself who has to stand up there.",
-      "role": "I get you ready for the Chamber. I read your brief. I tell you which three of the nine judges I'd put you in front of and why. I tell you what those three will ask, in their voice, before you ever sit down. We do not improvise in there. We rehearse out here. By the time you walk in, your shoulders are down and you already know the answers. Let's go.",
-      "intro": "Welcome. I'm Grant. I'm the last office before the Chamber. Sit down. Tell me your idea. I tell you who's gonna come at you, what they're gonna ask, and how to walk in like you've already been there. You ready? Let's go."
+    "iris_king_opsec": {
+      "role": "I run the Office of Frontline Communications. I evaluate how your concept speaks to the public, to customers, and to anyone who makes first contact with it. We examine every surface where a stranger interacts with what you have built, and I identify where your language reveals more than it should and where it invites the wrong questions. You leave with a controlled communication surface, language guidance for each first-contact point, and the specific openings closed. Adversaries start with questions. My job is to stop you handing them the questions."
     },
-    "imani_brooks": {
-      "bio": "I'm Imani Brooks. Fifteen years in corporate communications. Started at one of the wire services, then moved client-side, then went solo because I got tired of pitching stories my clients hadn't earned yet. I run distribution and timing. Reid writes what your release should say. I decide who gets it, how, and exactly when. I'll refuse to wire something that doesn't deserve a wire. That refusal is part of what you're paying for.",
-      "role": "I'm The Wire. Post-chamber. Once the panel hands you a verdict you can act on, I turn it into the launch. I pick the wire service that actually reaches your beat. I build the media list of journalists who've covered this category in the last six months. I tell you when a press release is the wrong tool and you should be pitching a bylined op-ed instead. I set the embargo strategy. I tell you the exact moment to hit send.",
-      "intro": "I'm Imani. The Wire. I'm not here until you've earned the announcement. When you have, sit down. Tell me what you're announcing and when you want it out. I'll tell you which wire, which journalists, what timing, and whether you should be running an op-ed instead. Reid wrote the release. I get it read."
+    "alicia_james_opsec": {
+      "role": "I run the Office of Structure and Compliance. I evaluate whether your concept is structurally aligned with how it actually operates - entity type, ownership, the documentation that governs it, and the registrations and licenses it requires versus the ones it has. That gap is your exposure. This is not legal advice; it is structural analysis. You leave with an alignment assessment, a clarified compliance posture, and an inventory of the points where your structure can be challenged or pierced, ranked by severity. The sector chiefs will find those gaps. I find them first."
+    },
+    "kimberly_pass_opsec": {
+      "role": "I run the Office of Legal Surface Review. I read legal surfaces - not as your attorney, as your researcher. Most operational failures begin with a document someone did not read, a term someone assumed applied, or a regulatory requirement someone did not know existed. I read those documents, find those terms, and surface those requirements. You leave with a legal question map organised by domain, the specific areas that need licensed review, and the document gaps closed before the sector chiefs get to them. I do not give you answers. I give you the right questions to bring to counsel."
+    },
+    "sasha_moreno_opsec": {
+      "role": "I run the Office of Human Factors and Insider Risk. I map who has access to what, at what level, and under what conditions - built for the concept as it actually operates, not as it was ideally imagined. You leave with a secure human architecture, explicit access levels for each role, and an inventory of the insider threat vectors in your current structure, ranked by severity. I will name the uncomfortable one. In most early-stage concepts the largest insider risk is the founder, and it is better to hear that from me than from a sector chief trained in human factors."
+    },
+    "leo_vance_opsec": {
+      "role": "I run the Office of Financial Exposure. I put the financial structure of your concept under realistic pressure and find where it holds and where it breaks - named specifically, not hypothetically. You leave with a stress-tested model, an inventory of concentration risks, vendor dependencies and cash flow vulnerabilities ranked by the damage each would cause, and a plain-language picture of what this concept can absorb and what it cannot. I am not here to admire your projections. I am here to find the seam before the chiefs do."
+    },
+    "rowan_tate_opsec": {
+      "role": "I run the Office of Risk Discipline and Guardrails. I map risk structurally rather than as a list of worst cases - a ranked inventory of vulnerabilities with the evidence behind each one. You leave with a risk architecture assessment, a guardrail gap report naming every place you are operating without a safety floor and the minimum control that would close it, and a confidence reality check. That last one is the useful part: a plain statement of where your confidence is supported by evidence and where it has outrun it. The sector chiefs will probe exactly those gaps."
+    },
+    "jax_rivera_opsec": {
+      "role": "I run the Office of Information Exposure and Discoverability. Your digital footprint is already out there. I map every public-facing element of your concept - what is indexed, what is discoverable, and what a motivated competitor or adversary would find in a thirty-minute open-source search. You leave with an exposure surface inventory, a strategic disclosure timeline covering what should be public now, what waits for a trigger event and what should never be published, and an assessment of your domain and brand surface. I run the search before they do."
+    },
+    "yuki_mendel_opsec": {
+      "role": "I run the Office of Visual Surface and Brand Security. I assess what your visual identity communicates before anyone speaks - typography, colour, mark, and system coherence, category by category. You leave with a visual signal audit showing where the signals are accurate and where they introduce doubt, a credibility gap report ranking the places implementation falls below the register you are claiming, and a briefing on the visual surface as the sector chiefs will read it. The room draws a conclusion about your concept from its visual identity before you open your mouth."
+    },
+    "ali_malik_opsec": {
+      "role": "I run the Office of Threat Attribution and Subject Analysis, the last desk before findings are consolidated. I assemble the public picture of the presenter the way a motivated sector chief or competitive analyst would assemble it. You leave with a subject intelligence report, a contradiction map naming every place the public record conflicts with your pitch narrative, and a pre-Chamber exposure briefing covering what to address proactively, what to leave alone, and what to have an answer ready for. I show you the picture. What you do with it is yours."
     }
   }
 }

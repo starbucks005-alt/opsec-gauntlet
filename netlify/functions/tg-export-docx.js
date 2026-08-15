@@ -42,15 +42,18 @@ const NAME_MAX      = 60;
 const TITLE_MAX     = 200;
 
 const KNOWN_EP_NAMES = {
-  jules:          'Jules',
-  ms_ivy:         'Ms. Ivy',
-  wren_calloway:  'Wren Calloway',
-  carol_haynes:   'Carol Haynes',
-  matthew_vance:  'Matthew Vance',
-  arjun_mehta:    'Arjun Mehta',
-  zara_cole:      'Zara Cole',
-  reid_callum:    'Reid Callum',
-  grant_ellis:    'Grant Ellis',
+  ms_ivy:              'Ms. Ivy',
+  ms_ivy_opsec:        'Ms. Ivy',
+  dr_rao_opsec:        'Dr. Rao',
+  iris_king_opsec:     'Iris S. King',
+  alicia_james_opsec:  'Alicia James',
+  kimberly_pass_opsec: 'Kimberly Pass',
+  sasha_moreno_opsec:  'Sasha Moreno',
+  leo_vance_opsec:     'Leo Vance',
+  rowan_tate_opsec:    'Rowan Tate',
+  jax_rivera_opsec:    'Jax Rivera',
+  yuki_mendel_opsec:   'Yuki Mendel',
+  ali_malik_opsec:     'Dr. Ali Malik',
 };
 
 function jsonError(statusCode, message) {
