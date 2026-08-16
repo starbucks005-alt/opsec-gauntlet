@@ -27,25 +27,33 @@
   const KEY_REVISIONS = 'tg_ep_revisions';
   const FETCH_TIMEOUT_MS = 45000;
 
+  // Corridor offices Ivy can hand a visitor on to. Keys match the office
+  // ep_id; paths are the office pages under SPECIALISTS/.
   const EP_OFFICES = {
-    reid_callum:   '/Helpers/reid-marketing.html',
-    zara_cole:     '/Helpers/zara-influencer.html',
-    jules:         '/Helpers/jules-rewrite.html',
-    grant_ellis:   '/Helpers/grant-coach.html',
-    arjun_mehta:   '/Helpers/arjun-delivery.html',
-    matthew_vance: '/Helpers/matthew-behaviorist.html',
-    wren_calloway: '/Helpers/wren-scout.html',
-    carol_haynes:  '/Helpers/carol-screener.html',
+    dr_rao_opsec:        '/SPECIALISTS/dr-rao-dual-use.html',
+    iris_king_opsec:     '/SPECIALISTS/iris-comms.html',
+    alicia_james_opsec:  '/SPECIALISTS/alicia-structure.html',
+    kimberly_pass_opsec: '/SPECIALISTS/kimberly-legal.html',
+    sasha_moreno_opsec:  '/SPECIALISTS/sasha-human.html',
+    leo_vance_opsec:     '/SPECIALISTS/leo-financial.html',
+    rowan_tate_opsec:    '/SPECIALISTS/rowan-risk.html',
+    jax_rivera_opsec:    '/SPECIALISTS/jax-discovery.html',
+    yuki_mendel_opsec:   '/SPECIALISTS/yuki-visual.html',
+    ali_malik_opsec:     '/SPECIALISTS/ali-osint.html',
+    wren_calloway:       '/wren.html',
   };
   const EP_SHORT = {
-    reid_callum:   'Reid',
-    zara_cole:     'Zara',
-    jules:         'Jules',
-    grant_ellis:   'Grant',
-    arjun_mehta:   'Arjun',
-    matthew_vance: 'Matthew',
-    wren_calloway: 'Wren',
-    carol_haynes:  'Carol',
+    dr_rao_opsec:        'Dr. Rao',
+    iris_king_opsec:     'Iris',
+    alicia_james_opsec:  'Alicia',
+    kimberly_pass_opsec: 'Kimberly',
+    sasha_moreno_opsec:  'Sasha',
+    leo_vance_opsec:     'Leo',
+    rowan_tate_opsec:    'Rowan',
+    jax_rivera_opsec:    'Jax',
+    yuki_mendel_opsec:   'Yuki',
+    ali_malik_opsec:     'Ali',
+    wren_calloway:       'Wren',
   };
 
   const TOOLS = {

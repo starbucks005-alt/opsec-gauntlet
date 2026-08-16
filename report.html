@@ -167,7 +167,7 @@
     margin-bottom:0.8rem;
   }
 
-  /* Jules edit blocks. */
+  /* Brief-addition blocks. */
   .doc-edit{ margin-bottom:1.4rem; }
   .doc-edit:last-child{ margin-bottom:0; }
   .doc-edit-meta{
@@ -1376,7 +1376,7 @@
         specialist: { id: 'iris_king_opsec', name: 'Iris S. King', role: 'Office of Frontline Communications', href: '/SPECIALISTS/iris-comms.html' },
       };
     }
-    // Middle ground: mixed clarity. Default to Jules for language tightening.
+    // Middle ground: mixed clarity. Default to Frontline Communications.
     return {
       title:  'Mixed clarity. Tighten before the next round.',
       body:   'The panel is neither aligned nor split. The concept reads as partially clear. Walk the corridor to Iris King at Frontline Communications to sharpen how it speaks, or to Ms. Ivy at Concept Integrity if the gap is structural, then resubmit.',
@@ -1543,7 +1543,7 @@
     `;
   }
 
-  // EP reports: each non-Jules EP produces a discrete report on the brief.
+  // Office reports: a discrete report on the brief from an office that reports
   // Rendered as an expandable card per EP, content shown in full.
   function renderEpReportsSection(epReports){
     const list = Array.isArray(epReports) ? epReports.filter(r => r && r.ep_id) : [];
@@ -1578,8 +1578,8 @@
     `;
   }
 
-  // Jules-only revisions: copy edits to the brief itself. Kept separate
-  // from EP reports because revising is Jules's job; the other EPs report.
+  // Brief additions: the text each office appended to the brief itself. Kept
+  // separate from office reports, which stand alone rather than altering the brief.
   function renderWorkSection(revisions){
     const groups = groupRevisionsByEp(revisions);
     if (!groups.length) return '';
@@ -1614,8 +1614,8 @@
     return `
       <section class="doc-section" id="work">
         <header class="doc-section-head">
-          <h2 class="doc-h2">III. Copy Edits</h2>
-          <p class="doc-h2-sub">${totalRevs} ${totalRevs === 1 ? 'revision' : 'revisions'} to the brief. Jules is the only Operational Specialist who edits the brief itself; the rest produce reports.</p>
+          <h2 class="doc-h2">III. Corridor Additions</h2>
+          <p class="doc-h2-sub">${totalRevs} ${totalRevs === 1 ? 'addition' : 'additions'} to the brief. The corridor offices append their assessments to what you wrote; none of them rewrite your prose.</p>
         </header>
         ${articlesHtml}
       </section>
@@ -1831,7 +1831,7 @@
       </nav>
     `;
 
-    // Brief, EP reports, and Jules's edits each render as standalone
+    // Brief, office reports, and corridor additions each render as standalone
     // document sections. Each section provides its own id anchor and
     // its own header so the TOC links land on the section header. No
     // wrapper card around them - flat document flow.
@@ -1967,7 +1967,7 @@
     // \"Save as PDF\" in the dialog. Print stylesheet handles layout,
     // chrome stripping, and (for samples) the diagonal SAMPLE watermark.
     // Before printing we force every <details> open so EP reports and
-    // Jules's edits print in full, then restore their original states
+    // Corridor additions print in full, then restore their original states
     // afterward so the on-screen view is unchanged.
     const printBtn = root.querySelector('[data-tg-print]');
     if (printBtn) {

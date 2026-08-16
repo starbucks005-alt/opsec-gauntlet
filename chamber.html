@@ -970,42 +970,70 @@ h1 em,h2 em{font-style:italic;color:var(--etl-blue)}
   //            whoever is on the panel (Marcus brought 3 assistants again,
   //            Selene's already counted the em dashes, etc.).
   const JUDGE_DEMO_LINES = {
-    selene_voss: {
-      active:   "Did AI write this, or did you?",
-      audience: "Mm. Those em dashes again."
+    helena_ward: {
+      active:   "Name the compound. Not the category - the compound.",
+      audience: "That is the wrong term for it. I will let it go once."
     },
-    marcus_holt: {
-      active:   "Walk me through who owns what. Who gets paid first if this sells?",
-      audience: "Selene, leave the founder alone for thirty seconds."
+    rafe_dominguez: {
+      active:   "Where is that part made, and who owns the plant that makes it?",
+      audience: "A bad bolt has consequences. Ask me how I know."
     },
-    priya_anand: {
-      active:   "Before you tell me what it does, tell me why you built it.",
-      audience: "Be kind. Someone built this."
+    liyun_zhao: {
+      active:   "Show me the route map. What happens when one cable is cut?",
+      audience: "Single path. They have not noticed yet."
     },
-    raymond_chen: {
-      active:   "What does one of these cost you to make, and what do you sell it for? Real numbers.",
-      audience: "Marcus is telling a story. Somebody press him on the math."
+    miles_harrington: {
+      active:   "Walk me through the money. Who moves it, and who can move it without asking?",
+      audience: "That workflow is already violating something. Give it a minute."
     },
-    astrid_lund: {
-      active:   "What's the worst-case lawsuit, and who files it?",
-      audience: "Whoever phrased that question would not want to say it in court."
+    amina_farouk: {
+      active:   "Where does the cold chain break, and who is downstream when it does?",
+      audience: "There are people in that gap. Say it plainly."
     },
-    osei_mensah: {
-      active:   "Where is the data?",
-      audience: "I would not have phrased it that way."
+    jonas_mccrae: {
+      active:   "When this fails at two in the morning, who picks up and what do they do?",
+      audience: "Skip the org chart. Tell me who answers the call."
     },
-    grace_nakamura: {
-      active:   "Tell me exactly how this could be used against people.",
-      audience: "Easy question to ask from this side of the panel."
+    pri_nanduri: {
+      active:   "What is the topology? Actual load figures, not a shape with arrows.",
+      audience: "That diagram is decorative. It is not a diagram."
     },
-    devon_sloane: {
-      active:   "Don't pitch me. Tell me what's broken. Start there.",
-      audience: "Are we workshopping this or judging it? Honey, pick a lane."
+    eli_kade: {
+      active:   "If a small contamination event starts here, how far does it get before anyone knows?",
+      audience: "The regulator is always the last to hear. Every time."
     },
-    cassidy_mercer: {
-      active:   "What do your users actually do? Not what they say they want.",
-      audience: "Watch how the question is being loaded."
-    }
+    mirela_stanescu: {
+      active:   "One bottleneck here. Model it forward across all three modes for me.",
+      audience: "The delay does not stay where it started. It never does."
+    },
+    gunnar_thorsen: {
+      active:   "Show me the single point of failure on the floor. There is always one.",
+      audience: "Field inspection would have caught that in an hour."
+    },
+    lynn_whitlow: {
+      active:   "Trace the vector for me. Origin to market, every hand it passes through.",
+      audience: "The advisory comes out weeks after it matters. Ask me how I know."
+    },
+    victor_hale: {
+      active:   "Which badge opens that door, and should it?",
+      audience: "The person is the vulnerability. It usually is."
+    },
+    yara_bensaid: {
+      active:   "Your material accounting has a gap. Explain the missing quantity.",
+      audience: "That is not a rounding error. Do not call it one."
+    },
+    owen_kessler: {
+      active:   "Zero trust, or the word 'zero-trust' on a slide? Those are different things.",
+      audience: "I found four doors while they were still introducing themselves."
+    },
+    marisol_quintero: {
+      active:   "Model the failure downstream. Who is living in that floodplain?",
+      audience: "It has not happened yet. That is not the same as safe."
+    },
+    soren_veldt: {
+      active:   "Walk me the concourse. Where are the camera blind spots?",
+      audience: "Soft target. They have not used the phrase once."
+    },
   };
 
   function judgeLine(judgeId, kind){
@@ -1023,15 +1051,22 @@ h1 em,h2 em{font-style:italic;color:var(--etl-blue)}
   // commenting on the active judge's personal quirk - the kind of dig
   // colleagues throw at each other across a panel.
   const HECKLES_ABOUT_ACTIVE = {
-    selene_voss:    "Selene's already counted the em dashes. Watch.",
-    marcus_holt:    "Marcus brought all three assistants today. Of course.",
-    priya_anand:    "Priya is going to ask 'why' before she asks anything else.",
-    raymond_chen:   "Raymond was up at four. He has already read this twice.",
-    astrid_lund:    "Astrid is checking your phrasing for legal exposure right now.",
-    osei_mensah:    "Osei has not spoken yet. When he does, listen.",
-    grace_nakamura: "Grace is finding a national security angle. She always does.",
-    devon_sloane:   "Devon is about to tell you your story has no spine.",
-    cassidy_mercer: "Cassidy already clocked the pause before you answered."
+    helena_ward:      "Helena has already corrected the terminology twice. Silently.",
+    rafe_dominguez:   "Rafe is looking for the country of origin. He will find it.",
+    liyun_zhao:       "Liyun found the single point of failure in the route map. She is waiting.",
+    miles_harrington: "Miles has the regulation number ready. He is being polite about it.",
+    amina_farouk:     "Amina is counting who is downstream of that gap.",
+    jonas_mccrae:     "Jonas wants to know who answers at two in the morning. Not the org chart.",
+    pri_nanduri:      "Pri read the diagram, sighed, and moved on. That was the review.",
+    eli_kade:         "Eli is thinking about the regulator finding out last. He always is.",
+    mirela_stanescu:  "Mirela is modeling the cascade three modes out already.",
+    gunnar_thorsen:   "Gunnar found the single point of failure. He is deciding how to say it.",
+    lynn_whitlow:     "Lynn traced the vector to market before the slide changed.",
+    victor_hale:      "Victor has not spoken. He is watching the badge system.",
+    yara_bensaid:     "Yara does not think that is a rounding error. She will say so.",
+    owen_kessler:     "Owen has been in the network since the title slide.",
+    marisol_quintero: "Marisol is modeling downstream. Nobody enjoys that part.",
+    soren_veldt:      "Soren already walked the concourse in his head. Twice.",
   };
 
   // ── Heckle engine ────────────────────────────────────────────────────────
@@ -1044,46 +1079,74 @@ h1 em,h2 em{font-style:italic;color:var(--etl-blue)}
   //
   // Keyed by TARGET judge id (the panel judge being teased).
   const HECKLE_LINES = {
-    selene_voss: [
-      { hecklers: ['devon_sloane'], line: "New assistant behind Selene today. I liked the last one. Briefly." },
-      { hecklers: ['devon_sloane'], line: "That is a fresh face carrying Selene's bag. Give it a week." },
-      { hecklers: [], line: "Selene has already counted the em dashes. She just will not say it twice." },
+    helena_ward: [
+      { hecklers: ['yara_bensaid'], line: "Helena and I compared notes on the precursor question before anyone sat down." },
+      { hecklers: [], line: "Helena will name the compound, the vendor, and the regulation. In that order." },
     ],
-    marcus_holt: [
-      { hecklers: ['devon_sloane'], line: "Marcus brought the whole entourage again. Say hi to the assistants I have named myself." },
-      { hecklers: ['grace_nakamura'], line: "Three assistants, Marcus. I will say nothing further." },
-      { hecklers: [], line: "Stagehands are earning it tonight, peeling Marcus's people off the stage." },
+    rafe_dominguez: [
+      { hecklers: ['pri_nanduri'], line: "Rafe takes the hardware, I take the firmware. We usually land in the same place." },
+      { hecklers: ['gunnar_thorsen'], line: "Rafe has opinions about that bolt. He has earned them." },
+      { hecklers: [], line: "Rafe found the country of origin in the first paragraph. He always does." },
     ],
-    priya_anand: [
-      { hecklers: [], line: "Notice the room went quiet. That happens when Priya leans in." },
-      { hecklers: ['marcus_holt'], line: "Even I sit up when Priya is the one asking." },
-      { hecklers: [], line: "Whatever Priya just asked, answer it straight. She can tell." },
+    liyun_zhao: [
+      { hecklers: ['owen_kessler'], line: "Liyun does the cable, I do the packets. She is faster." },
+      { hecklers: [], line: "Liyun is amused. That is worse than Liyun being concerned." },
     ],
-    raymond_chen: [
-      { hecklers: ['astrid_lund'], line: "That was almost the nineteen-nineties talking, Raymond. Almost." },
-      { hecklers: [], line: "Raymond read your brief twice before sunrise. He is not impressed yet. But he read it." },
-      { hecklers: ['astrid_lund'], line: "Careful, Raymond. I am keeping a tally of the old-school ones." },
+    miles_harrington: [
+      { hecklers: ['eli_kade'], line: "Miles has the regulation. I have the public trust problem. Neither is good news." },
+      { hecklers: [], line: "Miles said that calmly, which is how you know it is serious." },
     ],
-    astrid_lund: [
-      { hecklers: ['raymond_chen'], line: "Astrid is enjoying this far too much. She always does." },
-      { hecklers: [], line: "Astrid spotted the legal exposure three answers ago. She is deciding how to phrase it for sport." },
-      { hecklers: [], line: "Best-dressed person in the room and she knows it. Listen anyway." },
+    amina_farouk: [
+      { hecklers: ['lynn_whitlow'], line: "Amina takes the hospital, I take the farm. The cold chain is the same cold chain." },
+      { hecklers: [], line: "Amina's voice stays warm right up until the part where people are harmed." },
     ],
-    osei_mensah: [
-      { hecklers: [], line: "Osei spoke. Write that down. It does not happen often." },
-      { hecklers: ['astrid_lund'], line: "He speaks. Everyone lean in." },
+    jonas_mccrae: [
+      { hecklers: ['rafe_dominguez'], line: "Jonas has run the actual command board. Listen to the man." },
+      { hecklers: [], line: "Jonas will cut the bureaucracy out of your answer whether you like it or not." },
     ],
-    grace_nakamura: [
-      { hecklers: ['devon_sloane'], line: "Still chasing that second laugh out of the Admiral. Someday." },
-      { hecklers: [], line: "The Admiral does not do warm. She does correct. Take the correct." },
+    pri_nanduri: [
+      { hecklers: ['owen_kessler'], line: "Pri takes OT, I take IT, and we both know where they meet." },
+      { hecklers: ['rafe_dominguez'], line: "Pri already has the bulletin number. She had it two slides ago." },
+      { hecklers: [], line: "Pri does not slow down for anyone. That is not personal." },
     ],
-    devon_sloane: [
-      { hecklers: [], line: "Devon is about to make this feel like a hug. Do not be fooled, the read is real." },
-      { hecklers: ['cassidy_mercer'], line: "Devon notices everything in the room. He just says it out loud." },
+    eli_kade: [
+      { hecklers: ['marisol_quintero'], line: "Eli handles the treatment plant, I handle the dam. Same water, different failure." },
+      { hecklers: ['pri_nanduri'], line: "Eli's SCADA problem is my SCADA problem. We have had this conversation." },
+      { hecklers: [], line: "Eli is calm about contamination the way surgeons are calm about blood." },
     ],
-    cassidy_mercer: [
-      { hecklers: [], line: "Cassidy already clocked the pause before your answer. She always does." },
-      { hecklers: ['devon_sloane'], line: "Relax, Cassidy is not judging you. She is just reading you. Different thing entirely." },
+    mirela_stanescu: [
+      { hecklers: ['gunnar_thorsen'], line: "Mirela moves it, I make it. Her bottleneck becomes my backlog." },
+      { hecklers: [], line: "Mirela is quietly funny right up until the cascade model comes out." },
+    ],
+    gunnar_thorsen: [
+      { hecklers: ['mirela_stanescu'], line: "Gunnar found the failure point on the floor. He will mention it once." },
+      { hecklers: ['rafe_dominguez'], line: "Gunnar writes these up like field inspection reports. Because they are." },
+      { hecklers: [], line: "Gunnar is gentle with interns and merciless with drawings." },
+    ],
+    lynn_whitlow: [
+      { hecklers: ['amina_farouk'], line: "Lynn tracks it to market, I catch it at the hospital. We would rather she won." },
+      { hecklers: [], line: "Lynn is warm, curious, and about to ask where every hand touched it." },
+    ],
+    victor_hale: [
+      { hecklers: ['owen_kessler'], line: "Victor takes the door, I take the login. The gap is always between us." },
+      { hecklers: [], line: "Victor has not raised his voice in eleven years. He has not needed to." },
+    ],
+    yara_bensaid: [
+      { hecklers: ['helena_ward'], line: "Yara and I escalate the same way. It saves time." },
+      { hecklers: [], line: "Yara is blunt because the material accounting does not negotiate." },
+    ],
+    owen_kessler: [
+      { hecklers: ['liyun_zhao'], line: "Owen is already in the network. He is just being quiet about it." },
+      { hecklers: ['victor_hale'], line: "Owen does digital, I do physical, and the convergence is where it hurts." },
+      { hecklers: [], line: "Owen is sarcastic and caffeinated and usually right. Pick your battle." },
+    ],
+    marisol_quintero: [
+      { hecklers: ['eli_kade'], line: "Marisol models the failure nobody wants to imagine. Somebody has to." },
+      { hecklers: [], line: "Marisol is calm and quietly fierce. Do not mistake the first for the whole." },
+    ],
+    soren_veldt: [
+      { hecklers: ['victor_hale'], line: "Soren walked the concourse before the gates opened. He does that everywhere." },
+      { hecklers: [], line: "Soren is already counting exits. He started when you did." },
     ],
   };
 
